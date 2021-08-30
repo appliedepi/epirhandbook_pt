@@ -54,43 +54,43 @@ The R community of users is enormous and collaborative. New packages and tools t
 
 **Documentação de ajuda**
 
-Search the RStudio "Help" tab for documentation on R packages and specific functions. This is within the pane that also contains Files, Plots, and Packages (typically in the lower-right pane). As a shortcut, you can also type the name of a package or function into the R console after a question-mark to open the relevant Help page. Do not include parentheses.
+Pesquisar na aba"Ajuda" do RStudio pela documentação sobre pacotes do R e funções específicas. Isto está dentro do painel que também contém "Arquivos", "Gráficos" e "Pacotes" (tipicamente no painel inferior direito). Como atalho, também se pode digitar o nome de um pacote ou função no console do R após um ponto de interrogação para abrir a página de Ajuda relevante. Não inclui parênteses.
 
-For example: `?filter` or `?diagrammeR`.
+Por exemplo: `?filter` ou `?diagrammeR`.
 
-**Interactive tutorials**
+**Tutoriais interativos**
 
-There are several ways to learn R interactively *within* RStudio.
+Há várias maneiras de aprender R interactivamente *dentro* do RStudio.
 
-RStudio itself offers a Tutorial pane that is powered by the [**learnr**](https://blog.rstudio.com/2020/02/25/rstudio-1-3-integrated-tutorials/) R package. Simply install this package and open a tutorial via the new "Tutorial" tab in the upper-right RStudio pane (which also contains Environment and History tabs).
+O próprio RStudio oferece um painel Tutorial que é alimentado pelo pacote do R [**learnr**](https://blog.rstudio.com/2020/02/25/rstudio-1-3-integrated-tutorials/). Basta instalar este pacote e abrir um tutorial através da nova aba "Tutorial" no painel superior direito do RStudio (que também contém os separadores Ambiente e Histórico).
 
-The R package [**swirl**](https://swirlstats.com/) offers interactive courses in the R Console. Install and load this package, then run the command `swirl()` (empty parentheses) in the R console. You will see prompts appear in the Console. Respond by typing in the Console. It will guide you through a course of your choice.
+O pacote do R [**swirl**](https://swirlstats.com/) oferece cursos interativos no Console do R. Instale e carregue este pacote, depois execute o comando `swirl()` (parênteses vazios) no Console do R. Você verá avisos aparecerem no Console. Responda digitando no Console. Ele irá guiá-lo através de um curso à sua escolha.
 
-### Cheatsheets {.unnumbered}
+### Página de dicas {.unnumbered}
 
-There are many PDF "cheatsheets" available on the [RStudio website](https://rstudio.com/resources/cheatsheets/), for example:
+Há várias "cheatsheets" em pdf disponíveis no [website do RStudio](https://rstudio.com/resources/cheatsheets/), por exemplo:
 
--   Factors with **forcats** package\
--   Dates and times with **lubridate** package\
--   Strings with **stringr** package\
--   iterative opertaions with **purrr** package\
--   Data import\
--   Data transformation cheatsheet with **dplyr** package\
--   R Markdown (to create documents like PDF, Word, Powerpoint...)\
--   Shiny (to build interactive web apps)\
--   Data visualization with **ggplot2** package\
--   Cartography (GIS)\
--   **leaflet** package (interactive maps)\
--   Python with R (**reticulate** package)
+-   Fatores com o pacote **forcats**\
+-   Datas e horas com o pacote **lubridate**\
+-   Caracteres com o pacote **stringr**\
+-   Operações iterativas com o pacote **purrr**\
+-   Importação de dados\
+-   Folha de dica para transformação de dadas com o pacote **dplyr**\
+-   R Markdown (para criar documentos como PDF, Word, Powerpoint...)\
+-   Shiny (para construir aplicativos de web interativos)\
+-   Visualização de dados com o pacote **ggplot2**\
+-   Cartografia (GIS)\
+-   Pacote **leaflet** (mapas interativos)\
+-   Python com R (pacote **reticulate**)
 
-This is an online R resource specifically for [Excel users](https://jules32.github.io/r-for-excel-users/)
+Este é um recurso online do R especificamente para [usuários do Excel](https://jules32.github.io/r-for-excel-users/)
 
 ### Twitter {.unnumbered}
 
-R has a vibrant twitter community where you can learn tips, shortcuts, and news - follow these accounts:
+R tem uma vibrante comunidade no twitter onde você pode aprender dicas, atalhos e notícias, siga estas contas:
 
--   Follow us! [\@epiRhandbook](https://twitter.com/epirhandbook)\
--   R Function A Day [\@rfuntionaday](https://twitter.com/rfunctionaday) is an *incredible* resource\
+-   Siga nos! [\@epiRhandbook](https://twitter.com/epirhandbook)\
+-   R Function A Day [\@rfuntionaday](https://twitter.com/rfunctionaday) é um recurso *incrível*\
 -   R for Data Science [\@rstats4ds](https://twitter.com/rstats4ds?lang=en)\
 -   RStudio [\@RStudio](https://twitter.com/rstudio?lang=en)\
 -   RStudio Tips [\@rstudiotips](https://twitter.com/rstudiotips)\
@@ -98,17 +98,17 @@ R has a vibrant twitter community where you can learn tips, shortcuts, and news 
 -   R-ladies [\@RLadiesGlobal](https://twitter.com/RLadiesGlobal)\
 -   Hadley Wickham [\@hadleywickham](https://twitter.com/hadleywickham?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor)
 
-Also:
+Também:
 
-**\#epitwitter** and **\#rstats**
+**\#epitwitter** e **\#rstats**
 
-### Free online resources {.unnumbered}
+### Recursos online gratuitos {.unnumbered}
 
-A definitive text is the [R for Data Science](https://r4ds.had.co.nz/) book by Garrett Grolemund and Hadley Wickham
+Um texto definitivo é o livro [R for Data Science](https://r4ds.had.co.nz/) de Garrett Grolemund e Hadley Wickham
 
-The [R4Epis](https://r4epis.netlify.app/) project website aims to "develop standardised data cleaning, analysis and reporting tools to cover common types of outbreaks and population-based surveys that would be conducted in an MSF emergency response setting." You can find R basics training materials, templates for RMarkdown reports on outbreaks and surveys, and tutorials to help you set them up.
+O site do projeto [R4Epis](https://r4epis.netlify.app/) tem como objetivo “desenvolver ferramentas padronizadas de limpeza, análise e relatório de dados para cobrir tipos comuns de surtos e pesquisas populacionais que seriam conduzidas em um ambiente de resposta a emergências de MSF”. Você pode encontrar materiais de treinamento básicos do R, modelos para relatórios do RMarkdown sobre surtos e pesquisas e tutoriais para ajudá-lo a configurá-los.
 
-### Languages other than English {.unnumbered}
+### Idiomas além do inglês {.unnumbered}
 
 [Materiais do RStudio em Espanhol](https://www.rstudio.com/collections/espanol/)
 
@@ -1380,15 +1380,15 @@ Relational operators compare values and are often used when defining new variabl
 
 Logical operators, such as AND and OR, are often used to connect relational operators and create more complicated criteria. Complex statements might require parentheses ( ) for grouping and order of application.
 
-+---------------+-----------------------------------------------------------------------+
-| Meaning       | Operator                                                              |
-+===============+=======================================================================+
-| AND           | `&`                                                                   |
-+---------------+-----------------------------------------------------------------------+
-| OR            | `|` (vertical bar)                                                    |
-+---------------+-----------------------------------------------------------------------+
-| Parentheses   | `( )` Used to group criteria together and clarify order of operations |
-+---------------+-----------------------------------------------------------------------+
++-------------+-----------------------------------------------------------------------+
+| Meaning     | Operator                                                              |
++=============+=======================================================================+
+| AND         | `&`                                                                   |
++-------------+-----------------------------------------------------------------------+
+| OR          | `|` (vertical bar)                                                    |
++-------------+-----------------------------------------------------------------------+
+| Parentheses | `( )` Used to group criteria together and clarify order of operations |
++-------------+-----------------------------------------------------------------------+
 
 For example, below, we have a linelist with two variables we want to use to create our case definition, `hep_e_rdt`, a test result and `other_cases_in_hh`, which will tell us if there are other cases in the household. The command below uses the function `case_when()` to create the new variable `case_def` such that:
 
