@@ -38,7 +38,7 @@ The R community of users is enormous and collaborative. New packages and tools t
 
 ## Glossário
 
-**RStudio** - RStudio é um programa que oferece uma interface gráfica com o usuário (GUI, do inlgês *Graphical User Interface*) para facilitar a utilização do **R**. Mais detalhes [na seção do RStudio](#rstudio).
+**RStudio** - RStudio é um programa que oferece uma interface gráfica com o usuário (GUI, do inglês *Graphical User Interface*) para facilitar a utilização do **R**. Mais detalhes [na seção do RStudio](#rstudio).
 
 **Objetos** - Tudo o que você armazena no R - de conjuntos de dados variáveis, listas com nomes de vilarejos e quantidade total de uma população, até o resultado das análises, como os gráficos - são *objetos* que *recebem nomes* e *podem ser utilizados* em comandos posteriores. Mais detalhes [na seção Objetos.](#objects)
 
@@ -772,7 +772,7 @@ As noted above, although we do not recommend this approach in most circumstances
 setwd("C:/Documents/R Files/My analysis")
 ```
 
-[***DANGER:*** Setting a working directory with `setwd()` *can* be "brittle" if the file path is specific to one computer. Instead, use file paths relative to an R Project root directory (with the **here** package). ]{style="color: red;"}
+[***DANGER:*** Setting a working directory with `setwd()` *can* be "brittle" if the file path is specific to one computer. Instead, use file paths relative to an R Project root directory (with the **here** package).]{style="color: red;"}
 
 <!-- ======================================================= -->
 
@@ -1380,15 +1380,15 @@ Relational operators compare values and are often used when defining new variabl
 
 Logical operators, such as AND and OR, are often used to connect relational operators and create more complicated criteria. Complex statements might require parentheses ( ) for grouping and order of application.
 
-+---------------------+-----------------------------------------------------------------------+
-| Meaning             | Operator                                                              |
-+=====================+=======================================================================+
-| AND                 | `&`                                                                   |
-+---------------------+-----------------------------------------------------------------------+
-| OR                  | `|` (vertical bar)                                                    |
-+---------------------+-----------------------------------------------------------------------+
-| Parentheses         | `( )` Used to group criteria together and clarify order of operations |
-+---------------------+-----------------------------------------------------------------------+
++---------------+-----------------------------------------------------------------------+
+| Meaning       | Operator                                                              |
++===============+=======================================================================+
+| AND           | `&`                                                                   |
++---------------+-----------------------------------------------------------------------+
+| OR            | `|` (vertical bar)                                                    |
++---------------+-----------------------------------------------------------------------+
+| Parentheses   | `( )` Used to group criteria together and clarify order of operations |
++---------------+-----------------------------------------------------------------------+
 
 For example, below, we have a linelist with two variables we want to use to create our case definition, `hep_e_rdt`, a test result and `other_cases_in_hh`, which will tell us if there are other cases in the household. The command below uses the function `case_when()` to create the new variable `case_def` such that:
 
@@ -1482,7 +1482,7 @@ options(scipen=999)
 
 #### Rounding {.unnumbered}
 
-[***DANGER:*** `round()` uses "banker's rounding" which rounds up from a .5 only if the upper number is even. Use `round_half_up()` from **janitor** to consistently round halves up to the nearest whole number. See [this explanation](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes) ]{style="color: red;"}
+[***DANGER:*** `round()` uses "banker's rounding" which rounds up from a .5 only if the upper number is even. Use `round_half_up()` from **janitor** to consistently round halves up to the nearest whole number. See [this explanation](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes)]{style="color: red;"}
 
 ```{r}
 # use the appropriate rounding function for your work
