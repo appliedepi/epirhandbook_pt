@@ -21,37 +21,37 @@ Em outra nota, o projeto [R4Epis](https://r4epis.netlify.app/) tem desenvolvido 
 
 <!-- ======================================================= -->
 
-## Preparation
+## Preparação
 
-**Background to R Markdown**
+**Ideias preliminares ao R Markdown**
 
-To explain some of the concepts and packages involved:
+Para explicar alguns dos conceitos e pacotes envolvidos:
 
--   **Markdown** is a "language" that allows you to write a document using plain text, that can be converted to html and other formats. It is not specific to R. Files written in Markdown have a '.md' extension.
--   **R Markdown**: is a variation on markdown that *is specific to R* - it allows you to write a document using markdown to produce text *and to embed R code and display their outputs*. R Markdown files have '.Rmd' extension.\
--   **rmarkdown - the package**: This is used by R to render the .Rmd file into the desired output. It's focus is converting the markdown (text) syntax, so we also need...
--   **knitr**: This R package will read the code chunks, execute it, and 'knit' it back into the document. This is how tables and graphs are included alongside the text.
--   **Pandoc**: Finally, pandoc actually convert the output into word/pdf/powerpoint etc. It is a software separate from R but is installed automatically with RStudio.
+-   **Markdown** é uma "linguagem" que permite escrever um documento usando texto comum, que pode ser convertido para html e outros formatos. Não é específico de R e arquivos escritos nessa "linguagem" tem extensão '.md'.
+-   **R Markdown**: é uma variação de markdown que *é específica de R* - permite escrever um documento usando markdown para produzir código, *mas também incluir código em R e expor seus resultados*.\
+-   **rmarkdown - o pacote**: é usado pelo R para renderizar o arquivo .Rmd para a exportação desejada. Seu foco é converter a sintaxe markdown (texto), então também precisamos de...
+-   **knitr**: Esse pacote do R lerá os blocos de código, executá-los e costurá-los (do inglês *knit*, tricotar) de volta ao documento.
+-   **Pandoc**: Finalmente, pandoc converte o objeto final em um documento word/pdf/powerpoint, etc. É um software separado do R, mas é instalado automaticamente com o RStudio.
 
-In sum, the process that happens *in the background* (you do not need to know all these steps!) involves feeding the .Rmd file to **knitr**, which executes the R code chunks and creates a new .md (markdown) file which includes the R code and its rendered output. The .md file is then processed by pandoc to create the finished product: a Microsoft Word document, HTML file, powerpoint document, pdf, etc.
 
 ```{r out.width = "100%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "markdown/0_rmd.png"))
 ```
 
-(source: <https://rmarkdown.rstudio.com/authoring_quick_tour.html>):
+(fonte: <https://rmarkdown.rstudio.com/authoring_quick_tour.html>):
 
-**Installation**
+**Instalação**
 
-To create a R Markdown output, you need to have the following installed:
+Para criar um produto R Markdown, é necessário ter os seguintes instalados:
 
--   The **rmarkdown** package (**knitr** will also be installed automatically)\
--   Pandoc, which should come installed with RStudio. If you are not using RStudio, you can download Pandoc here: <http://pandoc.org>.
--   If you want to generate PDF output (a bit trickier), you will need to install LaTeX. For R Markdown users who have not installed LaTeX before, we recommend that you install TinyTeX (<https://yihui.name/tinytex/>). You can use the following commands:
+-   O pacote **rmarkdown** (**knitr** será automaticamente instalado também)\
+-   Pandoc, que deve ter vindo instalado com RStudio. Se você não está usando RStudio, é possível baixar o Pandoc aqui: <http://pandoc.org>.
+-   Se quiser gerar um arquivo PDF (um pouquinho mais complicado), será necessário instalar o LaTeX. Para usuários de R Markdown que nunca instalaram o LaTeX antes, recomendamos que instale o TinyTeX (<https://yihui.name/tinytex/>). Para isso, use os seguintes comandos:
+
 
 ```{r, eval=F}
-pacman::p_load(tinytex)     # install tinytex package
-tinytex::install_tinytex()  # R command to install TinyTeX software
+pacman::p_load(tinytex)     # instala o pacote tinytex
+tinytex::install_tinytex()  # Comando de R para instalar o software TinyTeX
 ```
 
 <!-- ======================================================= -->
