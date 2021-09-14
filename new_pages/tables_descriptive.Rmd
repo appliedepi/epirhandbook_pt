@@ -36,7 +36,7 @@ pacman::p_load(
   rstatix,      # resumo e testes estatísticos
   janitor,      # adiciona números absolutos e porcentagens às tabelas
   scales,       # facilmente converte proporções para porcentagens
-  flextable     # converte tabelas para imagens 'bonitas'
+  flextable     # converte tabelas para o formato de imagens
   )
 ```
 
@@ -120,49 +120,49 @@ linelist %>%
 
 ## **Pacote janitor** {#tbl_janitor}
 
-O pacote **janitor** contém a função `tabyl()`, que produz tabulações simples e tabulações cruzadas, as quais podem ser modificadas com funções auxiliares para mostrarem porcentagens, proporções, contagens, etc.
+O pacote **janitor** contém a função `tabyl()`, que gera tabulações simples e tabulações cruzadas que podem ser modificadas com funções auxiliares para mostrarem porcentagens, proporções, contagens, etc.
 
-Abaixo, nós utilizamos as funções do **janitor** no banco de dados `linelist,` criado anteriormente, e visualizamos o resultado da análise. Se necessário, é possível salvar as tabelas geradas utilizando o operador `<-`, e atribuir as tabelas a um novo objeto no R.
+Abaixo, nós utilizamos as funções do **janitor** no banco de dados `linelist`, criado anteriormente, e visualizamos o resultado da análise. Se necessário, é possível salvar as tabelas geradas utilizando o operador `<-`, e atribuindo elas a um novo objeto no R.
 
 ### Básico do tabyl {.unnumbered}
 
-O uso padrão do `tabyl()` em uma coluna específica produz gera os valores únicos, contagens, e proporções, em porcentagem, destes valores na coluna analisada. Como as proporções podem ter muitos dígitos, você pode ajustar o número de casas decimais com a função `adorn_rounding()`, descrita abaixo.
+O uso do `tabyl()`, no modo padrão, em uma coluna específica produz uma tabela com os valores únicos desta coluna, suas contagens, e "porcentagens" (proporções, na realidade). Como as proporções podem ter muitos dígitos, é possível ajustar o número de casas decimais com a função `adorn_rounding()`, descrita abaixo.
 
 ```{r}
 linelist %>% tabyl(age_cat)
 ```
 
-Como você pode observar acima, se existirem campos em branco na coluna, eles são mostrados em uma linha chamada `<NA>`. Você pode omitir estes campos com o atributo `show_na = FALSE`. Se não existirem campos em branco, essa linha não irá aparecer. Se estes campos existirem, todas as proporções são geradas como 'brutas' (coluna 'percent' gerada, onde no denominador está incluso a quantidade de `NA`) e 'válidas' (coluna 'valid_percent', onde a quantidade de campos `NA` não é considerada no cálculo).
+Como observado acima, se existirem campos em branco na coluna analisada, eles são mostrados em uma linha chamada `<NA>`. Você pode omitir estes campos com o atributo `show_na = FALSE`. Se não existirem campos em branco, essa linha não irá aparecer. Se estes campos existirem, todas as proporções são geradas como 'brutas' (coluna 'percent' gerada, em que a quantidade de campos `NA` está inclusa no denominador) e 'válidas' (coluna 'valid_percent', onde a quantidade de campos `NA` não é considerada no cálculo).
 
-Se a coluna é for da classe Factor e apenas alguns níveis dessa classe estiverem presentes em seus dados, todos os níveis desta classe serão mostrados na tabela de análise. Você pode omitir essa característica ao usar o atributo `show_missing_levels = FALSE`. Leia mais na página [Factors].
+Se a coluna for da classe Factor e apenas alguns níveis dessa classe estiverem presentes em seus dados, todos os níveis desta classe serão mostrados na tabela de análise. Você pode omitir essa característica ao usar o atributo `show_missing_levels = FALSE`. Leia mais na página [Factors].
 
 ### Tabulação cruzada (tabela de contingência) {.unnumbered}
 
-Contagens de tabulações cruzadas são obtidas ao adicionar uma ou mais colunas adicionais dentro da função `tabyl()`. Observe que agora apenas os números absolutos são gerados - proporções e porcentagens podem ser adicionadas à análise com etapas adicionais mostradas abaixo.
+As quantidades absolutas das tabulações cruzadas são obtidas ao adicionarmos uma ou mais variáveis dentro da função `tabyl()`. Observe que agora apenas os números absolutos são obtidos - proporções e porcentagens podem ser adicionadas à análise com etapas adicionais mostradas abaixo.
 
 ```{r}
 linelist %>% tabyl(age_cat, gender)
 ```
 
-### "Adornando" o tabyl {#tbl_adorn .unnumbered}
+### Personalizando o tabyl {#tbl_adorn .unnumbered}
 
-Use as funções "adorn" do **janitor** para adicionar ao resultado da análise as colunas de números absolutos ou converter para proporções, percentuais, ou ajustar o formato de gerado. Com frequência você vai aplicar essas funções nas análises geradas pelo tabyl.
+Use as funções "adorn", do **janitor**, para adicionar ao resultado da análise as colunas de números absolutos assim como converter para proporções, percentuais, ou ajustar o formato de gerado. Você utilizar essas funções nas tabelas geradas pelo tabyl frequentemente.
 
-+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Função                   | Resultado                                                                                                                                                                                                                 |
-+==========================+===========================================================================================================================================================================================================================+
-| `adorn_totals()`         | Adiciona a quantidade absoluta da contagem (`where =` "row", "col", or "both"). "row": linhas; "col": colunas; "both": ambas. Atribua ao campo `name =` o nome "Total".                                                   |
-+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `adorn_percentages()`    | Converte números absolutos para proporções, escolhendo o `denominator =` "row", "col", or "all".                                                                                                                          |
-+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `adorn_pct_formatting()` | Converte proporções para percentuais. Especifique o número de casas decimais com o atributo `digits =`. Remova o símbolo "%" com o atributo `affix_sign = FALSE`.                                                         |
-+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `adorn_rounding()`       | Arredonde as proporções utilizando `digits =` nº de casas decimais. Para arredondar percentuais, utilize a função `adorn_pct_formatting()` com o n° de casas decimais em `digits =`.                                      |
-+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `adorn_ns()`             | Adicione uma coluna de números absolutos em uma tabela de proporções ou porcentagens. Utilize o atributo `position =` "rear" para mostrar os números em parênteses, ou "front" para colocar os percentuais em parênteses. |
-+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| `adorn_title()`          | Adiciona texto à tabela gerada através dos argumentos `row_name =` e/ou `col_name =`                                                                                                                                      |
-+--------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++--------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Função                   | Resultado                                                                                                                                                                                                              |
++==========================+========================================================================================================================================================================================================================+
+| `adorn_totals()`         | Adiciona uma linha/coluna com os totais (`where =` "row", "col", or "both"). "row": linhas; "col": colunas; "both": ambas. Atribua ao campo `name =` o nome "Total".                                                   |
++--------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `adorn_percentages()`    | Converte contagens absolutas para proporções, escolhendo o `denominator =` "row", "col", or "all".                                                                                                                     |
++--------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `adorn_pct_formatting()` | Converte proporções para percentuais. Especifique o número de casas decimais com o atributo `digits =`. Remova o símbolo "%" com o atributo `affix_sign = FALSE`.                                                      |
++--------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `adorn_rounding()`       | Arredonde as proporções utilizando `digits =` nº de casas decimais. Para arredondar percentuais, utilize a função `adorn_pct_formatting()` com `digits =`.                                                             |
++--------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `adorn_ns()`             | Adicione a tabela as quantidades absolutas com as proporções ou porcentagens. Utilize o atributo `position =` "rear" para mostrar as quantidades em parênteses, ou "front" para colocar as porcentagens em parênteses. |
++--------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| `adorn_title()`          | Adiciona títulos à tabela gerada através dos argumentos `row_name =` e/ou `col_name =`                                                                                                                                 |
++--------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Preste atenção na ordem em que você utiliza estas funções. Abaixo estão alguns exemplos:
 
@@ -171,38 +171,38 @@ Uma tabela simples com porcentagens no lugar das proporções, que são padrão.
 ```{r}
 linelist %>%               # fonte dos dados
   tabyl(age_cat) %>%       # tabula números absolutos e proporções por idade
-  adorn_pct_formatting()   # converta as proporções para porcentagens
+  adorn_pct_formatting()   # converte as proporções para porcentagens
 ```
 
 Uma tabela cruzada com os números absolutos e porcentagens de cada linha.
 
 ```{r}
 linelist %>%                                  
-  tabyl(age_cat, gender) %>%                  # contagens absolutas por idade e gênero
-  adorn_totals(where = "row") %>%             # adiciona a contagem absoluta
-  adorn_percentages(denominator = "row") %>%  # converte as contagens para proporções
+  tabyl(age_cat, gender) %>%                  # contagens absolutas e proporções cruzando idade e gênero
+  adorn_totals(where = "row") %>%             # adiciona uma linha chamada 'Total', com os totais
+  adorn_percentages(denominator = "row") %>%  # converte os números absolutos para proporções
   adorn_pct_formatting(digits = 1)            # converte as proporções para porcentagens
 ```
 
-Uma tabela de dados cruzados ajustada de forma que as quantidades absolutas e percentuais são calculados.
+O código abaixo modifica uma tabela de dados cruzados de forma que as quantidades absolutas e os percentuais são mostrados.
 
 ```{r}
 linelist %>%                                  # fonte dos dados
   tabyl(age_cat, gender) %>%                  # geração da tabela cruzada
-  adorn_totals(where = "row") %>%             # mostra as contagens absolutas
-  adorn_percentages(denominator = "col") %>%  # gera proporções
-  adorn_pct_formatting() %>%                  # gera os percentuais
-  adorn_ns(position = "front") %>%            # mostrar como: "contagem (porcentagem)"
-  adorn_title(                                # ajusta os títulos das colunas e linhas
+  adorn_totals(where = "row") %>%             # adiciona uma linha "Total", com os totais
+  adorn_percentages(denominator = "col") %>%  # converte as quantidades absolutas para proporções
+  adorn_pct_formatting() %>%                  # converte as proporções para porcentagens
+  adorn_ns(position = "front") %>%            # mostra os dados como: "n° absoluto (porcentagem)"
+  adorn_title(                                # nomeia os títulos das colunas e linhas
     row_name = "Age Category",
     col_name = "Gender")
 ```
 
-### Printing the tabyl {.unnumbered}
+### Convertendo a tabela do tabyl para uma imagem {.unnumbered}
 
-By default, the tabyl will print raw to your R console.
+Por padrão, o tabyl vai gerar uma tabela 'crua' no seu console do R.
 
-Alternatively, you can pass the tabyl to **flextable** or similar package to print as a "pretty" image in the RStudio Viewer, which could be exported as .png, .jpeg, .html, etc. This is discussed in the page [Tables for presentation]. Note that if printing in this manner and using `adorn_titles()`, you must specify `placement = "combined"`.
+Adicionalmente, você pode obter a tabela no tabyl e utiliza-la nas funções do pacote **flextable**, ou outros pacotes similares, para gerar uma tabela no formato de imagem no RStudio Viewer, que pode ser exportada nos formatos .png, .jpeg, .html, etc. Isto é discutido na página [Tabelas para apresentação]. Observe que, caso você gere a tabela desta forma e utilize a função `adorn_titles()`, você precisa aplicar o atributo `placement = "combined"`.
 
 ```{r}
 linelist %>%
@@ -214,25 +214,25 @@ linelist %>%
   adorn_title(
     row_name = "Age Category",
     col_name = "Gender",
-    placement = "combined") %>% # this is necessary to print as image
-  flextable::flextable() %>%    # convert to pretty image
-  flextable::autofit()          # format to one line per row 
+    placement = "combined") %>% # isto é necessário para gerar a tabela como imagem
+  flextable::flextable() %>%    # converte a tabela em imagem
+  flextable::autofit()          # formata a tabela em linha por coluna
 
 ```
 
-### Use on other tables {.unnumbered}
+### Personalizando outras tabelas com funções 'adorn' {.unnumbered}
 
-You can use **janitor**'s `adorn_*()` functions on other tables, such as those created by `summarise()` and `count()` from **dplyr**, or `table()` from **base** R. Simply pipe the table to the desired **janitor** function. For example:
+Você pode utilizar as funções `adorn_*()`, do pacote **janitor**, em outras tabelas, como as criadas pelas funções `summarise()` e `count()` do pacote **dplyr**, ou `table()` do **base** R. Simplesmente aplique a tabela gerada à função desejada do pacote **janitor**. Por exemplo:
 
 ```{r}
 linelist %>% 
-  count(hospital) %>%   # dplyr function
-  adorn_totals()        # janitor function
+  count(hospital) %>%   # função do pacote dplyr
+  adorn_totals()        # função do pacote janitor
 ```
 
-### Saving the tabyl {.unnumbered}
+### Salvando a tabela do tabyl {.unnumbered}
 
-If you convert the table to a "pretty" image with a package like **flextable**, you can save it with functions from that package - like `save_as_html()`, `save_as_word()`, `save_as_ppt()`, and `save_as_image()` from **flextable** (as discussed more extensively in the [Tables for presentation] page). Below, the table is saved as a Word document, in which it can be further hand-edited.
+Se você converteu a tabela para uma imagem 'bonita' utilizando um pacote como **flextable**, você pode salvar ela com as funções desse pacote - utilizando as funções `save_as_html()`, `save_as_word()`, `save_as_ppt()`, e `save_as_image()` do **flextable** (discutido em detalhes na página [Tabelas para apresentação]). No código abaixo, a tabela é salva em um documento Word, onde poderá ser editada manualmente.
 
 ```{r, eval=F}
 linelist %>%
@@ -245,18 +245,18 @@ linelist %>%
     row_name = "Age Category",
     col_name = "Gender",
     placement = "combined") %>% 
-  flextable::flextable() %>%                     # convert to image
-  flextable::autofit() %>%                       # ensure only one line per row
-  flextable::save_as_docx(path = "tabyl.docx")   # save as Word document to filepath
+  flextable::flextable() %>%                     # converte para imagem
+  flextable::autofit() %>%                       # garante apenas uma linha por coluna
+  flextable::save_as_docx(path = "tabyl.docx")   # salva a imagem como um documento Word no endereço do documento (filepath)
 ```
 
 ```{r out.width = "50%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "tabyl_word.png"))
 ```
 
-### Statistics {#janitor_age_out_stats .unnumbered}
+### Análises estatísticas {#janitor_age_out_stats .unnumbered}
 
-You can apply statistical tests on tabyls, like `chisq.test()` or `fisher.test()` from the **stats** package, as shown below. Note missing values are not allowed so they are excluded from the tabyl with `show_na = FALSE`.
+Como mostrado abaixo, você pode aplicar testes estatísticos nas tabelas dos tabyls, como `chisq.test()` ou `fisher.test()` do pacote **stats**. Observe que campos em branco não são permitidos, devendo serem excluídos do tabyl com o atributo `show_na = FALSE`.
 
 ```{r, warning=F, message=F}
 age_by_outcome <- linelist %>% 
@@ -265,13 +265,13 @@ age_by_outcome <- linelist %>%
 chisq.test(age_by_outcome)
 ```
 
-See the page on [Simple statistical tests] for more code and tips about statistics.
+Veja a página [Testes estatísticos simples] para mais códigos e dicas sobre estatística.
 
-### Other tips {.unnumbered}
+### Outras dicas {.unnumbered}
 
--   Include the argument `na.rm = TRUE` to exclude missing values from any of the above calculations.\
--   If applying any `adorn_*()` helper functions to tables not created by `tabyl()`, you can specify particular column(s) to apply them to like `adorn_percentage(,,,c(cases,deaths))` (specify them to the 4th unnamed argument). The syntax is not simple. Consider using `summarise()` instead.\
--   You can read more detail in the [janitor page](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html) and this [tabyl vignette](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html).
+-   Utilize o argumento `na.rm = TRUE` para excluir campos em brancos de qualquer um dos cálculos acima.\
+-   Se utilizar qualquer função `adorn_*()` para tabelas criadas com outra função além do `tabyl()`, você pode especificar a(s) coluna(s) para aplicar o "adorn", como em `adorn_percentage(,,,c(cases,deaths))` (onde a porcentagem será adicionada somente no quarto argumento da análise). Como a sintaxe não é simples, considere utilizar a função `summarise()` em seu lugar.\
+-   Você pode obter mais detalhes na [página do janitor](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html) e nesse [resumo do tabyl](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html).
 
 ## **dplyr** package
 
