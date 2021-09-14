@@ -270,7 +270,7 @@ Veja a página [Testes estatísticos simples] para mais códigos e dicas sobre e
 ### Outras dicas {.unnumbered}
 
 -   Utilize o argumento `na.rm = TRUE` para excluir campos em brancos de qualquer um dos cálculos acima.\
--   Se utilizar qualquer função `adorn_*()` para tabelas criadas com outra função além do `tabyl()`, você pode especificar a(s) coluna(s) para aplicar o "adorn", como em `adorn_percentage(,,,c(cases,deaths))` (onde a porcentagem será adicionada somente no quarto argumento da análise). Como a sintaxe não é simples, considere utilizar a função `summarise()` em seu lugar.\
+-   Se utilizar qualquer função `adorn_*()` em tabelas criadas com outra função além do `tabyl()`, você pode especificar a(s) coluna(s) para aplicar o "adorn", como em `adorn_percentage(,,,c(cases,deaths))` (onde a porcentagem será adicionada somente no quarto argumento da análise). Como a sintaxe não é simples, considere utilizar a função `summarise()` em seu lugar.\
 -   Você pode obter mais detalhes na [página do janitor](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html) e nesse [resumo do tabyl](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html).
 
 ## **dplyr** package
