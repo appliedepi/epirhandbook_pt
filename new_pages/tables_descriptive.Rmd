@@ -898,7 +898,11 @@ linelist %>%
     )
 ```
 
+<<<<<<< HEAD
 Existem diversas formas de modificar essas tabelas, como adicionar valores do p, ajustar cores e títulos, etc. Muitas destas modificações estão descritas na documentação (digite `?tbl_summary` no Console), e algumas destas são mostradas na seção sobre [testes estatísticos](https://epirhandbook.com/simple-statistical-tests.html).
+=======
+Existem diversas formas de modificar essas tabelas, incluindo adicionar valores do p, ajustar cores e títulos, etc. Muitas destas modificações estão descritas na documentação (digite `?tbl_summary` no Console), e algumas destas são mostradas na seção sobre [testes estatísticos](https://epirhandbook.com/simple-statistical-tests.html).
+>>>>>>> 548dffd76c08ab218297ba573041031d1ddd0d2a
 
 ## **Pacote base** R
 
