@@ -900,51 +900,51 @@ linelist %>%
 
 Existem muitas outras maneiras de modificar essas tabelas, incluindo adicionar valores de p, ajustar as cores e títulos, etc. Muitos destas modificações são descritas na documentação (digite `?tbl_summary` no Console), e algumas destas são mostradas na seção sobre [testes estatísticos](https://epirhandbook.com/simple-statistical-tests.html).
 
-## **base** R
+## **Pacote base** R
 
-You can use the function `table()` to tabulate and cross-tabulate columns. Unlike the options above, you must specify the dataframe each time you reference a column name, as shown below.
+Você pode usar a função `table()` para tabular e realizar tabulações cruzadas das colunas. Diferente das opções acima, você precisa especificar o quadro de dados cada vez que o nome de uma coluna é apontado, como mostrado abaixo.
 
-[***CAUTION:*** `NA` (missing) values will **not** be tabulated unless you include the argument `useNA = "always"` (which could also be set to "no" or "ifany").]{style="color: orange;"}
+[***CUIDADO:*** `NA` valores em branco **não** serão tabulados a não ser que você coloque o argumento `useNA = "always"` (que também pode ser ajustado para "no" ou "ifany").]{style="color: orange;"}
 
-[***TIP:*** You can use the `%$%` from **magrittr** to remove the need for repeating data frame calls within **base** functions. For example the below could be written `linelist %$% table(outcome, useNA = "always")`]{style="color: darkgreen;"}
+[***DICA:*** É possível usar o `%$%` do pacote **magrittr** para remover a necessidade de repetir a quantidade de vezes que o quadro de dados é chamado dentro das funções do pacote **base**. Por exemplo, o código abaixo poderia ser reescrito como `linelist %$% table(outcome, useNA = "always")`]{style="color: darkgreen;"}
 
 ```{r}
 table(linelist$outcome, useNA = "always")
 ```
 
-Multiple columns can be cross-tabulated by listing them one after the other, separated by commas. Optionally, you can assign each column a "name" like `Outcome = linelist$outcome`.
+Múltiplas colunas podem ser utilizadas para tabulação cruzada ao listá-las uma após a outra, separadas por vírgulas. Opcionalmente, você pode dar um "nome" a cada coluna, como em `Outcome = linelist$outcome`.
 
 ```{r}
-age_by_outcome <- table(linelist$age_cat, linelist$outcome, useNA = "always") # save table as object
-age_by_outcome   # print table
+age_by_outcome <- table(linelist$age_cat, linelist$outcome, useNA = "always") # salve a tabela como objeto
+age_by_outcome   # exporte a tabela
 ```
 
-### Proportions {.unnumbered}
+### Proporções {.unnumbered}
 
-To return proportions, passing the above table to the function `prop.table()`. Use the `margins =` argument to specify whether you want the proportions to be of rows (1), of columns (2), or of the whole table (3). For clarity, we pipe the table to the `round()` function from **base** R, specifying 2 digits.
+Para obter proporções, utilize a tabela acima na função `prop.table()`. Use o argumento `margins =` para especificar caso você queira que as proporções sejam calculadas das linhas (1), colunas (2), ou da tabela inteira (3). No código abaixo, canalizamos ("pipe") a tabela para a função `round()`, do **base** R, especificando 2 dígitos.
 
 ```{r}
-# get proportions of table defined above, by rows, rounded
+# obtenhas as proporções da tabela definida acima, por linhas, arredondado
 prop.table(age_by_outcome, 1) %>% round(2)
 ```
 
-### Totals {.unnumbered}
+### Totais {.unnumbered}
 
-To add row and column totals, pass the table to `addmargins()`. This works for both counts and proportions.
+Para adicionar colunas e linhas com totais, passe a tabela gerada para a função `addmargins()`. Isto funciona para contagens e proporções.
 
 ```{r}
 addmargins(age_by_outcome)
 ```
 
-### Convert to data frame {.unnumbered}
+### Converta para um quadro de dados {.unnumbered}
 
-Converting a `table()` object directly to a data frame is not straight-forward. One approach is demonstrated below:
+Converter um objeto `table()` diretamente para um quadro de dados não é simples. Uma abordagem é mostrada abaixo:
 
-1)  Create the table, *without using* `useNA = "always"`. Instead convert `NA` values to "(Missing)" with `fct_explicit_na()` from **forcats**.\
-2)  Add totals (optional) by piping to `addmargins()`\
-3)  Pipe to the **base** R function `as.data.frame.matrix()`\
-4)  Pipe the table to the **tibble** function `rownames_to_column()`, specifying the name for the first column\
-5)  Print, View, or export as desired. In this example we use `flextable()` from package **flextable** as described in the [Tables for presentation] page. This will print to the RStudio viewer pane as a pretty HTML image.
+1)  Crie a tabela, *sem utilizar* `useNA = "always"`. Em vez disso, converta os valores `NA` para "(Missing)" com a função `fct_explicit_na()`, do pacote **forcats**.\
+2)  Adicione os totais (opcional) ao aplicar a tabela na função `addmargins()`\
+3)  Utilize a tabela na função do **base** R `as.data.frame.matrix()`\
+4)  Transforme a tabela utilizando a função do pacote **tibble,** `rownames_to_column()`, especificando o nome da primeira coluna\
+5)  Exporte, Visualize, ou exporte como desejado. Neste exemplo, nós utilizamos a função `flextable()`, do pacote **flextable**, como descrito na página [Tabelas para apresentação]. Isto irá exportar a tabela para o RStudio viewer como uma linda imagem HTML.
 
 ```{r, warning=F, message=F}
 table(fct_explicit_na(linelist$age_cat), fct_explicit_na(linelist$outcome)) %>% 
@@ -956,9 +956,9 @@ table(fct_explicit_na(linelist$age_cat), fct_explicit_na(linelist$outcome)) %>%
 
 <!-- ======================================================= -->
 
-## Resources
+## Recursos extras
 
-Much of the information in this page is adapted from these resources and vignettes online:
+Muitas das informações desta página foram adaptadas destes recursos e tutoriais online:
 
 [gtsummary](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html)
 
