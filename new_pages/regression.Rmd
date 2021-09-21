@@ -1,93 +1,93 @@
-# Univariate and multivariable regression { }
+# Regressão uni e multivariada { }
 
 <!-- ======================================================= -->
 
-This page demonstrates the use of **base** R regression functions such as `glm()` and the **gtsummary** package to 
-look at associations between variables (e.g. odds ratios, risk ratios and hazard
-ratios). It also uses functions like `tidy()` from the **broom** package to clean-up regression outputs.  
+Esta página demonstra o uso das funções de regressão do pacote **base** R, como `glm()`, e o pacote **gtsummary** para 
+verificar as associações entre as variáveis (ex.: riscos relativos, relações de risco e riscos de perigo).
+Também serão mostradads funções como `tidy()`, do pacote **broom**, para limpar os resultados da regressão.
 
-1.  Univariate: two-by-two tables 
-2.  Stratified: mantel-haenszel estimates  
-3.  Multivariable: variable selection, model selection, final table
-4.  Forest plots
+1.  Univariado: tabelas 2 x 2
+2.  Estratificado: método de Mantel-Haenszel
+3.  Multivariada: seleção variada, seleção de modelo, tabela final
+4.  Gráfico em floresta
 
-For Cox proportional hazard regression, see the [Survival analysis] page.  
+Para realizar a regressão proporcional de perigos (regressão Cox), veja a página [Análise de sobrevivência].  
 
-<span style="color: black;">**_NOTE:_** We use the term *multivariable* to refer to a regression with multiple explanatory variables. In this sense a *multivariate* model would be a regression with several outcomes - see this [editorial](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3518362/) for detail </span> 
+<span style="color: black;">**_NOTE:_** O termo *multivariável* é utilizado aqui ao se referir à uma regressão com múltiplas variáveis explanatórias. Assim, um modelo *multivariado* seria uma regressão com diferentes resultados - veja esse [editorial](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3518362/) para detalhes </span> 
 
 <!-- ======================================================= -->
 
-## Preparation {  }
+## Preparação {  }
 
 
-### Load packages {.unnumbered}
+### Carregue os pacotes {.unnumbered}
 
-This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary *and* loads it for use. You can also load installed packages with  `library()` from **base** R. See the page on [R basics] for more information on R packages.  
+Este código realiza o carregamento dos pacotes necessários para as análises. Neste manual, nós enfatizamos o uso da função `p_load()`, do pacote **pacman**, que instala os pacotes, caso necessário, *e* os carrega para utilização. Você também pode utilizar a função `library()`, do pacote **base** R, para carregar pacotes instalados. Veja a página sobre o [Básico do R] para mais informações sobre os pacotes R.
 
 ```{r}
 pacman::p_load(
-  rio,          # File import
-  here,         # File locator
-  tidyverse,    # data management + ggplot2 graphics, 
-  stringr,      # manipulate text strings 
-  purrr,        # loop over objects in a tidy way
-  gtsummary,    # summary statistics and tests 
-  broom,        # tidy up results from regressions
-  lmtest,       # likelihood-ratio tests
-  parameters,   # alternative to tidy up results from regressions
-  see          # alternative to visualise forest plots
+  rio,          # Importa arquivos
+  here,         # Localiza arquivos
+  tidyverse,    # gestão dos dados + gráficos no ggplot2
+  stringr,      # manipulação de textos em formato string
+  purrr,        # explore os objetos de forma organizada
+  gtsummary,    # resumos estatísticos e testes
+  broom,        # organize os resultados das regressões
+  lmtest,       # testes de relação de verosimilhança
+  parameters,   # alternativa para organizar os resultados das regressões
+  see           # alternativa para visualizar os gráficos em floresta
   )
 ```
 
-### Import data {.unnumbered}
+### Importe os dados {.unnumbered}
 
-We import the dataset of cases from a simulated Ebola epidemic. If you want to follow along, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>click to download the "clean" linelist</a> (as .rds file). Import your data with the `import()` function from the **rio** package (it accepts many file types like .xlsx, .rds, .csv - see the [Import and export] page for details).  
+Nós iremos importar o banco de dados dos casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar os passos abaixo, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique aqui para fazer o download do banco de dados 'limpo'</a> (como arquivo .rds). Importe seus dados utilizando a função `import()`, do pacote **rio** (esta função importa muitos tipos de arquivos, como .xlsx, .rds, .csv - veja a página [Importar e exportar] para detalhes).
 
 
 ```{r, echo=F}
-# import the linelist into R
+# importe os dados no R no objeto linelist
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 ```
 
 ```{r, eval=F}
-# import the linelist
+# importe os dados no R no objeto linelist
 linelist <- import("linelist_cleaned.rds")
 ```
 
-The first 50 rows of the linelist are displayed below.
+As primeiras 50 linhas do `linelist` são mostradas abaixo.
 
 ```{r, message=FALSE, echo=F}
 # display the linelist data as a table
 DT::datatable(head(linelist, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
 ```
 
-### Clean data {.unnumbered}
+### Limpando os dados {.unnumbered}
 
-#### Store explanatory variables {.unnumbered}  
+#### Armazene as variáveis exploratórias {.unnumbered}  
 
-We store the names of the explanatory columns as a character vector. This will be referenced later.  
+No código abaixo, os nomes das colunas exploratórias são salvos como um vetor de caracteres. Eles serão utilizados posteriormente.
 
 ```{r}
-## define variables of interest 
+## escolha as variáveis de interesse
 explanatory_vars <- c("gender", "fever", "chills", "cough", "aches", "vomit")
 ```
 
 
-#### Convert to 1's and 0's  {.unnumbered}   
+#### Converta para 1s e 0s {.unnumbered}   
 
-Below we convert the explanatory columns from "yes"/"no", "m"/"f", and "dead"/"alive" to **1 / 0**, to cooperate with the expectations of logistic regression models. To do this efficiently, used `across()` from **dplyr** to transform multiple columns at one time. The function we apply to each column is `case_when()` (also **dplyr**) which applies logic to convert specified values to 1's and 0's. See sections on `across()` and `case_when()` in the [Cleaning data and core functions page](#clean_across)).  
+Abaixo, as colunas exploratórias com as opções binárias "yes"/"no", "m"/"f", e "dead"/"alive" são convertidas para **1 / 0**, visando serem utilizadas nos modelos de regressão. Para fazer isso de forma eficiente, utilize a função `across()`, do **dplyr**, para transformar múltiplas colunas de uma vez. A função `case_when()` (também do **dplyr**) utiliza argumentos lógicos para converter valores específicos para 1s ou 0s. Veja as seções das funções `across()` e `case_when()` na [página de limpando dados e funções essenciais](#clean_across)).  
 
-Note: the "." below represents the column that is being processed by `across()` at that moment.
+Nota: o "." abaixo representa a coluna que está sendo processada pela função `across()` no momento.
 
 ```{r}
-## convert dichotomous variables to 0/1 
+## converte variáveis dicotômicas para 0/1 
 linelist <- linelist %>%  
   mutate(across(                                      
-    .cols = all_of(c(explanatory_vars, "outcome")),  ## for each column listed and "outcome"
+    .cols = all_of(c(explanatory_vars, "outcome")),  ## para cada coluna listada e "outcome"
     .fns = ~case_when(                              
-      . %in% c("m", "yes", "Death")   ~ 1,           ## recode male, yes and death to 1
-      . %in% c("f", "no",  "Recover") ~ 0,           ## female, no and recover to 0
-      TRUE                            ~ NA_real_)    ## otherwise set to missing
+      . %in% c("m", "yes", "Death")   ~ 1,           ## transforma male/yes/death em 1
+      . %in% c("f", "no",  "Recover") ~ 0,           ## transforma female/no/recover em 0
+      TRUE                            ~ NA_real_)    ## do contrário, transforma em 'missing'
     )
   )
 
@@ -95,25 +95,25 @@ linelist <- linelist %>%
       
 ```
 
-#### Drop rows with missing values {.unnumbered}  
+#### Exclua linhas com valores em branco {.unnumbered}  
 
-To drop rows with missing values, can use the **tidyr** function `drop_na()`. However, we only want to do this for rows that are missing values in the columns of interest.  
+Para excluir linhas com valores em branco, é possível utilizar a função `drop_na()`, do pacote **tidyr**. Entretanto, nós queremos que isso aconteça apenas nas linhas com campos em branco nas colunas de interesse.
 
-The first thing we must to is make sure our `explanatory_vars` vector includes the column `age` (`age` would have produced an error in the previous `case_when()` operation, which was only for dichotomous variables). Then we pipe the `linelist` to `drop_na()` to remove any rows with missing values in the `outcome` column or any of the `explanatory_vars` columns.  
+A primeira coisa a fazer é garantir que o nosso vetor `explanatory_vars` contenha a coluna `age` (`age` deve ter gerado um erro na operação anterior utilizando `case_when()`, que era apenas para variáveis dicotômicas). Então, nós utilizamos o objeto `linelist` na função `drop_na()` para remover qualquer linha com campos em branco na coluna `outcome` ou em qualquer uma das colunas salvas em `explanatory_vars`.  
 
-Before running the code, the number of rows in the `linelist` is ` nrow(linelist)`.  
+Antes de executar o código, o número de linhas no objeto `linelist` é obtido por ` nrow(linelist)`.  
 
 ```{r}
-## add in age_category to the explanatory vars 
+## adiciona a coluna age_category no vetor explanatory_vars 
 explanatory_vars <- c(explanatory_vars, "age_cat")
 
-## drop rows with missing information for variables of interest 
+## exclua linhas com campos em branco nas variáveis de interesse
 linelist <- linelist %>% 
   drop_na(any_of(c("outcome", explanatory_vars)))
 
 ```
 
-The number of rows remaining in `linelist` is ` nrow(linelist)`.  
+O número de linhas restante no `linelist` é ` nrow(linelist)`.  
 
 
 <!-- ======================================================= -->
