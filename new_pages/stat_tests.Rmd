@@ -1,64 +1,64 @@
-# Simple statistical tests { }
+# Testes estatísticos simples { }
 
 
-This page demonstrates how to conduct simple statistical tests using **base** R, **rstatix**, and **gtsummary**.  
+Esta página demonstra como realizar testes estatísticos simples com os pacotes **base** R, **rstatix**, e **gtsummary**.  
 
-* T-test  
-* Shapiro-Wilk test  
-* Wilcoxon rank sum test  
-* Kruskal-Wallis test  
-* Chi-squared test  
-* Correlations between numeric variables  
+* Teste T  
+* Teste de Shapiro-Wilk  
+* Teste de Wilcoxon  
+* Teste de Kruskal-Wallis  
+* Teste qui-quadrado de Pearson  
+* Correlações entre variáveis numéricas  
 
-...many other tests can be performed, but we showcase just these common ones and link to further documentation.  
+...muitos outros testes podem ser realizados, mas mostramos apenas os mais comuns e fornecemos links para outras fontes.  
 
-Each of the above packages bring certain advantages and disadvantages:  
+Cada um dos pacotes acima possuí certas vantagens e desvantagens:
 
-* Use **base** R functions to print a statistical outputs to the R Console  
-* Use **rstatix** functions to return results in a data frame, or if you want tests to run by group  
-* Use **gtsummary** if you want to quickly print publication-ready tables  
+* Utilize as funções do pacote **base** R para exportar resultados estatísticos para o console do R
+* Utilize as funções do pacote **rstatix** para gerar os resultados em um quadro de dados, ou caso queira que os testes sejam realizados por grupos
+* Utilize o pacote **gtsummary** para exportar facilmente tabelas prontas para apresentações
 
 
 
 <!-- ======================================================= -->
-## Preparation {  }
+## Preparação {  }
 
 
-### Load packages {.unnumbered}
+### Carregue os pacotes {.unnumbered}
 
-This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary *and* loads it for use. You can also load installed packages with  `library()` from **base** R. See the page on [R basics] for more information on R packages.  
+Este pequeno código carrega os pacotes necessários para as análises. Neste manual, nós estimulamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso necessários, *e* os carrega para utilização. Também é possível carregar pacotes já instalados com a função `library()` do pacote **base** R. Veja a página sobre [básico do R] para mais informações sobre pacotes do R.
 
 
 ```{r}
 pacman::p_load(
-  rio,          # File import
-  here,         # File locator
-  skimr,        # get overview of data
-  tidyverse,    # data management + ggplot2 graphics, 
-  gtsummary,    # summary statistics and tests
-  rstatix,      # statistics
-  corrr,        # correlation analayis for numeric variables
-  janitor,      # adding totals and percents to tables
-  flextable     # converting tables to HTML
+  rio,          # Importa arquivos
+  here,         # Localiza arquivos
+  skimr,        # visualize os dados
+  tidyverse,    # gerenciamento dos dados + gráficos no ggplot2, 
+  gtsummary,    # resumo estatístico e testes
+  rstatix,      # estatísticas
+  corrr,        # análise de correlação entre variáveis numéricas
+  janitor,      # adicione totais e porcentagens as tabelas
+  flextable     # converte tabelas para o formato HTML
   )
 ```
 
-### Import data {.unnumbered}
+### Importando os dados {.unnumbered}
 
-We import the dataset of cases from a simulated Ebola epidemic. If you want to follow along, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>click to download the "clean" linelist</a> (as .rds file). Import your data with the `import()` function from the **rio** package (it accepts many file types like .xlsx, .rds, .csv - see the [Import and export] page for details).  
+Nós iremos importar o banco de dados dos casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar o banco "limpo"</a> (como arquivo .rds). Importe os dados com a função `import()`, do pacote **rio** (ela aceita muitos formatos de arquivos, como .xlsx, .rds, .csv - veja a página [Importar e exportar] para detalhes).  
 
 
 ```{r, echo=F}
-# import the linelist into R
+# importa o banco de dados no R, dentro do objeto 'linelist'
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 ```
 
 ```{r, eval=F}
-# import the linelist
+# importa o banco de dados no R, dentro do objeto 'linelist'
 linelist <- import("linelist_cleaned.rds")
 ```
 
-The first 50 rows of the linelist are displayed below.
+As primeiras 50 linhas dos dados são mostradas abaixo.
 
 ```{r, message=FALSE, echo=F}
 # display the linelist data as a table
@@ -69,73 +69,73 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 
 
 
-## **base** R {}
+## Pacote **base** R {}
 
-You can use **base** R functions to conduct statistical tests. The commands are relatively simple and results will print to the R Console for simple viewing. However, the outputs are usually lists and so are harder to manipulate if you want to use the results in subsequent operations. 
+Você pode utilizar as funções do pacote **base** R para realizar testes estatísticos. Os comandos são relativamente simples, e os resultados são exportados para o terminal do R para visualização. Entretanto, normalmente os resultados são gerados no formato de listas, o que dificulta a manipulação caso queira utilizá-los posteriormente.
 
-### T-tests {.unnumbered} 
+### Testes T {.unnumbered} 
 
-A [t-test](https://en.wikipedia.org/wiki/Student%27s_t-test), also called "Student's t-Test", is typically used to determine if there is a significant difference between the means of some numeric variable between two groups. Here we'll show the syntax to do this test depending on whether the columns are in the same data frame.
+O [teste t](https://en.wikipedia.org/wiki/Student%27s_t-test), também chamando de "Teste t de Student", é tipicamente utilizado para determinar se existem diferenças significativas entre as médias de variáveis numéricas de dois grupos distintos. Aqui, nós iremos mostrar duas sintaxes para realizar esse teste, de acordo com a presença ou não das colunas no mesmo quadro de dados.
 
-**Syntax 1:** This is the syntax when your numeric and categorical columns are in the same data frame. Provide the numeric column on the left side of the equation and the categorical column on the right side. Specify the dataset to `data = `. Optionally, set `paired = TRUE`, and `conf.level = ` (0.95 default), and `alternative = ` (either "two.sided", "less", or "greater"). Enter `?t.test` for more details.  
+**Sintaxe 1:** Esta é a sintaxe utilizada quando as colunas numéricas e categóricas estão no mesmo quadro de dados. Especifique a coluna numérica no lado esquerdo da equação, e a coluna categórica no lado direito. Coloque o nome do banco de dados no argumento `data = `. Opcionalmente, ajuste os argumentos `paired = TRUE`, `conf.level = ` para (0.95 default), e `alternative = ` para ("two.sided", "less", ou "greater"). Digite `?t.test` para mais detalhes.  
 
 ```{r}
-## compare mean age by outcome group with a t-test
+## compare a média das idades de acordo com o sexo com um teste t
 t.test(age_years ~ gender, data = linelist)
 ```
 
-**Syntax 2:** You can compare two separate numeric vectors using this alternative syntax. For example, if the two columns are in different data sets.  
+**Sintaxe 2:** Você pode comparar dois vetores numéricos separados com essa sintaxe. Por exemplo, se as duas colunas estão em bancos de dados distintos.
 
 ```{r, eval=F}
 t.test(df1$age_years, df2$age_years)
 ```
 
-You can also use a t-test to determine whether a sample mean is significantly different from some specific value. Here we conduct a one-sample t-test with the known/hypothesized population mean as `mu = `:  
+Também é possível utilizar o teste t para determinar se a média de uma amostra é significativamente diferente de algum valor específico. Aqui, nós aplicamos o teste t entre uma amostra e uma média conhecida/suposta de uma população (`mu = `):
 
 ```{r, eval=F}
 t.test(linelist$age_years, mu = 45)
 ```
 
-### Shapiro-Wilk test {.unnumbered}  
+### Teste de Shapiro-Wilk {.unnumbered}  
 
-The [Shapiro-Wilk test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test) can be used to determine whether a sample came from a normally-distributed population (an assumption of many other tests and analysis, such as the t-test). However, this can only be used on a sample between 3 and 5000 observations. For larger samples a [quantile-quantile plot](https://ggplot2.tidyverse.org/reference/geom_qq.html) may be helpful. 
+O [teste de Shapiro-Wilk](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test) pode ser utilizado para determinar se uma amostra foi obtida de uma população com distribuição normal (um pré-requisito de muitos outros testes e análises, como o teste t). Entretanto, isto só pode ser utilizado em uma amostra de 3 a 5000 observações. Para amostras maiores, um [gráfico de Quantil-Quantil](https://ggplot2.tidyverse.org/reference/geom_qq.html) é recomendado.
 
 
 ```{r, eval=F}
 shapiro.test(linelist$age_years)
 ```
 
-### Wilcoxon rank sum test {.unnumbered}
+### Teste de Wilcoxon {.unnumbered}
 
-The Wilcoxon rank sum test, also called the [Mann–Whitney U test](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test), is often used to help determine if two numeric samples are from the same distribution when their populations are not normally distributed or have unequal variance.
+O teste de Wilcoxon, também chamado de [teste U de Mann–Whitney](https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test), é frequentemente utilizado para determinar se duas amostras numéricas possuem a mesma distribuição, mesmo quando suas populações não possuem distribuição normal ou possuem variância independente (desiguais).
 
 ```{r wilcox_base}
 
-## compare age distribution by outcome group with a wilcox test
+## compare a distribuição da idade de acordo com o grupo 'outcome' utilizando o teste wilcox
 wilcox.test(age_years ~ outcome, data = linelist)
 
 ```
 
 
-### Kruskal-Wallis test {.unnumbered}
+### Teste de Kruskal-Wallis {.unnumbered}
 
 
-The [Kruskal-Wallis test](https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_one-way_analysis_of_variance) is an extension of the Wilcoxon rank sum test that can be used to test for differences in the distribution of more than two samples. When only two samples are used it gives identical results to the Wilcoxon rank sum test. 
+O [tesde de Kruskal-Wallis](https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_one-way_analysis_of_variance) é uma extensão do teste de Wilcoxon que pode ser utilizado para verificar diferenças na distribuição de mais de duas amostras. Quando apenas duas amostras são utilizadas, os resultados são identicos ao teste de Wilcoxon.
 
 ```{r }
 
-## compare age distribution by outcome group with a kruskal-wallis test
+## compare a distribuição da idade de acordo com o grupo 'outcome' utilizando o teste de kruskal-wallis
 kruskal.test(age_years ~ outcome, linelist)
 
 ```
 
-### Chi-squared test {.unnumbered} 
+### Teste de qui-quadrado {.unnumbered} 
 
-[Pearson's Chi-squared test](https://en.wikipedia.org/wiki/Chi-squared_test) is used in testing for significant differences between categorical croups. 
+[O teste do qui-quadrado de Pearson](https://en.wikipedia.org/wiki/Chi-squared_test) é utilizado para verificar se existem diferenças significativas entre grupos categóricos.
 
 ```{r}
 
-## compare the proportions in each group with a chi-squared test
+## compare as proporções em cada grupo utilizando o teste do qui-quadrado
 chisq.test(linelist$gender, linelist$outcome)
 
 ```
