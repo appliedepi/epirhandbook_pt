@@ -142,16 +142,16 @@ chisq.test(linelist$gender, linelist$outcome)
 
 
 
-## **rstatix** package {}
+## Pacote **rstatix** {}
 
-The **rstatix** package offers the ability to run statistical tests and retrieve results in a "pipe-friendly" framework. The results are automatically in a data frame so that you can perform subsequent operations on the results. It is also easy to group the data being passed into the functions, so that the statistics are run for each group.  
+O pacote **rstatix** realiza testes estatísticos e gera os resultados de forma que possam ser manipulados ("pipe-friendly"). Os resultados são gerados automaticamente em um quadro de dados, sendo possível realizar operações posteriores com eles. Também é fácil agrupar os dados utilizados nas funções, podendo as estatísticas serem executadas por cada grupo.
 
 
-### Summary statistics {.unnumbered}  
+### Estatísticas resumo {.unnumbered}  
 
-The function `get_summary_stats()` is a quick way to return summary statistics. Simply pipe your dataset to this function and provide the columns to analyse. If no columns are specified, the statistics are calculated for all columns.  
+A função `get_summary_stats()` é uma maneira rápida de gerar resultados estatísticos. Simplesmente aplique seu banco de dados nessa função, e escolha as colunas para analisar. Se nenhuma coluna for especificada, as estatísticas são calculadas com todas as colunas.
 
-By default, a full range of summary statistics are returned: n, max, min, median, 25%ile, 75%ile, IQR, median absolute deviation (mad), mean, standard deviation, standard error, and a confidence interval of the mean. 
+Por padrão, um resumo estatístico amplo é gerado: n, max, min, mediana, 25%ile, 75%ile, IQR, desvio absoluto mediano (mad), média, desvio padrão, erro padrão, e o intervalo de confiança da média.
 
 
 ```{r}
@@ -159,9 +159,9 @@ linelist %>%
   rstatix::get_summary_stats(age, temp)
 ```
 
-You can specify a subset of summary statistics to return by providing one of the following values to `type = `: "full", "common", "robust", "five_number", "mean_sd", "mean_se", "mean_ci", "median_iqr", "median_mad", "quantile", "mean", "median", "min", "max".  
+Você pode especificar um sub-grupo do resumo estatístico a ser gerado, ao fornecer um fos seguintes valores ao argumento `type = `: "full", "common", "robust", "five_number", "mean_sd", "mean_se", "mean_ci", "median_iqr", "median_mad", "quantile", "mean", "median", "min", "max".  
 
-It can be used with grouped data as well, such that a row is returned for each grouping-variable:  
+Esta função também pode ser utilizada com dados agrupados, de forma que uma linha é gerada por cada variável agrupável:
 
 ```{r}
 linelist %>%
@@ -169,25 +169,25 @@ linelist %>%
   rstatix::get_summary_stats(age, temp, type = "common")
 ```
 
-You can also use **rstatix** to conduct statistical tests:  
+O pacote **rstatix** também pode ser utilizado para realizar testes estatísticos:
 
-### T-test {.unnumbered}  
+### Teste t {.unnumbered}  
 
-Use a formula syntax to specify the numeric and categorical columns:  
+Utilize a sintaxe para especificar as colunas numérica e categórica:
 
 ```{r}
 linelist %>% 
   t_test(age_years ~ gender)
 ```
 
-Or use `~ 1` and specify `mu = ` for a one-sample T-test. This can also be done by group.  
+Ou utilize `~ 1` e especifique `mu = ` para realizar o teste t de uma amostra. Isto também pode ser realizado por grupos.
 
 ```{r}
 linelist %>% 
   t_test(age_years ~ 1, mu = 30)
 ```
 
-If applicable, the statistical tests can be done by group, as shown below:  
+Se necessário, os testes estatísticos podem ser realizados por grupos, como mostrado abaixo:
 
 ```{r}
 linelist %>% 
@@ -195,17 +195,17 @@ linelist %>%
   t_test(age_years ~ 1, mu = 18)
 ```
 
-### Shapiro-Wilk test {.unnumbered}  
+### Tesde de Shapiro-Wilk {.unnumbered}  
 
-As stated above, sample size must be between 3 and 5000.  
+Como dito acima, o tamanho da amostra precisa estar entre 3 e 5000.
 
 ```{r}
 linelist %>% 
-  head(500) %>%            # first 500 rows of case linelist, for example only
+  head(500) %>%            # primeiras 500 linhas dos dados em linelist, para exemplificação apenas
   shapiro_test(age_years)
 ```
 
-### Wilcoxon rank sum test {.unnumbered}  
+### Tesde de Wilcoxon {.unnumbered}  
 
 ```{r}
 linelist %>% 
@@ -213,9 +213,9 @@ linelist %>%
 ```
 
 
-### Kruskal-Wallis test {.unnumbered}  
+### Teste de Kruskal-Wallis {.unnumbered}  
 
-Also known as the Mann-Whitney U test.  
+Também conhecido como teste U de Mann-Whitney.
 
 ```{r}
 linelist %>% 
@@ -223,9 +223,9 @@ linelist %>%
 ```
 
 
-### Chi-squared test {.unnumbered}  
+### Teste do Qui-quadrado {.unnumbered}  
 
-The chi-square test function accepts a table, so first we create a cross-tabulation. There are many ways to create a cross-tabulation (see [Descriptive tables]) but here we use `tabyl()` from **janitor** and remove the left-most column of value labels before passing to `chisq_test()`.  
+A função do teste do Qui-quadrado pode utilizar uma tabela, então primeiro criamos uma tabulação cruzada. Existem diversas formas de realizar isto (veja página de [Tabelas descritivas]), mas aqui utilizamos a função `tabyl()`, do pacote **janitor**, e então removemos a coluna mais a esquerda (com os nomes) antes de utilizá-la na função `chisq_test()`.
 
 ```{r}
 linelist %>% 
@@ -235,7 +235,7 @@ linelist %>%
 
 ```
 
-Many many more functions and statistical tests can be run with **rstatix** functions. See the documentation for **rstatix** [online here](https://github.com/kassambara/rstatix) or by entering ?rstatix.  
+Muitas outras funções e testes estatísticos podem ser realizados com as funções do **rstatix**. Veja a documentação do **rstatix** [online aqui](https://github.com/kassambara/rstatix) ou digite `?rstatix`.  
 
 
 
