@@ -900,6 +900,7 @@ linelist %>%
 
 Existem diversas formas de modificar essas tabelas, como adicionar valores do p, ajustar cores e títulos, etc. Muitas destas modificações estão descritas na documentação (digite `?tbl_summary` no Console), e algumas destas são mostradas na seção sobre [testes estatísticos](https://epirhandbook.com/simple-statistical-tests.html).
 
+
 ## **Pacote base** R
 
 Você pode usar a função `table()` para tabular e realizar tabulações cruzadas das colunas. Diferente das opções acima, você precisa especificar o quadro de dados cada vez que o nome de uma coluna é apontado, como mostrado abaixo.
