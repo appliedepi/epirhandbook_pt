@@ -411,63 +411,63 @@ DT::datatable(univ_tab_base, rownames = FALSE, options = list(pageLength = 5, sc
 
 <!-- ======================================================= -->
 
-### **gtsummary** package {#reg_gt_uni .unnumbered}
+### Pacote **gtsummary** {#reg_gt_uni .unnumbered}
 
-Below we present the use of `tbl_uvregression()` from the **gtsummary** package. Just like in the page on [Descriptive tables](https://epirhandbook.com/descriptive-tables.html), **gtsummary** functions do a good job of running statistics *and* producing professional-looking outputs. This function produces a table of univariate regression results.  
+Abaixo, nós apresentamos o uso da função `tbl_uvregression()` do pacote **gtsummary**. Assim como na página sobre [Tabelas descritivas](https://epirhandbook.com/descriptive-tables.html), as funções do **gtsummary** fazem um bom trabalho executando estatísticas *e* produzindo resultados com aparência profissional. A função `tbl_uvregression()` produz uma tabela com os resultados de uma regressão univariada.
 
-We select only the necessary columns from the `linelist` (explanatory variables and the outcome variable) and  pipe them into `tbl_uvregression()`. We are going to run univariate regression on each of the columns we defined as `explanatory_vars` in the data Preparation section (gender, fever, chills, cough, aches, vomit, and age_cat).  
+Primeiro, nós selecionamos apenas as colunas de interesse do objeto `linelist` (variáveis explanatórias e a variável de evolução clínica [outcome]), e as aplicamos na função `tbl_uvregression()`. Então, iremos executar uma regressão univariada em cada uma das colunas definidas no vetor `explanatory_vars`, previamente criado na seção sobre Preparação dos dados (colunas gender, fever, chills, cough, aches, vomit, e age_cat).  
 
-Within the function itself, we provide the `method = ` as `glm` (no quotes), the `y = ` outcome column (`outcome`), specify to `method.args = ` that we want to run logistic regression via `family = binomial`, and we tell it to exponentiate the results.  
+Dentro da função, os atributos serão modificados, como em `method = ` ao `glm` (sem aspas), o `y = ` com a coluna de evolução dos casos (`outcome`), especificar para o `method.args = ` que queremos rodar uma regressão logística através do atributo `family = binomial`, e então finalizamos com um comando para realizar a exponenciação dos resultados.
 
-The output is HTML and contains the counts
+O resultado é gerado no formado HTML, e contém as contagens
 
 ```{r odds_gt, message=F, warning=F}
 
 univ_tab <- linelist %>% 
-  dplyr::select(explanatory_vars, outcome) %>% ## select variables of interest
+  dplyr::select(explanatory_vars, outcome) %>% ## selecione as variáveis de interesse
 
-  tbl_uvregression(                         ## produce univariate table
-    method = glm,                           ## define regression want to run (generalised linear model)
-    y = outcome,                            ## define outcome variable
-    method.args = list(family = binomial),  ## define what type of glm want to run (logistic)
-    exponentiate = TRUE                     ## exponentiate to produce odds ratios (rather than log odds)
+  tbl_uvregression(                         ## produz uma tabela univariável
+    method = glm,                           ## define qual regressão será rodada (glm)
+    y = outcome,                            ## define a variável da evolução clínica (outcome)
+    method.args = list(family = binomial),  ## define qual tipo de glm será rodador (logístico)
+    exponentiate = TRUE                     ## realiza a exponenciação para produzir as probabilidades (em vez de probabilidaes em log)
   )
 
-## view univariate results table 
+## visualize a tabela com os resultados da análise univariada
 univ_tab
 ```
 
-There are many modifications you can make to this table output, such as adjusting the text labels, bolding rows by their p-value, etc. See tutorials [here](http://www.danieldsjoberg.com/gtsummary/articles/tbl_regression.html) and elsewhere online.  
+Exitem muitas modificações que podem ser feitas com a tabela gerada, como ajustar os rótulos em texto, destacar linhas pelo seu valor de p, etc. Veja tutoriais [aqui](http://www.danieldsjoberg.com/gtsummary/articles/tbl_regression.html) e em outras fontes online.
 
 
 
 <!-- ======================================================= -->
 
-## Stratified {  }
+## Análise estratificada {  }
 
-Stratified analysis is currently still being worked on for **gtsummary**, 
-this page will be updated in due course. 
-
-
+A seção sobre análise estratificada ainda está sendo trabalhada no **gtsummary**. 
+Esta página será atualizada quando possível.
 
 
-## Multivariable  
-
-For multivariable analysis, we again present two approaches:  
-
-* `glm()` and `tidy()`  
-* **gtsummary** package  
-
-The workflow is similar for each and only the last step of pulling together a final table is different.
 
 
-### Conduct multivariable {.unnumbered}  
+## Multivariável  
+
+Para a análise multivariável, novamente apresentamos duas abordagens:
+
+* `glm()` e `tidy()`  
+* pacote **gtsummary**  
+
+O fluxo de trabalho é similar para cada uma das abordagens, sendo apenas a última diferente quando a tabela final é obtida.
 
 
-Here we use `glm()` but add more variables to the right side of the equation, separated by plus symbols (`+`). 
+### Conduza a análise multivariável {.unnumbered}  
 
 
-To run the model with all of our explanatory variables we would run:  
+Aqui nós utilizamos a função `glm()`, mas adicionaremos mais variáveis no lado direito da equação, separadas pelos símbolos de mais (`+`).
+
+
+Para rodar o modelo com todas as nossas variáveis exploratórias, nós executamos o seguinte código:
 
 ```{r}
 mv_reg <- glm(outcome ~ gender + fever + chills + cough + aches + vomit + age_cat, family = "binomial", data = linelist)
@@ -475,31 +475,31 @@ mv_reg <- glm(outcome ~ gender + fever + chills + cough + aches + vomit + age_ca
 summary(mv_reg)
 ```
 
-If you want to include two variables and an interaction between them you can separate them with an asterisk `*` instead of a `+`. Separate them with a colon `:` if you are only specifying the interaction. For example:  
+Se você quiser incluir duas variáveis e uma interação entre elas, é possível separá-las com um asterisco `*` em vez do `+`. Separe eles com dois pontos `:` se você está especificando apenas a interação. Por exemplo:
 
 ```{r, eval=F}
 glm(outcome ~ gender + age_cat * fever, family = "binomial", data = linelist)
 ```
 
 
-*Optionally*, you can use this code to leverage the pre-defined vector of column names and re-create the above command using `str_c()`. This might be useful if your explanatory variable names are changing, or you don't want to type them all out again.  
+*Opcionalmente*, você pode utilizar este código para nivelar o vetor pré-definido com os nomes das colunas, e re-criar o comando acima utilizando a função `str_c()`. Isto pode ser útil caso os nomes das suas variáveis exploratórias estiverem mudando, ou se você não quiser digitar todas elas novamente.
 
 ```{r mv_regression}
 
-## run a regression with all variables of interest 
-mv_reg <- explanatory_vars %>%  ## begin with vector of explanatory column names
-  str_c(collapse = "+") %>%     ## combine all names of the variables of interest separated by a plus
-  str_c("outcome ~ ", .) %>%    ## combine the names of variables of interest with outcome in formula style
-  glm(family = "binomial",      ## define type of glm as logistic,
-      data = linelist)          ## define your dataset
+## rode uma regressão com todas as variáveis de interesse
+mv_reg <- explanatory_vars %>%  ## inicie com um vetor contendo o nome das colunas explanatórias
+  str_c(collapse = "+") %>%     ## combine todos os nomes das variáveis de interesse separados por um 'mais'
+  str_c("outcome ~ ", .) %>%    ## combine os nomes das variáveis de interesse com o 'outcome' no estilo de fórmula
+  glm(family = "binomial",      ## defina o tipo de glm como logístico,
+      data = linelist)          ## defina seu banco de dados
 ```
 
 
-#### Building the model {.unnumbered}  
+#### Construíndo o modelo {.unnumbered}  
 
-You can build your model step-by-step, saving various models that include certain explanatory variables. You can compare these models with likelihood-ratio tests using `lrtest()` from the package **lmtest**, as below:  
+É possível construir seu modelo passo a passo, salvando diferentes modelos que incluem certas variáveis explanatórias. Esses modelos podem ser comparados com os testes de probabilidade utilizando a função `lrtest()`, do pacote **lmtest**, como mostrado abaixo:  
 
-<span style="color: black;">**_NOTE:_** Using **base** `anova(model1, model2, test = "Chisq)` produces the same results </span> 
+<span style="color: black;">**_NOTA:_** Utilizar o teste `anova(model1, model2, test = "Chisq)` do **base** produz os mesmos resultados </span> 
 
 ```{r}
 model1 <- glm(outcome ~ age_cat, family = "binomial", data = linelist)
@@ -508,32 +508,32 @@ model2 <- glm(outcome ~ age_cat + gender, family = "binomial", data = linelist)
 lmtest::lrtest(model1, model2)
 ```
 
-Another option is to take the model object and apply the `step()` function from the **stats** package. Specify which variable selection direction you want use when building the model.      
+Outra opção é utilizar o objeto modelado diretamente na função `step()`, do pacote **stats**. Especifique qual a direção da seleção das variáveis que quer utilizar quando for construir o modelo.
 
 ```{r}
-## choose a model using forward selection based on AIC
-## you can also do "backward" or "both" by adjusting the direction
+## escolha um modelo utilizando a seleção 'foward' baseada no AIC
+## você também pode escolher "backward" ou "both" ao ajustar a direção
 final_mv_reg <- mv_reg %>%
   step(direction = "forward", trace = FALSE)
 ```
 
 
-You can also turn off scientific notation in your R session, for clarity:  
+Para facilitar a visualização, é possível desativar a notação científica na sua sessão do R:
 
 ```{r}
 options(scipen=999)
 ```
 
-As described in the section on univariate analysis, pass the model output to `tidy()` to exponentiate the log odds and CIs. Finally we round all numeric columns to two decimal places. Scroll through to see all the rows.  
+Como descrito na seção sobre análise univariada, aplique o resultado da modelagem na função `tidy()` para potencializar as probabilidades em log e os intervalos de confiança. Finalmente,  todas as colunas numéricas são arredondadads para duas casas decimais. Role o cursor para visualizar todas as linhas.
 
 ```{r mv_regression_base}
 
 mv_tab_base <- final_mv_reg %>% 
-  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%  ## get a tidy dataframe of estimates 
-  mutate(across(where(is.numeric), round, digits = 2))          ## round 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%  ## obtenha um quadro de dados organizado das estimativas
+  mutate(across(where(is.numeric), round, digits = 2))          ## arredonde 
 ```
 
-Here is what the resulting data frame looks like: 
+Aqui está o quadro de dados final:
 
 ```{r, message=FALSE, echo=F}
 DT::datatable(mv_tab_base, rownames = FALSE, options = list(pageLength = 10, scrollX=T), class = 'white-space: nowrap' )
@@ -545,49 +545,49 @@ DT::datatable(mv_tab_base, rownames = FALSE, options = list(pageLength = 10, scr
 
 <!-- ======================================================= -->
 
-### Combine univariate and multivariable {.unnumbered}
+### Combine as análises univariadas e multivariadas {.unnumbered}
 
-#### Combine with **gtsummary**  {.unnumbered}  
+#### Combine com o **gtsummary**  {.unnumbered}  
 
-The **gtsummary** package provides the `tbl_regression()` function, which will 
-take the outputs from a regression (`glm()` in this case) and produce an nice 
-summary table. 
+O pacote **gtsummary** possui a função `tbl_regression()`, que utiliza 
+os resultados de uma regressão (`glm()` neste caso) e produz uma linda 
+tabela resumo. 
 
 ```{r mv_regression_gt}
-## show results table of final regression 
+## mostra a tabela de resultados de uma regressão
 mv_tab <- tbl_regression(final_mv_reg, exponentiate = TRUE)
 ```
 
-Let's see the table:  
+Vamos visualizar a tabela:
 
 ```{r}
 mv_tab
 ```
 
-You can also combine several different output tables produced by **gtsummary** with 
-the `tbl_merge()` function. We now combine the multivariable results with the **gtsummary** *univariate* results that we created [above](#reg_gt_uni):  
+Também é possível combinar diferentes tabelas de resultados produzidas pelo **gtsummary** com 
+a função `tbl_merge()`. Assim, podemos combinar os resultados multivariados com os resultados *univariados* do **gtsummary** que criamos [acima](#reg_gt_uni):  
 
 ```{r}
-## combine with univariate results 
+## combine com os resultados univariados
 tbl_merge(
-  tbls = list(univ_tab, mv_tab),                          # combine
-  tab_spanner = c("**Univariate**", "**Multivariable**")) # set header names
+  tbls = list(univ_tab, mv_tab),                          # combine as tabelas
+  tab_spanner = c("**Univariate**", "**Multivariable**")) # escolha o nome dos cabeçalhos
 ```
 
 
 
-#### Combine with **dplyr** {.unnumbered}  
+#### Combine com o pacote **dplyr** {.unnumbered}  
 
-An alternative way of combining the `glm()`/`tidy()` univariate and multivariable outputs is with the **dplyr** join functions.  
+Uma alternativa para combinar os resultados univariados e multivariados do `glm()`/`tidy()` é com as funções de união do **dplyr**.
 
-* Join the univariate results from earlier (`univ_tab_base`, which contains counts) with the tidied multivariable results `mv_tab_base`  
-* Use `select()` to keep only the columns we want, specify their order, and re-name them  
-* Use `round()` with two decimal places on all the column that are class Double  
+* Una os resultados univariados anteriores (`univ_tab_base`, com contagens) com os resultados multivariados organizados `mv_tab_base`  
+* Use a função `select()` para manter apenas as colunas de interesse, especificar a sua ordem, e renomear elas
+* Use a função `round()` com duas casas decimais em todas as colunas da classe Double
 
 ```{r, warning=F, message=F}
-## combine univariate and multivariable tables 
+## combine tabelas univariadas e multivariadas 
 left_join(univ_tab_base, mv_tab_base, by = "term") %>% 
-  ## choose columns and rename them
+  ## escolha as colunas e as renomeie
   select( # new name =  old name
     "characteristic" = term, 
     "recovered"      = "0", 
@@ -610,52 +610,52 @@ left_join(univ_tab_base, mv_tab_base, by = "term") %>%
 
 <!-- ======================================================= -->
 
-## Forest plot {  }
+## Gráfico em floresta {  }
 
-This section shows how to produce a plot with the outputs of your regression.
-There are two options, you can build a plot yourself using **ggplot2** or use a 
-meta-package called **easystats** (a package that includes many packages).  
+Esta seção mostra como produzir um gráfico com os resultados da sua regressão.
+Existem duas opções. Você pode construir uma plotagem utilizando o **ggplot2** ou utilizando 
+um pacote-meta (um pacote que incluí muitos pacotes) chamado **easystats**.  
 
-See the page on [ggplot basics] if you are unfamiliar with the **ggplot2** plotting package.  
+Veja a página sobre [básico do ggplot] se você não é familiar com o pacote de plotagem **ggplot2**.  
 
 
 <!-- ======================================================= -->
 
-### **ggplot2** package {.unnumbered}
+### Pacote **ggplot2** {.unnumbered}
 
-You can build a forest plot with `ggplot()` by plotting elements of the multivariable regression results. Add the layers of the plots using these "geoms":  
+É possível construir uma plotagem em floresta com a função `ggplot()` ao plotar os resultados de uma regressão multivariada. Adicione as camadas das plotagens com estas funções "geoms":  
 
-* estimates with `geom_point()`  
-* confidence intervals with `geom_errorbar()`  
-* a vertical line at OR = 1 with `geom_vline()`  
+* realize estimativas com `geom_point()`  
+* obtenha intervalos de confiança com `geom_errorbar()`  
+* uma linha vertical em OU = 1 com `geom_vline()`  
 
-Before plotting, you may want to use `fct_relevel()` from the **forcats** package to set the order of the variables/levels on the y-axis. `ggplot()` may display them in alpha-numeric order which would not work well for these age category values ("30" would appear before "5"). See the page on [Factors] for more details.  
+Antes de plotar, é interessante utilizar a função `fct_relevel()`, do pacote **forcats**, para escolher a ordem das variáveis/níveis no eixo y. `ggplot()` pode mostrar elas em uma ordem alfa-numérica que pode não funcionar bem com os valores da variável 'age category' ("30" apareceria antes de "5"). Veja a página sobre [Factors] para mais detalhes.
 
 ```{r ggplot_forest}
 
-## remove the intercept term from your multivariable results
+## remove o termo da intercepção dos seus resultados multivariados
 mv_tab_base %>% 
   
-  #set order of levels to appear along y-axis
+  # escolhe a ordem dos níveis que aparecem no eixo y
   mutate(term = fct_relevel(
     term,
     "vomit", "gender", "fever", "cough", "chills", "aches",
     "age_cat5-9", "age_cat10-14", "age_cat15-19", "age_cat20-29",
     "age_cat30-49", "age_cat50-69", "age_cat70+")) %>%
   
-  # remove "intercept" row from plot
+  # remove a linha "intercept" do gráfico
   filter(term != "(Intercept)") %>% 
   
-  ## plot with variable on the y axis and estimate (OR) on the x axis
+  ## realize a plotagem no eixo y e/ou as estimativas no eixo x
   ggplot(aes(x = estimate, y = term)) +
   
-  ## show the estimate as a point
+  ## mostre a estimativa como um ponto
   geom_point() + 
   
-  ## add in an error bar for the confidence intervals
+  ## adicione uma barra de erro para os intervalos de confiança
   geom_errorbar(aes(xmin = conf.low, xmax = conf.high)) + 
   
-  ## show where OR = 1 is for reference as a dashed line
+  ## mostre a linha. OR = 1 é referência para uma linha tracejada
   geom_vline(xintercept = 1, linetype = "dashed")
   
 ```
@@ -663,18 +663,18 @@ mv_tab_base %>%
 
 <!-- ======================================================= -->
 
-### **easystats** packages {.unnumbered}
+### Pacotes **easystats** {.unnumbered}
 
-An alternative, if you do not want to the fine level of control that **ggplot2** provides, is to use a combination of **easystats** packages.  
+Uma alternativa, caso você não queira realizar os ajustes finos no **ggplot2**, é utilizar uma combinação dos pacotes do **easystats**.  
 
-The function `model_parameters()` from the **parameters** package does the equivalent
-of the **broom** package function `tidy()`. The **see** package then accepts those outputs
-and creates a default forest plot as a `ggplot()` object. 
+A função `model_parameters()`, do pacote **parameters**, faz o equivalente
+da função `tidy()` do pacote **broom**. O pacote **see** aceita estes resultados
+e cria uma plotagem em floresta padrão, como se fosse um objeto `ggplot()`. 
 
 ```{r easystats_forest}
 pacman::p_load(easystats)
 
-## remove the intercept term from your multivariable results
+## remove a intercepção dos seus resultados multivariados
 final_mv_reg %>% 
   model_parameters(exponentiate = TRUE) %>% 
   plot()
@@ -684,15 +684,15 @@ final_mv_reg %>%
 
 <!-- ======================================================= -->
 
-## Resources {  }
+## Recursos {  }
 
-The content of this page was informed by these resources and vignettes online:  
+O conteúdo desta página foi adaptado destes recursos e tutoriais onlines:
 
-[Linear regression in R](https://www.datacamp.com/community/tutorials/linear-regression-R)  
+[Regressão linear no R](https://www.datacamp.com/community/tutorials/linear-regression-R)  
 
 [gtsummary](http://www.danieldsjoberg.com/gtsummary/articles/tbl_regression.html)  
 
-[UCLA stats page](https://stats.idre.ucla.edu/other/dae/)  
+[Página sobre estatística da UCLA](https://stats.idre.ucla.edu/other/dae/)  
 
-[sthda stepwise regression](http://www.sthda.com/english/articles/36-classification-methods-essentials/150-stepwise-logistic-regression-essentials-in-r/)   
+[Regressão gradual sthda](http://www.sthda.com/english/articles/36-classification-methods-essentials/150-stepwise-logistic-regression-essentials-in-r/)   
 
