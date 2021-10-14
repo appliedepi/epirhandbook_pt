@@ -1384,15 +1384,15 @@ Relational operators compare values and are often used when defining new variabl
 
 Logical operators, such as AND and OR, are often used to connect relational operators and create more complicated criteria. Complex statements might require parentheses ( ) for grouping and order of application.
 
-+---------------+-----------------------------------------------------------------------+
-| Meaning       | Operator                                                              |
-+===============+=======================================================================+
-| AND           | `&`                                                                   |
-+---------------+-----------------------------------------------------------------------+
-| OR            | `|` (vertical bar)                                                    |
-+---------------+-----------------------------------------------------------------------+
-| Parentheses   | `( )` Used to group criteria together and clarify order of operations |
-+---------------+-----------------------------------------------------------------------+
++-------------+-----------------------------------------------------------------------+
+| Meaning     | Operator                                                              |
++=============+=======================================================================+
+| AND         | `&`                                                                   |
++-------------+-----------------------------------------------------------------------+
+| OR          | `|` (vertical bar)                                                    |
++-------------+-----------------------------------------------------------------------+
+| Parentheses | `( )` Used to group criteria together and clarify order of operations |
++-------------+-----------------------------------------------------------------------+
 
 For example, below, we have a linelist with two variables we want to use to create our case definition, `hep_e_rdt`, a test result and `other_cases_in_hh`, which will tell us if there are other cases in the household. The command below uses the function `case_when()` to create the new variable `case_def` such that:
 
