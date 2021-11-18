@@ -10,8 +10,8 @@ Está página irá abordar como:
 
 1) Avaliar a quantidade de campos em branco
 2) Filtrar linhas com variáveis em branco
-3) Realizar a plotagem da quantidade de campos em branco ao longo do tempo
-4) Modificar como `NA` é mostrado nas plotagens
+3) Traçar um gráfico da quantidade de campos em branco ao longo do tempo
+4) Modificar como os valores `NA` são mostrados nos gráficos
 5) Realizar a atribuição de valores aos campos em branco: MCAR, MAR, MNAR
 
 
@@ -265,7 +265,7 @@ pct_complete_case(linelist) # utilize n_complete() para obter quantidades absolu
 
 A função `gg_miss_var()` irá gerar o número absoluto (ou %) de campos em branco em cada coluna. Seguem alguns detalhes:
 
-* Você pode adicionar um nome de coluna (sem as aspas) ao atributo `facet = ` para ver a plotagem por grupos
+* Você pode adicionar um nome de coluna (sem as aspas) ao atributo `facet = ` para visualizar o gráfico por grupos
 * Por padrão, contagens absolutas são mostradas no lugar dos percentuais. Altere isso com o atributo `show_pct = TRUE`  
 * Você pode adicionar etiquetas aos eixos e títulos utilizando `+ labs(...)`, como no `ggplot()`
 
@@ -335,16 +335,16 @@ shadowed_linelist <- linelist %>%
 names(shadowed_linelist)
 ```
 
-Estas colunas "shadow" podem ser utilizadas para plotar a proporção de campos em branco, em relação à qualquer outra coluna.
+Estas colunas "shadow" podem ser utilizadas para traçar um gráfico da proporção de campos em branco, em relação à qualquer outra coluna.
 
-Por exemplo, a plotagem abaixo mostra a proporção de campos em branco na coluna `days_onset_hosp` (número de dias entre o início dos sintomas e a hospitalização), de acordo com o campo em `date_hospitalisation`. Essencialmente, você está plotando a densidade da coluna no eixo x, mas estratificando os resultados (`color = `) pela coluna "shadow" de interesse. Esta análise funciona melhor se o eixo x é uma coluna numérica ou com dados cronológicos.
+Por exemplo, o gráfico abaixo mostra a proporção de campos em branco na coluna `days_onset_hosp` (número de dias entre o início dos sintomas e a hospitalização), de acordo com o campo em `date_hospitalisation`. Essencialmente, você está plotando a densidade da coluna no eixo x, mas estratificando os resultados (`color = `) pela coluna "shadow" de interesse. Esta análise funciona melhor se o eixo x é uma coluna numérica ou com dados cronológicos.
 
 
 ```{r, message = F}
 ggplot(data = shadowed_linelist,          # banco de dados com as colunas "shadow"
   mapping = aes(x = date_hospitalisation, # colunas numéricas ou cronológicas
                 colour = age_years_NA)) + # coluna "shadow" de interesse
-  geom_density()                          # plotagem das curvas de densidade
+  geom_density()                          # adição das curvas de densidade
 ```
 
 Você pode também utilizar as colunas "shadow" para estratificar um resumo estatístico, como mostrado abaixo:
@@ -364,10 +364,10 @@ linelist %>%
 ```
 
 
-Uma forma alternativa para plotar a proporção de campos em branco em uma coluna de acordo com o tempo é mostrada abaixo. Esta forma *não* involve o pacote **naniar**. Este exemplo mostra a porcentagem de observações semanais que estão em branco.
+Uma forma alternativa para traçar um gráfico da proporção de campos em branco em uma coluna de acordo com o tempo é mostrada abaixo. Esta forma *não* involve o pacote **naniar**. Este exemplo mostra a porcentagem de observações semanais que estão em branco.
 
 1) Agregue os dados em uma unidade de tempo útil (dias, semanas, etc.), resumindo a proporção de observações com `NA`(e/ou qualquer outro valor de interesse)
-2) Realize a plotagem da proporção de campos em brancos como uma linha, utilizando o `ggplot()`  
+2) Faça um gáfico da proporção de campos em brancos como uma linha, utilizando o `ggplot()`  
 
 Abaixo, nós trabalhamos com a linelist, adicionamos uma nova coluna contendo a semana, então agrupamos os dados por semana, e calculamos o percentual de registros em branco de acordo com a semana. (nota: se você quisesse obter a % por 7 dias, o cálculo seria sutilmente diferente).
 
@@ -388,7 +388,7 @@ outcome_missing <- linelist %>%
   filter(stringr::str_detect(statistic, "_p_"))                  # mantenha apenas os valores proporcionais
 ```
 
-Então nós plotamos as proporções dos campos em branco como uma linha, de acordo com a semana. A página sobre [básico do ggplot] pode ser utilizada se você não tiver familiaridade com o pacote **ggplot2** de plotagem.
+Então nóstraçamos um gráfico das proporções dos campos em branco como uma linha, de acordo com a semana. A página sobre [básico do ggplot] pode ser utilizada se você não tiver familiaridade com o pacote **ggplot2** de plotagem.
 
 ```{r, message=F, warning=F}
 ggplot(data = outcome_missing)+
@@ -448,12 +448,12 @@ linelist %>%
 <!-- ======================================================= -->
 ### Trabalhando com `NA` no `ggplot()` {.unnumbered}
 
-Frequentemente, é sábio mostrar a quantidade de valores excluídos de uma plotagem em uma legenda. Abaixo é um exemplo:
+Frequentemente, é sábio mostrar a quantidade de valores excluídos na confeção de um gráfico em sua legenda. Abaixo é um exemplo:
 
 No `ggplot()`, você pode adicionar etiquetas com `labs()`, e dentro da função utilizar o atributo `caption = `. Neste atributo, você pode utilizar a função `str_glue()`, do pacote **stringr**, para unir os valores em uma senteça, de forma que eles são ajustados automaticamente. Um exemplo é mostrado abaixo:
 
 * Observe o uso do `\n` para adicionar uma nova linha
-* Observe que, caso colunas múltiplas contribuam para a exclusão dos valores do gráfico (ex.: age ou sex se estes interferirem na plotagem), então você precisa filtrar por estas colunas assim como calcular o número de registros não mostrados de forma correta.
+* Observe que, caso colunas múltiplas contribuam para a exclusão dos valores do gráfico (ex.: age ou sex se estes interferirem no gráfico), então você precisa filtrar por estas colunas assim como calcular o número de registros não mostrados de forma correta.
 
 ```{r, eval=F}
 labs(
