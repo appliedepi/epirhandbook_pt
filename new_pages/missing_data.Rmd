@@ -419,7 +419,7 @@ ggplot(data = outcome_missing)+
 
 Para rapidamente excluir linhas com valores em branco, utilize a função `drop_na()`, do pacote **dplyr**.
 
-O objeto `linelist` original possuí ` nrow(linelist)` linhas. O número ajustado de linhas, após exclusão das que possuíam campos em branco, é mostrado abaixo:
+O objeto `linelist` original possui ` nrow(linelist)` linhas. O número ajustado de linhas, após exclusão das que possuíam campos em branco, é mostrado abaixo:
 
 ```{r}
 linelist %>% 
