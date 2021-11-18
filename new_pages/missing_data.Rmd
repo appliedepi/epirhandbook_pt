@@ -68,7 +68,7 @@ Abaixo, nós exploramos as formas como os campos em branco são mostrados e anal
 
 ### `NA` {.unnumbered}  
 
-No R, campos em branco são representados por um valor especial e reservado - `NA`. Notar que é escrito *sem* as aspas simples. "NA" é diferente, sendo apenas um caractere normal no R (além de ser parte da letra de Hey Jude dos Beatles).
+No R, campos em branco são representados por um valor especial e reservado - `NA`. Notar que é escrito *sem* as aspas. Já "NA", com aspas, é diferente, sendo apenas um caractere normal no R (além de ser parte da letra de Hey Jude dos Beatles).
 
 Os campos em branco nos seus dados podem estar representados com outras formas, como "99", ou "Missing", ou "Unknown" - ou até como um caractere vazio "", parecido com um campo em branco, ou um espaço simples " ". Esteja ciente disto, e verifique a possibilidade de [converte-los para `NA` durante a importação](#import_missing) ou durante a limpeza dos dados, com a função  `na_if()`.  
 
@@ -109,7 +109,7 @@ Novamente, é improvável que você encontre essas variações, **a não ser que
 
 `NULL` é outro valor reservado (especial) no R. É a representação lógica de uma declaração que não é nem verdadeira (true), tampouco falsa (false). Ele é gerado por expressões ou funções em que os valores são indefinidos. Geralemnte, não atribua NULL como um valor, exceto ao escrever funções ou, talvez, uma [aplicação em **shiny**][Dashboards com Shiny] para gerar `NULL` em cenários específicos.
 
-Para avaliar se é Null, é só utilizar a função `is.null()`, e conversões podem ser feitas com a função `as.null()`.  
+Para avaliar se é um valor NULL, é só utilizar a função `is.null()`, e conversões podem ser feitas com a função `as.null()`.  
 
 Veja essa [postagem](https://www.r-bloggers.com/2010/04/r-na-vs-null/) detalhando as diferenças entre `NULL` e `NA`.  
 
@@ -177,7 +177,7 @@ var(22)
 <!-- ======================================================= -->
 ## Funções úteis { }
 
-Abaixo são elencadas funções úteis do **base** R para avaliar e trabalhar com campos em branco:
+Abaixo são elencadas funções úteis do R **base** para avaliar e trabalhar com campos em branco:
 
 
 ### `is.na()` e `!is.na()` {.unnumbered}  
@@ -194,7 +194,7 @@ sum(is.na(my_vector))
 
 ### `na.omit()` {.unnumbered}  
 
-Esta função, se aplicada em um conjunto de dados, irá remover linhas com *qualquer* campo em branco. Esta função também é do pacote **base** R.  
+Esta função, se aplicada em um conjunto de dados, irá remover linhas com *qualquer* campo em branco. Esta função também é do pacote R **base**.  
 Se aplicada em um vetor, os valores `NA` neste vetor serão removidos. Por exemplo:
 
 ```{r}
@@ -274,7 +274,7 @@ A função `gg_miss_var()` irá gerar o número absoluto (ou %) de campos em bra
 gg_miss_var(linelist, show_pct = TRUE)
 ```
 
-Aqui, os dados são canalizados `%>%` para a função. O atributo `facet = ` também é utilizado para dividir os dados.
+Aqui, os dados são encadeados `%>%` (do inglês *pipe*) na função. O atributo `facet = ` também é utilizado para dividir os dados.
 
 ```{r}
 linelist %>% 
@@ -323,7 +323,7 @@ gg_miss_fct(linelist, date_onset)
 
 
 
-### Colunas "Shadow" {.unnumbered}
+### Colunas Sombra "Shadow" {.unnumbered}
 
 Outra forma de visualizar os campos em branco em uma coluna, de acordo com os valores de uma segunda coluna, é utilizando o "shadow" que o pacote **naniar** consegue criar. A função `bind_shadow()` cria uma nova coluna com os valores binários `NA`/not `NA` para cada coluna existente, e então conecta todas essas colunas novas ao banco de dados original utilizando o sufixo "_NA" em seus nomes. Isto duplica o número de colunas:
 
@@ -471,7 +471,7 @@ As vezes, pode ser mais fácil salvar o texto em um objeto em comandos anteriore
 <!-- ======================================================= -->
 ### `NA` na classe factors {.unnumbered}
 
-Se a sua coluna de interesse for da classe factors, utilize a função `fct_explicit_na()`, do pacote **forcats**, para converter os valores do tipo `NA` para valores do tipo caractere. Veja mais detalhes na página [Factors]. Por padrão, o novo valor atribuído é "(Missing)", mas pode ser ajustado através do argumento `na_level =`.
+Se a sua coluna de interesse for um fator (da classe factors), utilize a função `fct_explicit_na()`, do pacote **forcats**, para converter os valores do tipo `NA` para valores do tipo caractere. Veja mais detalhes na página [Factors]. Por padrão, o novo valor atribuído é "(Missing)", mas pode ser ajustado através do argumento `na_level =`.
 
 ```{r}
 pacman::p_load(forcats)   # carregue o pacote
@@ -500,11 +500,11 @@ As vezes, ao analisar os dados, será importante "preencher as lacunas" e atribu
 
 Aqui estão três tipos gerais de dados em branco:
 
-1) **Dados perdidos completamente de forma aleatória** (MCAR). Isto significa que não existe relação entre os dados em branco e qualquer outra variável dos seus dados. A probabilidade dos dados estarem em branco são as mesmas para todos os casos. Isto é uma situação rara. Mas, se você tiver uma forte razão para acreditar que seus dados são do tipo MCAR, analisar apenas os dados completos sem atribuir valores não irá enviesar seus resultados (apesar de que você pode perder algum poder de amostra). [A fazer: considere discutir testes estatísticos para MCAR]
+1) **Dados faltantes completamente de forma aleatória** (MCAR, do inglês *Missing Comnpletely at Random*). Isto significa que não existe relação entre os dados em branco e qualquer outra variável dos seus dados. A probabilidade dos dados estarem em branco são as mesmas para todos os casos. Isto é uma situação rara. Mas, se você tiver uma forte razão para acreditar que seus dados são do tipo MCAR, analisar apenas os dados completos sem atribuir valores não irá enviesar seus resultados (apesar de que você pode perder algum poder de amostra). [A fazer: considere discutir testes estatísticos para MCAR]
 
-2) **Dados perdidos aleatoriamente** (MAR). Este nome é, na verdade, um pouco  incorreto, uma vez que dados do tipo MAR não estão perdidos de forma alearória, e sim de forma sistemática e previsível, baseado em outras informações que você tem. Por exemplo, talvez cada observação em branco do seu banco de dados para febre não foi registrada porque assumiram que todos os pacientes com calafrios e dores estavam com febre, e, então, suas temperaturas não foram medidas. Se verdade, nós poderíamos facilmente predizer que cada observação em branco em que o paciente tivesse calafrios e dores, ele também teve febre, e utilizar essa informação para atribuir dados. Na prática, existe um espectro de possibilidades. Talvez, se um paciente sem a temperatura medida tivesse tanto calafrios quanto dores, ele provavelmente também teria febre, mas nem sempre. Isto ainda é previsível, embora não seja perfeitamente previsível. Este é um tipo comum de perda de dados.
+2) **Dados faltantes aleatoriamente** (MAR, do inglês *Missing at Random*). Este nome é, na verdade, um pouco  incorreto, uma vez que dados do tipo MAR não estão perdidos de forma alearória, e sim de forma sistemática e previsível, baseado em outras informações que você tem. Por exemplo, talvez cada observação em branco do seu banco de dados para febre não foi registrada porque assumiram que todos os pacientes com calafrios e dores estavam com febre, e, então, suas temperaturas não foram medidas. Se verdade, nós poderíamos facilmente predizer que cada observação em branco em que o paciente tivesse calafrios e dores, ele também teve febre, e utilizar essa informação para atribuir dados. Na prática, existe um espectro de possibilidades. Talvez, se um paciente sem a temperatura medida tivesse tanto calafrios quanto dores, ele provavelmente também teria febre, mas nem sempre. Isto ainda é previsível, embora não seja perfeitamente previsível. Este é um tipo comum de perda de dados.
 
-3) **Dados perdidos de forma não aleatória** (MNAR). As vezes, também chamado de **Não perdidos aleatoriamente** (NMAR). Esta situação considera que a probabilidade de um campo estar em branco NÃO é sistemática ou previsível utilizando as outras informações que temos, mas também não foram perdidos de forma aleatória. Assim, os dados foram perdidos por razões desconhecidas ou por motivos que você não tem informações sobre. Por exemplo, em nosso banco de dados, talvez as informações sobre as idades estejam em branco porque alguns pacientes muito idosos ou não sabiam a idade, ou recusaram informar a idade. Nesta situação, os dados perdidos de idade estão relacionados à idade diretamente (e, assim, não são perdas aleatórias), e não são dados previsíveis através de outras informações que temos. MNAR é complexo e, frequentemente, a melhor forma de trabalhar com isso é tentar coletar mais dados ou informações sobre o porque os dados estão faltando, em vez de atribuir valores.
+3) **Dados faltantes de forma não aleatória** (MNAR, do inglês *Missing not at Random*). As vezes, também chamado de **Não perdidos aleatoriamente** (NMAR). Esta situação considera que a probabilidade de um campo estar em branco NÃO é sistemática ou previsível utilizando as outras informações que temos, mas também não foram perdidos de forma aleatória. Assim, os dados foram perdidos por razões desconhecidas ou por motivos que você não tem informações sobre. Por exemplo, em nosso banco de dados, talvez as informações sobre as idades estejam em branco porque alguns pacientes muito idosos ou não sabiam a idade, ou recusaram informar a idade. Nesta situação, os dados perdidos de idade estão relacionados à idade diretamente (e, assim, não são perdas aleatórias), e não são dados previsíveis através de outras informações que temos. MNAR é complexo e, frequentemente, a melhor forma de trabalhar com isso é tentar coletar mais dados ou informações sobre o porque os dados estão faltando, em vez de atribuir valores.
 
 Concluindo, geralmente, atribuir valores em dados MCAR é simples, enquanto em dados MNAR é desafiador, senão impossível. Muitos dos métodos de imputação de valores assumem dados MAR.
 
