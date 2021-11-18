@@ -147,7 +147,7 @@ Você pode executar a função `summary()` nos resultados obtidos para visualiza
 summary(lm_results)
 ```
 
-Alternativamente, é possível utilizar a função `tidy()`, do pacote **broom**, para organizar os resultados em uma tabela. O que os resultados nos mostram é que, a cada ano, a altura aumenta em 3.5 cm, e isto é estatisticamente significante.
+Alternativamente, é possível utilizar a função `tidy()`, do pacote **broom**, para organizar os resultados em uma tabela. O que os resultados nos mostram é que, a cada ano, a altura aumenta em 3.5 cm, e isto é estatisticamente significativo.
 
 ```{r lin_reg_res_tidy}
 tidy(lm_results)
