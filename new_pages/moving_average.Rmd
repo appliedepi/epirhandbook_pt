@@ -13,7 +13,7 @@ Nesta página, dois métodos para calcular e visualizar médias móveis serão a
 
 ## Preparação
 
-### Carregue os pacotes R {.unnumbered}
+### Carregue os pacotes {.unnumbered}
 
 O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do **base** R. Para mais informações sobre os pacotes do R, veja a página [Básico do R].
 
@@ -25,17 +25,17 @@ pacman::p_load(
 )
 ```
 
-### Importe os dados no R {.unnumbered}
+### Importe os dados para R {.unnumbered}
 
 Nós iremos importar o banco de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar os passos abaixo, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique aqui para fazer o download do banco de dados 'limpo'</a> (como arquivo .rds). Importe seus dados utilizando a função `import()` do pacote **rio** (esta função importa muitos tipos de arquivos, como .xlsx, .rds, .csv - veja a página [Importar e exportar] para detalhes).
 
 ```{r, echo=F}
-# importe o banco de dados
+# importe o banco de dados para o R
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 ```
 
 ```{r, eval=F}
-# importe o banco de dados
+# importe o *linelist*
 linelist <- import("linelist_cleaned.xlsx")
 ```
 
@@ -50,7 +50,7 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 
 ## Calculando com o pacote **slider**
 
-**Utilize esta abordagem para calcular uma média móvel em um conjunto de dados antes de realizar a plotagem.**
+**Utilize esta abordagem para calcular uma média móvel em um conjunto de dados antes de traçar o gráfico.**
 
 O pacote **slider** fornece diferentes funções que utilizam a abordagem de "janelas deslizantes" (do inglês, *sliding window*) para calcular médias móveis, somas cumulativas, regressões móveis, etc. Este pacote trata o conjunto de dados como um vetor de linhas, permitindo a iteração entre as linhas do conjunto de dados.
 
@@ -63,18 +63,18 @@ Aqui estão algumas das funções mais comuns:
 
 -   `slide_index_dbl()` - aplica as janelas deslizantes em uma coluna numérica, utilizando uma coluna separada para *indexar* a progressão das janelas (útil se a progressão estiver sendo por datas e algumas estiverem ausentes)
 
-    -   `slide_index_sum()` - função atalho para realizar a soma móvel usando index\
+    -   `slide_index_sum()` - função atalho para realizar a soma móvel usando indexador\
     -   `slide_index_mean()` - função atalho para realizar a média móvel usando indexador
 
 O pacote **slider** possuí muitas outras funções que são cobertas na seção sobre Recursos extras desta página. Aqui, nós abordamos brevemente as funções mais comuns.
 
 **Argumentos essenciais**
 
--   `.x`, por padrão, o primeiro argumento é o vetor para iterar sobre e para aplicar a função em\
+-   `.x`, por padrão, o primeiro argumento é o vetor sobre o qual serão realizadas as iterarações e sobre o qual será aplicada a função \
 
--   `.i =` para as versões "index" das funções do pacote **slider** - indique a coluna para "indexar" a linha com (veja a seção [abaixo](#roll_index))\
+-   `.i =` para as versões "index" das funções do pacote **slider** - indique a coluna para "indexar" o "delizamento" (veja a seção [abaixo](#roll_index))\
 
--   `.f =`, por padrão, o segundo argumento, ou:
+-   `.f =`, por padrão, o segundo argumento é:
 
     -   Uma função, escrita sem parênteses, como `mean`, ou\
     -   Uma fórmula, que será convertida em uma função. Por exemplo, `~ .x - mean(.x)` irá gerar o resultado do valor corrente menos a média do valor da janela
@@ -99,7 +99,7 @@ Para obter operações *cumulativas*, ajuste o argumento `.before =` para `Inf`.
 
 ### Deslizando por data {#roll_index .unnumbered}
 
-A aplicação mais provável de cálculos móveis em epidemiologia aplicada é examinar um indicador *no passar do tempo*. Por exemplo, uma medida móvel da incidência de casos, baseado na contagem diária dos casos.
+A aplicação mais provável de cálculos móveis em epidemiologia aplicada é para examinar um indicador *ao longo do tempo*. Por exemplo, uma medida móvel da incidência de casos, baseado na contagem diária dos casos.
 
 Se você possuir dados com séries cronológicas limpas, com valores para cada data, você pode estar OK para utilizar a função `slide_dbl()`, como demonstrado aqui na página sobre [Séries cronológicas e detecção de surtos](#timeseries_moving).
 
@@ -107,7 +107,7 @@ Entretanto, em muitas situações da epidemiologia aplicada, você pode não ter
 
 ### Dados indexados {.unnumbered}
 
-Abaixo, nós mostramos um exemplo utilizando a função `slide_index_dbl()` no objeto linelist criado acima. Digamos que nosso objetivo é calcular uma incidência móvelde 7 dias - a soma dos casos utilizando uma janela de 7 dias. Se você estiver procurando por um exemplo de média móvel, veja a seção abaixo sobre [deslocamento agrupado](#roll_slider_group).
+Abaixo, nós mostramos um exemplo utilizando a função `slide_index_dbl()` no objeto linelist criado acima. Digamos que nosso objetivo é calcular uma incidência móvel de 7 dias - a soma dos casos utilizando uma janela de 7 dias. Se você estiver procurando por um exemplo de média móvel, veja a seção abaixo sobre [deslocamento agrupado](#roll_slider_group).
 
 Para iniciar, o conjunto de dados `daily_counts` é criado para refletir a contagem diária de casos do `linelist`, sendo calculado com a função `count()` do **dplyr**.
 
@@ -207,7 +207,7 @@ ggplot(data = rolling)+
 
 Se você agrupar seus dados antes de utilizar uma função do **slider**, as janelas deslizantes serão aplicadas por grupos. Tenha cuidado para organizar suas linhas na ordem desejada *por grupo*.
 
-A cada momento que um novo grupo inicia, as janelas deslizantes irão reiniciar. Logo, um detalhe para ter ciência é que, se seus dados são agrupados *e* você ajustou `.complete = TRUE`, você terá valores em branco a cada transição entre os grupos. Enquanto a função desloca para baixo através das linhas, cada transição na coluna de agrupamento irá reiniciar o acúmulo do tamanho mínimo da janela, de forma a permitir a realização do cálculo.
+A cada momento que um novo grupo se inicia, as janelas deslizantes irão reiniciar. Logo, um detalhe para se ter em mente é, se seus dados são agrupados *e* você realizou o ajuste `.complete = TRUE`, você terá valores em branco a cada transição entre os grupos. Enquanto a função se desloca para baixo ao longo das linhas, cada transição na coluna de agrupamento irá reiniciar o acúmulo do tamanho mínimo da janela, de forma a permitir a realização do cálculo.
 
 Veja a página sobre [Agrupamento dos dados], deste manual, para detalhes sobre agrupamento dos dados.
 
@@ -239,34 +239,34 @@ Aqui está o novo conjunto de dados:
 DT::datatable(grouped_roll, rownames = FALSE, options = list(pageLength = 12, scrollX=T) )
 ```
 
-Agora, nós podemos plotar as médias móveis, mostrando os dados por grupo ao especificar `~ hospital` para `facet_wrap()` no `ggplot()`. Por diversão, nós plotamos duas geometrias - uma `geom_col()`, mostrando a contagem diária de casos, e uma `geom_line()`, mostrando a média móvel de 7 dias.
+Agora, nós podemos traçar os gráficos das médias móveis, mostrando os dados por grupo ao especificar `~ hospital` para `facet_wrap()` no `ggplot()`. Por diversão, incluímos dois tipos de visualização - uma `geom_col()`, mostrando a contagem diária de casos, e uma `geom_line()`, mostrando a média móvel de 7 dias.
 
 ```{r, warning=F, message=F}
 ggplot(data = grouped_roll)+
-  geom_col(                       # plote a contagem diária de casos como barras cinzas
+  geom_col(                       # adicione a contagem diária de casos como barras cinzas
     mapping = aes(
       x = date_hospitalisation,
       y = new_cases),
     fill = "grey",
     width = 1)+
-  geom_line(                      # plote a média móvel como linhas coloridas por hospital
+  geom_line(                      # adicione a média móvel como linhas coloridas por hospital
     mapping = aes(
       x = date_hospitalisation,
       y = mean_7day_hosp,
       color = hospital),
     size = 1)+
-  facet_wrap(~hospital, ncol = 2)+ # crie mini-plotagens por hospital
+  facet_wrap(~hospital, ncol = 2)+ # crie pequenos gráficos por hospital
   theme_classic()+                 # simplifique o plano de fundo
   theme(legend.position = "none")+ # remova a legenda
-  labs(                            # adicione etiquetas de plotagem
+  labs(                            # adicione legendas aos eixos e título do gráfico
     title = "7-day rolling average of daily case incidence",
     x = "Date of admission",
     y = "Case incidence")
 ```
 
-[***PERIGO:*** Se você obter um erro dizendo *"slide() was deprecated in tsibble 0.9.0 and is now defunct. Please use slider::slide() instead."*, significa que a função `slide()`, do pacote **tsibble**, está mascarando a função `slide()`, do pacote **slider**. Corrija isso ao especificar o pacote no comando, como em `slider::slide_dbl()`.]{style="color: red;"}
+[***PERIGO:*** Se você obtiver um erro dizendo *"slide() was deprecated in tsibble 0.9.0 and is now defunct. Please use slider::slide() instead."*, significa que a função `slide()`, do pacote **tsibble**, está mascarando a função `slide()`, do pacote **slider**. Corrija isso ao especificar o pacote no comando, como em `slider::slide_dbl()`.]{style="color: red;"}
 
-<!-- Você pode agrupar os dados antes de utilizar a função **slider**. Por exemplo, se você quer calcular a mesma soma móvel por 7 dias, como feito acima, mas por hospital. NÃO ENTENDI ESSA PARTE > above rolling mean delay from symptom onset to hospital admission (column `days_onset_hosp`). < ENTENDI ESSA PARTE   -->
+<!-- Você pode agrupar os dados antes de utilizar a função **slider**. Por exemplo, se você quer calcular a mesma soma móvel por 7 dias, como feito acima, mas por hospital, para o tempo entre o início dos sintomas e a adimissão no hospital.  (column `days_onset_hosp`). -->
 
 <!-- Você pode agrupar os dados pelo mês de início dos sintomas utilizando a função `floor_date()`, do pacote **lubridate**, como descrito na página sobre [Agrupando dados]. Então, use a função `slide_index_dbl()`, como antes, mas ajuste a extensão da janela, utilizando a função `months()` (também do pacote **lubridate**).  -->
 
@@ -322,7 +322,7 @@ ggplot(data = grouped_roll)+
 
 O pacote **tidyquant** oferece outra abordagem para calcular médias móveis - desta vez, de *dentro* de um comando `ggplot()`.
 
-Abaixo, os dados do `linelist` são contados por dia do início de sintomas, e isto é plotado como uma linha desbotada (`alpha` \< 1). Em frente à essa linha, está uma outra linha criada com a função `geom_ma()`, do pacote **tidyquant**, com uma janela de 7 dias (`n = 7`), cor e espessura especificados.
+Abaixo, os dados do `linelist` são contados por dia do início de sintomas, e isto é adicionado ao gráfico como uma linha desbotada (`alpha` \< 1). Em frente à essa linha, está uma outra linha criada com a função `geom_ma()`, do pacote **tidyquant**, com uma janela de 7 dias (`n = 7`), cor e espessura especificados.
 
 Por padrão, `geom_ma()` utiliza uma média móvel simples (`ma_fun = "SMA"`), mas outros tipos podem ser especificados, como:
 
@@ -335,11 +335,11 @@ linelist %>%
   count(date_onset) %>%                 # conte os casos por dia
   drop_na(date_onset) %>%               # remova casos sem a data de início dos sintomas
   ggplot(aes(x = date_onset, y = n))+   # inicie o ggplot
-    geom_line(                          # plote valores brutos
+    geom_line(                          # adicione uma linha com os valores brutos
       size = 1,
       alpha = 0.2                       # linha semi-transparente
       )+             
-    tidyquant::geom_ma(                 # plote a média móvel
+    tidyquant::geom_ma(                 # adicione a média móvel
       n = 7,           
       size = 1,
       color = "blue")+ 
