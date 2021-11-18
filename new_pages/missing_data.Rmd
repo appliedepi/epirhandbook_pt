@@ -10,7 +10,7 @@ Está página irá abordar como:
 
 1) Avaliar a quantidade de campos em branco
 2) Filtrar linhas com variáveis em branco
-3) Realizar a plotagem da quantidade de campos em branco através do tempo
+3) Realizar a plotagem da quantidade de campos em branco ao longo do tempo
 4) Modificar como `NA` é mostrado nas plotagens
 5) Realizar a atribuição de valores aos campos em branco: MCAR, MAR, MNAR
 
