@@ -4,7 +4,6 @@
 
 ## Overview
 
-TESTANDO SAVE, COMMITS
 This section is **not** meant as a comprehensive "how to learn R" tutorial. However, it does cover some of the fundamentals that can be good to reference or refresh. 
 
 More comprehensive tutorials are available online. See the tab on recommended training.  
