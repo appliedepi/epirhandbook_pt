@@ -3,7 +3,7 @@
 <!-- ======================================================= -->
 
 Esta página demonstra o uso das funções de regressão do pacote **base** R, como `glm()`, e o pacote **gtsummary** para 
-verificar as associações entre as variáveis (ex.: riscos relativos, relações de risco e riscos de perigo).
+verificar as associações entre as variáveis (ex.: riscos relativos, relações de risco e *hazard ratio*).
 Também serão mostradads funções como `tidy()`, do pacote **broom**, para limpar os resultados da regressão.
 
 1.  Univariado: tabelas 2 x 2
@@ -11,9 +11,9 @@ Também serão mostradads funções como `tidy()`, do pacote **broom**, para lim
 3.  Multivariada: seleção variada, seleção de modelo, tabela final
 4.  Gráfico em floresta
 
-Para realizar a regressão proporcional de perigos (regressão Cox), veja a página [Análise de sobrevivência].  
+Para realizar a regressão proporcional de riscos (regressão Cox), veja a página [Análise de sobrevivência].  
 
-<span style="color: black;">**_NOTE:_** O termo *multivariável* é utilizado aqui ao se referir à uma regressão com múltiplas variáveis explanatórias. Assim, um modelo *multivariado* seria uma regressão com diferentes resultados - veja esse [editorial](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3518362/) para detalhes </span> 
+<span style="color: black;">**_NOTE:_** O termo *multivariável* é utilizado aqui ao se referir à uma regressão com múltiplas variáveis explicativas. Assim, um modelo *multivariado* seria uma regressão com diferentes resultados - veja esse [editorial](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3518362/) para detalhes </span> 
 
 <!-- ======================================================= -->
 
@@ -63,9 +63,9 @@ DT::datatable(head(linelist, 50), rownames = FALSE, options = list(pageLength = 
 
 ### Limpando os dados {.unnumbered}
 
-#### Armazene as variáveis exploratórias {.unnumbered}  
+#### Armazene as variáveis explicativas {.unnumbered}  
 
-No código abaixo, os nomes das colunas exploratórias são salvos como um vetor de caracteres. Eles serão utilizados posteriormente.
+No código abaixo, os nomes das colunas explicativas são salvos como um vetor de caracteres. Eles serão utilizados posteriormente.
 
 ```{r}
 ## escolha as variáveis de interesse
@@ -75,7 +75,7 @@ explanatory_vars <- c("gender", "fever", "chills", "cough", "aches", "vomit")
 
 #### Converta para 1s e 0s {.unnumbered}   
 
-Abaixo, as colunas exploratórias com as opções binárias "yes"/"no", "m"/"f", e "dead"/"alive" são convertidas para **1 / 0**, visando serem utilizadas nos modelos de regressão. Para fazer isso de forma eficiente, utilize a função `across()`, do **dplyr**, para transformar múltiplas colunas de uma vez. A função `case_when()` (também do **dplyr**) utiliza argumentos lógicos para converter valores específicos para 1s ou 0s. Veja as seções das funções `across()` e `case_when()` na [página de limpando dados e funções essenciais](#clean_across)).  
+Abaixo, as colunas de variáveis explicativas com as opções binárias "yes"/"no", "m"/"f", e "dead"/"alive" são convertidas para **1 / 0**, visando serem utilizadas nos modelos de regressão. Para fazer isso de forma eficiente, utilize a função `across()`, do **dplyr**, para transformar múltiplas colunas de uma vez. A função `case_when()` (também do **dplyr**) utiliza argumentos lógicos para converter valores específicos para 1s ou 0s. Veja as seções das funções `across()` e `case_when()` na [página de limpando dados e funções essenciais](#clean_across)).  
 
 Nota: o "." abaixo representa a coluna que está sendo processada pela função `across()` no momento.
 
