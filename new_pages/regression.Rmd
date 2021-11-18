@@ -122,18 +122,18 @@ O número de linhas restante no `linelist` é ` nrow(linelist)`.
 
 Assim como na página sobre [Tabelas descritivas](https://epirhandbook.com/descriptive-tables.html), os seus objetivos irão determinar quais pacotes R utilizar. Aqui, nós apresentamos duas opções para realizar análises univariadas:
 
-* Utilize as funções disponíveis no pacote **base** R para rapidamente obter os resultados no terminal. Utilize o pacote **broom** para organizar os resultados.
+* Utilize as funções disponíveis no pacote R **base** para rapidamente obter os resultados no terminal. Utilize o pacote **broom** para organizar os resultados.
 * Utilize o pacote **gtsummary** para modelar e obter resultados prontos para publicação
 
 
 
 <!-- ======================================================= -->
 
-### Pacote **base** R {.unnumbered}
+### Pacote R **base** {.unnumbered}
 
 #### Regressão linear {.unnumbered}  
 
-A função `lm()`, do **base** R, executa regressões lineares, avaliando a relação entre respostas numéricas e variáveis explanatórias (independentes), que se presume terem uma relação linear.
+A função `lm()`, do R **base**, executa regressões lineares, avaliando a relação entre respostas numéricas e variáveis explanatórias (independentes), que se presume terem uma relação linear.
 
 Forneça a equação como uma fórmula, com os nomes das colunas contendo as respostas numéricas e as variáveis explanatórias separadas por um til `~`. Adicionalmente, especifique qual o banco de dados em `data = `. Para utiliza-los posteriormente, atribua os resultados da modelagem a um objeto R.
 
@@ -141,7 +141,7 @@ Forneça a equação como uma fórmula, com os nomes das colunas contendo as res
 lm_results <- lm(ht_cm ~ age, data = linelist)
 ```
 
-Você pode executar a função `summary()` nos resultados obtidos para visualizar os coeficientes (estimativas), valores de p, resíduos, e outras medições.
+Você pode executar a função `summary()` nos resultados obtidos para visualizar os coeficientes (*Estimates*), p-valor, resíduos, e outras medições.
 
 ```{r lin_reg_res}
 summary(lm_results)
@@ -189,7 +189,7 @@ Veja a seção sobre Recursos extras no final deste capítulo para mais tutoriai
 
 #### Regressão logística {.unnumbered}  
 
-A função `glm()`, do pacote **stats** (parte do pacote **base** R), é utilizada para ajustar Modelos Lineares Generalizados (GLM).  
+A função `glm()`, do pacote **stats** (parte do pacote R **base**), é utilizada para ajustar Modelos Lineares Generalizados (GLM).  
 
 `glm()` pode ser utilizada para regressões logísticas univariadas e multivariadas (ex.: para obter probabilidades). Aqui estão as partes principais:
 
@@ -198,7 +198,7 @@ A função `glm()`, do pacote **stats** (parte do pacote **base** R), é utiliza
 glm(formula, family, data, weights, subset, ...)
 ```
 
-* `formula = ` o modelo é fornecido ao `glm()` como uma equação, com o resultado no lado esquerdo e as variáveis exploratórias no lado direito de um til `~`.
+* `formula = ` o modelo é fornecido ao `glm()` como uma equação, com o resultado no lado esquerdo e as variáveis explicativas no lado direito de um til `~`.
 * `family = ` Isto determina o tipo de modelo a ser executado. Para regressão logística, utilize `family = "binomial"`, para o modelo log-linear de poisson utilize `family = "poisson"`. Outros exemplos estão na tabela abaixo.
 * `data = ` Especifique sua fonte de dados
 
@@ -233,7 +233,7 @@ model <- glm(outcome ~ age_cat, family = "binomial", data = linelist)
 summary(model)
 ```
 
-Para alterar o nível base de dada variável, garanta que a coluna é da classe Factor e altere a primeira posição ao nível desejado utilizando a função `fct_relevel()` (veja a página sobre [Factors]). Por exemplo, abaixo nós adaptamos a coluna `age_cat` e escolhemos "20-29" como nível base antes de aplicar estes dados na função `glm()`.
+Para alterar o nível base de comparação de dada variável, garanta que a coluna é da classe Factor e altere a primeira posição ao nível desejado utilizando a função `fct_relevel()` (veja a página sobre [Factors]). Por exemplo, abaixo nós adaptamos a coluna `age_cat` e escolhemos "20-29" como nível base antes de aplicar estes dados na função `glm()`.
 
 ```{r}
 linelist %>% 
@@ -242,7 +242,7 @@ linelist %>%
   summary()
 ```
 
-#### Exportando os resultados {.unnumbered}
+#### Vizualizando os resultados {.unnumbered}
 
 Na maioria das vezes, diferentes modificações precisam ser feitas nos resultados acima. A função `tidy()`, do pacote **broom**, é conveniente para transformar os resultados em um formato apresentável.
 
@@ -317,7 +317,7 @@ Abaixo, nós mostramos um método usando `glm()`e `tidy()`. Para uma abordagem m
 
 Para rodar os modelos com diferentes variáveis e produzir probabilidades univariadas (ex.: sem dependência entre elas), você pode utilizar a abordagem abaixo. Ela utiliza a função `str_c()`, do pacote **stringr**, para criar fórmulas univaridas (veja a página [caractéres e strings]), e rodar a regressão `glm()`com cada fórmula, aplicando cada resultado `glm()` no `tidy()`, e, finalmente, unindo todos os resultados dos modelos com a função `bind_rows()`, do pacote **tidyr**. Esta abordagem utiliza a função `map()`, do pacote **purrr**, para repetir as funções - veja a página sobre [Iteração, loops, e listas] para mais informações sobre essa ferramenta.
 
-1) Crie um vetor com o nome das colunas com as variáveis explanatórias. Nós já criamos este vetor como `explanatory_vars` na seção Preparação desta página.
+1) Crie um vetor com o nome das colunas com as variáveis explicativas. Nós já criamos este vetor como `explanatory_vars` na seção Preparação desta página.
 
 2) Utilize a função `str_c()` para criar múltiplas fórmulas em texto, com o `outcome` no lado esquerdo, e o nome de uma coluna do `explanatory_vars`no lado direito. O ponto final '.' é substituído pelo nome da coluna em `explanatory_vars`.  
 
@@ -365,7 +365,7 @@ Desta vez, o objeto final `models` é maior porque agora representa os resultado
 DT::datatable(models, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Como antes, nós podemos criar uma tabela de contagem do objeto `linelist` para cada variável exploratória, ligar ela no objeto `models`, e fazer uma bela tabela. Nós podemos começar com as variáveis, e repetir os processos com a função `map()`. Nós repetimos a execução de uma função definida pelo usuário, que envolve a criação de uma tabela de contagem utilizando as funções do **dplyr**. Então, os resultados são combinados e ligados com os resultados de `models`.
+Como antes, nós podemos criar uma tabela de contagem do objeto `linelist` para cada variável explicativa, ligar ela no objeto `models`, e fazer uma bela tabela. Nós podemos começar com as variáveis, e repetir os processos com a função `map()`. Nós repetimos a execução de uma função definida pelo usuário, que envolve a criação de uma tabela de contagem utilizando as funções do **dplyr**. Então, os resultados são combinados e ligados com os resultados de `models`.
 
 
 ```{r, warning=F, message=F}
@@ -451,9 +451,9 @@ Esta página será atualizada quando possível.
 
 
 
-## Multivariável  
+## Multivariada
 
-Para a análise multivariável, novamente apresentamos duas abordagens:
+Para a análise multivariada, novamente apresentamos duas abordagens:
 
 * `glm()` e `tidy()`  
 * pacote **gtsummary**  
@@ -461,7 +461,7 @@ Para a análise multivariável, novamente apresentamos duas abordagens:
 O fluxo de trabalho é similar para cada uma das abordagens, sendo apenas a última diferente quando a tabela final é obtida.
 
 
-### Conduza a análise multivariável {.unnumbered}  
+### Conduza a análise multivariada {.unnumbered}  
 
 
 Aqui nós utilizamos a função `glm()`, mas adicionaremos mais variáveis no lado direito da equação, separadas pelos símbolos de mais (`+`).
@@ -482,12 +482,12 @@ glm(outcome ~ gender + age_cat * fever, family = "binomial", data = linelist)
 ```
 
 
-*Opcionalmente*, você pode utilizar este código para nivelar o vetor pré-definido com os nomes das colunas, e re-criar o comando acima utilizando a função `str_c()`. Isto pode ser útil caso os nomes das suas variáveis exploratórias estiverem mudando, ou se você não quiser digitar todas elas novamente.
+*Opcionalmente*, você pode utilizar este código para nivelar o vetor pré-definido com os nomes das colunas, e re-criar o comando acima utilizando a função `str_c()`. Isto pode ser útil caso os nomes das suas variáveis explicativas estiverem mudando, ou se você não quiser digitar todas elas novamente.
 
 ```{r mv_regression}
 
 ## rode uma regressão com todas as variáveis de interesse
-mv_reg <- explanatory_vars %>%  ## inicie com um vetor contendo o nome das colunas explanatórias
+mv_reg <- explanatory_vars %>%  ## inicie com um vetor contendo o nome das colunas explicativas
   str_c(collapse = "+") %>%     ## combine todos os nomes das variáveis de interesse separados por um 'mais'
   str_c("outcome ~ ", .) %>%    ## combine os nomes das variáveis de interesse com o 'outcome' no estilo de fórmula
   glm(family = "binomial",      ## defina o tipo de glm como logístico,
@@ -497,7 +497,7 @@ mv_reg <- explanatory_vars %>%  ## inicie com um vetor contendo o nome das colun
 
 #### Construíndo o modelo {.unnumbered}  
 
-É possível construir seu modelo passo a passo, salvando diferentes modelos que incluem certas variáveis explanatórias. Esses modelos podem ser comparados com os testes de probabilidade utilizando a função `lrtest()`, do pacote **lmtest**, como mostrado abaixo:  
+É possível construir seu modelo passo a passo, salvando diferentes modelos que incluem certas variáveis explicativas. Esses modelos podem ser comparados com os testes de probabilidade utilizando a função `lrtest()`, do pacote **lmtest**, como mostrado abaixo:  
 
 <span style="color: black;">**_NOTA:_** Utilizar o teste `anova(model1, model2, test = "Chisq)` do **base** produz os mesmos resultados </span> 
 
@@ -610,7 +610,7 @@ left_join(univ_tab_base, mv_tab_base, by = "term") %>%
 
 <!-- ======================================================= -->
 
-## Gráfico em floresta {  }
+## Gráfico em floresta (Forest Plot) {  }
 
 Esta seção mostra como produzir um gráfico com os resultados da sua regressão.
 Existem duas opções. Você pode construir uma plotagem utilizando o **ggplot2** ou utilizando 
