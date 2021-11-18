@@ -19,7 +19,7 @@ Está página irá abordar como:
 <!-- ======================================================= -->
 ## Preparando o ambiente R { }
 
-### Carregue os pacotes R {.unnumbered}  
+### Carregue os pacotes {.unnumbered}  
 
 O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do **base** R. Para mais informações sobre os pacotes do R, veja a página [Básico do R].  
 
