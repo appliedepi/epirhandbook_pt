@@ -162,7 +162,7 @@ utilizando a função `augment()`, do pacote **broom**.
 ## coloque os pontos da regressão e os dados observados em um banco de dados
 points <- augment(lm_results)
 
-## realize a plotagem dos dados utilizando a variável 'age' no eixo x
+## trace um gráfico dos dados utilizando a variável 'age' no eixo x
 ggplot(points, aes(x = age)) + 
   ## inclua os pontos para a altura
   geom_point(aes(y = ht_cm)) + 
@@ -623,13 +623,13 @@ Veja a página sobre [básico do ggplot] se você não é familiar com o pacote 
 
 ### Pacote **ggplot2** {.unnumbered}
 
-É possível construir uma plotagem em floresta com a função `ggplot()` ao plotar os resultados de uma regressão multivariada. Adicione as camadas das plotagens com estas funções "geoms":  
+É possível construir um gráfico em floresta com a função `ggplot()` ao plotar os resultados de uma regressão multivariada. Adicione as camadas das plotagens com estas funções "geoms":  
 
 * realize estimativas com `geom_point()`  
 * obtenha intervalos de confiança com `geom_errorbar()`  
 * uma linha vertical em OU = 1 com `geom_vline()`  
 
-Antes de plotar, é interessante utilizar a função `fct_relevel()`, do pacote **forcats**, para escolher a ordem das variáveis/níveis no eixo y. `ggplot()` pode mostrar elas em uma ordem alfa-numérica que pode não funcionar bem com os valores da variável 'age category' ("30" apareceria antes de "5"). Veja a página sobre [Factors] para mais detalhes.
+Antes de traçar o gráfico, é interessante utilizar a função `fct_relevel()`, do pacote **forcats**, para escolher a ordem das variáveis/níveis no eixo y. `ggplot()` pode mostrar elas em uma ordem alfa-numérica que pode não funcionar bem com os valores da variável 'age category' ("30" apareceria antes de "5"). Veja a página sobre [Factors] para mais detalhes.
 
 ```{r ggplot_forest}
 
@@ -646,7 +646,7 @@ mv_tab_base %>%
   # remove a linha "intercept" do gráfico
   filter(term != "(Intercept)") %>% 
   
-  ## realize a plotagem no eixo y e/ou as estimativas no eixo x
+  ## trace um gráfico no eixo y e/ou as estimativas no eixo x
   ggplot(aes(x = estimate, y = term)) +
   
   ## mostre a estimativa como um ponto
