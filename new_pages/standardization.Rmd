@@ -6,7 +6,7 @@ Esta página irá descrever duas maneiras de normalizar os dados, como hospitali
 * Utilizando o pacote **dsr** 
 * Utilizando o pacote **PHEindicatormethods**
 
-Nós iniciaremos enfatizando os processos de preparação/limpeza/união dos dados, por serem atividades comuns ao combinar dados populacionais de diferentes países, dados populacionais padrões, mortes, etc.
+Nós iniciaremos enfatizando os processos de preparação/limpeza/união dos dados, por serem atividades comuns ao combinar dados populacionais de diferentes países, dados populacionais padrões, óbitos, etc.
 
 ## Visão geral  
 
@@ -299,7 +299,7 @@ standard_pop_clean <- standard_pop_data %>%
      rename(pop = WorldStandardPopulation)   # mude o nome da coluna para "pop", como o pacote dsr solicita
 ```
 
-<span style="color: orange;">**_CUIDADO:_** Se você tentar utilizar a função `str_replace_all()` para remover o *símbolo* de mais, ele não irá funcionar pois é um símbolo especial. "Ignore" o caráter especial ao colocar duas barras invertidas na frente, como em `str_replace_call(column, "\\+", "")`. </span>
+<span style="color: orange;">**_CUIDADO:_** Se você tentar utilizar a função `str_replace_all()` para remover o *símbolo* de adição, ele não irá funcionar pois é um símbolo especial. "Ignore" o caráter especial ao colocar duas barras invertidas na frente, como em `str_replace_call(column, "\\+", "")`. </span>
 
 ### Crie um conjunto de dados com uma população padrão {#standard_all .unnumbered}  
 
@@ -371,7 +371,7 @@ Acima, nós vemos que enquanto o país A possui uma menor taxa de mortalidade br
 # Calcule a razão entre as taxas (rates ratio)
 mortality_rr <- dsr::dsrr(
      data = country_data, # especifique o objeto que contém o número de mortes por estrato
-     event = Deaths,      # coluna contendo o número de mortes por estrato
+     event = Deaths,      # coluna contendo o número de óbitos por estrato
      fu = Population,     # coluna contendo o número da população por estrato
      subgroup = Country,  # unidades que queremos comparar
      age_cat5,
@@ -396,7 +396,7 @@ A taxa de mortalidade normalizada é 1.22 vezes maior no país A em relação ao
 # Calcule a diferença entre taxas normalizadas (Rates Difference)
 mortality_rd <- dsr::dsrr(
      data = country_data,       # especifique o objeto contendo o número de mortes por estrato
-     event = Deaths,            # coluna contendo o número de mortes por estrato
+     event = Deaths,            # coluna contendo o número de óbitos por estrato
      fu = Population,           # coluna contendo a quantidade de população por estrato
      subgroup = Country,        # unidades que gostaríamos de comparar
      age_cat5,                  # características para as quais gostaríamos de normalizar
@@ -412,7 +412,7 @@ mortality_rd <- dsr::dsrr(
 knitr::kable(mortality_rd) 
 ```
 
-Quando comparado ao país B, o país A possuí possuí 4.24 mortes adicionais por 100.000 habitantes (IC 95% 3.24-5.24).
+Quando comparado ao país B, o país A possui 4.24 óbitos adicionais por 100.000 habitantes (IC 95% 3.24-5.24).
 
 
 
@@ -455,7 +455,7 @@ knitr::kable(mortality_ds_rate_phe)
 <!-- ======================================================= -->
 ### Taxas normalizadas indiretamente {#standard_indirect .unnumbered}
 
-Para normalização indireta, você precisa de uma população de referência com o número de mortes e a quantidade da população por estrato. Neste exemplo, nós iremos calcular as taxas para o país A *utilizando o país B como população de referência*, uma vez que a população de referência em `standard_pop_clean` não possui a quantidade de mortes por estrato.
+Para normalização indireta, você precisa de uma população de referência com o número de óbitos e a quantidade da população por estrato. Neste exemplo, nós iremos calcular as taxas para o país A *utilizando o país B como população de referência*, uma vez que a população de referência em `standard_pop_clean` não possui a quantidade de mortes por estrato.
 
 Abaixo, primeiro criamos a população de referência do país B. Então, passamos os dados populacionais e de mortalidade do país A, combinamos ele com a população de referência, e passamos para a função `phe_isr()`, para obter taxas indiretamente normalizadas. Claro, você pode fazer isto vice versa.
 
