@@ -21,7 +21,7 @@ Está página irá abordar como:
 
 ### Carregue os pacotes {.unnumbered}  
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do **base** R. Para mais informações sobre os pacotes do R, veja a página [Básico do R].  
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Básico do R].  
 
 ```{r}
 pacman::p_load(
@@ -337,7 +337,7 @@ names(shadowed_linelist)
 
 Estas colunas "shadow" podem ser utilizadas para traçar um gráfico da proporção de campos em branco, em relação à qualquer outra coluna.
 
-Por exemplo, o gráfico abaixo mostra a proporção de campos em branco na coluna `days_onset_hosp` (número de dias entre o início dos sintomas e a hospitalização), de acordo com o campo em `date_hospitalisation`. Essencialmente, você está plotando a densidade da coluna no eixo x, mas estratificando os resultados (`color = `) pela coluna "shadow" de interesse. Esta análise funciona melhor se o eixo x é uma coluna numérica ou com dados cronológicos.
+Por exemplo, o gráfico abaixo mostra a proporção de campos em branco na coluna `days_onset_hosp` (número de dias entre o início dos sintomas e a hospitalização), de acordo com o campo em `date_hospitalisation`. Essencialmente, você está criando um gráfico da densidade da coluna no eixo x, mas estratificando os resultados (`color = `) pela coluna "shadow" de interesse. Esta análise funciona melhor se o eixo x é uma coluna numérica ou com dados cronológicos.
 
 
 ```{r, message = F}
@@ -388,7 +388,7 @@ outcome_missing <- linelist %>%
   filter(stringr::str_detect(statistic, "_p_"))                  # mantenha apenas os valores proporcionais
 ```
 
-Então nóstraçamos um gráfico das proporções dos campos em branco como uma linha, de acordo com a semana. A página sobre [básico do ggplot] pode ser utilizada se você não tiver familiaridade com o pacote **ggplot2** de plotagem.
+Então nóstraçamos um gráfico das proporções dos campos em branco como uma linha, de acordo com a semana. A página sobre [básico do ggplot] pode ser utilizada se você não tiver familiaridade com o pacote **ggplot2** de visuzalização de dados.
 
 ```{r, message=F, warning=F}
 ggplot(data = outcome_missing)+
