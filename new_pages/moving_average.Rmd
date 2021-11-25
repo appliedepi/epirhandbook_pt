@@ -15,7 +15,7 @@ Nesta página, dois métodos para calcular e visualizar médias móveis serão a
 
 ### Carregue os pacotes {.unnumbered}
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do **base** R. Para mais informações sobre os pacotes do R, veja a página [Básico do R].
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Básico do R].
 
 ```{r}
 pacman::p_load(
@@ -158,7 +158,7 @@ Observe como, na coluna regular, a contagem aumenta constantemente nas primeiras
 DT::datatable(rolling, rownames = FALSE, options = list(pageLength = 12, scrollX=T) )
 ```
 
-Agora você pode plotar esses dados utilizando o `ggplot()`:
+Agora você pode traçar um gráfico desses dados utilizando o `ggplot()`:
 
 ```{r}
 ggplot(data = rolling)+
