@@ -66,7 +66,7 @@ Aqui estão algumas das funções mais comuns:
     -   `slide_index_sum()` - função atalho para realizar a soma móvel usando indexador\
     -   `slide_index_mean()` - função atalho para realizar a média móvel usando indexador
 
-O pacote **slider** possuí muitas outras funções que são cobertas na seção sobre Recursos extras desta página. Aqui, nós abordamos brevemente as funções mais comuns.
+O pacote **slider** possui muitas outras funções que são cobertas na seção sobre Recursos extras desta página. Aqui, nós abordamos brevemente as funções mais comuns.
 
 **Argumentos essenciais**
 
