@@ -1,9 +1,9 @@
 # Testes estatísticos simples { }
 
 
-Esta página demonstra como realizar testes estatísticos simples com os pacotes **base** R, **rstatix**, e **gtsummary**.  
+Esta página demonstra como realizar testes estatísticos simples com os pacotes R **base**, **rstatix**, e **gtsummary**.  
 
-* Teste T  
+* Teste t  
 * Teste de Shapiro-Wilk  
 * Teste de Wilcoxon  
 * Teste de Kruskal-Wallis  
@@ -12,11 +12,11 @@ Esta página demonstra como realizar testes estatísticos simples com os pacotes
 
 ...muitos outros testes podem ser realizados, mas mostramos apenas os mais comuns e fornecemos links para outras fontes.  
 
-Cada um dos pacotes acima possuí certas vantagens e desvantagens:
+Cada um dos pacotes acima possui certas vantagens e desvantagens:
 
-* Utilize as funções do pacote **base** R para exportar resultados estatísticos para o console do R
+* Utilize as funções do pacote R **base** para exportar resultados estatísticos para o console do R
 * Utilize as funções do pacote **rstatix** para gerar os resultados em um quadro de dados, ou caso queira que os testes sejam realizados por grupos
-* Utilize o pacote **gtsummary** para exportar facilmente tabelas prontas para apresentações
+* Utilize o pacote **gtsummary** para exportar facilmente tabelas prontas para publicação.
 
 
 
@@ -26,7 +26,7 @@ Cada um dos pacotes acima possuí certas vantagens e desvantagens:
 
 ### Carregue os pacotes {.unnumbered}
 
-Este pequeno código carrega os pacotes necessários para as análises. Neste manual, nós estimulamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso necessários, *e* os carrega para utilização. Também é possível carregar pacotes já instalados com a função `library()` do pacote **base** R. Veja a página sobre [básico do R] para mais informações sobre pacotes do R.
+Este pequeno código carrega os pacotes necessários para as análises. Neste manual, nós estimulamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso necessários, *e* os carrega para utilização. Também é possível carregar pacotes já instalados com a função `library()` do pacote R **base**. Veja a página sobre [básico do R] para mais informações sobre pacotes do R.
 
 
 ```{r}
@@ -38,7 +38,7 @@ pacman::p_load(
   gtsummary,    # resumo estatístico e testes
   rstatix,      # estatísticas
   corrr,        # análise de correlação entre variáveis numéricas
-  janitor,      # adicione totais e porcentagens as tabelas
+  janitor,      # adicione totais e porcentagens às tabelas
   flextable     # converte tabelas para o formato HTML
   )
 ```
@@ -49,12 +49,12 @@ Nós iremos importar o banco de dados dos casos de uma simulação de epidemia d
 
 
 ```{r, echo=F}
-# importa o banco de dados no R, dentro do objeto 'linelist'
+# importa o banco de dados para o ambiente R
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 ```
 
 ```{r, eval=F}
-# importa o banco de dados no R, dentro do objeto 'linelist'
+# importa o 'linelist'
 linelist <- import("linelist_cleaned.rds")
 ```
 
@@ -69,15 +69,15 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 
 
 
-## Pacote **base** R {}
+## Pacote R **base** {}
 
-Você pode utilizar as funções do pacote **base** R para realizar testes estatísticos. Os comandos são relativamente simples, e os resultados são exportados para o terminal do R para visualização. Entretanto, normalmente os resultados são gerados no formato de listas, o que dificulta a manipulação caso queira utilizá-los posteriormente.
+Você pode utilizar as funções do pacote R **base** para realizar testes estatísticos. Os comandos são relativamente simples, e os resultados são exportados para o terminal do R para visualização. Entretanto, normalmente os resultados são gerados no formato de listas, o que dificulta a manipulação, caso queira utilizá-los posteriormente.
 
 ### Testes T {.unnumbered} 
 
 O [teste t](https://en.wikipedia.org/wiki/Student%27s_t-test), também chamando de "Teste t de Student", é tipicamente utilizado para determinar se existem diferenças significativas entre as médias de variáveis numéricas de dois grupos distintos. Aqui, nós iremos mostrar duas sintaxes para realizar esse teste, de acordo com a presença ou não das colunas no mesmo quadro de dados.
 
-**Sintaxe 1:** Esta é a sintaxe utilizada quando as colunas numéricas e categóricas estão no mesmo quadro de dados. Especifique a coluna numérica no lado esquerdo da equação, e a coluna categórica no lado direito. Coloque o nome do banco de dados no argumento `data = `. Opcionalmente, ajuste os argumentos `paired = TRUE`, `conf.level = ` para (0.95 default), e `alternative = ` para ("two.sided", "less", ou "greater"). Digite `?t.test` para mais detalhes.  
+**Sintaxe 1:** Esta é a sintaxe utilizada quando as colunas numéricas e categóricas estão no mesmo quadro de dados (*data frame*). Especifique a coluna numérica no lado esquerdo da equação, e a coluna categórica no lado direito. Coloque o nome do banco de dados no argumento `data = `. Opcionalmente, ajuste os argumentos `paired = TRUE`, `conf.level = ` para (0.95 default), e `alternative = ` para ("two.sided", "less", ou "greater"). Digite `?t.test` para mais detalhes.  
 
 ```{r}
 ## compare a média das idades de acordo com o sexo com um teste t
@@ -120,7 +120,7 @@ wilcox.test(age_years ~ outcome, data = linelist)
 ### Teste de Kruskal-Wallis {.unnumbered}
 
 
-O [tesde de Kruskal-Wallis](https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_one-way_analysis_of_variance) é uma extensão do teste de Wilcoxon que pode ser utilizado para verificar diferenças na distribuição de mais de duas amostras. Quando apenas duas amostras são utilizadas, os resultados são identicos ao teste de Wilcoxon.
+O [tesde de Kruskal-Wallis](https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_one-way_analysis_of_variance) é uma extensão do teste de Wilcoxon que pode ser utilizado para verificar diferenças na distribuição de mais de duas amostras. Quando apenas duas amostras são utilizadas, os resultados são idênticos ao teste de Wilcoxon.
 
 ```{r }
 
@@ -144,14 +144,14 @@ chisq.test(linelist$gender, linelist$outcome)
 
 ## Pacote **rstatix** {}
 
-O pacote **rstatix** realiza testes estatísticos e gera os resultados de forma que possam ser manipulados ("pipe-friendly"). Os resultados são gerados automaticamente em um quadro de dados, sendo possível realizar operações posteriores com eles. Também é fácil agrupar os dados utilizados nas funções, podendo as estatísticas serem executadas por cada grupo.
+O pacote **rstatix** realiza testes estatísticos e gera os resultados de forma que possam ser manipulados ("pipe-friendly"). Os resultados são gerados automaticamente em um quadro de dados (*data frame*), sendo possível realizar operações posteriores com eles. Também é fácil agrupar os dados utilizados nas funções, podendo as estatísticas serem executadas por cada grupo.
 
 
 ### Estatísticas resumo {.unnumbered}  
 
 A função `get_summary_stats()` é uma maneira rápida de gerar resultados estatísticos. Simplesmente aplique seu banco de dados nessa função, e escolha as colunas para analisar. Se nenhuma coluna for especificada, as estatísticas são calculadas com todas as colunas.
 
-Por padrão, um resumo estatístico amplo é gerado: n, max, min, mediana, 25%ile, 75%ile, IQR, desvio absoluto mediano (mad), média, desvio padrão, erro padrão, e o intervalo de confiança da média.
+Por padrão, um resumo estatístico completo é gerado: n, max, min, mediana, 25%ile, 75%ile, IQR, desvio absoluto mediano (mad), média, desvio padrão, erro padrão, e o intervalo de confiança da média.
 
 
 ```{r}
@@ -159,7 +159,7 @@ linelist %>%
   rstatix::get_summary_stats(age, temp)
 ```
 
-Você pode especificar um sub-grupo do resumo estatístico a ser gerado, ao fornecer um fos seguintes valores ao argumento `type = `: "full", "common", "robust", "five_number", "mean_sd", "mean_se", "mean_ci", "median_iqr", "median_mad", "quantile", "mean", "median", "min", "max".  
+Você pode especificar um sub-grupo do resumo estatístico a ser gerado, ao fornecer um dos seguintes valores ao argumento `type = `: "full", "common", "robust", "five_number", "mean_sd", "mean_se", "mean_ci", "median_iqr", "median_mad", "quantile", "mean", "median", "min", "max".  
 
 Esta função também pode ser utilizada com dados agrupados, de forma que uma linha é gerada por cada variável agrupável:
 
@@ -245,7 +245,7 @@ Muitas outras funções e testes estatísticos podem ser realizados com as funç
 
 Use o **gtsummary** se você quiser adicionar os resultados de um teste estatístico em uma tabela criada com esse pacote (como descrito na seção do **gtsummary** na página de [Tabelas descritivas](#tbl_gt)).  
 
-Para realizar testes estatísticos de comparação com a função `tbl_summary`, basta adicionar a função `add_p` na tabela e especificar qual teste utilizar. É possível obter os valores de p corrigidos para testes múltiplos ao utilizar a função `add_q`. Utilize o comando `?tbl_summary` para mais detalhes.  
+Para realizar testes estatísticos de comparação com a função `tbl_summary`, basta adicionar a função `add_p` na tabela e especificar qual teste utilizar. É possível obter os p-valores corrigidos para testes múltiplos ao utilizar a função `add_q`. Utilize o comando `?tbl_summary` para mais detalhes.  
 
 ### Teste Qui-quadrado {.unnumbered}
 
@@ -259,7 +259,7 @@ linelist %>%
 ```
 
 
-### Testes T {.unnumbered} 
+### Testes t {.unnumbered} 
 
 Compare a diferença média de uma variável contínua em dois grupos.
 Por exemplo, compare a média das idades de acordo com a evolução clínica do paciente.
@@ -460,7 +460,7 @@ linelist %>%
 
 ## Correlações
 
-Correlações entre variáveis numéricas podem ser investigadas utilizando os pacotes **tidyverse** **corrr**. Assim, é possível realizar os testes de correlação com Pearson, Kendall tau ou Spearman rho. O pacote cria uma tabela e tem uma função para plotar os valores automaticamente.
+Correlações entre variáveis numéricas podem ser investigadas utilizando os pacotes **tidyverse** **corrr**. Assim, é possível realizar os testes de correlação de Pearson, tau ($\tau$) de Kendall ou rho ($\rho$) de Spearman. O pacote cria uma tabela e tem uma função para gerar um gráfico os valores automaticamente.
 
 ```{r, warning=F, message=F}
 
