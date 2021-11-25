@@ -2,7 +2,7 @@
 
 <!-- ======================================================= -->
 
-Esta página demonstra o uso das funções de regressão do pacote **base** R, como `glm()`, e o pacote **gtsummary** para 
+Esta página demonstra o uso das funções de regressão do pacote R **base** , como `glm()`, e o pacote **gtsummary** para 
 verificar as associações entre as variáveis (ex.: riscos relativos, relações de risco e *hazard ratio*).
 Também serão mostradads funções como `tidy()`, do pacote **broom**, para limpar os resultados da regressão.
 
@@ -22,7 +22,7 @@ Para realizar a regressão proporcional de riscos (regressão Cox), veja a pági
 
 ### Carregue os pacotes {.unnumbered}
 
-Este código realiza o carregamento dos pacotes necessários para as análises. Neste manual, nós enfatizamos o uso da função `p_load()`, do pacote **pacman**, que instala os pacotes, caso necessário, *e* os carrega para utilização. Você também pode utilizar a função `library()`, do pacote **base** R, para carregar pacotes instalados. Veja a página sobre o [Básico do R] para mais informações sobre os pacotes R.
+Este código realiza o carregamento dos pacotes necessários para as análises. Neste manual, nós enfatizamos o uso da função `p_load()`, do pacote **pacman**, que instala os pacotes, caso necessário, *e* os carrega para utilização. Você também pode utilizar a função `library()`, do pacote R **base** , para carregar pacotes instalados. Veja a página sobre o [Básico do R] para mais informações sobre os pacotes R.
 
 ```{r}
 pacman::p_load(
@@ -293,7 +293,7 @@ Aqui está como os dados em `counts_table` ficam quando tabelados:
 DT::datatable(counts_table, rownames = FALSE, options = list(pageLength = nrow(counts_table), scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Agora nós podemos ligar os resultados dos objetos `counts_table` e `model` horizontalmente com a função `bind_cols()` (**dplyr**). Lembre que, com a função `bind_cols()`, as linhas dos dois objetos precisam estar alinhadas perfeitamente. Neste código, porque estamos ligando uma cadeia de comandos, nós utilizamos o `.` para representar o objeto de `counts_table` enquanto o ligamos ao `model`. Para finalizar o processo, a função `select()` é utilizada para selecionar colunas de interesse e sua ordem, e finalmente aplicar a função `round()`, do **base** R, em todas as colunas numéricas para até duas casas decimais.
+Agora nós podemos ligar os resultados dos objetos `counts_table` e `model` horizontalmente com a função `bind_cols()` (**dplyr**). Lembre que, com a função `bind_cols()`, as linhas dos dois objetos precisam estar alinhadas perfeitamente. Neste código, porque estamos ligando uma cadeia de comandos, nós utilizamos o `.` para representar o objeto de `counts_table` enquanto o ligamos ao `model`. Para finalizar o processo, a função `select()` é utilizada para selecionar colunas de interesse e sua ordem, e finalmente aplicar a função `round()`, do R **base**, em todas as colunas numéricas para até duas casas decimais.
 
 ```{r, message=F, warning=F}
 combined <- counts_table %>%           # inicie com uma tabela de contagens
@@ -499,7 +499,7 @@ mv_reg <- explanatory_vars %>%  ## inicie com um vetor contendo o nome das colun
 
 É possível construir seu modelo passo a passo, salvando diferentes modelos que incluem certas variáveis explicativas. Esses modelos podem ser comparados com os testes de probabilidade utilizando a função `lrtest()`, do pacote **lmtest**, como mostrado abaixo:  
 
-<span style="color: black;">**_NOTA:_** Utilizar o teste `anova(model1, model2, test = "Chisq)` do **base** produz os mesmos resultados </span> 
+<span style="color: black;">**_NOTA:_** Utilizar o teste `anova(model1, model2, test = "Chisq)` do R **base** produz os mesmos resultados </span> 
 
 ```{r}
 model1 <- glm(outcome ~ age_cat, family = "binomial", data = linelist)
