@@ -4,19 +4,19 @@
 knitr::include_graphics(here::here("images", "descriptive_tables.png"))
 ```
 
-Esta página demonstra o uso dos pacotes **janitor**, **dplyr**, **gtsummary**, **rstatix**, e **base** R para gerar um resumo dos dados e criar tabelas com estatísticas descritivas.
+Esta página demonstra o uso dos pacotes **janitor**, **dplyr**, **gtsummary**, **rstatix**, e R **base** para gerar um resumo dos dados e criar tabelas com estatísticas descritivas.
 
 *Esta página explica como* criar\* as tabelas básicas e detalhadas, enquanto que a página [Tabelas para apresentações] descreve como formatar e imprimir essas tabelas de forma visualmente agradável.\*
 
 Cada um destes pacotes tem vantagens e desvantagens em relação à simplicidade do código, acessibilidade dos resultados gerados, e qualidade da impressão destes resultados. Utilize esta página para decidir qual abordagem funciona melhor para a sua realidade.
 
-Você tem várias opções para produzir tabelas simples e tabelas cruzadas (também conhecidas como tabelas de contingência). Entretanto, é necessário levar em consideração alguns fatores, como a simplicidade do código R utilizado; a capacidade de personalização deste código; a forma de geração dos resultados (impresso para o terminal do R, como uma tabela de dados, e/ou como uma imagem 'bonita' nos formatos .png/.jpeg/.html); e a facilidade de pós-processamento dos resultados gerados. Leve em consideração os pontos abaixo ao escolher uma ferramenta para atender as suas necessidades.
+Você tem várias opções para produzir tabelas simples e tabelas cruzadas (também conhecidas como tabelas de contingência). Entretanto, é necessário levar em consideração alguns fatores, como a simplicidade do código R utilizado; a capacidade de personalização deste código; a forma de geração dos resultados (para visualização no terminal do R, ou como uma tabela de dados (*data frame*), e/ou como uma imagem 'bonita' nos formatos .png/.jpeg/.html); e a facilidade de pós-processamento dos resultados gerados. Leve em consideração os pontos abaixo ao escolher uma ferramenta para atender as suas necessidades.
 
 -   Use a função `tabyl()` do **janitor** para produzir e personalizar tabulações simples e tabulações cruzadas\
 -   Use a função `get_summary_stats()` do **rstatix** para gerar tabelas com resumos estatísticos de diferentes colunas e/ou grupos de dados de forma fácil\
 -   Use as funções `summarise()` e `count()` do **dplyr** para realizar análises estatísticas mais complexas, gerar tabelas de dados organizadas, ou preparar os dados para utilizar na função `ggplot()`\
 -   Use a função `tbl_summary()` do **gtsummary** para produzir tabelas detalhadas prontas para publicação\
--   Use a função `table()` do **base** R se você não tiver acesso aos pacotes citados acima
+-   Use a função `table()` do R **base** se você não tiver acesso aos pacotes citados acima
 
 <!-- ======================================================= -->
 
@@ -24,7 +24,7 @@ Você tem várias opções para produzir tabelas simples e tabelas cruzadas (tam
 
 ### Carregue os pacotes R {.unnumbered}
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do **base** R. Para mais informações sobre os pacotes do R, veja a página [Básico do R].
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do r **base**. Para mais informações sobre os pacotes do R, veja a página [Básico do R].
 
 ```{r, warning=F, message=F}
 pacman::p_load(
@@ -81,7 +81,7 @@ skim(linelist)
 skim_without_charts(linelist)
 ```
 
-Você também pode usar a função `summary()`, do **base** R, para obter informações sobre o banco de dados inteiro, mas os resultados obtidos podem ser mais difíceis de visualizar do que utilizando o **skimr**. O resultado da análise com `summary()` não é mostrado abaixo, visando poupar espaço na página.
+Você também pode usar a função `summary()`, do R **base**, para obter informações sobre o banco de dados inteiro, mas os resultados obtidos podem ser mais difíceis de visualizar do que utilizando o **skimr**. O resultado da análise com `summary()` não é mostrado abaixo, visando poupar espaço na página.
 
 ```{r, eval=F}
 ## obtenha informações sobre cada coluna no banco de dados
@@ -90,7 +90,7 @@ summary(linelist)
 
 ### Resumos estatísticos {.unnumbered}
 
-Você pode utilizar as funções do **base** R para obter resumos estatísticos de uma coluna com dados numéricos. Boa parte das análises estatísticas mais úteis com este tipo de coluna pode ser obtido utilizando a função `summary()`, como mostrado abaixo. Observe que o nome da tabela de dados e da coluna (linelist) precisam ser especificados como mostrado abaixo.
+Você pode utilizar as funções do R **base** para obter resumos estatísticos de uma coluna com dados numéricos. Boa parte das análises estatísticas mais úteis com este tipo de coluna pode ser obtido utilizando a função `summary()`, como mostrado abaixo. Observe que o nome da tabela de dados e da coluna (linelist) precisam ser especificados como mostrado abaixo.
 
 ```{r}
 summary(linelist$age_years)
@@ -99,16 +99,16 @@ summary(linelist$age_years)
 Você pode obter e salvar uma parte específica da análise utilizando o indexador com colchetes [ ]:
 
 ```{r}
-summary(linelist$age_years)[[2]] # obtém apenas o resultado da análise no index [2]
+summary(linelist$age_years)[[2]] # obtém apenas o resultado da análise no índice [2]
 # alternativa equivalente ao indexador [2], utilizando o nome do campo:
 # summary(linelist$age_years)[["1st Qu."]]  
 ```
 
-Você pode obter estatísticas individuais com outras funções do **base** R, como `max()`, `min()`, `median()`, `mean()`, `quantile()`, `sd()`, e `range()`. Veja a página [Básico do R] para uma lista completa.
+Você pode obter estatísticas individuais com outras funções do R **base**, como `max()`, `min()`, `median()`, `mean()`, `quantile()`, `sd()`, e `range()`. Veja a página [Básico do R] para uma lista completa.
 
 [***CUIDADO:*** Caso seus dados contenham campos em branco, o R quer que você saiba disso e irá gerar `NA` na análise. Isso só não irá ocorrer caso você 'peça' para o R ignorar esses campos em branco nas funções matemáticas acima. Isso pode ser realizado com o argumento]{style="color: orange;"}`na.rm = TRUE`[.]{style="color: orange;"}
 
-Você pode usar a função `get_summary_stats()`, do **rstatix**, para obter o resumo estatístico *em formato de tabela*. Isso pode ser útil na execução de comandos posteriores ou na plotagem dos números. Veja a página [Testes estatísticos simples] para mais detalhes do pacote **rstatix** e suas funções.
+Você pode usar a função `get_summary_stats()`, do **rstatix**, para obter o resumo estatístico *em formato de quadro de dados (data frame)*. Isso pode ser útil na execução de comandos posteriores ou para criação de gráficos com os valores. Veja a página [Testes estatísticos simples] para mais detalhes do pacote **rstatix** e suas funções.
 
 ```{r}
 linelist %>% 
@@ -134,7 +134,7 @@ linelist %>% tabyl(age_cat)
 
 Como observado acima, se existirem campos em branco na coluna analisada, eles são mostrados em uma linha chamada `<NA>`. Você pode omitir estes campos com o atributo `show_na = FALSE`. Se não existirem campos em branco, essa linha não irá aparecer. Se estes campos existirem, todas as proporções são geradas como 'brutas' (coluna 'percent' gerada, em que a quantidade de campos `NA` está inclusa no denominador) e 'válidas' (coluna 'valid_percent', onde a quantidade de campos `NA` não é considerada no cálculo).
 
-Se a coluna for da classe Factor e apenas alguns níveis dessa classe estiverem presentes em seus dados, todos os níveis desta classe serão mostrados na tabela de análise. Você pode omitir essa característica ao usar o atributo `show_missing_levels = FALSE`. Leia mais na página [Factors].
+Se a coluna for um fator (da classe Factor) e apenas alguns níveis dessa classe estiverem presentes em seus dados, todos os níveis desta classe serão mostrados na tabela de análise. Você pode omitir essa característica ao usar o atributo `show_missing_levels = FALSE`. Leia mais na página [Factors].
 
 ### Tabulação cruzada (tabela de contingência) {.unnumbered}
 
@@ -184,7 +184,7 @@ linelist %>%
   adorn_pct_formatting(digits = 1)            # converte as proporções para porcentagens
 ```
 
-O código abaixo modifica uma tabela de dados cruzados de forma que as quantidades absolutas e os percentuais são mostrados.
+O código abaixo modifica uma tabela cruzada de dados de forma que as quantidades absolutas e os percentuais sejam mostrados.
 
 ```{r}
 linelist %>%                                  # fonte dos dados
@@ -222,7 +222,7 @@ linelist %>%
 
 ### Personalizando outras tabelas com funções 'adorn' {.unnumbered}
 
-Você pode utilizar as funções `adorn_*()`, do pacote **janitor**, em outras tabelas, como as criadas pelas funções `summarise()` e `count()` do pacote **dplyr**, ou `table()` do **base** R. Simplesmente aplique a tabela gerada à função desejada do pacote **janitor**. Por exemplo:
+Você pode utilizar as funções `adorn_*()`, do pacote **janitor**, em outras tabelas, como as criadas pelas funções `summarise()` e `count()` do pacote **dplyr**, ou `table()` do R **base**. Simplesmente aplique a tabela gerada à função desejada do pacote **janitor**. Por exemplo:
 
 ```{r}
 linelist %>% 
@@ -277,7 +277,7 @@ Veja a página [Testes estatísticos simples] para mais códigos e dicas sobre e
 
 **dplyr** faz parte dos pacotes **tidyverse**, sendo uma ferramenta de gestão de dados muito comum. Criar tabelas com as funções `summarise()` e `count()` do **dplyr** é uma abordagem útil para obter resumos estatísticos, resumos *por grupos*, ou para utilizá-las no `ggplot()`.
 
-A função `summarise()` cria uma *nova tabela com o resumo dos dados.* Se os dados *não são agrupados*, esta função gera uma tabela de dados de uma linha com os resumos estatísticos desejados do banco de dados inteiro. Se os dados são *agrupados*, a nova tabela terá um linha por *grupo* (veja a página [Agrupando dados]).
+A função `summarise()` cria uma *nova tabela resumo dos dados.* Se os dados *não são agrupados*, esta função gera uma tabela de dados de uma linha com os resumos estatísticos desejados do banco de dados inteiro. Se os dados são *agrupados*, a nova tabela terá um linha por *grupo* (veja a página [Agrupando dados]).
 
 Dentro dos parênteses da função `summarise()`, você pode incluir os nomes de cada nova coluna, seguido pelo sinal de igual e uma função estatística a ser utilizada.
 
@@ -324,7 +324,7 @@ linelist %>%
 
 Se você estiver tabelando uma coluna da classe *factor*, é possível fazer com que *todos* os níveis dessa classe sejam mostrados (não apenas os níveis presentes nos dados) ao adicionar o atributo `.drop = FALSE` dentro das funções `summarise()` ou `count()`.
 
-Está técnica é útil para padronizar suas tabelas/plotagens. Por exemplo, se você estiver criando figuras para diferentes sub-grupos, ou precisar criar um mesmo tipo de figura para relatórios de rotina. Em cada uma dessas circuntâncias, os valores nos dados podem variar, mas é possível definir níveis que continuam constantes.
+Está técnica é útil para padronizar suas tabelas/gráficos. Por exemplo, se você estiver criando figuras para diferentes sub-grupos, ou precisar criar um mesmo tipo de figura para relatórios de rotina. Em cada uma dessas circuntâncias, os valores nos dados podem variar, mas é possível definir níveis que continuem constantes.
 
 Veja a página sobre [Factors] para mais informações.
 
@@ -359,7 +359,7 @@ age_by_outcome <- linelist %>%                  # inicie com os dados do linelis
 DT::datatable(age_by_outcome, rownames = FALSE, options = list(pageLength = 12, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-### Plotagem dos dados {.unnumbered}
+### Visualização dos dados {.unnumbered}
 
 Utilizar a função `ggplot()` com os dados de uma tabela no formato "longo", como a mostrada acima, é relativamente simples. Esses dados, no formato "longo", são facilmente aceitos pelo `ggplot()`. Veja mais exemplos nas páginas [básico do ggplot] e [dicas do ggplot].
 
@@ -376,7 +376,7 @@ linelist %>%                      # inicie com a linelist
 
 ### Resumo estatístico {.unnumbered}
 
-Uma das principais vantagens do pacote **dplyr** e da função `summarise()`, é a habilidade de gerarem resumos estatísticos mais avançados, como `median()`, `mean()`, `max()`, `min()`, `sd()` (desvio padrão), e percentis. Você também pode utilizar a função `sum()` para contar o número de linhas que cumprem certos critérios lógicos. Como mostrado acima, essas informações podem ser obtidascom todo o banco de dados, ou por grupos.
+Uma das principais vantagens do pacote **dplyr** e da função `summarise()` é a habilidade deles gerarem resumos estatísticos mais avançados, como `median()`, `mean()`, `max()`, `min()`, `sd()` (desvio padrão), e percentis. Você também pode utilizar a função `sum()` para contar o número de linhas que cumprem certos critérios lógicos. Como mostrado acima, essas informações podem ser obtidas com todo o banco de dados, ou por grupos.
 
 A sintaxe é a mesma - dentro dos parênteses da função `summarise()`, você adiciona os nomes de cada nova coluna resumo, seguido pelos sinais de igual e a função estatística a ser realizada. Dentro da função estatística, escolha a(s) coluna(s) para serem utilizadas no cálculo, e qualquer outro argumento relevante (exemplo: `na.rm = TRUE` para boa parte das funções matemáticas).
 
@@ -393,7 +393,7 @@ summary_table <- linelist %>%                                        # inicie co
   group_by(hospital) %>%                                             # agrupe todos os cálculos por hospital
   summarise(                                                         # apenas as colunas abaixo serão geradas
     cases       = n(),                                                # n° de casos por grupo
-    delay_max   = max(days_onset_hosp, na.rm = T),                    # tempo máximo entre ínicio dos sintomas e admissão
+    delay_max   = max(days_onset_hosp, na.rm = T),                    # tempo máximo entre o ínicio dos sintomas e a admissão
     delay_mean  = round(mean(days_onset_hosp, na.rm=T), digits = 1),  # tempo médio, arredondado
     delay_sd    = round(sd(days_onset_hosp, na.rm = T), digits = 1),  # desvio padrão do intervalo de tempo, arredondado
     delay_3     = sum(days_onset_hosp >= 3, na.rm = T),               # n° de acsos com intervalo igual ou maior à 3 dias
@@ -413,7 +413,7 @@ Algumas dicas:
 
     -   Escolha `accuracy =` para 0.1 ou 0.01 para garantir 1 ou 2 vírgulas decimais, respectivamente\
 
--   Use a função `round()`, do pacote **base** R, para arredondar e especificar quantidade de casas decimais\
+-   Use a função `round()`, do pacote R **base**, para arredondar e especificar quantidade de casas decimais\
 
 -   Para obter dados estatísticos do banco de dados completo, utilize a função `summarise()` sem a função `group_by()`\
 
@@ -461,7 +461,7 @@ summary_table %>%
 
 #### Percentis {.unnumbered}
 
-O cálculo dos *percentis* e quartis no **dplyr** merece uma menção especial. Para obter os quartis, utilize a função `quantile()` com os intervalos padrões, ou especifique os valores alterando o atributo `probs =`.
+O cálculo dos *percentis* e quantis no **dplyr** merece uma menção especial. Para obter os quantis, utilize a função `quantile()` com os intervalos padrões, ou especifique os valores alterando o atributo `probs =`.
 
 ```{r}
 # obtenha os percentis padrões da variável age (0%, 25%, 50%, 75%, 100%)
@@ -478,7 +478,7 @@ linelist %>%
     )
 ```
 
-Se você quer obter os quantis *por grupos*, é mais viável utilizar a função `group_by()` e criar novas colunas, uma vez que irá gerar dados mais claros em relação ao método acima, onde seriam obtidosresultados longos e menos úteis. Desta forma, experimente essa abordagem: crie um coluna para cada nível de quantil desejado.
+Se você quiser obter os quantis *por grupos*, é mais viável utilizar a função `group_by()` e criar novas colunas, uma vez que isso irá gerar dados mais claros em relação ao método acima, onde seriam obtidos resultados longos e menos úteis. Desta forma, experimente essa abordagem: crie um coluna para cada nível de quantil desejado.
 
 ```{r}
 # obtenha os valores de percentis nos níveis desejados de acordo com a variável age (5%, 50%, 75%, 98%), agrupando os dados por hospital
@@ -521,7 +521,7 @@ linelist_agg <- linelist %>%
 linelist_agg
 ```
 
-Para somar as contagens (da coluna `n`) por grupo, você pode usar a função `summarise()` e ajustar a nova coluna para ser igual à `sum(n, na.rm=T)`. Para adicionar um elemnto condicional à essa operação, você pode selecionar, na coluna de contagem (`n`), uma parte dos dados utilizando os colchetes [ ].
+Para somar as contagens (da coluna `n`) por grupo, você pode usar a função `summarise()` e ajustar a nova coluna para ser igual à `sum(n, na.rm=T)`. Para adicionar um elemento condicional à essa operação, você pode selecionar, na coluna de contagem (`n`), uma parte dos dados utilizando os colchetes [ ].
 
 ```{r}
 linelist_agg %>% 
@@ -586,7 +586,7 @@ linelist %>%
 
 ### Utilizando o pivot_wider() {#tbls_pivot_wider .unnumbered}
 
-Se você prefere sua tabela no formato "amplo", você pode transformar ela utilizando a função `pivot_wider()`, do pacote **tidyr**. Você provavelmente precisará renomear as colunas com a função `rename()`. Para mais informações, veja a página sobre [Pivoting os dados].
+Se você preferir sua tabela no formato "largo", você pode transformar ela utilizando a função `pivot_wider()`, do pacote **tidyr**. Você provavelmente precisará renomear as colunas com a função `rename()`. Para mais informações, veja a página sobre [Pivoting os dados].
 
 O exemplo abaixo utiliza a tabela `age_by_outcome` com formato "longo", da [seção de proporções](#tbl_dplyr_prop). Para faciliar o entendimento, nós criamos essa tabela novamente, e mostramos como é seu formato "longo":
 
@@ -601,7 +601,7 @@ age_by_outcome <- linelist %>%                  # inicie com o linelist
 DT::datatable(age_by_outcome, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Para realizar o pivoteamento amplo da tabela criada, nos criamos as novas colunas a partir dos *valores* na coluna existente `age_cat` (ao configurar `names_from = age_cat`). Nós também especificamos que os valores da nova tabela virão da coluna existente `n`, utilizando o atributo `values_from = n`. As colunas não mencionadas no nosso comando de pivoteamento (`outcome`) continuarão sem alterações na extremidade esquerda da tabela final.
+Para realizar o pivoteamento para a tabela criada fique no formato "largo", nós criamos as novas colunas a partir dos *valores* na coluna existente `age_cat` (ao configurar `names_from = age_cat`). Nós também especificamos que os valores da nova tabela virão da coluna existente `n`, utilizando o atributo `values_from = n`. As colunas não mencionadas no nosso comando de pivoteamento (`outcome`) continuarão sem alterações na extremidade esquerda da tabela final.
 
 ```{r}
 age_by_outcome %>% 
@@ -676,7 +676,7 @@ Aqui está a nova tabela com as linhas "Total" no final.
 DT::datatable(table_long, rownames = FALSE, options = list(pageLength = 12, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Esta tabela está no formato "longo", que pode ser o desejado. *Opcionalmente*, você pode *mudar* essa tabela para o formato *amplo*, de forma a torná-la mais fácil de interpretar. Veja a seção acima sobre como transformar a tabela para o formato "amplo", ou na página [Pivoting dados]. Você também pode adicionar mais colunas, e ajustá-las de forma agradável. Segue o código:
+Esta tabela está no formato "longo/comprido", que pode ser o desejado. *Opcionalmente*, você pode *mudar* essa tabela para o formato *largo*, de forma a torná-la mais fácil de interpretar. Veja a seção acima sobre como transformar a tabela para o formato "largo", ou na página [Pivoting dados]. Você também pode adicionar mais colunas, e ajustá-las de forma que considere mais agradável. Segue o código:
 
 ```{r}
 table_long %>% 
@@ -684,7 +684,7 @@ table_long %>%
   # Muda para o formato amplo e formata a tabela
   ########################
   mutate(hospital = replace_na(hospital, "Total")) %>% 
-  pivot_wider(                                         # Mude de "longo" para "amplo"
+  pivot_wider(                                         # Mude de "longo" para "largo"
     values_from = c(ct_value, N),                       # novos valores provenientes das colunas ct e de contagen (n)
     names_from = outcome) %>%                           # novos nomes das colunas proveniente dos outcomes
   mutate(                                              # adiciona novas colunas
@@ -717,7 +717,7 @@ pacman::p_load(
 table <- linelist %>% 
   # filtros
   ########
-  #filter(!is.na(outcome) & hospital != "Missing") %>%  # Excluí casos com campos em branco nas colunas outcome ou hospital
+  #filter(!is.na(outcome) & hospital != "Missing") %>%  # Exclui os casos com campos em branco nas colunas outcome ou hospital
   
   # Obtenha um resumo de valores por grupos hospital-outcome
   ###############################################
@@ -739,7 +739,7 @@ table <- linelist %>%
   # Transforme a tabela para o formato amplo e faça formatações
   ########################
   mutate(hospital = replace_na(hospital, "Total")) %>% 
-  pivot_wider(                                         # Transforme de longo para amplo
+  pivot_wider(                                         # Transforme de "longo" para "largo"
     values_from = c(ct_value, N),                       # novos valores das colunas ct e de contagens (n)
     names_from = outcome) %>%                           # novos nomes das colunas dos outcomes
   mutate(                                              # Adicione novas colunas
@@ -859,7 +859,7 @@ Ajuste como os campos em branco são mostrados. A opção padrão é "Unknown".
 Isto é utilizado para ajustar quantos níveis das estatísticas são mostradas. A sintaxe é similar ao atributo `statistic =`, pois você fornece uma equação com colunas no lado esquerdo, e um valor no lado direito. Dois cenários comuns incluem:
 
 -   `type = all_categorical() ~ "categorical"` Força colunas dicotômicas (ex.: `fever` sim/não) a mostrar todos os níveis em vez de apenas a linha "sim"\
--   `type = all_continuous() ~ "continuous2"` Permite a realização de estatísticas em mais de uma linha ("multi-line") por variável, como mostrado em seção posterior
+-   `type = all_continuous() ~ "continuous2"` Permite a realização de estatísticas em múltiplas linha ("multi-line") por variável, como mostrado em seção posterior
 
 No exemplo abaixo, cada um desses argumentos é utilizado para modificar a tabela resumo original:
 
@@ -871,7 +871,7 @@ linelist %>%
     statistic = list(all_continuous() ~ "{mean} ({sd})",        # estatísticas e formatação para colunas contínuas
                      all_categorical() ~ "{n} / {N} ({p}%)"),   # estatísticas e formatação para colunas categóricas
     digits = all_continuous() ~ 1,                              # arredondamento para colunas contínuas
-    type   = all_categorical() ~ "categorical",                 # force todos os níveis de colunas categóricas a serem mostradas
+    type   = all_categorical() ~ "categorical",                 # force todos os níveis de colunas categóricas a serem mostrados
     label  = list(                                              # mostre etiquetas de acordo com o nome das colunas
       outcome   ~ "Outcome",                           
       age_years ~ "Age (years)",
@@ -882,9 +882,9 @@ linelist %>%
   )
 ```
 
-### Estatísticas "multi-line" para variáveis contínuas {.unnumbered}
+### Estatísticas de múltiplas linhas ("multi-line") para variáveis contínuas {.unnumbered}
 
-Se você quer obter múltiplas linhas de estatísticas para variáveis contínuas, é possível indicar isto ao ajustar o atributo `type =` para "continuous2". É possívelcombinar todos os elementos mostrados anteriormente em uma tabela, ao escolher quais estatísticas quer mostrar. Para fazer isso, é necessário 'dizer' para a função que quer a tabela de volta ao inserir seu tipo como "continous2". A quantidade de campos em braco é mostrado como "Unknown".
+Se você quiser obter múltiplas linhas de estatísticas para variáveis contínuas, é possível indicar isto ao ajustar o atributo `type =` para "continuous2". É possível combinar todos os elementos mostrados anteriormente em uma tabela, ao escolher quais estatísticas quer mostrar. Para fazer isso, é necessário 'dizer' para a função que você quer a tabela de volta ao inserir seu tipo como "continous2". A quantidade de campos em braco é mostrado como "Unknown".
 
 ```{r}
 linelist %>% 
@@ -901,13 +901,13 @@ linelist %>%
 Existem diversas formas de modificar essas tabelas, como adicionar valores do p, ajustar cores e títulos, etc. Muitas destas modificações estão descritas na documentação (digite `?tbl_summary` no Console), e algumas destas são mostradas na seção sobre [testes estatísticos](https://epirhandbook.com/simple-statistical-tests.html).
 
 
-## **Pacote base** R
+## Pacote R **base**
 
 Você pode usar a função `table()` para tabular e realizar tabulações cruzadas das colunas. Diferente das opções acima, você precisa especificar o quadro de dados cada vez que o nome de uma coluna é apontado, como mostrado abaixo.
 
 [***CUIDADO:*** `NA` valores em branco **não** serão tabulados a não ser que você coloque o argumento `useNA = "always"` (que também pode ser ajustado para "no" ou "ifany").]{style="color: orange;"}
 
-[***DICA:*** É possível usar o `%$%` do pacote **magrittr** para remover a necessidade de repetir a quantidade de vezes que o quadro de dados é chamado dentro das funções do pacote **base**. Por exemplo, o código abaixo poderia ser reescrito como `linelist %$% table(outcome, useNA = "always")`]{style="color: darkgreen;"}
+[***DICA:*** É possível usar o `%$%` do pacote **magrittr** para remover a necessidade de repetir a quantidade de vezes que o quadro de dados é chamado dentro das funções do pacote R **base**. Por exemplo, o código abaixo poderia ser reescrito como `linelist %$% table(outcome, useNA = "always")`]{style="color: darkgreen;"}
 
 ```{r}
 table(linelist$outcome, useNA = "always")
@@ -922,7 +922,7 @@ age_by_outcome   # exporte a tabela
 
 ### Proporções {.unnumbered}
 
-Para obter proporções, utilize a tabela acima na função `prop.table()`. Use o argumento `margins =` para especificar caso você queira que as proporções sejam calculadas das linhas (1), colunas (2), ou da tabela inteira (3). No código abaixo, canalizamos ("pipe") a tabela para a função `round()`, do **base** R, especificando 2 dígitos.
+Para obter proporções, utilize a tabela acima na função `prop.table()`. Use o argumento `margins =` para especificar caso você queira que as proporções sejam calculadas das linhas (1), colunas (2), ou da tabela inteira (3). No código abaixo, encadeamos ("piped") a tabela com a função `round()`, do R **base**, especificando 2 dígitos.
 
 ```{r}
 # obtenhas as proporções da tabela definida acima, por linhas, arredondado
@@ -939,11 +939,11 @@ addmargins(age_by_outcome)
 
 ### Converta para um quadro de dados {.unnumbered}
 
-Converter um objeto `table()` diretamente para um quadro de dados não é simples. Uma abordagem é mostrada abaixo:
+Converter um objeto `table()` diretamente para um quadro de dado (*data frame*)s não é simples. Uma possível abordagem é mostrada abaixo:
 
 1)  Crie a tabela, *sem utilizar* `useNA = "always"`. Em vez disso, converta os valores `NA` para "(Missing)" com a função `fct_explicit_na()`, do pacote **forcats**.\
 2)  Adicione os totais (opcional) ao aplicar a tabela na função `addmargins()`\
-3)  Utilize a tabela na função do **base** R `as.data.frame.matrix()`\
+3)  Utilize a tabela na função do R **base** `as.data.frame.matrix()`\
 4)  Transforme a tabela utilizando a função do pacote **tibble,** `rownames_to_column()`, especificando o nome da primeira coluna\
 5)  Exporte, Visualize, ou exporte como desejado. Neste exemplo, nós utilizamos a função `flextable()`, do pacote **flextable**, como descrito na página [Tabelas para apresentação]. Isto irá exportar a tabela para o RStudio viewer como uma linda imagem HTML.
 
