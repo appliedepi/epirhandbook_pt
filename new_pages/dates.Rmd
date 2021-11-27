@@ -86,10 +86,10 @@ A seguir, apresentamos duas abordagens para converter uma coluna de valores de c
 
 Para o uso da função `as.Date()` é preciso que:
 
--   Você especifique o formato **existente** da data como caractere bruto* ou a data de origem se fornecer datas como números (consulte a seção sobre datas do Excel)\
+-   Você especifique o formato **existente** da data como um caractere bruto ou então que especifique a data de origem, caso forneça datas como números (consulte a seção sobre datas do Excel)\
 -   Se foi usado em uma coluna de caracteres, todos os valores de data devem ter o mesmo formato exato (se este não for o caso, tente `guess_dates()` do pacote **linelist**)
 
-**Primeiro**, verifique a classe de sua coluna com `class()` da **base** R. Se você não tem certeza ou está confuso sobre a classe de seus dados (por exemplo, você vê "POSIXct", etc.) pode ser mais fácil primeiro converter a coluna para a classe Caractere com a função `as.character()`, e depois converter para a classe Date.
+**Primeiro**, verifique a classe de sua coluna com `class()` do R **base**. Se você não tem certeza ou está confuso sobre a classe de seus dados (por exemplo, você vê "POSIXct", etc.) pode ser mais fácil primeiro converter a coluna para a classe *Character* com a função `as.character()`, e depois converter para a classe *Date*.
 
 **Segundo**, dentro da função `as.Date()`, use o argumento `format =` para informar ao R o formato *atual* dos componentes da data como caractere - quais caracteres se referem ao mês, dia e ano, e como eles são separados. Se seus valores já estiverem em um dos formatos de data padrão do R ("AAAA-MM-DD" ou "AAAA / MM / DD"), o argumento `format =` não é necessário.
 
@@ -101,7 +101,7 @@ linelist <- linelist %>%
   mutate(date_onset = as.Date(date_of_onset, format = "%d/%m/%Y"))
 ```
 
-A maioria das abreviações de strptime estão listadas abaixo. Você pode ver a lista completa executando `?strptime`.
+A maioria das abreviações de *strptime* estão listadas abaixo. Você pode ver a lista completa executando `?strptime`.
 
 %d = Número do dia do mês (5, 17, 28, etc.)\
 %j = Número do dia do ano (dia Juliano 001-366)\
@@ -114,25 +114,25 @@ A maioria das abreviações de strptime estão listadas abaixo. Você pode ver a
 %U = Número da semana (01-53, domingo é o início da semana)\
 %m = Número do mês (por exemplo, 01, 02, 03, 04)\
 %b = Mês abreviado (Jan, Fev, etc.)\
-%B = Mês completo (Janeiro, Fevereiro, etc.)\
+%B = Mês completo (Janeiro, Fevereiro, etc.)\ 
 %y = Ano em 2 dígitos (por exemplo, 89)\
 %Y = Ano em 4 dígitos (por exemplo, 1989)\
 %h = horas (relógio de 24 horas)\
-%m = minutos\
+%M = minutos\
 %s = segundos
 
 %z = deslocamento do GMT\
 %Z = fuso horário (caractere)
 
-[***DICA:*** O argumento `format =` da função `as.Date()` não está informando ao R o formato que deseja que as datas tenham, mas sim como identificar as partes da data da forma como elas estão, *antes* de rodar o comando.]{style="color: darkgreen;"}
+<span style="color: darkgreen;">**_DICA:_** TO argumento `format =` da função `as.Date()` não está informando ao R o formato que deseja que as datas tenham, mas sim como identificar as partes da data da forma como elas estão, *antes* de rodar o comando.</span>
 
-[***TIP:*** Certifique-se de que no argumento `format =` você usa o separador de data (por exemplo, /, -, ou espaço) que está presente em suas datas.]{style="color: darkgreen;"}
+<span style="color: darkgreen;">**_DICA:_** Certifique-se de que no argumento `format =` você usa o separador de data (por exemplo, /, -, ou espaço) que está presente em suas datas.</span>        
 
-Uma vez que os valores estão na classe Date, o R os exibirá por padrão no formato padrão, que é AAAA-MM-DD.
+Uma vez que os valores estão na classe Date, o R os exibirá no formato padrão, que é AAAA-MM-DD.
 
 ### **lubridate** {.unnumbered}
 
-A conversão de objetos de caracteres em datas pode ser facilitada com o uso do pacote **lubridate**. Este é um pacote **tidyverse** projetado para tornar o trabalho com datas e horários mais simples e consistente do que na **base** do R. Por essas razões, **lubridate** é frequentemente considerado o pacote padrão ouro para datas e horários, e é recomendado sempre que trabalhar com eles.
+A conversão de objetos de caracteres em datas pode ser facilitada com o uso do pacote **lubridate**. Este é um pacote **tidyverse** projetado para tornar o trabalho com datas e horários mais simples e consistente do que nO R **base**. Por essas razões, **lubridate** é frequentemente considerado o pacote padrão ouro para datas e horários, e é recomendado sempre que trabalhar com eles.
 
 O pacote **lubridate** fornece diferentes funções auxiliares projetadas para converter objetos de caracteres em datas de uma forma intuitiva e mais branda do que especificar o formato em `as.Date()`. Essas funções são específicas para o formato de data aproximada, mas permitem uma variedade de separadores e sinônimos para datas (como, 01 vs Jan vs Janeiro) - eles são nomeados após abreviações de formatos de data.
 
@@ -173,7 +173,7 @@ dmy("11 October 2020")
 
 <!-- ``` -->
 
-Se estiver usando piping, a conversão de uma coluna de caracteres para datas com **lubridate** pode ser assim:
+Se estiver usando o piping (%>%), a conversão de uma coluna de caracteres para datas com **lubridate** pode ser feita assim:
 
 ```{r, eval=F}
 linelist <- linelist %>%
@@ -213,13 +213,14 @@ linelist <- linelist %>%
 
 Em segundo plano, a maioria dos softwares armazena datas como números. O R armazena datas de uma origem de 1º Janeiro, 1970. Portanto, se você executar `as.numeric(as.Date("1970-01-01))` você obterá `0`.
 
-Microsoft Excel armazena datas com um origem em 30 de dezembro de 1899 (Windows) ou 1 de janeiro de 1904 (Mac), dependendo do seu sistema operacional. Consulte em [Microsoft guidance](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system) para obter mais informações.
+O Microsoft Excel armazena datas com um origem em 30 de dezembro de 1899 (Windows) ou 1 de janeiro de 1904 (Mac), dependendo do seu sistema operacional. Consulte em [Microsoft guidance](https://docs.microsoft.com/en-us/office/troubleshoot/excel/1900-and-1904-date-system) para obter mais informações.
 
 As datas do Excel geralmente são importadas para o R como esses valores numéricos, em vez de caracteres. Se o conjunto de dados que você importou do Excel mostra datas como números ou caracteres como "41369" ... use `as.Date()` (ou a função do **lubridate** `as_date()`) para converter, mas **no lugar de fornecer um "formato" como acima, forneça a data de origem do Excel** no argumento `origin =`.
 
 Isso não irá funcionar se as datas do Excel contidas no R estiverem como caracteres, assim, confirme se os números estão classificados como Numérico!
 
-[***NOTA:*** Você deve fornecer a data de origem no formato de data padrão do R ("AAAA-MM-DD").]{style="color: black;"}
+<span style="color: black;">**_NOTA:_** Você deve fornecer a data de origem no formato de data padrão do R ("AAAA-MM-DD").</span>                              
+
 
 ```{r, eval = FALSE}
 # Um exemplo de fornecimento da 'data de origem' do Excel ao converter datas numéricas do Excel
@@ -232,9 +233,9 @@ data_cleaned <- data %>%
 
 ## Datas bagunçadas
 
-A função `guess_dates()` do pacote **linelist** tenta ler uma coluna de data "bagunçada" contendo datas em muitos formatos diferentes e converte as datas para um formato padrão. Você pode [ler mais online sobre `guess_dates()`](https://www.repidemicsconsortium.org/linelist/reference/guess_dates.html). Se `guess_dates()` iainda não estiver disponível no CRAN para R 4.0.2, tente instalar via `pacman::p_load_gh("reconhub/linelist")`.
+A função `guess_dates()` do pacote **linelist** tenta ler uma coluna de data "bagunçada" contendo datas em muitos formatos diferentes e converte as datas para um formato padrão. Você pode [ler mais online sobre `guess_dates()`](https://www.repidemicsconsortium.org/linelist/reference/guess_dates.html). Se `guess_dates()` ainda não estiver disponível no CRAN para R 4.0.2, tente instalar via `pacman::p_load_gh("reconhub/linelist")`.
 
-Por exemplo, o `guess_dates` um vetor dos seguintes caracteres de datas "03 Jan 2018", "07/03/1982", e "08/20/85" e os converteria para a classe Date como: `2018-01-03`, `1982-03-07`, e `1985-08-20`.
+Por exemplo, o `guess_dates` vê um vetor dos seguintes caracteres de datas "03 Jan 2018", "07/03/1982", e "08/20/85" e os converteria para a classe Date como: `2018-01-03`, `1982-03-07`, e `1985-08-20`.
 
 ```{r, }
 linelist::guess_dates(c("03 Jan 2018",
