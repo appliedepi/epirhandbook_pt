@@ -8,7 +8,7 @@ Trabalhar com datas no R requer mais atenção do que trabalhar com outras class
 
 Na importação de dados brutos, o R frequentemente interpreta as datas como objetos de caracteres - isso significa que elas não podem ser usados para operações gerais de data, como criar séries temporais e calcular intervalos de tempo. Para tornar as coisas mais difíceis, existem muitas maneiras de formatar uma data e é preciso ajudar o R a saber qual parte da data representa o quê (mês, dia, hora, etc.).
 
-As datas no R possuem sua própria classe de objeto - a classe `Date`. Deve-se destacar que também existe uma classe que armazena objetos com data e hora. Objetos de data e hora são formalmente chamados de classes `POSIXt`, `POSIXct`, e/ou `POSIXlt` (a diferença não é importante). Esses objetos são informalmente chamados de classes de data e hora.
+As datas no R possuem sua própria classe de objeto - a classe `Date`. Deve-se destacar que também existe uma classe que armazena objetos com data e hora. Objetos de data e hora são formalmente chamados de classes `POSIXt`, `POSIXct`, e/ou `POSIXlt` (a diferença não é importante). Esses objetos são informalmente chamados de classes de data-e-hora (*datetime*).
 
 -   É importante fazer com que o R reconheça quando uma coluna contém datas.\
 
@@ -22,10 +22,10 @@ As datas no R possuem sua própria classe de objeto - a classe `Date`. Deve-se d
 
 ### Carregar os pacotes {.unnumbered}
 
-Esse trecho de código mostra o carregamento dos pacotes necessários para esta página. Neste manual enfatizamos a função `p_load()` do **pacman**, que instala o pacote se necessário e o carrega para utilização. Tamém é possível carregar os pacotes instalados com `library()` a partir da **base** R. Para mais informações, veja a página em [R basics] sobre pacotes no R.
+Esse trecho de código mostra o carregamento dos pacotes necessários para esta página. Neste manual enfatizamos a função `p_load()` do **pacman**, que instala o pacote se necessário e o carrega para utilização. Tamém é possível carregar os pacotes instalados com `library()` a partir do R **base**. Para mais informações, veja a página em [R basics] sobre pacotes no R.
 
 ```{r dates_packages, warning=F, message=F}
-# Confira se o pacote está instalado, instale o pacote se necessário, e carregue-o para a sessão atual
+# Confere se o pacote está instalado, instala o pacote se necessário, e carrega-o para a sessão atual
 
 pacman::p_load(
   lubridate,  # pacote geral para manipulação e conversão de datas  
@@ -54,7 +54,7 @@ linelist <- import("linelist_cleaned.xlsx")
 
 ## Data atual
 
-Você pode obter a data atual do "sistema" ou a data e hora do sistema do seu computador por meio da seguintes funções presentes na **base** do R.
+Você pode obter a data atual do "sistema" ou a data e hora do sistema do seu computador por meio da seguintes funções presentes no R **base**.
 
 ```{r}
 # obter a data do sistema - esta é uma classe DATE
@@ -78,15 +78,15 @@ Por padrão, os valores da classe Date em R são exibidos como AAAA-MM-DD. Poste
 
 A seguir, apresentamos duas abordagens para converter uma coluna de valores de caracteres para a classe Date.
 
-[***DICA:*** Você pode checar a classe atual de uma coluna utilizando a função `class()`presente na **base** do R , como por exemplo `class(linelist$date_onset)`.]{style="color: darkgreen;"}
+<span style="color: darkgreen;">**_DICA:_** Você pode checar a classe atual de uma coluna utilizando a função `class()`presente na **base** do R , como por exemplo `class(linelist$date_onset)`. </span>               
 
 ### **base** R {.unnumbered}
 
-`as.Date()` é a função presente na base do R para conversão um objeto ou coluna para a classe Data (observe a capitalização de "D").
+`as.Date()` é a função presente no R base para conversão um objeto ou coluna para a classe Data (observe a capitalização de "D").
 
 Para o uso da função `as.Date()` é preciso que:
 
--   Você especifique o formato ***existente** da data como caractere bruto* ou a data de origem se fornecer datas como números (consulte a seção sobre datas do Excel)\
+-   Você especifique o formato **existente** da data como caractere bruto* ou a data de origem se fornecer datas como números (consulte a seção sobre datas do Excel)\
 -   Se foi usado em uma coluna de caracteres, todos os valores de data devem ter o mesmo formato exato (se este não for o caso, tente `guess_dates()` do pacote **linelist**)
 
 **Primeiro**, verifique a classe de sua coluna com `class()` da **base** R. Se você não tem certeza ou está confuso sobre a classe de seus dados (por exemplo, você vê "POSIXct", etc.) pode ser mais fácil primeiro converter a coluna para a classe Caractere com a função `as.character()`, e depois converter para a classe Date.
