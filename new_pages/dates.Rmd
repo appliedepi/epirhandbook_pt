@@ -274,20 +274,20 @@ Um objeto `datetime` padrão object é formatado com a data primeiro, que é seg
 
 Felizmente, as funções auxiliares do **lubridate** também existem para ajudar a converter essas junções para objetos `datetime`. Essas funções são extensões das funções auxiliares de data, com `_h` (apenas horas fornecidas), `_hm` (horas e minutos fornecidos), ou `_hms` (horas, minutos e segundos fornecidos) anexado ao final (por exemplo, `dmy_hms()`). Eles podem ser usados conforme mostrado abaixo:
 
-Converte datetime contendo apenas horas para o objeto datetime
+Converte *datetime* contendo apenas horas para o objeto datetime
 
 ```{r}
 ymd_h("2020-01-01 16hrs")
 ymd_h("2020-01-01 4PM")
 ```
 
-Converte datetime com horas e minutos para o objeto datetime
+Converte *datetime* com horas e minutos para o objeto datetime
 
 ```{r}
 dmy_hm("01 January 2020 16:20")
 ```
 
-Converte datetime com horas, minutos e segundos para o objeto datetime
+Converte *datetime* com horas, minutos e segundos para o objeto datetime
 
 ```{r}
 mdy_hms("01 January 2020, 16:20:40")
@@ -300,9 +300,9 @@ mdy_hms("01 January 2020, 16:20:40 PST")
 
 ```
 
-Ao trabalhar com uma tabela de dados, as colunas de hora e data podem ser combinadas para criar uma coluna datetime usando `str_glue()` do pacote **stringr** e uma função apropriada do **lubridate**. Consulte a página em [Caracteres e junções] para obter detalhes sobre o **stringr**.
+Ao trabalhar com uma tabela de dados, as colunas de hora e data podem ser combinadas para criar uma coluna data-e-hora (*datetime*) usando `str_glue()` do pacote **stringr** e uma função apropriada do **lubridate**. Consulte a página em [Caracteres e junções] para obter detalhes sobre o **stringr**.
 
-Neste exemplo, a tabela de dados do `linelist` possui uma coluna no formato "horas:minutos". Para converter isso para data e hora, seguem-se algumas etapas:
+Neste exemplo, a tabela de dados do `linelist` possui uma coluna no formato "horas:minutos". Para converter isso para data-e-hora, seguem-se algumas etapas:
 
 1)  Crie uma coluna de tempo de admissão "limpa" na qual os valores ausentes são preenchidos pela mediana da coluna. Isso é realizado, pois **lubridate** não funciona com valores ausentes. Combine-o com a coluna `date_hospitalisation`, e então use a função `ymd_hm()` para converter.
 
@@ -321,7 +321,7 @@ linelist <- linelist %>%
       time_admission           # se não estiver faltando, mantenha como está
   ) %>%
   
-    # use str_glue() para combinar as colunas de data e horas em uma coluna de caracteres
+    # use str_glue() para combinar as colunas de data-e-horas em uma coluna de caracteres
     # em seguida, use ymd_hm() para converter em datetime
   mutate(
     date_time_of_admission = str_glue("{date_hospitalisation} {time_admission_clean}") %>% 
@@ -332,7 +332,7 @@ linelist <- linelist %>%
 
 ### Converta horários isolados {.unnumbered}
 
-Se seus dados contém apenas um tempo de caractere (horas e minutos), você pode convertê-los e manipulá-los como tempos usando `strptime()` a partir da **base** do R. Por exemplo, para obter a diferença entre dois desses tempos:
+Se seus dados contém apenas caracteres referente a um horário (horas e minutos), você pode convertê-los e manipulá-los como tempos usando `strptime()` a partir do R **base**. Por exemplo, para obter a diferença entre dois desses tempos:
 
 ```{r}
 # horário como caracteres brutos
