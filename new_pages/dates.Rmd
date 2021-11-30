@@ -313,7 +313,7 @@ pacman::p_load(tidyverse, lubridate, stringr)
 # time_admission é a coluna em horas:minutos
 linelist <- linelist %>%
   
-  # quando o tempo de admissão não é fornecido, atribua o tempo médio de admissão
+  # quando o horário de admissão não é fornecido, atribua o horário médio de admissão
   mutate(
     time_admission_clean = ifelse(
       is.na(time_admission),   # se horário estiver faltando
@@ -374,7 +374,7 @@ Para saber mais sobre `case_when()` , consulte a página [Limpeza dos daos e fun
 
 ## Trabalhando com datas
 
-`lubridate` ctambém pode ser usado para uma variedade de outras funções, como **extrair aspectos de uma data / data e hora, realizar aritmética de data ou calcular intervalos de data**
+`lubridate` também pode ser usado para uma variedade de outras funções, como **extrair aspectos de uma data / data e hora, realizar cálculos aritiméticos de data ou calcular intervalos de data**
 
 Aqui, definimos uma data que será usada para os exemplos:
 
@@ -456,7 +456,7 @@ linelist <- linelist %>%
   mutate(days_onset_to_hosp = date_hospitalisation - date_of_onset)
 ```
 
-No contexto de uma tabela de dados, se uma das datas acima estiver faltando, a operação falhará para essa linha. Isso resultará em um `NA` iem vez de um valor numérico. nstead of a numeric value. Ao usar esta coluna para cálculos, certifique-se de definir o argumento `na.rm =` como `TRUE`. Por exemple:
+No contexto de uma tabela de dados (*data frame*), se uma das datas acima estiver faltando, a operação falhará para essa linha. Isso resultará em um `NA` em vez de um valor numérico. Ao usar esta coluna para cálculos, certifique-se de definir o argumento `na.rm =` como `TRUE`. Por exemplo:
 
 ```{r, eval = FALSE}
 # calcule o número médio de dias até a hospitalização para todos os casos em que os dados estão disponíveis
@@ -471,7 +471,7 @@ Uma vez que as datas essão na classe correta, você geralmente deseja que elas 
 
 ### `format()` {.unnumbered}
 
-Ajuste a exibição de data com a função `format()`da **base** do R. Esta função aceita uma cadeia de caracteres (entre aspas) especificando o formato de saída *desejado* nas abreviações de strptime "%" strptime abbreviations (a mesma sintaxe usada em `as.Date()`). Abaixo estão mostradas a maioria das abreviações comuns.
+Ajuste a exibição de data com a função `format()`do R **base**. Esta função aceita uma cadeia de caracteres entre aspas (*string*) especificando o formato de saída *desejado* nas abreviações de strptime "%" (a mesma sintaxe usada em `as.Date()`). Abaixo estão relacionadas a maioria das abreviações comuns.
 
 Observação: o uso de `format()` converterá os valores para a classe Caractere, então geralmente é usado no final de uma análise ou apenas para fins de exibição! Você pode ver a lista completa executando `?strptime`.
 
@@ -489,7 +489,7 @@ Observação: o uso de `format()` converterá os valores para a classe Caractere
 %y = Ano em 2 dígitos (por exemplo, 89)\
 %Y = Ano em 7 dígitos (por exemplo, 1989)\
 %h = horas (relógio de 24 horas)\
-%m = minutos\
+%M = minutos\
 %s = segundos\
 %z = deslocamento do GMT\
 %Z = Fuso horário (caractere)
@@ -554,7 +554,7 @@ Geralmente recomendamos usar a função `floor_date()` do **lubridate**, com o a
 
 O valor retornado é a data de início da semana, na classe Date. A classe de data é útil ao plotar os dados, pois serão facilmente reconhecidos e ordenados corretamente por `ggplot()`.
 
-Se você estiver interessado apenas em ajustar as datas para *exibição* por semana em um gráfico, consulte a seção nesta página sobre Exibição de data. Por exemplo, ao plotar uma epicurva, você pode formatar a exibição da data fornecendo a nomenclatura "%" do strptime desejada.Por exemplo, use "%Y-%W" ou "%Y-%U" para retornar o ano e o número da semana (dado o início da semana na segunda-feira ou no domingo, respectivamente).
+Se você estiver interessado apenas em ajustar as datas para *exibição* por semana em um gráfico, consulte a seção nesta página sobre Exibição de data. Por exemplo, ao plotar uma curva epidemiológica, você pode formatar a exibição da data fornecendo a nomenclatura "%" do strptime desejada. Por exemplo, use "%Y-%W" ou "%Y-%U" para retornar o ano e o número da semana (dado o início da semana na segunda-feira ou no domingo, respectivamente).
 
 ### Contagens semanais {.unnumbered}
 
@@ -602,7 +602,7 @@ Quando os dados estão presentes em fusos horários diferentes, muitas vezes pod
 
 No R, cada objeto *datetime* possui um componente de fuso horário. Por padrão, todos os objetos datetime levarão o fuso horário local do computador que está sendo usado - isso geralmente é específico para um *local* em vez de um nome do fuso horário, pois os fusos horários geralmente mudam nos locais devido ao horário de verão. Não é possível compensar com precisão os fusos horários sem um componente de tempo de uma data, pois o evento que uma coluna de data representa não pode ser atribuído a um tempo específico e, portanto, as mudanças de tempo medidas em horas não podem ser razoavelmente contabilizadas.
 
-Para lidar com fusos horários, há várias funções auxiliares no lubridate que podem ser usadas para alterar o fuso horário de um objeto datetime do seu fuso horário local para um fuso horário diferente. Time zones are set by attributing a valid tz database time zone to the datetime object. Os fusos horários são definidos atribuindo um fuso horário do banco de dados tz válido ao objeto datetime. Uma lista deles pode ser encontrada aqui - se o local do qual você está usando os dados não estiver nessa lista, grandes cidades próximas no fuso horário estão disponíveis e têm a mesma finalidade.
+Para lidar com fusos horários, há várias funções auxiliares no lubridate que podem ser usadas para alterar o fuso horário de um objeto datetime do seu fuso horário local para um fuso horário diferente. Os fusos horários são definidos atribuindo um fuso horário do banco de dados tz válido ao objeto datetime. Uma lista deles pode ser encontrada aqui - se o local do qual você está usando os dados não estiver nessa lista, grandes cidades próximas no fuso horário estão disponíveis e têm a mesma finalidade.
 
 <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>
 
@@ -629,9 +629,9 @@ Isso pode parecer muito abstrato e geralmente não é necessário se o usuário 
 
 <!-- ======================================================= -->
 
-## Cálculos atrasados e subsequentes
+## Cálculos com valores anteriores ou posteriores
 
-`lead()` and `lag()` são funções do pacote **dplyr** package que ajudam a encontrar valores anteriores (lead) ou subsequentes (lag) em um vetor - normalmente um vetor numérico ou de data. Isso é útil ao fazer cálculos de mudança / diferença entre unidades de tempo.
+`lead()` and `lag()` são funções do pacote **dplyr** que ajudam a encontrar valores anteriores (lag) ou subsequentes (lead) em um vetor - normalmente um vetor numérico ou de data. Isso é útil ao fazer cálculos de mudança / diferença entre unidades de tempo.
 
 ```{r, echo=F}
 counts <- import(here("data", "example", "district_weekly_count_data.xlsx")) %>% 
