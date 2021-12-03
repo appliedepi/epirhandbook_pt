@@ -80,7 +80,7 @@ A seguir, apresentamos duas abordagens para converter uma coluna de valores de c
 
 <span style="color: darkgreen;">**_DICA:_** Você pode checar a classe atual de uma coluna utilizando a função `class()`presente na **base** do R , como por exemplo `class(linelist$date_onset)`. </span>               
 
-### **base** R {.unnumbered}
+### R **base** {.unnumbered}
 
 `as.Date()` é a função presente no R base para conversão um objeto ou coluna para a classe Data (observe a capitalização de "D").
 
