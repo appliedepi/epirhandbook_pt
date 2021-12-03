@@ -64,12 +64,12 @@ Este banco de dados é uma versão reduzida do banco de dados disponível no pac
 Importe estes dados com a função `import()` do pacote **rio** (ele manipula muitos tipos de arquivos, como .xlsx, .csv, .rds - veja a página sobre [Importar e exportar] para mais detalhes).
 
 ```{r read_data_hide, echo=F}
-# importa as contagens no R
+# importe as contagens para o R
 counts <- rio::import(here::here("data", "time_series", "campylobacter_germany.xlsx"))
 ```
 
 ```{r read_data_show, eval=F}
-# importa as contagens no R
+# importe as contagens para o R
 counts <- rio::import("campylobacter_germany.xlsx")
 ```
 
@@ -82,25 +82,25 @@ DT::datatable(head(counts, 10), rownames = FALSE, options = list(pageLength = 5,
 
 ### Limpe os dados {.unnumbered}
 
-O código abaixo garante que a coluna de datas está no formato apropriado.
+O código abaixo garante que a coluna de datas esteja no formato apropriado.
 Nesta página, iremos utilizar o pacote **tsibble** com funções `yearweek` 
-que serão usadas para criar uma variável com um calendário de semanas. Existem  outras diferentes
+que serão usadas para criar uma variável com um calendário de semanas. Existem  outras
 maneiras de fazer isso (veja a página [trabalhando com datas](https://epirhandbook.com/working-with-dates.html)
-para mais detalhes), entretanto, para séries temporais é melhor manter dentro de um framework apenas (**tsibble**). 
+para mais detalhes), entretanto, para séries temporais é melhor nos mantermos dentro de um único tipo de abordagem (**tsibble**). 
 
 ```{r clean_data}
 
-## garante que a coluna com datas está no formato apropriado
+## garanta que a coluna com datas estejam no formato apropriado
 counts$date <- as.Date(counts$date)
 
-## cria uma variável com semanas do calendário
-## ajusta definições ISO de semanas iniciando na segunda
+## crie uma variável com semanas do calendário
+## ajuste definições ISO de semanas iniciando na segunda
 counts <- counts %>% 
      mutate(epiweek = yearweek(date, week_start = 1))
 
 ```
 
-### Baixe os dados climáticos {.unnumbered} 
+### Baixe (*download*) os dados climáticos {.unnumbered} 
 
 Na seção sobre a *relação de duas séries temporais* nesta página, nós iremos comparar 
 contagens de casos de campylobacter com dados climáticos.
@@ -121,8 +121,8 @@ Você só pode baixar um ano de dados por vez. Do contrário, o tempo do servido
 Se você não tiver certeza das coordenadas de uma localização que quer baixar os dados, 
 é possível utilizar o pacote **tmaptools** para baixar as coordenadas de um mapa *open street*.
 Outra alternativa é o pacote [**photon**](https://github.com/rCarto/photon), entretanto ele ainda não foi liberado no CRAN; algo interessante do  
-**photon** é que ele fornece mais dados contextuais para quando existirem diferentes
-resultados do que se busca.
+**photon** é que ele fornece mais dados contextuais caso existam diferentes
+resultados para o que se busca.
 
 ```{r weather_data, eval = FALSE}
 
@@ -146,9 +146,9 @@ wf_set_key(user = "XXXXX",
 ## para cada ano de interesse, execute o código (do contrário o tempo do servidor expira)
 for (i in 2002:2011) {
   
-  ## baixe junto uma busca 
+  ## monte uma requisição (*Query*)
   ## veja aqui para como fazer isso: https://bluegreen-labs.github.io/ecmwfr/articles/cds_vignette.html#the-request-syntax
-  ## altere o pedido para uma lista utilizando o botão addin acima (python para lista)
+  ## altere o pedido para uma lista utilizando o botão *addin* acima (python para lista)
   ## O alvo é o nome do arquivo de saída!!
   request <- request <- list(
     product_type = "reanalysis",
@@ -167,7 +167,7 @@ for (i in 2002:2011) {
     target = paste0("germany_weather", i, ".nc")
   )
   
-  ## baixe o aquivo e o armazene no diretório de trabalho atual
+  ## baixe o aquivo e armazene-o no diretório de trabalho atual
   file <- wf_request(user     = "XXXXX",  # ID do usuário (para autenticação)
                      request  = request,  # o pedido
                      transfer = TRUE,     # baixe o arquivo
@@ -178,7 +178,7 @@ for (i in 2002:2011) {
 
 ### Carregue os dados climáticos {.unnumbered}
 
-Se você baixou os dados climáticos via nosso manual, ou utilizou o código acima, agora você deve ter 10 anos de arquivos com dados climáticos ".nc" armazenados na mesma pasta do seu computador.
+Se você baixou os dados climáticos seguindo o nosso manual, ou se utilizou o código acima, agora você deve ter 10 anos de arquivos com dados climáticos ".nc" armazenados na mesma pasta do seu computador.
 
 Utilize o código abaixo para importar estes arquivos no R com o pacote **stars**.
 
@@ -189,23 +189,23 @@ file_paths <- list.files(
   here::here("data", "time_series", "weather"), # substitua com o seu próprio endereço de arquivos
   full.names = TRUE)
 
-## apenas mantenha os arquivos com o nome de interesse atual
+## mantenha apenas os arquivos que tenham o nome de interesse atual
 file_paths <- file_paths[str_detect(file_paths, "germany")]
 
 ## leia todos os arquivos como um objeto stars
 data <- stars::read_stars(file_paths)
 ```
 
-Uma vez que estes arquivos foram importados como o objeto `data`, nós iremos convertê-los para um quadro de dados.
+Uma vez que estes arquivos foram importados como o objeto `data`, nós iremos convertê-los para um quadro de dados (*data frame*).
 
 ```{r}
-## mude para um quadro de dados
+## mude para um quadro de dados (*data frame*)
 temp_data <- as_tibble(data) %>% 
   ## adicione variáveis e corrija unidades
   mutate(
     ## crie uma variável com um calendário semanal
     epiweek = tsibble::yearweek(time), 
-    ## cria uma variável de data (início do calendário semanal)
+    ## crie uma variável de data (início do calendário semanal)
     date = as.Date(epiweek),
     ## mude a temperatura de kelvin para celsius
     t2m = set_units(t2m, celsius), 
@@ -245,18 +245,18 @@ counts <- tsibble(counts, index = epiweek)
 
 ```
 
-Executar `class(counts)` mostra que, além de ser um quadro de dados organizado 
+Ao executar `class(counts)` nota-se que, além de ser um quadro de dados (*data frame*) organizado 
 ("tbl_df", "tbl", "data.frame"), ele tem propriedades adicionais de um quadro de dados 
 de uma série temporal ("tbl_ts"). 
 
-Você pode analisar rapidamente os seus dados ao utilizar o **ggplot2**. Nós vemos pela plotagem que
+Você pode analisar rapidamente os seus dados ao utilizar o **ggplot2**. Nós vemos pelo gráfico que
 existe um padrão sazonal óbvio, e que não existem campos em branco. Entretanto, parece
 existir um erro para notificar os casos no começo de cada ano; o número de casos cai 
 na última semana do ano, e então aumenta na primeira semana do ano seguinte.
 
 ```{r basic_plot}
 
-## plota um gráfico de linha de casos por semana
+## trace um gráfico de linha de casos por semana
 ggplot(counts, aes(x = epiweek, y = case)) + 
      geom_line()
 
@@ -283,7 +283,7 @@ para mais detalhes sobre como selecionar as linhas que você quer.
 ## obtenha um vetor de TRUE/FALSE caso as linhas sejam duplicatas
 are_duplicated(counts, index = epiweek) 
 
-## obtenha um quadro de dados das linhas duplicadas
+## obtenha um quadro de dados (*data frame*) das linhas duplicadas
 duplicates(counts, index = epiweek)
 
 ```
@@ -291,12 +291,12 @@ duplicates(counts, index = epiweek)
 <!-- ======================================================= -->
 ### Campos em branco {.unnumbered}
 
-Através da breve inspeção acima, nós vimos que não existem campos em branco em nossos dados, mas também
+Por meio da breve inspeção demonstrada acima, nós vimos que não existem campos em branco em nossos dados, mas também
 notamos que existe um problema com atrasos de notificação próximo ao ano novo.
 Uma forma de abordar isto seria atribuir campos vazios a esses valores, e então
-imputar novos valores. A forma mais simples de imputação em uma série temporal é desenhar 
-uma linha reta entre o último valor preenchido, e o próximo valor preenchido (entre os campos em branco).
-Para fazer isso, nós iremos utilizar a funçaõ `na_interpolation()` do pacote **imputeTS**. 
+inserir novos valores. A forma mais simples de iserção (*input*) em uma série temporal é desenhar 
+uma linha reta entre o último valor preenchido e o próximo valor preenchido (entre os campos em branco).
+Para fazer isso, nós iremos utilizar a função `na_interpolation()` do pacote **imputeTS**. 
 
 Veja a página sobre [Campos em branco](https://epirhandbook.com/missing-data.html) para mais informações sobre imputação.
 
@@ -324,7 +324,7 @@ counts <- counts %>%
 
 ## para checar quais valores foram imputados comparados com os originais
 ggplot_na_imputations(counts$case_miss, counts$case_int) + 
-  ## crie uma plotagem tradicional (com eixos negros e fundo branco)
+  ## crie um gráfico tradicional (com eixos negros e fundo branco)
   theme_classic()
 
 ```
@@ -343,23 +343,23 @@ ggplot_na_imputations(counts$case_miss, counts$case_int) +
 Se os dados apresentam muitos ruídos (contagens pulando para cima e para baixo), então pode ser útil
 calcular a média móvel. No exemplo abaixo, para cada semana nós calculamos o
 número médio de casos das quatro semanas anteriores. Isto suaviza os dados para
-torná-los mais fáceis de interpretar. No nosso caso, isto não agrega muito, então
+torná-los mais fáceis de interpretar. No nosso caso, isto não traz grandes vantagens, então
 nós iremos manter os dados interpolados para mais análises.
 Veja a página sobre [Médias móveis](https://epirhandbook.com/moving-averages.html) para mais detalhes.
 
 ```{r moving_averages}
 
-## cria uma variável de média móvel (o que resolve o problema dos campos em branco)
+## crie uma variável de média móvel (o que resolve o problema dos campos em branco)
 counts <- counts %>% 
-     ## cria a variável ma_4w 
-     ## passa por cada linha da variável dos casos
+     ## crie a variável ma_4w 
+     ## passe por cada linha da variável dos casos
      mutate(ma_4wk = slider::slide_dbl(case, 
-                               ## para cada linha, calcula a média
+                               ## para cada linha, calcule a média
                                ~ mean(.x, na.rm = TRUE),
-                               ## usa as quatro semanas anteriores
+                               ## use as quatro semanas anteriores
                                .before = 4))
 
-## faz uma visualização rápida da diferença
+## faça uma visualização rápida da diferença
 ggplot(counts, aes(x = epiweek)) + 
      geom_line(aes(y = case)) + 
      geom_line(aes(y = ma_4wk), colour = "red")
@@ -379,7 +379,7 @@ Primeiro, a função é definida. Seus argumentos incluem um banco de dados com 
 ## Argumentos da função
 #####################
 ## x é um banco de dados
-## counts é uma variável com dados contados ou taxas dentro do x
+## counts é uma variável com dados contados ou com taxas em x
 ## start_week é a primeira semana do banco de dados
 ## period são quantas unidades em um ano
 ## output é caso você queira retornar um periodograma espectral, ou as semanas de pico
@@ -393,20 +393,20 @@ periodogram <- function(x,
                         output = "weeks") {
   
 
-    ## garanta que não é uma classe tsibble, filtra por projeto e mantém apenas colunas de interesse
+    ## garanta que não é uma classe tsibble, filtre por projeto e mantenha apenas as colunas de interesse
     prepare_data <- dplyr::as_tibble(x)
     
     # prepare_data <- prepare_data[prepare_data[[strata]] == j, ]
     prepare_data <- dplyr::select(prepare_data, {{counts}})
     
-    ## cria uma zona intermediária de série temporal para ser capaz de utilizar no spec.pgram
+    ## crie uma zona intermediária de série temporal para permitir a utilização no spec.pgram
     zoo_cases <- zoo::zooreg(prepare_data, 
                              start = start_week, frequency = period)
     
     ## obtenha um periodograma espectral sem utilizar a transformação fast fourier 
     periodo <- spec.pgram(zoo_cases, fast = FALSE, plot = FALSE)
     
-    ## retorna as semanas com picos de casos
+    ## retorne as semanas com picos de casos
     periodo_weeks <- 1 / periodo$freq[order(-periodo$spec)] * period
     
     if (output == "weeks") {
@@ -427,7 +427,7 @@ periodo <- periodogram(counts,
 ## coloque o espectro e a frequência em um quadro de dados para plotagem
 periodo <- data.frame(periodo$freq, periodo$spec)
 
-## plote um periodograma mostrando a peridiocidade que ocorre mais frequentemente
+## trace um periodograma mostrando a peridiocidade que ocorre mais frequentemente
 ggplot(data = periodo, 
                 aes(x = 1/(periodo.freq/52),  y = log(periodo.spec))) + 
   geom_line() + 
@@ -451,7 +451,7 @@ Para dividir a série temporal em diferentes partes, a decomposição clássica 
 quando analisadas juntas, é possível verificar um padrão.
 Estas partes distintas são:
 
-* O círculo-tendência (a tendência dos dados no longo prazo)
+* O ciclo-tendência (a tendência dos dados no longo prazo)
 * A sazonalidade (repetição dos padrões)
 * O aleatório (o que resta após remover a tendência e a sazonalidade)
 
@@ -462,9 +462,9 @@ Estas partes distintas são:
 counts %>% 
   # utilizando um modelo clássico de decomposição aditiva
   model(classical_decomposition(case_int, type = "additive")) %>% 
-  ## extrai a informação importante do modelo
+  ## extraia a informação importante do modelo
   components() %>% 
-  ## gera uma plotagem
+  ## gere um gráfico
   autoplot()
 
 ```
