@@ -473,15 +473,15 @@ counts %>%
 ### Autocorrelação {.unnumbered}
 
 Autocorrelação mostra a relação entre as contagens de cada semana 
-e das semanas antes dela (chamado de lags).
+e das semanas anteriores a la (chamado de lags).
 
 Ao utilizar a função `ACF()`, nós podemos gerar um gráfico que mostra o número de linhas 
-em relação aos diferentes lags. Quando o lag for 0 (x = 0), esta linha deve ser sempre 
-1 pois mostra a relação entre uma observação e ela mesmo (não mostrado aqui).
+em relação aos diferentes defasagens (*lags*). Quando o *lag* for 0 (x = 0), esta linha deve ser sempre 
+1 pois mostra a relação entre uma observação e ela mesma (não mostrado aqui).
 A primeira linha mostrada aqui (x = 1) mostra a relação entre cada observação
-e a observação antes dela (lag de 1), a segunda mostra a relação entre 
-cada observação e a observação anterior a última (lag de 2) e assim por diante, até o lag de 
-52 que mostra a relação entre cada observação e a observação de 1
+e a última observação antes dela (*lag* de 1), a segunda mostra a relação entre 
+cada observação e a penúltima observação anterior a ela (*lag* de 2) e assim por diante, até o *lag* de 
+52, que mostra a relação entre cada observação e a observação de 1
 ano (52 semanas antes).
 
 A função `PACF()` (para autocorrelação parcial) mostra o mesmo tipo de relação
@@ -492,9 +492,9 @@ peridiocidade.
 
 ## utilizando os dados de contagem
 counts %>% 
-  ## calcule a autocorrelação utilizando lags que cobrem anos completos
+  ## calcule a autocorrelação utilizando defasagens (lags) que cobrem anos completos
   ACF(case_int, lag_max = 52) %>% 
-  ## mostre uma plotagem
+  ## mostre um gráfico
   autoplot()
 
 ## utilizando os dados de contagem
@@ -508,7 +508,7 @@ counts %>%
 
 Você pode testar formalmente a hipótese nula de independência em uma série temporal (ex.:
 ausência de autocorrelação) utilizando o teste de Ljung-Box (no pacote **stats**). 
-Um valor significante de p sugere que existe uma autocorrelação nos dados.
+Um p-valor significantivo sugere que exista uma autocorrelação nos dados.
 
 ```{r ljung_box}
 
@@ -526,13 +526,13 @@ Entretanto, aqui nós iremos demonstrar como ajustar uma regressão binominal ne
 vez que frequentemente esta é a mais apropriada para dados de contagem em doenças infecciosas.
 
 <!-- ======================================================= -->
-### Termos fourier {.unnumbered}
+### Termos de Fourier {.unnumbered}
 
-Termos fourier são os equivalentes de curvas seno e coseno. A diferença é que 
+Termos de Fourier são os equivalentes de curvas seno e coseno. A diferença é que 
 estes são ajustados com base na identificação da combinação mais apropriada das curvas para explicar 
 seus dados.
 
-O ajuste de apenas um termo fourier equivale a ajustar um seno e um coseno para o lag que ocorre mais frequentemente em seu periodograma (no nosso
+O ajuste de apenas um termo de Fourier equivale a ajustar um seno e um coseno para a defasagem (*lag*) que ocorre mais frequentemente em seu periodograma (no nosso
 caso, de 52 semanas). Para isso, nós utilizamos a função `fourier()` do pacote **forecast**.  
 
 No código abaixo, a atribuição é feita utilizando o `$`, uma vez que `fourier()` retorna duas colunas (uma  
@@ -541,7 +541,7 @@ para seno, outra para coseno) que são adicionadas aos dados como uma lista, cha
 
 ```{r fourier}
 
-## adicione os termos fourier utilizando as variáveis epiweek e case_int
+## adicione os termos de Fourier utilizando as variáveis epiweek e case_int
 counts$fourier <- select(counts, epiweek, case_int) %>% 
   fourier(K = 1)
 ```
@@ -551,12 +551,12 @@ counts$fourier <- select(counts, epiweek, case_int) %>%
 
 É possível ajustar regressões utilizando funções básicas do **stats** ou **MASS**
 (ex.: `lm()`, `glm()` e `glm.nb()`). Entretanto, nós iremos utilizar as funções do 
-pacote **trending**, pois isto permite o cálculo apropriado dos intervalos de confiança
+pacote **trending**, pois ele permite o cálculo apropriado dos intervalos de confiança
 e de predição (que de outra forma não estão disponíveis). 
 A sintaxe é a mesma, em que você especifica uma variável para atribuir o resultado, um til (~),
 e então adiciona as variáveis de interesse separadas por um sinal de mais (+).
 
-A outra diferença é que nós primeiro definimos o modelo, e então `fit()` (ajustamos) ele para os 
+A outra diferença é que nós primeiro definimos o modelo e então o ajustamos `fit()` (ajustamos) para os 
 dados. Isto é útil porque permite a comparação de diferentes modelos 
 com a mesma sintaxe.
 
@@ -576,7 +576,7 @@ model <- glm_nb_model(
   case_int ~
     ## utilize a variável epiweek para levar em consideração a tendência
     epiweek +
-    ## utilize os termos fourier para levar em consideração a sazonalidade
+    ## utilize os termos de Fourier para levar em consideração a sazonalidade
     fourier)
 
 ## ajuste seu modelo utilizando os dados de contagem
