@@ -623,7 +623,7 @@ as contagens observadas.
 observed <- observed %>% 
   mutate(resid = residuals(fitted_model$fitted_model, type = "response"))
 
-## os resíduos são razoavelmente constantes através do tempo (se não: surtos? mudanças na prática?)
+## os resíduos são razoavelmente constantes ao longo do tempo (se não: surtos? mudanças na prática?)
 observed %>%
   ggplot(aes(x = epiweek, y = resid)) +
   geom_line() +
@@ -653,7 +653,7 @@ observed %>%
 ## teste formalmente a autocorrelação dos resíduos
 ## H0 é que os resíduos são ruídos brancos (ex.: aleatórios)
 ## teste de independência
-## se o valor de p for significante, então não aleatório
+## se p-valor for significantivo, então não é aleatório
 Box.test(observed$resid, type = "Ljung-Box")
 
 ```
@@ -672,7 +672,7 @@ manual a seção sobre [unindo dados](https://epirhandbook.com/joining-data.html
 
 ```{r join}
 
-## junção à esquerda, de forma que nós teremos apenas as linhas existentes na contagem
+## junção à esquerda, de forma que nós teremos apenas as linhas existentes na tabela de contagens
 ## exclua a variável date do temp_data (do contrário, ficará duplicada)
 counts <- left_join(counts, 
                     select(temp_data, -date),
@@ -729,22 +729,22 @@ counts %>%
       ## retorne o coeficiente de correlação
       type = "correlation") %>% 
   ## organize pela ordem decrescente do coeficiente de correlação
-  ## mostre os lags com maior associação
+  ## mostre as defasagens de tempo com maior associação
   arrange(-ccf) %>% 
   ## apenas mostre os dez maiores coeficientes
   slice_head(n = 10)
 
 ```
 
-A partir disso, nós vemos que um lag de 4 semanas é mais altamente correlacionado.
-Então, nós criamos uma variável de temperatura com esse lag para incluir em nossa regressão.
+A partir disso, nós vemos que uma defasagem (*lag*) de 4 semanas é o mais altamente correlacionado.
+Então, nós criamos uma variável de temperatura com esse *lag* para incluir em nossa regressão.
 
 <span style="color: red;">**_PERIGO:_** Observe que as quatro primeiras semanas dos nossos dados
 na variável de temperatura com lag estão em branco (`NA`) - como não existem quatro 
 semanas anteriores para obter os dados. Para utilizar esses dados com a função `predict()`,  
 do pacote **trending**, nós precisamos usar o argumento `simulate_pi = FALSE` dentro de
 `predict()` nas etapas posteriores. Se nós quiséssemos utilizar a opção de simular, então
-precisaríamos excluir esses campos em branco, e guardá-los como um novo conjunto de dados ao adicionar `drop_na(t2m_lag4)` 
+precisaríamos excluir esses campos em branco, e salvar um novo conjunto de dados ao adicionar `drop_na(t2m_lag4)` 
 ao código abaixo. </span>  
  
 
@@ -760,11 +760,11 @@ counts <- counts %>%
 <!-- ======================================================= -->
 ### Binominal negativa com duas variáveis {.unnumbered}
 
-Nós ajustamos uma regressão binominal negativa como anteriormente. Desta vez, adicionamos 
-a variável temperatura com lag de quatro semanas.
+Nós ajustamos uma regressão binominal negativa como feito anteriormente. Desta vez, adicionamos 
+a variável temperatura com uma defasagem de tempo (*lag*) de quatro semanas.
 
 <span style="color: orange;">**_CUIDADO:_** Observe o uso do argumento  `simulate_pi = FALSE`
-dentro da função `predict()`. Isto é porque o comportamento padrão de **trending** 
+dentro da função `predict()`. Isto se deve porque o comportamento padrão de **trending** 
 é usar o pacote **ciTools** para estimar um intervalo de predição. Isto não
 funciona se existirem contagen `NA`, e também produz intervalos mais granulares.
 Veja `?trending::predict.trending_model_fit` para mais detalhes. </span>  
@@ -792,12 +792,12 @@ observed <- predict(fitted_model, simulate_pi = FALSE)
 ```
 
 
-Para investigar os termos individual, nós podemos puxar a regressão binominal negativa original
+Para investigar os termos individual, nós podemos retomar a regressão binominal negativa original
 do formato **trending** utilizando a função `get_model()` e aplica-la na função `tidy()` function do  pacote
 **broom** para obter estimativas exponencializadas e intervalos
 de confiança associados.
 
-O que isso nos mostra é que a temperatura laggada, depois de controlar o modelo para tendência e sazonalidade, 
+O que isso nos mostra é que a temperatura defasada, depois de controlar o modelo para tendência e sazonalidade, 
 é similar a contagem dos casos (estimativa ~ 1) e significativamente associada com os casos.
 Isto sugere que esta possa ser uma boa variável para prever a quantidade de casos futura 
 (conforme a previsão do tempo é disponibilizada).
@@ -822,7 +822,7 @@ ggplot(data = observed, aes(x = epiweek)) +
   ## adicione uma linha com a estimativa do modelo
   geom_line(aes(y = estimate),
             col = "Red") + 
-  ## adicione uma banda com os intervalos de predição
+  ## adicione uma faixa sombreada dos intervalos de predição
   geom_ribbon(aes(ymin = lower_pi, 
                   ymax = upper_pi), 
               alpha = 0.25) + 
@@ -839,8 +839,8 @@ ggplot(data = observed, aes(x = epiweek)) +
 #### Resíduos {.unnumbered}
 
 Aqui, novamente avaliaremos os resíduos para ver o quão bem o nosso modelo se ajusta aos dados observados.
-Os resultados e interpretação são similares àqueles da regressão anterior,
-então pode ser mais paupável continuar com o modelo mais simples sem a temperatura.
+Os resultados e a interpretação são similares àqueles da regressão anterior,
+então pode ser mais viável continuar com o modelo mais simples, sem a temperatura.
 
 ```{r}
 
@@ -848,7 +848,7 @@ então pode ser mais paupável continuar com o modelo mais simples sem a tempera
 observed <- observed %>% 
   mutate(resid = case_int - estimate)
 
-## os resíduos são razoavelmente constantes através do tempo (caso não: surtos? mudanças na prática?)
+## os resíduos são razoavelmente constantes ao longo do tempo (caso não: surtos? mudanças na prática?)
 observed %>%
   ggplot(aes(x = epiweek, y = resid)) +
   geom_line() +
@@ -878,7 +878,7 @@ observed %>%
 ## formalmente avalie a autocorrelação dos resíduos
 ## H0 é que os resíduos são uma série de ruídos brancos (ex.: aleatórios)
 ## teste de independência
-## se o valor p for significante, então os resíduos não são aleatórios
+## se o p-valor for signficativo, então os resíduos não são aleatórios
 Box.test(observed$resid, type = "Ljung-Box")
 
 ```
@@ -892,7 +892,7 @@ Nós usamos o pacote **trending** para ajustar regressões para os anos anterior
 predizer o que esperar para o próximo ano. Se as contagens observadas estão acima
 do esperado, é possível que exista um surto.
 O segundo método é baseado em princípios similares, mas utiliza o pacote **surveillance**,
-que possuí uma variedade de algoritmos diferentes para detecção de aberrações.
+que possui uma variedade de algoritmos diferentes para detecção de anomalias.
 
 <span style="color: orange;">**_CUIDADO:_** Normalmente, você tem interesse no ano corrente (onde você apenas conhece contagens até a semana atual). Então, neste exemplo, nós fingiremos estar na semana 39 de 2011.</span>
 
@@ -917,7 +917,7 @@ E também definimos quantas semanas estão entre o limite do nosso período de r
 que estamos interessados em fazer previsões.
 
 
-<span style="color: black;">**_NOTA:_** Neste exemplo, nós fingímos estar no final de setembro de 2011 ("2011 W39").</span>  
+<span style="color: black;">**_NOTA:_** Neste exemplo, nós fingimos estar no final de setembro de 2011 ("2011 W39").</span>  
 
 ```{r cut_off}
 
@@ -966,12 +966,12 @@ counts <- counts %>%
 
 
 <!-- ======================================================= -->
-#### Termos fourier {.unnumbered}
+#### Termos de Fourier {.unnumbered}
 
-Nós precisamos redefinir nossos termos fourier - uma vez que queremos ajusta-los ao período de referência
-apenas, e então prever (extrapolar) esses termos para o próximo ano.
+Nós precisamos redefinir nossos termos de fourier - uma vez que queremos ajustá-los apenas ao período de referência,
+e então prever (extrapolar) esses termos para o próximo ano.
 Para fazer isso, nós precisamos combinar duas listas geradas da função `fourier()`; 
-a primeira é para os dados base de referência, e a segunda preve para o
+a primeira se trata dos dados que são a base de referência, e a segunda a previsão para o
 ano de interesse (ao definir o argumento `h`).  
 
 *N.b.* para unir linhas, nós temos que usar `rbind()` (em vez da função `bind_rows` do tidyverse) pois
@@ -980,13 +980,13 @@ as colunas fourier estão em forma de lista (logo, não são nomeadas individual
 ```{r fourier_terms_pred}
 
 
-## defina os termos fourier (senos e cosenos) 
+## defina os termos de fourier (senos e cosenos) 
 counts <- counts %>% 
   mutate(
-    ## combine os termos fourier para semanas antes e após a data limite de 2010
-    ## (termos fourier para 2011 e antes são estimados)
+    ## combine os termos de fourier para semanas antes e após a data limite de 2010
+    ## (termos de fourier para 2011 e antes são estimados)
     fourier = rbind(
-      ## obtenha termos fourier dos anos anteriores
+      ## obtenha termos de fourier dos anos anteriores
       fourier(
         ## mantenha apenas as linhas anteriores à 2011
         filter(counts, 
@@ -994,9 +994,9 @@ counts <- counts %>%
         ## inclua um conjunto de termos seno e coseno
         K = 1
         ), 
-      ## preveja os termos fourier para 2011 (utilizando os dados base de referência)
+      ## preveja os termos de fourier para 2011 (utilizando os dados base de referência)
       fourier(
-        ## mantenha apenas as linhas dentro do período de interesse
+        ## mantenha apenas as linhas que estejam dentro do período de interesse
         filter(counts, 
                epiweek <= cut_off),
         ## inclua um conjunto de termos seno e coseno
@@ -1075,10 +1075,10 @@ Desta vez, nós também adicionamos uma linha vertical para indicar onde o perí
 
 ## faça gráficos da sua regressão
 ggplot(data = observed, aes(x = epiweek)) + 
-  ## adiciona uma linha para as estimativas do modelo
+  ## adicione uma linha para as estimativas do modelo
   geom_line(aes(y = estimate),
             col = "grey") + 
-  ## adicione uma banda para os intervalos de predição
+  ## adicione uma faixa sombreada com os intervalos de predição
   geom_ribbon(aes(ymin = lower_pi, 
                   ymax = upper_pi), 
               alpha = 0.25) + 
@@ -1166,11 +1166,11 @@ roll_window <- 52
 weeks_ahead <- 52
 
 ## crie um conjunto de dados com dados repetindo e aumentando
-## nomeia cada conjunto de dados com um id único
-## apenas utilize os casos antes do ano de interesse (ex.: 2011)
+## nomeie cada conjunto de dados com um id único
+## utilize apenas os casos antes do ano de interesse (ex.: 2011)
 case_roll <- counts %>% 
   filter(epiweek < cut_off) %>% 
-  ## apenas mantenha as variáveis de semana e quantidade de casos
+  ## mantenha apenas as variáveis de semana e quantidade de casos
   select(epiweek, case_int) %>% 
     ## exclua as últimas x observações
     ## dependendo quantas semanas à frente estão sendo previstas
@@ -1188,7 +1188,7 @@ case_roll <- counts %>%
 forecasts <- purrr::map(unique(case_roll$.id), 
                         function(i) {
   
-  ## apenas mantenha a janela atual sendo ajustada no modelo
+  ## mantenha apenas a janela atual sendo ajustada no modelo
   mini_data <- filter(case_roll, .id == i) %>% 
     as_tibble()
   
@@ -1206,7 +1206,7 @@ forecasts <- purrr::map(unique(case_roll$.id),
   
   ## defina o limite de corte baseado nos últimos dados de contagem, com exceção dos dados em branco
   cv_cut_off <- mini_data %>% 
-    ## apenas mantenha as linhas sem campos em branco
+    ## mantenha apenas as linhas sem campos em branco
     drop_na(case_int) %>% 
     ## obtenha a última semana
     summarise(max(epiweek)) %>% 
@@ -1216,12 +1216,12 @@ forecasts <- purrr::map(unique(case_roll$.id),
   ## crie a variável mini_data de volta como um tsibble
   mini_data <- tsibble(mini_data, index = epiweek)
   
-  ## defina os termos fourier (sincos) 
+  ## defina os termos de fourier (sincos) 
   mini_data <- mini_data %>% 
     mutate(
     ## combine os termos fourier para semanas antes e após a data limite
     fourier = rbind(
-      ## obtenha termos fourier para anos anteriores
+      ## obtenha termos de fourier para anos anteriores
       forecast::fourier(
         ## matenha as linhas até a data limite
         filter(mini_data, 
@@ -1285,7 +1285,7 @@ forecasts <- left_join(forecasts,
 ## utilize {yardstick} para calcular métricas
   ## RMSE: Erro quadrático médio
   ## MAE:  Erro médio absoluto
-  ## MASE: Erro Médio Absoluto Escalonado
+  ## MASE: Erro médio absoluto escalonado
   ## MAPE: Erro médio absoluto percentual
 model_metrics <- bind_rows(
   ## no seu conjunto de dados previstos, compare o observado com o estimado
@@ -1321,7 +1321,7 @@ binominal negativa (incluíndo tendências) e diminui o peso de surtos passados 
 criar um nível de limiar.
 
 A segunda opção utiliza o método glrnb. Isto também ajusta uma glm binominal negativa 
-mas incluí tendências e termos fourier (então é a favorita aqui). A regressão é utilizada
+mas inclui tendências e termos de fourier (então é a favorita aqui). A regressão é utilizada
 para calcular o "controle médio" (~valores ajustados) - ele então utiliza uma razão estatística 
 generalizada de verosimilhança para avaliar se existe uma mudança na média
 de cada semana. Observe que o limiar para cada semana leva em conta semanas
@@ -1372,7 +1372,7 @@ ctrl <- list(
   weightsThreshold = 2.58, ## reponderando surtos passados (método melhorado de noufaily - método original sugere 1)
   ## pastWeeksNotIncluded = 3, ## utilize todas as semanas disponíveis (noufaily suggests drop 26)
   trend = TRUE,
-  pThresholdTrend = 1, ## 0.05 normalmente, entretanto 1 é recomendado no método melhorado (ex.: sempre mantenha)
+  pThresholdTrend = 1, ## 0.05 normalmente, entretanto 1 é recomendado no método melhorado (i.e.: sempre mantenha)
   thresholdMethod = "nbPlugin",
   populationOffset = TRUE
   )
@@ -1426,7 +1426,7 @@ para detalhes.
 ctrl <- list(
   ## defina qual período de tempo que quer utilizar o limiar (ex.: 2011)
   range = which(counts_sts@epoch > weekrange),
-  mu0 = list(S = 1,    ## número de termos fourier (harmonics) para incluir
+  mu0 = list(S = 1,    ## número de termos de fourier (harmônicos) para incluir
   trend = TRUE,   ## incluir tendências ou não
   refit = FALSE), ## reajustar o modelo após cada alarme ou não
   ## cARL = limiar para estatísticas GLR (arbitrário)
