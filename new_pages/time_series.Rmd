@@ -506,7 +506,7 @@ counts %>%
 
 ```
 
-Você pode testar formalmente a hipótese nula de independência em uma série temporal (ex.:
+Você pode testar formalmente a hipótese nula de independência em uma série temporal (i.e.:
 ausência de autocorrelação) utilizando o teste de Ljung-Box (no pacote **stats**). 
 Um p-valor significantivo sugere que exista uma autocorrelação nos dados.
 
@@ -651,7 +651,7 @@ observed %>%
   labs(x = "Fitted", y = "Residuals")
 
 ## teste formalmente a autocorrelação dos resíduos
-## H0 é que os resíduos são ruídos brancos (ex.: aleatórios)
+## H0 é que os resíduos são ruídos brancos (i.e.: aleatórios)
 ## teste de independência
 ## se p-valor for significantivo, então não é aleatório
 Box.test(observed$resid, type = "Ljung-Box")
@@ -876,7 +876,7 @@ observed %>%
   labs(x = "Fitted", y = "Residuals")
 
 ## formalmente avalie a autocorrelação dos resíduos
-## H0 é que os resíduos são uma série de ruídos brancos (ex.: aleatórios)
+## H0 é que os resíduos são uma série de ruídos brancos (i.e.: aleatórios)
 ## teste de independência
 ## se o p-valor for signficativo, então os resíduos não são aleatórios
 Box.test(observed$resid, type = "Ljung-Box")
@@ -927,7 +927,7 @@ start_date <- min(counts$epiweek)
 ## defina uma semana limite (final do período de referência, início do período de previsão)
 cut_off <- yearweek("2010-12-31")
 
-## defina a última data de interesse (ex.: final da previsão)
+## defina a última data de interesse (i.e.: final da previsão)
 end_date <- yearweek("2011-12-31")
 
 ## encontre quantas semanas no período (ano) de interesse
@@ -940,7 +940,7 @@ num_weeks <- as.numeric(end_date - cut_off)
 #### Adicione linhas {.unnumbered}
 
 Para ser capaz de prever no formato tidyverse, nós precisamos ter o número correto
-de linhas em nosso banco de dados, ex.: uma linha para cada semana até a data final (`end_date`) definida acima.
+de linhas em nosso banco de dados, i.e.: uma linha para cada semana até a data final (`end_date`) definida acima.
 O código abaixo permite adicionar essas linhas de acordo com uma variável de agrupamento - por exemplo,
 se nós tivéssemos múltiplos países em um conjunto de dados, poderíamos agrupar por país e então
 adicionar linhas apropriadas para cada um.
@@ -1167,7 +1167,7 @@ weeks_ahead <- 52
 
 ## crie um conjunto de dados com dados repetindo e aumentando
 ## nomeie cada conjunto de dados com um id único
-## utilize apenas os casos antes do ano de interesse (ex.: 2011)
+## utilize apenas os casos antes do ano de interesse (i.e.: 2011)
 case_roll <- counts %>% 
   filter(epiweek < cut_off) %>% 
   ## mantenha apenas as variáveis de semana e quantidade de casos
@@ -1365,7 +1365,7 @@ ter sido ativado (semana com casos acima do limiar) utilizando  `farringtonmetho
 
 ## defina o controle
 ctrl <- list(
-  ## defina qual período de tempo que quer utilizar o limiar (ex.: 2011)
+  ## defina qual período de tempo que quer utilizar o limiar (i.e.: 2011)
   range = which(counts_sts@epoch > weekrange),
   b = 9, ## quantos anos anteriores para considerar com os dados de referência
   w = 2, ## tamanho da janela flutuante em semanas
@@ -1424,7 +1424,7 @@ para detalhes.
 
 ## defina as opções de controle
 ctrl <- list(
-  ## defina qual período de tempo que quer utilizar o limiar (ex.: 2011)
+  ## defina qual período de tempo que quer utilizar o limiar (i.e.: 2011)
   range = which(counts_sts@epoch > weekrange),
   mu0 = list(S = 1,    ## número de termos de fourier (harmônicos) para incluir
   trend = TRUE,   ## incluir tendências ou não
@@ -1504,7 +1504,7 @@ do pós-período e é zero no pré-período.
 Isto significa que as estimativas $β_2$ e $β_3$ são efeitos da intervenção.
 
 Nós precisamos recalcular os termos de fourier sem realizar a previsão aqui, uma vez que iremos utilizar 
-todos os dados disponíveis para nós (ex.: retrospectivamente). Adicionalmente, nós precisamos calcular 
+todos os dados disponíveis para nós (i.e.: retrospectivamente). Adicionalmente, nós precisamos calcular 
 os termos extras necessários para a regressão.
 
 ```{r define_terms_interrupted}
