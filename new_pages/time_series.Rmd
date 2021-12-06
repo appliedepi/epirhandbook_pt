@@ -585,19 +585,19 @@ fitted_model <- trending::fit(model, counts)
 ## calcule os intervalos de confiança e predição
 observed <- predict(fitted_model, simulate_pi = FALSE)
 
-## plote sua regressão
+## faça um gráfico da sua regressão
 ggplot(data = observed, aes(x = epiweek)) + 
   ## adicione uma linha para a estimativa do modelo
   geom_line(aes(y = estimate),
             col = "Red") + 
-  ## adicione uma banda para os intervalos de predição
+  ## adicione uma faixa sombreada dos intervalos de predição
   geom_ribbon(aes(ymin = lower_pi, 
                   ymax = upper_pi), 
               alpha = 0.25) + 
   ## adicione uma linha para o número de casos
   geom_line(aes(y = case_int), 
             col = "black") + 
-  ## faça uma plotagem tradicional (com eixos pretos e fundo branco)
+  ## faça um gráfico tradicional (com eixos pretos e fundo branco)
   theme_classic()
 
 
@@ -606,16 +606,15 @@ ggplot(data = observed, aes(x = epiweek)) +
 <!-- ======================================================= -->
 ### Resíduos {.unnumbered}
 
-Para avaliar o quão bem nosso modelo ajusta os dados observados,  precisamos checar os resíduos. 
+Para avaliar o quão bem nosso modelo se ajusta aos dados observados,  precisamos checar os resíduos. 
 Os resíduos são a diferença entre as contagens observadas e as contagens
 estimadas pelo modelo. Nós podemos calcular isto de forma simples, utilizando `case_int - estimate`, 
 mas a função `residuals()` extrai isso diretamente da regressão para nós.
 
-O que vemos abaixo é que não estamos explicando toda a variação
-que nós poderíamos com o modelo. Pode ser que deveríamos ajustar mais termos fourier,
-e verificar a amplitude. Entretanto, para este exemplo, nós iremos deixar da forma que esta.
-As plotagens mostram que nosso modelo possuí pior desempenho nos picos e baixas (quando as contagens estão
-nas maiores e menores quantidades) e, assim, ele provavelmente irá subestimar 
+O que vemos abaixo é que não estamos explicando toda a variabilidade dos dados com o nosso modelo. Uma possibilidade seria ajustar mais termos de Fourier,
+e verificar a amplitude. Entretanto, para este exemplo, nós iremos deixar da forma que está.
+Os gráficos mostram que nosso modelo possui pior desempenho nos picos e nas baixas (quando as contagens estão
+nas maiores ou nas menores quantidades). Sendo assim, ele provavelmente irá subestimar 
 as contagens observadas.
 
 ```{r, warning=F, message=F}
