@@ -501,7 +501,7 @@ counts %>%
 counts %>% 
   ## calcule a autocorrelação parcial utilizando lags que cobrem anos completos
   PACF(case_int, lag_max = 52) %>% 
-  ## mostre uma plotagem
+  ## mostre um gráfico
   autoplot()
 
 ```
@@ -701,13 +701,13 @@ counts %>%
     names_to = "measure", 
     ## move os valores das células para a nova coluna "values"
     values_to = "value") %>% 
-  ## crie uma plotagem com os dados acima
-  ## plote a epiweek no eixo x e os valores (contagens/temperatura) no eixo y
+  ## crie um gráfico com os dados acima
+  ## trace um gráifco com a epiweek no eixo x e os valores (contagens/temperatura) no eixo y
   ggplot(aes(x = epiweek, y = value)) + 
-    ## crie uma plotagem separada para temperaturas e contagens dos casos
+    ## crie um gráfico separado para temperaturas e contagens dos casos
     ## deixe a escala do eixo y livre
     facet_grid(measure ~ ., scales = "free_y") +
-    ## plote as informações como linha
+    ## adiciona as informações como uma linha no gráfico
     geom_line()
 
 ```
@@ -1042,7 +1042,7 @@ model <- glm_nb_model(
   case_int ~
     ## use as semanas epidemiológicas ('epiweek') para considerar a tendência
     epiweek +
-    ## use os termos fourier para considerar a sazonalidade
+    ## use os termos de fourier para considerar a sazonalidade
     fourier
 )
 
@@ -1219,7 +1219,7 @@ forecasts <- purrr::map(unique(case_roll$.id),
   ## defina os termos de fourier (sincos) 
   mini_data <- mini_data %>% 
     mutate(
-    ## combine os termos fourier para semanas antes e após a data limite
+    ## combine os termos de fourier para semanas antes e após a data limite
     fourier = rbind(
       ## obtenha termos de fourier para anos anteriores
       forecast::fourier(
@@ -1503,13 +1503,13 @@ $β_2 \times δ(t-t_0) + β_3\times(t-t_0 )^+$ é a parte linear generalizada
 do pós-período e é zero no pré-período.
 Isto significa que as estimativas $β_2$ e $β_3$ são efeitos da intervenção.
 
-Nós precisamos recalcular os termos fourier sem realizar a previsão aqui, uma vez que iremos utilizar 
+Nós precisamos recalcular os termos de fourier sem realizar a previsão aqui, uma vez que iremos utilizar 
 todos os dados disponíveis para nós (ex.: retrospectivamente). Adicionalmente, nós precisamos calcular 
 os termos extras necessários para a regressão.
 
 ```{r define_terms_interrupted}
 
-## adicione os termos fourier utilizando as variáveis epiweek e case_int
+## adicione os termos de fourier utilizando as variáveis epiweek e case_int
 counts$fourier <- select(counts, epiweek, case_int) %>% 
   as_tsibble(index = epiweek) %>% 
   fourier(K = 1)
@@ -1521,7 +1521,7 @@ intervention_week <- yearweek("2008-12-31")
 counts <- counts %>% 
   mutate(
     ## corresponde ao t na fórmula
-      ## contagem das semanas (provavelmente poderial também utilizar diretamente a variável epiweeks (semanas epidemiológicas))
+      ## contagem das semanas (provavelmente poderia também utilizar diretamente a variável epiweeks (semanas epidemiológicas))
     # linear = row_number(epiweek), 
     ## corresponde ao delta(t-t0) na fórmula
       ## período pré ou pós intervenção
@@ -1552,7 +1552,7 @@ model <- glm_nb_model(
   case_int ~
     ## utilize a epiweek para levar em consideração a tendência
     epiweek +
-    ## utilize os termos fourier para levar em consideração a sazonalidade
+    ## utilize os termos de fourier para levar em consideração a sazonalidade
     fourier + 
     ## adicione o clima nos pré- e pós- períodos
     intervention + 
