@@ -43,19 +43,19 @@ pacman :: p_load(
 Importamos o conjunto de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o "clean" linelist </a> (as .rds file). Importe dados com a função `import()` do pacote **rio** (ele lida com muitos tipos de arquivo como .xlsx, .csv, .rds - veja a página [Importar e exportar] para detalhes). 
 
 ```{r, echo=F}
-# importe a lista de linha para R
+# importe lista de linhas (linelist) para R
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 ```
 
 ```{r, eval=F}
-# importar a lista de linha
+# importar a linelist
 linelist <- import("linelist_cleaned.rds")
 ```
 
-As primeiras 50 linhas da lista de linha são exibidas abaixo.
+As primeiras 50 linhas da *linelist* são exibidas abaixo.
 
 ```{r, message=FALSE, echo=F}
-# exibe os dados da lista de linha como uma tabela
+# exibe os dados da linelist como uma tabela
 DT :: datatable(head (linelist, 50), rownames = FALSE, filter = "top", options = list (pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
@@ -69,7 +69,7 @@ knitr::include_graphics(here::here("images", "flexdashboard_new1.png"))
 ```
 
 
-Na janela que se abre, selecione "Do modelo" e selecione o modelo "Flex Dashboard". Em seguida, você será solicitado a nomear o documento. No exemplo desta página, nomearemos nosso R Markdown como "outbreak_dashboard.Rmd".  
+Na janela que se abre, selecione "Do modelo" (*From template*) e selecione o modelo "Flex Dashboard". Em seguida, você será solicitado a nomear o documento. No exemplo desta página, nomearemos nosso R Markdown como "outbreak_dashboard.Rmd".  
   
 
 ```{r out.width = "100%", out.height="75%", fig.align = "center", echo=F}
@@ -117,7 +117,7 @@ Se apropriado, os valores lógicos devem ser fornecidos em YAML em letras minús
 
 ### Blocos de código {.unnumbered}  
 
-Um script R Markdown pode conter vários "pedaços" de código - essas são áreas do script onde você pode escrever código R de várias linhas e funcionam como mini scripts R.  
+Um script R Markdown pode conter vários "pedaços" (*chunks*) de código - essas são áreas do script onde você pode escrever código R de várias linhas e funcionam como mini scripts R.  
 
 Os trechos de código são criados com três marcas invertidas e chaves com um "r" minúsculo dentro. O pedaço é fechado com três crases. Você pode criar um novo bloco digitando-o você mesmo, usando o atalho de teclado "Ctrl+Alt+i" (ou Cmd+Shift+r no Mac) ou clicando no ícone verde 'inserir um novo bloco de código' no topo do seu editor de script. Muitos exemplos são fornecidos a seguir.  
 
@@ -126,7 +126,7 @@ Os trechos de código são criados com três marcas invertidas e chaves com um "
 
 Fora de um "bloco" de código R, você pode escrever um texto narrativo. Conforme descrito na página em [Relatórios com R Markdown], você pode colocar o texto em itálico circundando-o com um asterisco (*) ou em negrito circundando-o com dois asteriscos (**). Lembre-se de que os marcadores e os esquemas de numeração são sensíveis a novas linhas, recuo e acabamento de uma linha com dois espaços.  
 
-Você também pode inserir o código R in-line no texto, conforme descrito na página [Relatórios com R Markdown], circundando o código com crases e iniciando o comando com "r": `` `1 + 1` ``(veja o exemplo com data acima).  
+Você também pode inserir o código R nas próprias linhas de texto (*in-line*), conforme descrito na página [Relatórios com R Markdown], circundando o código com crases e iniciando o comando com "r": `` `1 + 1` ``(veja o exemplo com data acima).  
 
 
 
@@ -166,7 +166,7 @@ Os atributos de seção específicos para **flexdashboard** incluem:
 
 ## Layout {#layout}  
 
-Ajuste o layout do seu painel das seguintes maneiras:  
+Ajuste o *layout* do seu painel (*dashboard*) das seguintes maneiras:  
 
 * Adicione páginas, colunas / linhas e gráficos com títulos R Markdown (por exemplo, #, ## ou ###)  
 * Ajuste o parâmetro YAML `orientation:` para `rows` ou` columns`  
@@ -271,7 +271,7 @@ knitr::include_graphics(here::here("images", "flexdashboard_tabs_view.png"))
 
 ## Adicionando conteúdo  
 
-Vamos começar a construir um painel. Nosso painel simples terá 1 página, 2 colunas e 4 painéis. Vamos construir os painéis peça por peça para demonstração.  
+Vamos começar a construir um painel (*dashboard*). Nosso painel simples terá 1 página, 2 colunas e 4 painéis. Vamos construir os painéis peça por peça para demonstração.  
 
 Você pode incluir facilmente saídas R padrão, como texto, ggplots e tabelas (consulte a página [Tabelas para apresentação]). Simplesmente codifique-os dentro de um fragmento de código R, como faria para qualquer outro script R Markdown.  
 
@@ -282,7 +282,7 @@ Observação: você pode baixar o script Rmd finalizado e a saída do painel HTM
 
 Você pode digitar o texto do Markdown e incluir o código *in-line* como para qualquer outra saída do R Markdown. Consulte a página [Relatórios com R Markdown] para obter detalhes. 
 
-Neste painel, incluímos um painel de texto de resumo que inclui um texto dinâmico mostrando a última data de hospitalização e o número de casos relatados no surto. 
+Neste painel (*dashboard*), incluímos um painel de texto de resumo que inclui um texto dinâmico mostrando a última data de hospitalização e o número de casos relatados no surto. 
 
 ### Tabelas {.unnumbered}  
 
@@ -303,7 +303,7 @@ knitr::include_graphics(here::here("images", "flexdashboard_tables_view.png"))
 
 Se você deseja mostrar uma tabela dinâmica que permite ao usuário filtrar, classificar e / ou clicar nas "páginas" do quadro de dados, use o pacote **DT** e sua função `datatable()`, como no código abaixo.  
 
-O código de exemplo abaixo, a `linelist` do quadro de dados é impressa. Você pode definir `rownames = FALSE` para conservar espaço horizontal e` filter = "top" `para ter filtros no topo de cada coluna. Uma lista de outras especificações pode ser fornecida para `options =`. Abaixo, definimos `pageLength =` para que 5 linhas apareçam e `scrollX =` para que o usuário possa usar uma barra de rolagem na parte inferior para rolar horizontalmente. O argumento `class = 'white-space: nowrap'` garante que cada linha seja apenas uma linha (não várias linhas). Você pode ler sobre outros argumentos e valores possíveis [aqui](https://rstudio.github.io/DT/?_ga=2.2810736.1321860763.1619286819-369061888.1601594705) ou inserindo `?Datatable`
+O código de exemplo abaixo, a `linelist` do quadro de dados é impressa. Você pode definir `rownames = FALSE` para conservar espaço horizontal e` filter = "top" `para ter filtros no topo de cada coluna. Uma lista de outras especificações pode ser fornecida para `options =`. Abaixo, definimos `pageLength =` para que 5 linhas apareçam e `scrollX =` para que o usuário possa usar uma barra de rolagem na parte inferior para rolar horizontalmente. O argumento `class = 'white-space: nowrap'` garante que cada linha seja uma linha (não várias linhas). Você pode ler sobre outros argumentos e valores possíveis [aqui](https://rstudio.github.io/DT/?_ga=2.2810736.1321860763.1619286819-369061888.1601594705) ou inserindo `?Datatable`
 
 ```{r, eval=F}
 DT :: datatable(linelist, 
@@ -312,7 +312,7 @@ DT :: datatable(linelist,
               class = 'white-space: nowrap' )
 ```
 
-### Plots {.unnumbered}  
+### Gráficos {.unnumbered}  
 
 Você pode imprimir gráficos em um painel de controle como faria em um script R. Em nosso exemplo, usamos o pacote **incidence2** para criar uma "epicurva" por faixa etária com dois comandos simples (consulte a página [Curvas epidêmicas]). No entanto, você pode usar `ggplot()` e imprimir um gráfico da mesma maneira.  
 
@@ -343,7 +343,7 @@ Aqui está a aparência disso no painel (gif). Essa funcionalidade interativa ai
 knitr::include_graphics(here::here("images", "flexdashboard_ggplotly.gif"))
 ```
 
-### Widgets HTML {.unnumbered}
+### Ferramentas (*Widgets*) HTML {.unnumbered}
 
 [HTML widgets for R](http://www.htmlwidgets.org/) são uma classe especial de pacotes R que permitem maior interatividade utilizando bibliotecas JavaScript. Você pode incorporá-los nas saídas do R Markdown (como um flexdashboard) e nos painéis do Shiny.  
 
@@ -376,7 +376,7 @@ Você pode optar por ter todo o código dentro do script R Markdown **flexdashbo
 
 ## Shiny  
 
-A integração do pacote R **shiny** pode tornar seus painéis ainda mais reativos à entrada do usuário. Por exemplo, você pode fazer com que o usuário selecione uma jurisdição ou um intervalo de datas e os painéis reajam à sua escolha (por exemplo, filtrar os dados exibidos). Para incorporar a reatividade **shiny** ao **flexdashboard**, você só precisa fazer algumas alterações no script R Markdown do **flexdashboard**.  
+A integração do pacote R **shiny** pode tornar seus painéis (*dashboards*) ainda mais reativos à entrada do usuário. Por exemplo, você pode fazer com que o usuário selecione uma jurisdição ou um intervalo de datas e os painéis reajam à sua escolha (por exemplo, filtrar os dados exibidos). Para incorporar a reatividade **shiny** ao **flexdashboard**, você só precisa fazer algumas alterações no script R Markdown do **flexdashboard**.  
 
 Você pode usar **shiny** para produzir aplicativos / painéis *sem* flexdashboard também. A página do manual em [Dashboards with Shiny] oferece uma visão geral dessa abordagem, incluindo instruções sobre sintaxe **shiny**, estrutura de arquivo de aplicativo e opções para compartilhamento / publicação (incluindo opções de servidor gratuitas). Essa sintaxe e dicas gerais também se traduzem no contexto do **flexdashboard**.  
 
@@ -409,22 +409,22 @@ runtime: shiny
 
 ```
 
-Também é conveniente habilitar uma "barra lateral" para conter os widgets de entrada brilhantes que coletarão informações do usuário. Como explicado acima, crie uma coluna e indique a opção `{.sidebar}` para criar uma barra lateral no lado esquerdo. Você pode adicionar texto e pedaços R contendo os comandos **brilhante** `entrada` dentro desta coluna.  
+Também é conveniente habilitar uma "barra lateral" para conter os *widgets* de entrada shiny que coletarão informações do usuário. Como explicado acima, crie uma coluna e indique a opção `{.sidebar}` para criar uma barra lateral no lado esquerdo. Você pode adicionar texto e pedaços R contendo os comandos **shiny** `entrada` dentro desta coluna.  
 
 Se seu aplicativo / painel está hospedado em um servidor e pode ter vários usuários simultâneos, nomeie o primeiro fragmento de código R como `global`. Inclua os comandos para importar / carregar seus dados neste bloco. Esse fragmento com nome especial é tratado de maneira diferente e os dados importados dentro dele são importados apenas uma vez (não continuamente) e estão disponíveis para todos os usuários. Isso melhora a velocidade de inicialização do aplicativo.  
 
 ### Exemplo trabalhado {.unnumbered}  
 
-Aqui, adaptamos o script flexdashboard "outbreak_dashboard.Rmd" para incluir **shiny**. Adicionaremos a capacidade de o usuário selecionar um hospital em um menu suspenso e fazer com que a curva de epidemia reflita apenas os casos desse hospital, com um título de enredo dinâmico. Fazemos o seguinte:  
+Aqui, adaptamos o script flexdashboard "outbreak_dashboard.Rmd" para incluir **shiny**. Adicionaremos a capacidade de o usuário selecionar um hospital em um menu suspenso e fazer com que a curva de epidemia reflita apenas os casos desse hospital, com um título de gráfico dinâmico. Fazemos o seguinte:  
 
-* Adicione `runtime: brilhante` ao YAML  
+* Adicione `runtime: shiny` ao YAML  
 * Renomeie o trecho de configuração como `global`  
 * Crie uma barra lateral contendo:  
   * Código para criar um vetor de nomes de hospitais exclusivos  
-  * Um comando `selectInput()` (menu suspenso **brilhante**) com a escolha de nomes de hospitais. A seleção é salva como `hospital_choice`, que pode ser referenciada no código posterior como` input$hospital_choice`  
+  * Um comando `selectInput()` (menu suspenso **shiny**) com a escolha de nomes de hospitais. A seleção é salva como `hospital_choice`, que pode ser referenciada no código posterior como` input$hospital_choice`  
 * O código da curva epidêmica (coluna 2) está dentro de `renderPlot({})`, incluindo:  
   * Um filtro no conjunto de dados restringindo a coluna `hospital` ao valor atual de `input$hospital_choice`  
-  * Um título de enredo dinâmico que incorpora `input$hospital_choice`  
+  * Um título de um gráfico dinâmico que incorpora `input$hospital_choice`  
   
 Observe que qualquer código que faça referência a um valor `input$` deve estar dentro de uma função `render({})` (para ser reativo).  
 
