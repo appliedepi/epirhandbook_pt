@@ -681,9 +681,9 @@ knitr::include_graphics(here::here("images", "shiny", "app_text_view.png"))
 ```
 
 
-### Adicionando um link {.unnumbered}
+### Adicionando um *link* {.unnumbered}
 
-Para adicionar um link para um site, use `tags$a()` com o link e exiba o texto conforme mostrado abaixo. Para ter um parágrafo independente, coloque-o dentro de `p()`. Para ter apenas algumas palavras de uma frase ligada, divida a frase em partes e use `tags$a()` para a parte com hiperlink. Para garantir que o link seja aberto em uma *nova* janela do navegador, adicione `target =" _blank"` como um argumento.  
+Para adicionar um *link* para um site, use `tags$a()` com o link e exiba o texto conforme mostrado abaixo. Para ter um parágrafo independente, coloque-o dentro de `p()`. Para ter apenas algumas palavras de uma frase ligada, divida a frase em partes e use `tags$a()` para a parte com hiperlink. Para garantir que o link seja aberto em uma *nova* janela do navegador, adicione `target =" _blank"` como um argumento.  
 
 ```{r, eval=F}
 tags$a(href = "www.epiRhandbook.com", "Visite nosso site!")
@@ -691,12 +691,12 @@ tags$a(href = "www.epiRhandbook.com", "Visite nosso site!")
 
 
 
-### Adicionando um botão de download {.unnumbered}
+### Adicionando um botão de *download* {.unnumbered}
 
-Vamos passar para o segundo dos três recursos. Um botão de download é algo bastante comum para adicionar a um aplicativo e é bastante fácil de fazer. Precisamos adicionar outro widget à nossa interface do usuário e precisamos adicionar outra saída ao nosso servidor para anexar a ele. Também podemos introduzir *condutores reativos* neste exemplo!
+Vamos passar para o segundo dos três recursos. Um botão de *download* é algo bastante comum para adicionar a um aplicativo e é bastante fácil de fazer. Precisamos adicionar outro widget à nossa interface do usuário e precisamos adicionar outra saída ao nosso servidor para anexar a ele. Também podemos introduzir *condutores reativos* neste exemplo!
 
 
-Vamos atualizar nossa interface do usuário primeiro - isso é fácil, pois o Gloss vem com um widget chamado `downloadButton()` - vamos dar a ele um inputId e um rótulo.
+Vamos atualizar nossa interface do usuário primeiro - isso é fácil, pois o shiny vem com um *widget* chamado `downloadButton()` - vamos dar a ele um inputId e um rótulo.
 
 ```{r, eval = FALSE}
 
@@ -865,7 +865,7 @@ server <- function(input, output, session) {
 
 ```
 
-Você pode ver que estamos apenas chamando a saída de nosso reativo que definimos em ambas as funções de download e renderização de plotagem. Uma coisa a notar que muitas vezes confunde as pessoas é que você tem que usar os resultados dos reativos como se fossem funções - então você *deve adicionar colchetes vazios no final deles* (ou seja, `malaria_plot()` está correto, e `malaria_plot` não é). Agora que adicionamos essa solução, nosso aplicativo está um pouco mais arrumado, mais rápido e mais fácil de alterar, pois todo o nosso código que executa a função epicurva está em um só lugar.
+Você pode ver que estamos apenas chamando a saída de nosso reativo, que definimos em ambas as funções de download e de renderização de gráficos. Uma coisa a notar, e que muitas vezes confunde as pessoas, é que você precisa usar os resultados dos reativos como se fossem funções - então você *deve adicionar parênteses vazios no final deles* (ou seja, `malaria_plot()` está correto, e `malaria_plot` não está). Agora que adicionamos essa solução, nosso aplicativo está um pouco mais arrumado, mais rápido e mais fácil de alterar, pois todo o nosso código que executa a função da epicurva está em um só lugar.
 
 
 ```{r, echo=F}
@@ -875,7 +875,7 @@ knitr::include_graphics(here::here("images", "shiny", "download_button_view.png"
 
 ### Adicionando um seletor de instalação {.unnumbered}  
 
-Vamos passar para o nosso próximo recurso - um seletor para instalações específicas. Implementaremos outro parâmetro em nossa função para que possamos passar isso como um argumento de nosso código. Vamos ver como fazer isso primeiro - ele apenas opera com os mesmos princípios que os outros parâmetros que configuramos. Vamos atualizar e testar nossa função.
+Vamos passar para o nosso próximo recurso - um seletor para instalações específicas. Implementaremos outro parâmetro em nossa função para que possamos informar isso como um argumento de nosso código. Vamos ver como fazer isso primeiro - ele apenas opera com os mesmos princípios que os outros parâmetros que já configuramos. Vamos atualizar e testar nossa função.
 
 
 ```{r, echo = TRUE}
@@ -1044,7 +1044,7 @@ ui <- fluidPage(
       plotOutput("malaria_epicurve"),
       br(),
       hr(),
-      p("Bem-vindo ao aplicativo de visualização de instalações para malária! Para usar este aplicativo, manipule os widgets ao lado para alterar a curva epidêmica de acordo com suas preferências! Para baixar uma imagem de alta qualidade do plot que você criou, você também pode baixá-la com o botão de download. Para ver os dados brutos, use a guia de dados brutos para uma forma interativa da tabela. O dicionário de dados é o seguinte:"),
+      p("Bem-vindo ao aplicativo de visualização de instalações para malária! Para usar este aplicativo, manipule os widgets ao lado para alterar a curva epidêmica de acordo com suas preferências! Para baixar uma imagem de alta qualidade do gráfico que você criou, você também pode baixá-la com o botão de download. Para ver os dados brutos, use a guia de dados brutos para uma forma interativa da tabela. O dicionário de dados é o seguinte:"),
       tags$ul(
         tags$li(tags$b("location_name"), "- a instalação onde os dados foram coletados"),
         tags$li(tags$b("data_date"), "- a data em que os dados foram coletados"),
@@ -1064,7 +1064,7 @@ ui <- fluidPage(
 ```
 
 
-Observe como agora estamos passando variáveis para nossas escolhas em vez de codificá-las permanentemente na interface do usuário! Isso pode tornar nosso código mais compacto também! Por último, teremos que atualizar o servidor. Será fácil atualizar nossa função para incorporar nossa nova entrada (só temos que passá-la como um argumento para nosso novo parâmetro), mas devemos lembrar que também queremos que a interface do usuário seja atualizada dinamicamente quando o usuário muda o distrito selecionado. É importante entender aqui que *podemos alterar os parâmetros e o comportamento dos widgets* enquanto o aplicativo está em execução, mas isso precisa ser feito *no servidor*. Precisamos entender uma nova forma de saída para o servidor para aprender como fazer isso.
+Observe como agora estamos informando variáveis para nossas escolhas em vez de codificá-las permanentemente na interface do usuário! Isso pode tornar nosso código mais compacto também! Por último, teremos que atualizar o servidor. Será fácil atualizar nossa função para incorporar nossa nova entrada (só temos que passá-la como um argumento para nosso novo parâmetro), mas devemos lembrar que também queremos que a interface do usuário seja atualizada dinamicamente quando o usuário muda o distrito selecionado. É importante entender aqui que *podemos alterar os parâmetros e o comportamento dos widgets* enquanto o aplicativo está em execução, mas isso precisa ser feito *no servidor*. Precisamos entender uma nova forma de saída para o servidor para aprender como fazer isso.
 
 As funções que precisamos entender como fazer isso são conhecidas como funções de *observador* e são semelhantes às funções *reativas* no modo como se comportam. No entanto, eles têm uma diferença fundamental:
 
@@ -1168,7 +1168,7 @@ knitr::include_graphics(here::here("images", "shiny", "app_menu_view.gif"))
 
 ### Adicionando outra guia com uma tabela {.unnumbered}
 
-Agora vamos passar para o último componente que queremos adicionar ao nosso aplicativo. Queremos separar nossa interface do usuário em duas guias, uma das quais terá uma tabela interativa onde o usuário pode ver os dados com os quais está fazendo a curva epidêmica. Para fazer isso, podemos usar os elementos da interface do usuário empacotados que vêm com shiny relevantes para as guias. Em um nível básico, podemos incluir a maior parte de nosso painel principal nesta estrutura geral:
+Agora vamos passar para o último componente que queremos adicionar ao nosso aplicativo. Queremos separar nossa interface do usuário em duas guias, uma das quais terá uma tabela interativa onde o usuário pode ver os dados com os quais está fazendo a curva epidêmica. Para fazer isso, podemos usar os elementos da interface do usuário, que já vêm no pacote shiny, que relevantes para a elaboração de guias. Em um nível básico, podemos incluir a maior parte de nosso painel principal nesta estrutura geral:
 
 ```{r, eval = FALSE}
 
@@ -1259,7 +1259,7 @@ ui <- fluidPage(
                ),
                br(),
                hr(),
-               p("Bem-vindo ao aplicativo de visualização de instalações para malária! Para usar este aplicativo, manipule os widgets ao lado para alterar a curva epidêmica de acordo com suas preferências! Para baixar uma imagem de alta qualidade do plot que você criou, você também pode baixá-la com o botão de download. Para ver os dados brutos, use a guia de dados brutos para uma forma interativa da tabela. O dicionário de dados é o seguinte:"),
+               p("Bem-vindo ao aplicativo de visualização de instalações para malária! Para usar este aplicativo, manipule os widgets ao lado para alterar a curva epidêmica de acordo com suas preferências! Para baixar uma imagem de alta qualidade do gráfico que você criou, você também pode baixá-la com o botão de download. Para ver os dados brutos, use a guia de dados brutos para uma forma interativa da tabela. O dicionário de dados é o seguinte:"),
                tags$ul(
                     tags$li(tags$b("location_name"), "- a instalação onde os dados foram coletados"),
                     tags$li(tags$b("data_date"), "- a data em que os dados foram coletados"),
@@ -1370,12 +1370,12 @@ A partir daqui, você deve observar que o url da sua conta refletirá o nome do 
 
 ## Leitura adicional
 
-Até agora, cobrimos muitos aspectos do brilho e mal arranhamos a superfície do que é oferecido para o brilho. Embora este guia sirva como uma introdução, há muito mais coisas para aprender para entender completamente o shiny. Você deve começar a fazer aplicativos e adicionar gradualmente mais e mais funcionalidades
+Até agora, cobrimos muitos aspectos do shiny e mal arranhamos a superfície do que é oferecido ele. Embora este guia sirva como uma introdução, há muito mais coisas para aprender para entender completamente o shiny. Você deve começar a fazer aplicativos e adicionar gradualmente mais e mais funcionalidades
 
 
 ## Pacotes de extensão recomendados
 
-O que segue representa uma seleção de extensões shiny de alta qualidade que podem ajudá-lo a obter muito mais brilho. Em nenhuma ordem particular:
+O que segue representa uma seleção de extensões shiny de alta qualidade que podem ajudá-lo a obter muito mais brilho (trocadilho com o nome *shiny* que em inglês significa "brilhante"). Em nenhuma ordem particular:
 
 - **BrightWidgets** - este pacote oferece muitos, muitos mais widgets que podem ser usados em seu aplicativo. Execute `shinyWidgets::shinyWidgetsGallery()` para ver uma seleção de widgets disponíveis com este pacote. Veja exemplos [aqui](https://github.com/dreamRs/shinyWidgets)  
 
