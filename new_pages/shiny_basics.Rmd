@@ -57,7 +57,7 @@ library(shiny)
 
 ui <- fluidPage(
 
-    # Título da aplicação
+    # Título do aplicativo
     titlePanel("Meu aplicativo"),
 
     # Barra lateral com um widget de entrada deslizante
@@ -128,7 +128,7 @@ Depois de ter uma ideia do que é possível, também é útil mapear como você 
 
 ## Construindo uma IU 
 
-Ao construir nosso aplicativo, é mais fácil trabalhar na IU primeiro, para que possamos ver o que estamos fazendo e não correr o risco de o aplicativo falhar devido a erros do servidor. Como mencionado anteriormente, geralmente é bom usar um modelo ao trabalhar na IU. Existem vários layouts padrão que podem ser usados com o shiny que estão disponíveis no pacote base shiny, mas é importante notar que também há várias extensões de pacote como `painel shiny`. Usaremos um exemplo da base shiny para começar. 
+Ao construir nosso aplicativo, é mais fácil trabalhar na IU primeiro, para que possamos ver o que estamos fazendo e não correr o risco de o aplicativo falhar devido a erros do servidor. Como mencionado anteriormente, geralmente é bom usar um modelo ao trabalhar na IU. Existem vários layouts padrão que podem ser usados com o shiny que estão disponíveis no pacote base shiny, mas é importante notar que também há várias extensões de pacote como `shinydashboard`. Usaremos um exemplo da base shiny para começar. 
 
 Uma IU shiny é geralmente definida como uma série de funções aninhadas, na seguinte ordem
 
@@ -138,7 +138,7 @@ Uma IU shiny é geralmente definida como uma série de funções aninhadas, na s
      - um painel "principal" (`mainPanel()`)
      - uma guia (`tabPanel()`)
      - uma "coluna" genérica (`coluna()`)
-3. Widgets e saídas - podem conferir entradas para o servidor (widgets) ou saídas do servidor (saídas)
+3. Ferramentas (*Widgets*) e saídas - podem conferir entradas para o servidor (widgets) ou saídas do servidor (saídas)
      - Os widgets geralmente são estilizados como `xxxInput()`, por exemplo `selectInput ()`
      - As saídas são geralmente estilizadas como `xxxOutput()`, por exemplo `plotOutput()`
 
@@ -204,7 +204,7 @@ ui <- fluidPage(
 ```
 
 
-Quando app.R é executado com o código de IU acima (sem nenhum código ativo na parte `server` de app.R), o layout aparece assim - observe que não haverá plotagem se não houver servidor para renderizá-lo, mas nossas entradas estão funcionando!
+Quando app.R é executado com o código de IU acima (sem nenhum código ativo na parte `server` de app.R), o *layout* aparece assim - observe que não haverá um gráfico se não houver servidor para renderizá-lo, mas nossas entradas estão funcionando!
 
 ```{r, out.width = c('100%'), out.height = c('100%'), echo=F}
 knitr::include_graphics(here::here("images", "shiny", "simple_UI_view.png"))
@@ -339,7 +339,7 @@ plot_epicurve <- function(data, district = "All", agegroup = "malaria_tot") {
 
 Não entraremos em muitos detalhes sobre essa função, pois é relativamente simples em como funciona. Uma coisa a se notar, entretanto, é que tratamos os erros retornando `NULL` quando, de outra forma, resultaria em um erro. Isso ocorre porque quando um servidor shiny produz um objeto `NULL` em vez de um objeto de gráfico, nada será mostrado na interface do usuário! Isso é importante, pois, caso contrário, os erros geralmente farão com que seu aplicativo pare de funcionar.  
 
-Outra coisa a se notar é o uso do operador `%in%` ao avaliar a entrada `district`. Como mencionado acima, isso pode chegar como um vetor de caracteres com vários valores, então usar `% em%` é mais flexível do que dizer, `==`.  
+Outra coisa a se notar é o uso do operador `%in%` ao avaliar a entrada `district`. Como mencionado acima, isso pode chegar como um vetor de caracteres com vários valores, então usar `%in%` é mais flexível do que dizer, `==`.  
 
 Vamos testar nossa função!
 
@@ -372,7 +372,7 @@ malaria_data <- malaria_data%>%
   pivot_longer(cols = starts_with("malaria_"), names_to = "age_group", values_to = "cases_reported")
 
 
-# define a função de plotagem
+# define a função de criação de um gráfico
 plot_epicurve <- function(data, district = "All", agegroup = "malaria_tot") {
   
   # criar título do enredo
@@ -451,7 +451,7 @@ Agora que temos a maior parte do nosso código, só precisamos desenvolver nosso
 
 2. Condutores reativos - são objetos que existem *apenas* dentro do servidor shiny. Na verdade, não precisamos deles para aplicativos simples, mas eles produzem objetos que só podem ser vistos dentro do servidor e usados em outras operações. Eles geralmente dependem de fontes reativas.
 
-3. Endpoints - são saídas que são passadas do servidor para a IU. Em nosso exemplo, essa seria a curva epi que estamos produzindo. 
+3. Resultados (*Endpoints*) - são saídas que são passadas do servidor para a IU. Em nosso exemplo, essa seria a curva epi que estamos produzindo. 
 
 Com isso em mente vamos construir nosso servidor passo a passo. Mostraremos nosso código de IU novamente aqui apenas para referência:
 
@@ -559,10 +559,10 @@ knitr::include_graphics(here::here("images", "shiny", "listening.png"))
 
 ## Adicionando mais funcionalidades
 
-Neste ponto, finalmente temos um aplicativo em execução, mas temos muito poucas funcionalidades. Também não arranhamos realmente a superfície do que shiny pode fazer, então há muito mais para aprender! Vamos continuar a construir nosso aplicativo existente, adicionando alguns recursos extras. Algumas coisas que podem ser interessantes de adicionar são: 
+Neste ponto, finalmente temos um aplicativo em execução, mas temos muito poucas funcionalidades. Até agora só vimos a "ponta do iceberg" do que shiny pode fazer, então há muito mais para aprender! Vamos continuar a construir nosso aplicativo existente, adicionando alguns recursos extras. Algumas coisas que podem ser interessantes de adicionar são: 
 
 1. Algum texto explicativo 
-2. Um botão de download para nosso gráfico - isso forneceria ao usuário uma versão de alta qualidade da imagem que está gerando no aplicativo
+2. Um botão de *download* para nosso gráfico - isso forneceria ao usuário uma versão de alta qualidade da imagem que está gerando no aplicativo
 3. Um seletor para instalações específicas
 4. Outra página do painel - isso pode mostrar uma tabela de nossos dados.
 
