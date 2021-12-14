@@ -1,4 +1,4 @@
-# Regressão uni e multivariada { }
+# Regressão simples e múltipla { }
 
 <!-- ======================================================= -->
 
