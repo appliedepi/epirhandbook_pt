@@ -1,79 +1,69 @@
 
-# Getting help  
+# Conseguir ajuda  
 
-This page covers how to get help by posting a Github issue or by posting a reproducible example ("reprex") to an online forum.  
+Esta página aborda sobre como obter ajuda postando um problema no Github ou postando um exemplo reprodutível ("reprex") em um fórum online.
 
+## Problemas (Github)
 
+Muitos pacotes e projetos R têm seu código hospedado no site Github.com. Você pode se comunicar diretamente com os autores através do site, postando um "Problema".
 
+Leia mais sobre como armazenar seu trabalho no Github na página [Colaboração e Github]. 
 
-## Github issues  
+No Github, cada projeto está contido em um *repositório*. Cada repositório contém código, dados, saídas, documentação de ajuda etc. Existe também um veículo de comunicação com os autores denominado "Problemas".  
 
-Many R packages and projects have their code hosted on the website Github.com. You can communicate directly with authors via this website by posting an "Issue".  
-
-Read more about how to store your work on Github in the page [Collaboration and Github]. 
-
-On Github, each project is contained within a *repository*. Each repository contains code, data, outputs, help documentation, etc. There is also a vehicle to communicate with the authors called "Issues".  
-
-See below the Github page for the **incidence2** package (used to make epidemic curves). You can see the "Issues" tab highlighted in yellow. You can see that there are 5 open issues.  
+Veja abaixo a página do Github para o pacote **incidence2** (usado para fazer curvas epidêmicas). Você pode ver a guia "Problemas" destacada em amarelo. Você pode ver que existem 5 questões em aberto.
 
 ```{r, warning=F, message=F, echo=F}
 knitr::include_graphics(here::here("images", "errors_Github_issues.png"))
 ```
 
-Once in the Issues tab, you can see the open issues. Review them to ensure your problem is not already being addressed. You can open a new issue by clicking the green button on the right. You will need a Github account to do this. 
+Na guia Problemas você pode ver os problemas em aberto. Revise-os para garantir que seu problema não foi resolvido ainda. Você pode abrir um novo problema clicando no botão verde à direita. Para fazer isso, será necessário ter uma conta Github.
 
 ```{r, warning=F, message=F, echo=F}
 knitr::include_graphics(here::here("images", "errors_Github_issues2.png"))
 ```
 
+Siga as instruções abaixo para fornecer um exemplo mínimo e reproduzível do seu problema. Por favor, seja educado(a)! A maioria das pessoas que desenvolve pacotes e projetos R estão fazendo isso no seu tempo livre (como este manual!).
 
-  
-In your issue, follow the instructions below to provide a minimal, reproducible example. And please be courteous! Most people developing R packages and projects are doing so in their spare time (like this handbook!).  
+Para ler materiais mais avançados sobre como lidar com problemas no seu  repositório, verifique a [documentação sobre problemas do Github](https://guides.github.com/features/issues/).
 
-To read more advanced materials about handling issues in your own Github repository, check out the Github [documentation on Issues](https://guides.github.com/features/issues/).  
+## Exemplo reprodutível  
 
+Fornecer um exemplo reprodutível ("reprex") é a chave para obter ajuda com sua postagem ou problema no Github. As pessoas querem ajudá-lo, mas você precisa dar um exemplo com o qual elas possam trabalhar em seus próprios computadores. O exemplo deve:
 
+* Demonstrar o problema que você encontrou  
+* Ser *o mais curto possível*, incluindo apenas os dados e o código necessário para reproduzir o seu problema
+* Ser *reprodutível*, de modo que todos os objetos (por exemplo, dados), e pacotes sejam incluídos (por exemplo, `library ()` ou `p_load ()`)
 
-## Reproducible example  
+*Além disso, certifique-se de não postar nenhum dado sensível com o reprex!* Você pode criar frames de dados de exemplo ou usar um dos frames de dados embutidos no R (insira `data ()` para abrir uma lista desses conjuntos de dados).
 
-Providing a reproducible example ("reprex") is key to getting help when posting in a forum or in a Github issue. People want to help you, but you have to give them an example that they can work with on their own computer. The example should:  
+### O pacote ** reprex ** {.unnumbered}  
 
-* Demonstrate the problem you encountered  
-* Be *minimal*, in that it includes only the data and code required to reproduce your problem  
-* Be *reproducible*, such that all objects (e.g. data), package calls (e.g. `library()` or `p_load()`) are included
+O pacote **reprex** pode ajudá-lo a fazer um exemplo reprodutível: 
 
-*Also, be sure you do not post any sensitive data with the reprex!* You can create example data frames, or use one of the data frames built into R (enter `data()` to open a list of these datasets).  
-
-
-
-### The **reprex** package {.unnumbered}  
-
-The **reprex** package can assist you with making a reproducible example:  
-
-1) **reprex** is installed with **tidyverse**, so load either package  
+1) **reprex** é instalado com **tidyverse**, então carregue qualquer um dos pacotes  
 
 ```{r, eval=F}
-# install/load tidyverse (which includes reprex)
+# intale/carregue o tidyverse (que inclui o reprex)
 pacman::p_load(tidyverse)
 ```
 
-2) Begin an R script that creates your problem, step-by-step, starting from loading packages and data.  
+2) Inicie um script R que gere seu problema, passo a passo, começando com o carregamento de pacotes e dados.
 
 ```{r, eval=F}
-# load packages
+# carregar pacotes
 pacman::p_load(
      tidyverse,  # data mgmt and vizualization
      outbreaks)  # example outbreak datasets
 
-# flu epidemic case linelist
-outbreak_raw <- outbreaks::fluH7N9_china_2013  # retrieve dataset from outbreaks package
+# linelist lista dos casos da epidemia de gripe
+outbreak_raw <- outbreaks::fluH7N9_china_2013  #recuperar conjunto de dados do pacote de surtos
 
-# Clean dataset
+# Limpar conjunto de dados
 outbreak <- outbreak_raw %>% 
      mutate(across(contains("date"), as.Date))
 
-# Plot epidemic
-
+# Visualizar epidemia
 ggplot(data = outbreak)+
      geom_histogram(
           mapping = aes(x = date_of_onset),
@@ -84,67 +74,59 @@ ggplot(data = outbreak)+
   )
 
 ```
-*Copy* all the code to your clipboard, and run the following command:  
+*Copie* todo o código para a área de transferência e execute o seguinte comando:  
 
 ```{r, eval=F}
 reprex::reprex()
 ```
 
-You will see an HTML output appear in the RStudio Viewer pane. It will contain all your code and any warnings, errors, or plot outputs. This output is also copied to your clipboard, so you can post it directly into a Github issue or a forum post.  
+Você verá uma saída HTML aparecer no painel RStudio Viewer. Ele conterá todo o seu código e quaisquer avisos, erros ou resultados de plotagem. Essa saída também é copiada para sua área de transferência, para que você possa publicá-la diretamente em um problema do Github ou em uma postagem do fórum.
 
 ```{r, out.width=c('100%', '100%'), warning=F, message=F, echo=F}
 knitr::include_graphics(here::here("images", "errors_reprex_RStudio1.png"))
 ```
 
+* Se você definir `session_info = TRUE`, a saída de `sessioninfo ::session_info()` incluírá suas versões de pacote R e R
+* Você pode fornecer um diretório de trabalho para `wd =`
+* Você pode ler mais sobre os argumentos e possíveis variações em [documentação]() ou inserindo `?Reprex`
 
-* If you set `session_info = TRUE` the output of `sessioninfo::session_info()` with your R and R package versions will be included  
-* You can provide a working directory to `wd = `  
-* You can read more about the arguments and possible variations at the [documentation]() or by entering `?reprex`
+No exemplo acima, o comando `ggplot ()` não rodou porque o argumento `date_format =` não está correto - deveria ser `date_labels =`. 
 
-In the example above, the `ggplot()` command did not run because the arguemnt `date_format =` is not correct - it should be `date_labels = `.  
+### Dados mínimos {.unnumbered}  
 
+As pessoas que vão te ajudar precisam ser capazes de usar seus dados - de preferência, eles precisam ser capazes de criá-los *com código*.
 
-### Minimal data {.unnumbered}  
+Para criar um conjunto de dados mínimos, considere anonimizar e usar apenas um subconjunto das observações.
 
-The helpers need to be able to use your data - ideally they need to be able to create it *with code*.  
+EM CONSTRUÇÃO - você também pode usar a função `dput ()` para criar um conjunto mínimo de dados.
 
-To create a minumal dataset, consider anonymising and using only a subset of the observations. 
+## Postar em um fórum  
 
-UNDER CONSTRUCTION - you can also use the function `dput()` to create minimal dataset.  
+Leia muitas postagens do fórum. Entenda quais postagens são bem escritas e quais não são.
 
+1) Primeiro, decida se deseja fazer a pergunta. Você revisou *extensivamente* o site do fórum, tentando vários termos de pesquisa, para ver se sua pergunta já foi feita?
 
+2) Dê um título informativo à sua pergunta (não algo como "Socorro! Isso não está funcionando!").
 
+3) Escreva sua pergunta:
 
-## Posting to a forum  
+* Apresente sua situação e problema
+* Faça um link com postagens de problemas semelhantes e explique porque eles não responderam à sua pergunta
+* Inclua qualquer informação relevante para ajudar alguém que não conhece o contexto do seu trabalho
+* Dê um exemplo reprodutível mínimo com as informações do seu trabalho
+* Use ortografia, gramática e pontuação adequadas e divida sua pergunta em parágrafos para que seja mais fácil de ler
 
-Read lots of forum posts. Get an understanding for which posts are well-written, and which ones are not.  
+4) Depois de postar, monitore sua pergunta para responder a qualquer pedido de esclarecimento. Seja educado(a) e cortês - muitas vezes as pessoas que respondem estão oferecendo seu tempo para ajudá-lo. Se você tiver uma pergunta de acompanhamento, considere se deve ser uma pergunta postada separada.
 
-1) First, decide whether to ask the question at all. Have you *thoroughly* reviewed the forum website, trying various search terms, to see if your question has already been asked?  
+5) Marque a pergunta como respondida, *se* obtiver uma resposta que atenda à solicitação *original*. Isso ajuda outras pessoas a reconhecerem rapidamente a solução mais tarde.  
 
-2) Give your question an informative title (not "Help! this isn't working").  
-
-3) Write your question:  
-
-* Introduce your situation and problem  
-* Link to posts of similar issues and explain how they do not answer your question  
-* Include any relevant information to help someone who does not know the context of your work  
-* Give a minimal reproducible example with your R session information  
-* Use proper spelling, grammar, punctuation, and break your question into paragraphs so that it is easier to read  
-
-4) Monitor your question once posted to respond to any requests for clarification. Be courteous and gracious - often the people answering are volunteering their time to help you. If you have a follow-up question consider whether it should be a separate posted question.  
-
-5) Mark the question as answered, *if* you get an answer that meets the *original* request. This helps others later quickly recognize the solution.  
-
-
-Read these posts about [how to ask a good question](https://stackoverflow.com/help/how-to-ask) the [Stack overflow code of conduct](https://stackoverflow.com/conduct).  
-
+Leia estas postagens sobre [como fazer uma boa pergunta](https://stackoverflow.com/help/how-to-ask) e sobre o[código de conduta do Stack overflow](https://stackoverflow.com/conduct).  
 
 <!-- ======================================================= -->
-## Resources { }
+## Recursos { }
 
+Página do Tidyverse sobre como [obter ajuda!](https://www.tidyverse.org/help/#:~:text=When%20you%20want%20to%20make,to%20load%20the%20reprex%20package.&text=Enter%20reprex()%20in%20the,preview%20of%20your%20rendered%20reprex.)
 
-Tidyverse page on how to [get help!](https://www.tidyverse.org/help/#:~:text=When%20you%20want%20to%20make,to%20load%20the%20reprex%20package.&text=Enter%20reprex()%20in%20the,preview%20of%20your%20rendered%20reprex.)
+Dicas para [produzir um conjunto mínimo de dados](https://xiangxing98.github.io/R_Learning/R_Reproducible.nb.html#producing-a-minimal-dataset)
 
-Tips on [producing a minimal dataset](https://xiangxing98.github.io/R_Learning/R_Reproducible.nb.html#producing-a-minimal-dataset)
-
-Documentation for the [dput function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/dput)
+Documentação para a [função dput](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/dput)
