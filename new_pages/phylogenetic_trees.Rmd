@@ -1,17 +1,17 @@
 
-# Phylogenetic trees {}  
+# Árvores filogenéticas {}  
 
 
 <!-- ======================================================= -->
 
-## Overview {}
+## Visão Geral {}
 
 
-**Phylogenetic trees** are used to visualize and describe the relatedness and evolution of organisms based on the sequence of their genetic code.  
+**Árvores filogenéticas** são utilizados para visualizar e descrever a relação e evolução dos organismos com base no sequenciamento de seu código genético.   
 
-They can be constructed from genetic sequences using distance-based methods (such as neighbor-joining method) or character-based methods (such as maximum likelihood and Bayesian Markov Chain Monte Carlo method). Next-generation sequencing (NGS) has become more affordable and is becoming more widely used in public health to describe pathogens causing infectious diseases. Portable sequencing devices decrease the turn around time and hold promises to make data available for the support of outbreak investigation in real-time. NGS data can be used to identify the origin or source of an outbreak strain and its propagation, as well as determine presence of antimicrobial resistance genes. To visualize the genetic relatedness between samples a phylogenetic tree is constructed.  
+Eles podem ser construídos a partir de seqüências genéticas usando métodos baseados na distância (como o método de união de vizinhos) ou métodos baseados em caracteres (como o método de máxima verossimilhança e o método Baysiano de Monte Carlo via Cadeias de Markov ). O sequenciamento de próxima geração (NGS) tornou-se mais acessível e está se tornando mais amplamente utilizado na saúde pública para descrever patógenos causadores de doenças infecciosas. Os dispositivos portáteis de seqüenciamento diminuem o tempo de retorno e mantêm promessas de disponibilizar dados para o apoio à investigação de surtos em tempo real. Os dados da NGS podem ser usados para identificar a origem ou fonte de uma variante de surto e sua propagação, bem como determinar a presença de genes de resistência antimicrobiana. Para visualizar a relação genética entre as amostras, é construída uma árvore filogenética.  
 
-In this page we will learn how to use the **ggtree** package, which allows for combined visualization of phylogenetic trees with additional sample data in form of a dataframe. This will enable us to observe patterns and improve understanding of the outbreak dynamic.
+Nesta página aprenderemos como utilizar o pacote **ggtree**, que permite a visualização combinada de árvores filogenéticas com dados adicionais de amostras sob a forma de um *data frame*. Isto nos permitirá observar padrões e melhorar a compreensão da dinâmica do surto.
 
 ```{r, phylogenetic_trees_overview_graph, out.width=c('80%'), fig.align='center', fig.show='hold', echo = FALSE}
 
@@ -23,17 +23,17 @@ sample_data <- read.csv(here::here("data","phylo", "sample_data_Shigella_tree.cs
 
 
 ggtree(tree, layout="circular", branch.length='none') %<+% sample_data + # the %<+% is used to add your dataframe with sample data to the tree
-  aes(color=I(Belgium))+ # color the branches according to a variable in your dataframe
-  scale_color_manual(name = "Sample Origin", # name of your color scheme (will show up in the legend like this)
-                    breaks = c("Yes", "No"), # the different options in your variable
-                   labels = c("NRCSS Belgium", "Other"), # how you want the different options named in your legend, allows for formatting
-                 values= c("blue", "black"), # the color you want to assign to the variable 
-                 na.value = "black") + # color NA values in black as well
-  new_scale_color()+ # allows to add an additional color scheme for another variable
-     geom_tippoint(aes(color=Continent), size=1.5)+ # color the tip point by continent, you may change shape adding "shape = "
-scale_color_brewer(name = "Continent",  # name of your color scheme (will show up in the legend like this)
-                       palette="Set1", # we choose a set of colors coming with the brewer package
-                   na.value="grey")+ # for the NA values we choose the color grey
+  aes(color=I(Belgium))+ # colore os ramos de acordo com a variável no seu data frame       
+  scale_color_manual(name = "Sample Origin", # nome do seu esquema de cores (como aparecerá na leganda)          
+                    breaks = c("Yes", "No"), # as difeerenres opções na sua variável
+                   labels = c("NRCSS Belgium", "Other"), #como você que que as diferentes opções nomeadas na sua leganda, permite formatação
+                 values= c("blue", "black"), #a coqye que você que que cada variável tenha          
+                 na.value = "black") + # coloque os valores faltantes (NA) como preto também
+  new_scale_color()+ # permite que se adicione um outro esquema de cores para um outra variável
+     geom_tippoint(aes(color=Continent), size=1.5)+ # coloque a ponta de acordo com o continente, você pode mudar a forma adicionando "shape"
+scale_color_brewer(name = "Continent",  #nome do sei esquema de cores (assim aparecerá na legenada) 
+                       palette="Set1", #nós escolhemos uma paleta de cores de acordo com o pacote brewer
+                   na.value="grey")+ # para valores NA escolhemos a cor cinza 
   theme(legend.position= "bottom")
 
 ```
