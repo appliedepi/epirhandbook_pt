@@ -735,4 +735,3 @@ ggplot()+
 [apyramid documentation](https://cran.r-project.org/web/packages/apyramid/vignettes/intro.html)
 
 
-
