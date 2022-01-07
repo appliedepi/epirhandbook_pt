@@ -2,7 +2,7 @@
 # Gráficos de calor {}  
 
 
-Os gráficos de calor, também conhecidos como "mapas de calor" ou "blocos de calor", podem ser visualizações úteis ao tentar exibir 3 variáveis (eixo x, eixo y e preenchimento). Abaixo, demonstramos dois exemplos:  
+Os gráficos de calor, também conhecidos como "mapas de calor" ou "blocos/ladrilhos de calor" (do inglês heat tiles) , podem ser visualizações úteis ao tentar exibir 3 variáveis (eixo x, eixo y e preenchimento). Abaixo, demonstramos dois exemplos:  
 
 * Uma matriz visual de eventos de transmissão por idade ("quem infectou quem")  
 * Acompanhamento de métricas de relatórios em muitas instalações / jurisdições ao longo do tempo  
