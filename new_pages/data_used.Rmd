@@ -118,7 +118,7 @@ Esta opção envolve o download dos dados arquivo por arquivo de nosso repositó
 
 Este é um surto fictício de Ebola, expandido pela equipe do livro a partir do conjunto de dados de prática `ebola_sim` no pacote **surtos**.  
 
-* <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_raw.xlsx' class='download-button'> Clique para baixar a lista de linha "bruta" (.xlsx) </span> </a>. A lista de linha do caso "bruta" é uma planilha do Excel com dados confusos. Use-o para acompanhar a página [Dados de limpeza e funções principais].  
+* <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_raw.xlsx' class='download-button'> Clique para baixar a *linelist* "bruta" (.xlsx) </span> </a>. A linelist do caso "bruta" é uma planilha do Excel com dados confusos. Use-o para acompanhar a página [Dados de limpeza e funções principais].  
 
 Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o "clean" linelist </a> (as .rds file). Use este arquivo para todas as outras páginas deste livro que usam a lista de linha. Um arquivo .rds é um tipo de arquivo específico de R que preserva classes de coluna. Isso garante que você terá apenas uma limpeza mínima para fazer após importar os dados para R.  
 
