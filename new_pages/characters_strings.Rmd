@@ -5,7 +5,7 @@
 knitr::include_graphics(here::here("images", "Characters_Strings_1500x500.png"))
 ```
 
-Essa página mostra o uso do pacote **stringr** para avaliar e lidar com valores de caracteres ("strings").
+Essa página mostra o uso do pacote **stringr** para avaliar e lidar com cadeias de caracteres ("strings").
 
 1.  Combinar, ordenar, dividir, organizar - `str_c()`, `str_glue()`, `str_order()`, `str_split()`\
 
@@ -23,7 +23,7 @@ Essa página mostra o uso do pacote **stringr** para avaliar e lidar com valores
 
 5.  Expressões regulares ("regex")
 
-Para facilitar a exibição, a maioria dos exemplos são mostrados agindo em um curto vetor definido como caracteres, no entanto, eles podem ser facilmente adaptados a uma coluna dentro de um quadro de dados.
+Para facilitar a exibição, a maioria dos exemplos são mostrados agindo em um vetor curto do tipo caractere, no entanto, eles podem ser facilmente adaptados a uma coluna dentro de um quadro de dados (*data frame*).
 
 Esse [manual das funções do stringr](https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html) forneceu grande parte da inspiração para esta página.
 
@@ -39,7 +39,7 @@ Instale ou carregue o **stringr** e outros pacotes **tidyverse**.
 # instalar/carregar pacotes
 pacman::p_load(
   stringr,    # muitas funções para lidar com strings
-  tidyverse,  # para manipulação de dados opcional
+  tidyverse,  # para manipulação opicional de dados
   tools)      # alternativa para converter para maiúsculas
 
 ```
@@ -54,7 +54,7 @@ linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.r
 ```
 
 ```{r, eval=F}
-# Exemplo de importação da lista 
+# Exemplo de importação 
 linelist <- import("linelist_cleaned.rds")
 ```
 
@@ -79,7 +79,7 @@ Essa seção aborda:
 
 ### Combinar strings {.unnumbered}
 
-Para combinar ou concatenar múltiplos strings em um string, sugerimos usar `str_c` do **stringr**. Se você tiver distintos valores de caracteres para combinar, basta fornecê-los como argumentos exclusivos, separados por vírgulas.
+Para combinar ou concatenar múltiplos strings em um único string, sugerimos usar `str_c` do **stringr**. Se você tiver distintos valores de caracteres para combinar, basta fornecê-los como argumentos exclusivos, separados por vírgulas.
 
 ```{r}
 str_c("String1", "String2", "String3")
@@ -91,7 +91,7 @@ O argumento `sep =` insere um valor de caractere entre cada um dos argumentos fo
 str_c("String1", "String2", "String3", sep = ", ")
 ```
 
-O argumento `collapse =` é relevante se você estiver inserindo múltiplos *vetores* como argumentos para `str_c()`. É usado para separar os elementos do que seria um vetor de *saída*, de forma que o vetor de saída tenha apenas um elemento de caractere longo.
+O argumento `collapse =` é relevante se você estiver inserindo múltiplos *vetores* como argumentos para a função `str_c()`. Ele é usado para separar os elementos do que seria um vetor de *saída*, de forma que o vetor de saída tenha apenas um longo elemento de caractere.
 
 O exemplo abaixo mostra a combinação de dois vetores em um (nomes e sobrenomes). Outro exemplo semelhante pode ser sobre jurisdições e suas contagens de casos. Neste exemplo:
 
@@ -125,7 +125,7 @@ Use `str_glue()` para inserir um código R dinâmico em um string. Esta é uma f
 -   Dica: você pode usar `\n` para forçar uma nova linha\
 -   Dica: você usa `format()` para ajustar a exibição da data e usa `Sys.Date()` para exibir a data atual
 
-Um simples exemplo da plotagem de legenda dinâmica:
+Um simples exemplo da gráfico com legenda dinâmica:
 
 ```{r}
 str_glue("Os dados incluem {nrow(linelist)} casos e são atuais para {format(Sys.Date(), '%d %b %Y')}.")
@@ -144,7 +144,7 @@ str_glue("Lista  em {current_date}.\n dos último casos hospitalizados no {last_
 
 **Extraindo de uma tabela de dados**
 
-Às vezes, é útil extrair dados de uma tabela de dados e colá-los juntos na sequência. Abaixo está um exemplo de tabela de dados (data frame). Vamos usá-lo para fazer uma declaração resumida sobre as jurisdições e as contagens de casos novos e totais.
+Às vezes, é útil extrair dados de um data frame e colá-los juntos na sequência. Abaixo está um exemplo de data frame. Vamos usá-lo para fazer uma declaração resumida sobre as jurisdições e as contagens de casos novos e totais.
 
 ```{r}
 # fazer um data frame de casos
@@ -159,7 +159,7 @@ caso_tabela <- data.frame(
 DT::datatable(caso_tabela, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Use `str_glue_data()`, que é feito especialmente para obter dados de linhas da tabela de dados:
+Use `str_glue_data()`, que é feito especialmente para obter dados de linhas do data frame:
 
 ```{r}
 caso_tabela %>% 
@@ -168,11 +168,11 @@ caso_tabela %>%
 
 **Combine strings em linhas**
 
-Se você estiver tentando "acumular" valores em uma coluna de quadro de dados, por exemplo, combinar valores de várias linhas em apenas uma linha, colando-os juntos com um separador, consulte a seção da página \[Eliminação de duplicação\] em ["acumulando" valores](#str_rollup).
+Se você estiver tentando "acumular" valores em uma coluna de um data frame, por exemplo, combinar valores de várias linhas em apenas uma linha, colando-os juntos com um separador, consulte a seção da página \[Eliminação de duplicação\] em ["acumulando" valores](#str_rollup).
 
-**Tabela de dados para uma linha**
+**Data frame para uma linha**
 
-Você pode fazer a instrução aparecer em uma linha usando `str_c()` (especificando a tabela de dados e os nomes das colunas) e fornecendo os argumentos `sep =` e `collapse =`.
+Você pode fazer a frase aparecer em uma linha usando `str_c()` (especificando o data frame e os nomes das colunas) e fornecendo os argumentos `sep =` e `collapse =`.
 
 ```{r}
 str_c(caso_tabela$zone, caso_tabela$new_cases, sep = " = ", collapse = ";  ")
