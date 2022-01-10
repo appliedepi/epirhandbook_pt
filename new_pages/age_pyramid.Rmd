@@ -44,7 +44,7 @@ pacman::p_load(rio, # para importar dados
 
 ### Importar dados {.unnumbered}  
 
-Para começar, importamos a lista limpa de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o linelist "clean" </a> (como um arquivo .rds). Importe dados com a função `import()` do pacote **rio** (ele lida com muitos tipos de arquivo como .xlsx, .csv, .rds - veja a página [Importar e exportar] para detalhes).  
+Para começar, importamos a lista (*linelist*) limpa de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o linelist "clean" </a> (como um arquivo .rds). Importe dados com a função `import()` do pacote **rio** (ele lida com muitos tipos de arquivo como .xlsx, .csv, .rds - veja a página [Importar e exportar] para detalhes).  
 
 ```{r, echo=F}
 # importe a linelist para R
@@ -97,7 +97,7 @@ O pacote **apyramid** é um produto do projeto [R4Epis](https://r4epis.netlify.c
 
 Usando o conjunto de dados `linelist` limpo, podemos criar uma pirâmide de idade com um simples comando `age_pyramid() `. Neste comando:  
 
-* O argumento `data =` é definido como o quadro de dados `linelist`  
+* O argumento `data =` é definido como o quadro de dados (*data frame*) `linelist`  
 * O argumento `age_group =` (para o eixo y) é definido como o nome da coluna categórica de idade (entre aspas)  
 * O argumento `split_by =` (para o eixo x) é definido para a coluna de gênero  
 
@@ -174,7 +174,7 @@ apyramid::age_pyramid(
 
 ### Dados agregados {.unnumbered}  
 
-Os exemplos acima assumem que seus dados estão em um formato de linelist, com uma linha por observação. Se seus dados já estão agregados em contagens por categoria de idade, você ainda pode usar o pacote **apyramid**, conforme mostrado abaixo.  
+Os exemplos acima assumem que seus dados estão em um formato de linelist, com cada linha correspondendo a uma observação. Se seus dados já estão agregados em contagens por categoria de idade, você ainda pode usar o pacote **apyramid**, conforme mostrado abaixo.  
 
 Para demonstração, agregamos os dados da linelist em contagens por categoria de idade e sexo, em um formato "amplo" ou "wide". Isso simulará como se seus dados estivessem em contagens para começar. Saiba mais sobre [dados de agrupamento] e [dados dinâmicos] em suas respectivas páginas.  
 
@@ -195,7 +195,7 @@ demo_agg <- linelist%>%
 DT::datatable(demo_agg, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
-Para configurar esses dados para a pirâmide de idade, vamos dinamizar os dados para serem "longos" com a função `pivot_longer()` de **dplyr**. Isso ocorre porque `ggplot()` geralmente prefere dados "longos", e **apyramid** está usando `ggplot()`.  
+Para configurar esses dados para a pirâmide de idade, vamos organizar os dados no formato "longo" com a função `pivot_longer()` de **dplyr**. Isso ocorre porque `ggplot()` geralmente prefere dados "longos", e **apyramid** está usando `ggplot()`.  
 
 ```{r, warning=F, message=F, echo=F}
 # pivot os dados agregados em formato longo
@@ -470,7 +470,7 @@ Revise o conjunto de dados de caso alterado
 DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
-Agora os dois quadros de dados estão combinados, um em cima do outro (eles têm os mesmos nomes de coluna). Podemos "nomear" cada frame de dados e usar o argumento `.id =` para criar uma nova coluna "data_source" que indicará de qual frame de dados cada linha se originou. Podemos usar esta coluna para filtrar no `ggplot()`.  
+Agora os dois data frames estão combinados, um em cima do outro (eles têm os mesmos nomes de coluna). Podemos "nomear" cada frame de dados e usar o argumento `.id =` para criar uma nova coluna "data_source" que indicará de qual frame de dados cada linha se originou. Podemos usar esta coluna para filtrar no `ggplot()`.  
 
 
 
@@ -524,7 +524,7 @@ ggplot() + # eixo x padrão é a idade em anos;
   # vire os eixos X e Y para tornar a pirâmide vertical
   coord_flip()+
   
-  # manualmente garantir que o eixo da idade está ordenado corretamente
+  # garantir de forma manual que o eixo da idade está ordenado corretamente
   scale_x_discrete(limits = age_levels) + # definido no bloco acima
   
   # definir eixo percentual 
