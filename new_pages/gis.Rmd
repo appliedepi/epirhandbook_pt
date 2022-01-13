@@ -965,7 +965,7 @@ getis_ord <- spdep::localG(
   sle_listw
 )
 
-# faz join dos resultados aos dados do sf (shapefile) 
+# faz join dos resultados aos dados do sf
 sle_adm3_dat$getis_ord <- getis_ord
 
 # gera o mapa
