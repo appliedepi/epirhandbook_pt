@@ -1,145 +1,145 @@
 
-# De-duplication {}  
+# Eliminação de duplicatas {}  
 
 ```{r, out.width=c("50%"), echo=F}
 knitr::include_graphics(here::here("images", "deduplication.png"))
 ```
 
-This page covers the following de-duplication techniques:  
+Esta página abrange as seguintes técnicas de eliminação de duplicatas (ou deduplicação):  
 
-1. Identifying and removing duplicate rows  
-2. "Slicing" rows to keep only certain rows (e.g. min or max) from each group of rows  
-3. "Rolling-up", or combining values from multiple rows into one row  
+1. Identificando e removendo linhas duplicadas  
+2. "Fatiar" linhas para manter apenas algumas linhas (por exemplo, mín. ou máx.) de cada grupo de linhas  
+3. "Acumulação" ou combinação de valores de várias linhas em uma linha  
 
 
 <!-- ======================================================= -->
-## Preparation { }
+## Preparação
 
 
-### Load packages {.unnumbered}
+### Carregar pacotes {.unnumbered}
 
-This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary *and* loads it for use. You can also load installed packages with  `library()` from **base** R. See the page on [R basics] for more information on R packages.  
+Este pedaço de código mostra o carregamento de pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` de **pacman**, que instala o pacote se necessário *e* o carrega para uso. Você também pode carregar pacotes instalados com `library()` de R **base**. Veja a página em [R basics] para mais informações sobre pacotes R.  
 
 ```{r}
-pacman::p_load(
-  tidyverse,   # deduplication, grouping, and slicing functions
-  janitor,     # function for reviewing duplicates
-  stringr)      # for string searches, can be used in "rolling-up" values
+pacman :: p_load(
+  tidyverse, # deduplicação, agrupamento e funções de fatiamento
+  janitor, # função para revisar duplicatas
+  stringr) # para pesquisas de strings, pode ser usado em valores "rolling-up"
 ```
 
-### Import data {.unnumbered}
+### Importar dados {.unnumbered}
 
-For demonstration, we will use an example dataset that is created with the R code below.  
+Para demonstração, usaremos um conjunto de dados de exemplo criado com o código R abaixo.  
 
-The data are records of COVID-19 phone encounters, including encounters with contacts and with cases. The columns include `recordID` (computer-generated), `personID`, `name`, `date` of encounter, `time` of encounter, the `purpose` of the encounter (either to interview as a case or as a contact), and `symptoms_ever` (whether the person in that encounter reported *ever* having symptoms).  
+Os dados são registros de encontros telefônicos COVID-19, incluindo encontros com contatos e casos. As colunas incluem `recordID` (gerado por computador), `personID`, `name`, `date` do encontro, `time` do encontro, o `propósito` do encontro (para entrevistar como um caso ou como um contato ), e `symptoms_ever` (se a pessoa nesse encontro relatou *sempre* ter sintomas).  
 
-Here is the code to create the `obs` dataset:  
+Aqui está o código para criar o conjunto de dados `obs`:  
 
 ```{r}
 obs <- data.frame(
-  recordID  = c(1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18),
+  recordID = c(1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18),
   personID  = c(1,1,2,2,3,2,4,5,6,7,2,1,3,3,4,5,5,7,8),
-  name      = c("adam", "adam", "amrish", "amrish", "mariah", "amrish", "nikhil", "brian", "smita", "raquel", "amrish",
+  name = c("adam", "adam", "amrish", "amrish", "mariah", "amrish", "nikhil", "brian", "smita", "raquel", "amrish",
                 "adam", "mariah", "mariah", "nikhil", "brian", "brian", "raquel", "natalie"),
-  date      = c("1/1/2020", "1/1/2020", "2/1/2020", "2/1/2020", "5/1/2020", "5/1/2020", "5/1/2020", "5/1/2020", "5/1/2020","5/1/2020", "2/1/2020",
+  date = c("01/01/2020", "01/01/2020", "01/02/2020", "01/02/2020", "01/05/2020", "01/05/2020 ", "01/05/2020", "01/05/2020", "01/05/2020", "01/05/2020", "01/02/2020",
                 "5/1/2020", "6/1/2020", "6/1/2020", "6/1/2020", "6/1/2020", "7/1/2020", "7/1/2020", "7/1/2020"),
-  time      = c("09:00", "09:00", "14:20", "14:20", "12:00", "16:10", "13:01", "15:20", "14:20", "12:30", "10:24",
+  time = c("09:00", "09:00", "14:20", "14:20", "12:00", "16:10", "13:01", "15:20 ", "14:20", "12:30", "10:24",
                 "09:40", "07:25", "08:32", "15:36", "15:31", "07:59", "11:13", "17:12"),
   encounter = c(1,1,1,1,1,3,1,1,1,1,2,
                 2,2,3,2,2,3,2,1),
   purpose   = c("contact", "contact", "contact", "contact", "case", "case", "contact", "contact", "contact", "contact", "contact",
                 "case", "contact", "contact", "contact", "contact", "case", "contact", "case"),
   symptoms_ever = c(NA, NA, "No", "No", "No", "Yes", "Yes", "No", "Yes", NA, "Yes",
-                    "No", "No", "No", "Yes", "Yes", "No","No", "No")) %>% 
+                    "No", "No", "No", "Yes", "Yes", "No","No", "No")) %>%
   mutate(date = as.Date(date, format = "%d/%m/%Y"))
 ```
 
 
-#### Here is the data frame {#dedup_data .unnumbered}  
+#### Aqui está o data frame {#dedup_data .unnumbered}  
 
-Use the filter boxes along the top to review the encounters for each person.  
+Use as caixas de filtro na parte superior para revisar os encontros de cada pessoa.  
 
-```{r message=FALSE, echo=F}
-DT::datatable(obs, rownames = FALSE, filter = "top", options = list(pageLength = nrow(obs), scrollX=T), class = 'white-space: nowrap' )
+```{r, message=FALSE, echo=F}
+DT::datatable(head (linelist, 10), rownames = FALSE, filter = "top", options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 
-A few things to note as you review the data:  
+Algumas coisas a serem observadas ao revisar os dados:  
 
-* The first two records are 100% complete duplicates including duplicate `recordID` (must be a computer glitch!)  
-* The second two rows are duplicates, in all columns *except for `recordID`*  
-* Several people had multiple phone encounters, at various dates and times, and as contacts and/or cases  
-* At each encounter, the person was asked if they had **ever** had symptoms, and some of this information is missing.  
+* Os dois primeiros registros são duplicados 100% completos, incluindo `recordID` duplicado (deve ser uma falha do computador!)  
+* As duas segundas linhas são duplicadas, em todas as colunas *exceto para `recordID`*  
+* Várias pessoas tiveram vários encontros por telefone, em várias datas e horários, e como contatos e/ou casos  
+* Em cada encontro, a pessoa foi perguntada se ela **alguma vez** teve sintomas, e algumas dessas informações estão faltando.  
 
 
-And here is a quick summary of the people and the purposes of their encounters, using `tabyl()` from **janitor**:  
+E aqui está um resumo rápido das pessoas e os propósitos de seus encontros, usando `tabyl()` do **janitor**:  
 
 ```{r}
 obs %>% 
   tabyl(name, purpose)
 ```
 <!-- ======================================================= -->
-## Deduplication { }
+## Deduplicação { }
 
 
-This section describes how to review and remove duplicate rows in a data frame. It also show how to handle duplicate elements in a vector.  
+Esta seção descreve como revisar e remover linhas duplicadas em um data frame. Também mostra como lidar com elementos duplicados em um vetor.  
 
 
 <!-- ======================================================= -->
-### Examine duplicate rows {.unnumbered}  
+### Examinar linhas duplicadas {.unnumbered}  
 
 
-To quickly review rows that have duplicates, you can use `get_dupes()` from the **janitor** package. *By default*, all columns are considered when duplicates are evaluated - rows returned by the function are 100% duplicates considering the values in *all* columns.  
+Para revisar rapidamente as linhas que têm duplicatas, você pode usar `get_dupes()` do pacote **janitor**. *Por padrão*, todas as colunas são consideradas quando as duplicatas são avaliadas - as linhas retornadas pela função são 100% duplicadas considerando os valores em *todas* as colunas.  
 
-In the `obs` data frame, the first two rows are *100% duplicates* - they have the same value in every column (including the `recordID` column, which is *supposed* to be unique - it must be some computer glitch). The returned data frame automatically includes a new column `dupe_count` on the right side, showing the number of rows with that combination of duplicate values. 
+No data frame `obs`, as duas primeiras linhas são *100% duplicadas* - elas têm o mesmo valor em todas as colunas (incluindo a coluna `recordID`, que *supõe* ser única - deve ser alguma falha do computador ). O data frame retornado inclui automaticamente uma nova coluna `dupe_count` no lado direito, mostrando o número de linhas com essa combinação de valores duplicados. 
 
 ```{r, eval=F}
-# 100% duplicates across all columns
+# 100% duplicados em todas as colunas
 obs %>% 
   janitor::get_dupes()
 ```
 
-```{r message=FALSE, echo=F}
+```{r, message=FALSE, echo=F}
 obs %>% 
   janitor::get_dupes() %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = nrow(obs), scrollX=T), class = 'white-space: nowrap' )
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 10, scrollX = T), class = 'white-space: nowrap')
 ```
 
-See the [original data](#dedup_data)  
+Veja os [dados originais](#dedup_data)  
 
-However, if we choose to ignore `recordID`, the 3rd and 4th rows rows are also duplicates of each other. That is, they have the same values in all columns *except* for `recordID`. You can specify specific columns to be ignored in the function using a `-` minus symbol.  
+No entanto, se optarmos por ignorar `recordID`, as linhas da 3ª e 4ª linhas também serão duplicadas umas das outras. Ou seja, eles têm os mesmos valores em todas as colunas *exceto* para `recordID`. Você pode especificar colunas específicas a serem ignoradas na função usando um símbolo de menos `-`.  
 
 ```{r, eval=F}
-# Duplicates when column recordID is not considered
+# Duplica quando a coluna recordID não é considerada
 obs %>% 
-  janitor::get_dupes(-recordID)         # if multiple columns, wrap them in c()
+  janitor::get_dupes(-recordID) # se várias colunas, envolva-as em c()
 ```
 
-```{r message=FALSE, echo=F}
+```{r, message=FALSE, echo=F}
 obs %>% 
   janitor::get_dupes(-recordID) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = nrow(obs), scrollX=T), class = 'white-space: nowrap' )
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 10, scrollX = T), class = 'white-space: nowrap')
 ```
 
-You can also positively specify the columns to consider. Below, only rows that have the same values in the `name` and `purpose` columns are returned. Notice how "amrish" now has `dupe_count` equal to 3 to reflect his three "contact" encounters.  
+Você também pode especificar positivamente as colunas a serem consideradas. Abaixo, apenas as linhas que possuem os mesmos valores nas colunas `name` e `purpose` são retornadas. Observe como "amrish" agora tem `dupe_count` igual a 3 para refletir seus três encontros de "contato".  
 
-*Scroll left for more rows**  
+**Role para a esquerda para mais linhas**  
 
 ```{r, eval=F}
-# duplicates based on name and purpose columns ONLY
+# duplicatas com base nas colunas de nome e propósito SOMENTE
 obs %>% 
   janitor::get_dupes(name, purpose)
 ```
 
-```{r message=FALSE, echo=F}
+```{r, message=FALSE, echo=F}
 obs %>% 
   janitor::get_dupes(name, purpose) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 7, scrollX=T), class = 'white-space: nowrap' )
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 7, scrollX = T), class = 'white-space: nowrap')
 ```
 
-See the [original data](#dedup_data).  
+Veja os [dados originais](#dedup_data).  
 
-See `?get_dupes` for more details, or see this [online reference](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes)  
+Veja `?get_dupes` para mais detalhes, ou veja esta [referência online](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values -para-combinações-específicas-de-variáveis-com-get_dupes)  
 
 
 
@@ -147,293 +147,293 @@ See `?get_dupes` for more details, or see this [online reference](https://cran.r
 
 
 <!-- ======================================================= -->
-### Keep only unique rows  {.unnumbered}
+### Manter apenas linhas únicas {.unnumbered}
 
 
-To keep only unique rows of a data frame, use `distinct()` from **dplyr** (as demonstrated in the [Cleaning data and core functions] page). Rows that are duplicates are removed such that only the first of such rows is kept. By default, "first" means the highest `rownumber` (order of rows top-to-bottom). Only unique rows remain.  
+Para manter apenas linhas exclusivas de um data frame, use `distinct()` de **dplyr** (conforme demonstrado na página [Limpeza de dados e funções principais]). As linhas duplicadas são removidas de forma que apenas a primeira dessas linhas seja mantida. Por padrão, "primeiro" significa o maior `número da linha` (ordem das linhas de cima para baixo). Apenas linhas exclusivas permanecem.  
 
-In the example below, we run `distinct()` such that the column `recordID` is excluded from consideration - thus **two duplicate rows are removed**. The first row (for "adam") was 100% duplicated and has been removed. Also row 3 (for "amrish") was a duplicate in every column *except* `recordID` (which is not being considered) and so is also removed. The `obs` dataset n is now ` nrow(obs)-2`, not ` nrow(obs)` rows).  
+No exemplo abaixo, executamos `distinct()` de forma que a coluna `recordID` seja excluída da consideração - portanto, **duas linhas duplicadas são removidas**. A primeira linha (para "adam") foi 100% duplicada e foi removida. Além disso, a linha 3 (para "amrish") era uma duplicata em todas as colunas *exceto* `recordID` (que não está sendo considerada) e, portanto, também foi removida. O conjunto de dados `obs` n agora é `nrow(obs)-2`, não `nrow(obs)` linhas).  
 
-*Scroll to the left to see the entire data frame*  
+*Role para a esquerda para ver todo o data frame*  
 
 
 ```{r, eval=F}
-# added to a chain of pipes (e.g. data cleaning)
+# adicionado a uma cadeia de pipes (por exemplo, limpeza de dados)
 obs %>% 
-  distinct(across(-recordID), # reduces data frame to only unique rows (keeps first one of any duplicates)
-           .keep_all = TRUE) 
+  distinct(across(-recordID), # reduz o data frame para apenas linhas únicas (mantém a primeira de todas as duplicatas)
+           .keep_all = TRUE)
 
-# if outside pipes, include the data as first argument 
+# se fora de pipes, inclua os dados como primeiro argumento 
 # distinct(obs)
 ```
 
-```{r message=FALSE, echo=F}
+```{r, message=FALSE, echo=F}
 obs %>% 
-  distinct(across(-recordID), # reduces data frame to only unique rows (keeps first one of any duplicates)
-           .keep_all = TRUE) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 6, scrollX=T), class = 'white-space: nowrap' )
+  distinct(across(-recordID), # reduz o data frame para apenas linhas únicas (mantém a primeira de todas as duplicatas)
+           .keep_all = TRUE) %>%
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 6, scrollX = T), class = 'white-space: nowrap')
 ```
 
-<span style="color: orange;">**_CAUTION:_** If using `distinct()` on grouped data, the function will apply to each group.</span>
+<span style="color: orange;">**_CUIDADO:_** Se estiver usando `distinct()` em dados agrupados, a função será aplicada a cada grupo.</span>
 
 
-**Deduplicate based on specific columns**  
+**Deduplicar com base em colunas específicas**  
 
-You can also specify columns to be the basis for de-duplication. In this way, the de-duplication only applies to rows that are duplicates within the specified columns. Unless you set `.keep_all = TRUE`, all columns not mentioned will be dropped.  
+Você também pode especificar colunas para serem a base para eliminação de duplicação. Dessa forma, a eliminação de duplicação se aplica apenas a linhas duplicadas nas colunas especificadas. A menos que você defina `.keep_all = TRUE`, todas as colunas não mencionadas serão descartadas.  
 
-In the example below, the de-duplication only applies to rows that have identical values for `name` and `purpose` columns. Thus, "brian" has only 2 rows instead of 3 - his *first* "contact" encounter and his only "case" encounter. To adjust so that brian's *latest* encounter of each purpose is kept, see the tab on Slicing within groups.  
+No exemplo abaixo, a eliminação de duplicação se aplica apenas a linhas com valores idênticos para as colunas `name` e `purpose`. Assim, "brian" tem apenas 2 linhas em vez de 3 - seu *primeiro* encontro de "contato" e seu único encontro de "caso". Para ajustar para que o *último* encontro de brian de cada propósito seja mantido, veja a aba Fatiar dentro de grupos.  
 
-*Scroll to the left to see the entire data frame*  
+*Role para a esquerda para ver todo o data frame*  
 
 ```{r, eval=F}
-# added to a chain of pipes (e.g. data cleaning)
+# adicionado a uma cadeia de pipes (por exemplo, limpeza de dados)
 obs %>% 
-  distinct(name, purpose, .keep_all = TRUE) %>%  # keep rows unique by name and purpose, retain all columns
-  arrange(name)                                  # arrange for easier viewing
+  distinct(name, purpose, .keep_all = TRUE) %>% # mantém as linhas únicas por nome e propósito, mantém todas as colunas
+  arrange(name)       # organize para facilitar a visualização
 ```
 
-```{r message=FALSE, echo=F}
+```{r, message=FALSE, echo=F}
 obs %>% 
-  distinct(name, purpose, .keep_all = TRUE) %>%  # keep rows unique by name and purpose, retain all columns
+  distinct(name, purpose, .keep_all = TRUE) %>% # mantém as linhas únicas por nome e propósito, mantém todas as colunas
   arrange(name) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 6, scrollX=T), class = 'white-space: nowrap' )
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 6, scrollX = T), class = 'white-space: nowrap')
 ```
 
-See the [original data](#dedup_data).  
+Veja os [dados originais](#dedup_data).  
 
 <!-- ======================================================= -->
-### Deduplicate elements in a vector {.unnumbered}  
+### Deduplicar elementos em um vetor {.unnumbered}  
 
 
-The function `duplicated()` from **base** R will evaluate a vector (column) and return a logical vector of the same length (TRUE/FALSE). The first time a value appears, it will return FALSE (not a duplicate), and subsequent times that value appears it will return TRUE. Note how `NA` is treated the same as any other value.    
+A função `duplicated()` do **base** R avaliará um vetor (coluna) e retornará um vetor lógico de mesmo comprimento (VERDADEIRO/FALSO). Na primeira vez que um valor aparecer, ele retornará FALSE (não uma duplicata) e, nas próximas vezes em que esse valor aparecer, ele retornará TRUE. Observe como `NA` é tratado da mesma forma que qualquer outro valor.    
 
 ```{r}
 x <- c(1, 1, 2, NA, NA, 4, 5, 4, 4, 1, 2)
 duplicated(x)
 ```
 
-To return only the duplicated elements, you can use brackets to subset the original vector: 
+Para retornar apenas os elementos duplicados, você pode usar colchetes para subconjunto do vetor original: 
 
 ```{r}
 x[duplicated(x)]
 ```
 
-To return only the unique elements, use `unique()` from **base** R. To remove `NA`s from the output, nest `na.omit()` within `unique()`.  
+Para retornar apenas os elementos exclusivos, use `unique()` de **base** R. Para remover `NA`s da saída, aninhe `na.omit()` dentro de `unique()`.  
 
 ```{r}
-unique(x)           # alternatively, use x[!duplicated(x)]
-unique(na.omit(x))  # remove NAs 
+unique(x) # alternativamente, use x[!duplicated(x)]
+unique(na.omit(x)) # remove NAs 
 ```
 
 
 <!-- ======================================================= -->
-### Using **base** R {.unnumbered}
+### Usando **base** R {.unnumbered}
 
-**To return duplicate rows**  
+**Para retornar linhas duplicadas**  
 
-In **base** R, you can also see which rows are 100% duplicates in a data frame `df` with the command `duplicated(df)` (returns a logical vector of the rows).  
+No **base** R, você também pode ver quais linhas são 100% duplicadas em um data frame `df` com o comando `duplicated(df)` (retorna um vetor lógico das linhas).  
 
-Thus, you can also use the base subset `[ ]` on the data frame to see the *duplicated* rows with `df[duplicated(df),]` (don't forget the comma, meaning that you want to see all columns!). 
+Assim, você também pode usar o subconjunto base `[ ]` no data frame para ver as linhas *duplicadas* com `df[duplicated(df),]` (não esqueça a vírgula, significando que você quer ver todas colunas!). 
 
-**To return unique rows**  
+**Para retornar linhas exclusivas**  
 
-See the notes above. To see the *unique* rows you add the logical negator `!` in front of the `duplicated()` function:  
-`df[!duplicated(df),]`  
+Veja as notas acima. Para ver as linhas *únicas*, você adiciona o negador lógico `!` na frente da função `duplicated()`:  
+`df[!duplicado(df),]`  
 
 
-**To return rows that are duplicates of only certain columns**  
+**Para retornar linhas que são duplicatas de apenas determinadas colunas**  
 
-Subset the `df` that is *within the `duplicated()` parentheses*, so this function will operate on only certain columns of the `df`.  
+Subsete o `df` que está *dentro dos parênteses `duplicated()`*, então esta função irá operar apenas em certas colunas do `df`.  
 
-To specify the columns, provide column numbers or names after a comma (remember, all this is *within* the `duplicated()` function).  
+Para especificar as colunas, forneça os números ou nomes das colunas após uma vírgula (lembre-se, tudo isso está *dentro* da função `duplicated()`).  
 
-Be sure to keep the comma `,` *outside* after the `duplicated()` function as well! 
+Certifique-se de manter a vírgula `,` *fora* após a função `duplicated()` também! 
 
-For example, to evaluate only columns 2 through 5 for duplicates:  `df[!duplicated(df[, 2:5]),]`  
-To evaluate only columns `name` and `purpose` for duplicates: `df[!duplicated(df[, c("name", "purpose)]),]`  
+Por exemplo, para avaliar apenas as colunas de 2 a 5 para duplicatas: `df[!duplicated(df[, 2:5]),]`  
+Para avaliar apenas as colunas `name` e `purpose` para duplicatas: `df[!duplicated(df[, c("name", "purpose)]),]`  
 
 
 
 
 
 <!-- ======================================================= -->
-## Slicing { }
+## Fatiamento { }
 
 
-To "slice" a data frame to apply a filter on the rows by row number/position. This becomes particularly useful if you have multiple rows per functional group (e.g. per "person") and you only want to keep one or some of them. 
+Para "fatiar" (*slice*) um data frame para aplicar um filtro nas linhas por número/posição de linha. Isso se torna particularmente útil se você tiver várias linhas por grupo funcional (por exemplo, por "pessoa") e quiser manter apenas uma ou algumas delas. 
 
-The basic `slice()` function accepts numbers and returns rows in those positions. If the numbers provided are positive, only they are returned. If negative, those rows are *not* returned. Numbers must be either all positive or all negative.     
+A função básica `slice()` aceita números e retorna linhas nessas posições. Se os números fornecidos forem positivos, somente eles serão retornados. Se negativo, essas linhas *não* são retornadas. Os números devem ser todos positivos ou todos negativos.     
 
 ```{r}
-obs %>% slice(4)  # return the 4th row
+obs %>% slice(4) # retorna a 4ª linha
 ```
 
 ```{r}
-obs %>% slice(c(2,4))  # return rows 2 and 4
-#obs %>% slice(c(2:4))  # return rows 2 through 4
+obs %>% slice(c(2,4)) # retorna as linhas 2 e 4
+#obs %>% slice(c(2:4)) # retorna as linhas 2 a 4
 ```
 
 
-See the [original data](#dedup_data). 
+Veja os [dados originais](#dedup_data). 
 
-There are several variations:  These should be provided with a column and a number of rows to return (to `n = `).  
+Existem várias variações:  Estes devem ser fornecidos com uma coluna e um número de linhas para retornar (para `n = `).  
 
-* `slice_min()` and `slice_max()`  keep only the row(s) with the minimium or maximum value(s) of the specified column. This also works to return the "min" and "max" of ordered factors.    
-* `slice_head()` and `slice_tail()` - keep only the *first* or *last* row(s).  
-* `slice_sample()`  - keep only a random sample of the rows.  
+* `slice_min()` e `slice_max()` mantêm apenas a(s) linha(s) com o(s) valor(es) mínimo(s) ou máximo(s) da coluna especificada. Isso também funciona para retornar o "min" e o "max" dos fatores ordenados.    
+* `slice_head()` e `slice_tail()` - mantém apenas a *primeira* ou *última* linha(s).  
+* `slice_sample()` - mantém apenas uma amostra aleatória das linhas.  
 
 
 ```{r}
-obs %>% slice_max(encounter, n = 1)  # return rows with the largest encounter number
+obs %>% slice_max(encontro, n = 1) # retorna linhas com o maior número de encontro
 ```
 
-Use arguments `n = ` or `prop = ` to specify the number or proportion of rows to keep. If not using the function in a pipe chain, provide the data argument first (e.g. `slice(data, n = 2)`). See `?slice` for more information. 
+Use argumentos `n = ` ou `prop = ` para especificar o número ou a proporção de linhas a serem mantidas. Se não estiver usando a função em uma cadeia de pipes, forneça primeiro o argumento de dados (por exemplo, `slice(data, n = 2)`). Veja `?slice` para mais informações. 
 
-Other arguments:  
+Outros argumentos:  
 
-`.order_by = ` used in `slice_min()` and `slice_max()` this is a column to order by before slicing.  
-`with_ties = ` TRUE by default, meaning ties are kept.  
-`.preserve = ` FALSE by default. If TRUE then the grouping structure is re-calculated after slicing.  
-`weight_by = ` Optional, numeric column to weight by (bigger number more likely to get sampled).  Also `replace = ` for whether sampling is done with/without replacement.  
+`.order_by = ` usado em `slice_min()` e `slice_max()` esta é uma coluna para ordenar antes de fatiar.  
+`with_ties = ` TRUE por padrão, significando que os empates são mantidos.  
+`.preserve = ` FALSE por padrão. Se TRUE, a estrutura de agrupamento é recalculada após o fatiamento.  
+`weight_by = ` Opcional, coluna numérica para ponderar (número maior com maior probabilidade de ser amostrado).  Também `replace = ` para se a amostragem é feita com/sem substituição.  
 
-<span style="color: darkgreen;">**_TIP:_** When using `slice_max()` and `slice_min()`, be sure to specify/write the `n = `  (e.g. `n = 2`, not just `2`). Otherwise you may get an error `Error: `...` is not empty.` </span>
+<span style="color: darkgreen;">**_DICA:_** Ao usar `slice_max()` e `slice_min()`, certifique-se de especificar/escrever o `n = ` (por exemplo, `n = 2` , não apenas `2`). Caso contrário, você pode receber um erro `Erro: `...` não está vazio.` </span>
 
-<span style="color: black;">**_NOTE:_** You may encounter the function [`top_n()`](https://dplyr.tidyverse.org/reference/top_n.html), which has been superseded by the `slice` functions.</span>
+<span style="color: black;">**_NOTE:_** Você pode encontrar a função [`top_n()`](https://dplyr.tidyverse.org/reference/top_n.html), que tem foi substituído pelas funções `slice`.</span>
 
  
 
 
 <!-- ======================================================= -->
-### Slice with groups  {.unnumbered}
+### Fatia com grupos {.unnumbered}
 
-The `slice_*()` functions can be very useful if applied to a grouped data frame because the slice operation is performed on each group separately. Use the **function** `group_by()` in conjunction with `slice()` to group the data to take a slice from each group.  
+As funções `slice_*()` podem ser muito úteis se aplicadas a um data frame agrupado porque a operação de fatia é executada em cada grupo separadamente. Use a **função** `group_by()` em conjunto com `slice()` para agrupar os dados para obter uma fatia de cada grupo.  
 
-This is helpful for de-duplication if you have multiple rows per person but only want to keep one of them. You first use `group_by()` with key columns that are the same per person, and then use a slice function on a column that will differ among the grouped rows.  
+Isso é útil para a eliminação de duplicação se você tiver várias linhas por pessoa, mas quiser manter apenas uma delas. Você primeiro usa `group_by()` com colunas-chave que são as mesmas por pessoa e, em seguida, usa uma função de fatia em uma coluna que será diferente entre as linhas agrupadas.  
 
-In the example below, to keep only the *latest* encounter *per person*, we group the rows by `name` and then use `slice_max()` with `n = 1` on the `date` column. Be aware! To apply a function like `slice_max()` on dates, the date column must be class Date.   
+No exemplo abaixo, para manter apenas o *último* encontro *por pessoa*, agrupamos as linhas por `name` e então usamos `slice_max()` com `n = 1` na coluna `date`. Estar ciente! Para aplicar uma função como `slice_max()` em datas, a coluna de data deve ser da classe Date.   
 
-By default, "ties" (e.g. same date in this scenario) are kept, and we would still get multiple rows for some people (e.g. adam). To avoid this we set `with_ties = FALSE`. We get back only one row per person.  
+Por padrão, "empates" (por exemplo, mesma data neste cenário) são mantidos e ainda obteríamos várias linhas para algumas pessoas (por exemplo, adam). Para evitar isso, configuramos `with_ties = FALSE`. Retornamos apenas uma fila por pessoa.  
 
-<span style="color: orange;">**_CAUTION:_** If using `arrange()`, specify `.by_group = TRUE` to have the data arranged within each group.</span>
+<span style="color: orange;">**_CAUTION:_** Se estiver usando `arrange()`, especifique `.by_group = TRUE` para organizar os dados em cada grupo.</span>
 
-<span style="color: red;">**_DANGER:_** If `with_ties = FALSE`, the first row of a tie is kept. This may be deceptive. See how for Mariah, she has two encounters on her latest date (6 Jan) and the first (earliest) one was kept. Likely, we want to keep her later encounter on that day. See how to "break" these ties in the next example. </span>  
+<span style="color: red;">**_DANGER:_** Se `with_ties = FALSE`, a primeira linha de um empate é mantida. Isso pode ser enganoso. Veja como para Mariah, ela tem dois encontros em sua última data (6 de janeiro) e o primeiro (mais antigo) foi mantido. Provavelmente, queremos manter seu encontro posterior naquele dia. Veja como "quebrar" esses empates no próximo exemplo. </span>  
 
 
 
 
 ```{r, eval=F}
 obs %>% 
-  group_by(name) %>%       # group the rows by 'name'
-  slice_max(date,          # keep row per group with maximum date value 
-            n = 1,         # keep only the single highest row 
-            with_ties = F) # if there's a tie (of date), take the first row
+  group_by(name) %>% # agrupa as linhas por 'name'
+  slice_max(date, # mantém linha por grupo com valor máximo de data 
+            n = 1, # mantém apenas a linha mais alta
+            with_ties = F) # se houver empate (de data), pegue a primeira linha
 ```
 
-```{r message=FALSE, echo=F}
+```{r, message=FALSE, echo=F}
 obs %>% 
-  group_by(name) %>%       # group the rows by 'name'
-  slice_max(date,          # keep row per group with maximum date value 
-            n = 1,         # keep only the single highest row 
-            with_ties = F) %>%  # if there's a tie (of date), take the first row
-  DT::datatable(rownames = FALSE, options = list(pageLength = 8, scrollX=T), class = 'white-space: nowrap' )
+  group_by(name) %>% # agrupa as linhas por 'name'
+  slice_max(date, # mantém linha por grupo com valor máximo de data 
+            n = 1, # mantém apenas a linha mais alta
+            with_ties = F) %>% # se houver empate (de data), pegue a primeira linha
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 8, scrollX = T), class = 'white-space: nowrap')
 ```
 
-Above, for example we can see that only Amrish's row on 5 Jan was kept, and only Brian's row on 7 Jan was kept. See the [original data](#dedup_data).  
+Acima, por exemplo, podemos ver que apenas a linha de Amrish em 5 de janeiro foi mantida, e apenas a linha de Brian em 7 de janeiro foi mantida. Veja os [dados originais](#dedup_data).  
 
 
-**Breaking "ties"**  
+**Quebrando "empates"**  
 
-Multiple slice statements can be run to "break ties". In this case, if a person has multiple encounters on their latest *date*, the encounter with the latest *time* is kept (`lubridate::hm()` is used to convert the character times to a sortable time class).  
-Note how now, the one row kept for "Mariah" on 6 Jan is encounter 3 from 08:32, not encounter 2 at 07:25.  
+Várias instruções de fatia podem ser executadas para "desempate". Neste caso, se uma pessoa tiver vários encontros em sua última *data*, o encontro com a última *hora* é mantido (`lubridate::hm()` é usado para converter os tempos dos caracteres em uma classe de tempo classificável).  
+Observe como agora, a única linha mantida para "Mariah" em 6 de janeiro é o encontro 3 das 08:32, não o encontro 2 às 07:25.  
 
 ```{r, eval=F}
-# Example of multiple slice statements to "break ties"
+# Exemplo de várias instruções de fatia para "desempate"
 obs %>%
   group_by(name) %>%
   
-  # FIRST - slice by latest date
+  # PRIMEIRO - fatia por data mais recente
   slice_max(date, n = 1, with_ties = TRUE) %>% 
   
-  # SECOND - if there is a tie, select row with latest time; ties prohibited
+  # SEGUNDO - se houver empate, selecione a linha com o horário mais recente; empates proibidos
   slice_max(lubridate::hm(time), n = 1, with_ties = FALSE)
 ```
 
-```{r message=FALSE, echo=F}
-# Example of multiple slice statements to "break ties"
+```{r, message=FALSE, echo=F}
+# Exemplo de várias instruções de fatia para "desempate"
 obs %>%
   group_by(name) %>%
   
-  # FIRST - slice by latest date
+  # PRIMEIRO - fatia por data mais recente
   slice_max(date, n = 1, with_ties = TRUE) %>% 
   
-  # SECOND - if there is a tie, select row with latest time; ties prohibited
+  # SEGUNDO - se houver empate, selecione a linha com o horário mais recente; empates proibidos
   slice_max(lubridate::hm(time), n = 1, with_ties = FALSE) %>% 
   
-  DT::datatable(rownames = FALSE, options = list(pageLength = 8, scrollX=T), class = 'white-space: nowrap' )
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 8, scrollX = T), class = 'white-space: nowrap')
 ```
 
-*In the example above, it would also have been possible to slice by `encounter` number, but we showed the slice on `date` and `time` for example purposes.*  
+*No exemplo acima, também seria possível dividir por número de `encontro`, mas mostramos a fatia em `data` e `hora` para fins de exemplo.*  
 
-<span style="color: darkgreen;">**_TIP:_** To use `slice_max()` or `slice_min()` on a "character" column, mutate it to an *ordered* factor class!</span>
+<span style="color: darkgreen;">**_DICA:_** Para usar `slice_max()` ou `slice_min()` em uma coluna "character", altere-a para uma classe de fator *ordenada*!</span> extensão>
 
-See the [original data](#dedup_data).  
+Veja os [dados originais](#dedup_data).  
 
 
 <!-- ======================================================= -->
-### Keep all but mark them  {.unnumbered}
+### Mantenha tudo mas marque-os {.unnumbered}
 
-If you want to keep all records but mark only some for analysis, consider a two-step approach utilizing a unique recordID/encounter number:  
+Se você quiser manter todos os registros, mas marcar apenas alguns para análise, considere uma abordagem de duas etapas utilizando um recordID/número de encontro exclusivo:  
 
-1) Reduce/slice the orginal data frame to only the rows for analysis. Save/retain this reduced data frame.  
-2) In the original data frame, mark rows as appropriate with `case_when()`, based on whether their record unique identifier (recordID in this example) is present in the reduced data frame.  
+1) Reduza/faça o recorte do data frame original apenas nas linhas para análise. Salve/retenha este data frame reduzido.  
+2) No data frame original, marque as linhas conforme apropriado com `case_when()`, com base no fato de seu identificador exclusivo de registro (recordID neste exemplo) estar presente no data frame reduzido.  
 
 
 ```{r}
-# 1. Define data frame of rows to keep for analysis
+# 1. Defina o data frame de linhas para manter para análise
 obs_keep <- obs %>%
   group_by(name) %>%
-  slice_max(encounter, n = 1, with_ties = FALSE) # keep only latest encounter per person
+  slice_max(encounter, n = 1, with_ties = FALSE) # mantém apenas o último encontro por pessoa
 
 
-# 2. Mark original data frame
-obs_marked <- obs %>%
+# 2. Marcar data frame original
+obs_marcado <- obs %>%
 
-  # make new dup_record column
+  # cria uma nova coluna dup_record
   mutate(dup_record = case_when(
     
-    # if record is in obs_keep data frame
-    recordID %in% obs_keep$recordID ~ "For analysis", 
+    # se o registro estiver no data frame obs_keep
+    recordID %in% obs_keep$recordID ~ "Para análise", 
     
-    # all else marked as "Ignore" for analysis purposes
-    TRUE                            ~ "Ignore"))
+    # tudo o mais marcado como "Ignorar" para fins de análise
+    VERDADEIRO ~ "Ignorar"))
 
-# print
+# imprimir
 obs_marked
 ```
 
 
 ```{r, echo=F}
-DT::datatable(obs_marked, rownames = FALSE, options = list(pageLength = 8, scrollX=T), class = 'white-space: nowrap' )
+DT::datatable(obs_marked, rownames = FALSE, options = list(pageLength = 8, scrollX = T), class = 'white-space: nowrap')
 ```
 
-See the [original data](#dedup_data).  
+Veja os [dados originais](#dedup_data).  
 
 <!-- ======================================================= -->
-### Calculate row completeness {.unnumbered} 
+### Calcular a integridade da linha {.unnumbered} 
 
-Create a column that contains a metric for the row's completeness (non-missingness). This could be helpful when deciding which rows to prioritize over others when de-duplicating/slicing.  
+Crie uma coluna que contenha uma métrica para a integridade da linha (não falta). Isso pode ser útil ao decidir quais linhas priorizar em relação a outras ao desduplicar/fatiar.  
 
-In this example, "key" columns over which you want to measure completeness are saved in a vector of column names.  
+Neste exemplo, as colunas "chave" sobre as quais você deseja medir a integridade são salvas em um vetor de nomes de coluna.  
 
-Then the new column `key_completeness` is created with `mutate()`. The new value in each row is defined as a calculated fraction: the number of non-missing values in that row among the key columns, divided by the number of key columns.  
+Então a nova coluna `key_completeness` é criada com `mutate()`. O novo valor em cada linha é definido como uma fração calculada: o número de valores não omissos nessa linha entre as colunas-chave, dividido pelo número de colunas-chave.  
 
-This involves the function `rowSums()` from **base** R. Also used is `.`, which within piping refers to the data frame at that point in the pipe (in this case, it is being subset with brackets `[]`).  
+Isso envolve a função `rowSums()` de **base** R. Também é usado `.`, que dentro da tubulação se refere ao data frame naquele ponto na tubulação (neste caso, está sendo subconjunto com colchetes ` []`).  
 
-*Scroll to the right to see more rows**  
+*Role para a direita para ver mais linhas**  
 
 ```{r, eval=F}
-# create a "key variable completeness" column
-# this is a *proportion* of the columns designated as "key_cols" that have non-missing values
+# cria uma coluna "completude da variável chave"
+# esta é uma *proporção* das colunas designadas como "key_cols" que não possuem valores omissos
 
 key_cols = c("personID", "name", "symptoms_ever")
 
@@ -441,183 +441,181 @@ obs %>%
   mutate(key_completeness = rowSums(!is.na(.[,key_cols]))/length(key_cols)) 
 ```
 
-```{r message=FALSE, echo=F}
+```{r, message=FALSE, echo=F}
 key_cols = c("personID", "name", "symptoms_ever")
 
 obs %>% 
   mutate(key_completeness = rowSums(!is.na(.[,key_cols]))/length(key_cols)) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
-See the [original data](#dedup_data).  
+Veja os [dados originais](#dedup_data).  
 
 
 
 
 <!-- ======================================================= -->
-## Roll-up values {#str_rollup}
+## Valores acumulados {#str_rollup}
 
 
-This section describes:  
+Esta seção descreve:  
 
-1) How to "roll-up" values from multiple rows into just one row, with some variations  
-2) Once you have "rolled-up" values, how to overwrite/prioritize the values in each cell  
+1) Como "agregar" valores de várias linhas em apenas uma linha, com algumas variações  
+2) Depois de ter os valores "acumulados", como substituir/priorizar os valores em cada célula  
 
-This tab uses the example dataset from the Preparation tab.  
+Esta guia usa o conjunto de dados de exemplo da guia Preparação.  
 
 
 
 <!-- ======================================================= -->
-### Roll-up values into one row {.unnumbered}  
+### Valores acumulados em uma linha {.unnumbered}  
 
-The code example below uses `group_by()` and `summarise()` to group rows by person, and then paste together all unique values within the grouped rows. Thus, you get one summary row per person. A few notes:  
+O exemplo de código abaixo usa `group_by()` e `summarise()` para agrupar linhas por pessoa e depois colar todos os valores exclusivos nas linhas agrupadas. Assim, você obtém uma linha de resumo por pessoa. Algumas notas:  
 
-* A suffix is appended to all new columns ("_roll" in this example)  
-* If you want to show only unique values per cell, then wrap the `na.omit()` with `unique()`  
-* `na.omit()` removes `NA` values, but if this is not desired it can be removed `paste0(.x)`...  
+* Um sufixo é anexado a todas as novas colunas ("_roll" neste exemplo)  
+* Se você quiser mostrar apenas valores exclusivos por célula, envolva o `na.omit()` com `unique()`  
+* `na.omit()` remove valores `NA`, mas se isso não for desejado, pode ser removido `paste0(.x)`...  
 
 
 
 ```{r, eval=F}
-# "Roll-up" values into one row per group (per "personID") 
+# Valores "roll-up" em uma linha por grupo (por "personID") 
 cases_rolled <- obs %>% 
   
-  # create groups by name
+  #cria grupos por nome
   group_by(personID) %>% 
   
-  # order the rows within each group (e.g. by date)
+  # ordena as linhas dentro de cada grupo (por exemplo, por data)
   arrange(date, .by_group = TRUE) %>% 
   
-  # For each column, paste together all values within the grouped rows, separated by ";"
-  summarise(
-    across(everything(),                           # apply to all columns
-           ~paste0(na.omit(.x), collapse = "; "))) # function is defined which combines non-NA values
+  # Para cada coluna, cole todos os valores dentro das linhas agrupadas, separados por ";"
+  summarise()%>%
+    across(everything(), # aplica-se a todas as colunas
+           ~paste0(na.omit(.x), recolher = "; "))) # função é definida que combina valores não-NA
 ```
 
-The result is one row per group (`ID`), with entries arranged by date and pasted together. *Scroll to the left to see more rows*    
+O resultado é uma linha por grupo (`ID`), com entradas organizadas por data e coladas juntas. *Role para a esquerda para ver mais linhas*    
 
-```{r message=FALSE, echo=F}
-# "Roll-up" values into one row per group (per "personID") 
+```{r, message=FALSE, echo=F}
+# Valores "roll-up" em uma linha por grupo (por "personID") 
 obs %>% 
   
-  # create groups by name
+  #cria grupos por nome
   group_by(personID) %>% 
   
-  # order the rows within each group (e.g. by date)
+  # ordena as linhas dentro de cada grupo (por exemplo, por data)
   arrange(date, .by_group = TRUE) %>% 
   
-  # For each column, paste together all values within the grouped rows, separated by ";"
-  summarise(
-    across(everything(),                                # apply to all columns
-           ~paste0(na.omit(.x), collapse = "; "))) %>%  # function is defined which combines non-NA values
+  # Para cada coluna, cole todos os valores dentro das linhas agrupadas, separados por ";"
+  summarise()%>%
+    across(everything(), # aplica-se a todas as colunas
+           ~paste0(na.omit(.x), recolher = "; "))) %>% # função é definida que combina valores não-NA
 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap')
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
-See the [original data](#dedup_data).  
+Veja os [dados originais](#dedup_data).  
 
 
-**This variation shows unique values only:**  
+**Esta variação mostra apenas valores únicos:**  
 
 ```{r}
-# Variation - show unique values only 
+# Variação - mostra apenas valores únicos 
 cases_rolled <- obs %>% 
   group_by(personID) %>% 
   arrange(date, .by_group = TRUE) %>% 
-  summarise(
-    across(everything(),                                   # apply to all columns
-           ~paste0(unique(na.omit(.x)), collapse = "; "))) # function is defined which combines unique non-NA values
+  summarise()%>%
+    across(everything(), # aplica-se a todas as colunas
+           ~paste0(unique(na.omit(.x)), recolher = "; "))) # função é definida que combina valores únicos não-NA
 ```
 
-```{r message=FALSE, echo=F}
-# Variation - show unique values only 
+```{r, message=FALSE, echo=F}
+# Variação - mostra apenas valores únicos 
 obs %>% 
   group_by(personID) %>% 
   arrange(date, .by_group = TRUE) %>% 
-  summarise(
-    across(everything(),                                   # apply to all columns
-           ~paste0(unique(na.omit(.x)), collapse = "; "))) %>%  # function is defined which combines unique non-NA values
+  summarise()%>%
+    across(everything(), # aplica-se a todas as colunas
+           ~paste0(unique(na.omit(.x)), recolher = "; "))) %>% # função é definida que combina valores únicos não-NA
 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 
-**This variation appends a suffix to each column.**  
-In this case "_roll" to signify that it has been rolled:  
+**Esta variação anexa um sufixo a cada coluna.**  
+Neste caso "_roll" para significar que foi agregado:  
 
 ```{r, eval=F}
-# Variation - suffix added to column names 
+# Variação - sufixo adicionado aos nomes das colunas 
 cases_rolled <- obs %>% 
   group_by(personID) %>% 
   arrange(date, .by_group = TRUE) %>% 
-  summarise(
+  summarise()%>%
     across(everything(),                
-           list(roll = ~paste0(na.omit(.x), collapse = "; ")))) # _roll is appended to column names
+           list(roll = ~paste0(na.omit(.x), recolher = "; ")))) # _roll é anexado aos nomes das colunas
 ```
 
-```{r message=FALSE, echo=F}
-# display the linelist data as a table
-# Variation - suffix added to column names 
+```{r, message=FALSE, echo=F}
+# exibe os dados da linelist como uma tabela
+# Variação - sufixo adicionado aos nomes das colunas 
 obs %>% 
   group_by(personID) %>% 
   arrange(date, .by_group = TRUE) %>% 
-  summarise(
+  summarise()%>%
     across(everything(),                
-           list(roll = ~paste0(na.omit(.x), collapse = "; ")))) %>%  # _roll is appended to column names
-  DT::datatable(rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+           list(roll = ~paste0(na.omit(.x), recolher = "; ")))) %>% # _roll é anexado aos nomes das colunas
+  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 
 <!-- ======================================================= -->
-### Overwrite values/hierarchy {.unnumbered} 
+### Substituir valores/hierarquia {.unnumbered} 
 
 
-If you then want to evaluate all of the rolled values, and keep only a specific value (e.g. "best" or "maximum" value), you can use `mutate()` across the desired columns, to implement `case_when()`, which uses `str_detect()` from the **stringr** package to sequentially look for string patterns and overwrite the cell content.  
+Se você quiser avaliar todos os valores rolados e manter apenas um valor específico (por exemplo, valor "melhor" ou "máximo"), você pode usar `mutate()` nas colunas desejadas, para implementar `case_when()` , que usa `str_detect()` do pacote **stringr** para procurar sequencialmente padrões de string e sobrescrever o conteúdo da célula.  
 
 ```{r}
-# CLEAN CASES
+# CASOS LIMPOS
 #############
 cases_clean <- cases_rolled %>% 
-    
-    # clean Yes-No-Unknown vars: replace text with "highest" value present in the string
-    mutate(across(c(contains("symptoms_ever")),                     # operates on specified columns (Y/N/U)
-             list(mod = ~case_when(                                 # adds suffix "_mod" to new cols; implements case_when()
+# limpar vars Yes-No-Unknown: substitui o texto pelo valor "mais alto" presente na string
+mutate(across(c(contains("symptoms_ever")), # opera em colunas especificadas (S/N/U)
+       list(mod = ~case_when( # adiciona o sufixo "_mod" a new cols; implementa case_when()
                
-               str_detect(.x, "Yes")       ~ "Yes",                 # if "Yes" is detected, then cell value converts to yes
-               str_detect(.x, "No")        ~ "No",                  # then, if "No" is detected, then cell value converts to no
-               str_detect(.x, "Unknown")   ~ "Unknown",             # then, if "Unknown" is detected, then cell value converts to Unknown
-               TRUE                        ~ as.character(.x)))),   # then, if anything else if it kept as is
-      .keep = "unused")                                             # old columns removed, leaving only _mod columns
+       str_detect(.x, "Sim") ~ "Sim", # se "Sim" for detectado, o valor da célula será convertido em sim
+       str_detect(.x, "No") ~ "No", # então, se "No" for detectado, o valor da célula será convertido em não
+       str_detect(.x, "Desconhecido") ~ "Desconhecido", # então, se "Desconhecido" for detectado, o valor da célula será convertido em Desconhecido
+               TRUE ~ as.character(.x)))), # então, se mais alguma coisa se mantiver como está
+      .keep = "unused") # colunas antigas removidas, deixando apenas colunas _mod
 ```
 
 
-Now you can see in the column `symptoms_ever` that if the person EVER said "Yes" to symptoms, then only "Yes" is displayed.  
+Agora você pode ver na coluna `symptoms_ever` que se a pessoa ALGUMA VEZ disse "Sim" aos sintomas, então apenas "Sim" é exibido.  
 
-```{r message=FALSE, echo=F}
-# display the linelist data as a table
-DT::datatable(cases_clean, rownames = FALSE, options = list(pageLength = 10, scrollX=T), class = 'white-space: nowrap')
+```{r, message=FALSE, echo=F}
+# exibe os dados da linelist como uma tabela
+DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 10, scrollX = T), class = 'white-space: nowrap')
 ```
 
 
-See the [original data](#dedup_data).  
+Veja os [dados originais](#dedup_data).  
 
 
-## Probabilistic de-duplication  
+## Deduplicação probabilística  
 
-Sometimes, you may want to identify "likely" duplicates based on similarity (e.g. string "distance") across several columns such as name, age, sex, date of birth, etc. You can apply a probabilistic matching algorithm to identify likely duplicates.  
+Às vezes, você pode querer identificar duplicatas "prováveis" com base na semelhança (por exemplo, string "distance") em várias colunas, como nome, idade, sexo, data de nascimento etc. Você pode aplicar um algoritmo de correspondência probabilística para identificar duplicatas prováveis.  
 
-See the page on [Joining data] for an explanation on this method. The section on Probabilistic Matching contains an example of applying these algorithms to compare a data frame to *itself*, thus performing probabilistic de-duplication.  
+Consulte a página em [Juntar dados] para obter uma explicação sobre este método. A seção sobre Correspondência Probabilística contém um exemplo de aplicação desses algoritmos para comparar um data frame com o *próprio*, realizando assim a desduplicação probabilística.  
 
 
 
 <!-- ======================================================= -->
-## Resources { }
+## Recursos {}
 
-Much of the information in this page is adapted from these resources and vignettes online:  
+Muitas das informações nesta página são adaptadas destes recursos e vinhetas online:  
 
 [datanovia](https://www.datanovia.com/en/lessons/identify-and-remove-duplicate-data-in-r/)
 
 [dplyr tidyverse reference](https://dplyr.tidyverse.org/reference/slice.html)  
 
-[cran janitor vignette](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes)  
-
+[vinheta de janitor de cran](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables- com-get_dupes)  
