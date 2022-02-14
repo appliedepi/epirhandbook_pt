@@ -1,35 +1,35 @@
 
-# ggplot tips {}
+# Dicas do ggplot {}
 
-In this page we will cover tips and tricks to make your ggplots sharp and fancy. See the page on [ggplot basics] for the fundamentals.  
+Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot].
 
-There a several extensive [**ggplot2** tutorials](https://ggplot2.tidyverse.org/) linked in the Resources section. You can also download this [data visualization with ggplot cheatsheet](https://rstudio.com/resources/cheatsheets/) from the RStudio website. We strongly recommend that you peruse for inspiration at the [R graph gallery](https://www.r-graph-gallery.com/) and [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
+Existem diferentes e completos [tutoriais sobre o **ggplot2**](https://ggplot2.tidyverse.org/), mostrados na seção de Recursos. Você também pode baixar essa [colinha sobre visualização de dados com o ggplot](https://rstudio.com/resources/cheatsheets/) do site do RStudio. Nós recomendamos fortemente que você busque inspiração de gráficos [na galeria de gráficos do R](https://www.r-graph-gallery.com/) e no [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
 
 
 
 <!-- ======================================================= -->
-## Preparation {}
+## Preparando o ambiente R {}
 
-### Load packages {.unnumbered}
+### Carregue os pacotes {.unnumbered}
 
-This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary *and* loads it for use. You can also load installed packages with  `library()` from **base** R. See the page on [R basics] for more information on R packages.  
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar os pacotes instalados utilizando a função `library()`, do **base** R. Para mais informações sobre  pacotes do R, veja a página [Básico do R].  
 
 ```{r}
 pacman::p_load(
-  tidyverse,      # includes ggplot2 and other
-  rio,            # import/export
-  here,           # file locator
-  stringr,        # working with characters   
-  scales,         # transform numbers
-  ggrepel,        # smartly-placed labels
-  gghighlight,    # highlight one part of plot
-  RColorBrewer    # color scales
+  tidyverse,      # inclue ggplot2 e outros pacotes
+  rio,            # importar/exportar
+  here,           # localizador de arquivos
+  stringr,        # trabalhando com caractéres
+  scales,         # transforme números
+  ggrepel,        # etiquetas colocadas de forma inteligente
+  gghighlight,    # destaque uma parte do gráfico
+  RColorBrewer    # escalas de cores
 )
 ```
 
-### Import data {.unnumbered}  
+### Importe os dados {.unnumbered}  
 
-For this page, we import the dataset of cases from a simulated Ebola epidemic. If you want to follow along, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>click to download the "clean" linelist</a> (as .rds file). Import data with the `import()` function from the **rio** package (it handles many file types like .xlsx, .csv, .rds - see the [Import and export] page for details).  
+Nesta página, nós importamos um conjunto de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (as .rds file). Importe os dados com a função `import()`, do pacote **rio** (ela trabalha com uma variedade de tipos de arquivos, como .xlsx, .csv, .rds - veja a página [Importar e exportar] para detalhes).  
 
 ```{r,  echo=F}
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
@@ -40,10 +40,10 @@ linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.r
 linelist <- rio::import("linelist_cleaned.rds")
 ```
 
-The first 50 rows of the linelist are displayed below.
+As primeiras 50 linhas da linelist são mostradas abaixo.
 
 ```{r, message=FALSE, echo=F}
-# display the linelist data as a table
+# mostre a linelist como uma tabela
 DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
@@ -51,143 +51,143 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 
 
 <!-- ======================================================= -->
-## Scales for color, fill, axes, etc. {#ggplot_tips_colors}
+## Escalas para as cores, preenchimentos, eixos, etc. {#ggplot_tips_colors}
 
-In **ggplot2**, when aesthetics of plotted data (e.g. size, color, shape, fill, plot axis) are mapped to columns in the data, the exact display can be adjusted with the corresponding "scale" command. In this section we explain some common scale adjustments.  
+No **ggplot2**, quando a aparência dos dados no gráfico (ex.: tamanho, cor, formato, preenchimento, eixo do gráfico) é mapeada para colunas nos dados, a visualização exata pode ser ajustada com o comando de "escala" correspondente. Nesta seção, nós explicamos alguns ajustes comuns de escalas.
 
 
 
-### Color schemes
+### Esquemas de cores
 
-One thing that can initially be difficult to understand with **ggplot2** is control of color schemes. Note that this section discusses the color of *plot objects* (geoms/shapes) such as points, bars, lines, tiles, etc. To adjust color of accessory text, titles, or background color see the [Themes](#ggplot_basics_themes) section of the [ggplot basics] page. 
+Uma coisa que pode ser inicialmente difícil de entender com o **ggplot2**, é o controle dos esquemas de cores. Observe que esta seção discute a cor dos *objetos no gráfico* (geometrias/formatos), como pontos, barras, linhas, bases, etc. Para ajustar a cor de textos adicionais, títulos, ou plano de fundo, veja a seção [Temas](#ggplot_basics_themes) da página sobre [Básico do ggplot].
 
-To control "color" of *plot objects* you will be adjusting either the `color = ` aesthetic (the *exterior* color) or the `fill = ` aesthetic (the *interior* color). One exception to this pattern is `geom_point()`, where you really only get to control `color = `, which controls the color of the point (interior and exterior).  
+Para controlar a "cor" dos *objetos no gráfico*, você irá ajustar o argumento `color = ` (a cor *exterior* do item) ou o `fill = ` (a cor *interior* do item). Uma exceção a esse padrão é o `geom_point()`, em que você realmente só consegue ajustar `color = `, que ajusta a cor do ponto inteiro (interior e exterior).
 
-When setting colour or fill you can use colour names recognized by R like `"red"` (see [complete list](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) or enter `?colors`), or a specific hex colour such as `"#ff0505"`.
+Ao ajustar a cor ou preenchimento (fill), você pode utilizar o nome das cores reconhecidas pelo R, como `"red"` (vermelho) (veja a [lista completa](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) ou digite `?colors`), ou um código hexadecimal específico para uma cor, como `"#ff0505"`.
 
 ```{r, warning=F, message=F}
-# histogram - 
-ggplot(data = linelist, mapping = aes(x = age))+       # set data and axes
-  geom_histogram(              # display histogram
-    binwidth = 7,                # width of bins
-    color = "red",               # bin line color
-    fill = "lightblue")          # bin interior color (fill) 
+# histograma - 
+ggplot(data = linelist, mapping = aes(x = age))+       # ajuste os dados e eixos
+  geom_histogram(              # mostre o histograma
+    binwidth = 7,                # largura dos containers
+    color = "red",               # cor da linha dos containers
+    fill = "lightblue")          # cor interior dos containers (preenchimento)
 ```
 
 
 
-As explained the [ggplot basics] section on [mapping data to the plot](#ggplot_basics_mapping), aesthetics such as `fill = ` and `color = ` can be defined either *outside* of a `mapping = aes()` statement or *inside* of one. If *outside* the `aes()`, the assigned value should be static (e.g. `color = "blue"`) and will apply for *all* data plotted by the geom. If *inside*, the aesthetic should be mapped to a column, like `color = hospital`, and the expression will vary by the value for that row in the data. A few examples:  
+Como explicado na seção [mapeando os dados para o gráfico](#ggplot_basics_mapping), da página [Básico do ggplot], aspectos estéticos como `fill = ` e `color = ` podem ser definidos *fora* do comando `mapping = aes()`, ou *dentro* dele. Se *fora* de `aes()`, o valor atribuído deve ser estático (ex.: `color = "blue"`) e irá ser aplicado para *todos* os dados colocados no gráfico pelo geom. Se *dentro*, a aparência estética deve ser mapeada para uma variável, como `color = hospital`, e a expressão irá variar de acordo com o valor desta linha nos dados. Alguns exemplos:
 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', warning=F, message=F}
-# Static color for points and for line
+# Cor estática para pontos e para a linha
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+     
   geom_point(color = "purple")+
   geom_vline(xintercept = 50, color = "orange")+
-  labs(title = "Static color for points and line")
+  labs(title = "Cor estática para os pontos e linha")
 
-# Color mapped to continuous column
+# Cor mapeada para uma coluna contínua
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+     
   geom_point(mapping = aes(color = temp))+         
-  labs(title = "Color mapped to continuous column")
+  labs(title = "Cor mapeada para uma coluna contínua")
 
-# Color mapped to discrete column
+# Cor mapeada para uma coluna discreta
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+     
   geom_point(mapping = aes(color = gender))+         
-  labs(title = "Color mapped to discrete column")
+  labs(title = "Cor mapeada para uma coluna discreta")
 
-# bar plot, fill to discrete column, color to static value
+# gráfico de barras, preenchimento com uma coluna discreta, cor para um valor estático
 ggplot(data = linelist, mapping = aes(x = hospital))+     
   geom_bar(mapping = aes(fill = gender), color = "yellow")+         
-  labs(title = "Fill mapped to discrete column, static color")
+  labs(title = "Preenchimento mapeado para uma coluna discreta, cor estática")
 
 ```
 
 
-### Scales {#ggplot_tips_scales .unnumbered}  
+### Escalas {#ggplot_tips_scales .unnumbered}  
 
-Once you map a column to a plot aesthetic (e.g. `x = `, `y = `, `fill = `, `color = `...), your plot will gain a scale/legend. See above how the scale can be continuous, discrete, date, etc. values depending on the class of the assigned column. If you have multiple aesthetics mapped to columns, your plot will have multiple scales.  
+Quando você mapear uma coluna para uma aparência estética do gráfico (ex.: `x = `, `y = `, `fill = `, `color = `...), seu gráfico irá ganhar uma escala/legenda. Veja acima como a escala pode ter valores contínuos, discretos, datas, etc. dependendo na classe da coluna atribuída. Se você tiver múltiplas estéticas mapeadas para as colunas, seu gráfico terá múltiplas escalas. 
 
-You can control the scales with the appropriate `scales_()` function. The scale functions of **ggplot()** have 3 parts that are written like this: `scale_AESTHETIC_METHOD()`.  
+Você pode controlar as escalas com a função `scales_()` apropriada. As funções de escala do **ggplot()** têm 3 partes, que são escritas assim: `scale_AESTHETIC_METHOD()`.  
 
-1) The first part, `scale_()`, is fixed.  
-2) The second part, the AESTHETIC, should be the aesthetic that you want to adjust the scale for (`_fill_`, `_shape_`, `_color_`, `_size_`, `_alpha_`...) - the options here also include `_x_` and `_y_`.  
-3) The third part, the METHOD, will be either `_discrete()`, `continuous()`, `_date()`, `_gradient()`, or `_manual()` depending on the class of the column and *how* you want to control it. There are others, but these are the most-often used.  
+1) A primeira parte, `scale_()`, é fixa.
+2) A segunda parte, o AESTHETIC, deve ser a estética que você quer ajustar a escala para (`_fill_`, `_shape_`, `_color_`, `_size_`, `_alpha_`...) - as opções aqui também incluem `_x_` e `_y_`.  
+3) A terceira parte, o METHOD, será ou `_discrete()`, `continuous()`, `_date()`, `_gradient()`, ou `_manual()`, de acordo com a classe da coluna e *como* você quer controlar ela. Existem outras classes, mas estes são frequentemente os mais utilizados.
 
-Be sure that you use the correct function for the scale! Otherwise your scale command will not appear to change anything. If you have multiple scales, you may use multiple scale functions to adjust them! For example:  
+Certifique-se de utilizar a função correta para a escala! Do contrário, seu comando de escala não mudará nada no gráfico. Se você tiver múltiplas escalas, pode utilizar múltiplas funções de escala para ajusta-las! Por exemplo:
 
-### Scale arguments {.unnumbered}  
+### Argumentos de escala {.unnumbered}  
 
-Each kind of scale has its own arguments, though there is some overlap. Query the function like `?scale_color_discrete` in the R console to see the function argument documentation.  
+Cada tipo de escala possui seus próprios argumentos, embora existam alguns em comum. Busque uma função no R, como `?scale_color_discrete`, para ver a documentação dos argumentos dessa função.
 
-For continuous scales, use `breaks = ` to provide a sequence of values with `seq()` (take `to = `, `from = `, and `by = ` as shown in the example below. Set `expand = c(0,0)` to eliminate padding space around the axes (this can be used on any `_x_` or `_y_` scale.  
+Para escalas contínuas, utilize `breaks = ` para fornecer uma sequência de valores com `seq()` (use `to = `, `from = `, e `by = ` como mostrado no exemplo abaixo). Ajuste `expand = c(0,0)` para eliminar espaços extras ao redor dos eixos (isto pode ser utilizado em qualquer escala `_x_` ou `_y_`).
 
-For discrete scales, you can adjust the order of level appearance with `breaks = `, and how the values display with the `labels = ` argument. Provide a character vector to each of those (see example below). You can also drop `NA` easily by setting `na.translate = FALSE`.  
+Para escalas discretas, você pode ajustar o nível da ordem de aparecimento com `breaks = `, e como os valores são mostrados com o argumento `labels = `. Forneça um vetor de caractere para cada um desses argumentos (veja exemplos abaixo). Você também pode excluir `NA` facilmente ao ajustar `na.translate = FALSE`.  
 
-The nuances of date scales are covered more extensively in the [Epidemic curves] page.  
-
-
-### Manual adjustments {.unnumbered}  
-
-One of the most useful tricks is using "manual" scaling functions to explicitly assign colors as you desire. These are functions with the syntax `scale_xxx_manual()` (e.g. `scale_colour_manual()` or `scale_fill_manual()`). Each of the below arguments are demonstrated in the code example below.  
-
-* Assign colors to data values with the `values = ` argument  
-* Specify a color for `NA` with `na.value = `  
-* Change how the values are *written* in the legend with the `labels = ` argument  
-* Change the legend title with `name = `  
+Os nuances de escalas de datas são cobertos mais extensivamente na página [Curvas epidêmicas].
 
 
-Below, we create a bar plot and show how it appears by default, and then with three scales adjusted - the continuous y-axis scale, the discrete x-axis scale, and manual adjustment of the fill (interior bar color).  
+### Ajustes manuais {.unnumbered}  
+
+Um dos truques mais úteis é utilizar funções que alteram as escalas de forma "manual", de forma a explicitamente atribuir cores conforme você desejar. Estas são funções com a sintaxe `scale_xxx_manual()` (ex.: `scale_colour_manual()` ou `scale_fill_manual()`). Cada um dos argumentos a seguir são utilizados no exemplo abaixo.
+
+* Atribua cores para os valores dos dados com o argumento `values = `  
+* Especifique uma cor para `NA` com `na.value = `  
+* Mude como os valores são *escritos* na legenda com o argumento `labels = `  
+* Mude o título da legenda com `name = `  
+
+
+A seguir, nós criamos um gráfico de barras, mostramos como ele é por padrão, e, então, mostramos como fica após ajustarmos três escalas - a escala contínua do eixo y, a escala discreta do eixo x, e o ajuste manual do preenchimento (cor interior das barras).
 
 
 ```{r, warning=F, message=F}
-# BASELINE - no scale adjustment
+# PADRÃO - sem ajuste de escalas
 ggplot(data = linelist)+
   geom_bar(mapping = aes(x = outcome, fill = gender))+
-  labs(title = "Baseline - no scale adjustments")
+  labs(title = "Padrão - sem ajuste de escalas")
 
-# SCALES ADJUSTED
+# ESCALAS AJUSTADAS
 ggplot(data = linelist)+
   
   geom_bar(mapping = aes(x = outcome, fill = gender), color = "black")+
   
-  theme_minimal()+                   # simplify background
+  theme_minimal()+                   # simplifique o fundo do gráfico
   
-  scale_y_continuous(                # continuous scale for y-axis (counts)
-    expand = c(0,0),                 # no padding
+  scale_y_continuous(                # escala contínua para o eixo y (contagens)
+    expand = c(0,0),                 # sem espaços extras
     breaks = seq(from = 0,
                  to = 3000,
                  by = 500))+
   
-  scale_x_discrete(                   # discrete scale for x-axis (gender)
-    expand = c(0,0),                  # no padding
-    drop = FALSE,                     # show all factor levels (even if not in data)
-    na.translate = FALSE,             # remove NA outcomes from plot
-    labels = c("Died", "Recovered"))+ # Change display of values
+  scale_x_discrete(                   # escala discreta para o eixo x (gênero)
+    expand = c(0,0),                  # sem espaços extras
+    drop = FALSE,                     # mostre todos os níveis de factor (mesmo que não estejam nos dados)
+    na.translate = FALSE,             # remove desfechos clínicos desconhecidos (NA) do gráfico
+    labels = c("Died", "Recovered"))+ # Mude a visualização dos valores
     
   
-  scale_fill_manual(                  # Manually specify fill (bar interior color)
-    values = c("m" = "violetred",     # reference values in data to assign colors
+  scale_fill_manual(                  # Especifique manualmente o preenchimento (cor interior da barra)
+    values = c("m" = "violetred",     # valores de referência nos dados para atribuir cores
                "f" = "aquamarine"),
-    labels = c("m" = "Male",          # re-label the legend (use "=" assignment to avoid mistakes)
-              "f" = "Female",
-              "Missing"),
-    name = "Gender",                  # title of legend
-    na.value = "grey"                 # assign a color for missing values
+    labels = c("m" = "Homem",          # renomeie a legenda (use "=" para fazer atribuições e evitar erros)
+              "f" = "Mulher",
+              "Desconhecido"),
+    name = "Gênero",                  # título da legenda
+    na.value = "grey"                 # atribua uma cor para dados em branco
   )+
-  labs(title = "Adjustment of scales") # Adjust the title of the fill legend
+  labs(title = "Com as escalas ajustadas") # Ajuste o título da legenda do preenchimento
 ```
 
-### Continuous axes scales {.unnumbered}  
+### Escalas contínuas dos eixos {.unnumbered}  
 
-When data are mapping to the plot axes, these too can be adjusted with scales commands. A common example is adjusting the display of an axis (e.g. y-axis) that is mapped to a column with continuous data. 
+Quando os dados são mapeados para os eixos do gráfico, estes também podem ser ajustados com comandos de escala. Um exemplo simples é ajustar a visualização de um eixo (ex.: eixo y) que é mapeado para uma coluna com dados contínuos.
 
-We may want to adjust the breaks or display of the values in the ggplot using `scale_y_continuous()`. As noted above, use the argument `breaks = ` to provide a sequence of values that will serve as "breaks" along the scale. These are the values at which numbers will display. To this argument, you can provide a `c()` vector containing the desired break values, or you can provide a regular sequence of numbers using the **base** R function `seq()`. This `seq()` function accepts `to = `, `from = `, and `by = `.
+No caso de querermos ajustar as quebras ou visualização dos valores no gráfico, podemos utilizar o `scale_y_continuous()`, do ggplot. Como observado acima, utilize o argumento `breaks = ` para fornecer uma sequência de valores que irão servir como "quebras" na escala. Estes são os intervalos em que os números serão mostrados. Para este argumento, você pode fornecer um vetor `c()` contendo os valores dos intervalos desejados, ou você pode fornecer uma sequência regular de números utilizando a função `seq()` do R **base**. Esta função aceita `to = `, `from = `, e `by = `.
 
 ```{r, warning=F, message=F, out.width=c('50%', '50%'), fig.show='hold'}
-# BASELINE - no scale adjustment
+# PADRÃO - sem ajuste da escala
 ggplot(data = linelist)+
   geom_bar(mapping = aes(x = outcome, fill = gender))+
-  labs(title = "Baseline - no scale adjustments")
+  labs(title = "Padrão - sem ajuste da escala")
 
 # 
 ggplot(data = linelist)+
@@ -198,39 +198,39 @@ ggplot(data = linelist)+
       to = 3000,
       by = 100)
   )+
-  labs(title = "Adjusted y-axis breaks")
+  labs(title = "Intervalo do eixo y ajustado")
 
 ```
 
 
 
-#### Display percents {.unnumbered}  
+#### Mostre as porcentagens {.unnumbered}  
 
-If your original data values are proportions, you can easily display them as percents with "%" by providing `labels = scales::percent` in your scales command, as shown below.  
+Caso os seus dados originais sejam proporções, você pode facilmente mostra-los como porcentagens com "%" ao adicionar `labels = scales::percent` nos seus comandos de escala, como mostrado abaixo.
 
-While an alternative would be to convert the values to character and add a "%" character to the end, this approach will cause complications because your data will no longer be continuous numeric values. 
+Embora uma alternativa seria converter os valores para caracteres, e, então, adicionar o "%" como caracter no final, esta abordagem irá causar problemas uma vez que seus dados não serão mais variáveis numéricas contínuas.
 
 
 ```{r, warning=F, message=F, out.width=c('50%', '50%'), fig.show='hold'}
-# Original y-axis proportions
+# Proporções originais do eixo y
 #############################
-linelist %>%                                   # start with linelist
-  group_by(hospital) %>%                       # group data by hospital
-  summarise(                                   # create summary columns
-    n = n(),                                     # total number of rows in group
-    deaths = sum(outcome == "Death", na.rm=T),   # number of deaths in group
-    prop_death = deaths/n) %>%                   # proportion deaths in group
-  ggplot(                                      # begin plotting
+linelist %>%                                   # inicie com a linelist
+  group_by(hospital) %>%                       # agrupe os dados por hospital
+  summarise(                                   # crie uma coluna de resumo dos dados
+    n = n(),                                     # total de casos (linhas) em um grupo
+    deaths = sum(outcome == "Death", na.rm=T),   # número de mortes nos grupos
+    prop_death = deaths/n) %>%                   # proporção de mortes por grupo
+  ggplot(                                      # inicie o gráfico
     mapping = aes(
       x = hospital,
       y = prop_death))+ 
   geom_col()+
   theme_minimal()+
-  labs(title = "Display y-axis original proportions")
+  labs(title = "Mostre as proporções originais do eixo y")
 
 
 
-# Display y-axis proportions as percents
+# Mostre as proporções do eixo y como porcentagens
 ########################################
 linelist %>%         
   group_by(hospital) %>% 
@@ -244,16 +244,16 @@ linelist %>%
       y = prop_death))+
   geom_col()+
   theme_minimal()+
-  labs(title = "Display y-axis as percents (%)")+
+  labs(title = "Mostre o eixo y como porcentagem (%)")+
   scale_y_continuous(
-    labels = scales::percent                    # display proportions as percents
+    labels = scales::percent                    # mostre as proporções como porcentagens
   )
 
 ```
 
-#### Log scale {.unnumbered}  
+#### Escala logarítmica {.unnumbered}  
 
-To transform a continuous axis to log scale, add `trans = "log2"` to the scale command. For purposes of example, we create a data frame of regions with their respective `preparedness_index` and cumulative cases values.  
+Para transformar um eixo contínuo em uma escala logarítmica, adicione `trans = "log2"` no comando da escala. Para os propósitos deste exemplo, criamos um quadro de dados de regiões com seus respectivos `preparedness_index` e valores de casos acumulados.
 
 ```{r}
 plot_data <- data.frame(
@@ -265,35 +265,35 @@ plot_data <- data.frame(
 plot_data
 ```
 
-The cumulative cases for region "I" are dramatically greater than all the other regions. In circumstances like this, you may elect to display the y-axis using a log scale so the reader can see differences between the regions with fewer cumulative cases.  
+Os casos acumulados para a região "I" são drasticamente maiores do que todas as outras regiões. Em circunstâncias como esta, você pode optar por mostrar o eixo y utilizando uma escala logarítmica, de forma que o leitor possa ver diferenças entre as regiões com menos casos acumulados.
 
 ```{r, warning=F, message=F, out.width=c('50%', '50%'), fig.show='hold'}
-# Original y-axis
+# Eixo y original
 preparedness_plot <- ggplot(data = plot_data,  
        mapping = aes(
          x = preparedness_index,
          y = cases_cumulative))+
-  geom_point(size = 2)+            # points for each region 
+  geom_point(size = 2)+            # pontos para cada região
   geom_text(
     mapping = aes(label = region),
-    vjust = 1.5)+                  # add text labels
+    vjust = 1.5)+                  # adicione os rótulos em texto
   theme_minimal()
 
-preparedness_plot                  # print original plot
+preparedness_plot                  # visualize o gráfico original
 
 
-# print with y-axis transformed
-preparedness_plot+                   # begin with plot saved above
-  scale_y_continuous(trans = "log2") # add transformation for y-axis
+# visualize o eixo y transformado
+preparedness_plot+                   # inicie com o gráfico salvo acima
+  scale_y_continuous(trans = "log2") # adicione a transformação para o eixo y
 ```
 
 
 
-### Gradient scales {.unnumbered}  
+### Escalas em gradiente {.unnumbered}  
 
-Fill gradient scales can involve additional nuance. The defaults are usually quite pleasing, but you may want to adjust the values, cutoffs, etc.  
+O preenchimento de escadas em gradiente de cores pode envolver detalhes adicionais. Normalmente, os ajustes padrões são bons, mas você pode querer ajustar os valores, limites de corte, etc.
 
-To demonstrate how to adjust a continuous color scale, we'll use a data set from the [Contact tracing] page that contains the ages of cases and of their source cases.  
+Para demonstrar como ajustar uma escala contínua de cor, nós iremos utilizar um conjunto de dados da página [Rastreamento de contatos], que contém as idades dos casos e dos seus casos-fonte.
 
 
 ```{r, warning=F, message=F}
@@ -301,7 +301,7 @@ case_source_relationships <- rio::import(here::here("data", "godata", "relations
   select(source_age, target_age) 
 ```
 
-Below, we produce a "raster" heat tile density plot. We won't elaborate how (see the link in paragraph above) but we will focus on how we can adjust the color scale. Read more about the `stat_density2d()` **ggplot2** function [here](https://ggplot2.tidyverse.org/reference/geom_density_2d.html). Note how the `fill` scale is *continuous*.  
+Abaixo, produzimos um arquivo "raster" de um gráfico de densidade de calor. Não iremos discorrer sobre como criar o gráfico (veja o link no parágrafo acima), mas sim como ajustar a escala de cor. Veja mais sobre a função `stat_density2d()` do **ggplot2** [aqui](https://ggplot2.tidyverse.org/reference/geom_density_2d.html). Observe como a escala `fill` é *contínua*.  
 
 ```{r, warn=F, message=F}
 trans_matrix <- ggplot(
@@ -314,102 +314,102 @@ trans_matrix <- ggplot(
   theme_minimal()
 ```
 
-Now we show some variations on the fill scale: 
+A seguir, mostramos algumas variações na escala de preenchimento:
 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', warning=F, message=F}
 trans_matrix
 trans_matrix + scale_fill_viridis_c(option = "plasma")
 ```
 
-Now we show some examples of actually adjusting the break points of the scale:  
+Agora veremos alguns exemplos de como ajustar os pontos de quebra da escala:
 
-* `scale_fill_gradient()` accepts two colors (high/low)  
-* `scale_fill_gradientn()` accepts a vector of any length of colors to `values = ` (intermediate values will be interpolated)  
-* Use [`scales::rescale()`](https://www.rdocumentation.org/packages/scales/versions/0.4.1/topics/rescale) to adjust how colors are positioned along the gradient; it rescales your vector of positions to be between 0 and 1.  
+* `scale_fill_gradient()` aceita duas cores (alta/baixa)
+* `scale_fill_gradientn()` aceita um vetor com qualquer quantidade de cores para `values = ` (valores intermediários serão intercalados)  
+* Use [`scales::rescale()`](https://www.rdocumentation.org/packages/scales/versions/0.4.1/topics/rescale) para ajustar como as cores serão posicionadas no decorrer do gradiente; ele reajusta o seu vetor de posições para ser entre 0 e 1.
 
 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', warning=F, message=F}
 trans_matrix + 
-  scale_fill_gradient(     # 2-sided gradient scale
-    low = "aquamarine",    # low value
-    high = "purple",       # high value
-    na.value = "grey",     # value for NA
-    name = "Density")+     # Legend title
-  labs(title = "Manually specify high/low colors")
+  scale_fill_gradient(     # escala de gradiente com 2 cores
+    low = "aquamarine",    # valor baixo
+    high = "purple",       # valor alto
+    na.value = "grey",     # valor para NA
+    name = "Densidade")+     # Título da legenda
+  labs(title = "Especifique manualmente as cores para valores altos/baixos")
 
-# 3+ colors to scale
+# 3+ cores na escala
 trans_matrix + 
-  scale_fill_gradientn(    # 3-color scale (low/mid/high)
-    colors = c("blue", "yellow","red") # provide colors in vector
+  scale_fill_gradientn(    # escala de 3-cores (baixo/médio/alto)
+    colors = c("blue", "yellow","red") # forneça cores no vetor
   )+
-  labs(title = "3-color scale")
+  labs(title = "Escala de 3 cores")
 
-# Use of rescale() to adjust placement of colors along scale
+# Uso de rescale() para ajustar a posição de cores na escala
 trans_matrix + 
-  scale_fill_gradientn(    # provide any number of colors
+  scale_fill_gradientn(    # forneça qualquer número de cores
     colors = c("blue", "yellow","red", "black"),
-    values = scales::rescale(c(0, 0.05, 0.07, 0.10, 0.15, 0.20, 0.3, 0.5)) # positions for colors are rescaled between 0 and 1
+    values = scales::rescale(c(0, 0.05, 0.07, 0.10, 0.15, 0.20, 0.3, 0.5)) # a posições para as cores é reescalado entre 0 e 1
     )+
-  labs(title = "Colors not evenly positioned")
+  labs(title = "Cores não são posicionadas igualmente")
 
-# use of limits to cut-off values that get fill color
+# uso de limites para os valores de corte que recebem a cor de preenchimento
 trans_matrix + 
   scale_fill_gradientn(    
     colors = c("blue", "yellow","red"),
     limits = c(0, 0.0002))+
-  labs(title = "Restrict value limits, resulting in grey space")
+  labs(title = "Restrinja os limites dos valores, resultando em um espaço cinza")
 
 ```
 
 
-### Palettes {.unnumbered}  
+### Paletas de cores {.unnumbered}  
 
-#### Colorbrewer and Viridis {.unnumbered}
-More generally, if you want predefined palettes, you can use the `scale_xxx_brewer` or `scale_xxx_viridis_y` functions.  
+#### Colorbrewer e Viridis {.unnumbered}
+Geralmente, se você quiser paletas pré-definidas, pode usar as funções `scale_xxx_brewer` ou `scale_xxx_viridis_y`.  
 
-The 'brewer' functions can draw from [colorbrewer.org](colorbrewer.org) palettes.  
+As funções 'brewer' colorem a partir das paletas do [colorbrewer.org](colorbrewer.org).  
 
-The 'viridis' functions draw from viridis (colourblind friendly!) palettes, which "provide colour maps that are perceptually uniform in both colour and black-and-white. They are also designed to be perceived by viewers with common forms of colour blindness." (read more [here](https://ggplot2.tidyverse.org/reference/scale_viridis.html) and [here](https://bids.github.io/colormap/)). Define if the palette is discrete, continuous, or binned by specifying this at the end of the function (e.g. discrete is `scale_xxx_viridis_d`).
+As funções 'viridis' colorem das paletas viridis (amigável para deficientes visuais!), que "fornece mapas de cores que são uniformes, tanto nas cores quanto no preto-e-branco. Elas também foram desenhadas para serem percebidas por usuários com formas comuns de cegueiras de cor." (leia mais [aqui](https://ggplot2.tidyverse.org/reference/scale_viridis.html) e [aqui](https://bids.github.io/colormap/)). Defina se a paleta é discreta, contínua, ou contida ao especificar isto no final da função (ex.: discreta é `scale_xxx_viridis_d`).
 
-It is advised that you test your plot in this [color blindness simulator](https://www.color-blindness.com/coblis-color-blindness-simulator/). If you have a red/green color scheme, try a "hot-cold" (red-blue) scheme instead as described [here](https://www.visualisingdata.com/2019/08/five-ways-to-design-for-red-green-colour-blindness/#:~:text=The%20pink%2Dred%20through%20to,green%20hues%20used%20by%20default.)  
+É recomendado que você teste as cores de seu gráfico neste [simulador de cegueira de cor](https://www.color-blindness.com/coblis-color-blindness-simulator/). Se você tiver um esquema de cores vermelho/verde, tente um esquema "quente-frio" (vermelho-azul) no lugar, como descrito [aqui](https://www.visualisingdata.com/2019/08/five-ways-to-design-for-red-green-colour-blindness/#:~:text=The%20pink%2Dred%20through%20to,green%20hues%20used%20by%20default.)  
 
-Here is an example from the [ggplot basics] page, using various color schemes. 
+Aqui é um exemplo da página [Básico do ggplot], utilizando diferentes esquemas de cores.
 
 ```{r, out.width=c('50%'), fig.show='hold', warning=F, message=F} 
-symp_plot <- linelist %>%                                         # begin with linelist
-  select(c(case_id, fever, chills, cough, aches, vomit)) %>%     # select columns
-  pivot_longer(                                                  # pivot longer
+symp_plot <- linelist %>%                                         # inicie com a linelist
+  select(c(case_id, fever, chills, cough, aches, vomit)) %>%     # selecione as colunas
+  pivot_longer(                                                  # faça o pivoteamento longo
     cols = -case_id,                                  
     names_to = "symptom_name",
     values_to = "symptom_is_present") %>%
-  mutate(                                                        # replace missing values
+  mutate(                                                        # substitua os campos em branco
     symptom_is_present = replace_na(symptom_is_present, "unknown")) %>% 
-  ggplot(                                                        # begin ggplot!
+  ggplot(                                                        # inicie o ggplot!
     mapping = aes(x = symptom_name, fill = symptom_is_present))+
   geom_bar(position = "fill", col = "black") +                    
   theme_classic() +
   theme(legend.position = "bottom")+
   labs(
-    x = "Symptom",
-    y = "Symptom status (proportion)"
+    x = "Sintoma",
+    y = "Status do sintoma (proporção)"
   )
 
-symp_plot  # print with default colors
+symp_plot  # visualize com as cores padrão
 
 #################################
-# print with manually-specified colors
+# visualize com cores especificadas manualmente
 symp_plot +
   scale_fill_manual(
-    values = c("yes" = "black",         # explicitly define colours
+    values = c("yes" = "black",         # defina as cores de forma explícita
                "no" = "white",
                "unknown" = "grey"),
-    breaks = c("yes", "no", "unknown"), # order the factors correctly
-    name = ""                           # set legend to no title
+    breaks = c("yes", "no", "unknown"), # ordene os fatores corretamente
+    name = ""                           # configure a legenda para não ter título
 
   ) 
 
 #################################
-# print with viridis discrete colors
+# visualize com as cores discretas do viridis
 symp_plot +
   scale_fill_viridis_d(
     breaks = c("yes", "no", "unknown"),
@@ -422,40 +422,40 @@ symp_plot +
 
 
 <!-- ======================================================= -->
-## Change order of discrete variables {}  
+## Altere a ordem das variáveis discretas {}  
 
-Changing the order that discrete variables appear in is often difficult to understand for people who are new to `ggplot2` graphs. It's easy to understand how to do this however once you understand how `ggplot2` handles discrete variables under the hood. Generally speaking, if a discrete varaible is used, it is automatically converted to a `factor` type - which orders factors by alphabetical order by default. To handle this, you simply have to reorder the factor levels to reflect the order you would like them to appear in the chart. For more detailed information on how to reorder `factor` objects, see the factor section of the guide. 
+Geralmente, alterar a ordem em que as variáveis discretas aparecem no gráfico é difícil de entender para novatos no `ggplot2`. Entretanto, ao compreender o mecanismo que o `ggplot2` usa para trabalhar com variáveis discretas, fica mais fácil de entender como alterar. No geral, se uma variável discreta é utilizada, ela é automaticamente convertida para a classe `factor`- que, por padrão, ordena os factors por ordem alfabética. Para trabalhar com isso, você simplesmente precisa reordenar os níveis de factor para refletirem na ordem que você gostaria que eles aparecessem no gráfico. Para informações mais detalhadas sobre como reordenar objetos da classe `factor`, veja a seção sobre factor neste guia.
 
-We can look at a common example using age groups - by default the 5-9 age group will be placed in the middle of the age groups (given alphanumeric order), but we can move it behind the 0-4 age group of the chart by releveling the factors.
+Nós podemos utilizar um exemplo comum com grupos de idade - por padrão, o grupo de 5-9 anos será colocado no meio dos grupos ordenados (considerando a ordem alfanumérica), mas nós podemos movê-lo para atrás do grupo de 0-4 anos do gráfico ao renivelar os factors.
 
 
 ```{r, , warning=F, message=F}
 ggplot(
-  data = linelist %>% drop_na(age_cat5),                         # remove rows where age_cat5 is missing
-  mapping = aes(x = fct_relevel(age_cat5, "5-9", after = 1))) +  # relevel factor
+  data = linelist %>% drop_na(age_cat5),                         # remova as linhas em que age_cat5 está ausente
+  mapping = aes(x = fct_relevel(age_cat5, "5-9", after = 1))) +  # renivele os factors
 
   geom_bar() +
   
-  labs(x = "Age group", y = "Number of hospitalisations",
-       title = "Total hospitalisations by age group") +
+  labs(x = "Grupo de idade", y = "Número de hospitalizações",
+       title = "Quantidade total de hospitalizações por grupo de idade") +
   
   theme_minimal()
 
 
 ```
 
-#### **ggthemr** {.unnnumbered}  
+#### Pacote **ggthemr** {.unnnumbered}  
 
-Also consider using the **ggthemr** package. You can download this package from Github using the instructions [here](https://github.com/Mikata-Project/ggthemr). It offers palettes that are very aesthetically pleasing, but be aware that these typically have a maximum number of values that can be limiting if you want more than 7 or 8 colors.  
-
-
+Adicionalmente, considere utilizar o pacote **ggthemr**, que pode ser baixado do Github utilizando [essas instruções](https://github.com/Mikata-Project/ggthemr). Ele oferece paletas de cores muito agradáveis estéticamente, mas tenha ciência de que estas geralmente possuem um número máximo de valores, o que é um fator limitante caso você queira mais de 7 ou 8 cores.
 
 
 
 
-## Contour lines  
 
-Contour plots are helpful when you have many points that might cover each other ("overplotting"). The case-source data used above are again plotted, but more simply using `stat_density2d()` and `stat_density2d_filled()` to produce discrete contour levels - like a topographical map. Read more about the statistics [here](https://ggplot2.tidyverse.org/reference/geom_density_2d.html).  
+
+## Linhas de contorno  
+
+Gráficos de contorno são úteis quando você tem muitos pontos que podem se sobrepor ("overplotting"). Iremos utilizar os dados sobre as fontes dos casos utilizados acima para fazer um gráfico, mas de forma mais simples utilizando `stat_density2d()` e `stat_density2d_filled()` para produzir níveis discretos de contorno - como um mapa topográfico. Veja mais sobre as estatísticas utilizadas [aqui](https://ggplot2.tidyverse.org/reference/geom_density_2d.html).  
 
 
 ```{r, out.width=c('50%'), fig.show='hold', warning=F, message=F}
@@ -477,144 +477,144 @@ case_source_relationships %>%
 
 
 
-## Marginal distributions  
+## Distribuições marginais
 
-To show the distributions on the edges of a `geom_point()` scatterplot, you can use the **ggExtra** package and its function `ggMarginal()`. Save your original ggplot as an object, then pass it to `ggMarginal()` as shown below. Here are the key arguments:  
+Para mostrar as distribuições nas extremidades de um gráfico de dispersão criado com `geom_point()`, você pode utilizar o pacote **ggExtra** e sua função `ggMarginal()`. Salve seu ggplot original como um objeto, e então o utilize com `ggMarginal()`, como mostrado abaixo. Aqui estão os argumentos chave:
 
-* You must specify the `type = ` as either "histogram", "density" "boxplot", "violin", or "densigram".  
-* By default, marginal plots will appear for both axes. You can set `margins = ` to "x" or "y" if you only want one.  
-* Other optional arguments include `fill = ` (bar color), `color = ` (line color), `size = ` (plot size relative to margin size, so larger number makes the marginal plot smaller).  
-* You can provide other axis-specific arguments to `xparams = ` and `yparams = `. For example, to have different histogram bin sizes, as shown below.  
+* Você precisa especificar `type = ` como "histogram", "density" "boxplot", "violin", ou "densigram".  
+* Por padrão, gráficos de dispersão marginal irão aparecer para ambos eixos. Você pode ajustar `margins = ` para "x" ou "y" se quiser apenas um deles.
+* Outros argumentos opcionais incluem `fill = ` (cor da barra), `color = ` (cor da linha), `size = ` (tamanho do gráfico relativo ao tamanho da margem, de forma que números maiores criam um gráfico de dispersão marginal menor).  
+* Você pode fornecer outros argumentos específicos para os eixos em `xparams = ` e `yparams = `. Por exemplo, para obter diferentes tamanhos dos containers do histograma, como mostrado abaixo.
 
-You can have the marginal plots reflect groups (columns that have been assigned to `color = ` in your `ggplot()` mapped aesthetics). If this is the case, set the `ggMarginal()` argument `groupColour = ` or `groupFill = ` to `TRUE`, as shown below.  
+Os gráficos de dispersão marginal podem refletir os grupos (colunas que foram atribuídas a `color = ` no seu mapa estético do `ggplot()`). Se este for o caso, ajuste os argumentos `groupColour = ` ou `groupFill = `, do `ggMarginal()`, para `TRUE`, como mostrado abaixo.
 
-Read more at [this vignette](https://cran.r-project.org/web/packages/ggExtra/vignettes/ggExtra.html), in the [R Graph Gallery](https://www.r-graph-gallery.com/277-marginal-histogram-for-ggplot2.html) or the function R documentation `?ggMarginal`.  
+Leia mais [neste resumo](https://cran.r-project.org/web/packages/ggExtra/vignettes/ggExtra.html), na [galeria de gráficos em R](https://www.r-graph-gallery.com/277-marginal-histogram-for-ggplot2.html) ou a documentação da função no R, com `?ggMarginal`.  
 
 ```{r, message=FALSE, warning=FALSE}
-# Install/load ggExtra
+# Instale/carregue o pacote ggExtra
 pacman::p_load(ggExtra)
 
-# Basic scatter plot of weight and age
+# Gráfico básico de distribuição de peso e idade
 scatter_plot <- ggplot(data = linelist)+
   geom_point(mapping = aes(y = wt_kg, x = age)) +
-  labs(title = "Scatter plot of weight and age")
+  labs(title = "Gráfico de distribuição de peso e idade")
 ```
 
-To add marginal histograms use `type = "histogram"`. You can optionally set `groupFill = TRUE` to get stacked histograms.     
+Para adicionar histogramas marginais, utilize `type = "histogram"`. Opcionalmente, você pode ajustar `groupFill = TRUE` para obter histogramas empilhados.
 
 ```{r, message=FALSE, warning=FALSE}
-# with histograms
+# com histogramas
 ggMarginal(
-  scatter_plot,                     # add marginal histograms
-  type = "histogram",               # specify histograms
-  fill = "lightblue",               # bar fill
-  xparams = list(binwidth = 10),    # other parameters for x-axis marginal
-  yparams = list(binwidth = 5))     # other parameters for y-axis marginal
+  scatter_plot,                     # adicione histogramas marginais
+  type = "histogram",               # especifique histogram
+  fill = "lightblue",               # preenchimento das barras
+  xparams = list(binwidth = 10),    # outros parâmetros para a dispersão marginal do eixo x
+  yparams = list(binwidth = 5))     # outros parâmetros para a dispersão marginal do eixo y
 ```
 
-Marginal density plot with grouped/colored values:  
+Gráfico de densidade marginal com valores agrupados/coloridos:
 
 ```{r, message=FALSE, warning=FALSE}
 
-# Scatter plot, colored by outcome
-# Outcome column is assigned as color in ggplot. groupFill in ggMarginal set to TRUE
+# Gráfico de dispersão, colorido de acordo com o desfecho clínico (outcome) do paciente
+# Coluna de desfecho é atribuída como cor no ggplot. groupFill no ggMarginal ajustado para TRUE
 scatter_plot_color <- ggplot(data = linelist %>% drop_na(gender))+
   geom_point(mapping = aes(y = wt_kg, x = age, color = gender)) +
-  labs(title = "Scatter plot of weight and age")+
+  labs(title = "Gráfico de dispersão por peso e idade")+
   theme(legend.position = "bottom")
 
 ggMarginal(scatter_plot_color, type = "density", groupFill = TRUE)
 ```
 
-Set the `size = ` arguemnt to adjust the relative size of the marginal plot. Smaller number makes a larger marginal plot. You also set `color = `. Below are is a marginal boxplot, with demonstration of the `margins = ` argument so it appears on only one axis:  
+Coloque o argumento `size = ` para ajustar o tamanho relativo do gráfico de dispersão marginal. Números menores criam gráficos de dispersão marginal maiores. Você também ajusta `color = `. A seguir, um diagrama de caixa (boxplot) marginal, com a demonstração do argumento `margins = `, de forma que apareça apenas em um eixo:
 
 ```{r, message=FALSE, warning=FALSE}
-# with boxplot 
+# com boxplot 
 ggMarginal(
   scatter_plot,
-  margins = "x",      # only show x-axis marginal plot
+  margins = "x",      # mostre apenas o gráfico de dispersão marginal do eixo x
   type = "boxplot")   
 ```
 
 
 
 <!-- ======================================================= -->
-## Smart Labeling {}  
+## Rotulagem inteligente {}  
 
-In **ggplot2**, it is also possible to add text to plots. However, this comes with the notable limitation where text labels often clash with data points in a plot, making them look messy or hard to read. There is no ideal way to deal with this in the base package, but there is a **ggplot2** add-on, known as **ggrepel** that makes dealing with this very simple! 
+No **ggplot2**, também é possível adicionar texto aos gráficos. Entretanto, a limitação disto é a sobreposição dos rótulos de texto com os dados no gráfico, ficando com aparência confusa e difícil de interpretar. Não existe forma ideal de lidar com issso no pacote básico, mas existe um complemento do **ggplot2**, chamado de **ggrepel**, que lida com isso de forma bem simples!
 
-The **ggrepel** package provides two new functions, `geom_label_repel()` and `geom_text_repel()`, which replace `geom_label()` and `geom_text()`. Simply use these functions instead of the base functions to produce neat labels. Within the function, map the aesthetics `aes()` as always, but include the argument `label = ` to which you provide a column name containing the values you want to display (e.g. patient id, or name, etc.). You can make more complex labels by combining columns and newlines (`\n`) within `str_glue()` as shown below.  
+O pacote **ggrepel** fornece duas novas funções, `geom_label_repel()` e `geom_text_repel()`, que substituem `geom_label()` e `geom_text()`. Simplesmente utilize estas funções, em vez das originais do **ggplot2**, para produzir rótulos claros e bonitos. Dentro da função, mapeie a estética  `aes()` como sempre, mas inclua o argumento `label = `, onde você fornece a coluna com os valores que quer mostrar (ex.: id do paciente, ou nome, etc). Você pode criar mais rótulos complexos ao combinar colunas e linhas novas (`\n`) dentro de `str_glue()`, como mostrado abaixo.
 
-A few tips:  
+Algumas dicas:
 
-* Use `min.segment.length = 0` to always draw line segments, or `min.segment.length = Inf` to never draw them  
-* Use `size = ` outside of `aes()` to set text size  
-* Use `force = ` to change the degree of repulsion between labels and their respective points (default is 1)  
-* Include `fill = ` within `aes()` to have label colored by value  
-  * A letter "a" may appear in the legend - add `guides(fill = guide_legend(override.aes = aes(color = NA)))+` to remove it  
+* Use `min.segment.length = 0` para sempre desenhar segmentos de linhas, ou `min.segment.length = Inf` para nunca desenhá-los
+* Use `size = ` fora de `aes()` para ajustar o tamanho do texto
+* Use `force = ` para mudar o grau de repulsão entre os rótulos e seus respectivos pontos (padrão é 1)
+* Inclua `fill = ` dentro de `aes()` para ter os rótulos coloridos de acordo com os valores
+  * A letra "a" pode aparecer na legenda - adicione `guides(fill = guide_legend(override.aes = aes(color = NA)))+` para removê-la
 
-See this is very in-depth [tutorial](https://ggrepel.slowkow.com/articles/examples.html) for more.  
+Veja esse detalhado [tutorial](https://ggrepel.slowkow.com/articles/examples.html) para mais detalhes.
 
 ```{r, , warning=F, message=F}
 pacman::p_load(ggrepel)
 
-linelist %>%                                               # start with linelist
-  group_by(hospital) %>%                                   # group by hospital
-  summarise(                                               # create new dataset with summary values per hospital
-    n_cases = n(),                                           # number of cases per hospital
-    delay_mean = round(mean(days_onset_hosp, na.rm=T),1),    # mean delay per hospital
+linelist %>%                                               # comece com a linelist
+  group_by(hospital) %>%                                   # agrupe por hospital
+  summarise(                                               # crie um novo conjunto de dados com o resumo dos valores por hospital
+    n_cases = n(),                                           # número de casos por hospital
+    delay_mean = round(mean(days_onset_hosp, na.rm=T),1),    # demora média por hospital
   ) %>% 
-  ggplot(mapping = aes(x = n_cases, y = delay_mean))+      # send data frame to ggplot
-  geom_point(size = 2)+                                    # add points
-  geom_label_repel(                                        # add point labels
+  ggplot(mapping = aes(x = n_cases, y = delay_mean))+      # envie o quadro de dados para o ggplot
+  geom_point(size = 2)+                                    # adicione os pontos
+  geom_label_repel(                                        # adicione os rótulos dos pontos
     mapping = aes(
       label = stringr::str_glue(
-        "{hospital}\n{n_cases} cases, {delay_mean} days")  # how label displays
+        "{hospital}\n{n_cases} casos, {delay_mean} dias")  # como o rótulo é mostrado
       ), 
-    size = 3,                                              # text size in labels
-    min.segment.length = 0)+                               # show all line segments                
-  labs(                                                    # add axes labels
-    title = "Mean delay to admission, by hospital",
-    x = "Number of cases",
-    y = "Mean delay (days)")
+    size = 3,                                              # tamanho do texto nos rótulos
+    min.segment.length = 0)+                               # mostre todos os segmentos de linhas
+  labs(                                                    # adicione os rótulos dos eixos
+    title = "Tempo médio de espera para admissão, por hospital",
+    x = "Número de casos",
+    y = "Tempo médio de espera (dias)")
 ```
 
-You can label only a subset of the data points - by using standard `ggplot()` syntax to provide different `data = ` for each `geom` layer of the plot. Below, All cases are plotted, but only a few are labeled.    
+Você pode rotular apenas um subconjunto dos dados - ao utilizar a sintaxe padrão do `ggplot()` para fornecer diferentes `data = ` para cada camada `geom` do gráfico. Abaixo, todos os casos são colocados no gráfico, mas apenas alguns são rotulados.
 
 ```{r, warning=F, message=FALSE}
 
 ggplot()+
-  # All points in grey
+  # Todos os pontos em cinza
   geom_point(
-    data = linelist,                                   # all data provided to this layer
+    data = linelist,                                   # todos os dados fornecidos para essa camada
     mapping = aes(x = ht_cm, y = wt_kg),
     color = "grey",
-    alpha = 0.5)+                                              # grey and semi-transparent
+    alpha = 0.5)+                                              # cinza e semi-transparente
   
-  # Few points in black
+  # Poucos pontos em preto
   geom_point(
-    data = linelist %>% filter(days_onset_hosp > 15),  # filtered data provided to this layer
+    data = linelist %>% filter(days_onset_hosp > 15),  # dados filtrados nesta camada
     mapping = aes(x = ht_cm, y = wt_kg),
-    alpha = 1)+                                                # default black and not transparent
+    alpha = 1)+                                                # padrão preto e não transparente
   
-  # point labels for few points
+  # rótulos de pontos para alguns pontos
   geom_label_repel(
-    data = linelist %>% filter(days_onset_hosp > 15),  # filter the data for the labels
+    data = linelist %>% filter(days_onset_hosp > 15),  # filtre os dados para os rótulos
     mapping = aes(
       x = ht_cm,
       y = wt_kg,
-      fill = outcome,                                          # label color by outcome
-      label = stringr::str_glue("Delay: {days_onset_hosp}d")), # label created with str_glue()
-    min.segment.length = 0) +                                  # show line segments for all
+      fill = outcome,                                          # cor dos rótulos por desfecho
+      label = stringr::str_glue("Demora: {days_onset_hosp}d")), # rótulo criado com str_glue()
+    min.segment.length = 0) +                                  # mostre os segmentos de linha para todos
   
-  # remove letter "a" from inside legend boxes
+  # remova a letra "a" de dentro das caixas de legenda
   guides(fill = guide_legend(override.aes = aes(color = NA)))+
   
-  # axis labels
+  # rótulos dos eixos
   labs(
-    title = "Cases with long delay to admission",
-    y = "weight (kg)",
-    x = "height(cm)")
+    title = "Casos com longa demora até admissão",
+    y = "peso (kg)",
+    x = "altura (cm)")
 ```
 
 
@@ -622,25 +622,25 @@ ggplot()+
 
 
 <!-- ======================================================= -->
-## Time axes {}
+## Eixos de tempo {}
 
-Working with time axes in ggplot can seem daunting, but is made very easy with a few key functions. Remember that when working with time or date that you should ensure that the correct variables are formatted as date or datetime class - see the [Working with dates] page for more information on this, or [Epidemic curves] page (ggplot section) for examples.
+Trabalhar com eixos de tempo no ggplot pode ser cansativo, mas é mais fácil com algumas funções chave. Lembre que, ao trabalhar com tempo ou datas, você deve garantir que as variáveis corretas estejam formatadas como das classes date ou datetime - veja a página [Trabalhando com datas] para mais informações, ou a página [Curvas epidêmicas], na seção sobre o ggplot, para exemplos.
 
-The single most useful set of functions for working with dates in `ggplot2` are the scale functions (`scale_x_date()`, `scale_x_datetime()`, and their cognate y-axis functions). These functions let you define how often you have axis labels, and how to format axis labels. To find out how to format dates, see the _working with dates_ section again! You can use the `date_breaks` and `date_labels` arguments to specify how dates should look:
+O conjunto de funções mais útil para trabalhar com datas no `ggplot2` são as funções de escala (`scale_x_date()`, `scale_x_datetime()`, e os seus cognatos do eixo y). Estas funções permitem definir a frequência dos rótulos dos eixos, e como formatar esses rótulos. Para descobrir como formatar datas, veja a seção _working with dates_ novamente! Você pode utilizar os argumentos `date_breaks` e `date_labels` para especificar como as datas devem aparecer:
 
-  1. `date_breaks` allows you to specify how often axis breaks occur - you can pass a string here (e.g. `"3 months"`, or "`2 days"`)
+  1. `date_breaks` permite especificar a frequência das quebras dos eixos - você pode utilizar uma string (ex.: `"3 months"`, ou "`2 days"`)
   
-  2. `date_labels` allows you to define the format dates are shown in. You can pass a date format string to these arguments (e.g. `"%b-%d-%Y"`):
+  2. `date_labels` permite definir o formato das datas mostradas. Você pode utilizar uma string de formatação de datas (ex.: `"%b-%d-%Y"`):
 
 
 ```{r, , warning=F, message=F}
-# make epi curve by date of onset when available
+# crie uma epicurva por data de início dos sintomas, quando disponível
 ggplot(linelist, aes(x = date_onset)) +
   geom_histogram(binwidth = 7) +
   scale_x_date(
-    # 1 break every 1 month
+    # 1 quebra a cada mês
     date_breaks = "1 months",
-    # labels should show month then date
+    # rótulos devem mostrar o mês, então a data
     date_labels = "%b %d"
   ) +
   theme_classic()
@@ -650,42 +650,42 @@ ggplot(linelist, aes(x = date_onset)) +
 
 
 <!-- ======================================================= -->
-## Highlighting {}
+## Destacando {}
 
-Highlighting specific elements in a chart is a useful way to draw attention to a specific instance of a variable while also providing information on the dispersion of the full dataset. While this is not easily done in base **ggplot2**, there is an external package that can help to do this known as **gghighlight**. This is easy to use within the ggplot syntax.
+Destacar elementos específicos em um gráfico é uma forma útil de chamar a atenção para algo nos dados, enquanto também fornece informação na distribuição dos dados no conjunto inteiro. Embora isto não seja feito de forma fácil no **ggplot2** básico, existe um pacote externo que pode ajudar nisso, conhecido como **gghighlight**. Ele é fácil de usar dentro da sintaxe do ggplot.
 
-The **gghighlight** package uses the `gghighlight()` function to achieve this effect. To use this function, supply a logical statement to the function - this can have quite flexible outcomes, but here we'll show an example of the age distribution of cases in our linelist, highlighting them by outcome.
+O pacote **gghighlight** utiliza a função `gghighlight()` para realizar os destaques. Para usar esta função, forneça um argumento lógico - o que pode ter muitos desfechos, mas iremos mostrar um exemplo da distribuição de idade dos casos em nosso linelist, ao destacar pelo desfecho clínico.
 
 ```{r, , warning=F, message=F}
-# load gghighlight
+# carregue o pacote gghighlight
 library(gghighlight)
 
-# replace NA values with unknown in the outcome variable
+# substitua os valores NA por "unknown" na variável de desfecho
 linelist <- linelist %>%
   mutate(outcome = replace_na(outcome, "Unknown"))
 
-# produce a histogram of all cases by age
+# produza um histograma de todos os casos de acordo com a idade
 ggplot(
   data = linelist,
   mapping = aes(x = age_years, fill = outcome)) +
   geom_histogram() + 
-  gghighlight::gghighlight(outcome == "Death")     # highlight instances where the patient has died.
+  gghighlight::gghighlight(outcome == "Death")     # destaque as situações onde o desfecho do paciente foi óbito.
 
 ```
 
-This also works well with faceting functions - it allows the user to produce facet plots with the background data highlighted that doesn't apply to the facet! Below we count cases by week and plot the epidemic curves by hospital (`color = ` and `facet_wrap()` set to `hospital` column).  
+Isto também funciona bem com as funções de facetas - ele permite a produção de gráficos facetados com os dados no fundo em destaque, mas que não se aplica à faceta! Abaixo, nós contamos os casos por semana e criamos uma curva epidêmica por hospital (`color = ` e `facet_wrap()` ajustado para a coluna `hospital`).  
 
 ```{r, , warning=F, message=F}
 
-# produce a histogram of all cases by age
+# produz um histograma de todos os casos por idade
 linelist %>% 
   count(week = lubridate::floor_date(date_hospitalisation, "week"),
         hospital) %>% 
   ggplot()+
   geom_line(aes(x = week, y = n, color = hospital))+
   theme_minimal()+
-  gghighlight::gghighlight() +                      # highlight instances where the patient has died
-  facet_wrap(~hospital)                              # make facets by outcome
+  gghighlight::gghighlight() +                      # destaque as situações em que o paciente morreu
+  facet_wrap(~hospital)                              # crie facetas de acordo com o desfecho
 
 ```
 
@@ -693,12 +693,12 @@ linelist %>%
 
 
 
-## Plotting multiple datasets  
+## Criando gráficos de múltiplos conjuntos de dados
 
-Note that properly aligning axes to plot from multiple datasets in the same plot can be difficult. Consider one of the following strategies:  
+Observe que alinhar adequadamente os eixos para criar gráficos de conjuntos de dados múltilos no mesmo gráfico pode ser difícil. Considere uma das seguintes estratégias:
 
-* Merge the data prior to plotting, and convert to "long" format with a column reflecting the dataset  
-* Use **cowplot** or a similar package to combine two plots (see below)  
+* Una os dados antes de criar o gráfico, e então converta para o formato "longo" com uma coluna associando os dados
+* Use **cowplot** ou um pacote similar para combinar dois gráficos (veja abaixo)
 
 
 
@@ -706,57 +706,57 @@ Note that properly aligning axes to plot from multiple datasets in the same plot
 
 
 <!-- ======================================================= -->
-## Combine plots {}
+## Combine os gráficos {}
 
-Two packages that are very useful for combining plots are **cowplot** and **patchwork**. In this page we will mostly focus on **cowplot**, with occassional use of **patchwork**.  
+Dois pacotes bem úteis para combinar gráficos são o **cowplot** e o **patchwork**. Nesta página, iremos focar no **cowplot**, e, ocasionalmente, usaremos o **patchwork**.  
 
-Here is the online [introduction to cowplot](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html). You can read the more extensive documentation for each function online [here](https://www.rdocumentation.org/packages/cowplot/versions/1.1.1). We will cover a few of the most common use cases and functions below.  
+Aqui está uma [introdução ao cowplot](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html). Você pode ler a documentação mais extensa para cada função [aqui](https://www.rdocumentation.org/packages/cowplot/versions/1.1.1). Nós iremos mostrar alguns dos casos de uso e funções mais comuns a seguir.
 
-The **cowplot** package works in tandem with **ggplot2** - essentially, you use it to arrange and combine ggplots and their legends into compound figures. It can also accept **base** R graphics.  
+O pacote **cowplot** funciona em tandem com **ggplot2** - essencialmente, você o utiliza para organizar e combinar ggplots e suas legendas em figuras compostas. Este pacote também aceita gráficos do R **base**.
 
 ```{r}
 pacman::p_load(
-  tidyverse,      # data manipulation and visualisation
-  cowplot,        # combine plots
-  patchwork       # combine plots
+  tidyverse,      # manipulação e visualização de dados
+  cowplot,        # combine os gráficos
+  patchwork       # combine os gráficos
 )
 ```
 
 
-While faceting (described in the [ggplot basics] page) is a convenient approach to plotting, sometimes its not possible to get the results you want from its relatively restrictive approach. Here, you may choose to combine plots by sticking them together into a larger plot. There are three well known packages that are great for this - **cowplot**, **gridExtra**, and **patchwork**. However, these packages largely do the same things, so we'll focus on **cowplot** for this section. 
+Enquanto facetear (descrito na página [Básico do ggplot]) é uma abordagem conveniente para criar gráficos, as vezes não é possível obter os resultados desejados com essa abordagem. Aqui, você pode escolher combinar os gráficos ao uní-los em um gráfico maior. Existem três pacotes bem conhecidos, que são ótimos para isso - **cowplot**, **gridExtra**, e **patchwork**. Entretanto, estes pacotes fazem basicamente a mesma coisa, de forma que iremos focar no **cowplot** nesta seção.
 
 ### `plot_grid()` {.unnumbered}
 
-The **cowplot** package has a fairly wide range of functions, but the easiest use of it can be achieved through the use of `plot_grid()`. This is effectively a way to arrange predefined plots in a grid formation. We can work through another example with the malaria dataset - here we can plot the total cases by district, and also show the epidemic curve over time.
+O pacote **cowplot** tem uma grande variedade de funções, mas o uso mais fácil dele é com `plot_grid()`. Isto é, efetivamente, uma forma de organizar gráficos pré-definidos em forma de uma rede. Nós podemos aplicar em outro exemplo com os dados de malária - aqui nós fizemos um gráfico com o total de casos por distrito, e também mostramos a curva epidêmica pelo tempo.
 
 
 ```{r, , warning=F, message=F}
 malaria_data <- rio::import(here::here("data", "malaria_facility_count_data.rds")) 
 
-# bar chart of total cases by district
+# gráfico do total de casos por distrito
 p1 <- ggplot(malaria_data, aes(x = District, y = malaria_tot)) +
   geom_bar(stat = "identity") +
   labs(
-    x = "District",
-    y = "Total number of cases",
-    title = "Total malaria cases by district"
+    x = "Distrito",
+    y = "Número total de casos",
+    title = "Quantidade total de casos de malária por distrito"
   ) +
   theme_minimal()
 
-# epidemic curve over time
+# curva epidêmica pelo tempo
 p2 <- ggplot(malaria_data, aes(x = data_date, y = malaria_tot)) +
   geom_col(width = 1) +
   labs(
-    x = "Date of data submission",
-    y =  "number of cases"
+    x = "Data de envio dos dados",
+    y =  "número de casos"
   ) +
   theme_minimal()
 
 cowplot::plot_grid(p1, p2,
-                  # 1 column and two rows - stacked on top of each other
+                  # 1 coluna e duas linhas - empilhadas uma sobre a outra
                    ncol = 1,
                    nrow = 2,
-                   # top plot is 2/3 as tall as second
+                   # gráfico de cima é 2/3 da altura do segundo
                    rel_heights = c(2, 3))
 
 
@@ -765,19 +765,19 @@ cowplot::plot_grid(p1, p2,
 
 
 
-### Combine legends {.unnumbered}  
+### Combine as legendas {.unnumbered}  
 
-If your plots have the same legend, combining them is relatively straight-forward. Simple use the **cowplot** approach above to combine the plots, but remove the legend from one of them (de-duplicate).  
+Caso os seus gráficos tenham a mesma legenda, combina-las é relativamente fácil. Simplesmente use a abordagem acima do **cowplot** para combinar os gráficos, mas remova a legenda de um deles (de-duplique).  
 
-If your plots have different legends, you must use an alternative approach:  
+Caso seus gráficos tenham legendas diferentes, você precisa usar uma abordagem alternativa:
 
-1) Create and save your plots *without legends* using `theme(legend.position = "none")`  
-2) Extract the legends from each plot using `get_legend()` as shown below - *but extract legends from the plots modified to actually show the legend*  
-3) Combine the legends into a legends panel  
-4) Combine the plots and legends panel  
+1) Crie e salve seus gráficos *sem as legendas* utilizando `theme(legend.position = "none")`  
+2) Extraia as legendas de cada gráfico utilizando `get_legend()`, como mostrado abaixo - *mas extraia as legendas dos gráficos modificados para, na verdade, mostrar a legenda*  
+3) Combine as legendas em um painel de legendas
+4) Combine os gráficos e o painel de legendas
 
 
-For demonstration we show the two plots separately, and then arranged in a grid with their own legends showing (ugly and inefficient use of space):  
+Para fins de demonstração, primeiro mostramos os dois gráficos separados, e, então organizados em uma grade com suas próprias legendas (feio e uso ineficiente de espaço):
 
 ```{r, out.width=c('50%'), fig.show='hold', warning=F, message=F}
 p1 <- linelist %>% 
@@ -788,7 +788,7 @@ p1 <- linelist %>%
   scale_fill_brewer(type = "qual", palette = 4, na.value = "grey")+
   coord_flip()+
   theme_minimal()+
-  labs(title = "Cases by outcome")
+  labs(title = "Casos por desfecho clínico")
 
 
 p2 <- linelist %>% 
@@ -800,21 +800,21 @@ p2 <- linelist %>%
   coord_flip()+
   theme_minimal()+
   theme(axis.text.y = element_blank())+
-  labs(title = "Cases by age")
+  labs(title = "Casos por idade")
 
 ```
 
-Here is how the two plots look when combined using `plot_grid()` without combining their legends:  
+Aqui esta como os dois gráficos ficam quando combinados usando `plot_grid()`, mas sem combinar as suas legendas:
 
 ```{r, warning=F, message=F}
 cowplot::plot_grid(p1, p2, rel_widths = c(0.3))
 ```
 
-And now we show how to combine the legends. Essentially what we do is to define each plot *without* its legend (`theme(legend.position = "none"`), and then we define each plot's legend *separately*, using the `get_legend()` function from **cowplot**. When we extract the legend from the saved plot, we need to add `+` the legend back in, including specifying the placement ("right") and smaller adjustments for alignment of the legends and their titles. Then, we combine the legends together vertically, and then combine the two plots with the newly-combined legends. Voila!  
+E agora nós mostramos como combinar as legendas. Essencialmente, o que fazemos é criar cada gráfico *sem* sua legenda (`theme(legend.position = "none"`), e então definimos cada legenda dos gráficos *separadamente*, usando a função `get_legend()` do **cowplot**. Quando extraimos a legenda do gráfico salvo, precisamos adicionar `+` a legenda de volta, incluindo o argumento de posição ("right") e ajustes menores para alinhar as legendas e seus títulos. Então, combinamos as legendas verticalmente, e os dois gráficos com a nova legenda combinada. Voilà!  
 
 ```{r, warning=F, message=F}
 
-# Define plot 1 without legend
+# Crie o gráfico 1 sem a legenda
 p1 <- linelist %>% 
   mutate(hospital = recode(hospital, "St. Mark's Maternity Hospital (SMMH)" = "St. Marks")) %>% 
   count(hospital, outcome) %>% 
@@ -824,10 +824,10 @@ p1 <- linelist %>%
   coord_flip()+
   theme_minimal()+
   theme(legend.position = "none")+
-  labs(title = "Cases by outcome")
+  labs(title = "Casos por desfecho clínico")
 
 
-# Define plot 2 without legend
+# Crie o gráfico 2 sem a legenda
 p2 <- linelist %>% 
   mutate(hospital = recode(hospital, "St. Mark's Maternity Hospital (SMMH)" = "St. Marks")) %>% 
   count(hospital, age_cat) %>% 
@@ -841,61 +841,61 @@ p2 <- linelist %>%
     axis.text.y = element_blank(),
     axis.title.y = element_blank()
   )+
-  labs(title = "Cases by age")
+  labs(title = "Casos por idade")
 
 
-# extract legend from p1 (from p1 + legend)
+# extraia a legenda do gráfico 1 (de gráfico1 + legenda)
 leg_p1 <- cowplot::get_legend(p1 +
-                                theme(legend.position = "right",        # extract vertical legend
-                                      legend.justification = c(0,0.5))+ # so legends  align
-                                labs(fill = "Outcome"))                 # title of legend
-# extract legend from p2 (from p2 + legend)
+                                theme(legend.position = "right",        # extraia a legenda vertical
+                                      legend.justification = c(0,0.5))+ # de forma que as legendas alinhem
+                                labs(fill = "Desfecho"))                 # título da legenda
+# extraia a legenda do gráfico 2 (de gráfico 2 + legend)
 leg_p2 <- cowplot::get_legend(p2 + 
-                                theme(legend.position = "right",         # extract vertical legend   
-                                      legend.justification = c(0,0.5))+  # so legends align
-                                labs(fill = "Age Category"))             # title of legend
+                                theme(legend.position = "right",         # extraia a legenda vertical
+                                      legend.justification = c(0,0.5))+  # de forma que as legendas alinhem
+                                labs(fill = "Categoria de idade"))             # título da legenda
 
-# create a blank plot for legend alignment
+# crie um gráfico em branco para alinhar a legenda
 #blank_p <- patchwork::plot_spacer() + theme_void()
 
-# create legends panel, can be one on top of the other (or use spacer commented above)
+# crie um painel de legendas, pode ser um sobre o outro (ou utilize o espaçados comentado acima)
 legends <- cowplot::plot_grid(leg_p1, leg_p2, nrow = 2, rel_heights = c(.3, .7))
 
-# combine two plots and the combined legends panel
+# combine os dois gráficos e o painel de legendas criado
 combined <- cowplot::plot_grid(p1, p2, legends, ncol = 3, rel_widths = c(.4, .4, .2))
 
-combined  # print
+combined  # visualize o gráfico
 
 
 ```
 
-This solution was learned from [this post](https://stackoverflow.com/questions/52060601/ggplot-multiple-legends-arrangement) with a minor fix to align legends from [this post](https://github.com/wilkelab/cowplot/issues/33).  
+Esta solução foi apresentada [neste post](https://stackoverflow.com/questions/52060601/ggplot-multiple-legends-arrangement) com pequenos ajustes para alinhar as legendas [deste post](https://github.com/wilkelab/cowplot/issues/33).  
 
 
-<span style="color: darkgreen;">**_TIP:_** Fun note - the "cow" in **cowplot** comes from the creator's name - Claus O. Wilke.</span>  
+<span style="color: darkgreen;">**_DICA:_** Nota interessante -  o "cow" no **cowplot** vem do nome do criador do pacote - Claus O. Wilke.</span>  
 
 
-### Inset plots {.unnumbered} 
+### Inserção de gráficos {.unnumbered} 
 
-You can inset one plot in another using **cowplot**. Here are things to be aware of:  
+Você pode inserir um gráfico em outros utilizando **cowplot**. Aqui estão pontos para estar ciente:
 
-* Define the main plot with `theme_half_open()` from **cowplot**; it may be best to have the legend either on top or bottom  
-* Define the inset plot. Best is to have a plot where you do not need a legend. You can remove plot theme elements with `element_blank()` as shown below.  
-* Combine them by applying `ggdraw()` to the main plot, then adding `draw_plot()` on the inset plot and specifying the coordinates (x and y of lower left corner), height and width as proportion of the whole main plot.  
+* Defina o gráfico principal com `theme_half_open()`, do **cowplot**; é recomendado colocar a legenda no topo ou na base do gráfico
+* Defina o gráfico a ser inserido. O melhor é usar um gráfico que não precise de legenda. Você pode remover os elementos de tema deste gráfico com `element_blank()`, como mostrado abaixo.
+* Os combine ao aplicar a função `ggdraw()` no gráfico principal, e então adicionando `draw_plot()` no gráfico a ser inserido, e especificando as coordenadas (x e y da extremidade baixa a esquerda), altura e comprimento proporcionais ao tamanho do gráfico principal.
 
 
 ```{r, out.width=c('100%'), fig.show='hold', warning=F, message=F}
 
-# Define main plot
+# Defina o gráfico principal
 main_plot <- ggplot(data = linelist)+
   geom_histogram(aes(x = date_onset, fill = hospital))+
   scale_fill_brewer(type = "qual", palette = 1, na.value = "grey")+ 
   theme_half_open()+
   theme(legend.position = "bottom")+
-  labs(title = "Epidemic curve and outcomes by hospital")
+  labs(title = "Curva epidêmica e desfechos clínicos por hospital")
 
 
-# Define inset plot
+# Crie o gráfico a ser inserido
 inset_plot <- linelist %>% 
   mutate(hospital = recode(hospital, "St. Mark's Maternity Hospital (SMMH)" = "St. Marks")) %>% 
   count(hospital, outcome) %>% 
@@ -906,10 +906,10 @@ inset_plot <- linelist %>%
     theme_minimal()+
     theme(legend.position = "none",
           axis.title.y = element_blank())+
-    labs(title = "Cases by outcome") 
+    labs(title = "Casos por desfecho") 
 
 
-# Combine main with inset
+# Combine o gráfico principal com o gráfico a ser inserido
 cowplot::ggdraw(main_plot)+
      draw_plot(inset_plot,
                x = .6, y = .55,    #x = .07, y = .65,
@@ -918,36 +918,36 @@ cowplot::ggdraw(main_plot)+
 ```
 
 
-This technique is explained more in these two vignettes:  
+Esta técnica é melhor explicada nestes dois resumos:
 
 [Wilke lab](https://wilkelab.org/cowplot/articles/drawing_with_on_plots.html)  
-[draw_plot() documentation](https://www.rdocumentation.org/packages/cowplot/versions/1.1.1/topics/draw_plot)
+[Documentação do draw_plot()](https://www.rdocumentation.org/packages/cowplot/versions/1.1.1/topics/draw_plot)
 
 
 
 
 <!-- ======================================================= -->
-## Dual axes {}
+## Eixos duplos {}
 
-A secondary y-axis is often a requested addition to a `ggplot2` graph. While there is a robust debate about the validity of such graphs in the data visualization community, and they are often not recommended, your manager may still want them. Below, we present one method to achieve them: using the **cowplot** package to combine two separate plots.  
+Um segundo eixo y é, frequentemente, solicitado em um gráfico `ggplot2`. Embora existam fortes debates sobre a validade destes gráficos na comunidade de visualização de dados, em que geralmente não são recomendados, o seu chefe pode requisitá-los. Abaixo, apresentamos um método para obtê-los: utilizando o pacote **cowplot** para combinar dois gráficos separados.
 
-This approach involves creating two separate plots - one with a y-axis on the left, and the other with y-axis on the right. Both will use a specific `theme_cowplot()` and must have the same x-axis. Then in a third command the two plots are aligned and overlaid on top of each other. The functionalities of **cowplot**, of which this is only one, are described in depth at this [site](https://wilkelab.org/cowplot/articles/aligning_plots.html).  
+Esta abordagem envolve criar dois gráficos distintos - um com um eixo y na esquerda, e outro com o eixo y na direita. Ambos utilizarão um específico `theme_cowplot()` e terão o mesmo eixo x. Então, em um terceiro comando, os dois gráficos serão alinhados e sobrepostos. As funcionalidades do **cowplot**, das quais esta é apenas uma delas, são descritas em detalhes neste [site](https://wilkelab.org/cowplot/articles/aligning_plots.html).  
 
-To demonstrate this technique we will overlay the epidemic curve with a line of the weekly percent of patients who died. We use this example because the alignment of dates on the x-axis is more complex than say, aligning a bar chart with another plot. Some things to note:  
+Para demonstrar esta técnica, iremos sobrepor uma curva epidêmica com uma linha de porcentagem semanal de pacientes que morreram. Nós usamos este exemplo pois o alinhamento de datas no eixo x é mais complexo do que, digamos, alinhar um gráfico de barras com outro gráfico. Algumas coisas a serem observadas:
 
-* The epicurve and the line are aggregated into weeks prior to plotting *and* the `date_breaks` and `date_labels` are identical - we do this so that the x-axes of the two plots are the same when they are overlaid.  
-* The y-axis is moved to the right-side for plot 2 with the `position = ` argument of `scale_y_continuous()`.  
-* Both plots make use of `theme_cowplot()`  
+* A epicurva e a linha são agregadas em semanas antes de criarmos os gráficos, *e* os `date_breaks` e `date_labels` são idênticos - nós fizemos isto de forma que os eixos x dos dois gráficos é o mesmo quando sobrepostos.
+* O eixo y é movido para o lado direito, no gráfico 2, com o argumento `position = ` de `scale_y_continuous()`.  
+* Ambos gráficos fazem uso do `theme_cowplot()`  
 
-Note there is another example of this technique in the [Epidemic curves] page - overlaying cumulative incidence on top of the epicurve.  
+Note que existe outro exemplo dessa técnica na página [Curvas epidêmicas] - a sobreposição da incidência acumulada acima da epicurva.
 
-**Make plot 1**  
-This is essentially the epicurve. We use `geom_area()` just to demonstrate its use (area under a line, by default)  
+**Crie o primeiro gráfico**  
+Este é, essencialmente, uma epicurva. Nós utilizamos `geom_area()` apenas para demonstrar o seu uso (área abaixo de uma linha, por padrão)
 
 ```{r, warning=F, message=F}
-pacman::p_load(cowplot)            # load/install cowplot
+pacman::p_load(cowplot)            # carregue/instale o cowplot
 
-p1 <- linelist %>%                 # save plot as object
+p1 <- linelist %>%                 # salve o gráfico como um objeto
      count(
        epiweek = lubridate::floor_date(date_onset, "week")) %>% 
      ggplot()+
@@ -957,18 +957,18 @@ p1 <- linelist %>%                 # save plot as object
                date_labels = "%b")+
      theme_cowplot()+
      labs(
-       y = "Weekly cases"
+       y = "Casos semanais"
      )
 
-p1                                      # view plot 
+p1                                      # veja o gráfico 
 ```
 
-**Make plot 2**  
-Create the second plot showing a line of the weekly percent of cases who died.  
+**Crie o segundo gráfico**  
+Crie o segundo gráfico mostrando uma linha com a porcentagem semanal de óbitos.
 
 ```{r, warning=F, message=F}
 
-p2 <- linelist %>%         # save plot as object
+p2 <- linelist %>%         # salve seu gráfico como um objeto
      group_by(
        epiweek = lubridate::floor_date(date_onset, "week")) %>% 
      summarise(
@@ -983,64 +983,64 @@ p2 <- linelist %>%         # save plot as object
                position = "right")+
           theme_cowplot()+
           labs(
-            x = "Epiweek of symptom onset",
-            y = "Weekly percent of deaths",
-            title = "Weekly case incidence and percent deaths"
+            x = "Semana epidemiológica de aparecimento dos sintomas",
+            y = "Percentual semanal de mortes",
+            title = "Incidência semanal de casos e percentual de mortes"
           )
 
-p2     # view plot
+p2     # veja o gráfico
 ```
 
-Now we align the plot using the function `align_plots()`, specifying horizontal and vertical alignment ("hv", could also be "h", "v", "none"). We specify alignment of all axes as well (top, bottom, left, and right) with "tblr". The output is of class list (2 elements).    
+Agora alinhamos o gráfico usando a função `align_plots()`, especificando os alinhamentos horizontal e vertical ("hv", poderia também ser "h", "v", "none"). Também especificamos o alinhamento de todos os eixos ("top", "bottom", "left", e "right") com "tblr". O resultado é da classe list (2 elementos).    
 
-Then we draw the two plots together using `ggdraw()` (from **cowplot**) and referencing the two parts of the `aligned_plots` object.  
+Então, desenhamos os dois gráficos juntos utilizando `ggdraw()` (do **cowplot**) e referenciando as outras duas partes do objeto `aligned_plots`.  
 
 ```{r, warning=F, message=F}
-aligned_plots <- cowplot::align_plots(p1, p2, align="hv", axis="tblr")         # align the two plots and save them as list
-aligned_plotted <- ggdraw(aligned_plots[[1]]) + draw_plot(aligned_plots[[2]])  # overlay them and save the visual plot
-aligned_plotted                                                                # print the overlayed plots
+aligned_plots <- cowplot::align_plots(p1, p2, align="hv", axis="tblr")         # alinhe os dois gráficos e os salve como uma lista
+aligned_plotted <- ggdraw(aligned_plots[[1]]) + draw_plot(aligned_plots[[2]])  # sobreponha os gráficos e salve o gráfico visualizado
+aligned_plotted                                                                # visualize os gráficos sobrepostos
 
 ```
 
 
 
-<!-- ### Statistical transformation {.unnumbered}   -->
-<!-- Another way to do this to have the second axis be a direct transformation of the secondary axis.  -->
+<!-- ### Transformação estatística {.unnumbered}   -->
+<!-- Outra forma de fazer isto é criar o segundo eixo como uma transformação do segundo eixo.  -->
 
-<!-- Differences in axis values will be purely cosmetic - if you want to show two different variables on one graph, with different y-axis scales for each variable, this will not work without some work behind the scenes. To obtain this effect, you will have to transform one of your variables in the data, and apply the same transformation *in reverse* when specifying the axis labels. Based on this, you can either specify the transformation explicitly (e.g. variable a is around 10x as large as variable b) or calculate it in the code (e.g. what is the ratio between the maximum values of each dataset). -->
+<!-- Diferenças nos valores dos eixos serão puramente estéticas - se você quiser mostrar duas variáveis diferentes em um gráfico, com diferentes escalas do eixo y para cada variável, não funcionará sem algum trabalho por trás. Para obtêr este efeito, você precisará transformar uma das suas variáveis nos dados, e então aplicar a mesma transformação *de forma reversa* ao especificar os rótulos dos eixos. Baseado nisto, você pode especificar a transformação de forma explícita (ex.: variável a é 10x maior do que a variável b, ou calcular ela no código (ex.: qual a proporção entre os valores máximos e mínimos de cada conjunto de dados). -->
 
 
-<!-- The syntax for adding a secondary axis is very straightforward! When calling a `scale_xxx_xxx()` function (e.g. `scale_y_continuous()`), use the `sec.axis` argument to call the `sec_axis()` function. The `trans` argument in this function allows you to specify the label transformation for the axis - provide this in standard tidyverse syntax.  -->
+<!-- A sintaxe para dicionar um segundo eixo é bem direta! Quando usar uma função `scale_xxx_xxx()` (ex.: `scale_y_continuous()`), use o argumento `sec.axis` para chamar a função `sec_axis()`. O argumento `trans` nesta função permite especificar a transformação do rótulo para o eixo - forneça este rótulo na sintaxe do tidyverse.  -->
 
-<!-- For example, if we want to show the number of positive RDTs in the malaria dataset for facility 1, showing 0-4 year olds and all cases on chart: -->
+<!-- Por exemplo, se quisermos mostrar o número de testes rápidos positivos para malária nos dados de malária, para a unidade 1, mostrando 0-4 anos de idade e todos os casos em um gráfico: -->
 
 
 <!-- ```{r, , warning=F, message=F} -->
 
-<!-- # take malaria data from facility 1 -->
+<!-- # pegue os dados de malária da unidade 1 -->
 <!-- malaria_facility_1 <- malaria_data %>% -->
 <!--   filter(location_name == "Facility 1") -->
 
-<!-- # calculate the ratio between malaria_rdt_0-4 and malaria_tot  -->
+<!-- # calcule a razão entre malaria_rdt_0-4 e malaria_tot  -->
 
 <!-- tf_ratio <- max(malaria_facility_1$malaria_tot, na.rm = T) / max(malaria_facility_1$`malaria_rdt_0-4`, na.rm = T) -->
 
-<!-- # transform the values in the dataset -->
+<!-- # transforme os valores nos dados -->
 
 <!-- malaria_facility_1 <- malaria_facility_1 %>% -->
 <!--   mutate(malaria_rdt_0_4_tf = `malaria_rdt_0-4` * tf_ratio) -->
 
 
-<!-- # plot the graph with dual axes -->
+<!-- # crie o gráfico com dois eixos -->
 
 <!-- ggplot(malaria_facility_1, aes(x = data_date)) + -->
 <!--   geom_line(aes(y = malaria_tot, col = "Total cases")) + -->
 <!--   geom_line(aes(y = malaria_rdt_0_4_tf, col = "Cases: 0-4 years old")) + -->
 <!--   scale_y_continuous( -->
 <!--     name = "Total cases", -->
-<!--     sec.axis = sec_axis(trans = ~ . / tf_ratio, name = "Cases: 0-4 years old") -->
+<!--     sec.axis = sec_axis(trans = ~ . / tf_ratio, name = "Casos: 0-4 anos de idade") -->
 <!--   ) + -->
-<!--   labs(x = "date of data collection") + -->
+<!--   labs(x = "data de obtenção dos dados") + -->
 <!--   theme_minimal() + -->
 <!--   theme(legend.title = element_blank()) -->
 
@@ -1061,44 +1061,44 @@ aligned_plotted                                                                #
 
 
 
-## Packages to help you  
+## Pacotes para te ajudar  
 
 
-There are some really neat R packages specifically designed to help you navigate **ggplot2**:  
+Existem ótimos pacotes do R desenhados especificamente para ajudar a navegar no **ggplot2**:  
 
 
-### Point-and-click **ggplot2** with **equisse**  {.unnumbered}
+### Aponte-e-clique no **ggplot2** com **equisse**  {.unnumbered}
 
-"This addin allows you to interactively explore your data by visualizing it with the ggplot2 package. It allows you to draw bar plots, curves, scatter plots, histograms, boxplot and sf objects, then export the graph or retrieve the code to reproduce the graph."
+"Este complemento permite que você explore seus dados de forma interativa, ao visualiza-los com o pacote ggplot2. Ele permite desenhar gráficos de barras, curvas, gráficos de dispersão, hsitogramas, boxplots e objetos sf, e, então, exportar o gráfico e gerar o código de geração do gráfico."
 
-Install and then launch the addin via the RStudio menu or with `esquisse::esquisser()`.
+Instale e então o execute o pacote através do menu do RStudio ou com `esquisse::esquisser()`.
 
-See the [Github page](https://github.com/dreamRs/esquisse)
+Veja a página do [Github](https://github.com/dreamRs/esquisse)
 
-[Documentation](https://dreamrs.github.io/esquisse/index.html)
-
-
-
+[Documentação](https://dreamrs.github.io/esquisse/index.html)
 
 
 
 
 
 
-## Miscellaneous  
 
 
-### Numeric display {.unnumbered}  
 
-You can disable scientific notation by running this command prior to plotting.  
+## Dicas diversas
+
+
+### Exibição dos números {.unnumbered}  
+
+Você pode desabilitar a notação científica ao executar este comando antes de criar o gráfico.
 
 ```{r, eval=F}
 options(scipen=999)
 ```
 
-Or apply `number_format()` from the **scales** package to a specific value or column, as shown below.  
+Ou aplicar `number_format()`, do pacote **scales**, para um valor ou coluna específica, como mostrado abaixo.
 
-Use functions from the package **scales** to easily adjust how numbers are displayed. These can be applied to columns in your data frame, but are shown on individual numbers for purpose of example.  
+Use funções do pacote **scales** para facilmente ajustar como os números são mostrados. Isto pode ser aplicado para colunas em seus dados, mas aqui são mostrados em números individuais para fins de exemplo.
 
 ```{r}
 scales::number(6.2e5)
@@ -1110,37 +1110,37 @@ scales::dollar(56)
 scales::scientific(100000)
 ```
 
-## Resources
+## Recursos extras
 
-Inspiration
-[ggplot graph gallery](https://www.tidyverse.org/blog/2018/07/ggplot2-3-0-0/)
+Para inspiração, 
+[galeria de gráficos do ggplot](https://www.tidyverse.org/blog/2018/07/ggplot2-3-0-0/)
 
-Presentation of data
-European Centre for Disease Prevention and Control [Guidelines of presentation of surveillance data](https://ecdc.europa.eu/sites/portal/files/documents/Guidelines%20for%20presentation%20of%20surveillance%20data-final-with-cover-for-we....pdf) 
+Recomendação de formas de apresentação de dados
+Centro Europeu de Prevenção e Controle de Doenças [Recomendações para apresentação de dados de vigilância](https://ecdc.europa.eu/sites/portal/files/documents/Guidelines%20for%20presentation%20of%20surveillance%20data-final-with-cover-for-we....pdf) 
 
 
-Facets and labellers
-[Using labellers for facet strips](http://www.cookbook-r.com/Graphs/Facets_(ggplot2)/#modifying-facet-label-text)
-[Labellers](https://ggplot2.tidyverse.org/reference/labellers.html)
+Facetas e rotuladores
+[Utilizando rotuladores para feixes de facetas](http://www.cookbook-r.com/Graphs/Facets_(ggplot2)/#modifying-facet-label-text)
+[Rotuladores](https://ggplot2.tidyverse.org/reference/labellers.html)
 
-Adjusting order with factors
+Ajustando a ordem com factors
 [fct_reorder](https://forcats.tidyverse.org/reference/fct_reorder.html)  
 [fct_inorder](https://forcats.tidyverse.org/reference/fct_inorder.html)  
-[How to reorder a boxplot](https://cmdlinetips.com/2019/02/how-to-reorder-a-boxplot-in-r/)  
-[Reorder a variable in ggplot2](https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2.html)  
-[R for Data Science - Factors](https://r4ds.had.co.nz/factors.html)  
+[Como reordenar um  boxplot](https://cmdlinetips.com/2019/02/how-to-reorder-a-boxplot-in-r/)  
+[Reordene uma variável no ggplot2](https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2.html)  
+[R para Ciência dos Dados - Factors](https://r4ds.had.co.nz/factors.html)  
 
-Legends  
-[Adjust legend order](https://stackoverflow.com/questions/38425908/reverse-stacking-order-without-affecting-legend-order-in-ggplot2-bar-charts)  
+Legendas  
+[Ajuste a ordem da legenda](https://stackoverflow.com/questions/38425908/reverse-stacking-order-without-affecting-legend-order-in-ggplot2-bar-charts)  
 
-Captions
-[Caption alignment](https://stackoverflow.com/questions/64701500/left-align-ggplot-caption)  
+Títulos
+[Alinhamento do título](https://stackoverflow.com/questions/64701500/left-align-ggplot-caption)  
 
-Labels  
+Rótulos  
 [ggrepel](https://ggrepel.slowkow.com/articles/examples.html)  
 
-Cheatsheets  
-[Beautiful plotting with ggplot2](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)  
+Colinhas
+[Lindos gráficos com  ggplot2](http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/)  
 
 
 
