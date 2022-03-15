@@ -4,7 +4,7 @@ editor_options:
     wrap: 72
 ---
 
-# Analises de sobrevivência
+# Analises de pesquisa
 
 <!-- ======================================================= -->
 
