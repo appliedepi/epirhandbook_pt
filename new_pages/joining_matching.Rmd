@@ -43,7 +43,7 @@ pacman::p_load(
 Para iniciar, importaremos a versão limpa da linelist de casos de uma epidemia simulada de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (com um arquivo .rds). Importe os dados com a função `import()` do pacote **rio** (ela manipula vários tipos de arquivo, tais como .xlsx, .csv, .rds - veja na página [Importando and exportando] para detalhes).  
 
 ```{r, echo=F}
-# importal a linelist para o R
+# importa a linelist para o R
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 ```
 
@@ -688,15 +688,15 @@ results_not_matched <- results[!rownames(results) %in% my_matches$inds.b, ] # Li
 ```
 
 
-### Deduplicação probabilística {.unnumbered}  
+### Remoção de duplicidades probabilística {.unnumbered}  
 
-A combinação probabilística também pode ser utilizada para deduplicar uma base de dados. Veja a página de deduplicação para outros métodos de deduplicação.  
+A combinação probabilística também pode ser utilizada para remover duplicidades uma base de dados. Veja a página de remoção de duplicidades para outros métodos de deduplicação.  
 
-Aqui, vamos começar com a base `cases`, mas a partir daqui chamaremos ela de `cases_dup`, pois ela tem 2 linhas adicionais que podem ser duplicatas de linhas anteriores:
+Aqui, vamos começar com a base `cases`, mas a partir daqui chamaremos ela de `cases_dup`, pois ela tem 2 linhas adicionais que podem ser duplicidades de linhas anteriores:
 Veja "Tony" com "Anthony", e "Marialisa Rodrigues" com "Maria Rodriguez".  
 
 ```{r, echo=F}
-## Adiciona duplicatas
+## Adiciona duplicidades
 # cases_dup <- rbind(cases, cases[sample(1:nrow(cases), 3, replace = FALSE),])
 
 cases_dup <- tribble(
@@ -720,7 +720,7 @@ DT::datatable(cases_dup, rownames = FALSE, options = list(pageLength = nrow(case
 ```
 
 
-Execute `fastLink()` como anteriormente, mas compare o dataframe `cases_dup` com ele mesmo. Quando os dois dataframes passados para a função são idênticos, ela assume que você quer fazer a deduplicação. Note que nós não especificamos `stringdist.match = ` ou `numeric.match = ` como havíamos feito anteriormente.  
+Execute `fastLink()` como anteriormente, mas compare o dataframe `cases_dup` com ele mesmo. Quando os dois dataframes passados para a função são idênticos, ela assume que você quer fazer a remoção de duplicidades. Note que nós não especificamos `stringdist.match = ` ou `numeric.match = ` como havíamos feito anteriormente.  
 
 ```{r, message = F, warning = F}
 ## Execute fastLink na mesma base de dados
@@ -731,7 +731,7 @@ dedupe_output <- fastLink(
 )
 ```
 
-Agora, você pode revisar as duplicatas em potencial com `getMatches()`. Passe o dataframe tanto como `dfA = ` como `dfB = `, e passa a saída da função `fastLink()` como `fl.out = `.  `fl.out` deve ser da classe `fastLink.dedupe`, ou em outras palavras, o resultado de `fastLink()`.  
+Agora, você pode revisar as duplicidades em potencial com `getMatches()`. Passe o dataframe tanto como `dfA = ` como `dfB = `, e passa a saída da função `fastLink()` como `fl.out = `.  `fl.out` deve ser da classe `fastLink.dedupe`, ou em outras palavras, o resultado de `fastLink()`.  
 
 
 ```{r}
@@ -749,7 +749,7 @@ Veja a coluna da extrema direita, que indica os IDs das duplicatas - as duas úl
 DT::datatable(cases_dedupe, rownames = FALSE, options = list(pageLength = nrow(cases_dedupe)))
 ```
 
-Para retornar o número de linhas que são potenciais duplicatas, você pode contar o número de linhas por valores únicos na coluna `dedupe.ids`, e aí filtrar para manter apenas aquelas com mais de uma linha. Nesse caso, isso deixaria as linhas 2 e 3.  
+Para retornar o número de linhas que são potenciais duplicidades, você pode contar o número de linhas por valores únicos na coluna `dedupe.ids`, e aí filtrar para manter apenas aquelas com mais de uma linha. Nesse caso, isso deixaria as linhas 2 e 3.  
 
 ```{r}
 cases_dedupe %>%
@@ -757,10 +757,10 @@ cases_dedupe %>%
   filter(n > 1)
 ```
 
-Para investigar a totalidade das linhas que poderiam ser duplicatas, coloque o número da linha nesse comando:  
+Para investigar a totalidade das linhas que poderiam ser duplicidades, coloque o número da linha nesse comando:  
 
 ```{r}
-# mostra a linha 2 e todas as possíveis duplicatas dela
+# mostra a linha 2 e todas as possíveis duplicidades dela
 cases_dedupe[cases_dedupe$dedupe.ids == 2, ]
 ```
 
