@@ -87,7 +87,7 @@ pacman::p_load(
 ### Importe os dados {.unnumbered}  
 
 
-Para iniciar, importaremos a linelist dos casos de uma epidemia simulada do Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (como um arquivo .rds). Importe os dados com a função `import()` do pacote **rio**  (a função suporta váris tipos de arquivo como .xlsx, .csv, .rds - cheque a página [Importar e exportar] para mais detalhes).  
+Para iniciar, importaremos a linelist dos casos de uma epidemia simulada do Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (como um arquivo .rds). Importe os dados com a função `import()` do pacote **rio**  (a função suporta vários tipos de arquivo como .xlsx, .csv, .rds - cheque a página [Importar e exportar] para mais detalhes).  
 
 
 
@@ -102,7 +102,7 @@ linelist_sym <- import("linelist_cleaned.rds")
 ```
 
 
-Essa linelist inclui cinco variáveis do tipo "sim/não" ("yes/no") a respeito dos sintomas relatados. Nós vamos precisar transformar essas variáveis um puco para poder utilizar o pacote **ggupset** para fazer nosso gráfico. Confira os dados (role para a direita para ver as variáveis dos sintomas).
+Essa linelist inclui cinco variáveis do tipo "sim/não" ("yes/no") a respeito dos sintomas relatados. Nós vamos precisar transformar essas variáveis um pouco para poder utilizar o pacote **ggupset** para fazer nosso gráfico. Confira os dados (role para a direita para ver as variáveis dos sintomas).
 
 ```{r, message=FALSE, echo=F}
 # display the linelist data as a table
