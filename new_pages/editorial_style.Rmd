@@ -5,23 +5,23 @@ Nesta página descrevemos a abordagem filosófica, o estilo e as decisões edito
 
 ## Abordagem e estilo
 
-O público em potencial para este livro é grande. Ele será certamente utilizado por pessoas muito novas no R, e também por utilizadores experientes do R que procuram as melhores práticas e dicas. Portanto, deve ser ao mesmo tempo acessível e sucinto. Por conseguinte, a nossa abordagem foi fornecer explicar o de *suficiente* no texto para que alguém muito novo no R possa aplicar o código e seguir o que o código está a fazer.  
+O público em potencial para este livro é grande. Ele será certamente utilizado por pessoas muito novas no R, e também por usuários experientes do R que procuram as melhores práticas e dicas. Portanto, deve ser ao mesmo tempo acessível e sucinto. Portanto, a nossa abordagem foi fornecer o *suficiente* no texto para que alguém muito novo no R possa aplicar o código e seguir o que o código está fazendo.  
 
 
 Alguns outros pontos:  
 
 * Este é um livro de referência de códigos, acompanhado de exemplos relativamente breves - *não* um livro de texto completo sobre R ou sobre ciência de dados  
 * Este é um *manual  de R* para utilização no âmbito da epidemiologia aplicada - não um manual sobre os métodos ou a ciência da epidemiologia aplicada  
-* Este destina-se a ser um documento vivo - o pacotes R que são ideais para uma determinada tarefa tendem a mudar frequentemente, e acolhemos de bom grado a discussão sobre qual deles deveríamos enfatizar neste manual
+* Este destina-se a ser um documento "vivo" - os pacotes R que são ideais para uma determinada tarefa tendem a mudar frequentemente, e estamos abertos a discussão sobre qual pacote deveríamos enfatizar neste manual
 
 
-### Pacotes R {.unnumbered}
+### Pacotes do R {.unnumbered}
 
 **São tantas escolhas***  
 
-Um dos aspectos mais desafiadores da aprendizagem de R é saber qual o pacote R utilizar para uma dada tarefa. É uma ocorrência comum esforçar-se demasiadamente em uma tarefa e só mais tarde perceber - ei, há um pacote R que faz tudo isso numa única linha de comando!  
+Um dos aspectos mais desafiadores da aprendizagem de R é saber qual o pacote R utilizar para uma dada tarefa. É uma ocorrência comum esforçar-se demais em uma tarefa e só mais tarde perceber - ei, há um pacote R que faz tudo isso numa única linha de código!  
 
-Neste manual, tentamos oferecer-lhe pelo menos duas formas de completar cada tarefa: um método experimentado e validado (provavelmente em R **base*** ou **tidyverse**) e um pacote especial R que tenha sido construído para esse fim. Queremos que tenham algumas opções caso não consigam fazer o *donwload* de um determinado pacote ou que este não funcione.  
+Neste manual, tentamos oferecer-lhe pelo menos duas formas de completar cada tarefa: um método experimentado e validado (provavelmente em R **base*** ou **tidyverse**) e um pacote especial R que tenha sido construído para esse fim. Queremos que tenham algumas opções caso não consigam fazer o *download* de um determinado pacote ou que este não funcione.  
 
 Ao escolher os pacotes a utilizar, nós demos prioridade aos pacotes R e às abordagens que foram testados e aprovados pela comunidade. Também minimizamos o número de pacotes utilizados numa sessão de trabalho típica, e escolhemos aqueles que são estáveis (não mudam com muita frequência), e que cumprem a tarefa de forma simples e limpa  
 
@@ -34,7 +34,7 @@ Quando aplicável, também oferecemos opções de código usando o R **base** - 
 
 Geralmente é frustrante quando, nos tutoriais de R, uma função é mostrada em código, mas não se sabe de que pacote ela é! Tentamos evitar esta situação.  
 
-No texto narrativo, os nomes dos pacotes são escritos a negrito (por exemplo **dplyr***) e as funções são escritas desta forma: `mutate()`. Esforçamo-nos por ser explícitos sobre de que pacote vem uma função, quer referenciando o pacote em texto próximo ou especificando o pacote explicitamente no código como este: `dplyr::mutate()`. Pode parecer redundante, mas estamos fazendo isso de propósito.
+No texto narrativo, os nomes dos pacotes são escritos a negrito (por exemplo **dplyr***) e as funções são escritas desta forma: `mutate()`. Esforçamo-nos por ser explícitos sobre de que pacote vem uma função, seja referenciando o pacote em texto próximo ou especificando o pacote explicitamente no código: `dplyr::mutate()`. Pode parecer redundante, mas estamos fazendo isso de propósito.
 
 Veja a página em [R fundamentos] para saber mais sobre pacotes e funções.   
 
