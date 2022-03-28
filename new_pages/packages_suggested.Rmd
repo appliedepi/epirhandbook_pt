@@ -1,163 +1,162 @@
-# Suggested packages
+# acotes sugeridos
 
-Below is a long list of suggested packages for common epidemiological work in R. You can copy this code, run it, and all of these packages will install from CRAN and load for use in the current R session. If a package is already installed, it will be loaded for use only.  
+Abaixo está uma longa lista de pacotes sugeridos para trabalho epidemiológico comum em R. Você pode copiar este código, executá-lo, e todos estes pacotes serão instalados a partir de CRAN e carregados para uso na sessão R atual. Se um pacote já estiver instalado, ele será carregado apenas para uso.  
 
-You can modify the code with `#` symbols to exclude any packages you do not want.  
+Você pode modificar o código com símbolos `#` para excluir qualquer pacote que não queira.  
 
-Of note:  
+Nota:  
 
-* Install the **pacman** package first before running the below code. You can do this with `install.packages("pacman")`. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary *and* loads it for use in the current R session. You can also load packages that are already installed with `library()` from **base** R.  
-* In the code below, packages that are included when installing/loading another package are indicated by an indent and hash. For example how **ggplot2** is listed under **tidyverse**.  
-* If multiple packages have functions with the same name, *masking* can occur when the function from the more recently-loaded package takes precedent. Read more in the [R basics] page. Consider using the package **conflicted** to manage such conflicts.  
-* See the [R basics] section on packages for more information on **pacman** and masking.  
+* Instale primeiro o pacote **pacman** antes de executar o código abaixo. Você pode fazer isto com `install.packages("pacman")`. Neste manual, enfatizamos `p_load()` de **pacman**, que instala o pacote se necessário *e* o carrega para utilização na sessão R atual. Você também pode carregar pacotes que já estão instalados com `library()` a partir do R **base**.  
+* No código abaixo, os pacotes que são incluídos ao instalar/carregar outro pacote são indicados por um travessão e hash. Por exemplo, como **ggplot2** está listado em **tidyverse**.  
+* Se vários pacotes têm funções com o mesmo nome, *masking* pode ocorrer quando a função do pacote mais recentemente carregado tem precedência. Leia mais na página [R- o básico]. Considere o uso do pacote **conflicted** para gerenciar tais conflitos.  
+* Consulte a seção [R- o básico] sobre pacotes para mais informações sobre **pacman** e mascaramento.  
 
-To see the versions of R, RStudio, and R packages used during the production of this handbook, see the page on [Editorial and technical notes].  
+Para ver as versões dos pacotes R, RStudio e R utilizados durante a produção deste manual, veja a página em [Notas editoriais e técnicas].  
 
-## Packages from CRAN  
+## Pacotes do CRAN 
 
 ```{r, eval=F}
 
 ##########################################
-# List of useful epidemiology R packages #
+# Lista de pscotes úteis para uso em epidemiologia#
 ##########################################
 
-# This script uses the p_load() function from pacman R package, 
-# which installs if package is absent, and loads for use if already installed
+# Este script usa a função p_load() do pacote R pacman , 
+# que  instala se o pacote estiver ausente, e os carrega para uso, se já estiverem instalados
 
 
-# Ensures the package "pacman" is installed
+# Garante que o pacman eestá instalado
 if (!require("pacman")) install.packages("pacman")
 
 
-# Packages available from CRAN
+# Pacotes disponíveis no CRAN
 ##############################
 pacman::p_load(
      
-     # learning R
+     # aprendendo R
      ############
-     learnr,   # interactive tutorials in RStudio Tutorial pane
-     swirl,    # interactive tutorials in R console
+     learnr,   # tutoriais interetivos no RStudio 
+     swirl,    # tutoriais interetivos no console
         
-     # project and file management
+     # manuseio de projetos e arquivos 
      #############################
-     here,     # file paths relative to R project root folder
-     rio,      # import/export of many types of data
-     openxlsx, # import/export of multi-sheet Excel workbooks 
+     here,     # caminhos relativos de arquivos para a pasta raiz do projeto 
+     rio,      # importar/exportar muitos formatos de arquivos
+     openxlsx, # importar/exportar planilhas de Excel com várias abas 
      
-     # package install and management
+     # manipulação e instalação de pacotes
      ################################
-     pacman,   # package install/load
-     renv,     # managing versions of packages when working in collaborative groups
-     remotes,  # install from github
+     pacman,   # instalação e carregamento de pacotes
+     renv,     # manipulando versões de pacotes quando trabalhando em grupos 
+     remotes,  # instalar pacotes do github 
      
-     # General data management
+     # Manipulação geral de dados
      #########################
-     tidyverse,    # includes many packages for tidy data wrangling and presentation
-          #dplyr,      # data management
-          #tidyr,      # data management
-          #ggplot2,    # data visualization
-          #stringr,    # work with strings and characters
-          #forcats,    # work with factors 
-          #lubridate,  # work with dates
-          #purrr       # iteration and working with lists
-     linelist,     # cleaning linelists
-     naniar,       # assessing missing data
+     tidyverse,    # inlcui vários pacotes para arrumação,  manipulação e apresentação de dados. 
+          #dplyr,      # manipulação de dados
+          #tidyr,      # manipulação de dados
+          #ggplot2,    # visualização de dados
+          #stringr,    # trabalhar com strings e caracteres
+          #forcats,    # trabalhar com fatores
+          #lubridate,  # trabalhar com datas
+          #purrr       # iteração e trabalhando com listas
+     linelist,     # limbando linelists
+     naniar,       # assessando valores ausentes
      
-     # statistics  
+     # estatísticas
      ############
-     janitor,      # tables and data cleaning
-     gtsummary,    # making descriptive and statistical tables
-     rstatix,      # quickly run statistical tests and summaries
-     broom,        # tidy up results from regressions
-     lmtest,       # likelihood-ratio tests
+     janitor,      # tabelas e limpeza de dados
+     gtsummary,    # fazendo tabelas estatísticas e descritivas
+     rstatix,      #  fazer estatíticas e resumos rápidos 
+     broom,        # arrumar resultados de regressões 
+     lmtest,       # testes de razão de likelihood
      easystats,
-          # parameters, # alternative to tidy up results from regressions
-          # see,        # alternative to visualise forest plots 
+          # parametros, # alternativa a limpar os resultados de regressoes. 
+          # see,        # alternativa para vizualizar gráfico de floresta. 
      
-     # epidemic modeling
+     # modelagem de epidemmias
      ###################
-     epicontacts,  # Analysing transmission networks
-     EpiNow2,      # Rt estimation
-     EpiEstim,     # Rt estimation
-     projections,  # Incidence projections
-     incidence2,   # Make epicurves and handle incidence data
-     i2extras,     # Extra functions for the incidence2 package
-     epitrix,      # Useful epi functions
-     distcrete,    # Discrete delay distributions
+     epicontacts,  # Analisando rede de transmissão t
+     EpiNow2,      # Estimando Rt 
+     EpiEstim,     # Estimando Rt 
+     projections,  # Projeção de incidencia
+     incidence2,   # Fazer epicurvas e manipular dados de incidencia. 
+     i2extras,     # Funções extra para pacote incidence2 
+     epitrix,      # Funções epi úteis
+     distcrete,    # Distribuições discretas com delay 
      
      
-     # plots - general
+     # Gráficos - geral
      #################
-     #ggplot2,         # included in tidyverse
-     cowplot,          # combining plots  
-     # patchwork,      # combining plots (alternative)     
-     RColorBrewer,     # color scales
-     ggnewscale,       # to add additional layers of color schemes
+     #ggplot2,         # incluso no tidyverse
+     cowplot,          # combinando gráficos
+     # patchwork,      #combinando gráficos (alternativa)     
+     RColorBrewer,     # escala de cores
+     ggnewscale,       # adicionar novos esquemas de cores
 
      
-     # plots - specific types
+     # Gráficos - tipoes específicos
      ########################
-     DiagrammeR,       # diagrams using DOT language
-     incidence2,       # epidemic curves
-     gghighlight,      # highlight a subset
-     ggrepel,          # smart labels
-     plotly,           # interactive graphics
-     gganimate,        # animated graphics 
+     DiagrammeR,       # diagramas utilizando linguagem DOT
+     incidence2,       # curvas epidêmicas
+     gghighlight,      # highlight um subset
+     ggrepel,          # rótulos inteligentes
+     plotly,           # gráficos interativos
+     gganimate,        # gráficos animados
 
      
      # gis
      ######
-     sf,               # to manage spatial data using a Simple Feature format
-     tmap,             # to produce simple maps, works for both interactive and static maps
-     OpenStreetMap,    # to add OSM basemap in ggplot map
-     spdep,            # spatial statistics 
+     sf,               # manusear dados espaciais usado o formato Simple Feature 
+     tmap,             # produzir mapas simples, funciona tanto com mapas estáticos ou interativos
+     OpenStreetMap,    # adicionar base OSM num mapa ggplot
+     spdep,            # estatística espacial
      
-     # routine reports
+     # relatórios de rotina
      #################
-     rmarkdown,        # produce PDFs, Word Documents, Powerpoints, and HTML files
-     reportfactory,    # auto-organization of R Markdown outputs
-     officer,          # powerpoints
+     rmarkdown,        #produz arquivos em  PDFs, Word, Powerpoint e HTML 
+     reportfactory,    # auto-organização de outputs de R Markdown
+     officer,          # powerpoint
      
      # dashboards
      ############
-     flexdashboard,    # convert an R Markdown script into a dashboard
-     shiny,            # interactive web apps
+     flexdashboard,    # converte um script R Markdown em um dashboard
+     shiny,            # web apps interativo
      
-     # tables for presentation
+     # tabelas para apresentação
      #########################
-     knitr,            # R Markdown report generation and html tables
-     flextable,        # HTML tables
-     #DT,              # HTML tables (alternative)
-     #gt,              # HTML tables (alternative)
-     #huxtable,        # HTML tables (alternative) 
+     knitr,            # Geração de relatório R Markdown e tabelas html 
+     flextable,        # Tabelas HTML 
+     #DT,              # Tabelas HTML  (alternativa)
+     #gt,              # Tabelas HTML  (alternativa)
+     #huxtable,        # Tabelas HTML  (alternativa)
      
      # phylogenetics
      ###############
-     ggtree,           # visualization and annotation of trees
-     ape,              # analysis of phylogenetics and evolution
-     treeio            # to visualize phylogenetic files
+     ggtree,           # visualização e de árvores filogenéticas 
+     ape,              # análise e de filogenenia e evolução
+     treeio            # visualizar arquivos de filogenia
  
 )
 
 ```
 
-## Packages from Github  
+## Pacotes do Github  
 
+Abaixo estão os comandos para instalar dois pacotes diretamente dos repositórios Github.  
 
-Below are commmands to install two packages directly from Github repositories.  
-
-* The development version of **epicontacts** contains the ability to make transmission trees with an temporal x-axis  
-* The **epirhandbook** package contains all the example data for this handbook and can be used to download the offline version of the handbook.  
+A versão de desenvolvimento de **epicontacts** contém a capacidade de fazer árvores de transmissão com um eixo x temporal  
+O pacote **epirhandbook** contém todos os dados de exemplo para este manual e pode ser usado para baixar a versão offline do manual.  
 
 
 ```{r, eval=F}
-# Packages to download from Github (not available on CRAN)
+# Pacotes para baixar do github (não estão disponíveis no CRAN)
 ##########################################################
 
-# Development version of epicontacts (for transmission chains with a time x-axis)
+# Versão de desenvolvimento de epicontacts (para cadeias de transmissão com tempo no  eixo x)
 pacman::p_install_gh("reconhub/epicontacts@timeline")
 
-# The package for this handbook, which includes all the example data  
+# O pacote para este manual, que inclui todos os dados usados nos exemplos 
 pacman::p_install_gh("appliedepi/epirhandbook")
 
 
