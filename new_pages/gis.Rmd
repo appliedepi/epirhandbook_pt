@@ -171,7 +171,7 @@ linelist <- linelist[sample_rows,]
 
 Queremos converter essa `linelist`, que possui a classe dataframe, para um objeto da classe "sf" (spatial features). Dado que a linelist possui duas colunas "lon" e "lat" representando a longitude e latitude da casa de cada caso, isso será fácil.  
 
-Utilizamos o pacote **sf** (spatial features) e sua função `st_as_sf()` para criar um novo objeto que chamaremos de `linelist_sf`. Esse novo objeto parece essencialmente a mesma coisa que a linelist, mas as colunas `lon` e `lat` foram designadas como colunas de coordenadas, e um sistema de referência de coordenadas (CRS) foi atribuído para quando os pontos forem mostrados. O número 4326 identifica nossas coordenadas de acordo com o [World Geodetic System 1984 (WGS84)](https://gisgeography.com/wgs84-world-geodetic-system/) - que é o padrão para coordenadas de GPS.  
+Utilizamos o pacote **sf** (spatial features) e sua função `st_as_sf()` para criar um novo objeto que chamaremos de `linelist_sf`. Esse novo objeto parece essencialmente a mesma coisa que a linelist, mas as colunas `lon` e `lat` foram designadas como colunas de coordenadas, e um sistema de referência de coordenadas (SRC) foi atribuído para quando os pontos forem mostrados. O número 4326 identifica nossas coordenadas de acordo com o [World Geodetic System 1984 (WGS84)](https://gisgeography.com/wgs84-world-geodetic-system/) - que é o padrão para coordenadas de GPS.  
 
 ```{r}
 # Cria um objeto do tipo sf
