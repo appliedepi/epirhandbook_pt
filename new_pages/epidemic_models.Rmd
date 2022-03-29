@@ -133,7 +133,7 @@ pacman::p_load(
    projections,  # Projeções da incidência
    incidence2,   # Trabalhando com dados de incidência
    epitrix,      # Funções uteis de epi
-   distcrete     # Distribuições discretas dos atrasos (discrete delay distributions)
+   distcrete     # Distribuições discretas .;
 )
 ```
 	
@@ -190,8 +190,8 @@ Entretanto, ele também possuí duas desvantagens chave:
 * **EpiNow2** é significamente mais devagar do que **EpiEstim**, por fatores entre
   100-1000 mais lento! Por exemplo, estimar o R<sub>t</sub> para a amostra do surto
   trabalhada nesta seção levou por volta de quatro horas (esta estimativa rodou por um elevado
-  número de iterações para garantir elevada acurácia, e provavelmente poderia ser resudiza caso
-  necessário. Entretanto, o ponto é que este algorítmo é mais devagar,
+  número de iterações para garantir elevada acurácia, e provavelmente poderia ser reduzida caso
+  necessário. Entretanto, o ponto é que este algoritmo é mais devagar,
   no geral). Logo, este pacote pode ser inviável caso você esteja atualizando regularmente suas estimativas
   do R<sub>t</sub>.
   
@@ -203,7 +203,7 @@ recursos computacionais disponíveis.
 #### Estimando a distribuição dos intervalos {.unnumbered}
 
 As distribuições dos intervalos necessárias para utilizar o **EpiNow2** variam de acordo com os
-seus dados. Essencialmente, você precisar ser capaz de descrever o intervalo ebtre a data
+seus dados. Essencialmente, você precisar ser capaz de descrever o intervalo entre a data
 de infecção e a data do evento que você quer utilizar para estimar o R<sub>t</sub>. Caso
 você esteha utilizando as datas de início dos sintomas, isto seria simplesmente a distribuição do período de
 incubação. Se você estiver utilizando as datas de notificação, você utiliza o
@@ -398,7 +398,7 @@ df_wide <- estimates %>%
     variable = replace(variable, variable == "growth_rate", "doubling_time")
   )
 
-## crie um df longo para criar gráfico de quantils
+## crie um data frame longo para criar gráfico de quantis
 df_long <- df_wide %>%
   ## aqui nós combinamos quantis correspondentes (ex.: lower_90 para upper_90)
   pivot_longer(
@@ -658,10 +658,10 @@ df_wide <- epiestim_res_lit$R %>%
     names_to = c(".value", "variable"),
     names_pattern = "(.+)_(.+)"
   ) %>%
-  ## atribua os níveis de factor
+  ## atribua os níveis do fator
   mutate(variable = factor(variable, c("risk", "r")))
 
-## crie um quadro de dados longo a partir dos quantis
+## crie um data frame longo a partir dos quantis
 df_long <- df_wide %>%
   select(-variable, -median) %>%
   ## separe o r/estimativas de risco e níveis de quantis
@@ -715,7 +715,7 @@ ggplot() +
 ```
 
 <!-- ======================================================= -->
-## Projetando a incidência {  }
+## Projeções da incidência {  }
 
 ### EpiNow2 {.unnumbered}
 
@@ -817,7 +817,7 @@ gamma, iremos utilizar a função `gamma_mucv2shapescale` do pacote
 ## variação (ex.: a razão do desvio padrão para a média)
 shapescale <- epitrix::gamma_mucv2shapescale(mu = 12.0, cv = 5.2/12)
 
-## crie um objeto distcrete
+## crie um objeto do tipo *distcrete*
 serial_interval_lit <- distcrete::distcrete(
   name = "gamma",
   interval = 1,
@@ -880,7 +880,7 @@ serial_interval <- fit_disc_gamma(get_pairwise(epic, "date_onset"))
 serial_interval[c("mu", "sd")]
 ```
 
-#### Projetando a incidência {.unnumbered}
+#### Projeções da incidência {.unnumbered}
 
 Para prever a incidência futura, nós ainda precisamos fornecer a incidência histórica na
 forma de um objeto `incidence`, assim como uma amostra de valores plausíveis de
