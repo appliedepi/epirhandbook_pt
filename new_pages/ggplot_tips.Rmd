@@ -3,7 +3,7 @@
 
 Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot].
 
-Existem diferentes e completos [tutoriais sobre o **ggplot2**](https://ggplot2.tidyverse.org/), mostrados na seção de Recursos. Você também pode baixar essa [colinha sobre visualização de dados com o ggplot](https://rstudio.com/resources/cheatsheets/) do site do RStudio. Nós recomendamos fortemente que você busque inspiração de gráficos [na galeria de gráficos do R](https://www.r-graph-gallery.com/) e no [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
+Existem diversos [tutoriais sobre o **ggplot2**](https://ggplot2.tidyverse.org/) disponíveis na seção de Recursos. Você também pode baixar essa [colinha sobre visualização de dados com o ggplot](https://rstudio.com/resources/cheatsheets/) do site do RStudio. Nós recomendamos fortemente que você busque inspiração de gráficos [na galeria de gráficos do R](https://www.r-graph-gallery.com/) e no [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
 
 
 
