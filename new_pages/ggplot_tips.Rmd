@@ -3,7 +3,7 @@
 
 Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot].
 
-Existem diversos [tutoriais sobre o **ggplot2**](https://ggplot2.tidyverse.org/) disponíveis na seção de Recursos. Você também pode baixar essa [colinha sobre visualização de dados com o ggplot](https://rstudio.com/resources/cheatsheets/) do site do RStudio. Nós recomendamos fortemente que você busque inspiração de gráficos [na galeria de gráficos do R](https://www.r-graph-gallery.com/) e no [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
+Existem diversos [tutoriais sobre o **ggplot2**](https://ggplot2.tidyverse.org/) disponíveis na seção de Recursos ao final deste capítulo. Você também pode baixar essa [colinha sobre visualização de dados com o ggplot](https://rstudio.com/resources/cheatsheets/) do site do RStudio. Nós recomendamos fortemente que você busque inspiração de gráficos [na galeria de gráficos do R](https://www.r-graph-gallery.com/) e no [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
 
 
 
@@ -12,14 +12,14 @@ Existem diversos [tutoriais sobre o **ggplot2**](https://ggplot2.tidyverse.org/)
 
 ### Carregue os pacotes {.unnumbered}
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar os pacotes instalados utilizando a função `library()`, do **base** R. Para mais informações sobre  pacotes do R, veja a página [Básico do R].  
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar os pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre  pacotes do R, veja a página [Básico do R].  
 
 ```{r}
 pacman::p_load(
   tidyverse,      # inclue ggplot2 e outros pacotes
   rio,            # importar/exportar
   here,           # localizador de arquivos
-  stringr,        # trabalhando com caractéres
+  stringr,        # trabalhando com caracteres
   scales,         # transforme números
   ggrepel,        # etiquetas colocadas de forma inteligente
   gghighlight,    # destaque uma parte do gráfico
@@ -123,7 +123,7 @@ Para escalas contínuas, utilize `breaks = ` para fornecer uma sequência de val
 
 Para escalas discretas, você pode ajustar o nível da ordem de aparecimento com `breaks = `, e como os valores são mostrados com o argumento `labels = `. Forneça um vetor de caractere para cada um desses argumentos (veja exemplos abaixo). Você também pode excluir `NA` facilmente ao ajustar `na.translate = FALSE`.  
 
-Os nuances de escalas de datas são cobertos mais extensivamente na página [Curvas epidêmicas].
+As nuances de escalas de datas são abordados mais extensivamente na página [Curvas epidêmicas].
 
 
 ### Ajustes manuais {.unnumbered}  
