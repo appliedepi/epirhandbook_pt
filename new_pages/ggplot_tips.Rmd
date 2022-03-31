@@ -121,7 +121,7 @@ Cada tipo de escala possui seus próprios argumentos, embora existam alguns em c
 
 Para escalas contínuas, utilize `breaks = ` para fornecer uma sequência de valores com `seq()` (use `to = `, `from = `, e `by = ` como mostrado no exemplo abaixo). Ajuste `expand = c(0,0)` para eliminar espaços extras ao redor dos eixos (isto pode ser utilizado em qualquer escala `_x_` ou `_y_`).
 
-Para escalas discretas, você pode ajustar o nível da ordem de aparecimento com `breaks = `, e como os valores são mostrados com o argumento `labels = `. Forneça um vetor de caractere para cada um desses argumentos (veja exemplos abaixo). Você também pode excluir `NA` facilmente ao ajustar `na.translate = FALSE`.  
+Para escalas discretas, você pode ajustar a ordem de aparecimento dos fatores com `breaks = ` e também ajustar os rótulos desses fatores com o argumento `labels = `. Forneça um vetor de caractere para cada um desses argumentos (veja exemplos abaixo). Você também pode excluir `NA` facilmente ao ajustar `na.translate = FALSE`.  
 
 As nuances de escalas de datas são abordados mais extensivamente na página [Curvas epidêmicas].
 
@@ -409,7 +409,7 @@ symp_plot +
   ) 
 
 #################################
-# visualize com as cores discretas do viridis
+# visualize com as cores discretas do pacote viridis
 symp_plot +
   scale_fill_viridis_d(
     breaks = c("yes", "no", "unknown"),
@@ -723,7 +723,7 @@ pacman::p_load(
 ```
 
 
-Enquanto facetear (descrito na página [Básico do ggplot]) é uma abordagem conveniente para criar gráficos, as vezes não é possível obter os resultados desejados com essa abordagem. Aqui, você pode escolher combinar os gráficos ao uní-los em um gráfico maior. Existem três pacotes bem conhecidos, que são ótimos para isso - **cowplot**, **gridExtra**, e **patchwork**. Entretanto, estes pacotes fazem basicamente a mesma coisa, de forma que iremos focar no **cowplot** nesta seção.
+Enquanto facetear (descrito na página [Básico do ggplot]) é uma abordagem conveniente para criar gráficos, as vezes não é possível obter os resultados desejados com essa abordagem. Aqui, você pode escolher combinar os gráficos ao uni-los em um gráfico maior. Existem três pacotes bem conhecidos, que são ótimos para isso - **cowplot**, **gridExtra**, e **patchwork**. Entretanto, estes pacotes fazem basicamente a mesma coisa, de forma que iremos focar no **cowplot** nesta seção.
 
 ### `plot_grid()` {.unnumbered}
 
@@ -1071,7 +1071,7 @@ Existem ótimos pacotes do R desenhados especificamente para ajudar a navegar no
 
 "Este complemento permite que você explore seus dados de forma interativa, ao visualiza-los com o pacote ggplot2. Ele permite desenhar gráficos de barras, curvas, gráficos de dispersão, hsitogramas, boxplots e objetos sf, e, então, exportar o gráfico e gerar o código de geração do gráfico."
 
-Instale e então o execute o pacote através do menu do RStudio ou com `esquisse::esquisser()`.
+Instale e então o execute o pacote por meio do menu do RStudio ou com `esquisse::esquisser()`.
 
 Veja a página do [Github](https://github.com/dreamRs/esquisse)
 
