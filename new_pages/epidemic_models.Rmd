@@ -452,7 +452,7 @@ ggplot() +
 ### EpiEstim {.unnumbered}
 
 Para executar **EpiEstim**, nós precisamos fornecer dados de incidência diária, e especificar
-o intervalo seriado (ex.: a distribuição dos intervalos entre o início dos sintomas dos
+o intervalo seriado (i.e.: a distribuição dos intervalos entre o início dos sintomas dos
 casos primários e secundários). 
 
 Dados de incidência podem ser fornecidos para o **EpiEstim** como um vetor, um quadro de dados, ou um objeto
