@@ -24,7 +24,7 @@ Usar o **Git** facilita:
 
 1) Arquivar versões documentadas com mudanças adicionais para que você possa recuperar facilmente qualquer versão anterior;
 
-2) Ter *ramos* paralelos, ou seja, desenvolver / "trabalhar" diferentes versões com formas estruturadas de integrar as mudanças após a revisão.
+2) Ter *ramos* ( do inglês *branches*) paralelos, ou seja, desenvolver / "trabalhar" diferentes versões com formas estruturadas de integrar as mudanças após a revisão.
 
 Isso pode ser feito localmente em seu computador, mesmo se você não colaborar com outras pessoas. Você já:
 
@@ -97,7 +97,7 @@ Mostraremos como criar (_inicializar_) um repositório Git a partir do Github, G
 
 ### Commits () {.unnumbered}
 
-Um *commit* é um **snapshot** do projeto, um instantâneode um determinado momento. Ao fazer uma alteração no projeto, você fará um novo commit para rastrear as alterações (o delta) feitas em seus arquivos. Por exemplo, talvez você tenha editado algumas linhas de código e atualizado um conjunto de dados. Depois que suas alterações forem salvas, você pode agrupar essas alterações em um "commit".
+Um *commit* é um **snapshot** do projeto, ou seja, uma foto  instantânea de um determinado momento. Ao fazer uma alteração no projeto, você fará um novo commit para rastrear as alterações (o delta) feitas em seus arquivos. Por exemplo, talvez você tenha editado algumas linhas de código e atualizado um conjunto de dados. Depois que suas alterações forem salvas, você pode agrupar essas alterações em um "commit".
 
 Cada commit possui um ID exclusivo (um *hash*). Para fins de controle de versão, você pode recuperar seu projeto no tempo com base em commits, então é melhor mantê-los relativamente pequenos e coerentes. Você também anexará uma breve descrição das mudanças, chamada de "mensagem de confirmação".
 
@@ -274,7 +274,7 @@ knitr::include_graphics(here::here("images", "github_table.png"))
 
 Aqui está [outro diagrama](https://build5nines.com/introduction-to-git-version-control-workflow/).
 
-*Observação: até recentemente, o termo branch "master" era usado, mas agora é chamado de branch "principal".*
+*Observação: até recentemente, o termo branch "master" era usado, mas agora é chamado de branch "main" (principal).*
 
 ```{r echo=F, out.width = '100%', out.height='100%', fig.align = "center"}
 knitr::include_graphics(here::here("images", "GitHub-Flow.png"))
@@ -291,7 +291,7 @@ Quando você seleciona um branch para trabalhar, **Git redefine seu diretório d
 Certifique-se de que está no branch "principal" e clique no ícone roxo para criar um novo branch (veja a imagem acima).
 
 - Você deverá nomear seu branch com uma única palavra (pode usar sublinhado, se necessário).
-- Você verá que localmente está no mesmo projeto R, mas não está mais trabalhando no branch "principal".
+- Você verá que localmente está no mesmo projeto R, mas não está mais trabalhando no branch "main".
 - Depois de criado, o novo branch também aparecerá no site do Github como um branch.
     
 Você pode visualizar branches no painel Git no Rstudio depois de clicar em "Histórico"
@@ -408,25 +408,23 @@ git commit --amend -m "An updated commit message"  # Corrija o commit anterior E
 
 _Observação: pense antes de modificar commits que já são públicos e compartilhados com seus colaboradores_.
 
-## Extrair e enviar alterações para o Github
+## Pull (baixar/extrair) e Push (enviar/subir) alterações para o Github
 
-"Primeiro EXTRAIR, depois ENVIAR"
+"Primeiro PULL, depois PUSH"
 
-É uma boa prática *buscar* e *extrair* antes de começar a trabalhar no seu projeto, para atualizar a versão do branch em seu computador local com quaisquer alterações que tenham sido feitas na versão remota / Github.
+É uma boa prática *fetch* (buscar) e *pull* (baixar) antes de começar a trabalhar no seu projeto, para atualizar a versão do branch em seu computador local com quaisquer alterações que tenham sido feitas na versão remota / Github.
 
-EXTRAIA frequentemente. Não hesite. *Sempre extraia antes de enviar*.
+PULL frequentemente. Não hesite. *Sempre faça um pull antes de fazer um push*.
 
-Quando suas mudanças forem feitas e confirmadas e você estiver feliz com o seu projeto, você pode *enviar* seus commits para a versão remota / Github de seu branch.
-
-Rince and repeat while you are working on the repository.
+Quando suas mudanças forem feitas e confirmadas e você estiver feliz com o seu projeto, você pode *fazer um push* dos seus commits para a versão remota / Github de seu branch.
 
 **Observação:** é muito mais fácil desfazer alterações que foram confirmadas, mas não enviadas (ou seja, ainda são locais) do que alterações que foram enviadas para o repositório remoto (e talvez já extraídas por outra pessoa), por isso é melhor enviar quando terminar de introduzir mudanças no estava trabalhando.
 
 #### No Rstudio {.unnumbered}
 
-*EXTRAIR* - Primeiro, clique no ícone "Extrair" (seta azul para baixo) que busca e extrai ao mesmo tempo.
+*PULL* - Primeiro, clique no ícone "Pull" (seta azul para baixo) que busca e extrai ao mesmo tempo.
 
-*ENVIAR* - Clique no ícone "Enviar" (seta verde para cima). Pode ser necessário inserir seu nome de usuário e senha do Github. Na primeira vez que você for solicitado, pode ser necessário inserir duas linhas de comando Git no *Terminal*:
+*PUSH* - Clique no ícone "Pull" (seta verde para cima). Pode ser necessário inserir seu nome de usuário e senha do Github. Na primeira vez que você for solicitado, pode ser necessário inserir duas linhas de comando Git no *Terminal*:
 
 -   **git config --global user.email "[voce\@exemplo.com](mailto:voce@exemplo.com){.email}"** (seu endereço de email Github), e\
 -   **git config --global user.name "Seu nome de usuário Github"**
@@ -443,7 +441,7 @@ Clique no botão "Buscar origem" para verificar se há novos commits no reposit�
 knitr::include_graphics(here::here("images", "github_desktop_fetch_button.png"))
 ```
 
-Se o Git encontrar novos commits no repositório remoto, o botão mudará para um botão "Extrair". Como o mesmo botão é usado para extrair e enviar, você não pode enviar suas alterações se não extrair antes.
+Se o Git encontrar novos commits no repositório remoto, o botão mudará para um botão "Pull". Como o mesmo botão é usado para fazer o pull (baixar/extrair) e fazer o push (subir/enviar), você não pode enviar suas alterações se não fizer o pull antes.
 
 ```{r echo=F, fig.align = "center"}
 knitr::include_graphics(here::here("images", "github_desktop_pull_button.png"))
@@ -471,12 +469,12 @@ git pull   # Traga commits remotos para seu branch local
 git push   # Envie commits locais deste branch para o branch remoto
 ```
 
-### Quero extrair, mas tenho trabalho local {.unnumbered}
+### Quero fazer um pull, mas tenho trabalho local {.unnumbered}
 
 Isso pode acontecer às vezes: você fez algumas mudanças em seu repositório local, mas o repositório remoto tem commits que você não extraiu.
 
 
-O Git se recusará a extrair porque pode sobrescrever suas alterações. Existem várias estratégias para manter suas mudanças, bem descritas em [Happy Git with R](https://happygitwithr.com/pull-tricky.html), entre as quais as duas principais são:
+O Git se recusará a fazer um pull porque pode sobrescrever suas alterações. Existem várias estratégias para manter suas mudanças, bem descritas em [Happy Git with R](https://happygitwithr.com/pull-tricky.html), entre as quais as duas principais são:
  
 - confirme suas alterações, busque alterações remotas, extraia elas, resolva conflitos, se necessário (consulte a seção abaixo), e coloque tudo online
 - `stash` suas alterações, que meio que as armazena à parte, extrai, restaura ("unstash") e então efetua o commit, resolvendo quaisquer conflitos e envia.
@@ -512,17 +510,17 @@ git merge this_fancy_new_branch
 
 [Esta página](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) mostra um exemplo mais avançado de branching e explica um pouco como funciona nos bastidores.
 
-### No Github: submitting pull requests {.unnumbered}
+### No Github: submeter uma requisição de pull {.unnumbered}
 
-Embora seja totalmente possível mesclar dois branches localmente, ou sem informar ninguém, uma mesclagem pode ser discutida ou investigada por várias pessoas antes de ser integrada ao branch master. Para ajudar no processo, o Github oferece alguns recursos de discussão sobre a mesclagem: a **solicitação de extração**.
+Embora seja totalmente possível mesclar dois branches localmente, ou sem informar ninguém, uma mesclagem pode ser discutida ou investigada por várias pessoas antes de ser integrada ao branch master. Para ajudar no processo, o Github oferece alguns recursos de discussão sobre a mesclagem: a **solicitação de pull**.
 
-Uma solicitação de extração (um "PR") é uma solicitação para mesclar um branch em outro (em outras palavras, uma solicitação para que _seu branch de trabalho seja extraído para o branch "principal"). Uma solicitação de extração geralmente envolve vários commits e inicia uma conversa, um processo de revisão, antes de ser aceita e o branch ser mesclado. Por exemplo, você pode ler as discussões de solicitação de extração no [github do dplyr](https://github.com/tidyverse/dplyr/pulls).
+Uma solicitação de pull (um "PR", do inglês *pull request*) é uma solicitação para mesclar um branch em outro (em outras palavras, uma solicitação para que _seu branch de trabalho seja extraído para o branch "main"). Uma solicitação de extração geralmente envolve vários commits e inicia uma conversa, um processo de revisão, antes de ser aceita e o branch ser mesclado. Por exemplo, você pode ler as discussões de solicitação de extração no [github do dplyr](https://github.com/tidyverse/dplyr/pulls).
 
-Você pode enviar uma solicitação de extração (PR) diretamente do site (conforme ilustrado abaixo) ou do Github Desktop.
+Você pode enviar uma solicitação de pull (PR) diretamente do site (conforme ilustrado abaixo) ou do Github Desktop.
 
 - Vá para o repositório Github (online)
-- Visualize a guia "Solicitações de extração" e clique no botão "Nova solicitação de pull"
-- Selecione no menu suspenso para mesclar seu branch no principal
+- Visualize a guia "Solicitações de pull" e clique no botão "Nova solicitação de pull"
+- Selecione no menu suspenso para mesclar seu branch no branch principal (main)
 - Escreva um comentário detalhado sobre o Pull Request e clique em "Criar Pull Request".
 
 ```{r echo=F, out.width = '100%', out.height='150%', fig.align = "center"}
@@ -531,8 +529,8 @@ knitr::include_graphics(here::here("images", "github_pull_request2.png"))
 
 Agora você será capaz de ver a solicitação pull (exemplo na imagem abaixo):
 
-- Revise a guia "Arquivos alterados" para ver como o branch "principal" mudaria se o branch fosse mesclado. \
-- À direita, você pode solicitar uma revisão dos colaboradores da sua equipe marcando seus IDs no Github. Se desejar, você pode definir as configurações do repositório para exigir uma revisão de aprovação antes de mesclar com o principal.\
+- Revise a guia "Arquivos alterados" para ver como o branch "main" mudaria se o branch fosse mesclado. \
+- À direita, você pode solicitar uma revisão dos colaboradores da sua equipe marcando seus IDs no Github. Se desejar, você pode definir as configurações do repositório para exigir uma revisão de aprovação antes de mesclar com o main.\
 - Assim que a solicitação pull for aprovada, um botão para "Mesclar solicitação pull" ficará ativo. Clique nele.\
 - Depois de concluído, exclua seu branch conforme explicado abaixo.
 
