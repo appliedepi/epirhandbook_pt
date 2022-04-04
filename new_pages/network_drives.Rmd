@@ -43,14 +43,14 @@ myPaths <- c(myPaths[2], myPaths[1]) # trocar os caminhos
 Se você estiver com dificuldades no para conectar o R Markdown ao Pandoc, comece com este código para descobrir onde RStudio entende que está sua instalação Pandoc. 
 
 ```{r, eval=F}
-
+#Encontrar o Pandoc
 Sys.getenv("RSTUDIO_PANDOC")  # Descubra onde o RStudio entende que está sua instalação Pandoc
 ```
 
 Se você quiser ver de qual biblioteca um pacote está sendo carregado, tente o código abaixo: 
 
 ```{r, eval=F}
-# Encontra um pacote
+# Encontrar um pacote
 # Indica a primeira localização do pacote (Note a ordem de suas bibliotecas)
 find.package("rmarkdown", lib.loc = NULL, quiet = FALSE, verbose = getOption("verbose")) 
 ```
@@ -61,7 +61,7 @@ find.package("rmarkdown", lib.loc = NULL, quiet = FALSE, verbose = getOption("ve
 
 **"Failed to compile...tex in rmarkdown"**
 
--   Verifique a instalação de TinyTex, ou instale TinyTex em C:. Veja na página [R Básico] sobre como instalar o TinyTex. 
+-   Verifique a instalação de TinyTex, ou instale TinyTex em C:. Veja na página [R - o básico] sobre como instalar o TinyTex. 
 
 ```{r, eval=F}
 # Verificar/instalar tinytex em C:
@@ -79,10 +79,10 @@ Por exemplo, `Error in tools::startDynamicHelp() : internet routines cannot be l
 
 -   Alternativamente, tente desinstalar R e reinstalar com versão de bit diferente (32 em vez de 64).
 
-**C: não aparece como opção quando tento instalar pacotes manualmente**
+**C: o pacote não aparece como opção quando tento instalar pacotes manualmente**
 
 - Execute o RStudio como administrador que esta opção vai aparecer  
-- Para executar o RStudio sempre como administrador, clique com o botão direito do mouse no ícone do Rstudio (opção vantajosa ao usar um projeto R, em que você não clica no ícone do RStudio para abrir).  administrator (advantageous when using an Rproject where you don't click RStudio icon to open)... right-click the Rstudio icon
+- Para executar o RStudio sempre como administrador, clique com o botão direito do mouse no ícone do Rstudio (opção vantajosa ao usar um projeto R, em que você não clica no ícone do RStudio para abrir).  
 
 A imagem abaixo mostra como você pode selecionar manualmente a biblioteca para a instalação de um pacote. Esta janela aparece quando você abre o painel Packages (Pacotes) no RStudio e clica em "Install" (Instalar).  
 
@@ -110,7 +110,7 @@ Possibilidades:
 2)  O pacote Rmarkdown não pode ser encontrado\
 3)  Uma questão de direitos do administrador.
 
-É possível que o R não seja capaz de encontrar o arquivo do pacote **rmarkdown**, portanto verifique qual biblioteca (pasta) o pacote **rmarkdown** se encontra (veja o código acima). Se o pacote foi instalado em uma biblioteca inacessível (por exemplo, que comece com "\"), considere movê-lo manualmente para C: ou outra biblioteca que comece com uma letra. Esteja ciente de que o pacote **rmarkdown** tem que ser capaz de se conectar à instalação do TinyTex, portanto não pode estar em uma biblioteca em uma unidade de rede.
+É possível que o R não seja capaz de encontrar o arquivo do pacote **rmarkdown**, portanto verifique qual biblioteca (pasta) o pacote **rmarkdown** se encontra (veja o código acima). Se o pacote foi instalado em uma biblioteca inacessível (por exemplo, que comece com "\\"), considere movê-lo manualmente para C: ou outra biblioteca que comece com uma letra. Esteja ciente de que o pacote **rmarkdown** tem que ser capaz de se conectar à instalação do TinyTex, portanto não pode estar em uma biblioteca em uma unidade de rede.
 
 **Erro Pandoc 61**
 
