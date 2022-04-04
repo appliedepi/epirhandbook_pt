@@ -34,7 +34,7 @@ Nós também precisamos de uma população de referência, a população padrão
 <!-- ======================================================= -->
 ### Carregue os pacotes R {.unnumbered}
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do **base** R. Para mais informações sobre os pacotes do R, veja a página [Básico do R].  
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Básico do R].  
 
 ```{r}
 pacman::p_load(
@@ -335,7 +335,7 @@ Nós iremos utilizar estes dados separados na abordagem do **dsr**.
 
 Abaixo, nós calculamos as taxas por país normalizadas diretamente para idade e sexo. Nós utilizamos a função `dsr()`. 
 
-De nota - a função `dsr()` espera uma tabela de dados para as populações do país e as contagens dos eventos (mortes), *e um quadro de dados **separado** contendo a população padrão*. Ela também considera que no banco de dados da população padrão, o nome da coluna com a unidade-tempo é "pop" (nós garantimos isto na seção sobre Preparação de dados).
+De nota - a função `dsr()` espera uma tabela de dados para as populações do país e as contagens dos eventos (mortes), *e um data frame **separado** contendo a população padrão*. Ela também considera que no banco de dados da população padrão, o nome da coluna com a unidade-tempo é "pop" (nós garantimos isto na seção sobre Preparação de dados).
 
 Existem muitos argumentos possíveis, como anotado no código abaixo. Notavelmente, a coluna `Deaths` está selecionada em `event = `, e a coluna `Population` está selecionada para `fu = ` ("acompanhamento"). Nós selecionamos os subgrupos de comparação como sendo da coluna `Country`, e padronizamos baseado em `age_cat5` e `Sex`. Estas últimas duas colunas não foram utilizadas em nenhum argumento em particular. Veja `?dsr` para detalhes.
 
@@ -348,7 +348,7 @@ mortality_rate <- dsr::dsr(
      subgroup = Country,   # unidades que gostaríamos de comparar
      age_cat5,             # outras colunas - taxas serão normalizadas por estas colunas
      Sex,
-     refdata = standard_pop_clean, # quadro de dados contendo a população de referência, com a coluna chamada pop
+     refdata = standard_pop_clean, # data frame contendo a população de referência, com a coluna chamada pop
      method = "gamma",      # método para calcular o IC 95%
      sig = 0.95,            # nível de significância
      mp = 100000,           # nós queremos taxas por 100.000 habitantes
@@ -459,7 +459,7 @@ Para normalização indireta, você precisa de uma população de referência co
 
 Abaixo, primeiro criamos a população de referência do país B. Então, passamos os dados populacionais e de mortalidade do país A, combinamos ele com a população de referência, e passamos para a função `phe_isr()`, para obter taxas indiretamente normalizadas. Claro, você pode fazer isto vice versa.
 
-De nota - no exemplo abaixo, a população de referência é fornecida como um quadro de dados separado. Neste caso, nós garantimos que os vetores `x = `, `n = `, `x_ref = ` e `n_ref = ` são todos ordenados pelos mesmos valores da categoria de padronização (estrato) como nos nossos dados específicos dos países, uma vez que os registros serão ligados pela posição na tabela.
+De nota - no exemplo abaixo, a população de referência é fornecida como um data frame separado. Neste caso, nós garantimos que os vetores `x = `, `n = `, `x_ref = ` e `n_ref = ` são todos ordenados pelos mesmos valores da categoria de padronização (estrato) como nos nossos dados específicos dos países, uma vez que os registros serão ligados pela posição na tabela.
 
 Para mais informações, utilize `?phr_isr`, ou acesse os links na seção de Referências.
 
