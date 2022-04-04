@@ -22,7 +22,7 @@ pacman::p_load(
 
 Use a função `dir_tree()` do **fs**.  
 
-Forneça o caminho da pasta do arquivo para `path =` e decida se deseja mostrar apenas um nível (`recurse = FALSE`) ou todos os arquivos em todos os subníveis (` recurse = TRUE`). Abaixo, usamos `here ()` como uma abreviação para o projeto R e especificamos sua subpasta "dados", que contém todos os dados usados para este manual de R. Nós o configuramos para exibir todos os arquivos em "dados" e suas subpastas (por exemplo, "cache", "epidemic models", "population", "shp", and "weather").
+Forneça o caminho da pasta do arquivo para `path =` e decida se deseja mostrar apenas um nível (`recurse = FALSE`) ou todos os arquivos em todos os subníveis (` recurse = TRUE`). Abaixo, usamos `here ()` como uma abreviação para o projeto R e especificamos sua subpasta "data" (dados), que contém todos os dados usados para este manual de R. Nós o configuramos para exibir todos os arquivos na pasta supra citada e suas subpastas (por exemplo, "cache", "epidemic models", "population", "shp", and "weather").
 
 
 ```{r}
@@ -85,21 +85,21 @@ file_info(here("data", "case_linelists", "linelist_cleaned.rds"))$modification_t
 
 ## Verifique se existe  
 
-### R objects {.unnumbered}  
+### Objetos R {.unnumbered}  
 
 Você pode usar `exists ()` do R **base** para verificar se um objeto existe *dentro do* R (forneça o nome do objeto entre aspas).
 
 ```{r}
 exists("linelist")
 ```
-Observe que alguns pacotes do R **base** usam nomes de objetos genéricos como "data" nos bastidores, que aparecerão como TRUE a menos que `inherit = FALSE` seja especificado. Este é um dos motivos para não nomear o conjunto de dados como "data" (de dados).
+Observe que alguns pacotes do R **base** usam nomes de objetos genéricos como "data" (que significa "dados" em inglês) nos bastidores, que aparecerão como TRUE a menos que `inherit = FALSE` seja especificado. Este é um dos motivos para não nomear o conjunto de dados como "data".
 
 ```{r}
 exists("data")
 exists("data", inherit = FALSE)
 ```
 
-Se você está escrevendo uma função, deve usar `missing ()` do R **base** R para verificar se um argumento está presente ou não, ao invés de `exists ()`.
+Se você está escrevendo uma função, deve usar `missing ()` do R **base** para verificar se um argumento está presente ou não, ao invés de `exists ()`.
 
 
 ### Diretórios {.unnumbered}  
@@ -133,7 +133,7 @@ Para criar um novo diretório (pasta), você pode usar `dir_create ()` de **fs**
 dir_create(here("data", "test"))
 ```
 
-Uma alternativa é `dir.create ()` do R **base** R, que mostrará um erro se o diretório já existir. Em contraste, `dir_create ()` neste cenário será silencioso.
+Uma alternativa é `dir.create ()` do R **base**, que mostrará um erro se o diretório já existir. Em contraste, `dir_create ()` neste cenário será silencioso.
 
 ### Arquivos {.unnumbered}  
 
@@ -177,7 +177,7 @@ Para executar um script R a partir de outro script R, você pode usar o comando 
 source(here("scripts", "cleaning_scripts", "clean_testing_data.R"))
 ```
 
-Isso é equivalente a visualizar o script R acima e clicar no botão "Fonte" no canto superior direito do script. Isso executará o script, mas silenciosamente (sem saída para o console do R), a menos que seja especificada esta intenção. Veja a página [Console interativo] para exemplos de uso da `source ()` para interagir com um usuário através do console R no modo pergunta e resposta.
+Isso é equivalente a visualizar o script R acima e clicar no botão "Source" (Fonte) no canto superior direito do script. Isso executará o script, mas silenciosamente (sem saída para o console do R), a menos que seja especificada esta intenção. Veja a página [Console interativo] para exemplos de uso da `source ()` para interagir com um usuário através do console R no modo pergunta e resposta.
 
 
 ```{r, fig.align = "center", out.height = '300%', echo=F}
@@ -187,7 +187,7 @@ knitr::include_graphics(here::here("images", "source_button.png"))
 
 ### `render()` {.unnumbered}  
 
-`render ()` é uma variação de `source ()` mais frequentemente usada para scripts R markdown. Você fornece o `input =` que é o arquivo markdown R, e também o `output_format =` (normalmente "html_document", "pdf_document", "word_document", "")
+`render ()` é uma variação de `source ()` mais frequentemente usada para scripts R markdown. Você fornece o `input =` que é o arquivo Rmarkdown (.Rmd), e também o `output_format =` (normalmente "html_document", "pdf_document", "word_document", "")
 
 Consulte a página [Relatórios com R Markdown] para obter mais detalhes. Veja também a documentação para `render ()` 
 [aqui](https://rmarkdown.rstudio.com/docs/reference/render.html) ou inserindo `?render`.  
