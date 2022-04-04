@@ -7,7 +7,7 @@
 
 ### Carregar pacotes {-}
 
-Este pedaço de código mostra o carregamento de pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` de **pacman**, que instala o pacote, se necessário, *e* carrega ele para ser utilizado. Você também pode carregar pacotes instalados com  `library()` de **base** R. Veja em [R básico] para mais informações sobre pacotes R.  
+Este "chuk" (pedaço) de código mostra o carregamento de pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` de **pacman**, que instala o pacote, se necessário, *e* carrega ele para ser utilizado. Você também pode carregar pacotes instalados com  `library()` do R **base**. Veja em [R - o básico] para mais informações sobre pacotes R.  
 
 ```{r, echo=F, warning=F, message=F}
 pacman::p_load(
@@ -15,7 +15,7 @@ pacman::p_load(
   here,         # Localizar de arquivos
   skimr,        # Obter uma visão geral dos dados
   tidyverse,    # Gerenciar dados + gráficos ggplot2 
-  gtsummary,    # Estatísticas sumárias (de resumo) e testes
+  gtsummary,    # Estatísticas resumo e testes
   janitor,      # Adicionar totais e porcentagens às tabelas
   scales,       # Converter facilmente proporções em porcentagens  
   flextable,    # Converter tabelas para HTML
@@ -47,7 +47,7 @@ As funções são úteis na programação, pois permitem tornar os códigos mais
 
 Se você chegou até aqui neste manual, significa que encontrou inúmeras funções, uma vez que no R toda operação é uma chamada de função `+, for, if, [, $, { …`. Por exemplo `x + y` é o mesmo que `'+'(x, y)`
 
-R é uma das linguagens que oferece a maior possibilidade de trabalhar com funções e dar ferramentas suficientes para que o usuário as escreva facilmente. Não devemos pensar nas funções como fixas no topo ou no final da cadeia de programação, O R oferece a possibilidade de usá-las como se fossem vetores e até mesmo dentro de outras funções, listas ...
+R é uma das linguagens que oferece a maior possibilidade de trabalhar com funções e dar ferramentas suficientes para que o usuário as escreva facilmente. Não devemos pensar nas funções como fixas no topo ou no final da cadeia de programação, o R oferece a possibilidade de usá-las como se fossem vetores e até mesmo dentro de outras funções, listas ...
 
 Existem muitos recursos muito avançados sobre programação de funções e só daremos aqui uma visão para ajudá-lo a começar com breves exemplos práticos. Em seguida, você é incentivado a visitar os links de referências para ler mais sobre o assunto.
 
@@ -471,7 +471,7 @@ A programação de funções visa facilitar o código e facilitar sua leitura. D
 
 ### Nomes de coluna e avaliação organizada {.unnumbered}  
 
-Se você quiser saber como fazer referência a *nomes de coluna* fornecidos em seu código como argumentos, leia  [tidyverse programming guidance](https://dplyr.tidyverse.org/articles/programming.html).Entre os tópicos cobertos estão *avaliação arrumada * e uso de *embrace* `{{ }}` "Colchetes duplos"
+Se você quiser saber como fazer referência a *nomes de coluna* fornecidos em seu código como argumentos, leia  [tidyverse programming guidance](https://dplyr.tidyverse.org/articles/programming.html).Entre os tópicos cobertos estão *avaliação arrumada* (de *tidy evaluation*) e uso de *embrace* `{{ }}` "Colchetes duplos"
 
 Por exemplo, aqui está um esqueleto rápido de código modelo da página do tutorial mencionado acima:
 
@@ -492,7 +492,7 @@ mtcars %>%
 
 Quanto mais complicada a tarefa de uma função, maior a possibilidade de erros. Portanto, às vezes é necessário adicionar alguma verificação na função para ajudar a entender rapidamente de onde vem o erro e encontrar uma maneira de corrigi-lo.
 
-- Pode ser mais do que recomendado introduzir uma verificação sobre a falta de um argumento usando `ausente (argumento)`. Esta verificação simples pode retornar um valor "VERDADEIRO" ou "FALSO".
+- Pode ser mais do que recomendado introduzir uma verificação sobre a falta de um argumento usando `missing(argumento)`. Esta verificação simples pode retornar um valor "TRUE" (verdadeiro) ou "FALSE" (falso).
 
 ```{r , error=TRUE}
 
@@ -540,7 +540,7 @@ conter_covid19_stop(distanciamento_social=1, usar_mascara="sim", vacinacao = "n�
 
 - Também podemos lidar com erros usando `safely()`, que pega uma função como um argumento e a executa de maneira segura. Na verdade, a função será executada sem parar se encontrar um erro. `safely()` retorna como resultado uma **list** com dois objetos, que são os resultados e o erro "pulado".
 
-Podemos verificar executando primeiro a `mean ()` como função e, em seguida, executando com `secure ()`.
+Podemos verificar executando primeiro a `mean()` como função e, em seguida, executando com `secure ()`.
 
 
 ```{r, warning=FALSE}
@@ -564,10 +564,10 @@ Como dito anteriormente, comentar bem nossos códigos já é uma boa forma de te
 ## Recursos
 
 
-[R for Data Science link](https://r4ds.had.co.nz/functions.html)   
+[link para o livro R para Ciência de Dados](https://r4ds.had.co.nz/functions.html)   
 
-[Cheatsheet advance R programming](https://www.rstudio.com/wp-content/uploads/2016/02/advancedR.pdf)
+[Cheatsheet (cola) em programação avançada em R](https://www.rstudio.com/wp-content/uploads/2016/02/advancedR.pdf)
 
-[Cheatsheet purr Package](https://purrr.tidyverse.org/)
+[Cheatsheet (cola) do Pacote purr](https://purrr.tidyverse.org/)
 
-[Video-ACM talk by Hadley Wickham: The joy of functional programming (how does map_dbl work)](https://youtube.videoken.com/embed/bzUmK0Y07ck)
+[Video-ACM palesta por Hadley Wickham: A alegria da programação funcional (como map_dbl funciona)](https://youtube.videoken.com/embed/bzUmK0Y07ck)
