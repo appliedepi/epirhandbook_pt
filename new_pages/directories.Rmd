@@ -1,13 +1,13 @@
 
-# Interações do diretório { }  
+# Interações de diretório { }  
 
 Nesta página, cobrimos cenários comuns onde você cria, interage, salva e importa com diretórios (pastas).
 
-## Preparation  
+## Preparação
 
 ### Pacote **fs**  {.unnumbered}  
 
-O **fs**  é um pacote do **tidyverse** quee facilita as interações de diretório, melhorando algumas das funções do R **base**. Nas seções a seguir, usaremos frequentemente as funções do **fs**.  
+O **fs**  é um pacote do **tidyverse** que facilita as interações de diretório, melhorando algumas das funções do R **base**. Nas seções a seguir, usaremos frequentemente as funções do **fs**.  
 
 ```{r}
 pacman::p_load(
@@ -22,7 +22,7 @@ pacman::p_load(
 
 Use a função `dir_tree()` do **fs**.  
 
-Forneça o caminho da pasta do arquivo para `path =` e decida se deseja mostrar apenas um nível (`recurse = FALSE`) ou todos os arquivos em todos os subníveis (` recurse = TRUE`). Abaixo, usamos `here ()` como uma abreviação para o projeto R e especificamos sua subpasta "dados", que contém todos os dados usados para este manual de R. Nós o configuramos para exibir todos os arquivos em "dados" e suas subpastas (por exemplo, "cache", "modelos de epidemia", "população", "shp" e "clima").
+Forneça o caminho da pasta do arquivo para `path =` e decida se deseja mostrar apenas um nível (`recurse = FALSE`) ou todos os arquivos em todos os subníveis (` recurse = TRUE`). Abaixo, usamos `here ()` como uma abreviação para o projeto R e especificamos sua subpasta "dados", que contém todos os dados usados para este manual de R. Nós o configuramos para exibir todos os arquivos em "dados" e suas subpastas (por exemplo, "cache", "epidemic models", "population", "shp", and "weather").
 
 
 ```{r}
