@@ -1,4 +1,4 @@
-# Limpeza de dados e funções essenciais
+# Limpeza de dados e principais funções
 
 ```{r, out.height = "10%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "cleaning.png"))
