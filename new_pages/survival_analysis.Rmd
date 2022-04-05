@@ -14,17 +14,17 @@ knitr::include_graphics(here::here("images", "survival_analysis.png"))
 
 ## Visão Geral
 
-*A análise de sobrevivência* centra-se na descrição, para um determinado indivíduo ou grupo de indivíduos, de um ponto definido de evento chamado ***a falha*** (ocorrência de uma doença, cura de uma doença, morte, recaída após resposta ao tratamento...) que ocorre após um período de tempo chamado ***tempo de falha*** (ou ***tempo de seguimento*** em estudos baseados em coorte/população) durante o qual os indivíduos são observados. Para determinar o tempo de falha, é então necessário definir um tempo de origem (que pode ser a data de inclusão, a data de diagnóstico...).
+*A análise de sobrevivência* centra-se na descrição, para um determinado indivíduo ou grupo de indivíduos, de um ponto definido de evento chamado **a falha** (ocorrência de uma doença, cura de uma doença, óbito, recaída após resposta ao tratamento...) que ocorre após um período de tempo chamado **tempo de falha** (ou **tempo de seguimento** em estudos baseados em coorte/população) durante o qual os indivíduos são observados. Para determinar o tempo de falha, é então necessário definir um tempo de origem (que pode ser a data de inclusão, a data de diagnóstico...).
 
 O alvo de inferência para a análise de sobrevivência é então o tempo entre uma origem e um evento. Na investigação médica actual, é amplamente utilizado em estudos clínicos para avaliar o efeito de um tratamento, por exemplo, ou na epidemiologia do câncer para avaliar uma grande variedade de medidas de sobrevivência ao câncer.
 
-É normalmente expressa através da ***probabilidade de sobrevivência*** que é a probabilidade de o evento de interesse não ter ocorrido por uma duração t.
+É normalmente expressa através da **probabilidade de sobrevivência** que é a probabilidade de o evento de interesse não ter ocorrido por uma duração t.
 
-***Censura***\*: A censura ocorre quando no final do seguimento, alguns dos indivíduos não tiveram o evento de interesse, e assim o seu verdadeiro tempo para o evento é desconhecido. Aqui focaremos principalmente na censura correta, mas para mais detalhes sobre a censura e a análise de sobrevivência em geral, é possível ver referências.
+**Censura**: A censura ocorre quando no final do seguimento, alguns dos indivíduos não tiveram o evento de interesse, e assim o seu verdadeiro tempo para o evento é desconhecido. Aqui focaremos principalmente na censura correta, mas para mais detalhes sobre a censura e a análise de sobrevivência em geral, é possível ver referências.
 
 ```{r echo=F, eval=F, out.width = "80%", out.height="80%", fig.align = "center"}
  
-#Adicionar uma figura dos seguintes chunks para a última versão da página
+# Adicionar uma figura dos seguintes chunks para a última versão da página
 # não se esqueça de guardar a figura de saída em "images"
 # knitr::include_graphics(here::here("images", "survanalysis.png"))
 
@@ -36,9 +36,9 @@ O alvo de inferência para a análise de sobrevivência é então o tempo entre 
 
 ### Carregar Pacotes {.unnumbered}
 
-Para realizar análises de sobrevivência em R, um dos pacotes mais utilizados é o pacote **survival**\*. Primeiro o instalamos e depois o carregamos, bem como os outros pacotes que serão utilizados nesta secção:
+Para realizar análises de sobrevivência em R, um dos pacotes mais utilizados é o pacote **survival**. Primeiro o instalamos e depois o carregamos, bem como os outros pacotes que serão utilizados nesta secção:
 
-Neste manual enfatizamos `p_load()` do **pacman***, que instala o pacote se necessário* e\* carrega-o para utilização. Pode também carregar os pacotes instalados com `library()` de **base**\* R. Veja a página em [R basics] para mais informações sobre os pacotes R.
+Neste manual enfatizamos `p_load()` do **pacman**, que instala o pacote se necessário *e* carrega-o para utilização. Pode também carregar os pacotes instalados com `library()` do R **base** . Veja a página em [R - o basico] para mais informações sobre os pacotes R.
 
 ```{r, echo=F, message=FALSE, warning=FALSE}
 
@@ -63,7 +63,7 @@ Esta página explora análises de sobrevivência usando a *linelist* usada na ma
 
 Importar conjunto de dados
 
-Importamos o conjunto de dados de casos de uma epidemia simulada de Ébola. Se quiser acompanhar, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para fazer o download da *linelist* "limpa" </a> (as .rds file). Importe os dados com a função `import()` do pacote **rio** (suporta muitos formatos de arquivos .xlsx, .csv, .rds - veja a página [Importar e exportar] para mais detalhes).
+Importamos o conjunto de dados de casos de uma epidemia simulada de Ebola. Se quiser acompanhar, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para fazer o download da *linelist* "limpa" </a> (as .rds file). Importe os dados com a função `import()` do pacote **rio** (suporta muitos formatos de arquivos .xlsx, .csv, .rds - veja a página [Importar e exportar] para mais detalhes).
 
 ```{r echo=F}
 # importar linelist
@@ -87,14 +87,14 @@ Assim, criaremos diferentes variáveis necessárias para respeitar essa estrutur
 
 Definimos:
 
-- um novo *data frame* `linelist_surv` para esta análise\
-- o nosso evento de interesse como sendo "morte" (nossa probabilidade de sobrevivência será a probabilidade de estar vivo um certo tempo após o tempo de origem),
+- um novo *data frame* `linelist_surv` para esta análise
+- o nosso evento de interesse como sendo "óbito" (nossa probabilidade de sobrevivência será a probabilidade de estar vivo um certo tempo após o tempo de origem),
 - o tempo de seguimento (`futime`) como o tempo entre o tempo de início e o tempo do resultado *em dias*,
 - pacientes censurados como aqueles que recuperaram ou para os quais o resultado final não é conhecido, ou seja, o evento "morte" não foi observado (`evento=0`).
 
-[***CUIDADO:*** Uma vez que num estudo de coorte real, a informação sobre a hora de origem e o fim do seguimento é conhecida, dado que são observados indivíduos, removeremos as observações onde a data de início ou a data do desfecho é desconhecida. Também os casos em que a data de início é posterior à data do resultado serão removidos, uma vez que são considerados errados]{estilo="color: orange;"}
+[**CUIDADO:** Uma vez que num estudo de coorte real, a informação sobre a hora de origem e o fim do seguimento é conhecida, dado que são observados indivíduos, removeremos as observações onde a data de início ou a data do desfecho é desconhecida. Também os casos em que a data de início é posterior à data do resultado serão removidos, uma vez que são considerados errados]{estilo="color: orange;"}
 
-[***DICA:*** Dado que filtrar para maior que (\>) ou menor que (\<) uma data pode remover linhas sem valores, aplicar o filtro nas datas erradas também removerá as linhas sem datas.]{style="color: darkgreen;"}
+[**DICA:** Dado que filtrar para maior que (\>) ou menor que (\<) uma data pode remover linhas sem valores, aplicar o filtro nas datas erradas também removerá as linhas sem datas.]{style="color: darkgreen;"}
 
 Depois utilizamos `case_when()` para criar uma coluna `age_cat_small` na qual existem apenas 3 categorias de idade.
 
@@ -120,27 +120,27 @@ linelist_surv <-  linelist_case_data %>%
             age_years >= 5 & age_years < 20 ~ "5-19",
             age_years >= 20   ~ "20+"),
        
-       # passo anterior criou age_cat_small var como *character*.
-       # agora o converte em *fator* e especifica os níveis.
+       # passo anterior criou age_cat_small var como caractere
+       # agora o converte em fator e especifica os níveis.
        # note que os valores NA continuam a ser NA e não são colocados num nível "desconhecido", por exemplo,
        # uma vez que nas análises seguintes tem de ser removidas.
        age_cat_small = fct_relevel(age_cat_small, "0-4", "5-19", "20+")
        )
 ```
 
-[***DICA:*** Podemos verificar as novas colunas que criámos fazendo um resumo sobre o `futime` e uma tabulação cruzada entre o `evento` e o `resultado` de onde foi criado. Para além desta verificação, é um bom hábito comunicar o tempo médio de seguimento ao interpretar os resultados da análise de sobrevivência.]{style="color: darkgreen;"}
+[**DICA:** Podemos verificar as novas colunas que criamos fazendo um resumo sobre o `futime` e uma tabulação cruzada entre o `evento` e o `resultado` de onde foi criado. Para além desta verificação, é um bom hábito comunicar o tempo médio de seguimento ao interpretar os resultados da análise de sobrevivência.]{style="color: darkgreen;"}
 
 ```{r }
 
 summary(linelist_surv$futime)
 
-# tabulação cruzada do novo evento var e o resultado var a partir do qual foi criado
+# tabulação cruzada das novas variáveis modificadas "event" e "outcome" (desfecho) 
 # para garantir que o código fazia o que se pretendia
 linelist_surv %>% 
   tabyl(outcome, event)
 ```
 
-Agora fazemos uma tabulação cruzada do var new age_cat_small e old age_cat col para garantir atribuições corretas
+Agora fazemos uma tabulação cruzada da nova variável "age_cat_small" e da antiga coluna "age_cat" para garantir atribuições corretas
 
 ```{r}
 linelist_surv %>% 
@@ -212,10 +212,10 @@ linelist_surv %>%
 
 Utilizaremos primeiro a função `Surv()` do pacote **survival** para construir um objeto de sobrevivência a partir das colunas de tempo e evento seguintes.
 
-O resultado de tal passo é produzir um objeto do tipo *Surv* que condensa a informação do tempo e se o evento de interesse (morte) foi observado. Este objeto acabará por ser utilizado no lado direito das fórmulas do modelo subsequente (ver [documentação](https://cran.r-project.org/web/packages/survival/vignettes/survival.pdf)).
+O resultado de tal passo é produzir um objeto do tipo *Surv* que condensa a informação do tempo e se o evento de interesse (óbito) foi observado. Este objeto acabará por ser utilizado no lado direito das fórmulas do modelo subsequente (ver [documentação](https://cran.r-project.org/web/packages/survival/vignettes/survival.pdf)).
 
 ```{r survobj }
-# Use a sintaxe Suv() para dados censudaros
+# Use a sintaxe Suv() para dados censurados
 survobj <- Surv(time = linelist_surv$futime,
                 event = linelist_surv$event)
 ```
@@ -245,7 +245,7 @@ E aqui estão os primeiros 10 elementos do `survobj`. Imprime essencialmente com
 head(survobj, 10)
 ```
 
-### Rodando analises iniciais {.unnumbered}
+### Rodando análises iniciais {.unnumbered}
 
 Iniciamos então a nossa análise utilizando a função `survfit()` para produzir um *objeto survfit*, que se ajusta aos cálculos padrões de estimativas da curva de sobrevivência global (marginal) ***Kaplan Meier*** (KM) , que são na verdade uma função com saltos em tempos de eventos observados. O objeto final *survfit* contém uma ou mais curvas de sobrevivência e são criadas usando o objeto *Surv* como uma resposta variável na fórmula do modelo.
 
@@ -253,19 +253,19 @@ Iniciamos então a nossa análise utilizando a função `survfit()` para produzi
 
 O resumo deste *objeto survfit* dará o que se chama uma *tabela de vida*. Para cada passo do seguimento (`tempo`) em que um evento aconteceu (em ordem ascendente):
 
--   o número de pessoas que estavam em risco de desenvolver o evento (pessoas que ainda não tinham o evento nem foram censuradas: `n.risk`)\
--   aqueles que desenvolveram o evento (`n.event`)\
--   e do acima exposto: a probabilidade de *não* desenvolver o evento (probabilidade de não morrer, ou de sobreviver depois desse tempo específico)\
+-   o número de pessoas que estavam em risco de desenvolver o evento (pessoas que ainda não tinham o evento nem foram censuradas: `n.risk`)
+-   aqueles que desenvolveram o evento (`n.event`)
+-   e do acima exposto: a probabilidade de *não* desenvolver o evento (probabilidade de não morrer, ou de sobreviver depois desse tempo específico)
 -   finalmente, o erro padrão e o intervalo de confiança para essa probabilidade são derivados e exibidos
 
-Encaixamos as estimativas KM usando a fórmula em que o objeto anteriormente Surv "survobj" é a variável de resposta. "\~ 1" precisa que executamos o modelo para a sobrevivência global.
+Encaixamos as estimativas KM usando a fórmula em que o objeto anteriormente Surv "survobj" é a variável de resposta. "~ 1" precisa que executamos o modelo para a sobrevivência global.
 
 ```{r fit}
 # encaixa nas estimativas KM usando uma fórmula onde o objeto Surv "sobrevivente" é a variável de resposta.
 # "~ 1" significa que executamos o modelo para a sobrevivência global   
 linelistsurv_fit <-  survival::survfit(survobj ~ 1)
 
-#imprime o resumo para mais detalhes
+# imprime o resumo para mais detalhes
 summary(linelistsurv_fit)
 
 ```
@@ -281,7 +281,7 @@ summary(linelistsurv_fit, times = c(5,10,20,30,60))
 
 Podemos também utilizar a função `print()`. O argumento `print.rmean = TRUE` é utilizado para obter o tempo médio de sobrevivência e o seu erro padrão (SE na sigla em inglês).
 
-<span style="color: black;">***NOTA:*** O tempo médio de sobrevivência restrito (RMST na sigla em inglês) é uma medida de sobrevivência específica cada vez mais utilizada na análise de sobrevivência ao câncer e que é frequentemente definida como a área sob a curva de sobrevivência, dado que observamos pacientes até ao tempo restrito T (mais detalhes na seção Recursos).
+[**NOTA:** O tempo médio de sobrevivência restrito (RMST na sigla em inglês) é uma medida de sobrevivência específica cada vez mais utilizada na análise de sobrevivência ao câncer e que é frequentemente definida como a área sob a curva de sobrevivência, dado que observamos pacientes até ao tempo restrito T (mais detalhes na seção Recursos).]{style="color: black;"}
 
 ```{r, mean_survtime}
 # imprimir objeto linelistsurv_fit com tempo médio de sobrevivência e sua SE.
@@ -289,13 +289,13 @@ print(linelistsurv_fit, print.rmean = TRUE)
 
 ```
 
-[***DICA:*** Podemos criar o objeto *surv* diretamente na função `survfit()` e economizar uma linha de código. Ficará então: `linelistsurv_quick <-  survfit(Surv(futime, event) ~ 1, data=linelist_surv)`.]{style="color: darkgreen;"}
+[**DICA:** Podemos criar o objeto *surv* diretamente na função `survfit()` e economizar uma linha de código. Ficará então: `linelistsurv_quick <-  survfit(Surv(futime, event) ~ 1, data=linelist_surv)`.]{style="color: darkgreen;"}
 
-### Perigo acumulado {.unnumbered}
+### Risco acumulado {.unnumbered}
 
 Além da função `summary()`, também podemos utilizar a função `str()` que dá mais detalhes sobre a estrutura do objeto `survfit()`. É uma lista de 16 elementos.
 
-Entre estes elementos é um importante: `cumhaz`, que é um vetor numérico. Este pode ser traçado para permitir mostrar o ***perigo cumulativo***, sendo o ***perigo*** o ***índice instantâneo de ocorrência de eventos**** (ver referências).
+Entre estes elementos é um importante: `cumhaz`, que é um vetor numérico. Este pode ser traçado para permitir mostrar o **risco cumulativo**, sendo o **risco** o **índice instantâneo de ocorrência de eventos** (ver referências).
 
 ```{r fit_struct}
 
@@ -318,28 +318,28 @@ Uma maneira fácil de interpretar é dizer que no tempo zero, todos os participa
 plot(linelistsurv_fit, 
      xlab = "Days of follow-up",    # nome eixo X
      ylab="Survival Probability",   # nome eixo Y
-     main= "Overall survival curve" # fítulo da figura
+     main= "Overall survival curve" # título da figura
      )
 
 ```
 
 O intervalo de confiança das estimativas de sobrevivência do KM também são traçados por padrão e podem ser descartados adicionando a opção `conf.int = FALSE` ao comando `plot()`.
 
-Uma vez que o evento de interesse é "morte", desenhar uma curva descrevendo os complementos das proporções de sobrevivência levará a desenhar as proporções de mortalidade acumulada. Isto pode ser feito com `lines()`, o que acrescenta informação a uma parcela existente.
+Uma vez que o evento de interesse é "óbito", desenhar uma curva descrevendo os complementos das proporções de sobrevivência levará a desenhar as proporções de mortalidade acumulada. Isto pode ser feito com `lines()`, o que acrescenta informação a uma parcela existente.
 
 ```{r}
 
-# plot original
+# gráfico original
 plot(
   linelistsurv_fit,
-  xlab = "Days of follow-up",       
-  ylab = "Survival Probability",       
+  xlab = "Dias de seguimento",       
+  ylab = "Probabilidade de Sobrevivência",       
   mark.time = TRUE,               # marcar eventos na curva: um "+" é impresso em cada evento
   conf.int = FALSE,              # não traçar o intervalo de confiança
-  main = "Overall survival curve and cumulative mortality"
+  main = "Curva geral de sobrevivência e mortalidade acumulada"
   )
 
-# desenhar uma curva adicional ao plot anterior
+# desenhar uma curva adicional ao gráfico anterior
 lines(
   linelistsurv_fit,
   lty = 3,             # usar tipo de linha diferente para maior clareza
@@ -348,13 +348,13 @@ lines(
   conf.int = FALSE
   )
 
-# adiciona legenda ao plot
+# adiciona legenda ao gráfico
 legend(
-  "topright",                               # posição da legenda
-  legend = c("Survival", "Cum. Mortality"), # texto da legenda
-  lty = c(1, 3),                            # tipos de linha a serem usados na legenda
-  cex = .85,                                # parametros que definem o tamanho do texto da legenda
-  bty = "n"                                 # nenhum tipo de caixa a ser desenhada para a legenda
+  "topright",                                       # posição da legenda
+  legend = c("Sobrevivência", "Mortalidade Acum."), # texto da legenda
+  lty = c(1, 3),                                    # tipos de linha a serem usados na legenda
+  cex = .85,                                        # parâmetros que definem o tamanho do texto da legenda
+  bty = "n"                                         # nenhum tipo de caixa a ser desenhada para a legenda
   )
 
 ```
@@ -367,19 +367,19 @@ Para comparar a sobrevivência dentro de diferentes grupos dos nossos participan
 
 ### Teste de classificação de registo {.unnumbered}
 
-O teste de log rank é um teste popular que compara toda a experiência de sobrevivência entre dois ou mais grupos *independentes* e pode ser pensado como um teste para verificar se as curvas de sobrevivência são idênticas (sobreposição) ou não (hipótese nula de não haver diferença na sobrevivência entre os grupos). A função `survdiff()` do pacote **survival** permite executar o teste de log-rank quando especificamos `rho = 0` (que é o padrão). Os resultados do teste dão uma estatística de qui-quadrado juntamente com um valor p, uma vez que a estatística de classificação logarítmica é distribuída aproximadamente como uma estatística de teste de qui-quadrado.
+O teste de log-rank é um teste popular que compara toda a experiência de sobrevivência entre dois ou mais grupos *independentes* e pode ser pensado como um teste para verificar se as curvas de sobrevivência são idênticas (sobreposição) ou não (hipótese nula de não haver diferença na sobrevivência entre os grupos). A função `survdiff()` do pacote **survival** permite executar o teste de log-rank quando especificamos `rho = 0` (que é o padrão). Os resultados do teste dão uma estatística de qui-quadrado juntamente com um p-valor, uma vez que a estatística de classificação logarítmica é distribuída aproximadamente como uma estatística de teste de qui-quadrado.
 
-Tentamos primeiro comparar as curvas de sobrevivência por grupo de género. Para tal, tentamos primeiro visualizá-la (verificar se as duas curvas de sobrevivência estão sobrepostas). Um novo objeto *survfit* será criado com uma fórmula ligeiramente diferente. Depois será criado o objeto *survdiff*.
+Tentamos primeiro comparar as curvas de sobrevivência por grupo de gênero. Para tal, tentamos primeiro visualizá-la (verificar se as duas curvas de sobrevivência estão sobrepostas). Um novo objeto *survfit* será criado com uma fórmula ligeiramente diferente. Depois será criado o objeto *survdiff*.
 
-Ao fornecer `~ gender` como o lado direito da fórmula, deixamos de traçar a sobrevivência global e passamos a fazê-lo por género.
+Ao fornecer `~ gender` como o lado direito da fórmula, deixamos de traçar a sobrevivência global e passamos a fazê-lo por gênero.
 
 ```{r comp_surv, warning=FALSE}
 
-# criar um novo objeto survfit baseado no gênero
+# criar um novo objeto do tipo survfit baseado no gênero
 linelistsurv_fit_sex <-  survfit(Surv(futime, event) ~ gender, data = linelist_surv)
 ```
 
-Agora podemos traçar as curvas de sobrevivência por género. Veja a *ordem* dos níveis de estratos na coluna do gênero antes de definir as suas cores e legendas.
+Agora podemos traçar as curvas de sobrevivência por gênero. Veja a *ordem* dos níveis de estratos na coluna do gênero antes de definir as suas cores e legendas.
 
 ```{r}
 # padrão de cor
@@ -395,7 +395,7 @@ plot(
 # adiciona legenda
 legend(
   "topright",
-  legend = c("Female","Male"),
+  legend = c("Feminino","Masculino"),
   col = col_sex,
   lty = 1,
   cex = .9,
@@ -417,7 +417,7 @@ Vemos que a curva de sobrevivência das mulheres e a dos homens se sobrepõem e 
 
 Alguns outros pacotes de R permitem ilustrar curvas de sobrevivência para diferentes grupos e testar a diferença de uma só vez. Utilizando a função `ggsurvplot()` do pacote **survminer**, podemos também incluir na nossa curva as tabelas de risco impressas para cada grupo, bem como o valor p do teste de log-rank.
 
-[***CUIDADO:*** funções **survminer** requerem que se especifique o objeto de sobrevivência *e* novamente os dados utilizados para encaixar o objeto de sobrevivência. Lembre-se de fazer isto para evitar mensagens de erro não específicas].{style="color: orange;"}
+[**CUIDADO:** funções **survminer** requerem que se especifique o objeto de sobrevivência *e* novamente os dados utilizados para encaixar o objeto de sobrevivência. Lembre-se de fazer isto para evitar mensagens de erro não específicas].{style="color: orange;"}
 
 ```{r, warning=F, message=F}
 
@@ -478,44 +478,44 @@ ggsurvplot(
 
 <!-- ======================================================= -->
 
-## Análise de regressão Cox
+## Análise de regressão de Cox
 
-A regressão proporcional de perigos Cox é uma das técnicas de regressão mais populares para a análise de sobrevivência. Outros modelos também podem ser utilizados, uma vez que o modelo Cox requer *importantes pressupostos* que precisam ser verificados para uma utilização adequada, tal como o pressuposto dos perigos proporcionais: ver referências.
+O modelo de riscos proporcionais de Cox é uma das técnicas de regressão mais populares para a análise de sobrevivência. Outros modelos também podem ser utilizados, uma vez que o modelo Cox requer *importantes pressupostos* que precisam ser verificados para uma utilização adequada, tal como o pressuposto dos riscos proporcionais: ver referências.
 
-Num modelo de regressão de perigos proporcionais Cox, a medida do efeito é a ***taxa de risco ***(HR na sigla em inglês), que é o risco de fracasso (ou o risco de morte no nosso exemplo), dado que o participante sobreviveu até um tempo específico. Normalmente, estamos interessados em comparar *grupos independentes* com respeito aos seus perigos, e utilizamos uma taxa de perigo, que é análoga a uma taxa de probabilidade no estabelecimento de uma análise de regressão logística múltipla. A função `cox.ph()` do pacote **survival** é utilizada para se adequar ao modelo. A função `cox.zph()` do pacote **survival** pode ser utilizada para testar a hipótese de perigos proporcionais para um ajuste do modelo de regressão Cox.
+Num modelo de riscos proporcionais de Cox, a medida do efeito é a **taxa de risco ou razão de riscos**(HR na sigla *Hazard Ratio* em inglês), que é o risco de fracasso (ou o risco de morte no nosso exemplo), dado que o participante sobreviveu até um tempo específico. Normalmente, estamos interessados em comparar *grupos independentes* com respeito aos seus perigos, e utilizamos uma taxa de risco, que é análoga a uma taxa de probabilidade no estabelecimento de uma análise de regressão logística múltipla. A função `cox.ph()` do pacote **survival** é utilizada para se adequar ao modelo. A função `cox.zph()` do pacote **survival** pode ser utilizada para testar a hipótese de riscos proporcionais para um ajuste do modelo de regressão Cox.
 
-<span style="color: black;">***NOTA:*** A probabilidade deve estar no intervalo de 0 a 1. No entanto, o perigo representa o número esperado de eventos por uma unidade de tempo.
+<span style="color: black;">**NOTA:** A probabilidade deve estar no intervalo de 0 a 1. No entanto, o perigo representa o número esperado de eventos por uma unidade de tempo.
 
 -   Se a razão de perigo para um preditor for próxima de 1, então esse preditor não afeta a sobrevivência,
--   se o RH for inferior a 1, então o preditor é protetor (ou seja, associado a uma melhor sobrevivência),
+-   se o HR for inferior a 1, então o preditor é protetor (ou seja, associado a uma melhor sobrevivência),
 -   e se a FC for superior a 1, então o preditor está associado ao aumento do risco (ou diminuição da sobrevivência).</span>
 
-### Colocação de um modelo Cox {.unnumbered}
+### Ajuste de um modelo Cox {.unnumbered}
 
-Podemos primeiro encaixar um modelo para avaliar o efeito da idade e do gênero na sobrevivência. Ao imprimir apenas o modelo, temos a informação sobre:
+Podemos primeiro ajustar um modelo para avaliar o efeito da idade e do gênero na sobrevivência. Ao imprimir apenas o modelo, temos a informação sobre:
 
 -   os coeficientes de regressão estimados "coef" que quantificam a associação entre os preditores e o resultado,
--   a sua exponencialidade (para interpretabilidade, `exp(coef)`) que produz a relação *perigosa*,
+-   a sua exponencial (para interpretabilidade, `exp(coef)`) que produz a *razão de riscos HR*,
 -   o seu erro padrão `se(coef)`,
 -   o z-score: quantos erros padrão é o coeficiente estimado a partir de 0,
--   e o p valor: a probabilidade de o coeficiente estimado poder ser 0.
+-   e o p-valor: a probabilidade de o coeficiente estimado poder ser 0.
 
 A função `summary()` aplicada ao objeto modelo Cox dá mais informações, tais como o intervalo de confiança do HR estimado e os diferentes resultados do teste.
 
-O efeito do primeiro "gênero" covariável é apresentado na primeira linha. O `genderm` (masculino) é impresso, implicando que o primeiro nível de estratos ("f"), ou seja, o grupo feminino, é o grupo de referência para o gênero. Assim, a interpretação do parâmetro de teste é a dos homens em comparação com a das mulheres. O p-valor indica que não havia provas suficientes de um efeito do gênero sobre o perigo esperado ou de uma associação entre o gênero e a mortalidade por todas as causas.
+O efeito da primeira covariável "gênero" é apresentado na primeira linha. O `genderm` (masculino) é mostrado indicando que o primeiro nível de estratos ("f"), ou seja, o grupo feminino, é o grupo de referência para as comparações dentro do gênero. Assim, a interpretação do parâmetro de teste é a dos homens em comparação com a das mulheres. O p-valor indica que não havia evidências suficientes de um efeito do gênero sobre o risco esperado ou de uma associação entre o gênero e a mortalidade por todas as causas.
 
-A mesma falta de provas é notada no que diz respeito ao grupo etário.
+A mesma falta de evidências é notada no que diz respeito ao grupo etário.
 
 ```{r coxmodel_agesex}
 
-#encaixando o modelo cox
+# ajustando o modelo cox
 linelistsurv_cox_sexage <-  survival::coxph(
               Surv(futime, event) ~ gender + age_cat_small, 
               data = linelist_surv
               )
 
 
-#imprimindo o modelo encaixado
+#imprimindo o modelo ajustado
 linelistsurv_cox_sexage
 
 
@@ -524,7 +524,7 @@ summary(linelistsurv_cox_sexage)
 
 ```
 
-Foi interessante executar o modelo e olhar para os resultados, mas um primeiro olhar para verificar se os pressupostos de perigos proporcionais são respeitados poderia ajudar a poupar tempo.
+Foi interessante executar o modelo e olhar para os resultados, mas um primeiro olhar para verificar se os pressupostos de riscos proporcionais são respeitados poderia ajudar a poupar tempo.
 
 ```{r test_assumption}
 
@@ -533,7 +533,7 @@ test_ph_sexage
 
 ```
 
-[***NOTA:*** Um segundo argumento chamado *método* pode ser especificado ao calcular o modelo cox, que determina como os laços são tratados. O *padrão* é "efron", e as outras opções são "breslow" e "exact".]{style="color: black;"}
+[**NOTA:** Um segundo argumento da função chamado *method* pode ser especificado ao calcular o modelo cox, que determina como os empates são tratados. O *padrão* é "efron", e as outras opções são "breslow" e "exact".]{style="color: black;"}
 
 Num outro modelo, adicionamos mais fatores de risco, tais como a fonte da infecção e o número de dias entre a data de início e a admissão. Desta vez, verificamos primeiro a hipótese de riscos proporcionais antes de avançarmos.
 
@@ -548,7 +548,7 @@ linelistsurv_cox <-  coxph(
                         )
 
 
-#testa o modelo de perigo proporcional
+#testa o modelo de risco proporcional
 linelistsurv_ph_test <- cox.zph(linelistsurv_cox)
 linelistsurv_ph_test
 ```
@@ -560,7 +560,7 @@ survminer::ggcoxzph(linelistsurv_ph_test)
 
 ```
 
-Os resultados do modelo indicam a existência de uma associação negativa entre o início da duração da admissão e a mortalidade por todas as causas. O perigo esperado é 0,9 vezes menor numa pessoa que é admitida um dia mais tarde do que outra, mantendo constante o gênero. Ou, numa explicação mais direta, um aumento de uma unidade na duração do início da admissão está associado a uma diminuição de 10,7% (`coef *100`) no risco de morte.
+Os resultados do modelo indicam a existência de uma associação negativa entre o início da duração da admissão e a mortalidade por todas as causas. O risco esperado é 0,9 vezes menor numa pessoa que é admitida um dia mais tarde do que outra, mantendo constante o gênero. Ou, numa explicação mais direta, um aumento de uma unidade na duração do início da admissão está associado a uma diminuição de 10,7% (`coef *100`) no risco de morte.
 
 Os resultados mostram também uma associação positiva entre a fonte da infecção e a mortalidade por todas as causas. Ou seja, há um aumento do risco de morte (1,21x) para os pacientes que têm outra fonte de infecção.
 
@@ -585,7 +585,7 @@ Teríamos de considerar e investigar porque é que esta associação existe nos 
 
 <!-- ======================================================= -->
 
-### Forest plots {.unnumbered}
+### Gráficos em floresta (Forest plots) {.unnumbered}
 
 Podemos visualizar os resultados do modelo Cox usando "forest plots" com a função `ggforest()` do pacote **survminer**.
 
@@ -601,13 +601,13 @@ ggforest(linelistsurv_cox, data = linelist_surv)
 
 Algumas das seções seguintes foram adaptadas com permissão de uma excelente [introdução à análise de sobrevivência em R](https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html) pela [Dra. Emily Zabor](https://www.emilyzabor.com/)
 
-Na última seção usamos a regressão Cox para examinar associações entre covariates de interesse e resultados de sobrevivência. Mas estas análises dependem da covariação ser medida na linha de base, ou seja, antes do tempo de seguimento do evento começar.
+Na última seção usamos a regressão Cox para examinar associações entre covariáveis de interesse e resultados de sobrevivência. Mas estas análises dependem da covariância ser medida na linha de base, ou seja, antes do tempo de seguimento do evento começar.
 
-O que acontece se estiver interessado numa covariada que é medida **após** o início do tempo de seguimento? Ou, e se tiver uma covariada que possa mudar ao longo do tempo?
+O que acontece se estiver interessado em uma covariável que é medida **após** o início do tempo de seguimento? Ou, e se uma dessas covariáveis possa mudar ao longo do tempo?
 
-Por exemplo, talvez esteja trabalhando com dados clínicos onde repetiu medidas de valores laboratoriais hospitalares que podem mudar ao longo do tempo. Este é um exemplo de uma **Covariação Dependente do Tempo**. Para resolver este problema é necessário uma configuração especial, mas felizmente o modelo cox é muito flexível e este tipo de dados também pode ser modelado com ferramentas do pacote **survival**.
+Por exemplo, talvez esteja trabalhando com dados clínicos onde repetiu medidas de valores laboratoriais hospitalares que podem mudar ao longo do tempo. Este é um exemplo de uma **Covariável Dependente do Tempo**. Para resolver este problema é necessário uma configuração especial, mas felizmente o modelo cox é muito flexível e este tipo de dados também pode ser modelado com ferramentas do pacote **survival**.
 
-### Configuração covariada dependente do tempo {.unnumbered}
+### Configuração de covariável dependente do tempo {.unnumbered}
 
 A análise de covariáveis dependentes do tempo em R requer a configuração de um conjunto de dados especial. Se estiver interessado, ver o artigo mais detalhado sobre este assunto do autor do pacote **survival** [Using Time Dependent Covariates and Time Dependent Coefficients in the Cox Model](https://cran.r-project.org/web/packages/survival/vignettes/timedep.pdf).
 
@@ -615,7 +615,7 @@ Para tal, utilizaremos um novo conjunto de dados do pacote `SemiCompRisks' chama
 
 -   `T1` - tempo (em dias) até à morte ou último seguimento\
 
--   `delta1` - indicador de morte; 1-Morte, 0-Vivos\
+-   `delta1` - indicador de óbito; 1-Óbito, 0-Vivos\
 
 -   `TA` - tempo (em dias) até à doença aguda de enxerto-versus-hospedeiro\
 
@@ -624,7 +624,7 @@ Para tal, utilizaremos um novo conjunto de dados do pacote `SemiCompRisks' chama
     -   1 - desenvolveu a doença aguda de enxerto-versus-hospedeiro\
     -   0 - Nunca desenvolveu doença aguda de enxerto-versus-hospedeiro
 
-Vamos carregar este conjunto de dados a partir do pacote **survival** utilizando o comando **base** R `data()`, que pode ser utilizado para carregar dados que já estão incluídos num pacote R que é carregado. A moldura de dados `BMT` irá aparecer no seu ambiente R.
+Vamos carregar este conjunto de dados a partir do pacote **survival** utilizando o comando do R **base** `data()`, que pode ser utilizado para carregar dados que já estão incluídos num pacote R que é carregado. A moldura de dados `BMT` irá aparecer no seu ambiente R.
 
 ```{r}
 data(BMT, package = "SemiCompRisks")
@@ -632,7 +632,7 @@ data(BMT, package = "SemiCompRisks")
 
 #### Adicionar identificador único de doente {.unnumbered}
 
-Não existe uma coluna de ID única nos dados `BMT`, que é necessária para criar o tipo de conjunto de dados que desejamos. Assim, utilizamos a função `rowid_to_column()` do pacote **tidyverse** para criar uma nova coluna de id chamada `my_id` (adiciona coluna no início do Data Frame com ids sequenciais de linha, começando em 1). Nomeamos o Data Frame como `bmt`.
+Não existe uma coluna de ID única nos dados `BMT`, que é necessária para criar o tipo de conjunto de dados que desejamos. Assim, utilizamos a função `rowid_to_column()` do pacote **tidyverse** para criar uma nova coluna de id chamada `my_id` (adiciona coluna no início do Data Frame com ids sequenciais de linha, começando em 1). Nomeamos o data frame como `bmt`.
 
 ```{r}
 bmt <- rowid_to_column(BMT, "my_id")
@@ -646,7 +646,7 @@ DT::datatable(bmt, rownames = FALSE, options = list(pageLength = 5, scrollX=T), 
 
 #### Expandir as linhas de pacientes {.unnumbered}
 
-A seguir, utilizaremos a função `tmerge()` com as funções auxiliares `event()` e `tdc()` helper para criar o conjunto de dados reestruturado. O nosso fim Neste caso, cada paciente pode ter no máximo duas linhas, dependendo se desenvolveu doença aguda de enxerto-versus-hospedeiro durante o período de coleta de dados. Vamos chamar o nosso novo indicador para o desenvolvimento da doença aguda de enxerto-versus-hospedeiro `agvhd`.
+A seguir, utilizaremos a função `tmerge()` com as funções auxiliares `event()` e `tdc()` helper para criar o conjunto de dados reestruturado. Neste caso, cada paciente pode ter no máximo duas linhas, dependendo se desenvolveu doença aguda de enxerto-versus-hospedeiro durante o período de coleta de dados. Vamos chamar o nosso novo indicador para o desenvolvimento da doença aguda de enxerto-versus-hospedeiro `agvhd`.
 
 -   `tmerge()` cria um longo conjunto de dados com múltiplos intervalos de tempo para os diferentes valores covariados para cada paciente
 -   `event()` cria o novo indicador de evento para combinar com os intervalos de tempo recém-criados
@@ -703,7 +703,7 @@ ggforest(bmt_td_model, data = td_dat)
 
 ```
 
-Como se pode ver pela "forest plot", intervalo de confiança e p-valor, não parece haver forte associação entre a morte e a doença aguda do enxerto-versus-hospedeiro no contexto do nosso modelo simples.
+Como se pode ver pela "forest plot", intervalo de confiança e p-valor, não parece haver forte associação entre ocorrência de óbito e a doença aguda do enxerto-versus-hospedeiro no contexto do nosso modelo simples.
 
 <!-- ======================================================= -->
 
@@ -711,7 +711,7 @@ Como se pode ver pela "forest plot", intervalo de confiança e p-valor, não par
 
 [Survival Analysis Part I: Basic concepts and first analyses](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2394262/)
 
-[Survival Analysis in R](https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html)
+[Análise de sobrevivência no R](https://www.emilyzabor.com/tutorials/survival_analysis_in_r_tutorial.html)
 
 [Survival analysis in infectious disease research: Describing events in time](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2954271/)
 
@@ -719,8 +719,8 @@ Como se pode ver pela "forest plot", intervalo de confiança e p-valor, não par
 
 [Using Time Dependent Covariates and Time Dependent Coefficients in the Cox Model](https://cran.r-project.org/web/packages/survival/vignettes/timedep.pdf)
 
-[Survival analysis cheatsheet R](https://publicifsv.sund.ku.dk/~ts/survival/survival-cheat.pdf)
+[Cheatsheet (cola) de análise de sobrevivência](https://publicifsv.sund.ku.dk/~ts/survival/survival-cheat.pdf)
 
-[Survminer cheatsheet](https://paulvanderlaken.files.wordpress.com/2017/08/survminer_cheatsheet.pdf)
+[Cheatsheet (cole) do Survminer ](https://paulvanderlaken.files.wordpress.com/2017/08/survminer_cheatsheet.pdf)
 
 [Paper on different survival measures for cancer registry data with Rcode provided as supplementary materials](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6322561/)
