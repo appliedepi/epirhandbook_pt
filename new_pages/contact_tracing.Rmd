@@ -2,24 +2,12 @@
 # Rastreio de contatos
 
 
-Esta página demonstra uma análise descritiva dos dados de rastreio de
-contatos, acrescentando algumas considerações-chave e abordagens únicas a este tipo de dados.
+Esta página demonstra uma análise descritiva dos dados de rastreio de contatos, acrescentando algumas considerações-chave e abordagens únicas a este tipo de dados.
 
-Esta página faz referência a muitas das competências centrais de gestão
-e visualização de dados em R, cobertas em outras páginas (por exemplo,
-limpeza de dados, pivot, tabelas, análises de séries temporais).
-Contudo, destacaremos exemplos específicos de rastreio de contatos que
-têm sido úteis para a tomada de decisões operacionais. Por exemplo, está
-inclusa a visualização de dados de seguimento de rastreio de contatos ao
-longo do tempo ou através de áreas geográficas, ou a produção de tabelas
-de Indicadores de Desempenho Chave (KPI, na sigla em inglês) limpas para
-supervisores de rastreio de contatos.
+Esta página faz referência a muitas das competências centrais de gestão e visualização de dados em R, cobertas em outras páginas (por exemplo, limpeza de dados, pivoteamento, tabelas, análises de séries temporais). Contudo, destacaremos exemplos específicos de rastreio de contatos que têm sido úteis para a tomada de decisões operacionais. Por exemplo, está inclusa a visualização de dados de seguimento de rastreio de contatos ao longo do tempo ou através de áreas geográficas, ou a produção de tabelas
+de Indicadores de Desempenho Chave (KPI, do inglês *Key Performance Indicator*) limpas para supervisores de rastreio de contatos.
 
-Para fins de demonstração, utilizaremos amostras de dados de rastreio de
-contatos da plataforma [Go.Data](https://www.who.int/tools/godata). Os
-princípios aqui abordados serão aplicados aos dados de rastreio de
-contatos de outras plataformas - você poderá apenas precisar passar por
-diferentes etapas de pré-processamento de dados, dependendo da estrutura
+Para fins de demonstração, utilizaremos amostras de dados de rastreio de contatos da plataforma [Go.Data](https://www.who.int/tools/godata). Os princípios aqui abordados serão aplicados aos dados de rastreio de contatos de outras plataformas - você poderá apenas precisar passar por diferentes etapas de pré-processamento de dados, dependendo da estrutura
 da base.
 
 Leia mais sobre o projeto Go.Data no site [Github Documentation
