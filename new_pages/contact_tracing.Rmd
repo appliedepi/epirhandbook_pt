@@ -1,9 +1,9 @@
 
 # Rastreio de contatos
 
+
 Esta página demonstra uma análise descritiva dos dados de rastreio de
-contatos, acrescentando algumas considerações-chave e abordagens únicas
-a este tipo de dados.
+contatos, acrescentando algumas considerações-chave e abordagens únicas a este tipo de dados.
 
 Esta página faz referência a muitas das competências centrais de gestão
 e visualização de dados em R, cobertas em outras páginas (por exemplo,
