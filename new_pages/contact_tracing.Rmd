@@ -7,29 +7,24 @@ Esta página demonstra uma análise descritiva dos dados de rastreio de contatos
 Esta página faz referência a muitas das competências centrais de gestão e visualização de dados em R, cobertas em outras páginas (por exemplo, limpeza de dados, pivoteamento, tabelas, análises de séries temporais). Contudo, destacaremos exemplos específicos de rastreio de contatos que têm sido úteis para a tomada de decisões operacionais. Por exemplo, está inclusa a visualização de dados de seguimento de rastreio de contatos ao longo do tempo ou através de áreas geográficas, ou a produção de tabelas
 de Indicadores de Desempenho Chave (KPI, do inglês *Key Performance Indicator*) limpas para supervisores de rastreio de contatos.
 
-Para fins de demonstração, utilizaremos amostras de dados de rastreio de contatos da plataforma [Go.Data](https://www.who.int/tools/godata). Os princípios aqui abordados serão aplicados aos dados de rastreio de contatos de outras plataformas - você poderá apenas precisar passar por diferentes etapas de pré-processamento de dados, dependendo da estrutura
-da base.
+Para fins de demonstração, utilizaremos amostras de dados de rastreio de contatos da plataforma [Go.Data](https://www.who.int/tools/godata). Os princípios aqui abordados serão aplicados aos dados de rastreio de contatos de outras plataformas - você poderá apenas precisar passar por diferentes etapas de pré-processamento de dados, dependendo da estrutura da base.
 
-Leia mais sobre o projeto Go.Data no site [Github Documentation
-site](https://worldhealthorganization.github.io/godata/) ou [Community
+Leia mais sobre o projeto Go.Data no site [Github Documentation site](https://worldhealthorganization.github.io/godata/) ou [Community
 of Practice](https://community-godata.who.int/).
 
 ## Preparação
 
 ### Carregar pacotes {.unnumbered}
 
-Esta chunck mostra o carregamento dos pacotes necessários para as
-análises. Neste manual damos ênfase a função `p_load()` do **pacman**,
-que instala o pacote se necessário *e* carrega-o para utilização. Também
-se pode carregar pacotes instalados com `library()` a partir do **R
-base**. Veja a página [R basics] para mais informações sobre pacotes R.
+Esta chunck mostra o carregamento dos pacotes necessários para as análises. Neste manual damos ênfase a função `p_load()` do **pacman**,
+que instala o pacote se necessário *e* carrega-o para utilização. Também se pode carregar pacotes instalados com `library()` a partir do **R base**. Veja a página [R basics] para mais informações sobre pacotes R.
 
 ```{r, message = F}
 pacman::p_load(
-  rio,          # importando dados  
+  rio,          # importar dados  
   here,         # caminhos relativos de arquivos 
   janitor,      # limpeza dos dados e tabelas
-  lubridate,    # trabalhando com datas
+  lubridate,    # trabalhar com datas
   epikit,       # função age_categories()
   apyramid,     # piramides etárias
   tidyverse,    # manipulação e visualização de dados
@@ -41,15 +36,11 @@ pacman::p_load(
 
 ### Importação de dados {.unnumbered}
 
-Importaremos amostras de conjuntos de dados de contatos e de seus
-"acompanhamentos". Estes dados foram recuperados e separados da API
-Go.Data e armazenados como arquivos ".rds".
+Importaremos amostras de conjuntos de dados de contatos e de seus "acompanhamentos". Estes dados foram recuperados e separados da API Go.Data e armazenados como arquivos ".rds".
 
-Você pode fazer o download de todos os dados de exemplo para este manual
-a partir da página [Download do manual e dados].
+Você pode fazer o download de todos os dados de exemplo para este manual a partir da página [Download do manual e dados].
 
-Se desejar fazer o download do exemplo de dados de rastreio de contatos
-específicos para esta página, utilize os três links de download abaixo:
+Se desejar fazer o download do exemplo de dados de rastreio de contatos específicos para esta página, utilize os três links de download abaixo:
 
 <a href='https://github.com/WorldHealthOrganization/godata/blob/master/analytics/r-reporting/data/cases_clean.rds?raw=true' class='download-button'>
 Clique para fazer o download dos dados da investigação do caso (arquivo
@@ -69,21 +60,13 @@ Clique para fazer o download dos dados de acompanhamento dos contatos
 
 <!-- ``` -->
 
-Na sua forma original nos arquivos passíveis de download, os dados são
-exibidos como fornecidos pela API do Go.Data (saiba mais sobre [APIs
-aqui](#import_api)). Para fins de exemplo, aqui vamos limpar os dados
-para facilitar a leitura nesta página. Se estiver usando uma extensão
-Go.Data, pode ver instruções completas sobre como recuperar os seus
-dados
+Na sua forma original nos arquivos passíveis de download, os dados são exibidos como fornecidos pela API do Go.Data (saiba mais sobre [APIs
+aqui](#import_api)). Para fins de exemplo, aqui vamos limpar os dados para facilitar a leitura nesta página. Se estiver usando uma extensão
+Go.Data, pode ver instruções completas sobre como recuperar os seus dados
 [aqui](https://github.com/WorldHealthOrganization/godata/tree/master/analytics/r-reporting).
 
-Abaixo, os conjuntos de dados são importados utilizando a função
-`import()` do pacote **rio**. Veja a página [Importar e exportar] para
-várias formas de importação de dados. Utilizamos `here()` para
-especificar o caminho do arquivo - forneça o caminho específico do
-arquivo para o seu computador. Em seguida, utilizamos `select()` para
-selecionar apenas certas colunas dos dados, simplificando para efeitos
-de demonstração.
+Abaixo, os conjuntos de dados são importados utilizando a função `import()` do pacote **rio**. Veja a página [Importar e exportar] para
+várias formas de importação de dados. Utilizamos `here()` para especificar o caminho do arquivo - forneça o caminho específico do arquivo para o seu computador. Em seguida, utilizamos `select()` para selecionar apenas certas colunas dos dados, simplificando para efeitos de demonstração.
 
 #### Dados do caso {.unnumbered}
 
@@ -103,17 +86,12 @@ DT::datatable(cases, rownames = FALSE, options = list(pageLength = 5, scrollX=T)
 
 #### Dados de contatos {.unnumbered}
 
-Estes dados são uma tabela de todos os contatos e suas informações. Mais
-uma vez, forneça o seu próprio caminho para o arquivo. Após a
-importação, realizamos alguns passos preliminares de limpeza de dados,
-incluindo:
+Estes dados são uma tabela de todos os contatos e suas informações. Mais uma vez, forneça o seu próprio caminho para o arquivo. Após a importação, realizamos alguns passos preliminares de limpeza de dados, incluindo:
 
--   Definir a age_class (classificação de idade) como fator e inverter a
-    ordem de nível, de modo que as idades menores sejam as primeiras\
+-   Definir a age_class (faixa-etária) como fator e inverter a ordem desses níveis, de modo que as idades menores sejam as primeiras a aparecer
 -   Selecionar apenas algumas colunas específicas, ao mesmo tempo que se
-    renomeia uma delas\
--   Artificialmente atribuir "Djembe" às linhas com valores faltosos
-    (*missing*), melhorando a clareza da visualização de alguns exemplos
+    renomeia uma delas
+-   Atribuir artificialmente às linhas cuja coluna `admin_2_name` estiver o nome "Djembe", melhorando a clareza da visualização de alguns exemplos
 
 ```{r}
 contacts <- import(here("data", "godata", "contacts_clean.rds")) %>% 
