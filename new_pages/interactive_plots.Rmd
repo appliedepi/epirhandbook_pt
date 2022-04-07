@@ -1,17 +1,17 @@
 
 # Gráficos interativos { }  
-Cada vez mais tem sido necessária a visualização de dados, devido ao questionamento do público.Consequentemente, a criação de gráficos interativos torna-se  algo comum, do dia-a dia. Há várias formas de torná-los interativos, sendo as duas mais comuns: **plotly**  e **shiny**. 
+A visualização de dados é cada vez mais necessária para questionamento do público. Consequentemente, a criação de gráficos interativos torna-se algo comum. Há várias formas de torná-los interativos, sendo as duas mais comuns: **plotly** e **shiny**. 
 
-Nesta página iremos focar na conversão de um gráfico já existente no `ggplot()`  em um gráfico interativo, utilizando o **plotly**.  Para saber mais sobre o **shiny**, veja na no capítulo [!Paineis com  Shiny](https://epirhandbook.com/en/dashboards-with-shiny.html#dashboards-with-shiny). Importante lembrar que este formato de gráfico interativo tem limitações, *utilizados apenas em documentos do R Markdown em formato HTML*, não sendo possível em documentos com formatos em PDF ou Word.
+Nesta página iremos focar na conversão de um gráfico já existente no `ggplot()`  em um gráfico interativo, utilizando o **plotly**. Para saber mais sobre o **shiny**, veja na no capítulo [Paineis com  Shiny](https://epirhandbook.com/en/dashboards-with-shiny.html#dashboards-with-shiny). Importante lembrar que este formato de gráfico interativo tem limitações, utilizados apenas em documentos do R Markdown em formato HTML*, não sendo possível em documentos com formatos em PDF ou Word.
 
 No exemplo abaixo, tem-se um gráfico de  curva epidêmica, que foi transformado para ser interativo,  usando a integração de **ggplot2** e **plotly**(_Passe o mouse sobre o grafico, amplie ou clique nos itens na legenda_). 
 
- ##*Atenção verificar se roda sem ter executados os códigos seguintes*
+ 
 ```{r plotly_demo, out.width=c('75%'), out.height=c('500px'), echo=F, warning=F, message=F}
 pacman::p_load(plotly, rio, here, ggplot2, dplyr, lubridate)
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 
-## these buttons are superfluous/distracting
+## esses botões são supérfluos/distrações
 plotly_buttons_remove <- list('zoom2d','pan2d','lasso2d', 'select2d','zoomIn2d',
                               'zoomOut2d','autoScale2d','hoverClosestCartesian',
                               'toggleSpikelines','hoverCompareCartesian')
@@ -39,7 +39,7 @@ p %>%
 
 ### Carregando os pacotes  {.unnumbered} 
 
-Nesta, parte de código(chunk),mostra o carregamento de pacotes necessários para as análises, com destaque `p_load()` do **pacman**, que instala o pacote se necessário e o carrega para uso. Ou você pode carregar utilizando a função `library()` - "Base do R". Para mais informações sobre pacotes consulte o capítulo  ![Noções básicas de R](https://epirhandbook.com/en/r-basics.html#r-basics). 
+Esta parte de código(chunk) mostra o carregamento de pacotes necessários para as análises, com destaque `p_load()` do **pacman**, que instala o pacote se necessário e o carrega para uso. Você também pode carregar utilizando a função `library()` - "R base". Para mais informações sobre pacotes consulte o capítulo [R - O Básico](https://epirhandbook.com/en/r-basics.html#r-basics). 
 
 ```{r}
 pacman::p_load(
@@ -56,11 +56,11 @@ pacman::p_load(
 
 ### Comece com um `ggplot()` {.unnumbered}  
 
-Assumindo que você está começando com um `ggplot()` gráfico que deseja converter para ser interativo. Vamos contruir então, vários gráficos, usando o caso`linelist`,  exemplo utilizado em outros capítulos anteriores deste manual.
+Nessa seção, assumimos que que você está começando com um gráfico `ggplot()` que pretende tornar interativo. Vamos contruir então, vários gráficos usando o `linelist` de casos, exemplo utilizado em outros capítulos deste manual.
 
 ### Importar os dados {.unnumbered}
 
-Para começar, importe a lista de casos (limpa/organizada) de uma epidemia simulada de Ebola. Se quiser acompanhar o script, ![clique para baixar a linelist “limpa”] (https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds),como arquivo .rds. Importe dados com a função  *import()* do pacote rio (ele lida com vários tipos de arquivos como .xlsx, .csv, .rds - veja a página, ![Importar e exportar](https://epirhandbook.com/en/import-and-export.html#import-and-export) para mais detalhes.
+Para começar, importe a lista de casos (limpa/organizada) de uma epidemia simulada de Ebola. Se quiser acompanhar o script, <ahref='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar a linelist “limpa”</a> (como arquivo .rds). Importe dados com a função  *import()* do pacote rio (ele lida com vários tipos de arquivos como .xlsx, .csv, .rds - veja a página [Importar e exportar] para mais detalhes).
 
 
 
@@ -88,7 +88,7 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 <!-- ======================================================= -->
 ## Gráfico com `ggplotly()` {  }
 
-A função `ggplotly()` do pacote **plotly** facilita a conversão de um `ggplot()` para ser interativo.  Só precisa salvá-lo o seu `ggplot()` e na sequência direciona-lo para a função do `ggplotly()`.  
+A função `ggplotly()` do pacote **plotly** facilita a conversão de um `ggplot()` para ser interativo.  Só precisa salvar o seu `ggplot()` e na sequência direciona-lo para a função do `ggplotly()`.  
 
 
 Abaixo, é traçada uma linha simples no gráfico representando a proporção de casos que morreram em uma determinada semana: 
@@ -98,21 +98,21 @@ Para começar, necessário cria um conjunto de dados resumido de cada semana epi
 ```{r}
 weekly_deaths <- linelist %>%
   group_by(epiweek = floor_date(date_onset, "week")) %>%  # criar e agrupar dados por coluna *epiweek*
-  summarise(                                              # criar um novo da frame (quadro)  de dados resumidos
-    n_known_outcome = sum(!is.na(outcome), na.rm=T),      # número de casos por grupo(com resultados conhecidos/confirmados)
-    n_death  = sum(outcome == "Death", na.rm=T),          # número de casos que foram a óbitos por grupo
-    pct_death = 100*(n_death / n_known_outcome)           # percentual de casos que forma a obitos com resultados conhecidos/confirmados
+  summarise(                                              # criar um novo da Data Frame resumido
+    n_known_outcome = sum(!is.na(outcome), na.rm=T),      # número de casos por grupo(com resultados conhecidos)
+    n_death  = sum(outcome == "Death", na.rm=T),          # número de casos que foram a óbitos
+    pct_death = 100*(n_death / n_known_outcome)           # percentual de casos que foram a obitos com resultados conhecidos
   )
 ```
-Aqui estão as primeiras 50 linhas do conjunto `weekly_deaths` do data.frame (dados).  
+Aqui estão as primeiras 50 linhas do conjunto `weekly_deaths`.  
 
 ```{r message=FALSE, echo=F}
 DT::datatable(head(weekly_deaths, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
-Na sequência o gráfico criado com  **ggplot2**, usando o `geom_line()`.  
+Na sequência criamos o gráfico com  **ggplot2**, usando o `geom_line()`.  
 
 ```{r, warning=F, message=F}
-deaths_plot <- ggplot(data = weekly_deaths)+            # construído com a semana do óbito
+deaths_plot <- ggplot(data = weekly_deaths)+            # começar com o registro de óbito semanal
   geom_line(mapping = aes(x = epiweek, y = pct_death))  # criar a linha no gráfico
 
 deaths_plot   # visualizar
@@ -122,11 +122,11 @@ Para torná-lo interativo, basta passar esse gráfico para `ggplotly()`, como ab
 
 * Baixar a visualização atual como uma imagem PNG  
 * Ampliar com uma caixa de seleção  
-* Gire, ou mova-se pela plotagem clicando e arrastando a plotagem  
+* Gire, ou mova-se pelo gráfico clicando e arrastando  
 * Ampliar, reduzir ou retornar ao zoom padrão 
 * Redefinir os eixos para os padrões 
-* Ative/desative as “linhas pontiagudas” que são linhas pontilhadas do ponto interativo que se estendem até os eixos x e y
-* Ajustes para mostrar os dados quando você não está pairando na linha  
+* Ative/desative as “Spike Lines” que são linhas pontilhadas do ponto interativo que se estendem até os eixos x e y
+* Ajustes para mostrar os dados quando você não está navegando na linha
 
 
 ```{r}
@@ -163,7 +163,7 @@ p %>%
 
 ### Tamanho do arquivo {.unnumbered}  
 
-Ao exportar em HTML gerado pelo R Markdown (como este livro!), você irá desejar o gráfico com o menor tamanho de dados possível (sem efeitos colaterais negativos na maioria dos casos). Para isso, basta direcionar a plotagem interativa para `partial_bundle()`,e para o **plotly**.  
+Ao exportar em HTML gerado pelo R Markdown (como este livro!), você irá desejar o gráfico com o menor tamanho de dados possível (sem efeitos colaterais negativos na maioria dos casos). Para isso, basta direcionar a plotagem interativa para `partial_bundle()`, também do **plotly**.  
 
 ```{r plot_tidyshow, eval=F}
 p <- p %>% 
@@ -190,15 +190,15 @@ p <- p %>%          # redefinir o grafico interativo com esses botões
 <!-- ======================================================= -->
 ## Gráfico -Blocos  de calor {  }
 
-Você pode tornar quase qualquer gráfico interativo do `ggplot()` , incluindo o gráfico de calor. No exemplo, a seguir mostra a proporção de dias por semana que certas instalações reportaram dados de malária  à sua província.
+Você pode tornar quase qualquer gráfico do `ggplot()` interativo, incluindo o gráfico de calor. No exemplo, a seguir mostra a proporção de dias por semana que certas instalações reportaram dados de malária  à sua província.
 
 Aqui está o código, embora não descrito em profundidade neste tópico. 
 
 ```{r  message=F, warning=F}
 # Importar os dados de malária
-facility_count_data <- rio::import(here::here("data", "malaria_facility_count_data.rds")) #Ver capitulo 12 para baixar os dados de malária
+facility_count_data <- rio::import(here::here("data", "malaria_facility_count_data.rds"))
 
-# Dados agregados por semana para o Distrito durante a primavera
+# Dados agregados por semana para o distrito durante a primavera
 agg_weeks <- facility_count_data %>% 
   filter(District == "Spring",
          data_date < as.Date("2020-08-01")) %>% 
@@ -261,7 +261,7 @@ metrics_plot %>%
 
 <!-- ## Mapas{.unnumbered}   -->
 
-<!-- Mapas também podem ser interativos  do  `ggplot()`  para o SIG, porém  mais trabalhoso-->
+<!-- Você também pode fazer mapas GIS interativos do `ggplot()`, porém  exige mais trabalho-->
 
 <!-- SEÇÃO EM CONSTRUÇÃO -->
 
@@ -285,7 +285,7 @@ metrics_plot %>%
 <!-- ## Carregar seu arquivo geojson -->
 <!-- geoJSON <- rjson::fromJSON(file=here::here("data", "gis", "africa_countries.geo.json")) -->
 
-<!-- ## Aqui estão algumas das propriedades de cada elemento do objecto -->
+<!-- ## Aqui estão algumas das propriedades de cada elemento do objeto -->
 <!-- head(geoJSON$features[[1]]$properties) -->
 
 <!-- ``` -->
@@ -300,7 +300,7 @@ metrics_plot %>%
 <!--   return(x) -->
 <!-- } -->
 
-<!-- ## Use {purrr} para aplicar esta função a cada elemento da lista de características do objecto geoJSON -->
+<!-- ## Use {purrr} para aplicar esta função a cada elemento da lista de características do objeto geoJSON -->
 <!-- geoJSON$features <- purrr::map(.x = geoJSON$features, give_id) -->
 <!-- ``` -->
 
@@ -311,7 +311,7 @@ metrics_plot %>%
 
 <!-- ```{r, echo=FALSE, eval=FALSE, out.width=c('95%'), out.height=c('500px'),warning=F} -->
 <!-- plotly::plot_ly() %>%  -->
-<!--   plotly::add_trace(         ##A função principal de mapeamento de parcelas -->
+<!--   plotly::add_trace(         ##A função principal de mapeamento -->
 <!--     type="choropleth", -->
 <!--     geojson=geoJSON, -->
 <!--     locations=df$Name,      #A coluna com os nomes (deve corresponder ao id)  -->
@@ -330,6 +330,4 @@ metrics_plot %>%
 <!-- ======================================================= -->
 ## Recursos {  }
 
-Plotly is not just for R, but also works well with Python (and really any data science language as it's built in JavaScript). You can read more about it on the [plotly website](https://plotly.com/r/)
-
-
+Plotly não é apenas para R, também funciona bem com Python (e qualquer linguagem de ciência de dados, por ser construído em JavaScript). Você pode ler mais sobre o tema no [Website plotly](https://plotly.com/r/)
