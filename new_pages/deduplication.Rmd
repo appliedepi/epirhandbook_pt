@@ -7,9 +7,9 @@ knitr::include_graphics(here::here("images", "deduplication.png"))
 
 Esta página abrange as seguintes técnicas de eliminação de duplicidades (ou deduplicação):  
 
-1. Identificando e removendo linhas duplicadas  
-2. "Fatiar" linhas para manter apenas algumas linhas (por exemplo, mín. ou máx.) de cada grupo de linhas  
-3. "Acumulação" ou combinação de valores de várias linhas em uma linha  
+1. Identificar e remover duplicidades  
+2. "Fatiar/subdividir" linhas para manter apenas algumas linhas (por exemplo, mín. ou máx.) de cada grupo de linhas  
+3. "Acumular" ou combinar de valores de várias linhas em uma linha  
 
 
 <!-- ======================================================= -->
@@ -18,12 +18,12 @@ Esta página abrange as seguintes técnicas de eliminação de duplicidades (ou 
 
 ### Carregar pacotes {.unnumbered}
 
-Este pedaço de código mostra o carregamento de pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` de **pacman**, que instala o pacote se necessário *e* o carrega para uso. Você também pode carregar pacotes instalados com `library()` de R **base**. Veja a página em [R basics] para mais informações sobre pacotes R.  
+Este pedaço de código mostra o carregamento de pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` de **pacman**, que instala o pacote se necessário *e* o carrega para uso. Você também pode carregar pacotes instalados com `library()` do R **base**. Veja a página em [R basics] para mais informações sobre pacotes R.  
 
 ```{r}
 pacman :: p_load(
   tidyverse, # deduplicação, agrupamento e funções de fatiamento
-  janitor, # função para revisar duplicatas
+  janitor, # função para revisar duplicidades
   stringr) # para pesquisas de strings, pode ser usado em valores "rolling-up"
 ```
 
@@ -67,7 +67,7 @@ DT::datatable(head (linelist, 10), rownames = FALSE, filter = "top", options = l
 Algumas coisas a serem observadas ao revisar os dados:  
 
 * Os dois primeiros registros são duplicados 100% completos, incluindo `recordID` duplicado (deve ser uma falha do computador!)  
-* As duas segundas linhas são duplicadas, em todas as colunas *exceto para `recordID`*  
+* As duas segundas linhas são duplicidades, em todas as colunas *exceto para `recordID`*  
 * Várias pessoas tiveram vários encontros por telefone, em várias datas e horários, e como contatos e/ou casos  
 * Em cada encontro, a pessoa foi perguntada se ela **alguma vez** teve sintomas, e algumas dessas informações estão faltando.  
 
@@ -79,17 +79,17 @@ obs %>%
   tabyl(name, purpose)
 ```
 <!-- ======================================================= -->
-## Deduplicação { }
+## Remoção de duplicidades { }
 
 
-Esta seção descreve como revisar e remover linhas duplicadas em um data frame. Também mostra como lidar com elementos duplicados em um vetor.  
+Esta seção descreve como revisar e remover duplicidades em um data frame. Também mostra como lidar com elementos duplicados em um vetor.  
 
 
 <!-- ======================================================= -->
-### Examinar linhas duplicadas {.unnumbered}  
+### Examinar duplicidades {.unnumbered}  
 
 
-Para revisar rapidamente as linhas que têm duplicatas, você pode usar `get_dupes()` do pacote **janitor**. *Por padrão*, todas as colunas são consideradas quando as duplicatas são avaliadas - as linhas retornadas pela função são 100% duplicadas considerando os valores em *todas* as colunas.  
+Para revisar rapidamente as linhas que têm duplicidades, você pode usar `get_dupes()` do pacote **janitor**. *Por padrão*, todas as colunas são consideradas quando as duplicidades são avaliadas - as linhas retornadas pela função são 100% duplicadas considerando os valores em *todas* as colunas.  
 
 No data frame `obs`, as duas primeiras linhas são *100% duplicadas* - elas têm o mesmo valor em todas as colunas (incluindo a coluna `recordID`, que *supõe* ser única - deve ser alguma falha do computador ). O data frame retornado inclui automaticamente uma nova coluna `dupe_count` no lado direito, mostrando o número de linhas com essa combinação de valores duplicados. 
 
@@ -150,7 +150,7 @@ Veja `?get_dupes` para mais detalhes, ou veja esta [referência online](https://
 ### Manter apenas linhas únicas {.unnumbered}
 
 
-Para manter apenas linhas exclusivas de um data frame, use `distinct()` de **dplyr** (conforme demonstrado na página [Limpeza de dados e funções principais]). As linhas duplicadas são removidas de forma que apenas a primeira dessas linhas seja mantida. Por padrão, "primeiro" significa o maior `número da linha` (ordem das linhas de cima para baixo). Apenas linhas exclusivas permanecem.  
+Para manter apenas linhas exclusivas de um data frame, use `distinct()` de **dplyr** (conforme demonstrado na página [Limpeza de dados e funções principais]). As duplicidades são removidas de forma que apenas a primeira dessas linhas seja mantida. Por padrão, "primeiro" significa o maior `número da linha` (ordem das linhas de cima para baixo). Apenas linhas exclusivas permanecem.  
 
 No exemplo abaixo, executamos `distinct()` de forma que a coluna `recordID` seja excluída da consideração - portanto, **duas linhas duplicadas são removidas**. A primeira linha (para "adam") foi 100% duplicada e foi removida. Além disso, a linha 3 (para "amrish") era uma duplicata em todas as colunas *exceto* `recordID` (que não está sendo considerada) e, portanto, também foi removida. O conjunto de dados `obs` n agora é `nrow(obs)-2`, não `nrow(obs)` linhas).  
 
@@ -160,7 +160,7 @@ No exemplo abaixo, executamos `distinct()` de forma que a coluna `recordID` seja
 ```{r, eval=F}
 # adicionado a uma cadeia de pipes (por exemplo, limpeza de dados)
 obs %>% 
-  distinct(across(-recordID), # reduz o data frame para apenas linhas únicas (mantém a primeira de todas as duplicatas)
+  distinct(across(-recordID), # reduz o data frame para apenas linhas únicas (mantém a primeira de todas as duplicidades)
            .keep_all = TRUE)
 
 # se fora de pipes, inclua os dados como primeiro argumento 
@@ -169,7 +169,7 @@ obs %>%
 
 ```{r, message=FALSE, echo=F}
 obs %>% 
-  distinct(across(-recordID), # reduz o data frame para apenas linhas únicas (mantém a primeira de todas as duplicatas)
+  distinct(across(-recordID), # reduz o data frame para apenas linhas únicas (mantém a primeira de todas as duplicidades)
            .keep_all = TRUE) %>%
   DT::datatable(pop, rownames = FALSE, options = list(pageLength = 6, scrollX = T), class = 'white-space: nowrap')
 ```
@@ -177,11 +177,11 @@ obs %>%
 <span style="color: orange;">**_CUIDADO:_** Se estiver usando `distinct()` em dados agrupados, a função será aplicada a cada grupo.</span>
 
 
-**Deduplicar com base em colunas específicas**  
+**Remover duplicidades com base em colunas específicas**  
 
-Você também pode especificar colunas para serem a base para eliminação de duplicação. Dessa forma, a eliminação de duplicação se aplica apenas a linhas duplicadas nas colunas especificadas. A menos que você defina `.keep_all = TRUE`, todas as colunas não mencionadas serão descartadas.  
+Você também pode especificar colunas para serem a base para eliminação de duplicação. Dessa forma, a eliminação de duplicidades se aplica apenas a linhas duplicadas nas colunas especificadas. A menos que você defina `.keep_all = TRUE`, todas as colunas não mencionadas serão descartadas.  
 
-No exemplo abaixo, a eliminação de duplicação se aplica apenas a linhas com valores idênticos para as colunas `name` e `purpose`. Assim, "brian" tem apenas 2 linhas em vez de 3 - seu *primeiro* encontro de "contato" e seu único encontro de "caso". Para ajustar para que o *último* encontro de brian de cada propósito seja mantido, veja a aba Fatiar dentro de grupos.  
+No exemplo abaixo, a eliminação de duplicidades se aplica apenas a linhas com valores idênticos para as colunas `name` e `purpose`. Assim, "brian" tem apenas 2 linhas em vez de 3 - seu *primeiro* encontro de "contato" e seu único encontro de "caso". Para ajustar para que o *último* encontro de brian de cada propósito seja mantido, veja a aba Fatiar dentro de grupos.  
 
 *Role para a esquerda para ver todo o data frame*  
 
@@ -202,10 +202,10 @@ obs %>%
 Veja os [dados originais](#dedup_data).  
 
 <!-- ======================================================= -->
-### Deduplicar elementos em um vetor {.unnumbered}  
+### Remover duplicidades em um vetor {.unnumbered}  
 
 
-A função `duplicated()` do **base** R avaliará um vetor (coluna) e retornará um vetor lógico de mesmo comprimento (VERDADEIRO/FALSO). Na primeira vez que um valor aparecer, ele retornará FALSE (não uma duplicata) e, nas próximas vezes em que esse valor aparecer, ele retornará TRUE. Observe como `NA` é tratado da mesma forma que qualquer outro valor.    
+A função `duplicated()` do R **base** avaliará um vetor (coluna) e retornará um vetor lógico de mesmo comprimento (VERDADEIRO/FALSO). Na primeira vez que um valor aparecer, ele retornará FALSE (não uma duplicata) e, nas próximas vezes em que esse valor aparecer, ele retornará TRUE. Observe como `NA` é tratado da mesma forma que qualquer outro valor.    
 
 ```{r}
 x <- c(1, 1, 2, NA, NA, 4, 5, 4, 4, 1, 2)
@@ -218,7 +218,7 @@ Para retornar apenas os elementos duplicados, você pode usar colchetes para sub
 x[duplicated(x)]
 ```
 
-Para retornar apenas os elementos exclusivos, use `unique()` de **base** R. Para remover `NA`s da saída, aninhe `na.omit()` dentro de `unique()`.  
+Para retornar apenas os elementos exclusivos, use a função `unique()` do R **base**. Para remover `NA`s da saída, aninhe `na.omit()` dentro de `unique()`.  
 
 ```{r}
 unique(x) # alternativamente, use x[!duplicated(x)]
@@ -227,11 +227,11 @@ unique(na.omit(x)) # remove NAs
 
 
 <!-- ======================================================= -->
-### Usando **base** R {.unnumbered}
+### Usando o R **base** {.unnumbered}
 
 **Para retornar linhas duplicadas**  
 
-No **base** R, você também pode ver quais linhas são 100% duplicadas em um data frame `df` com o comando `duplicated(df)` (retorna um vetor lógico das linhas).  
+No R **base**, você também pode ver quais linhas são 100% duplicadas em um data frame `df` com o comando `duplicated(df)` (retorna um vetor lógico das linhas).  
 
 Assim, você também pode usar o subconjunto base `[ ]` no data frame para ver as linhas *duplicadas* com `df[duplicated(df),]` (não esqueça a vírgula, significando que você quer ver todas colunas!). 
 
@@ -241,7 +241,7 @@ Veja as notas acima. Para ver as linhas *únicas*, você adiciona o negador lóg
 `df[!duplicado(df),]`  
 
 
-**Para retornar linhas que são duplicatas de apenas determinadas colunas**  
+**Para retornar linhas que são duplicidades em determinadas colunas**  
 
 Subsete o `df` que está *dentro dos parênteses `duplicated()`*, então esta função irá operar apenas em certas colunas do `df`.  
 
@@ -257,10 +257,10 @@ Para avaliar apenas as colunas `name` e `purpose` para duplicatas: `df[!duplicat
 
 
 <!-- ======================================================= -->
-## Fatiamento { }
+## Fatiar/Subdividir { }
 
 
-Para "fatiar" (*slice*) um data frame para aplicar um filtro nas linhas por número/posição de linha. Isso se torna particularmente útil se você tiver várias linhas por grupo funcional (por exemplo, por "pessoa") e quiser manter apenas uma ou algumas delas. 
+Subdividir um data frame, ou "fatiá-lo" (literalmente do inglês *slice*), significa aplicar um filtro nas linhas por número/posição de linha. Isso se torna particularmente útil se você tiver várias linhas por grupo funcional (por exemplo, por "pessoa") e quiser manter apenas uma ou algumas delas. 
 
 A função básica `slice()` aceita números e retorna linhas nessas posições. Se os números fornecidos forem positivos, somente eles serão retornados. Se negativo, essas linhas *não* são retornadas. Os números devem ser todos positivos ou todos negativos.     
 
@@ -304,7 +304,7 @@ Outros argumentos:
 
 
 <!-- ======================================================= -->
-### Fatia com grupos {.unnumbered}
+### Subdividão com grupos {.unnumbered}
 
 As funções `slice_*()` podem ser muito úteis se aplicadas a um data frame agrupado porque a operação de fatia é executada em cada grupo separadamente. Use a **função** `group_by()` em conjunto com `slice()` para agrupar os dados para obter uma fatia de cada grupo.  
 
@@ -341,7 +341,7 @@ obs %>%
 Acima, por exemplo, podemos ver que apenas a linha de Amrish em 5 de janeiro foi mantida, e apenas a linha de Brian em 7 de janeiro foi mantida. Veja os [dados originais](#dedup_data).  
 
 
-**Quebrando "empates"**  
+**"Desempates"**  
 
 Várias instruções de fatia podem ser executadas para "desempate". Neste caso, se uma pessoa tiver vários encontros em sua última *data*, o encontro com a última *hora* é mantido (`lubridate::hm()` é usado para converter os tempos dos caracteres em uma classe de tempo classificável).  
 Observe como agora, a única linha mantida para "Mariah" em 6 de janeiro é o encontro 3 das 08:32, não o encontro 2 às 07:25.  
@@ -419,15 +419,15 @@ DT::datatable(obs_marked, rownames = FALSE, options = list(pageLength = 8, scrol
 Veja os [dados originais](#dedup_data).  
 
 <!-- ======================================================= -->
-### Calcular a integridade da linha {.unnumbered} 
+### Calcular a completitude da linha {.unnumbered} 
 
-Crie uma coluna que contenha uma métrica para a integridade da linha (não falta). Isso pode ser útil ao decidir quais linhas priorizar em relação a outras ao desduplicar/fatiar.  
+Crie uma coluna que contenha uma métrica para a completitude da linha (não falta). Isso pode ser útil ao decidir quais linhas priorizar em relação a outras ao remover duplicidade/fatiar.  
 
 Neste exemplo, as colunas "chave" sobre as quais você deseja medir a integridade são salvas em um vetor de nomes de coluna.  
 
 Então a nova coluna `key_completeness` é criada com `mutate()`. O novo valor em cada linha é definido como uma fração calculada: o número de valores não omissos nessa linha entre as colunas-chave, dividido pelo número de colunas-chave.  
 
-Isso envolve a função `rowSums()` de **base** R. Também é usado `.`, que dentro da tubulação se refere ao data frame naquele ponto na tubulação (neste caso, está sendo subconjunto com colchetes ` []`).  
+Isso envolve a função `rowSums()` do R **base**. Também é usado `.`, que dentro do  encadeamento do código (pipe - %>%) se refere ao data frame naquele ponto do pipe (neste caso, está sendo subconjunto com colchetes ` []`).  
 
 *Role para a direita para ver mais linhas**  
 
@@ -601,9 +601,9 @@ DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 10, scrol
 Veja os [dados originais](#dedup_data).  
 
 
-## Deduplicação probabilística  
+## Remoção de duplicidades probabilística  
 
-Às vezes, você pode querer identificar duplicatas "prováveis" com base na semelhança (por exemplo, string "distance") em várias colunas, como nome, idade, sexo, data de nascimento etc. Você pode aplicar um algoritmo de correspondência probabilística para identificar duplicatas prováveis.  
+Às vezes, você pode querer identificar duplicidades "prováveis" com base na semelhança (por exemplo, string "distance") em várias colunas, como nome, idade, sexo, data de nascimento etc. Você pode aplicar um algoritmo de correspondência probabilística para identificar duplicidades prováveis.  
 
 Consulte a página em [Juntar dados] para obter uma explicação sobre este método. A seção sobre Correspondência Probabilística contém um exemplo de aplicação desses algoritmos para comparar um data frame com o *próprio*, realizando assim a desduplicação probabilística.  
 
