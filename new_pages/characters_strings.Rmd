@@ -117,7 +117,7 @@ cat(str_c(first_names, last_names, sep = " ", collapse = ";\n"))
 
 ### Strings dinâmicas {.unnumbered}
 
-Use `str_glue()` para inserir um código R dinâmico em um string. Esta é uma função muito útil para criar legendas dinâmicas de plotagens, conforme demonstrado abaixo.
+Use `str_glue()` para inserir um código R dinâmico em um string. Esta é uma função muito útil para criar legendas dinâmicas de gráficos, conforme demonstrado abaixo.
 
 -   Todo o conteúdo fica entre aspas duplas `str_glue("")`\
 -   Qualquer código dinâmico ou referências aos valores predefinidos são colocados entre chaves `{}` com aspas duplas. Pode haver muitas chaves no mesmo comando `str_glue()`.\
@@ -168,7 +168,7 @@ caso_tabela %>%
 
 **Combine strings em linhas**
 
-Se você estiver tentando "acumular" valores em uma coluna de um data frame, por exemplo, combinar valores de várias linhas em apenas uma linha, colando-os juntos com um separador, consulte a seção da página \[Eliminação de duplicação\] em ["acumulando" valores](#str_rollup).
+Se você estiver tentando "acumular" valores em uma coluna de um data frame, por exemplo, combinar valores de várias linhas em apenas uma linha, colando-os juntos com um separador, consulte a seção da página [Eliminação de duplicidades] em ["acumulando" valores](#str_rollup).
 
 **Data frame para uma linha**
 
@@ -246,7 +246,7 @@ str_split(string = "jaundice, fever, chills",
           pattern = ",")
 ```
 
-Se o resultado de saída for salvo, você poderá acessar o enésimo valor de divisão com a sintaxe de colchetes. Para acessar um valor específico, você pode usar uma sintaxe como esta: `the_returned_object[[1]][2]`, que acessaria o segundo valor da primeira string avaliada ("febre"). Consulte a página \[Básico do R\] para obter mais detalhes sobre como acessar os elementos.
+Se o resultado de saída for salvo, você poderá acessar o enésimo valor de divisão com a sintaxe de colchetes. Para acessar um valor específico, você pode usar uma sintaxe como esta: `the_returned_object[[1]][2]`, que acessaria o segundo valor da primeira string avaliada ("febre"). Consulte a página [R - o básico] para obter mais detalhes sobre como acessar os elementos.
 
 ```{r}
 pt1_symptoms <- str_split("jaundice, fever, chills", ",")
@@ -299,15 +299,17 @@ Assumindo que os dados sejam divididos por meio do `separate()`, primeiro forne�
 
 -   `sep =` o separador, pode ser um caractere ou um número (interpretado como a posição do caractere para dividir)
 
--   `remove =` FALSE por padrão, remove a coluna de entrada\
+-   `remove =` FALSE por padrão, remove a coluna de entrada
 
--   `convert =` FALSE por padrão, fará com que a string "NA" se torne `NA`\
+-   `convert =` FALSE por padrão, fará com que a string "NA" se torne `NA`
 
 -   `extra =` isso controla o que acontece se houver mais valores criados pela separação do que novas colunas nomeadas.
 
-    -   `extra = "warn"` significa que você verá um aviso, mas os valores em excesso serão descartados (**o padrão**)\
-    -   `extra = "drop"` significa que os valores em excesso serão descartados sem aviso\
-    -   **`extra = "merge"` somente será dividido para o número de novas colunas listadas em `into` - *esta configuração preservará todos os seus dados***
+-   `extra = "warn"` significa que você verá um aviso, mas os valores em excesso serão descartados (**o padrão**)
+
+-   `extra = "drop"` significa que os valores em excesso serão descartados sem aviso
+
+-   **`extra = "merge"` somente será dividido para o número de novas colunas listadas em `into` - *esta configuração preservará todos os seus dados**
 
 Um exemplo com `extra = "merge"` está abaixo - nenhum dado é perdido. Duas novas colunas são definidas, mas quaisquer terceiros sintomas são combinados na segunda coluna nova:
 
@@ -325,7 +327,7 @@ df %>%
   separate(symptoms, into = c("sym_1", "sym_2"), sep=",")
 ```
 
-[***CUIDADO:*** Se você não fornecer valores suficientes `into` para as novas colunas, seus dados podem ser truncados.]{style="color: orange;"}
+[**CUIDADO:** Se você não fornecer valores suficientes `into` para as novas colunas, seus dados podem ser truncados.]{style="color: orange;"}
 
 <!-- ======================================================= -->
 
@@ -375,7 +377,7 @@ str_to_upper("California")
 str_to_lower("California")
 ```
 
-Usando R \*\*base\*\*, o acima também pode ser obtido com `toupper()`, `tolower()`.
+Usando R **base**, o acima também pode ser obtido com `toupper()`, `tolower()`.
 
 **Capitalização de título**
 
@@ -388,13 +390,13 @@ str_to_title("go to the US state of california ")
 Use `toTitleCase()` do pacote **tools** para obter uma capitalização mais sutil (palavras como "para", "o" e "de" não são capitalizadas).
 
 ```{r}
-tools::toTitleCase("This is the US state of california")
+tools::toTitleCase("Este é o estado da califórnia dos EUA")
 ```
 
 Você também pode usar `str_to_sentence()`, que coloca em maiúscula apenas a primeira letra do string.
 
 ```{r}
-str_to_sentence("the patient must be transported")
+str_to_sentence("o paciente precisa ser transportado")
 ```
 
 ### Comprimento do código {#str_pad .unnumbered}
@@ -501,15 +503,15 @@ cat(str_wrap(pt_course, 40))
 
 Use `str_sub()` para retornar apenas uma parte de uma string. A função tem três argumentos principais:
 
-1)  o(s) vetor(es) de caracteres\
-2)  posição inicial\
+1)  o(s) vetor(es) de caracteres
+2)  posição inicial
 3)  posição final
 
 Algumas notas sobre os números de posição:
 
--   Se um número de posição for positivo, a posição é contada a partir da extremidade esquerda da string.\
--   Se um número de posição for negativo, ele é contado a partir da extremidade direita da string.\
--   Os números das posições são inclusivos.\
+-   Se um número de posição for positivo, a posição é contada a partir da extremidade esquerda da string.
+-   Se um número de posição for negativo, ele é contado a partir da extremidade direita da string.
+-   Os números das posições são inclusivos.
 -   As posições que se estendem além da string serão truncadas (removidas).
 
 Abaixo estão alguns exemplos aplicados à string "pneumonia":
@@ -593,50 +595,50 @@ Muitas funções **stringr** trabalham para detectar, localizar, extrair, combin
 Use `str_detect()` como abaixo para detectar a presença / ausência de um padrão dentro de uma string. Primeiro forneça a string ou vetor a ser pesquisado (`string =`) e, em seguida, o padrão a ser procurado (`pattern =`). Observe que, por padrão, a pesquisa *diferencia maiúsculas de minúsculas*!
 
 ```{r}
-str_detect(string = "professor de escola primária", pattern = "ensino")
+str_detect(string = "professor de escola primária", pattern = "prof")
 ```
 
 O argumento `negate =` pode ser incluído e definido como `TRUE` se você quiser saber se o padrão NÃO está presente.
 
 ```{r}
-str_detect(string = "professor de escola primária", pattern = "ensino", negate = TRUE)
+str_detect(string = "professor de escola primária", pattern = "prof", negate = TRUE)
 ```
 
 Para ignorar maiúsculas e minúsculas, envolva o padrão em `regex()`, e *em* `regex()` adicione o argumento `ignore_case = TRUE` (ou `T` como abreviação).
 
 ```{r}
-str_detect(string = "Professor", pattern = regex("ensino", ignore_case = T))
+str_detect(string = "Professor", pattern = regex("prof", ignore_case = T))
 ```
 
 Quando `str_detect()` é aplicado a um vetor de caracteres ou uma coluna da tabela de dados, ele retornará TRUE ou FALSE para cada um dos valores.
 
 ```{r}
 # um vetor / coluna de ocupações
-occupations <- c("field laborer",
-                 "university professor",
-                 "primary school teacher & tutor",
+occupations <- c("trabalhador do campo",
+                 "professor universitário",
+                 "educador de escola primária",
                  "tutor",
-                 "nurse at regional hospital",
-                 "lineworker at Amberdeen Fish Factory",
-                 "physican",
-                 "cardiologist",
-                 "office worker",
-                 "food service")
+                 "enfermeira em hospital regional",
+                 "eletricita da Fábrica em Amberdeen",
+                 "médico",
+                 "cardiologista",
+                 "trabalhador de escritório",
+                 "trabalhador de serviço de alimentação")
 
-# Detecta a presença do padrão "ensino" em cada string - a saída é um vetor TRUE / FALSE
-str_detect(occupations, "ensino")
+# Detecta a presença do padrão "prof" em cada string - a saída é um vetor TRUE / FALSE
+str_detect(occupations, "prof")
 ```
 
 Se você precisar contar os `TRUE`s, simplesmente some os resultados por meio da função `sum()`. Essa função conta o número de `TRUE`.
 
 ```{r}
-sum(str_detect(occupations, "ensino"))
+sum(str_detect(occupations, "prof"))
 ```
 
 Para pesquisar incluindo vários termos, inclua-os separados por barras OR (`|`) dentro do argumento `pattern =`, conforme mostrado abaixo:
 
 ```{r}
-sum(str_detect(string = occupations, pattern = "ensino|professor|tutor"))
+sum(str_detect(string = occupations, pattern = "prof|educador|tutor"))
 ```
 
 Se precisar construir uma longa lista de termos de pesquisa, você pode combiná-los usando `str_c()` e `sep = |`, em seguida defina que este é um objeto de caractere e referencie o vetor posteriormente de forma mais sucinta. O exemplo abaixo inclui possíveis termos de pesquisa de ocupação para provedores médicos de linha de frente.
@@ -677,9 +679,9 @@ O `gsub()` interno que atua primeiro em `lengths` convertendo quaisquer pontos e
 ```{r, eval=F}
 lengths <- c("2.454,56", "1,2", "6.096,5")
 
-as.numeric(gsub(pattern = ",",                # encontra vírgulas commas     
+as.numeric(gsub(pattern = ",",                # encontra vírgulas   
                 replacement = ".",            # substitui por pontos
-                x = gsub("\\.", "", lengths)  # vetor com outros períodos removidos (períodos de escape)
+                x = gsub("\\.", "", lengths)  # vetor com outros pontos removidos (deve-se "escapar" os pontos)
                 )
            )                                  # converter resultado em numérico
 ```
@@ -689,11 +691,11 @@ as.numeric(gsub(pattern = ",",                # encontra vírgulas commas
 Use `str_replace_all()` omo uma ferramenta de "localizar e substituir". Primeiro, forneça as strings a serem avaliadas para `string =`, depois o padrão a ser substituído por `pattern =` e, a seguir, o valor de substituição para `replacement =`. O exemplo abaixo substitui todas as ocorrências de "morto" por "falecido". Observe que isso É sensível a maiúsculas e minúsculas.
 
 ```{r}
-outcome <- c("Karl: dead",
-            "Samantha: dead",
-            "Marco: not dead")
+outcome <- c("Karl: morto",
+            "Samantha: morto",
+            "Marco: não morto")
 
-str_replace_all(string = outcome, pattern = "dead", replacement = "deceased")
+str_replace_all(string = outcome, pattern = "morto", replacement = "óbito")
 ```
 
 Notas:
@@ -714,10 +716,10 @@ df <- df %>%
   mutate(is_educator = case_when(
     # pesquisa de termo dentro da ocupação, sem distinção entre maiúsculas e minúsculas
     str_detect(occupations,
-               regex("ensino|prof|tutor|university",
-                     ignore_case = TRUE))              ~ "Educator",
+               regex("educador|prof|tutor|universidade",
+                     ignore_case = TRUE))              ~ "Educador",
     # todos os outros
-    TRUE                                               ~ "Not an educator"))
+    TRUE                                               ~ "Não é educador"))
 ```
 
 Como um lembrete, pode ser importante adicionar critérios de exclusão à lógica condicional (`negate = F`):
@@ -727,20 +729,20 @@ df <- df %>%
   # valor na nova coluna is_educator é baseado na lógica condicional
   mutate(is_educator = case_when(
     
-    # a coluna de ocupação deve atender a 2 critérios para ser atribuído "Educator":
+    # a coluna de ocupação deve atender a 2 critérios para ser atribuído "Educador":
     # deve ter um termo de pesquisa E NÃO qualquer termo de exclusão
     
     # Deve conter um termo de pesquisa
     str_detect(occupations,
-               regex("ensino|prof|tutor|university", ignore_case = T)) &              
+               regex("educador|prof|tutor|universidade", ignore_case = T)) &              
     
     # E NÃO deve ter um termo de exclusão
     str_detect(occupations,
                regex("admin", ignore_case = T),
-               negate = TRUE                        ~ "Educator"
+               negate = TRUE                        ~ "Educador"
     
     # Todas as linhas que não atendem aos critérios acima
-    TRUE                                            ~ "Not an educator"))
+    TRUE                                            ~ "Não é educador"))
 ```
 
 <!-- ======================================================= -->
@@ -766,18 +768,18 @@ str_locate_all(phrases, "h" ) # posição de *cada* instância do padrão
 
 ### Extraia uma combinação {.unnumbered}
 
-`str_extract_all()` retorna os próprios padrões de correspondência, o que é mais útil quando você oferece vários padrões por meio de condições "OU". Por exemplo, procurando no vetor string de ocupações (consulte a aba anterior) "ensino", "prof" ou "tutor".
+`str_extract_all()` retorna os próprios padrões de correspondência, o que é mais útil quando você oferece vários padrões por meio de condições "OU". Por exemplo, procurando no vetor string de ocupações (consulte a aba anterior) "educador", "prof" ou "tutor".
 
 `str_extract_all()` retorna uma `list` que contém todas as correspondências para cada string avaliada. Veja abaixo como a ocupação 3 tem duas correspondências de padrão dentro dela.
 
 ```{r}
-str_extract_all(occupations, "teach|prof|tutor")
+str_extract_all(occupations, "educador|prof|tutor")
 ```
 
 `str_extract()` extrai apenas *a primeira combinação* (match) em cada string avaliada, produzindo um vetor de caracteres com um elemento para cada string avaliada. Retorna `NA` onde não há uma combinação. Os `NA`s pode ser removido envolvendo o vetor retornado com `na.exclude()`. Observe como o segundo dos acertos da ocupação 3 não é mostrado.
 
 ```{r}
-str_extract(occupations, "ensino|prof|tutor")
+str_extract(occupations, "educador|prof|tutor")
 ```
 
 <!-- ======================================================= -->
@@ -789,13 +791,13 @@ As funções alinhadas incluem `str_subset()` e `str_count()`.
 `str_subset()` retorna os valores reais que continham o padrão:
 
 ```{r}
-str_subset(occupations, "ensino|prof|tutor")
+str_subset(occupations, "educador|prof|tutor")
 ```
 
 `str_count()` retorna um vetor de números: o **número de vezes** que um termo de pesquisa aparece em cada valor avaliado.
 
 ```{r}
-str_count(occupations, regex("ensino|prof|tutor", ignore_case = TRUE))
+str_count(occupations, regex("educador|prof|tutor", ignore_case = TRUE))
 ```
 
 <!-- ======================================================= -->
@@ -848,9 +850,9 @@ Uma expressão regular é frequentemente aplicada para extrair padrões específ
 
 Existem quatro ferramentas básicas que podem ser usadas para criar uma expressão regular básica:
 
-1)  Conjuntos de caracteres\
-2)  Meta caracteres\
-3)  Quantificadores\
+1)  Conjuntos de caracteres
+2)  Meta caracteres
+3)  Quantificadores
 4)  Grupos
 
 **Conjunto de caracteres**
