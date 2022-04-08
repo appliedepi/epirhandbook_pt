@@ -50,7 +50,7 @@ pacman::p_load(
   scales,    # percents
   tidyverse, # manuseio e visualização
   incidence2,# gráfico epicurva
-  magrittr)  #piper %>%
+  magrittr)  # pipe %>%
 # Verificar a versão do R, o pacote pacman e o rio  foi construido na versão 4.1.2
 ```
 
