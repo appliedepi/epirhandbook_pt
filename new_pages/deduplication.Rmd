@@ -5,7 +5,7 @@
 knitr::include_graphics(here::here("images", "deduplication.png"))
 ```
 
-Esta página abrange as seguintes técnicas de eliminação de duplicatas (ou deduplicação):  
+Esta página abrange as seguintes técnicas de eliminação de duplicidades (ou deduplicação):  
 
 1. Identificando e removendo linhas duplicadas  
 2. "Fatiar" linhas para manter apenas algumas linhas (por exemplo, mín. ou máx.) de cada grupo de linhas  
