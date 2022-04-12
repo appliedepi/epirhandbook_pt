@@ -54,6 +54,8 @@ Para ver as primeiras 50 linhas do banco utilize o codigo a seguir
 DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
+
+
 <!-- ======================================================= -->
 
 ## Diagramas de fluxos
