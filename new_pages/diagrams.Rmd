@@ -78,7 +78,7 @@ A função `grViz()` é utilizada para criar um diagrama "Graphviz". Esta funç�
 
 A seguir será usado dois exemplos simples
 
-No código a seguir um exemplo mínimo
+Um exemplo mínimo:
 
 ```{r out.width='50%'}
 # plotar o mínimo
@@ -94,7 +94,7 @@ a -> b -> c
 }")
 ```
 
-O próximo exemplo, é mais aplicado no contexto de saúde pública:
+Um exemplo mais aplicado ao contexto de saúde pública:
 
 ```{r out.width='50%'}
 grViz("                           # Todas as instruções estão dentro de uma grande cadeia de caracteres
@@ -107,7 +107,7 @@ digraph surveillance_diagram {    # 'digraph' significa 'grafico direcional', de
          overlap = true,
          fontsize = 10]
   
-  # nos(node)
+  # nos(nodea)
   #######
   node [shape = circle,           # forma (shape) = circulo
        fixedsize = true
@@ -129,36 +129,24 @@ digraph surveillance_diagram {    # 'digraph' significa 'grafico direcional', de
 
 **Sintaxe básica**
 
-Os nomes de nós, ou declarações de borda, podem ser separados por
-espaços, ponto e vírgula ou novas linhas.
+Os nomes de nós, ou declarações de borda, podem ser separados por espaços, ponto e vírgula ou novas linhas.
 
 **Direção da classificação**
 
-Um gráfico pode ser reorientado para se mover da esquerda para a
-direita, ajustando o `rankdir` argumento dentro da instrução do gráfico.
-O padrão é TB (de cima para baixo), mas pode ser LR (da esquerda para a
-direita), RL (da direita para esquerda) ou BT (baixo para cima).
+Um gráfico pode ser reorientado para se mover da esquerda para a direita, ajustando o `rankdir` argumento dentro da instrução do gráfico. O padrão é TB (de cima para baixo), mas pode ser LR (da esquerda para a direita), RL (da direita para esquerda) ou BT (baixo para cima).
 
 **Nomes dos nós**
 
-Os nomes dos nós podem ser palavras únicas, como no exemplo simples
-acima. Para usar nomes com várias palavras ou caracteres especiais (por
-exemplo, parênteses, travessões), coloque o nome do nó entre aspas
-simples (' '). Pode ser mais fácil ter um nome de nó curto e atribuir um
-rótulo *label* , como mostrado abaixo entre colchetes [ ]. Se você
-quiser ter uma nova linha no nome do nó, deve fazê-lo por meio de um
-rótulo - use, `\n` , rótulo do nó entre aspas simples, conforme mostrado
-abaixo.
+Os nomes dos nós podem ser palavras únicas, como no exemplo simples acima. Para usar nomes com várias palavras ou caracteres especiais (por
+exemplo, parênteses, travessões), coloque o nome do nó entre aspas simples (' '). Pode ser mais fácil ter um nome de nó curto e atribuir um
+rótulo *label* , como mostrado abaixo entre colchetes [ ]. Se você quiser ter uma nova linha no nome do nó, deve fazê-lo por meio de um
+rótulo - use, `\n` , rótulo do nó entre aspas simples, conforme mostrado abaixo.
 
 **Subgrupos**\
-Dentro das declarações de borda, podem ser criados subgrupos em ambos os
-lados da borda com parênteses curvos ({ }). A margem (borda) aplica-se
-então a todos os nós do parêntese - é uma abreviação.
+Dentro das declarações de borda, podem ser criados subgrupos em ambos os lados da borda com parênteses curvos ({ }). A margem (borda) aplica-se então a todos os nós do parêntese - é uma abreviação.
 
 **Layouts**\
-\# desde ponto o padrão, circulos, multi dimensional com uso do neato
-(até 100 nós), radiais com twopi \# mais informações
-consulte[graphviz](http://www.graphviz.org/docs/layouts/twopi/)
+\# desde ponto o padrão, circulos, multi dimensional com uso do neato (até 100 nós), radiais com twopi \# mais informações consulte[graphviz](http://www.graphviz.org/docs/layouts/twopi/)
 
 -   dot (set `rankdir` to either TB, LR, RL, BT, )
 -   neato\
@@ -166,8 +154,7 @@ consulte[graphviz](http://www.graphviz.org/docs/layouts/twopi/)
 -   circo
 
 **Nós - atributos editáveis**\
-\#Quando na execução do código os atributos editáveis devem ser mantidos
-em inglês
+\#Quando na execução do código os atributos editáveis devem ser mantidos em inglês
 
 -   `label` (texto, entre aspas simples, se houver várias palavras)\
 -   `fillcolor` (muitas cores possíveis)\
@@ -231,8 +218,7 @@ cores](http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html)
 
 ### Exemplos complexos {.unnumbered}
 
-O exemplo abaixo, expande o diagrama de vigilância, adicionando nomes de
-nós complexos, de bordas agrupadas, com cores e estilo
+O exemplo abaixo, expande o diagrama de vigilância, adicionando nomes de nós complexos, de bordas agrupadas, com cores e estilo
 
     DiagrammeR::grViz("               # Todas as instruções estão dentro de uma grande cadeia de caracteres
     digraph surveillance_diagram {    # 'digraph' significa 'gráfico direcional', depois vem o nome do gráfico
@@ -316,10 +302,7 @@ digraph surveillance_diagram {    # 'digraph' significa 'gráfico direcional', d
 
 **Clusters de sub-graficos**
 
-Para agrupar nós em clusters em caixas, coloque-os dentro do mesmo
-subgráfico nomeado (`subgraph name {}`). Para ter cada subgrafo
-identificado dentro de uma caixa delimitadora, comece o nome do subgrafo
-com "cluster", como exemplificado com as 4 caixas abaixo
+Para agrupar nós em clusters em caixas, coloque-os dentro do mesmo subgráfico nomeado (`subgraph name {}`). Para ter cada subgrafo identificado dentro de uma caixa delimitadora, comece o nome do subgrafo com "cluster", como exemplificado com as 4 caixas abaixo
 
     DiagrammeR::grViz("             # Todas as instruções estão dentro de uma grande cadeia de caracteres
     digraph surveillance_diagram {  # 'digraph' significa 'gráfico direcional', depois vem o nome do gráfico
@@ -454,10 +437,7 @@ digraph surveillance_diagram {  # 'digraph' significa 'gráfico direcional', dep
 
 **Formas dos nós**
 
-O exemplo abaixo, emprestado [deste
-tutoriall](http://rich-iannone.github.io/DiagrammeR/), mostra exemplos
-de formas de nós (nodes) aplicadas e uma abreviatura para conexões
-seriais de borda
+O exemplo abaixo, emprestado [deste tutoriall](http://rich-iannone.github.io/DiagrammeR/), mostra exemplos de formas de nós (nodes) aplicadas e uma abreviatura para conexões seriais de borda
 
 ```{r out.width='75%'}
 DiagrammeR::grViz("digraph {
@@ -493,15 +473,7 @@ Como lidar e salvar resultados
 Sugere-se que veja tutorial para mais detalhes se for do seu interesse :
 <https://mikeyharper.uk/flowcharts-in-r-using-diagrammer/>
 
-"Figuras parametrizadas: um grande benefício de projetar figuras dentro
-de R é que somos capazes de conectar as figuras diretamente com nossa
-análise, lendo os valores de R diretamente em nossos fluxogramas. Por
-exemplo, suponha que você tenha criado um processo de filtragem que
-remove valores após cada estágio de um processo, você pode ter uma
-figura mostrando o número de valores restantes no conjunto de dados após
-cada estágio de seu processo. Para fazer isso, você pode usar o símbolo
-*\@ @X* diretamente na figura e, em seguida, referir-se a ele no rodapé
-do gráfico usando [*X*]*:*, onde X é um índice numérico único."
+"Figuras parametrizadas: um grande benefício de projetar figuras dentro de R é que somos capazes de conectar as figuras diretamente com nossa análise, lendo os valores de R diretamente em nossos fluxogramas. Por exemplo, suponha que você tenha criado um processo de filtragem que remove valores após cada estágio de um processo, você pode ter uma figura mostrando o número de valores restantes no conjunto de dados após cada estágio de seu processo. Para fazer isso, você pode usar o símbolo *\@ @X* diretamente na figura e, em seguida, referir-se a ele no rodapé do gráfico usando [*X*]*:*, onde X é um índice numérico único."
 
 Recomenda-se rever este  este tutorial se a parametrização é algo que você  esteja interessado
 
