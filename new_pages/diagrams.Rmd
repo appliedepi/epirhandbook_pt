@@ -12,9 +12,7 @@ knitr::include_graphics(here::here("images", "sankey_diagram.png"))
 Esta página abrange o código para produzir:
 
 -   Diagramas de fluxo usando **DiagrammeR** e a linguagem DOT\
-
 -   Diagramas aluviais/Sankey\
-
 -   Cronogramas de eventos
 
     <!-- * DAGs (Directed Acyclic Graphs)   -->
