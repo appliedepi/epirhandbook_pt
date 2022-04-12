@@ -133,14 +133,11 @@ Os nomes de nós, ou declarações de borda, podem ser separados por espaços, p
 
 **Direção da classificação**
 
-Um gráfico pode ser reorientado para se mover da esquerda para a direita, ajustando o `rankdir` argumento dentro da instrução do gráfico. O padrão é TB (de cima para baixo), mas pode ser LR (da esquerda para a direita), RL (da direita para esquerda) ou BT (baixo para cima).
+Um gráfico pode ser reorientado para se mover da esquerda para a direita, ajustando o `rankdir` argumento dentro da instrução do gráfico. O padrão é TB (da cigla em inglês *top-to-bottom* - de cima para baixo), mas pode ser LR (da cigla em inglês *left-to-right* - da esquerda para a direita), RL (da cigla em inglês *right-to-left* - da direita para esquerda) ou BT (da cigla em inglês *bottom-to-top* - baixo para cima).
 
 **Nomes dos nós**
 
-Os nomes dos nós podem ser palavras únicas, como no exemplo simples acima. Para usar nomes com várias palavras ou caracteres especiais (por
-exemplo, parênteses, travessões), coloque o nome do nó entre aspas simples (' '). Pode ser mais fácil ter um nome de nó curto e atribuir um
-rótulo *label* , como mostrado abaixo entre colchetes [ ]. Se você quiser ter uma nova linha no nome do nó, deve fazê-lo por meio de um
-rótulo - use, `\n` , rótulo do nó entre aspas simples, conforme mostrado abaixo.
+Os nomes dos nós podem ser palavras únicas, como no exemplo simples acima. Para usar nomes com várias palavras ou caracteres especiais (por exemplo, parênteses, travessões), coloque o nome do nó entre aspas simples (' '). Pode ser mais fácil ter um nome de nó curto e atribuir um rótulo *label* , como mostrado abaixo entre colchetes [ ]. Se você quiser ter uma nova linha no nome do nó, deve fazê-lo por meio de um rótulo - use, `\n` , rótulo do nó entre aspas simples, conforme mostrado abaixo.
 
 **Subgrupos**\
 Dentro das declarações de borda, podem ser criados subgrupos em ambos os lados da borda com parênteses curvos ({ }). A margem (borda) aplica-se então a todos os nós do parêntese - é uma abreviação.
