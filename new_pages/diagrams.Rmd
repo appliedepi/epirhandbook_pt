@@ -57,22 +57,13 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 
 
 <!-- ======================================================= -->
-
 ## Diagramas de fluxos
 
-Pode-se usar o pacote R **DiagrammeR** para criar gráficos ou gráficos
-de fluxo. Esses podem ser estáticos, ou podem ser ajustados de forma
-dinâmica, a partir das mudanças ou alterações do conjunto de dados
-utilizado.
+Pode-se usar o pacote R **DiagrammeR** para criar gráficos ou gráficos de fluxo. Esses podem ser estáticos, ou podem ser ajustados de forma dinâmica, a partir das mudanças ou alterações do conjunto de dados utilizado.
 
 **Ferramentas**
 
-A função `grViz()` é utilizada para criar um diagrama "Graphviz". Esta
-função aceita uma *entrada de cadeia de caracteres contendo instruções*
-para produção do diagrama. Dentro dessa cadeia, as instruções são
-escritas numa linguagem diferente, chamada
-[DOT](https://graphviz.org/doc/info/lang.html) - mas muito fácil de
-aprender a estrutura básica necessária.
+A função `grViz()` é utilizada para criar um diagrama "Graphviz". Esta função aceita uma *entrada de cadeia de caracteres contendo instruções* para produção do diagrama. Dentro dessa cadeia, as instruções são escritas numa linguagem diferente, chamada [DOT](https://graphviz.org/doc/info/lang.html) - mas muito fácil de aprender a estrutura básica necessária.
 
 **Estrutura básica**
 
