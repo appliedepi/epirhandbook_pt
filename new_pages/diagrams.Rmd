@@ -11,12 +11,11 @@ knitr::include_graphics(here::here("images", "sankey_diagram.png"))
 
 Esta página abrange o código para produzir:
 
--   Diagramas de fluxo usando **DiagrammeR** e a linguagem DOT\
--   Diagramas aluviais/Sankey\
--   Cronogramas de eventos
+* Diagramas de fluxo usando **DiagrammeR** e a linguagem DOT\
+* Diagramas aluviais/Sankey\
+* Cronogramas de eventos
 
     <!-- * DAGs (Directed Acyclic Graphs)   -->
-
     <!-- * GANTT charts   -->
 
     <!-- ======================================================= -->
@@ -24,11 +23,11 @@ Esta página abrange o código para produzir:
 
 ### Carregar pacotes {.unnumbered}
 
-Este pedaço de código mostra o carregamento dos pacotes necessárias para
-as análises. Neste manual damos ênfase a `p_load()` de **pacman**, que
+Este chunk mostra o carregamento dos pacotes necessárias para
+as análises. Neste manual damos ênfase à função `p_load()` do pacote **pacman**, que
 instala o pacote se necessário *e* carrega-o para utilização. Outra
 opção é carregar os pacotes instalados utilizando `library()` a partir
-de **base**\* R. Ver a página em [R basics] para mais informações sobre
+de **R base**. Ver a página em [R - O Basico] para mais informações sobre
 pacotes R.
 
 ```{r}
@@ -49,10 +48,9 @@ href='<https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linel
 com `import()` função do pacote **rio** (ele lida com muitos tipos de
 arquivo como .xlsx, .csv, .rds - veja a página [Importar e exportar](https://epirhandbook.com/en/import-and-export.html#import-and-export) para detalhes
 
-library
 
 ```{r, echo=F}
-# import the linelist into R
+# importar lista para o R
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 ```
 
@@ -80,7 +78,7 @@ utilizado.
 **Ferramentas**
 
 A função `grViz()` é utilizada para criar um diagrama "Graphviz". Esta
-função aceita uma entrada de cadeia de caracteres *contendo instruções*
+função aceita uma *entrada de cadeia de caracteres contendo instruções*
 para produção do diagrama. Dentro dessa cadeia, as instruções são
 escritas numa linguagem diferente, chamada
 [DOT](https://graphviz.org/doc/info/lang.html) - mas muito fácil de
@@ -88,12 +86,11 @@ aprender a estrutura básica necessária.
 
 **Estrutura básica**
 
-1)  Abra as instruções `grViz("`\
-2)  Especifique a direcionalidade e o nome do gráfico, e com colchetes
-    abertos, por exemplo `digraph my_flow_chart {`
-3)  Declaração do gráfico (layout, direção de classificação)\
+1)  Abra as instruções `grViz("`
+2)  Especifique a direcionalidade e o nome do gráfico, e abra colchetes, por exemplo `digraph my_flow_chart {`
+3)  Declaração do gráfico (layout, direção de classificação)
 4)  Declarações de nós (criar os nós)
-5)  Declarações Bordas (fornece links entre os nós)\
+5)  Declarações Bordas (fornece links entre os nós)
 6)  Feche as instruções `}")`
 
 ### Exemplos simples {.unnumbered}
