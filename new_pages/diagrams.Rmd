@@ -235,8 +235,8 @@ O exemplo abaixo, expande o diagrama de vigilância, adicionando nomes de nós c
                                           fontcolor = darkgreen,
                                           color = darkgreen,
                                           style = dashed]
-    }
-    ")
+}
+")
 ```
 
 
@@ -244,14 +244,14 @@ O exemplo abaixo, expande o diagrama de vigilância, adicionando nomes de nós c
 DiagrammeR::grViz("               # Todas as instruções estão dentro de uma grande cadeia de caracteres
 digraph surveillance_diagram {    # 'digraph' significa 'gráfico direcional', depois vem o nome do gráfico
   
-  # Declaração gráfica
+  # Demonstração gráfica
   #################
   graph [layout = dot,
-         rankdir = TB,            # layout de cima para baixo
+         rankdir = TB,            # layout top-to-bottom (de cima para baixo)
          fontsize = 10]
   
 
-  # nodes (circles)
+  # nós (circles)
   #################
   node [shape = circle,           # shape = círculo
        fixedsize = true
@@ -283,12 +283,13 @@ digraph surveillance_diagram {    # 'digraph' significa 'gráfico direcional', d
 
 **Clusters de sub-graficos**
 
-Para agrupar nós em clusters em caixas, coloque-os dentro do mesmo subgráfico nomeado (`subgraph name {}`). Para ter cada subgrafo identificado dentro de uma caixa delimitadora, comece o nome do subgrafo com "cluster", como exemplificado com as 4 caixas abaixo
+Para agrupar nós em caixas de clusters, coloque-os dentro do mesmo subgráfico nomeado (`subgraph name {}`). Para ter cada subgráfico identificado dentro de uma caixa delimitadora, comece o nome do subgráfico com "cluster", como exemplificado com as 4 caixas abaixo
 
-    DiagrammeR::grViz("             # Todas as instruções estão dentro de uma grande cadeia de caracteres
-    digraph surveillance_diagram {  # 'digraph' significa 'gráfico direcional', depois vem o nome do gráfico
+```    
+DiagrammeR::grViz("             # Todas as instruções estão dentro de uma grande cadeia de caracteres
+digraph surveillance_diagram {  # 'digraph' significa 'gráfico direcional', depois vem o nome do gráfico
       
-      # Declaração gráfica
+      # Demonstração gráfica
       #################
       graph [layout = dot,
              rankdir = TB,            
@@ -312,7 +313,7 @@ Para agrupar nós em clusters em caixas, coloque-os dentro do mesmo subgráfico 
       
       # nós (boxes)
       ###############
-      node [shape = box,                     # formas dos nós
+      node [shape = box,                     # formas dos nós (Box - Caixa)
             fontname = Helvetica]            # fonte do texto no nó
       
       subgraph cluster_active {
@@ -349,11 +350,14 @@ Para agrupar nós em clusters em caixas, coloque-os dentro do mesmo subgráfico 
     }
     ")
 
+```
+
+
 ```{r out.width='120%', echo=F}
 DiagrammeR::grViz("             # Todas as instruções estão dentro de uma grande cadeia de caracteres
 digraph surveillance_diagram {  # 'digraph' significa 'gráfico direcional', depois vem o nome do gráfico
   
-  # declaração gráfica
+  # Demonstração gráfica
   #################
   graph [layout = dot,
          rankdir = TB,            
@@ -377,7 +381,7 @@ digraph surveillance_diagram {  # 'digraph' significa 'gráfico direcional', dep
   
   # nós (boxes)
   ###############
-  node [shape = box,                     # formas dos nós
+  node [shape = box,                     # formas dos nós (Box - Caixa)
         fontname = Helvetica]            # fonte do texto no nó
   
   subgraph cluster_active {
@@ -415,6 +419,7 @@ digraph surveillance_diagram {  # 'digraph' significa 'gráfico direcional', dep
 ")
 
 ```
+
 
 **Formas dos nós**
 
