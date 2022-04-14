@@ -738,6 +738,8 @@ Uma outra alternativa é usar os pacotes como **ggdag** e **daggity**
 <!-- ======================================================= -->
 ## Recursos
 
+
+
 Muito do que foi dito acima em relação à linguagem DOT é adaptado do tutorial [nesta página](https://mikeyharper.uk/flowcharts-in-r-using-diagrammer/)
 
 Outro tutorial mais aprofundado [tutorial on DiagammeR](http://rich-iannone.github.io/DiagrammeR/)
