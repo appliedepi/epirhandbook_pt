@@ -150,6 +150,7 @@ Dentro das declarações de borda, podem ser criados subgrupos em ambos os lados
 * twopi\
 * circo
 
+
 **Nós - atributos editáveis**
 
 * `label` (Rótulo - texto, entre aspas simples, se houver várias palavras)
@@ -170,6 +171,7 @@ Dentro das declarações de borda, podem ser criados subgrupos em ambos os lados
 * `fontname` (Nome da fonte)
 * `fontsize` (Tamanho da fonte)
 * `icon` (Ícone)
+
 
 **Bordas - atributos editáveis**
 
