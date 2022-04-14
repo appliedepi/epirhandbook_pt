@@ -205,7 +205,7 @@ O exemplo abaixo, expande o diagrama de vigilância, adicionando nomes de nós c
       # Declaração gráfica
       #################
       graph [layout = dot,
-             rankdir = TB,            # layout de cima para baixo
+             rankdir = TB,            # layout top-to-bottom (de cima para baixo)
              fontsize = 10]
       
 
@@ -237,6 +237,8 @@ O exemplo abaixo, expande o diagrama de vigilância, adicionando nomes de nós c
                                           style = dashed]
     }
     ")
+```
+
 
 ```{r out.width='50%', echo=F}
 DiagrammeR::grViz("               # Todas as instruções estão dentro de uma grande cadeia de caracteres
