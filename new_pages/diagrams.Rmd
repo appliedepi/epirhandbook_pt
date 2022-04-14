@@ -444,49 +444,43 @@ results [label= 'Results']
 }")
 ```
 
+
 ### Saídas {.unnumbered}
 
 Como lidar e salvar resultados
 
--   As saídas aparecerão no painel Viewer do RStudio, por padrão no
-    canto inferior direito ao lado de Files, Plots, Packages e Help.
--   Para exportar, você pode "Salvar como imagem" ou "Copiar para a área
-    de transferência" do Visualizador. O gráfico se ajustará ao tamanho
-    especificado.
+* As saídas aparecerão no painel Viewer do RStudio, por padrão no canto inferior direito ao lado de Files, Plots, Packages e Help.
+* Para exportar, você pode "Salvar como imagem" ou "Copiar para a área de transferência" do Visualizador. O gráfico se ajustará ao tamanho especificado.
+
+
+
 
 ### Figuras parametrizadas {.unnumbered}
 
-Sugere-se que veja tutorial para mais detalhes se for do seu interesse :
-<https://mikeyharper.uk/flowcharts-in-r-using-diagrammer/>
+Aqui temos uma citação do tutorial: <https://mikeyharper.uk/flowcharts-in-r-using-diagrammer/>
 
-"Figuras parametrizadas: um grande benefício de projetar figuras dentro de R é que somos capazes de conectar as figuras diretamente com nossa análise, lendo os valores de R diretamente em nossos fluxogramas. Por exemplo, suponha que você tenha criado um processo de filtragem que remove valores após cada estágio de um processo, você pode ter uma figura mostrando o número de valores restantes no conjunto de dados após cada estágio de seu processo. Para fazer isso, você pode usar o símbolo *\@ @X* diretamente na figura e, em seguida, referir-se a ele no rodapé do gráfico usando [*X*]*:*, onde X é um índice numérico único."
+"Figuras parametrizadas: um grande benefício de projetar figuras dentro de R é que somos capazes de conectar as figuras diretamente com nossa análise, lendo os valores de R diretamente em nossos fluxogramas. Por exemplo, suponha que você tenha criado um processo de filtragem que remove valores após cada estágio de um processo, você pode ter uma figura mostrando o número de valores restantes no conjunto de dados após cada estágio de seu processo. Para fazer isso, você pode usar o símbolo *@@X* diretamente na figura e, em seguida, referir-se a ele no rodapé do gráfico usando [X]:, onde X é um índice numérico único."
 
-Recomenda-se rever este  este tutorial se a parametrização é algo que você  esteja interessado
+Recomenda-se rever este  este tutorial se a parametrização é algo que você esteja interessado
+
 
 <!-- Abaixo um exemplo deste tutorial. -->
 
 <!-- ```{r, eval=F} -->
-
 <!-- # Definir alguns dados de amostra -->
-
 <!-- data <- list(a=1000, b=800, c=600, d=400) -->
 
-<!-- DiagrammeR::grViz(" -->
 
+<!-- DiagrammeR::grViz(" -->
 <!-- digraph graph2 { -->
 
 <!-- graph [layout = dot] -->
 
 <!-- # definições dos nós com texto de etiqueta substituído -->
-
 <!-- node [shape = rectangle, width = 4, fillcolor = Biege] -->
-
 <!-- a [label = '@@1'] -->
-
 <!-- b [label = '@@2'] -->
-
 <!-- c [label = '@@3'] -->
-
 <!-- d [label = '@@4'] -->
 
 <!-- a -> b -> c -> d -->
@@ -494,16 +488,14 @@ Recomenda-se rever este  este tutorial se a parametrização é algo que você  
 <!-- } -->
 
 <!-- [1]:  paste0('Raw Data (n = ', data$a, ')') -->
-
 <!-- [2]: paste0('Remove Errors (n = ', data$b, ')') -->
-
 <!-- [3]: paste0('Identify Potential Customers (n = ', data$c, ')') -->
-
 <!-- [4]: paste0('Select Top Priorities (n = ', data$d, ')') -->
-
 <!-- ") -->
 
 <!-- ``` -->
+
+
 
 <!-- ### CONSORT diagram  {.unnumbered} -->
 
@@ -513,23 +505,17 @@ Recomenda-se rever este  este tutorial se a parametrização é algo que você  
 
 <!-- Nota acima está desactualizada via DiagrammeR -->
 
+
+
+
 <!-- ======================================================= -->
-
-
 ## Diagramas Aluviais/Sankey
 
 ### Carregar pacotes {.unnumbered}
 
-Esta parte de código mostra o carregamento de pacotes necessários para
-as análises. Neste manual enfatiza-se o `p_load()` do **pacman**, que
-instala o pacote se necessário e carrega-o para uso. Você também pode
-carregar pacotes instalados usando a biblioteca `library()` a partir da
-**base** R. Consulte a página sobre o [básico do R]
-(<https://epirhandbook.com/en/r-basics.html#r-basics>) para obter mais
-informações sobre os pacotes R.
+Esta parte de código mostra o carregamento de pacotes necessários para as análises. Neste manual enfatiza-se o `p_load()` do **pacman**, que instala o pacote se necessário e carrega-o para uso. Você também pode carregar pacotes instalados usando a biblioteca `library()` a partir da **base** R. Consulte a página sobre o [básico do R] (<https://epirhandbook.com/en/r-basics.html#r-basics>) para obter mais informações sobre os pacotes R.
 
-Carregou-se o pacote **networkD3** para a construção do diagrama, e o
-pacote **tidyverse** para as etapas de preparação dos dados.
+Carregou-se o pacote **networkD3** para a construção do diagrama, e o pacote **tidyverse** para as etapas de preparação dos dados.
 
 ```{r}
 pacman::p_load(
@@ -539,17 +525,9 @@ pacman::p_load(
 
 ### Plotagem do conjunto de dados {.unnumbered}
 
-Plotagem das ligações de um conjunto de dados. Abaixo é apresentado a
-utilização deste pacote sobre o caso `linelist`. O tutorial está
-disponível online para consulta.
-[Tutorial](https://www.r-graph-gallery.com/321-introduction-to-interactive-sankey-diagram-2.html).
+Plotagem das ligações de um conjunto de dados. Abaixo é apresentado a utilização deste pacote sobre o caso `linelist`. O tutorial está disponível online para consulta. [Tutorial](https://www.r-graph-gallery.com/321-introduction-to-interactive-sankey-diagram-2.html).
 
-Inicia-se obtendo a contagem de casos para cada categoria etária e a
-combinação por hospital. Os valores sem categoria de idade são removidos
-para maior clareza. Também foi realizado uma nova rotulagem
-(renomeadas), o `hospital` como fonte (source) e categorias de idades
-`age_cat` como alvo (target). Estes serão os dois lados do diagrama
-aluvial.
+Inicia-se obtendo a contagem de casos para cada categoria etária e a combinação por hospital. Os valores sem categoria de idade são removidos para maior clareza. Também foi realizado uma nova rotulagem (renomeadas), o `hospital` como fonte (source) e categorias de idades `age_cat` como alvo (target). Estes serão os dois lados do diagrama aluvial.
 
 ```{r}
 # Contar por hospital e categoria de idade
@@ -567,11 +545,7 @@ O conjunto de dados tem agora este aspecto:
 DT::datatable(links, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap')
 ```
 
-Agora cria-se um quadro de dados, de todos os nós do diagrama, sob a
-coluna `name`. Isso consiste em todos os valores para `hospital` e
-`age_cat`. Observe que garantiu que todos eles pertecem a *classe
-Character* antes de combiná-los. E ajustou-se as colunas de ID para que
-fossem números em vez de rótulos:
+Agora cria-se um quadro de dados, de todos os nós do diagrama, sob a coluna `name`. Isso consiste em todos os valores para `hospital` e `age_cat`. Observe que garantiu que todos eles pertecem a *classe Character* antes de combiná-los. E ajustou-se as colunas de ID para que fossem números em vez de rótulos:
 
 ```{r}
 # Unico nome para os nós
@@ -583,12 +557,7 @@ nodes <- data.frame(
 nodes  # print
 ```
 
-Na sequência editou-se o`links`, que é um data frame("tabela de uma base
-de dados), criado anteriormente com o `count()`. Duas novas colunas
-númericas então foram adicionadas `IDsource` e `IDtarget` que irá
-refletir o `links` entre os nós. Essas colunas manterão os números das
-linhas (posição) dos nós tanto de origem como o do destino. O 1 é
-subtraído, para que estes números de posição comecem em 0 e (não em 1).
+Na sequência editou-se o`links`, que é um data frame("tabela de uma base de dados), criado anteriormente com o `count()`. Duas novas colunas númericas então foram adicionadas `IDsource` e `IDtarget` que irá refletir o `links` entre os nós. Essas colunas manterão os números das linhas (posição) dos nós tanto de origem como o do destino. O 1 é subtraído, para que estes números de posição comecem em 0 e (não em 1).
 
 ```{r}
 # corresponder a números e  não a nomes
@@ -602,10 +571,7 @@ O conjunto de dados de ligações agora tem este aspecto:
 DT::datatable(links, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap')
 ```
 
-Agora, hora de traçar o diagrama Sankey com `sankeyNetwork()`. Você pode
-ler mais sobre cada argumento correndo `?sankeyNetwork` no console. Note
-que, a menos que defina `iterations = 0` a ordem dos seus nós pode não
-ser a esperada.
+Agora, hora de traçar o diagrama Sankey com `sankeyNetwork()`. Você pode ler mais sobre cada argumento correndo `?sankeyNetwork` no console. Note que, a menos que defina `iterations = 0` a ordem dos seus nós pode não ser a esperada.
 
 ```{r}
 
@@ -625,10 +591,7 @@ p <- sankeyNetwork(
 p
 ```
 
-Aqui está um exemplo em que o resultado do paciente também é incluído.
-Na etapa de preparação dos dados, é necessário calcular as contagens de
-casos entre a idade e o hospital, e separadamente entre o hospital e o
-resultado, e depois ligar todas estas contagens juntamente com
+Aqui está um exemplo em que o resultado do paciente também é incluído. Na etapa de preparação dos dados, é necessário calcular as contagens de casos entre a idade e o hospital, e separadamente entre o hospital e o resultado, e depois ligar todas estas contagens juntamente com
 `bind_rows()`.
 
 ```{r}
@@ -755,31 +718,22 @@ pp
 
 ## Gráficos cíclicos direcionados - DAGs
 
-Este tipo de gráfico é utilizado como ferramenta para entender e lidar
-com a inferência causal.
+Este tipo de gráfico é utilizado como ferramenta para entender e lidar com a inferência causal.
 
-Você pode construir um DAG manualmente usando o pacote **DiagammeR** e a
-linguagem DOT conforme descrito acima. Uma outra alternativa é usar os
-pacotes como **ggdag** e **daggity**
+Você pode construir um DAG manualmente usando o pacote **DiagammeR** e a linguagem DOT conforme descrito acima. Uma outra alternativa é usar os pacotes como **ggdag** e **daggity**
 
 Para saber mais sobre, você pode consultar:
 
-[Introdução DAGs ggdag
-vignette](https://cran.r-project.org/web/packages/ggdag/vignettes/intro-to-dags.html)
+[Introdução DAGs ggdag vignette](https://cran.r-project.org/web/packages/ggdag/vignettes/intro-to-dags.html)
 
-[Causal Inferência com dags no
-R](https://www.r-bloggers.com/2019/08/causal-inference-with-dags-in-r/#:~:text=In%20a%20DAG%20all%20the,for%20drawing%20and%20analyzing%20DAGs.)
+[Causal Inferência com dags no R](https://www.r-bloggers.com/2019/08/causal-inference-with-dags-in-r/#:~:text=In%20a%20DAG%20all%20the,for%20drawing%20and%20analyzing%20DAGs.)
 
 <!-- ======================================================= -->
 
 ## Recursos
 
-Muito do que foi dito acima em relação à língua DOT é adaptado do
-tutorial [at this
-site](https://mikeyharper.uk/flowcharts-in-r-using-diagrammer/)
+Muito do que foi dito acima em relação à língua DOT é adaptado do tutorial [at this site](https://mikeyharper.uk/flowcharts-in-r-using-diagrammer/)
 
-Outro tutorial mais aprofundado [tutorial on
-DiagammeR](http://rich-iannone.github.io/DiagrammeR/)
+Outro tutorial mais aprofundado [tutorial on DiagammeR](http://rich-iannone.github.io/DiagrammeR/)
 
-Esta página  consulte em [Sankey
-diagrams](https://www.displayr.com/sankey-diagrams-r/)
+Esta página  consulte em [Sankey diagrams](https://www.displayr.com/sankey-diagrams-r/)
