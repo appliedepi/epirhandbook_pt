@@ -523,9 +523,9 @@ pacman::p_load(
   tidyverse)
 ```
 
-### Plotagem do conjunto de dados {.unnumbered}
+### Mapeamento do conjunto de dados {.unnumbered}
 
-Plotagem das ligações de um conjunto de dados. Abaixo é apresentado a utilização deste pacote sobre o caso `linelist`. O tutorial está disponível online para consulta. [Tutorial](https://www.r-graph-gallery.com/321-introduction-to-interactive-sankey-diagram-2.html).
+Mapeamento das ligações de um conjunto de dados. Abaixo é apresentado a utilização deste pacote sobre o caso `linelist`. O tutorial está disponível online para consulta. [Tutorial](https://www.r-graph-gallery.com/321-introduction-to-interactive-sankey-diagram-2.html).
 
 Inicia-se obtendo a contagem de casos para cada categoria etária e a combinação por hospital. Os valores sem categoria de idade são removidos para maior clareza. Também foi realizado uma nova rotulagem (renomeadas), o `hospital` como fonte (source) e categorias de idades `age_cat` como alvo (target). Estes serão os dois lados do diagrama aluvial.
 
@@ -545,19 +545,20 @@ O conjunto de dados tem agora este aspecto:
 DT::datatable(links, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap')
 ```
 
-Agora cria-se um quadro de dados, de todos os nós do diagrama, sob a coluna `name`. Isso consiste em todos os valores para `hospital` e `age_cat`. Observe que garantiu que todos eles pertecem a *classe Character* antes de combiná-los. E ajustou-se as colunas de ID para que fossem números em vez de rótulos:
+
+Agora cria-se um Data Frame, de todos os nós do diagrama, sob a coluna `name`. Isso consiste em todos os valores para `hospital` e `age_cat`. Observe que garantiu-se que todos eles pertecem a *classe Character* antes de combiná-los. E ajustou-se as colunas de ID para que fossem números em vez de rótulos:
 
 ```{r}
-# Unico nome para os nós
+# O nome único para os nós
 nodes <- data.frame(
   name=c(as.character(links$source), as.character(links$target)) %>% 
     unique()
   )
 
-nodes  # print
+nodes  # Exibir
 ```
 
-Na sequência editou-se o`links`, que é um data frame("tabela de uma base de dados), criado anteriormente com o `count()`. Duas novas colunas númericas então foram adicionadas `IDsource` e `IDtarget` que irá refletir o `links` entre os nós. Essas colunas manterão os números das linhas (posição) dos nós tanto de origem como o do destino. O 1 é subtraído, para que estes números de posição comecem em 0 e (não em 1).
+Na sequência editou-se o Data Frame `links`, criado anteriormente com o `count()`. Duas novas colunas númericas então foram adicionadas `IDsource` e `IDtarget` que irão refletir/criar os linques entre os nós. Essas colunas manterão os números das linhas (posição) dos nós tanto de origem como o do destino. O 1 é subtraído, para que estes números de posição comecem em 0 (não em 1).
 
 ```{r}
 # corresponder a números e  não a nomes
@@ -565,7 +566,7 @@ links$IDsource <- match(links$source, nodes$name)-1
 links$IDtarget <- match(links$target, nodes$name)-1
 ```
 
-O conjunto de dados de ligações agora tem este aspecto:
+O conjunto de dados Links agora tem este aspecto:
 
 ```{r message=FALSE, echo=F}
 DT::datatable(links, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap')
@@ -575,7 +576,7 @@ Agora, hora de traçar o diagrama Sankey com `sankeyNetwork()`. Você pode ler m
 
 ```{r}
 
-# plotar
+# traçar o diagrama
 ######
 p <- sankeyNetwork(
   Links = links,
@@ -591,8 +592,9 @@ p <- sankeyNetwork(
 p
 ```
 
-Aqui está um exemplo em que o resultado do paciente também é incluído. Na etapa de preparação dos dados, é necessário calcular as contagens de casos entre a idade e o hospital, e separadamente entre o hospital e o resultado, e depois ligar todas estas contagens juntamente com
-`bind_rows()`.
+
+
+Aqui está um exemplo em que o resultado do paciente também é incluído. Na etapa de preparação dos dados, é necessário calcular as contagens de casos entre a idade e o hospital, e separadamente entre o hospital e o resultado, e depois ligar todas estas contagens juntamente com `bind_rows()`.
 
 ```{r}
 # conta por hospital e categoria de idade
@@ -613,7 +615,7 @@ hosp_out_links <- linelist %>%
 # combinar links
 links <- bind_rows(age_hosp_links, hosp_out_links)
 
-# Único nome para os nós
+# Nome único para os nós
 nodes <- data.frame(
   name=c(as.character(links$source), as.character(links$target)) %>% 
     unique()
@@ -623,7 +625,7 @@ nodes <- data.frame(
 links$IDsource <- match(links$source, nodes$name)-1 
 links$IDtarget <- match(links$target, nodes$name)-1
 
-# plotar
+# exibir
 ######
 p <- sankeyNetwork(Links = links,
                    Nodes = nodes,
@@ -639,17 +641,17 @@ p
 
 ```
 
+
 Consulte: <https://www.displayr.com/sankey-diagrams-r/>
 
-<!-- ======================================================= -->
 
+
+<!-- ======================================================= -->
 ## Cronograma de eventos
 
-Para fazer uma linha do tempo mostrando eventos específicos, você pode
-usar o pacote `vistime`.
+Para fazer uma linha do tempo mostrando eventos específicos, você pode usar o pacote `vistime`.
 
-Veja essa
-[vignette](https://cran.r-project.org/web/packages/vistime/vignettes/vistime-vignette.html#ex.-2-project-planning)
+Veja [vignette](https://cran.r-project.org/web/packages/vistime/vignettes/vistime-vignette.html#ex.-2-project-planning)
 
 ```{r}
 # Carregando  o pacote
@@ -659,7 +661,7 @@ pacman::p_load(vistime,  # criando a linha do tempo
 ```
 
 ```{r, echo=F}
-# reference: https://cran.r-project.org/web/packages/vistime/vignettes/vistime-vignette.html#ex.-2-project-planning
+# referencia: https://cran.r-project.org/web/packages/vistime/vignettes/vistime-vignette.html#ex.-2-project-planning
 
 data <- read.csv(text="event, group, start, end, color
                        Event 1, Group A,2020-01-22,2020-01-22, #90caf9
@@ -709,7 +711,7 @@ for(i in 1:length(pp$x$data)){
   if(pp$x$data[[i]]$mode == "text") pp$x$data[[i]]$textposition <- "right"
 }
 
-#print
+#exibir
 pp
 
 ```
