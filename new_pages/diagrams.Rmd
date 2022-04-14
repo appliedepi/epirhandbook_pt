@@ -197,6 +197,8 @@ Dentro das declarações de borda, podem ser criados subgrupos em ambos os lados
 
 O exemplo abaixo, expande o diagrama de vigilância, adicionando nomes de nós complexos, de bordas agrupadas, com cores e estilo
 
+
+```
     DiagrammeR::grViz("               # Todas as instruções estão dentro de uma grande cadeia de caracteres
     digraph surveillance_diagram {    # 'digraph' significa 'gráfico direcional', depois vem o nome do gráfico
       
