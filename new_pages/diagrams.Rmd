@@ -140,78 +140,56 @@ Um gráfico pode ser reorientado para se mover da esquerda para a direita, ajust
 Os nomes dos nós podem ser palavras únicas, como no exemplo simples acima. Para usar nomes com várias palavras ou caracteres especiais (por exemplo, parênteses, travessões), coloque o nome do nó entre aspas simples (' '). Pode ser mais fácil ter um nome de nó curto e atribuir um rótulo *label*, como mostrado abaixo entre colchetes [ ]. Se você quiser ter uma nova linha no nome do nó, deve fazê-lo por meio de um rótulo - use `\n` rótulo do nó entre aspas simples, conforme mostrado abaixo.
 
 **Subgrupos**\
-Dentro das declarações de borda, podem ser criados subgrupos em ambos os lados da borda com parênteses curvos ({ }). A margem (borda) aplica-se então a todos os nós do parêntese - é uma abreviação.
+Dentro das declarações de borda, podem ser criados subgrupos em ambos os lados da borda com chaves ({ }). A borda aplica-se então a todos os nós do parêntese - é uma abreviação.
+
 
 **Layouts**\
-\# desde ponto o padrão, circulos, multi dimensional com uso do neato (até 100 nós), radiais com twopi \# mais informações consulte[graphviz](http://www.graphviz.org/docs/layouts/twopi/)
 
--   dot (set `rankdir` to either TB, LR, RL, BT, )
--   neato\
--   twopi\
--   circo
+* dot (set `rankdir` to either TB, LR, RL, BT, )
+* neato\
+* twopi\
+* circo
 
-**Nós - atributos editáveis**\
-\#Quando na execução do código os atributos editáveis devem ser mantidos em inglês
+**Nós - atributos editáveis**
 
--   `label` (texto, entre aspas simples, se houver várias palavras)\
--   `fillcolor` (muitas cores possíveis)\
--   `fontcolor`\
--   `alpha` (transparência 0-1)\
--   `shape` (elipse, oval, diamante, ovo, texto simples, ponto,
-    quadrado, triângulo) (ellipse, oval, diamond, egg, plaintext, point,
-    square, triangle)
--   `style`\
--   `sides`\
--   `peripheries`\
--   `fixedsize` (h x w)\
--   `height`\
--   `width`\
--   `distortion`\
--   `penwidth` (largura da borda da forma)\
--   `x` (deslocamento para a esquerda / direita) left/right
--   `y` (ddeslocamento para cima / para baixo) up/down
--   `fontname`\
--   `fontsize`\
--   `icon`
+* `label` (Rótulo - texto, entre aspas simples, se houver várias palavras)
+* `fillcolor` (Cor do preenchimento - muitas cores possíveis)
+* `fontcolor` (Cor da fonte - muitas cores possíveis)
+* `alpha` (Alfa - transparência 0-1)
+* `shape` (Formato - ellipse, oval, diamond, egg, plaintext, point, square, triangle)
+* `style` (Estilo)
+* `sides` (Tamanhos)
+* `peripheries` (Margens)
+* `fixedsize` (Tamanho fixo - h x w)
+* `height` (Altura)
+* `width` (Largura)
+* `distortion` (Distorção)
+* `penwidth` (Largura/espessura da linha - largura da borda da forma)
+* `x` (deslocamento para a esquerda e direita - left/right
+* `y` (ddeslocamento para cima e para baixo - up/down
+* `fontname` (Nome da fonte)
+* `fontsize` (Tamanho da fonte)
+* `icon` (Ícone)
 
 **Bordas - atributos editáveis**
 
--   `arrowsize`\
+* `arrowsize` (Tamanho da seta)
+* `arrowhead` (Ponta da seta - normal, box, crow, curve, diamond, dot, inv, none, tee, vee)
+* `arrowtail` (Base da seta)
+* `dir` (Direção)
+* `style` (Estilo "dashed", para tracejadas ...)
+* `color` (Cor)
+* `alpha` (Alfa)
+* `headport` (texto na ponta da seta)
+* `tailport` (texto na da base da seta)
+* `fontname` (Nome da fonte)
+* `fontsize` (Tamanho da fonte)
+* `fontcolor`(Cor da fonte)
+* `penwidth` (Largura da linha)
+* `minlen` (Comprimento minímo)
 
--   `arrowhead` (normal, caixa, "ramificada lembra pé de galinha",
-    curva, diamante, ponto, inv, nenhum, T, V)
+**Nomes das cores**: usa-se valores hexadecimais ou os nomes de cores 'X11', consulte [detalhes X11](http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html)
 
-    atributos em inglês (normal, box, crow, curve, diamond, dot,
-
-    inv, none, tee, vee)\
-
--   `arrowtail`\
-
--   `dir` (direction, ) - Direção
-
--   `style` (dashed, ...) se tracejadas
-
--   `color`
-
--   `alpha`\
-
--   `headport` (texto na frente da ponta da seta)\
-
--   `tailport` (texto atrás da ponta da seta)\
-
--   `fontname`\
-
--   `fontsize`\
-
--   `fontcolor`\
-
--   `penwidth` (largura da seta)\
-
--   `minlen` (comprimento minímo)
-
-**Nomes das cores**: usa-se valores hexadecimais ou os nomes de cores
-'red', consulte [detalhes das
-cores](http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html)
 
 ### Exemplos complexos {.unnumbered}
 
