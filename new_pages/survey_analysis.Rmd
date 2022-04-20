@@ -7,13 +7,12 @@
 
 Esta página demonstra o uso de vários pacotes para análise de pesquisa (*survey*).
 
-A maioria dos pacotes de pesquisa R depende do [pacote **survey**](https://cran.r-project.org/web/packages/survey/index.html) para fazer análises ponderadas. Utilizaremos **survey** assim como [**srvyr**](https://cran.r-project.org/web/packages/srvyr/index.html)(que funciona como um *wrapper* para o pacote **survey**, isto é, simplificando seu uso e permitindo uma codificação em estilo "tidyverse") e [**gtsummary**](<https://cran.r-project.org/web/packages/gtsummary/index.html>) (que
-funciona como um *wrapper* para o pacote **survey**, permitindo a publicação de tabelas prontas). Embora o pacote original de **survey** não permita uma codificação em estilo "tidyverse", ele tem o benefício adicional de permitir modelos lineares generalizados ponderados (que serão adicionados a esta página posteriormente). Também demonstraremos usando uma função do pacote [**sitrep**](https://github.com/R4EPI/sitrep), para criar pesos de amostragem (*n.b* este pacote ainda não está atualmente no CRAN, mas pode ser instalado a partir do github).
+A maioria dos pacotes de pesquisa R depende do [pacote **survey**](https://cran.r-project.org/web/packages/survey/index.html) para fazer análises ponderadas. Utilizaremos **survey** assim como [**srvyr**](https://cran.r-project.org/web/packages/srvyr/index.html)(que funciona como uma roupagem (*wrapper*) para o pacote **survey**, isto é, simplificando seu uso e permitindo uma codificação em estilo "tidyverse") e [**gtsummary**](<https://cran.r-project.org/web/packages/gtsummary/index.html>) (que
+funciona como uma roupagem (*wrapper*) para o pacote **survey**, permitindo a publicação de tabelas prontas). Embora o pacote original de **survey** não permita uma codificação em estilo "tidyverse", ele tem o benefício adicional de permitir modelos lineares generalizados ponderados (que serão adicionados a esta página posteriormente). Também demonstraremos usando uma função do pacote [**sitrep**](https://github.com/R4EPI/sitrep), para criar pesos de amostragem (*n.b* este pacote ainda não está atualmente no CRAN, mas pode ser instalado a partir do github).
 
 A maior parte desta página é baseada no trabalho feito para o projeto ["R4Epis"](https://r4epis.netlify.app/); para obter o código detalhado e modelos R-markdown veja a página do github ["R4Epis"](https://github.com/R4EPI/sitrep). Alguns dos códigos **survey** baseados em pacotes são baseados nas primeiras versões do [EPIET case studies](https://github.com/EPIET/RapidAssessmentSurveys).
 
-No momento, esta página não aborda os cálculos de tamanho de amostra ou amostragem. Para uma calculadora de tamanho de amostra simples de usar,
-consulte [OpenEpi](https://www.openepi.com/Menu/OE_Menu.htm). A página [GIS basic (<https://epirhandbook.com/gis-basics.html>) do manual terá eventualmente uma seção sobre amostragem espacial aleatória, e esta página terá eventualmente uma seção sobre estruturas de amostragem, bem como cálculos de tamanho de amostra.
+No momento, esta página não aborda os cálculos de tamanho de amostra ou amostragem. Para uma calculadora de tamanho de amostra simples de usar, consulte [OpenEpi](https://www.openepi.com/Menu/OE_Menu.htm). A página [GIS basic] (<https://epirhandbook.com/gis-basics.html>) do manual terá eventualmente uma seção sobre amostragem espacial aleatória, e esta página terá eventualmente uma seção sobre estruturas de amostragem, bem como cálculos de tamanho de amostra.
 
 1.  Dados da pesquisa
 2.  Tempo de observação
@@ -29,13 +28,8 @@ consulte [OpenEpi](https://www.openepi.com/Menu/OE_Menu.htm). A página [GIS bas
 
 ### Pacotes {.unnumbered}
 
-Este trecho de código mostra o carregamento dos pacotes necessários para
-as análises. Neste manual, enfatizamos `p_load()` do **pacman**, que
-instala o pacote se necessário *e* o carrega para utilização. Você
-também pode carregar pacotes usando `library()` do **R Base**. Veja a
-página [R básico] para mais informações sobre os pacotes R.\
-Aqui também demonstramos utilizando a função `p_load_gh()` de **pacman**
-para instalar e carregar pacote do github que ainda não foi publicado no
+Este trecho de código mostra o carregamento dos pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` do **pacman**, que instala o pacote se necessário *e* o carrega para utilização. Você também pode carregar pacotes usando `library()` do **R Base**. Veja a página [R - o básico] para mais informações sobre os pacotes R.\
+Aqui também demonstramos utilizando a função `p_load_gh()` de **pacman** para instalar e carregar pacote do github que ainda não foi publicado no
 CRAN.
 
 ```{r}
@@ -46,8 +40,8 @@ pacman::p_load(rio,          # Importar arquivo
                tidyverse,    # manipulação de dados + gráficos com ggplot2
                tsibble,      # manipulação de bases de séries temporais
                survey,       # funções de pesquisa
-               srvyr,        # dplyr wrapper for survey package
-               gtsummary,    # wrapper para o pacote survey, para to produce tables
+               srvyr,        # roupagem (wraper) para o pacote survey
+               gtsummary,    # wrapper para o pacote survey, para produzir tabelas
                apyramid,     # pacote destinado a criação de pirâmides etárias
                patchwork,    # combinação de gráficos ggplots
                ggforce       # para diagramas aluviais e de sankey
