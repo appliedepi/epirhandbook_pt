@@ -208,8 +208,8 @@ survey_data <- survey_data %>%
 
 ## Dados da pesquisa
 
-Existem inúmeros projetos diferentes de amostragem que podem ser usados para pesquisas. Aqui demonstraremos o código para: - Estratificado -
-Agrupado (Cluster) - Estratificado e Agrupado
+Existem inúmeras técnicas de amostragem que podem ser usados para pesquisas. Aqui demonstraremos o código para: - Estratificado -
+Conglomerados (Cluster) - Estratificado e Conglomerados
 
 Como descrito acima (dependendo de como você projeta seu questionário) os dados para cada nível seriam exportados como um conjunto separado de dados do Kobo.
 Em nosso exemplo, há um nível para domicílio e um nível para indivíduos dentro desses domicílios.
@@ -356,12 +356,7 @@ survey_data <- anti_join(survey_data, dropped, by = names(dropped))
 
 ```
 
-Como mencionado acima, demonstramos como adicionar pesos para três
-modelos diferentes de estudo (estratificado, cluster e cluster
-estratificado). Estes exigem informações sobre a população de origem
-e/ou os aglomerados pesquisado. Usaremos o código de agrupamento
-estratificado para este exemplo, mas use o que for mais apropriado para
-seu modelo de estudo.
+Como mencionado acima, demonstramos como adicionar pesos para as três formas de amostragem (estratificado, conglomerado e conglomerado estratificado). Estas exigem informações sobre a população de origem e/ou os aglomerados pesquisados. Usaremos o código do "conglomerado estratificado" para este exemplo, mas escolha o que for mais apropriado para seu modelo de estudo.
 
 ```{r survey_weights}
 
@@ -374,7 +369,7 @@ survey_data <- add_weights_strata(x = survey_data,
                                          surv_weight_ID = "surv_weight_ID_strata",
                                          age_group, sex, health_district)
 
-## cluster ---------------------------------------------------------------------
+## por conglomerados (cluster) ---------------------------------------------------------------------
 
 # obter o número de pessoas entrevistadas por domicílio
 # adiciona uma variável com contagens da variável de índice doméstico
@@ -382,7 +377,7 @@ survey_data <- survey_data %>%
   add_count(index, name = "interviewed")
 
 
-## criar pesos para o cluster
+## criar pesos para o conglomerados (cluster)
 survey_data <- add_weights_cluster(x = survey_data,
                                           cl = cluster_counts,
                                           eligible = member_number,
@@ -397,7 +392,7 @@ survey_data <- add_weights_cluster(x = survey_data,
                                           ignore_household = FALSE)
 
 
-# estratificado e cluster ------------------------------------------------------
+# estratificado e conglomerado (cluster) ------------------------------------------------------
 # criar um peso de pesquisa para o cluster e os estratos
 survey_data <- survey_data %>%
   mutate(surv_weight_cluster_strata = surv_weight_strata * surv_weight_cluster)
@@ -408,27 +403,18 @@ survey_data <- survey_data %>%
 
 ## Objetos de projeto de pesquisa
 
-Crie um objeto de pesquisa de acordo com seu projeto de estudo.
-Utilizado da mesma forma que os *data frames* para calcular as
-proporções de peso etc. Certifique-se de que todas as variáveis
-necessárias sejam criadas antes disso.
+Crie um objeto de pesquisa de acordo com seu projeto de estudo. Utilizado da mesma forma que os *data frames* para calcular as proporções de peso etc.
+Certifique-se de que todas as variáveis necessárias sejam criadas antes disso.
 
-Há quatro opções, comente aquelas que você não utiliza: - Aleatório
-simples - Estratificado - Cluster - Cluster estratificado
+Há quatro opções, comente aquelas que você não utiliza: - Aleatório simples - Estratificado - Conglomerado (*cluster*) - Conglomerado estratificado
 
-Para este modelo - vamos fingir que agrupamos as pesquisas em dois
-estratos separados (distritos de saúde A e B). Portanto, para obter
-estimativas gerais, precisamos ter pesos combinados de agregados e
-estratos.
+Para este modelo - vamos fingir que agrupamos as pesquisas em dois estratos separados (distritos de saúde A e B). Portanto, para obter estimativas gerais, precisamos ter pesos combinados de agregados e estratos.
 
-Como mencionado anteriormente, há dois pacotes disponíveis para fazer
-isto. O clássico é o **survey** e depois há um pacote *wrapper* chamado
-**srvyr** que torna os objetos e funções mais fáceis de arrumar.
-Demonstraremos ambos, mas observe que a maioria dos códigos neste
-capítulo utilizará objetos baseados no **srvyr**. A única exceção é que
-o pacote **gtsummary** só aceita objetos do **survey**.
+Como mencionado anteriormente, há dois pacotes disponíveis para fazer isto. O clássico é o **survey** e depois há um pacote de "roupagem" (*wrapper*) chamado
+**srvyr** que torna os objetos e funções mais fáceis de arrumar. Demonstraremos ambos, mas observe que a maioria dos códigos neste capítulo utilizará objetos 
+baseados no **srvyr**. A única exceção é que o pacote **gtsummary** só aceita objetos do **survey**.
 
-### Pacote **Survey**
+### Pacote **survey**
 
 O pacote **survey** utiliza, do forma eficaz, codificação em **R base**,
 e por isso não é possível utilizar os *pipes* (`%>%`) ou outra sintaxe
