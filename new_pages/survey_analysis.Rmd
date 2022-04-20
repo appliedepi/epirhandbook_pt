@@ -564,35 +564,17 @@ left_join(ag, propcount, by = "age_group", suffix = c("", "_pop")) %>%
 
 ### Pirâmides demográficas
 
-As pirâmides demográficas (ou de idade-sexo) são uma maneira fácil de
-visualizar a distribuição em sua população pesquisada. Também vale a
-pena considerar a criação de [tabelas
-descritivas](https://epirhandbook.com/descriptive-tables.html) de idade
-e sexo por estratos de pesquisa. Demonstraremos utilizando o pacote
-**apyramid**, pois ele permite proporções ponderadas utilizando nosso
-objeto de pesquisa criado acima. Outras opções para criar [pirâmides
-demográficas](https://epirhandbook.com/demographic-pyramids-and-likert-scales.html)
-são amplamente cobertas nesse capítulo do manual. Também utilizaremos
-uma função *wrapper* da **sitrep** chamada `plot_age_pyramid()` que
-economiza algumas linhas de código para produzir um gráfico com
-proporções.
+As pirâmides demográficas (ou de idade-sexo) são uma maneira fácil de visualizar a distribuição em sua população pesquisada. Também vale a pena considerar a criação 
+de [tabelas descritivas](https://epirhandbook.com/descriptive-tables.html) de idade e sexo por estratos de pesquisa. Demonstraremos utilizando o pacote **apyramid**,
+pois ele permite proporções ponderadas utilizando nosso objeto de pesquisa criado acima. Outras opções para criar [pirâmides demográficas](https://epirhandbook.com/demographic-pyramids-and-likert-scales.html) são amplamente cobertas nesse capítulo do manual. Também utilizaremos uma função *wrapper* da
+**sitrep** chamada `plot_age_pyramid()` que economiza algumas linhas de código para produzir um gráfico comproporções.
 
-Como no teste binomial formal de diferença, visto acima na seção de viés
-de amostragem, estamos interessados aqui em visualizar se nossa
-população amostrada é substancialmente diferente da população original e
-se a ponderação corrige esta diferença. Para isso, usaremos o pacote
-**patchwork** para mostrar nossas visualizações **ggplot** lado a lado;
-para detalhes, veja a seção sobre combinação de lotes no capítulo [dicas
-ggplot](https://epirhandbook.com/ggplot-tips.html?q=patch#combine-plots)
-do manual. Visualizaremos nossa população original, nossa população não
-ponderada de pesquisa e nossa população ponderada de pesquisa. Você
-também pode considerar a visualização por cada estrato de sua pesquisa -
-em nosso exemplo aqui, isso seria utilizando o argumento
-`stack_by = "health_district"` (veja \`?plot_age_pyramid' para
-detalhes).
+Como no teste binomial formal de diferença, visto acima na seção de viés de amostragem, estamos interessados aqui em visualizar se nossa população amostrada é 
+substancialmente diferente da população original e se a ponderação corrige esta diferença. Para isso, usaremos o pacote **patchwork** para mostrar nossas visualizações **ggplot** lado a lado; para detalhes, veja a seção sobre combinação de lotes no capítulo [dicas ggplot](https://epirhandbook.com/ggplot-tips.html?q=patch#combine-plots) do manual. Visualizaremos nossa população original, nossa população não ponderada de pesquisa e nossa população ponderada de pesquisa. Você
+também pode considerar a visualização por cada estrato de sua pesquisa - em nosso exemplo aqui, isso seria utilizando o argumento
+`stack_by = "health_district"` (veja \`?plot_age_pyramid' para detalhes).
 
-[***NOTA:*** Os eixos x e y são invertidos em
-pirâmides]{style="color: black;"}
+[**NOTA:** Os eixos x e y são invertidos em pirâmides]{style="color: black;"}
 
 ```{r weighted_age_pyramid, warning = FALSE, message = FALSE, fig.show = "hold", fig.width = 15}
 
@@ -645,9 +627,9 @@ source_population <- population %>%
             count = proportion, 
             proportional = TRUE) +
   ## mostrar apenas a legenda do eixo y (caso contrário será repetida nos três gráficos)
-  labs(title = "Source population", 
+  labs(title = "População de origem", 
        y = "", 
-       x = "Age group (years)") + 
+       x = "Faixa-etária (anos)") + 
   ## fazer o eixo x o mesmo para todas os gráfcos
   scale_y_continuous(breaks = breaks, 
     limits = limits, 
@@ -660,8 +642,8 @@ sample_population <- plot_age_pyramid(survey_data,
                  split_by = "sex",
                  proportion = TRUE) + 
   ## mostrar apenas a legenda do eixo x (caso contrário será repetida nos três gráficos)
-  labs(title = "Unweighted sample population", 
-       y = "Proportion (%)", 
+  labs(title = "População amostrada sem ponderação", 
+       y = "Proporção (%)", 
        x = "") + 
   ## fazer o eixo x o mesmo para todas os gráfcos
   scale_y_continuous(breaks = breaks, 
@@ -679,7 +661,7 @@ weighted_population <- survey_design %>%
     split_by = "sex", 
     proportion = TRUE) +
   ## mostrar apenas a legenda do eixo x (caso contrário será repetida nos três gráficos)
-  labs(title = "Weighted sample population", 
+  labs(title = "População amostrada ponderada", 
        y = "", 
        x = "")  + 
   ## fazer o eixo x o mesmo para todas os gráfcos
@@ -702,14 +684,9 @@ source_population + sample_population + weighted_population +
 
 ### Diagrama aluvial/sankey
 
-A visualização de pontos de partida e resultados para indivíduos pode
-ser muito útil para se ter uma visão geral. Há uma aplicação bastante
-óbvia para populações móveis, porém existem inúmeras outras aplicações,
-tais como coortes ou qualquer outra situação em que há transições nos
-estados para indivíduos. Estes diagramas são conhecidos por vários nomes
-diferentes, incluindo aluvial, sankey e conjuntos paralelos - os
-detalhes estão no capítulo sobre [diagramas e
-gráficos](https://epirhandbook.com/diagrams-and-charts.html#alluvialsankey-diagrams).
+A visualização de pontos de partida e resultados para indivíduos pode ser muito útil para se ter uma visão geral. Há uma aplicação bastante óbvia para populações
+móveis, porém existem inúmeras outras aplicações, tais como coortes ou qualquer outra situação em que há transições nos estados para indivíduos. Estes diagramas são
+conhecidos por vários nomes diferentes, incluindo aluvial, sankey e conjuntos paralelos - os detalhes estão no capítulo sobre [diagramas e gráficos (https://epirhandbook.com/diagrams-and-charts.html#alluvialsankey-diagrams).
 
 ```{r visualise_population_flow}
 
@@ -756,31 +733,19 @@ ggplot(flow_table, aes(x, id = id, split = y, value = n)) +
 
 ## Proporções ponderadas
 
-Esta seção detalha como produzir tabelas para contagens e proporções
-ponderadas, com os intervalos de confiança associados e delineamento.
-Existem quatro opções diferentes, utilizando funções dos seguintes
-pacotes: **survey**, **srvyr**, **sitrep** e **gtsummary**. Para para
-produzir uma tabela de estilo epidemiológico padrão com mínimo de
-código, nós recomendamos a função **sitrep** - que é um *wrapper* para
-códigos **srvyr**; note, entretanto, que isso ainda não está no CRAN e
-pode mudar no futuro. Caso contrário, o código **survey** será
-provavelmente o mais estável a longo prazo, enquanto **srvyr** caberá
-melhor dentro do fluxos de trabalho. Embora as funções **gtsummary**
-tenham um grande potencial, elas parecem ser experimentais e incompletas
+Esta seção detalha como produzir tabelas para contagens e proporções ponderadas, com os intervalos de confiança associados e delineamento.
+Existem quatro opções diferentes, utilizando funções dos seguintes pacotes: **survey**, **srvyr**, **sitrep** e **gtsummary**. Para para
+produzir uma tabela de estilo epidemiológico padrão com mínimo de código, nós recomendamos a função **sitrep** - que é um *wrapper* para códigos **srvyr**; note, 
+entretanto, que isso ainda não está no CRAN e pode mudar no futuro. Caso contrário, o código **survey** será provavelmente o mais estável a longo prazo, enquanto 
+**srvyr** caberá melhor dentro do fluxos de trabalho. Embora as funções **gtsummary** tenham um grande potencial, elas parecem ser experimentais e incompletas
 no momento em que da escrita deste manual.
 
-### **Pacote de pesquisa**
+### Pacote **survey**
 
-Podemos utilizar a função `svyciprop()` do **survey** para obter
-proporções ponderadas e intervalos de confiança de 95%. Um delineamento
-apropriado pode ser extraído utilizando o `svymean()` em vez da função
-`svyprop()`. Vale notar que a função `svyprop()` parece apenas aceitar
-variáveis entre 0 e 1 (ou TRUE/FALSE), então, variáveis categóricas não
-funcionarão.
+Podemos utilizar a função `svyciprop()` do **survey** para obter proporções ponderadas e intervalos de confiança de 95%. Um delineamento apropriado pode ser extraído
+utilizando o `svymean()` em vez da função `svyprop()`. Vale notar que a função `svyprop()` parece apenas aceitar variáveis entre 0 e 1 (ou TRUE/FALSE), então, variáveis categóricas não funcionarão.
 
-[***NOTA:*** Funções do **survey** também aceitam objetos **srvyr** mas
-aqui usamos o objeto de delineamento **survey** apenas por uma questão
-de consistência]{style="color: black;"}
+[**NOTA:** Funções do **survey** também aceitam objetos **srvyr** mas aqui usamos o objeto de delineamento **survey** apenas por uma questão de consistência]{style="color: black;"}
 
 ```{r survey_props}
 
@@ -796,12 +761,9 @@ svymean(~died, base_survey_design, na.rm = T, deff = T) %>%
 
 ```
 
-Podemos combinar as funções de **survey** mostradas acima em um função
-chamada `svy_prop`; e podemos então utilize essa função junto com o
-`map()` do pacote purrr para repetir sobre várias variáveis e criar uma
-tabela. Veja o capítulo
-[iteration](https://epirhandbook.com/iteration-loops-and-lists.html)
-para mais detalhes do pacote **purrr**.
+Podemos combinar as funções de **survey** mostradas acima em um função chamada `svy_prop`; e podemos então utilize essa função junto com o `map()` do pacote purrr
+para repetir sobre várias variáveis e criar uma tabela. Veja o capítulo [iteration](https://epirhandbook.com/iteration-loops-and-lists.html) para mais detalhes do
+pacote **purrr**.
 
 ```{r survey_prop_fun}
 # Definir função para calcular contagens ponderadas, proporções, IC e efeito de delineamento
@@ -823,11 +785,11 @@ svy_prop <- function(design, x) {
   
   ## combinar em um único dataframe
   full_table <- cbind(
-    "Variable"        = x,
-    "Count"           = weighted_counts,
-    "Proportion"      = weighted_props,
+    "Variável"        = x,
+    "Contagens"           = weighted_counts,
+    "Proporção"      = weighted_props,
     weighted_confint, 
-    "Design effect"   = design_eff
+    "Efeito de delineamento"   = design_eff
     )
   
   ## retorna tabela como um dataframe
@@ -855,18 +817,13 @@ purrr::map(
 
 ```
 
-### Pacote **Srvyr**
+### Pacote **srvyr**
 
-Com **srvyr** podemos usar a sintaxe **dplyr** para criar uma tabela.
-Note que a função `survey_mean()` é utilizada e o argumento da proporção
-é especificado, e também que a mesma função é utilizada para calcular o
-efeito do delineamento. Isto porque **srvyr** envolve ambas as funções
-do pacote **survey** `svyciprop()` e `svymean()`, que são utilizadas na
-seção acima.
+Com **srvyr** podemos usar a sintaxe **dplyr** para criar uma tabela. Note que a função `survey_mean()` é utilizada e o argumento da proporção é especificado, e 
+também que a mesma função é utilizada para calcular o efeito do delineamento. Isto porque **srvyr** envolve ambas as funções do pacote **survey** `svyciprop()` 
+e `svymean()`, que são utilizadas na seção acima.
 
-[***NOTA:*** Não parece ser possível obter proporções a partir de
-variáveis categóricas utilizando **srvyr**, se você precisar disto então
-verifique a seção abaixo usando **sitrep**]{style="color: black;"}
+[**NOTA:** Não parece ser possível obter proporções a partir de variáveis categóricas utilizando **srvyr**, se você precisar disto então verifique a seção abaixo usando **sitrep**]{style="color: black;"}
 
 ```{r srvyr_prop}
 
@@ -888,10 +845,7 @@ survey_design %>%
 
 ```
 
-Também aqui poderíamos escrever uma função para então reiterar sobre
-múltiplas variáveis usando o pacote **purrr**. Veja o capítulo do manual
-[iteração](https://epirhandbook.com/iteration-loops-and%20lists.html)
-para detalhes sobre **purrr**.
+Também aqui poderíamos escrever uma função para então reiterar sobre múltiplas variáveis usando o pacote **purrr**. Veja o capítulo do manual [iteração](https://epirhandbook.com/iteration-loops-and%20lists.html) para detalhes sobre **purrr**.
 
 ```{r srvyr_prop_fun}
 
@@ -935,12 +889,10 @@ purrr::map(
 
 ```
 
-### Pacote **Sitrep**
+### Pacote **sitrep**
 
-A função `tab_survey()` de **sitrep** é um *wrapper* para **srvyr**,
-permitindo a criação de tabelas ponderadas com codificação mínima.
-Também permite calcular proporções ponderadas para variáveis
-categóricas.
+A função `tab_survey()` de **sitrep** é um *wrapper* para **srvyr**, permitindo a criação de tabelas ponderadas com codificação mínima.
+Também permite calcular proporções ponderadas para variáveis categóricas.
 
 ```{r sitrep_props}
 
@@ -954,13 +906,10 @@ survey_design %>%
 
 ```
 
-### Pacote **Gtsummary**
+### Pacote **gtsummary**
 
-Com **gtsummary** não parece haver ainda funções embutidas para
-acrescentar intervalos de confiança ou efeito de delineamento. Aqui
-mostramos como definir uma função para adicionar intervalos de confiança
-e depois adicionar intervalos de confiança a uma tabela **gtsummary**
-criada utilizando a função `tbl_svysummary()`.
+Com **gtsummary** não parece haver ainda funções embutidas para acrescentar intervalos de confiança ou efeito de delineamento. Aqui mostramos como definir uma função
+para adicionar intervalos de confiança e depois adicionar intervalos de confiança a uma tabela **gtsummary** criada utilizando a função `tbl_svysummary()`.
 
 ```{r gtsummary_table}
 
@@ -987,9 +936,9 @@ tbl_svysummary(base_survey_design,
   ## modificar títulos das colunas
   modify_header(
     list(
-      n ~ "**Weighted total (N)**",
-      stat_0 ~ "**Weighted Count**",
-      add_stat_1 ~ "**95%CI**"
+      n ~ "**Total ponderado (N)**",
+      stat_0 ~ "**Contagem ponderada**",
+      add_stat_1 ~ "**95%IC**"
     )
     )
 
@@ -999,14 +948,11 @@ tbl_svysummary(base_survey_design,
 
 ## Razões ponderadas
 
-Da mesma forma, para relações ponderadas (como para relações de
-mortalidade) você pode usar o pacote **survey** ou o pacote **srvyr**.
-Você poderia escrever funções (semelhantes àquelas acima) para iterar
-sobre várias variáveis. Você também poderá criar uma função para o
-pacote **gtsummary**, como acima, mas atualmente ela não tem nenhuma
-funcionalidade embutida.
+Da mesma forma, para relações ponderadas (como para relações de mortalidade) você pode usar o pacote **survey** ou o pacote **srvyr**.
+Você poderia escrever funções (semelhantes àquelas acima) para iterar sobre várias variáveis. Você também poderá criar uma função para o pacote **gtsummary**, 
+como acima, mas atualmente ela não tem nenhuma funcionalidade embutida.
 
-### Pacote **Survey**
+### Pacote **survey**
 
 ```{r survey_ratio}
 
@@ -1023,7 +969,7 @@ cbind(
 
 ```
 
-### Pcaote **Srvyr**
+### Pcaote **srvyr**
 
 ```{r srvyr_ratio}
 
@@ -1042,15 +988,12 @@ survey_design %>%
 
 ## Referência
 
-[UCLA stats
-page](https://stats.idre.ucla.edu/r/seminars/survey-data-analysis-with-r/)
+[Página de estatísticas da UCLA](https://stats.idre.ucla.edu/r/seminars/survey-data-analysis-with-r/)
 
-[Analyze survey data free](http://asdfree.com/)
+[Analise dados de questioários gratuitamente](http://asdfree.com/)
 
-[srvyr packge](http://gdfe.co/srvyr/)
+[Pacote srvyr](http://gdfe.co/srvyr/)
 
-[gtsummary
-package](http://www.danieldsjoberg.com/gtsummary/reference/index.html)
+[Pacote gtsummary](http://www.danieldsjoberg.com/gtsummary/reference/index.html)
 
-[EPIET survey case
-studies](https://github.com/EPIET/RapidAssessmentSurveys)
+[Estudo de caso da pesquisa EPIET](https://github.com/EPIET/RapidAssessmentSurveys)
