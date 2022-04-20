@@ -150,7 +150,7 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 *Antes* de começar a utilizar o pacote **flextable** você precisará *criar* a sua tabela como um data frame. Veja a seção em [Tabelas descritivas] e [Pivotando dados] para aprender a criar um quadro de dados utilizando pacotes como **janitor*** e **dplyr***. 
 Você deverá organizar o conteúdo em linhas e colunas conforme você queira que seja exibido. Então,  o conjunto de dados será passado para o comando **flextable*** para ser exibido com cores, cabeçalhos, fontes, etc. 
  
-Abaixo está um exemplo da página [Tabelas descritivas] de conversão dos casos na `linelist` dentro de um conjunto de dados que resume os resultados dos pacientes e os valores de CT (limiar de ciclo, da sigla em inglês "cycle threshold", um proxy para a carga viral) por hospital, com uma linha de Totais na parte inferior. A saída é salva como o objeto `table`.
+Abaixo está um exemplo da página [Tabelas descritivas] de conversão dos casos na `linelist` dentro de um conjunto de dados que resume os resultados dos pacientes e os valores de CT (limiar de detecção, da sigla em inglês "cycle threshold") por hospital, com uma linha de Totais na parte inferior. A saída é salva como o objeto `table`.
 
 
 ```{r message=FALSE, warning=FALSE}
