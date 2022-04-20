@@ -240,8 +240,7 @@ período de interesse. Isto não é relevante para todas, mas particularmente pa
 entre populações móveis ou deslocadas.
 
 Para isso, definimos primeiro nosso período de tempo de interesse, também conhecido como período de retordo, ou período de *recall* (i.e. o tempo que os participantes
-são instruídos a se reportarem quando respondem as perguntas). Podemos então utilizar este período para definir datas inadequadas para o ausência, ou seja, se as 
-mortes forem relatadas fora do período de interesse.
+são instruídos a se reportarem quando respondem as perguntas). Podemos então utilizar este período para definir datas inadequadas para o ausência, ou seja, se as mortes forem relatadas fora do período de interesse.
 
 ```{r recall_period}
 
@@ -401,14 +400,14 @@ survey_data <- survey_data %>%
 
 <!-- ======================================================= -->
 
-## Objetos de projeto de pesquisa
+## Objetos de delineamento de pesquisa
 
 Crie um objeto de pesquisa de acordo com seu projeto de estudo. Utilizado da mesma forma que os *data frames* para calcular as proporções de peso etc.
 Certifique-se de que todas as variáveis necessárias sejam criadas antes disso.
 
 Há quatro opções, comente aquelas que você não utiliza: - Aleatório simples - Estratificado - Conglomerado (*cluster*) - Conglomerado estratificado
 
-Para este modelo - vamos fingir que agrupamos as pesquisas em dois estratos separados (distritos de saúde A e B). Portanto, para obter estimativas gerais, precisamos ter pesos combinados de agregados e estratos.
+Para este modelo - vamos fingir que agrupamos as pesquisas em dois estratos separados (distritos de saúde A e B). Portanto, para obter estimativas gerais, precisamos ter pesos combinados de conglomerados e estratos.
 
 Como mencionado anteriormente, há dois pacotes disponíveis para fazer isto. O clássico é o **survey** e depois há um pacote de "roupagem" (*wrapper*) chamado
 **srvyr** que torna os objetos e funções mais fáceis de arrumar. Demonstraremos ambos, mas observe que a maioria dos códigos neste capítulo utilizará objetos 
@@ -416,15 +415,10 @@ baseados no **srvyr**. A única exceção é que o pacote **gtsummary** só acei
 
 ### Pacote **survey**
 
-O pacote **survey** utiliza, do forma eficaz, codificação em **R base**,
-e por isso não é possível utilizar os *pipes* (`%>%`) ou outra sintaxe
-do **dplyr**. Com o pacote **survey**, utilizamos a função `svydesign()`
-para definir um objeto de pesquisa com agrupamentos (cluster), pesos e
-estratificações apropriados.
+O pacote **survey** utiliza, do forma eficaz, codificação em **R base**, e por isso não é possível utilizar os *pipes* (`%>%`) ou outra sintaxe do **dplyr**. 
+Com o pacote **survey**, utilizamos a função `svydesign()` para definir um objeto de pesquisa com agrupamentos (cluster), pesos e estratificações apropriados.
 
-[***NOTA:*** precisamos utilizar o til (`~`) em frente às variáveis,
-pois o pacote usa a sintaxe **R base** para atribuição variáveis baseada
-em fórmulas].{style="color: black;"}
+[**NOTA:** precisamos utilizar o til (`~`) em frente às variáveis, pois o pacote usa a sintaxe **R base** para atribuição variáveis baseada em fórmulas].{style="color: black;"}
 
 ```{r survey_design}
 
@@ -442,26 +436,25 @@ base_survey_design_strata <- svydesign(ids = ~1,  # 1 para nenhuma identificaç�
                    data = survey_data             # especificar a base de dados
                   )
 
-# cluster ---------------------------------------------------------------------
+# conglomerado ---------------------------------------------------------------------
 base_survey_design_cluster <- svydesign(ids = ~village_name, # identificação do cluster
                    weights = ~surv_weight_cluster, # variável de peso criada acima
                    strata = NULL,                 # amostragem simples (não estratificada)
                    data = survey_data              # especificar a base de dados
                   )
 
-# cluster estratificado --------------------------------------------------------
-base_survey_design <- svydesign(ids = ~village_name,      # identificação do cluster
+# conglomerado estratificado --------------------------------------------------------
+base_survey_design <- svydesign(ids = ~village_name,      # identificação do conglomerado
                    weights = ~surv_weight_cluster_strata, # variável de peso criada acima
                    strata = ~health_district,             # amostragem estratificada por distrito
                    data = survey_data                     # especificar a base de dados
                   )
 ```
 
-### Pacote **Srvyr**
+### Pacote **srvyr**
 
-Com o pacote **srvyr**\* podemos utilizar a função `as_survey_design()`,
-que tem os mesmos argumentos exemplificados acima, mas permite *pipes*
-(`%>%`), e assim não precisamos utilizar o til (`~`).
+Com o pacote **srvyr**\* podemos utilizar a função `as_survey_design()`, que tem os mesmos argumentos exemplificados acima, mas permite *pipes* (`%>%`), 
+e assim não precisamos utilizar o til (`~`).
 
 ```{r survey_design_srvyr}
 # aleatório simples ------------------------------------------------------------
@@ -495,42 +488,26 @@ survey_design <- survey_data %>%
 
 ## Análise descritiva
 
-A análise descritiva básica e a visualização são amplamente cobertas em
-outros capítulos do manual, portanto, não vamos nos deter aqui. Para
-detalhes veja os capítulos [tabelas
-descritivas](https://epirhandbook.com/descriptive-tables.html), [testes
-estatísticos](https://epirhandbook.com/simple-statistical-tests.html),
-[tabelas para
-apresentação](https://epirhandbook.com/tables-for-presentation.html),
-(<https://epirhandbook.com/ggplot-basics.html>) e [Relatórios em R
-markdown](https://epirhandbook.com/r-markdown-reports.html).
+A análise descritiva básica e a visualização são amplamente cobertas em outros capítulos do manual, portanto, não vamos nos deter aqui. Para detalhes veja os
+capítulos [tabelas descritivas](https://epirhandbook.com/descriptive-tables.html), [testes estatísticos](https://epirhandbook.com/simple-statistical-tests.html),
+[tabelas para apresentação](https://epirhandbook.com/tables-for-presentation.html),(<https://epirhandbook.com/ggplot-basics.html>) e [Relatórios em R markdown](https://epirhandbook.com/r-markdown-reports.html).
 
-Nesta seção, vamos nos concentrar em como investigar o viés em sua
-amostra e em como visualizá-lo. Também vamos visualizar o fluxo
-populacional em um ambiente de pesquisa usando diagramas
-aluviais/sankey.
+Nesta seção, vamos nos concentrar em como investigar o viés em sua amostra e em como visualizá-lo. Também vamos visualizar o fluxo populacional em um ambiente de pesquisa usando diagramas aluviais/sankey.
 
-Em geral, você deve considerar incluir as seguintes análises
-descritivas:
+Em geral, você deve considerar incluir as seguintes análises descritivas:
 
 -   Número final de agrupamentos, domicílios e indivíduos incluídos.
 -   Número de indivíduos excluídos e os motivos de exclusão
--   Número médio (intervalo) de domicílios por agrupamento e de
-    indivíduos por doméstico
+-   Número médio (intervalo) de domicílios por agrupamento e de indivíduos por doméstico
 
 ### Viés de amostras
 
-Compare as proporções em cada faixa etária entre sua amostra e a
-população de origem. Isto é importante para poder destacar uma potencial
-polarização da amostragem. Da mesma forma, você poderia repetir esta
-análise nas distribuições por sexo.
+Compare as proporções em cada faixa etária entre sua amostra e a população de origem. Isto é importante para poder destacar um potencial viés de amostragem. 
+Da mesma forma, você poderia repetir esta análise nas distribuições por sexo.
 
-Note que estes *valores de p* (p-valor) são apenas indicativos e uma
-discussão descritiva (ou visualização em pirâmides etárias abaixo) da
-distribuições de sua amostra de estudo, em comparação com a população de
-origem é, mais importante do que o próprio teste binomial. Isto se deve
-ao fato de que o tamanho da amostra levará, na maioria das vezes, a
-diferenças que podem ser irrelevantes após a ponderação dos dados.
+Note que estes p-valores são apenas indicativos e uma discussão descritiva (ou visualização em pirâmides etárias abaixo) dadistribuições de sua amostra de estudo,
+em comparação com a população de origem, é mais importante do que o próprio teste binomial. Isto se deve ao fato de que o tamanho da amostra levará, na maioria 
+das vezes, a diferenças que podem ser irrelevantes após a ponderação dos dados.
 
 ```{r descriptive_sampling_bias, warning = FALSE}
 
@@ -557,8 +534,8 @@ left_join(ag, propcount, by = "age_group", suffix = c("", "_pop")) %>%
   group_by(age_group) %>%
   ## broom::tidy(binom.test()) faz um data frame a partir do teste binomial e
   ## adicionará as variáveis p.value (p-valor), parameter (parâmetro), 
-  ## conf.low (intervalo de confiança inferior), method (método),
-  ## conf.high (intervalo de confiança superior) e (alternative) alternativa.
+  ## conf.low (intervalo de confiança inferior), method (método, o tipo de teste),
+  ## conf.high (intervalo de confiança superior) e alternative (alternativa à hipotese nula).
   ## Aqui usaremos apenas p.value. Você pode incluir outras colunas se quiser
   ## informar intervalos de confiança
   mutate(binom = list(broom::tidy(binom.test(n, n_total, proportion_pop)))) %>%
@@ -576,12 +553,12 @@ left_join(ag, propcount, by = "age_group", suffix = c("", "_pop")) %>%
   
   ## renomear as colunas de forma apropriada
   select(
-    "Age group" = age_group,
-    "Study population (n)" = n,
-    "Study population (%)" = proportion,
-    "Source population (n)" = n_pop,
-    "Source population (%)" = proportion_pop,
-    "P-value" = p.value
+    "Faixa-etária" = age_group,
+    "População de estudo (n)" = n,
+    "População de estudo (%)" = proportion,
+    "População fonte (n)" = n_pop,
+    "População fonte (%)" = proportion_pop,
+    "P-valor" = p.value
   )
 ```
 
