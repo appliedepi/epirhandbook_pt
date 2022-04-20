@@ -929,7 +929,7 @@ confidence_intervals <- function(data, variable, by, ...) {
 
 ## usando o objeto delimitado do pacote survey
 tbl_svysummary(base_survey_design, 
-               include = c(arrived, left, died),   ## definir variáveis a serem incluidas
+               include = c(arrived, left, died),   ## definir variáveis a serem incluídas
                statistic = list(everything() ~ c("{n} ({p}%)"))) %>% ## definir estatísticas de interesse
   add_n() %>%  ## adicionar o peso total
   add_stat(fns = everything() ~ confidence_intervals) %>% ## adicionar intervalos de confiança
