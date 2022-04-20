@@ -102,7 +102,7 @@ Esta seção demonstra como converter *data frames* resumo dos seus dados em tab
 
 É preciso compreender que, *antes* de usar o pacote **flextable**, você deve criar a tabela resumida como um data frame. Você pode utilizar os métodos das [Tabelas Descritivas] ou [Pivotando dados], tais como: tabulações, tabulações cruzadas, pivotamento e calcular estatísticas descritivas. O data frame resultantes pode então ser utilizado na função **flextable** para formatar a visualização. 
 
-Há muitos outros pacotes R que podem ser usados para elaborar tabelas para apresentação – aqui, nós escolhemos destacar o pacote “flextable” nesta seção. Um exemplo usando o pacote **knitr** e sua função `kable()` pode ser encontrado na página de [Rastreamento de Contatos]. Da mesma maneira, o pacote **DT** é evidenciado na seção de Painéis com Destaque (Dashboard with Shiny). Outros programas, tais como o **GT** e o **huxtable** são mencionados na página de pacotes sugeridos (Suggested  packages).
+Há muitos outros pacotes R que podem ser usados para elaborar tabelas para apresentação – aqui, nós escolhemos destacar o pacote “flextable” nesta seção. Um exemplo usando o pacote **knitr** e sua função `kable()` pode ser encontrado na página de [Rastreamento de Contatos]. Da mesma maneira, o pacote **DT** é evidenciado na seção de [Paineis com Shiny]. Outros programas, tais como o **GT** e o **huxtable** são mencionados na página de pacotes sugeridos [Pacotes sugeridos].
 
 
 <!-- ======================================================= -->
@@ -110,7 +110,7 @@ Há muitos outros pacotes R que podem ser usados para elaborar tabelas para apre
 
 ### Carregando pacotes {.unnumbered} 
 
-Instalar e carregar o pacote **flextable**.Neste manual, nós destacamos o `p_load()` do **pacman**, o qual instala o pacote, se necessário, *and* o carrega para ser utilizado. Você também pode carregar os pacotes com `library()`presente na **base** R. Veja a seção sobre [R basics] do o pacote “R” para obter mais informações sobre os pacotes “R”.
+Instalar e carregar o pacote **flextable**. Neste manual, nós destacamos o `p_load()` do **pacman**, o qual instala o pacote, se necessário, *e* o carrega para ser utilizado. Você também pode carregar os pacotes com `library()` presente no R **base**. Veja a seção sobre [R - o básico] para obter mais informações sobre os pacotes “R”.
 
 
 ```{r}
@@ -118,14 +118,14 @@ pacman::p_load(
   rio,            # importar/exportar
   here,           # caminho do arquivo
   flextable,      # fazer tabelas HTML 
-  officer,        # Funções auhelper functions for tables
+  officer,        # Funções auxiliares para tabelas
   tidyverse)      # visualização, resumo e gerenciamento dos dados 
 
 ```
 
 ### Importando dados {.unnumbered}  
 
-Para começar, nós importamos a linelist dos casos que simulam uma epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o "clean "linelist </a> (como arquivo .rds). Importe dados com a função `import()` do pacote **rio** (ele trabalho com vários tipos de arquivo, tais como: .xlsx, .csv, .rds - você pode visualizar a seção [Importar e exportar] para outros detalhes).
+Para começar, nós importamos a *linelist* dos casos que simulam uma epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o "clean "linelist </a> (como arquivo .rds). Importe dados com a função `import()` do pacote **rio** (ele trabalho com vários tipos de arquivo, tais como: .xlsx, .csv, .rds - você pode visualizar a seção [Importar e exportar] para outros detalhes).
 
 
 ```{r, echo=F}
@@ -134,7 +134,7 @@ linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.r
 ```
 
 ```{r, eval=F}
-# importar a lista de linha - linelist
+# importar a linelist
 linelist <- import("linelist_cleaned.rds")
 ```
 
@@ -147,10 +147,10 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 
 ### Preparar a tabela {.unnumbered}  
 
-Antes de começar *Before* a utilizar o pacote **flextable** você precisará criar *create* a sua tabela como quadro de dados. Veja a seção em Tabelas descritivas [Descriptive tables] e Dados dinâmicos [Pivoting data] para aprender a criar um quadro de dados utilizando pacotes como **janitor*** e **dplyr***. 
-Voê deverá organizar o conteúdo em linhas e colunas conforme você queira que seja exibido. Então,  o conjunto de dados serão passado para o comando **flextable*** para exibir com cores, cabeçalhos, fontes, etc. 
+*Antes* de começar a utilizar o pacote **flextable** você precisará *criar* a sua tabela como um data frame. Veja a seção em [Tabelas descritivas] e [Pivotando dados] para aprender a criar um quadro de dados utilizando pacotes como **janitor*** e **dplyr***. 
+Você deverá organizar o conteúdo em linhas e colunas conforme você queira que seja exibido. Então,  o conjunto de dados será passado para o comando **flextable*** para ser exibido com cores, cabeçalhos, fontes, etc. 
  
-Abaixo está um exemplo da página Tabelas descritivas [Descriptive tables] de conversão dos casos na `linelist` dentro de um conjunto de dados o qual resume os resultados dos pacientes e os valores da CT por hospital, com uma linha de Totais na parte inferior. A saída é salva como tabela `table`.
+Abaixo está um exemplo da página [Tabelas descritivas] de conversão dos casos na `linelist` dentro de um conjunto de dados que resume os resultados dos pacientes e os valores de CT (limiar de ciclo, da sigla em inglês "cycle threshold", um proxy para a carga viral) por hospital, com uma linha de Totais na parte inferior. A saída é salva como o objeto `table`.
 
 
 ```{r message=FALSE, warning=FALSE}
