@@ -1,18 +1,27 @@
 
-# Analises de pesquisa (*survey*)
+# Analises de pesquisa de questionários (*survey*)
 
 <!-- ======================================================= -->
 
 ## Visão Geral
 
-Esta página demonstra o uso de vários pacotes para análise de pesquisa (*survey*).
+Esta página demonstra o uso de vários pacotes para análise de pesquisas de questionários (do tipo *survey*).
 
-A maioria dos pacotes de pesquisa R depende do [pacote **survey**](https://cran.r-project.org/web/packages/survey/index.html) para fazer análises ponderadas. Utilizaremos **survey** assim como [**srvyr**](https://cran.r-project.org/web/packages/srvyr/index.html)(que funciona como uma roupagem (*wrapper*) para o pacote **survey**, isto é, simplificando seu uso e permitindo uma codificação em estilo "tidyverse") e [**gtsummary**](<https://cran.r-project.org/web/packages/gtsummary/index.html>) (que
-funciona como uma roupagem (*wrapper*) para o pacote **survey**, permitindo a publicação de tabelas prontas). Embora o pacote original de **survey** não permita uma codificação em estilo "tidyverse", ele tem o benefício adicional de permitir modelos lineares generalizados ponderados (que serão adicionados a esta página posteriormente). Também demonstraremos usando uma função do pacote [**sitrep**](https://github.com/R4EPI/sitrep), para criar pesos de amostragem (*n.b* este pacote ainda não está atualmente no CRAN, mas pode ser instalado a partir do github).
+A maioria dos pacotes de pesquisa R depende do [pacote **survey**](https://cran.r-project.org/web/packages/survey/index.html) para fazer análises ponderadas.
+Utilizaremos **survey** assim como [**srvyr**](https://cran.r-project.org/web/packages/srvyr/index.html)(que funciona como uma roupagem (*wrapper*) 
+para o pacote **survey**, isto é, simplificando seu uso e permitindo uma codificação em estilo "tidyverse") e [**gtsummary**](<https://cran.r-project.org/web/packages/gtsummary/index.html>) (que funciona como uma roupagem (*wrapper*) para o pacote **survey**, permitindo a publicação de tabelas prontas).
 
-A maior parte desta página é baseada no trabalho feito para o projeto ["R4Epis"](https://r4epis.netlify.app/); para obter o código detalhado e modelos R-markdown veja a página do github ["R4Epis"](https://github.com/R4EPI/sitrep). Alguns dos códigos **survey** baseados em pacotes são baseados nas primeiras versões do [EPIET case studies](https://github.com/EPIET/RapidAssessmentSurveys).
+Embora o pacote original de **survey** não permita uma codificação em estilo "tidyverse", ele tem o benefício adicional de permitir modelos lineares generalizados
+ponderados (que serão adicionados a esta página posteriormente). Também demonstraremos usando uma função do pacote [**sitrep**](https://github.com/R4EPI/sitrep),
+para criar pesos de amostragem (*n.b* este pacote ainda não está atualmente no CRAN, mas pode ser instalado a partir do github).
 
-No momento, esta página não aborda os cálculos de tamanho de amostra ou amostragem. Para uma calculadora de tamanho de amostra simples de usar, consulte [OpenEpi](https://www.openepi.com/Menu/OE_Menu.htm). A página [GIS basic] (<https://epirhandbook.com/gis-basics.html>) do manual terá eventualmente uma seção sobre amostragem espacial aleatória, e esta página terá eventualmente uma seção sobre estruturas de amostragem, bem como cálculos de tamanho de amostra.
+A maior parte desta página é baseada no trabalho feito para o projeto ["R4Epis"](https://r4epis.netlify.app/); para obter o código detalhado e modelos R-markdown 
+veja a página do github ["R4Epis"](https://github.com/R4EPI/sitrep). Alguns dos códigos **survey** baseados em pacotes são baseados nas primeiras versões do 
+[EPIET case studies](https://github.com/EPIET/RapidAssessmentSurveys).
+
+No momento, esta página não aborda os cálculos de tamanho de amostra ou amostragem. Para uma calculadora de tamanho de amostra simples de usar, consulte 
+[OpenEpi](https://www.openepi.com/Menu/OE_Menu.htm). A página [GIS basic] (<https://epirhandbook.com/gis-basics.html>) do manual terá eventualmente uma seção sobre 
+amostragem espacial aleatória, e esta página terá eventualmente uma seção sobre estruturas de amostragem, bem como cálculos de tamanho de amostra.
 
 1.  Dados da pesquisa
 2.  Tempo de observação
@@ -28,7 +37,9 @@ No momento, esta página não aborda os cálculos de tamanho de amostra ou amost
 
 ### Pacotes {.unnumbered}
 
-Este trecho de código mostra o carregamento dos pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` do **pacman**, que instala o pacote se necessário *e* o carrega para utilização. Você também pode carregar pacotes usando `library()` do **R Base**. Veja a página [R - o básico] para mais informações sobre os pacotes R.\
+Este trecho de código mostra o carregamento dos pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` do **pacman**, que instala o pacote 
+se necessário *e* o carrega para utilização. Você também pode carregar pacotes usando `library()` do **R Base**. Veja a página [R - o básico] para mais informações
+sobre os pacotes R.
 Aqui também demonstramos utilizando a função `p_load_gh()` de **pacman** para instalar e carregar pacote do github que ainda não foi publicado no
 CRAN.
 
@@ -63,36 +74,19 @@ O conjunto de dados de exemplo utilizado nesta seção:
 -   dicionário de dados para os dados fictícios da pesquisa de
     mortalidade.
 
-Isto é baseado na pesquisa pré-aprovada pelo conselho de análise ética
-da MSF OCA. O conjunto de dados fictício foi produzido como parte do
-[projeto "R4Epis"](https://r4epis.netlify.app/). Baseado em dados
-coletados usando [KoboToolbox](https://www.kobotoolbox.org/), que é um
-software de coleta de dados baseado em [Open Data
-Kit](https://opendatakit.org/).
+Isto é baseado na pesquisa pré-aprovada pelo conselho de análise ética da MSF OCA. O conjunto de dados fictício foi produzido como parte do [projeto "R4Epis"](https://r4epis.netlify.app/). Baseado em dados coletados usando [KoboToolbox](https://www.kobotoolbox.org/), que é um software de coleta de dados baseado em 
+[Open Data Kit](https://opendatakit.org/).
 
-Kobo lhe permite exportar tanto os dados coletados quanto o dicionário
-para esse conjunto de dados. Recomendamos fortemente que se faça isso,
-pois simplifica a limpeza de dados e é útil para a pesquisa de
-variáveis/questões.
+Kobo lhe permite exportar tanto os dados coletados quanto o dicionário para esse conjunto de dados. Recomendamos fortemente que se faça isso, pois simplifica a limpeza de dados e é útil para a pesquisa devariáveis/questões.
 
-[***DICA:*** O dicionário de dados Kobo tem nomes de variáveis na coluna
-"name" da planilha de pesquisa. Os valores possíveis para cada variável
-são especificado na planilha de escolhas. Na planilha de escolhas, a
-coluna "name" tem o nome abreviado e as colunas "label::english" e
-"label::french" têm nome completo. Use o pacote **epidict**, função
-`msf_dict_survey()` para importar um arquivo excel do dicionário Kobo e
-formatá-lo para que possa ser usado facilmente em uma
-recodificação.]{style="color: darkgreen;"}
+[**DICA:** O dicionário de dados Kobo tem nomes de variáveis na coluna"name" da planilha de pesquisa. Os valores possíveis para cada variável
+são especificado na planilha de escolhas. Na planilha de escolhas, a coluna "name" tem o nome abreviado e as colunas "label::english" e "label::french" têm nome completo. Use o pacote **epidict**, função `msf_dict_survey()` para importar um arquivo excel do dicionário Kobo e formatá-lo para que possa ser usado facilmente
+em uma recodificação.]{style="color: darkgreen;"}
 
-[***CUIDADO:*** O conjunto de dados do exemplo não é o mesmo que uma
-exportação (como em Kobo você exporta diferentes níveis de questionários
-individualmente) - veja o seção de dados da pesquisa abaixo para fundir
-as diferentes níveis] {estilo="cor: laranja;"}
+[**CUIDADO:** O conjunto de dados do exemplo não é o mesmo que uma exportação (como em Kobo você exporta diferentes níveis de questionários individualmente) - 
+veja o seção de dados da pesquisa abaixo para fundir as diferentes níveis] {estilo="cor: laranja;"}
 
-O conjunto de dados é importado utilizando a função `import()` do pacote
-**rio**. Veja a página [Importar e
-exportação](https://epirhandbook.com/import-and-export.html) para outras
-maneiras de importar dados.
+O conjunto de dados é importado utilizando a função `import()` do pacote **rio**. Veja a página [Importar e exportação](https://epirhandbook.com/import-and-export.html) para outrasmaneiras de importar dados.
 
 ```{r echo = FALSE}
 # importar a pesquisa para o R
@@ -120,10 +114,8 @@ As primeiras 10 linhas da pesquisa são exibidas abaixo.
 DT::datatable(head(survey_data, 10), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Também queremos importar os dados sobre a população de amostragem para
-que possamos produzir pesos adequados. Estes dados podem estar em
-diferentes formatos, no entanto, sugerimos que seja como visto abaixo
-(podendo ser apenas digitado numa planilha).
+Também queremos importar os dados sobre a população de amostragem para que possamos produzir pesos adequados. Estes dados podem estar em diferentes formatos, 
+no entanto, sugerimos que seja como visto abaixo (podendo ser apenas digitado numa planilha).
 
 ```{r read_data_pop_show, eval = FALSE}
 # importar os dados da população
@@ -137,14 +129,10 @@ As primeiras 10 linhas da pesquisa são exibidas abaixo.
 DT::datatable(head(population, 10), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Para pesquisas de *cluster* (grupos, agregados) você pode querer
-adicionar pesos de pesquisa no nível do cluster. Você poderia ler estes
-dadoscomo acima. Você poderia ler estes dados como acima.
-Alternativamente, se houver apenas algumas contas, estas poderiam ser
-inseridas como abaixo em um *tibble* (data frame com ajustes que a deixa
-mais amigável). Em qualquer caso você precisará ter uma coluna com um
-identificador de cluster, que corresponde aos dados de sua pesquisa, e
-outra coluna com o número de agregados familiares em cada grupo.
+Para pesquisas de *cluster* (grupos, agregados) você pode querer adicionar pesos de pesquisa no nível do cluster. Você poderia ler estes
+dados como acima.  Alternativamente, se houver apenas algumas contagens, estas poderiam ser inseridas como abaixo em um *tibble* (data frame com alguns ajustes
+para deixá-lo mais amigável). Em qualquer caso você precisará ter uma coluna com um identificador de cluster, que corresponde aos dados de sua pesquisa, e outra
+coluna com o número de agregados familiares em cada grupo.
 
 ```{r cluster_counts}
 
@@ -159,22 +147,12 @@ cluster_counts <- tibble(cluster = c("village_1", "village_2", "village_3", "vil
 
 ### Dados limpos {.unnumbered}
 
-Abaixo, garantimos que a coluna de datas esteja no formato apropriado.
-Há várias outras maneiras de fazer isso (veja a página [Trabalhando com
-datas](https://epirhandbook.com/working-with-dates.html) para mais
-detalhes), porém a utilização do dicionário para definir datas é rápida
-e fácil.
+Abaixo, garantimos que a coluna de datas esteja no formato apropriado. Há várias outras maneiras de fazer isso (veja a página [Trabalhando com datas](https://epirhandbook.com/working-with-dates.html) para mais detalhes), porém a utilização do dicionário para definir datas é rápida e fácil.
 
-Também criamos uma variável de faixa etária utilizando a função
-`age_categories()` do pacote **epikit**\* - veja a seção [limpeza de
-dados
-(<https://epirhandbook.com/cleaning-data-and-core-functions.html#num_cats>)
-para mais detalhes. Além disso, criamos uma variável do tipo caracter,
-que define em qual distrito se encontram os vários agrupamentos.
+Também criamos uma variável de faixa etária utilizando a função `age_categories()` do pacote **epikit** - veja a seção [limpeza de dados](<https://epirhandbook.com/cleaning-data-and-core-functions.html#num_cats>) para mais detalhes. Além disso, criamos uma variável do tipo caractere, que define em
+qual distrito se encontram os vários agrupamentos.
 
-Finalmente, recodificamos todas as variáveis yes/no (sim/não) para
-variáveis TRUE/FALSE (Verdadeiro/Falso) - caso contrário, estas não
-poderão ser utilizadas pelas funções de proporção **survey**.
+Finalmente, recodificamos todas as variáveis yes/no (sim/não) para variáveis TRUE/FALSE (Verdadeiro/Falso) - caso contrário, estas não poderão ser utilizadas pelas funções de proporção **survey**.
 
 ```{r cleaning}
 
@@ -203,7 +181,7 @@ survey_data <- survey_data %>%
                                     ))
 
 
-## criar uma variável do tipo caracter baseada em grupos de uma variável diferente
+## criar uma variável do tipo caractere baseada em grupos de uma variável diferente
 survey_data <- survey_data %>% 
   mutate(health_district = case_when(
     cluster_number %in% c(1:5) ~ "district_a", 
@@ -230,21 +208,14 @@ survey_data <- survey_data %>%
 
 ## Dados da pesquisa
 
-Existem inúmeros projetos diferentes de amostragem que podem ser usados
-para pesquisas. Aqui demonstraremos o código para: - Estratificado -
+Existem inúmeros projetos diferentes de amostragem que podem ser usados para pesquisas. Aqui demonstraremos o código para: - Estratificado -
 Agrupado (Cluster) - Estratificado e Agrupado
 
-Como descrito acima (dependendo de como você projeta seu questionário)
-os dados para cada nível seriam exportados como um conjunto separado de
-dados do Kobo. Em nosso exemplo, há um nível para domicílio e um nível
-para indivíduos dentro desses domicílios.
+Como descrito acima (dependendo de como você projeta seu questionário) os dados para cada nível seriam exportados como um conjunto separado de dados do Kobo.
+Em nosso exemplo, há um nível para domicílio e um nível para indivíduos dentro desses domicílios.
 
-Estes dois níveis estão ligados por um identificador único. Para um
-conjunto de dados Kobo esta variável é "\_index" a nível de domicílios,
-que corresponde ao "\_parent_index" a nível individual. Isto criará
-novas linhas para domicílio com cada indivíduo correspondente. Para
-maiores detalhes, veja a seção do manual sobre junções
-(<https://epirhandbook.com/joining-data.html>).
+Estes dois níveis estão ligados por um identificador único. Para um conjunto de dados Kobo esta variável é "\_index" a nível de domicílios, que corresponde
+ao "\_parent_index" a nível individual. Isto criará novas linhas para domicílio com cada indivíduo correspondente. Para maiores detalhes, veja a seção do manual sobre união de bases (<https://epirhandbook.com/joining-data.html>).
 
 ```{r merge_data_levels, eval = FALSE}
 
@@ -264,18 +235,13 @@ survey_data <- survey_data %>%
 
 ## Tempo de observação
 
-Para pesquisas de mortalidade, queremos agora saber quanto tempo cada
-indivíduo esteve presente no local, para podermos calcular um taxa de
-mortalidade para nosso período de interesse. Isto não é relevante para
-todas, mas particularmente para pesquisas de mortalidade, isso é
-importante, pois são conduzidas frequentemente entre populações móveis
-ou deslocadas.
+Para pesquisas de mortalidade, queremos agora saber quanto tempo cada indivíduo esteve presente no local, para podermos calcular um taxa de mortalidade para nosso
+período de interesse. Isto não é relevante para todas, mas particularmente para pesquisas de mortalidade, isso é importante, pois são conduzidas frequentemente
+entre populações móveis ou deslocadas.
 
-Para isso, definimos primeiro nosso período de tempo de interesse,
-também conhecido como período de recall (i.e. the time that participants
-are asked to report on when answering questions). Podemos então utilizar
-este período para definir datas inadequadas para o ausência, ou seja, se
-as mortes forem relatadas fora do período de interesse.
+Para isso, definimos primeiro nosso período de tempo de interesse, também conhecido como período de retordo, ou período de *recall* (i.e. o tempo que os participantes
+são instruídos a se reportarem quando respondem as perguntas). Podemos então utilizar este período para definir datas inadequadas para o ausência, ou seja, se as 
+mortes forem relatadas fora do período de interesse.
 
 ```{r recall_period}
 
@@ -308,19 +274,14 @@ survey_data <- survey_data %>%
 
 ```
 
-Podemos usar nossas variáveis de data para definir datas de inicio e fim
-para cada individuo. Usamos a função `find_start_date()` do **sitrep**
-para apurar as causas para as datas e depois usar isso para calcular a
-diferença entre os dias (pessoa - tempo).
+Podemos usar nossas variáveis de data para definir datas de inicio e fim para cada individuo. Usamos a função `find_start_date()` do **sitrep** para apurar as causas
+para as datas e depois usar isso para calcular a diferença entre os dias (pessoa - tempo).
 
-Data de início: Primeiro evento de chegada apropriado dentro de seu
-período de recall, ou o início de seu período de recall (que você define
-em previamente), ou uma data após o início do recall, se aplicável (por
-exemplo chegadas ou nascimentos).
+Data de início: Primeiro evento de chegada apropriado dentro de seu período de recall, ou o início de seu período de recall (que você define em previamente), ou uma
+data após o início do recall, se aplicável (por exemplo chegadas ou nascimentos).
 
-Data final: Primeiro evento de partida apropriado dentro de seu período
-de recall, ou o final de seu período de recall, ou uma data antes do
-final do recall se aplicável (por exemplo, partidas e mortes).
+Data final: Primeiro evento de partida apropriado dentro de seu período de recall, ou o final de seu período de recall, ou uma data antes do final do recall se
+aplicável (por exemplo, partidas e mortes).
 
 ```{r observation_time}
 
@@ -373,25 +334,15 @@ survey_data <- survey_data %>%
 
 ## Ponderação
 
-É importante que você remova observações errôneas antes de acrescentar
-pesos à pesquisa. Por exemplo, se você tiver registros com tempos de
-observação negativos, precisará verificá-los (você pode fazer isso com a
-função`assert_positive_timespan()` do pacote **sitrep**. Outra questão é
-se você quiser eliminar linhas vazias (por exemplo, com `drop_na(uid)`)
-ou remover duplicatas (consulte a seção do manual sobre
-[Desduplicidades] para maiores detalhes). Aqueles sem consentimento
+É importante que você remova observações errôneas antes de acrescentar pesos à pesquisa. Por exemplo, se você tiver registros com tempos de observação negativos,
+precisará verificá-los (você pode fazer isso com a função`assert_positive_timespan()` do pacote **sitrep**. Outra questão é se você quiser eliminar linhas vazias (por
+exemplo, com `drop_na(uid)`) ou remover duplicidades (consulte a seção do manual sobre [Eliminação de duplicidades] para maiores detalhes). Aqueles sem consentimento
 também precisarão ser removidos.
 
-Neste exemplo, filtramos para os casos que queremos remover e os
-armazenamos em um data frame separado - desta forma podemos descrever
-aqueles que foram excluídos da pesquisa. Em seguida, utilizamos a função
-`anti_join()` do **dplyr** para remover estes casos descartados de
-nossos dados de pesquisa.
+Neste exemplo, filtramos para os casos que queremos remover e os armazenamos em um data frame separado - desta forma podemos descrever aqueles que foram excluídos da
+pesquisa. Em seguida, utilizamos a função `anti_join()` do **dplyr** para remover estes casos descartados de nossos dados de pesquisa.
 
-[***PERIGO:*** Você não pode ter valores ausentes em sua variável de
-peso, ou qualquer uma das variáveis relevantes para o projeto de sua
-pesquisa (por exemplo, idade, sexo, estratos ou variáveis de
-agrupamento).]{style="color: red;"}
+[**PERIGO:** Você não pode ter valores ausentes em sua variável de peso, ou qualquer uma das variáveis relevantes para o projeto de sua pesquisa (por exemplo, idade, sexo, estratos ou variáveis de agrupamento).]{style="color: red;"}
 
 ```{r remove_unused_data}
 
