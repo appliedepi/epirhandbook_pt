@@ -74,17 +74,17 @@ O pacote do R [**swirl**](https://swirlstats.com/) oferece cursos interativos no
 
 Há várias "cheatsheets" em pdf disponíveis no [website do RStudio](https://rstudio.com/resources/cheatsheets/), por exemplo:
 
--   Fatores com o pacote **forcats**\
--   Datas e horas com o pacote **lubridate**\
--   Caracteres com o pacote **stringr**\
--   Operações iterativas com o pacote **purrr**\
--   Importação de dados\
--   Folha de dica para transformação de dadas com o pacote **dplyr**\
--   R Markdown (para criar documentos como PDF, Word, Powerpoint...)\
--   Shiny (para construir aplicativos de web interativos)\
--   Visualização de dados com o pacote **ggplot2**\
--   Cartografia (GIS)\
--   Pacote **leaflet** (mapas interativos)\
+-   Fatores com o pacote **forcats**
+-   Datas e horas com o pacote **lubridate**
+-   Caracteres com o pacote **stringr**
+-   Operações iterativas com o pacote **purrr**
+-   Importação de dados
+-   Folha de dica para transformação de dadas com o pacote **dplyr**
+-   R Markdown (para criar documentos como PDF, Word, Powerpoint...)
+-   Shiny (para construir aplicativos de web interativos)
+-   Visualização de dados com o pacote **ggplot2**
+-   Cartografia (GIS)
+-   Pacote **leaflet** (mapas interativos)
 -   Python com R (pacote **reticulate**)
 
 Este é um recurso online do R especificamente para [usuários do Excel](https://jules32.github.io/r-for-excel-users/)
@@ -93,13 +93,13 @@ Este é um recurso online do R especificamente para [usuários do Excel](https:/
 
 R tem uma vibrante comunidade no twitter onde você pode aprender dicas, atalhos e notícias, siga estas contas:
 
--   Siga nos! [\@epiRhandbook](https://twitter.com/epirhandbook)\
--   R Function A Day [\@rfuntionaday](https://twitter.com/rfunctionaday) é um recurso *incrível*\
--   R for Data Science [\@rstats4ds](https://twitter.com/rstats4ds?lang=en)\
--   RStudio [\@RStudio](https://twitter.com/rstudio?lang=en)\
--   RStudio Tips [\@rstudiotips](https://twitter.com/rstudiotips)\
--   R-Bloggers [\@Rbloggers](https://twitter.com/Rbloggers)\
--   R-ladies [\@RLadiesGlobal](https://twitter.com/RLadiesGlobal)\
+-   Siga nos! [\@epiRhandbook](https://twitter.com/epirhandbook)
+-   R Function A Day [\@rfuntionaday](https://twitter.com/rfunctionaday) é um recurso *incrível*
+-   R for Data Science [\@rstats4ds](https://twitter.com/rstats4ds?lang=en)
+-   RStudio [\@RStudio](https://twitter.com/rstudio?lang=en)
+-   RStudio Tips [\@rstudiotips](https://twitter.com/rstudiotips)
+-   R-Bloggers [\@Rbloggers](https://twitter.com/Rbloggers)
+-   R-ladies [\@RLadiesGlobal](https://twitter.com/RLadiesGlobal)
 -   Hadley Wickham [\@hadleywickham](https://twitter.com/hadleywickham?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor)
 
 Também:
@@ -120,113 +120,117 @@ O site do projeto [R4Epis](https://r4epis.netlify.app/) tem como objetivo “des
 
 <!-- ======================================================= -->
 
-## Installation
+## Instalação
 
-### R and RStudio {.unnumbered}
+### R e R Studio {.unnumbered}
 
-**How to install R**
+**Como instalar o R**
 
-Visit this website <https://www.r-project.org/> and download the latest version of R suitable for your computer.
+Visite o site <https://www.r-project.org/> e faça o *download*da versão mais recente do  R que seja adequada para o seu computador.
 
-**How to install RStudio**
+**Como instalar o RStudio**
 
-Visit this website <https://rstudio.com/products/rstudio/download/> and download the latest free Desktop version of RStudio suitable for your computer.
+Visite esse website <https://rstudio.com/products/rstudio/download/> e faça o *download* da versão gratuita mais recente para Desktop do RStudio que seja adequada para seu computador.
 
-**Permissions**\
-Note that you should install R and RStudio to a drive where you have read and write permissions. Otherwise, your ability to install R packages (a frequent occurrence) will be impacted. If you encounter problems, try opening RStudio by right-clicking the icon and selecting "Run as administrator". Other tips can be found in the page [R on network drives].
+**Permissões**
+Note que você deve instalar R e RStudio em um drive onde você tenha permissões de leitura e escrita. Caso contrário, sua capacidade de instalar pacotes R (um problema de ocorrência freqüente) será impactada. Se você encontrar problemas, tente abrir o RStudio clicando com o botão direito do mouse no ícone e selecionando "Executar como administrador". Outras dicas podem ser encontradas na página [R em unidades de rede].
 
-**How to update R and RStudio**
 
-Your version of R is printed to the R Console at start-up. You can also run `sessionInfo()`.
+**Como atualizar o R e o RStudio**
 
-To update R, go to the website mentioned above and re-install R. Alternatively, you can use the **installr** package (on Windows) by running `installr::updateR()`. This will open dialog boxes to help you download the latest R version and update your packages to the new R version. More details can be found in the **installr** [documentation](https://www.r-project.org/nosvn/pandoc/installr.html).
+Sua versão de R é impressa no o Console R na inicialização. Você também pode executar o `sessionInfo()`.
 
-Be aware that the old R version will still exist in your computer. You can temporarily run an older version (older "installation") of R by clicking "Tools" -\> "Global Options" in RStudio and choosing an R version. This can be useful if you want to use a package that has not been updated to work on the newest version of R.
+Para atualizar o R, vá para o site mencionado acima e reinstale o R. Alternativamente, você pode utilizar o pacote **installr** (no Windows) executando `installr::updateR()`. Isto abrirá caixas de diálogo para ajudá-lo a baixar a última versão R e atualizar seus pacotes para a nova versão R. Mais detalhes podem ser encontrados na **installr** [documentação](https://www.r-project.org/nosvn/pandoc/installr.html).
 
-To update RStudio, you can go to the website above and re-download RStudio. Another option is to click "Help" -\> "Check for Updates" within RStudio, but this may not show the very latest updates.
+Esteja ciente de que a antiga versão R ainda existirá em seu computador. Você pode executar temporariamente uma versão antiga (antiga "instalação") do R clicando em "Ferramentas" -> "Opções Globais" no RStudio e escolhendo uma versão R. Isto pode ser útil se você quiser usar um pacote que não tenha sido atualizado para funcionar na versão mais nova do R.
 
-To see which versions of R, RStudio, or packages were used when this Handbook as made, see the page on [Editorial and technical notes].
+Para atualizar o RStudio, você pode ir ao site acima e fazer o download novamente do RStudio. Outra opção é clicar em "Ajuda" -\> "Verificar Atualizações" dentro do RStudio, mas isto pode não mostrar as últimas atualizações.
 
-### Other software you *may* need to install {.unnumbered}
+Para ver quais versões do R, RStudio, ou pacotes foram usados quando este Manual foi feito, veja a página em [Notas editoriais e técnicas].
 
--   TinyTeX (*for compiling an RMarkdown document to PDF*)\
--   Pandoc (*for compiling RMarkdown documents*)\
--   RTools (*for building packages for R*)\
--   phantomjs (*for saving still images of animated networks, such as transmission chains*)
+
+### Outros softwares você *pode* precisar instalar {.unnumbered}
+
+-   TinyTeX (*para compilaar documentos de RMarkdown em PDF*)
+-   Pandoc (*para compilar documentos de RMarkdown*)
+-   RTools (*para construir pacotes em R*)
+-   phantomjs (*para salvar imagens ou redes animadas, como redes de transmissão*)
 
 #### TinyTex {.unnumbered}
 
-TinyTex is a custom LaTeX distribution, useful when trying to produce PDFs from R.\
-See <https://yihui.org/tinytex/> for more informaton.
+TinyTex é uma distribuição do LaTeX customizada, útil quando for tentar produzir PDFs no R.
+Veja <https://yihui.org/tinytex/> para mais informações.
 
-To install TinyTex from R:
+Para instalar o TiniTex no R:
 
 ```{r, eval=F}
 install.packages('tinytex')
 tinytex::install_tinytex()
-# to uninstall TinyTeX, run tinytex::uninstall_tinytex()
+# para desisntalar o TinyTeX, corra tinytex::uninstall_tinytex()
 ```
 
 #### Pandoc {.unnumbered}
 
-Pandoc is a document converter, a separate software from R. **It comes bundled with RStudio and should not need to be downloaded.** It helps the process of converting Rmarkdown documents to formats like .pdf and adding complex functionality.
+Sua versão de R é impressa no o Console R na inicialização. Você também pode executar o Pandoc é um conversor de documentos, um software separado do R. ** Ele vem junto com o RStudio e não deve precisar ser baixado.** Ele ajuda no processo de conversão de documentos Rmarkdown para formatos como .pdf e adição de funcionalidades complexas.
 
 #### RTools {.unnumbered}
 
-RTools is a collection of software for building packages for R
+RTools é uma coleção de softwares para construção de pacotes para R
 
-Install from this website: <https://cran.r-project.org/bin/windows/Rtools/>
+Instale desse website: <https://cran.r-project.org/bin/windows/Rtools/>
 
 #### phantomjs {.unnumbered}
 
-This is often used to take "screenshots" of webpages. For example when you make a transmission chain with **epicontacts** package, an HTML file is produced that is interactive and dynamic. If you want a static image, it can be useful to use the [**webshot**](https://wch.github.io/webshot/articles/intro.html) package to automate this process. This will require the external program "phantomjs". You can install phantomjs via the **webshot** package with the command `webshot::install_phantomjs()`.
+Esta ferramenta é freqüentemente usada para tirar "fotografias da tela" de páginas da web. Por exemplo, quando você cria uma cadeia de transmissão com o pacote **epicontacts**,  um arquivo HTML é produzido e ele é interativo e dinâmico. Se você quiser uma imagem estática, pode ser útil usar o pacote [**webshot**](https://wch.github.io/webshot/articles/intro.html) para automatizar este processo. Isto exigirá o programa externo "phantomjs". Você pode instalar o phantomjs através do pacote **webshot** com o comando `webshot::install_phantomjs()`.
 
 <!-- ======================================================= -->
 
 ## RStudio {#rstudio}
 
-### RStudio orientation {.unnumbered}
+### Se orientando no RStudio  {.unnumbered}
 
-**First, open RStudio.** As their icons can look very similar, be sure you are opening *RStudio* and not R.
+**Primeiramente, abra o RStudio.** Como os ícones deles podem ser muito parecidos, certifique-se de que você está abrindo *RStudio* e não R.
 
-For RStudio to work you must also have R installed on the computer (see above for installation instructions).
+Para que o RStudio funcione, você também deve ter R instalado no computador (veja acima as instruções de instalação).
 
-**RStudio** is an interface (GUI) for easier use of **R**. You can think of R as being the engine of a vehicle, doing the crucial work, and RStudio as the body of the vehicle (with seats, accessories, etc.) that helps you actually use the engine to move forward! You can see the complete RStudio user-interface cheatsheet (PDF) [here](https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf)
+**RStudio** é uma interface (GUI) para facilitar o uso de **R**. Você pode pensar em R como sendo o motor de um veículo, fazendo o trabalho crucial, e RStudio como a carroceria do veículo (com assentos, acessórios, etc.) que ajuda você realmente a usar o motor para seguir em frente! Você pode ver a ficha completa da interface de usuário do RStudio (PDF) [aqui](https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf)
 
-By default RStudio displays four rectangle panes.
+Por padrão, o RStudio exibe quatro painéis retangulares.
 
 ```{r out.width = "100%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "RStudio_overview.png"))
 ```
 
-[***TIP:*** If your RStudio displays only one left pane it is because you have no scripts open yet.]{style="color: black;"}
+[***DICA:*** Se o seu RStudio mostrar apenas um painel esquerdo, é porque não há nenhum script aberto ainda]{style="color: black;"}
 
-**The Source Pane**\
-This pane, by default in the upper-left, is a space to edit, run, and save your [scripts](#scripts). Scripts contain the commands you want to run. This pane can also display datasets (data frames) for viewing.
+**O Painel Fonte**
+Este painel, por padrão localizado na parte superior esquerda, é um espaço onde é possível editar, executar e salvar seus [scripts](#scripts). Os scripts contêm os comandos que você deseja executar. Este painel também pode exibir conjuntos de dados (quadros de dados) para visualização.
 
-For Stata users, this pane is similar to your Do-file and Data Editor windows.
+Para usuários da Stata, este painel é similar às janelas de seu Do-file e Data Editor.
 
-**The R Console Pane**
+**O Painel de Console R**
 
-The R Console, by default the left or lower-left pane in R Studio, is the home of the R "engine". This is where the commands are actually run and non-graphic outputs and error/warning messages appear. You can directly enter and run commands in the R Console, but realize that these commands are not saved as they are when running commands from a script.
+O Console R, ou simplesmente Console, é por padrão o painel esquerdo ou inferior esquerdo do RStudio. Ele é a casa do "motor" R. É aqui que os comandos são realmente executados e as saídas não gráficas e as mensagens de erro/aviso aparecem. Você pode digitar e executar comandos diretamente no Console, mas perceba que estes comandos não são salvos como são ao executar comandos de um script.
 
-If you are familiar with Stata, the R Console is like the Command Window and also the Results Window.
+Se você está familiarizado com Stata, o Console R é como a Janela de Comando e também a Janela de Resultados.
 
-**The Environment Pane**\
-This pane, by default in the upper-right, is most often used to see brief summaries of [objects](#objects) in the R Environment in the current session. These objects could include imported, modified, or created datasets, parameters you have defined (e.g. a specific epi week for the analysis), or vectors or lists you have defined during analysis (e.g. names of regions). You can click on the arrow next to a data frame name to see its variables.
+**O Painel Ambiente**
 
-In Stata, this is most similar to the Variables Manager window.
+Este painel, por padrão na parte superior direita, é mais freqüentemente usado para ver resumos breves de [objetos] (#objetos) no Ambiente R na sessão atual. Estes objetos podem incluir conjuntos de dados importados, modificados ou criados, parâmetros que você definiu (por exemplo, uma semana epidemiológica específica para a análise), ou vetores ou listas que você definiu durante a análise (por exemplo, nomes de regiões). Você pode clicar na seta ao lado de um nome de data frame para ver suas variáveis.
 
-This pane also contains *History* where you can see commands that you can previously. It also has a "Tutorial" tab where you can complete interactive R tutorials if you have the **learnr** package installed. It also has a "Connections" pane for external connections, and can have a "Git" pane if you choose to interface with Github.
+No Stata, isto é mais parecido com a janela Gerenciador de Variáveis.
 
-**Plots, Viewer, Packages, and Help Pane**\
-The lower-right pane includes several important tabs. Typical plot graphics including maps will display in the Plot pane. Interactive or HTML outputs will display in the Viewer pane. The Help pane can display documentation and help files. The Files pane is a browser which can be used to open or delete files. The Packages pane allows you to see, install, update, delete, load/unload R packages, and see which version of the package you have. To learn more about packages see the [packages section](#packages) below.
+Este painel também contém a aba *History* onde você pode ver comandos que você pode ver anteriormente. Tem também uma aba "Tutorial" onde você pode completar tutoriais R interativos se você tiver o pacote **learnr** instalado. Tem também um painel "Conections" para conexões externas, e pode ter um painel "Git" se você optar por fazer interface com o Github.
 
-This pane contains the Stata equivalents of the Plots Manager and Project Manager windows.
+**Paineis Plots (Gráficos), Viewer, Packages (Pacotes), e Help (Ajuda)**
 
-### RStudio settings {.unnumbered}
+O painel inferior-direito inclui várias abas importantes. Gráficos típicos, incluindo mapas, serão exibidos no painel Plo. Saídas interativas ou HTML serão exibidas no painel do Visualizador (Viewer). O painel de Ajuda (Help) pode exibir documentação e arquivos de ajuda. O painel Arquivos (Files) é um navegador que pode ser usado para abrir ou excluir arquivos. O painel Pacotes (Packages) permite ver, instalar, atualizar, excluir, carregar/descarregar pacotes R, e ver qual versão do pacote você tem. Para saber mais sobre pacotes, veja a [seção pacotes](#packages) abaixo.
 
-Change RStudio settings and appearance in the *Tools* drop-down menu, by selecting *Global Options*. There you can change the default settings, including appearance/background color.
+Este painel contém os equivalentes Stata das janelas Plots Manager e Project Manager.
+
+### Configurações do RStudio  {.unnumbered}
+
+Altere as configurações e a aparência do RStudio no menu suspenso *Ferramentas* (Tools), selecionando *Opções Globais* (Global Options). Lá você pode alterar as configurações padrão, incluindo a cor da aparência/fundo.
 
 ```{r out.width = c('50%'), fig.show='hold', echo=F}
 knitr::include_graphics(here::here("images", "RStudio_tools_options_1.png"))
@@ -234,69 +238,69 @@ knitr::include_graphics(here::here("images", "RStudio_tools_options_1.png"))
 knitr::include_graphics(here::here("images", "RStudio_tools_options.png"))
 ```
 
-**Restart**
+**Restart (Reiniciar)**
 
-If your R freezes, you can re-start R by going to the Session menu and clicking "Restart R". This avoids the hassle of closing and opening RStudio. Everything in your R environment will be removed when you do this.
+Se seu R travar, você pode reiniciar o R indo ao menu Sessão (Session) e clicando em "Reiniciar R" (Restart R). Isto evita o incômodo de fechar e abrir o RStudio. Tudo em seu ambiente R será removido quando você fizer isso.
 
-### Keyboard shortcuts {.unnumbered}
+### Atalhos no teclado {.unnumbered}
 
-Some very useful keyboard shortcuts are below. See all the keyboard shortcuts for Windows, Max, and Linux in the second page of this RStudio [user interface cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf).
+Alguns atalhos de teclado muito úteis estão abaixo. Veja todos os atalhos de teclado para Windows, Mac e Linux na segunda página deste RStudio [cheatsheet da interface do usuário](https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf).
 
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Windows/Linux                    | Mac                    | Action                                                                                                                         |
+| Windows/Linux                    | Mac                    | Ação                                                                                                                         |
 +==================================+========================+================================================================================================================================+
-| Esc                              | Esc                    | Interrupt current command (useful if you accidentally ran an incomplete command and cannot escape seeing "+" in the R console) |
+| Esc                              | Esc                    | Interrompe comando atual (útil se você acidentalmente executou um comando incompleto e não pode escapar de ver o "+" no console R)|
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl+s                           | Cmd+s                  | Save (script)                                                                                                                  |
+| Ctrl+s                           | Cmd+s                  | Salva (script)                                                                                                                 |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Tab                              | Tab                    | Auto-complete                                                                                                                  |
+| Tab                              | Tab                    | Auto-completa                                                                                                                  |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + Enter                     | Cmd + Enter            | Run current line(s)/selection of code                                                                                          |
+| Ctrl + Enter                     | Cmd + Enter            | Roda a(s) linha(s) atual(is)/seleção de código   |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + Shift + C                 | Cmd + Shift + c        | comment/uncomment the highlighted lines                                                                                        |
+| Ctrl + Shift + C                 | Cmd + Shift + c        | comenta/descomenta as linhas selecionadas                                                                                       |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Alt + -                          | Option + -             | Insert `<-`                                                                                                                    |
+| Alt + -                          | Option + -             | Insere `<-`                                                                                                                    |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + Shift + m                 | Cmd + Shift + m        | Insert `%>%`                                                                                                                   |
+| Ctrl + Shift + m                 | Cmd + Shift + m        | Insere `%>%`                                                                                                                   |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + l                         | Cmd + l                | Clear the R console                                                                                                            |
+| Ctrl + l                         | Cmd + l                | Limpa o console                                                                                                                |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + Alt + b                   | Cmd + Option + b       | Run from start to current line                                                                                                 |
+| Ctrl + Alt + b                   | Cmd + Option + b       | Roda do início até a linha atual                                                                                              |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + Alt + t                   | Cmd + Option + t       | Run the current code section (R Markdown)                                                                                      |
+| Ctrl + Alt + t                   | Cmd + Option + t       | Roda a seção de código atual (R Markdown)                                                                                      |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + Alt + i                   | Cmd + Shift + r        | Insert code chunk (into R Markdown)                                                                                            |
+| Ctrl + Alt + i                   | Cmd + Shift + r        | Insere chunk de código (no R Markdown)                                                                                            |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + Alt + c                   | Cmd + Option + c       | Run current code chunk (R Markdown)                                                                                            |
+| Ctrl + Alt + c                   | Cmd + Option + c       | Roda o chunk atual (R Markdown)                                                                                            |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| up/down arrows in R console      | Same                   | Toggle through recently run commands                                                                                           |
+| up/down arrows in R console      | Same                   | Alterna entre os comandos executados recentemente                                                                                          |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Shift + up/down arrows in script | Same                   | Select multiple code lines                                                                                                     |
+| Shift + up/down arrows in script | Same                   | Seleciona múltiplas linhas de código                                                                                                   |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + f                         | Cmd + f                | Find and replace in current script                                                                                             |
+| Ctrl + f                         | Cmd + f                | Procura e substitui no script atual                                                                                            |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Ctrl + Shift + f                 | Cmd + Shift + f        | Find in files (search/replace across many scripts)                                                                             |
+| Ctrl + Shift + f                 | Cmd + Shift + f        | Encontra em arquivos (pesquisa/substitui em vários script)                                                                             |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Alt + l                          | Cmd + Option + l       | Fold selected code                                                                                                             |
+| Alt + l                          | Cmd + Option + l       | Oculta código atual                                                                                                             |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
-| Shift + Alt + l                  | Cmd + Shift + Option+l | Unfold selected code                                                                                                           |
+| Shift + Alt + l                  | Cmd + Shift + Option+l | Exibe código sele                                                                                                           |
 +----------------------------------+------------------------+--------------------------------------------------------------------------------------------------------------------------------+
 
-[***TIP:*** Use your Tab key when typing to engage RStudio's auto-complete functionality. This can prevent spelling errors. Press Tab while typing to produce a drop-down menu of likely functions and objects, based on what you have typed so far.]{style="color: darkgreen;"}
+[***DICA:*** Use sua tecla Tab ao digitar para ativar a funcionalidade de auto-completar do RStudio. Isto pode evitar erros ortográficos. Pressione Tab enquanto digita para produzir um menu suspenso de funções e objetos prováveis, com base no que você digitou até agora. ]{style="color: darkgreen;"}
 
 <!-- ======================================================= -->
 
-## Functions {#functions}
+## Funções {#functions}
 
-Functions are at the core of using R. Functions are how you perform tasks and operations. Many functions come installed with R, many more are available for download in *packages* (explained in the [packages](#packages) section), and you can even write your own custom functions!
+As funções estão no cerne do uso de R. As funções são a forma como você executa tarefas e operações. Muitas funções vêm instaladas com R, muitas mais estão disponíveis para download em *packages* (explicado na seção [pacotes](#packages)), e você pode até mesmo escrever suas próprias funções personalizadas!
 
-This basics section on functions explains:
+Esta seção básica sobre funções explica:
 
--   What a function is and how they work\
--   What function *arguments* are\
--   How to get help understanding a function
+-   O que é uma função e como funcionam
+-   O que são os *argumentos/parâmetros* de uma função
+-   Como conseguir ajuda para compreender uma função
 
-*A quick note on syntax:* In this handbook, functions are written in code-text with open parentheses, like this: `filter()`. As explained in the [packages](#packages) section, functions are downloaded within *packages*. In this handbook, package names are written in **bold**, like **dplyr**. Sometimes in example code you may see the function name linked explicitly to the name of its package with two colons (`::`) like this: `dplyr::filter()`. The purpose of this linkage is explained in the packages section.
+*Uma nota rápida sobre a sintaxe:* Neste manual, as funções são escritas em texto de código com parênteses abertos, como este: `filter()`. Como explicado na seção [pacotes](#packages), as funções são baixadas dentro de *pacotes*. Neste manual, os nomes dos pacotes são escritos em **negrito**, como **dplyr**. Às vezes, no código de exemplo, você pode ver o nome da função ligado explicitamente ao nome de seu pacote com um par de dois-pontos (`::`) como este: `dplyr::filter()`. O propósito desta ligação é explicado na seção de pacotes.
 
 <!-- ======================================================= -->
 
