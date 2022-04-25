@@ -8,7 +8,7 @@ Abaixo, fornecemos alguns conselhos e recursos se você estiver fazendo a transi
 
 O R foi lançado no final dos anos 90 e desde então, seu escopo tem crescido dramaticamente. Suas capacidades são tão amplas que programas alternativos comerciais reagiram ao surgimento do R para se manterem competitivas! ([leia este artigo comparando R, SPSS, SAS, STATA, e Python](https://www.inwt-statistics.com/read-blog/comparison-of-r-python-sas-spss-and-stata.html)).  
 
-Além disso, o R é muito mais fácil de aprender do que era há 10 anos. Anteriormente, o R tinha a reputação de ser difícil para os iniciantes. Agora é muito mais fácil com interfaces de usuário amigáveis como RStudio, código intuitivo como o **tidyverse**, e muitos recursos tutoriais.  
+Além disso, o R é muito mais fácil de aprender do que era há 10 anos. Anteriormente, o R tinha a reputação de ser difícil para os iniciantes. Agora é muito mais fácil de aprender, com interfaces de usuário amigáveis como RStudio, código intuitivo como o **tidyverse**, e muitos recursos tutoriais.  
 
 
 <span style="color: darkgreen;">**Não se sinta intimidado - venha descobrir o mundo do R!**</span>  
@@ -42,7 +42,7 @@ Muitos fluxos de trabalho do Excel dependem da memória e da repetição - porta
 
 ### Dados bem arrumados (*tidy data*) {.unnumbered}  
 
-Use dados "arrumados" (*tidy*) que sejam legíveis para a máquina em vez de dados bagunçados que são apenas "legíveis para humanos". Estes são os três principais requisitos para dados do tipo "*tidy*", como explicado neste tutorial sobre [dados "tidy" em R](https://r4ds.had.co.nz/tidy-data.html):  
+Use dados "arrumados" (*tidy*), isto é, que sejam legíveis para a máquina em vez de dados bagunçados, que são apenas "legíveis para humanos". Estes são os três principais requisitos para dados do tipo "*tidy*", como explicado neste tutorial sobre [dados "tidy" em R](https://r4ds.had.co.nz/tidy-data.html):  
 
 * Cada variável deve ter sua própria coluna  
 * Cada observação deve ter sua própria linha
@@ -62,7 +62,7 @@ linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.r
 DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-*O principal motivo pelo qual se encontra dados não-arrumados (*non-tidy*) se deve ao fato de muitas planilhas Excel serem projetadas para priorizar a leitura fácil por humanos, não a leitura fácil por máquinas/software.*  
+*O principal motivo pelo qual entramos dados não-arrumados por aí (*non-tidy*) se deve ao fato de muitas planilhas Excel serem projetadas para priorizar a leitura fácil por humanos, não a leitura fácil por máquinas/software.*  
 
 Para ajudá-lo a ver a diferença, abaixo estão alguns exemplos fictícios de **dados não-arrumados** que priorizam leitura por *humanos* em vez de leitura por *máquina*:  
 
@@ -71,7 +71,7 @@ knitr::include_graphics(here::here("images", "Excel_nonTidy_1.png"))
 ```
 
 
-*Problemas:* Na planilha acima, há *células mescladas* que não são facilmente digeridas por R. Qual linha deve ser considerada o "cabeçalho" não está clara. Um dicionário baseado em cores está do lado direito e os valores das células são representados por cores - o que também não é facilmente interpretado por R (nem por humanos daltônicos!). Além disso, diferentes pedaços de informação são combinados em uma célula (múltiplas organizações parceiras trabalhando em uma área, ou o status "TBC" na mesma célula que "Parceiro (*partner*) D").     
+*Problemas:* Na planilha acima, há *células mescladas* que não são facilmente digeridas pelo R. Qual linha deve ser considerada o "cabeçalho" não está totalmente clara. Um dicionário baseado em cores está do lado direito e os valores das células são representados por cores - o que também não é facilmente interpretado pelo R (nem por humanos daltônicos!). Além disso, diferentes pedaços de informação são combinados em uma célula (múltiplas organizações parceiras trabalhando em uma área, ou o status "TBC" na mesma célula que "Parceiro (*partner*) D").     
 
 
 ```{r, echo=F, out.width = "100%", out.height="100%", fig.align = "center"}
@@ -81,12 +81,12 @@ knitr::include_graphics(here::here("images", "Excel_nonTidy_2.png"))
 
 *Problemas:* Na planilha acima, há numerosas linhas e colunas vazias extras dentro do conjunto de dados - isto causará dores de cabeça para a limpeza do banco no R. Além disso, as coordenadas GPS estão espalhadas por duas linhas para um determinado centro de tratamento. Como nota lateral - as coordenadas GPS estão em dois formatos diferentes!  
 
-Os conjuntos de dados "tidy" podem não ser tão legíveis a um olho humano, mas tornam a limpeza e análise dos dados muito mais fácil! Dados "tidy" podem ser armazenados em vários formatos, por exemplo "longo/comprido" (*long*)  ou "largo/amplo" (*wide*) (ver página em [Dados pivotantes]), mas os princípios acima ainda são observados.
+Os conjuntos de dados "tidy" podem não ser tão legíveis a um olho humano, mas tornam a limpeza e análise dos dados muito mais fácil! Dados "tidy" podem ser armazenados em vários formatos, por exemplo "longo/comprido" (*long*)  ou "largo/amplo" (*wide*) (ver página em [Pivotando dados]), mas os princípios acima serão sempre observados.
 
 
 ### Funções {.unnumbered}  
 
-A palavra R "função" pode ser nova, mas o conceito também existe no Excel como *fórmulas*. As fórmulas no Excel também requerem sintaxe precisa (por exemplo, colocação de ponto-e-vírgula e parênteses). Tudo o que você precisa fazer é aprender algumas novas funções e como elas funcionam juntas em R.  
+A palavra "função" em R pode ser nova, mas o conceito também existe no Excel como *fórmulas*. As fórmulas no Excel também requerem sintaxe precisa (por exemplo, colocação de ponto-e-vírgula e parênteses). Tudo o que você precisa fazer é aprender algumas novas funções e como elas funcionam juntas em R.  
 
 ### Scripts {.unnumbered}  
 
