@@ -6,8 +6,6 @@
 
 Abaixo, fornecemos alguns conselhos e recursos se você estiver fazendo a transição para o R.  
 
-Abaixo, fornecemos alguns conselhos e recursos se você estiver fazendo a transição para o R.  
-
 O R foi lançado no final dos anos 90 e desde então, seu escopo tem crescido dramaticamente. Suas capacidades são tão amplas que programas alternativos comerciais reagiram ao surgimento do R para se manterem competitivas! ([leia este artigo comparando R, SPSS, SAS, STATA, e Python](https://www.inwt-statistics.com/read-blog/comparison-of-r-python-sas-spss-and-stata.html)).  
 
 Além disso, o R é muito mais fácil de aprender do que era há 10 anos. Anteriormente, o R tinha a reputação de ser difícil para os iniciantes. Agora é muito mais fácil com interfaces de usuário amigáveis como RStudio, código intuitivo como o **tidyverse**, e muitos recursos tutoriais.  
