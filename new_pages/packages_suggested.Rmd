@@ -1,4 +1,4 @@
-# acotes sugeridos
+# Pacotes sugeridos
 
 Abaixo está uma longa lista de pacotes sugeridos para trabalho epidemiológico comum em R. Você pode copiar este código, executá-lo, e todos estes pacotes serão instalados a partir de CRAN e carregados para uso na sessão R atual. Se um pacote já estiver instalado, ele será carregado apenas para uso.  
 
@@ -7,8 +7,8 @@ Você pode modificar o código com símbolos `#` para excluir qualquer pacote qu
 Nota:  
 
 * Instale primeiro o pacote **pacman** antes de executar o código abaixo. Você pode fazer isto com `install.packages("pacman")`. Neste manual, enfatizamos `p_load()` de **pacman**, que instala o pacote se necessário *e* o carrega para utilização na sessão R atual. Você também pode carregar pacotes que já estão instalados com `library()` a partir do R **base**.  
-* No código abaixo, os pacotes que são incluídos ao instalar/carregar outro pacote são indicados por um travessão e hash. Por exemplo, como **ggplot2** está listado em **tidyverse**.  
-* Se vários pacotes têm funções com o mesmo nome, *masking* pode ocorrer quando a função do pacote mais recentemente carregado tem precedência. Leia mais na página [R- o básico]. Considere o uso do pacote **conflicted** para gerenciar tais conflitos.  
+* No código abaixo, os pacotes que são incluídos ao instalar/carregar outro pacote são indicados por um travessão e *hashtag*. Por exemplo, como **ggplot2** está listado em **tidyverse**.  
+* Se vários pacotes têm funções com o mesmo nome, o mascaramento (*masking*) das funções pode ocorrer entre os pacotes. Ou seja, quando a função do pacote mais recentemente carregado prevalece. Leia mais na página [R- o básico]. Considere o uso do pacote **conflicted** para gerenciar tais conflitos.  
 * Consulte a seção [R- o básico] sobre pacotes para mais informações sobre **pacman** e mascaramento.  
 
 Para ver as versões dos pacotes R, RStudio e R utilizados durante a produção deste manual, veja a página em [Notas editoriais e técnicas].  
@@ -35,7 +35,7 @@ pacman::p_load(
      
      # aprendendo R
      ############
-     learnr,   # tutoriais interetivos no RStudio 
+     learnr,   # tutoriais interativos no RStudio 
      swirl,    # tutoriais interetivos no console
         
      # manuseio de projetos e arquivos 
@@ -60,7 +60,7 @@ pacman::p_load(
           #forcats,    # trabalhar com fatores
           #lubridate,  # trabalhar com datas
           #purrr       # iteração e trabalhando com listas
-     linelist,     # limbando linelists
+     linelist,     # limpando linelists
      naniar,       # assessando valores ausentes
      
      # estatísticas
@@ -71,7 +71,7 @@ pacman::p_load(
      broom,        # arrumar resultados de regressões 
      lmtest,       # testes de razão de likelihood
      easystats,
-          # parametros, # alternativa a limpar os resultados de regressoes. 
+          # parametros, # alternativa a limpar os resultados de regressões. 
           # see,        # alternativa para vizualizar gráfico de floresta. 
      
      # modelagem de epidemmias
@@ -80,10 +80,10 @@ pacman::p_load(
      EpiNow2,      # Estimando Rt 
      EpiEstim,     # Estimando Rt 
      projections,  # Projeção de incidencia
-     incidence2,   # Fazer epicurvas e manipular dados de incidencia. 
+     incidence2,   # Fazer epicurvas e manipular dados de incidência. 
      i2extras,     # Funções extra para pacote incidence2 
      epitrix,      # Funções epi úteis
-     distcrete,    # Distribuições discretas com delay 
+     distcrete,    # Distribuições discretas com delay (atraso)
      
      
      # Gráficos - geral
@@ -114,7 +114,7 @@ pacman::p_load(
      
      # relatórios de rotina
      #################
-     rmarkdown,        #produz arquivos em  PDFs, Word, Powerpoint e HTML 
+     rmarkdown,        # produz arquivos em  PDFs, Word, Powerpoint e HTML 
      reportfactory,    # auto-organização de outputs de R Markdown
      officer,          # powerpoint
      
