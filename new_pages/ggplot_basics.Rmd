@@ -6,7 +6,7 @@ knitr::include_graphics(here::here("images", "ggplot_basics_top.png"))
 ```
 
 
-O **ggplot2** é o pacote R mais popular de visualização de dados. Sua função `ggplot()` está no centro deste pacote, e toda esta abordagem é conhecida coloquialmente como *"ggplot "* com as imagens resultantes às vezes carinhosamente chamadas de "ggplots". O "gg" nestes nomes reflete a "**g***ramática de **g*** gráficos" utilizados para construir as figuras. O **ggplot2** beneficia-se de uma grande variedade de pacotes R suplementares que melhoram ainda mais sua funcionalidade.  
+O **ggplot2** é o pacote R mais popular de visualização de dados. Sua função `ggplot()` está no centro deste pacote, e toda esta abordagem é conhecida coloquialmente como *"ggplot "* com as imagens resultantes às vezes carinhosamente chamadas de "ggplots". O "gg" nestes nomes reflete a "**g**ramática de **g**ráficos" utilizados para construir as figuras. O **ggplot2** beneficia-se de uma grande variedade de pacotes R suplementares que melhoram ainda mais sua funcionalidade.
 
 A sintaxe é significativamente diferente dos gráficos gerados pelo R **base***, e tem uma curva de aprendizado associada a ela. A utilização do **ggplot2** geralmente exige que o usuário formate seus dados de uma forma altamente **compatível com o "tidyverse**, o que em última análise torna a utilização conjunta destes pacotes muito eficaz.
 
