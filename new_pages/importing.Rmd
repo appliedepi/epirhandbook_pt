@@ -14,7 +14,7 @@ Nesta página descrevemos formas de localizar, importar e exportar arquivos:
 * Cenários específicos de importação, como por exemplo:  
   * Planilhas específicas do Excel  
   * Cabeçalhos confusos e linhas para pular  
-  * Das planilhas do Google  
+  * Planilhas do Google  
   * A partir de dados postados em websites  
   * Com APIs  
   * Importação do arquivo *mais recente*  
@@ -27,13 +27,13 @@ Nesta página descrevemos formas de localizar, importar e exportar arquivos:
 <!-- ======================================================= -->
 ## Visão geral
 
-Quando você importa um "conjunto de dados" para R, você geralmente está criando um novo objeto do tipo *data frame* em seu ambiente R e definindo-o como um arquivo importado (por exemplo, Excel, CSV, TSV, RDS) que está localizado em suas pastas em um determinado caminho/endereço de arquivo.  
+Quando você importa um "conjunto de dados" para o R, você geralmente está criando um novo objeto do tipo *data frame* em seu ambiente R e definindo-o como um arquivo importado (por exemplo, Excel, CSV, TSV, RDS) que está localizado em suas pastas em um determinado caminho/endereço de arquivo.  
 
 Você pode importar/exportar muitos tipos de arquivos, inclusive aqueles criados por outros programas estatísticos (SAS, STATA, SPSS). Você também pode se conectar a bancos de dados relacionais.  
 
 R tem até seus próprios formatos de dados:  
 
-* Um arquivo RDS (.rds) armazena um único objeto R, como um quadro de dados. Estes são úteis para armazenar dados limpos, pois eles mantêm as classes de colunas R. Leia mais em [esta seção](#import_rds).    
+* Um arquivo RDS (.rds) armazena um único objeto R, como um data frame. Estes são úteis para armazenar dados limpos, pois eles mantêm as classes de colunas R. Leia mais em [esta seção](#import_rds).    
 * Um arquivo RData (.Rdata) pode ser usado para armazenar vários objetos, ou mesmo um espaço de trabalho R completo. Leia mais em [esta seção](#import_rdata).  
 
 <!-- ======================================================= -->
@@ -52,16 +52,16 @@ A importação/exportação de *shapefiles* (para mapas) requer outros pacotes, 
 
 ## O pacote **here** {#here}
 
-O pacote **here** e sua função `aqui()` tornam fácil dizer a R onde encontrar e salvar seus arquivos - em essência, ele constrói os caminhos dos arquivos.  
+O pacote **here** e sua função `here()` tornam fácil dizer a R onde encontrar e salvar seus arquivos - em essência, ele constrói os caminhos dos arquivos.  
 
 Utilizado em conjunto com um projeto R, **here** permite descrever a localização dos arquivos em seu projeto R em relação ao diretório *root do projeto R* (a pasta de nível superior). Isto é útil quando o projeto R pode ser compartilhado ou acessado por várias pessoas/computadores. Ele evita complicações devido aos caminhos exclusivos dos arquivos em diferentes computadores (por exemplo, `"C:/Users/Laura/Documents...'', "iniciando" o caminho do arquivo em um lugar comum a todos os usuários (a raiz do projeto R).  
 
-Isto é como `here()` funciona dentro de um projeto R:  
+É assim como `here()` funciona dentro de um projeto R:  
 
 * Quando o pacote **here** é carregado pela primeira vez dentro do projeto R, ele coloca um pequeno arquivo chamado ".here" na pasta raiz de seu projeto R como um "*benchmark*" ou "âncora".  
 * Em seus scripts, para referenciar um arquivo nas subpastas do projeto R, você utiliza a função `here()` para construir o caminho do arquivo *em relação a essa âncora*.
 * Para construir o caminho do arquivo, escreva os nomes das pastas além da raiz, entre aspas, separados por vírgulas, finalmente terminando com o nome do arquivo e a extensão do arquivo, como mostrado abaixo  
-* 'here()` caminhos de arquivos podem ser utilizados tanto para importação quanto para exportação  
+* Caminhos de arquivos com a função 'here()`  podem ser utilizados tanto para importação quanto para exportação  
 
 Por exemplo, abaixo, a função `import()` está sendo fornecida um caminho de arquivo construído com `here()`.   
 
@@ -182,7 +182,7 @@ Por padrão, se você fornecer uma pasta de trabalho Excel (.xlsx) para a funç�
 my_data <- import("my_excel_file.xlsx", which = "Sheetname")
 ```
 
-Se utilizar o método `here()` para fornecer um caminho relativo para `importar()`, você ainda pode indicar uma aba específica adicionando o `which = ` argumento depois dos parênteses de fechamento da função `here()`.      
+Se utilizar o método `here()` para fornecer um caminho relativo para `import()`, você ainda pode indicar uma aba específica adicionando o `which = ` argumento depois dos parênteses de fechamento da função `here()`.      
 
 ```{r import_sheet_here, eval=F}
 # Demonstração: importação de uma planilha específica do Excel ao utilizar caminhos relativos com o pacote 'here'.  
@@ -190,7 +190,7 @@ Se utilizar o método `here()` para fornecer um caminho relativo para `importar(
 linelist_raw <- import(here("data", "linelist.xlsx"), which = "Sheet1")`  
 ```
 
-Para *exportar* um *data frame* de R para uma planilha específica do Excel e ter o resto da pasta de trabalho do Excel inalterado, você terá que importar, editar e exportar com um pacote alternativo criado para este propósito, como **openxlsx***. Veja mais informações na página em [Interações do diretório] ou [nesta página do github](https://ycphs.github.io/openxlsx/).
+Para *exportar* um *data frame* do R para uma planilha específica do Excel e ter o resto da pasta de trabalho do Excel inalterado, você terá que importar, editar e exportar com um pacote alternativo criado para este propósito, como **openxlsx***. Veja mais informações na página em [Interações do diretório] ou [nesta página do github](https://ycphs.github.io/openxlsx/).
 
 Se sua pasta de trabalho Excel for .xlsb (pasta de trabalho Excel em formato binário) você talvez não consiga importá-la usando **rio**. Considere a possibilidade de salvá-la como .xlsx, ou usando um pacote como **readxlsb*** que é construído para [este propósito](https://cran.r-project.org/web/packages/readxlsb/vignettes/read-xlsb-workbook.html).  
 
@@ -208,7 +208,7 @@ Aqui, o valor "99" no conjunto de dados importados é considerado ausente e conv
 linelist <- import(here("data", "my_linelist.xlsx"), na = "99")
 ```
 
-qualquer um dos valores "Missing", "" (célula vazia), ou "" (espaço único) no conjunto de dados importados são convertidos para `NA` em R.  
+Qualquer um dos valores "Missing", "" (célula vazia), ou "" (espaço único) no conjunto de dados importados são convertidos para `NA` no R.  
 
 ```{r, eval=F}
 linelist <- import(here("data", "my_linelist.csv"), na = c("Missing", "", " "))
@@ -221,7 +221,7 @@ linelist <- import(here("data", "my_linelist.csv"), na = c("Missing", "", " "))
 Às vezes, você pode querer evitar a importação de uma linha específica de dados. Você pode fazer isso com o argumento `skip = ` se utilizar `import()` de **rio** em um arquivo .xlsx ou .csv. Forneça o número de linhas que você deseja pular. 
 
 ```{r, eval=F}
-linelist_raw <- import("linelist_raw.xlsx", skip = 1)  # does not import header row
+linelist_raw <- import("linelist_raw.xlsx", skip = 1)  # Não importa a linha de cabeçalho
 ```
 
 Infelizmente 'skip = 'aceita apenas um valor inteiro, *não* um intervalo (por exemplo, "2:10" não funciona). Para pular a importação de linhas específicas que não são consecutivas do topo, considere importar várias vezes e utilizar `bind_rows()` a partir de **dplyr***. Veja o exemplo abaixo de pular apenas a linha 2.  
@@ -265,7 +265,7 @@ linelist_2headers <- rio::import(here::here("data", "case_linelists", "linelist_
 Abaixo está um exemplo deste tipo de conjunto de dados (sendo a primeira linha o dicionário de dados).  
 
 ```{r message=FALSE, echo=F}
-# display the linelist data as a table
+# Exibe a linelist como uma tabela
 DT::datatable(head(linelist_2headers, 5), rownames = FALSE, filter="top", options = list(pageLength = 4, scrollX=T), class = 'white-space: nowrap' )
 ```
 
@@ -282,10 +282,10 @@ O argumento exato usado para ligar os nomes corretos das colunas depende do tipo
 **Para arquivos Excel:** (`col_names = `)  
 
 ```{r, eval=F}
-# import first time; store the column names
-linelist_raw_names <- import("linelist_raw.xlsx") %>% names()  # save true column names
+# importe a primeira vez; salve o nome das colunas
+linelist_raw_names <- import("linelist_raw.xlsx") %>% names()  # Salva o nome veradeiro das colunas
 
-# import second time; skip row 2, and assign column names to argument col_names =
+# Importe uma segunda vez; pule a segunda linha e designe os nomes das colunas para o argumento col_names =
 linelist_raw <- import("linelist_raw.xlsx",
                        skip = 2,
                        col_names = linelist_raw_names
@@ -296,7 +296,7 @@ linelist_raw <- import("linelist_raw.xlsx",
 
 ```{r, eval=F}
 # importe a primeira vez; salve o nome das colunas
-linelist_raw_names <- import("linelist_raw.csv") %>% names() # salve o nome das colunas
+linelist_raw_names <- import("linelist_raw.csv") %>% names() # salve o nome verdadeiro das colunas
 
 # note que o argumento para arquivos csv é 'col.names = '
 linelist_raw <- import("linelist_raw.csv",
@@ -381,7 +381,7 @@ Aqui estão alguns outros tutoriais on-line úteis:
 
 ## Múltiplos arquivos- importar, exportar, dividir, combinar  
 
-Veja a página em [Iteração, loops e listas] para exemplos de como importar e combinar vários arquivos, ou vários arquivos de pastas de trabalho Excel. Essa página também tem exemplos de como dividir um quadro de dados em partes e exportar cada uma separadamente, ou como planilhas nomeadas em uma pasta de trabalho do Excel.  
+Veja a página em [Iteração, loops e listas] para exemplos de como importar e combinar vários arquivos, ou vários arquivos de pastas de trabalho Excel. Essa página também tem exemplos de como dividir um data frame em partes e exportar cada uma separadamente, ou como planilhas nomeadas em uma pasta de trabalho do Excel.  
 
 
 
@@ -395,7 +395,7 @@ A importação de dados diretamente do Github para R pode ser muito fácil ou po
 
 Pode ser fácil importar um arquivo .csv diretamente do Github para R com um comando R.  
 
-1) Vá até o repo Github, localize o arquivo de interesse e clique sobre ele  
+1) Vá até o repositório Github, localize o arquivo de interesse e clique sobre ele  
 3) Clique no botão "Raw" (você verá então os dados "brutos" do csv, como mostrado abaixo)  
 4) Copiar a URL (endereço web)  
 5) Colocar a URL entre aspas dentro do comando `import()` no R  
@@ -408,7 +408,7 @@ knitr::include_graphics(here::here("images", "download_csv_raw.png"))
 
 Talvez você não consiga visualizar os dados "Raw" de alguns arquivos (por exemplo, .xlsx, .rds, .nwk, .shp)  
 
-1) Vá até o repo Github, localize o arquivo de interesse e clique sobre ele  
+1) Vá até o repositório Github, localize o arquivo de interesse e clique sobre ele  
 2) Clique no botão "Download", como mostrado abaixo  
 3) Salve o arquivo em seu computador, e importe-o para o R  
 
@@ -443,7 +443,7 @@ Utilize a função `tribble` do pacote **tibble** do tidyverse ([referência onl
 Observe como os cabeçalhos das colunas começam com um *til* (`~`).  Observe também que cada coluna deve conter apenas uma classe de dados (caractere, numérico, etc.). Você pode utilizar abas, espaçamento e novas linhas para tornar a entrada de dados mais intuitiva e legível. Os espaços não importam entre os valores, mas cada linha é representada por uma nova linha de código. Por exemplo: 
 
 ```{r import_manual_row}
-# create the dataset manually by row
+# Crie um conjunto de dados manualmente por linha
 manual_entry_rows <- tibble::tribble(
   ~colA, ~colB,
   "a",   1,
@@ -455,14 +455,14 @@ manual_entry_rows <- tibble::tribble(
 A agora nós exibimos o novo *data frame*::  
 
 ```{r, echo=F}
-# exibeo novao data frame
+# exibe o novo data frame
 DT::datatable(manual_entry_rows)
 ```
 
 
 ### Inserção por colunas {.unnumbered}  
 
-Como um quadro de dados consiste em vetores (colunas verticais), a abordagem **base** para a criação manual de quadros de dados em R espera que você defina cada coluna e depois as vincule juntas. Isto pode ser contra-intuitivo em epidemiologia, pois geralmente pensamos em nossos dados em linhas (como acima). 
+Como um data frame consiste em vetores (colunas verticais), a abordagem **base** para a criação manual de data frames no R espera que você defina cada coluna e depois as vincule juntas. Isto pode ser contra-intuitivo em epidemiologia, pois geralmente pensamos em nossos dados em linhas (como acima). 
 
 ```{r import_manual_col}
 # definir cada vetor (coluna vertical) separadamente, cada um com seu próprio nome
@@ -480,7 +480,7 @@ The vectors can then be bound together using the function `data.frame()`:
 manual_entry_cols <- data.frame(PatientID, Treatment, Death)
 ```
 
-And now we display the new dataset:  
+E agora vamos vizualizar o novo conjunto de dados:
 
 ```{r, echo=F}
 # exibe o novo data frame
@@ -494,7 +494,7 @@ DT::datatable(manual_entry_cols)
 
 Se você copiar dados de outro lugar e os tem na "área de transferência" (*clipboard*), você pode tentar uma das duas maneiras abaixo:  
 
-Do pacote **clipr***, você pode utilizar `read_clip_tbl()` para importar como um quadro de dados, ou apenas `read_clip()` para importar como um vetor de caracteres. Em ambos os casos, deixe os parênteses vazios.     
+Do pacote **clipr***, você pode utilizar `read_clip_tbl()` para importar como um data frame, ou apenas `read_clip()` para importar como um vetor de caracteres. Em ambos os casos, deixe os parênteses vazios.     
 
 ```{r, eval=F}
 linelist <- clipr::read_clip_tbl()  # importa a área de transferência atual como uma data frame
@@ -542,7 +542,7 @@ linelist_filenames                                              # exibe
 Uma vez que você tenha este vetor de nomes, você pode extrair as datas a partir deles aplicando `str_extract()` de **stringr** utilizando esta expressão regular. Ela extrai quaisquer números no nome do arquivo (incluindo quaisquer outros caracteres no meio, tais como traços ou cortes). Você pode ler mais sobre **stringr*** na página [Strings e caracteres].  
 
 ```{r}
-linelist_dates_raw <- stringr::str_extract(linelist_filenames, "[0-9].*[0-9]") # extrei números e quaisquer caracteres no meio
+linelist_dates_raw <- stringr::str_extract(linelist_filenames, "[0-9].*[0-9]") # extrai números e quaisquer caracteres no meio
 linelist_dates_raw  # print
 ```
 
@@ -561,7 +561,7 @@ index_latest_file <- which.max(linelist_dates_clean)
 index_latest_file
 ```
 
-If we condense all these commands, the complete code could look like below. Note that the `.` in the last line is a placeholder for the piped object at that point in the pipe sequence. At that point the value is simply the number 6. This is placed in double brackets to extract the 6th element of the vector of file names produced by `dir()`.    
+Se nós condensarmos todos esses comandos, o cógico compelto deve parecer com o abaixo. Observe que o `.` na ultima linha é um marcador para o objeto pipe naquele ponta da sequência de pipes. Naquele ponto o valor é implesmente o número 6. Isso é colocado entre cochetes para extrair o sexto elemnto do vetor de nomes do arquivo produzido por `dir()`.    
 
 ```{r}
 # carrega os pacotes
@@ -607,11 +607,11 @@ Abaixo, fornecemos a pasta de interesse para **fs**'s `dir_info()`. Neste caso, 
 Podemos ordenar este *data frame* de arquivos pela coluna `modification_time`, e então manter apenas a linha superior/última linha (arquivo) com a função do R **base*** `head()`. Então podemos extrair o caminho do arquivo deste último arquivo somente com a função **dplyr*** `pull()` na coluna `path`. Finalmente, podemos passar este caminho de arquivo para `import()`. O arquivo importado é salvo como `latest_file`.   
 
 ```{r, eval=F}
-latest_file <- dir_info(here("dados", "examplo", "linelists")) %>%  # collect file info on all files in directory
-  arrange(desc(modification_time)) %>%      # sort by modification time
-  head(1) %>%                               # keep only the top (latest) file
-  pull(path) %>%                            # extract only the file path
-  import()                                  # import the file
+latest_file <- dir_info(here("dados", "examplo", "linelists")) %>%  # coleta dados sobre todos os arquivos no diretório
+  arrange(desc(modification_time)) %>%      # classifica por data da última modificação
+  head(1) %>%                               # mantém apenas o arquivo modificado por último
+  pull(path) %>%                            # extrai apenas o endereço do arquivo
+  import()                                  # importa o arquivo
 
 ```
 
@@ -642,12 +642,12 @@ Aqui estão alguns componentes de uma solicitação *HTTP*:
 
 O "método" de solicitação HTTP é a ação que você deseja realizar. Os dois métodos HTTP mais comuns são `GET` e `POST`, mas outros poderiam incluir `PUT`, `DELETE`, `PATCH`, etc. Ao importar dados para R, é mais provável que você utilize `GET`.  
 
-Após sua solicitação, seu computador receberá uma "resposta" em um formato similar ao que você enviou, incluindo URL, status HTTP (Status 200 é o que você quer!), tipo de arquivo, tamanho e o conteúdo desejado. Você precisará então analisar esta resposta e transformá-la em um quadro de dados funcional dentro de seu ambiente R.
+Após sua solicitação, seu computador receberá uma "resposta" em um formato similar ao que você enviou, incluindo URL, status HTTP (Status 200 é o que você quer!), tipo de arquivo, tamanho e o conteúdo desejado. Você precisará então analisar esta resposta e transformá-la em um data frame funcional dentro de seu ambiente R.
 
 
 ### Pacotes {.unnumbered}  
 
-pacote funciona bem para lidar com solicitações HTTP em R. Ele requer pouco conhecimento prévio de APIs Web e pode ser usado por pessoas menos familiarizadas com a terminologia de desenvolvimento de software. Além disso, se a resposta HTTP for .json, você pode usar **jsonlite** para analisar a resposta.  
+O pacote **httr** funciona bem para lidar com solicitações HTTP em R. Ele requer pouco conhecimento prévio de APIs Web e pode ser usado por pessoas menos familiarizadas com a terminologia de desenvolvimento de software. Além disso, se a resposta HTTP for .json, você pode usar **jsonlite** para analisar a resposta.  
 
 ```{r, eval=F}
 # carrega pacotes
@@ -657,20 +657,20 @@ pacman::p_load(httr, jsonlite, tidyverse)
 
 ### Dados públicos {.unnumbered}  
 
-Below is an example of an HTTP request, borrowed from a tutorial from [the Trafford Data Lab](https://www.trafforddatalab.io/open_data_companion/#A_quick_introduction_to_APIs). This site has several other resources to learn and API exercises.
+Abaixo é um exemplo de uma solicitação de HTTP, originalmente de um tutorial do [the Trafford Data Lab](https://www.trafforddatalab.io/open_data_companion/#A_quick_introduction_to_APIs). Esse site têm vários outros recursos para aprender esse tema e exercícios sobre API.
 
-Scenario: We want to import a list of fast food outlets in the city of Trafford, UK. The data can be accessed from the API of the Food Standards Agency, which provides food hygiene rating data for the United Kingdom.  
+Cenário: nós queremos importar uma lista de restaurantes fast food na cidade de Trafford, Reino Unido. Os dados podem ser acessados pela API da Food Standards Agency, que disponibiliza dados e classificações acerca de hiigiene alimentar no Reino Unido.
 
-Here are the parameters for our request:  
+OAqui estão os parâmetros para a nossa solicitação:
 
 * HTTP verb: GET  
 * API endpoint URL: http://api.ratings.food.gov.uk/Establishments  
-* Selected parameters: name, address, longitude, latitude, businessTypeId, ratingKey, localAuthorityId  
-* Headers: “x-api-version”, 2  
-* Data format(s): JSON, XML  
-* Documentation: http://api.ratings.food.gov.uk/help  
+* Parâmetros selecionados: name, address, longitude, latitude, businessTypeId, ratingKey, localAuthorityId  
+* Cabeçalho: “x-api-version”, 2  
+* Formato(s) dos dados: JSON, XML  
+* Documentação: http://api.ratings.food.gov.uk/help  
 
-The R code would be as follows:  
+O código no R seria como seguinte:
 
 ```{r, eval=F, warning=F, message=F}
 # prepare a solicitação
@@ -764,7 +764,7 @@ Esta seção também foi informada por [este tutorial](https://www.dataquest.io/
 ### Com  o pacote **rio**  {.não numerado}
 Com **rio***, você pode utilizar a função `export()` de uma forma muito semelhante à `import()`. Primeiro dê o nome do objeto R que você deseja salvar (por exemplo, `linelist`) e depois, entre aspas, coloque o caminho do arquivo onde você deseja salvar o arquivo, incluindo o nome do arquivo desejado e a extensão do arquivo. Por exemplo, o nome do objeto R:  
 
-Isto salva o quadro de dados `linelist` como uma pasta de trabalho do Excel para a pasta raiz do diretório de trabalho/R do projeto:  
+Isto salva o data frame `linelist` como uma pasta de trabalho do Excel para a pasta raiz do diretório de trabalho/R do projeto:  
 
 ```{r, eval=F}
 export(linelist, "my_linelist.xlsx") # will save to working directory
@@ -779,7 +779,7 @@ export(linelist, here("data", "clean", "my_linelist.csv"))
 
 ### Para a área de transferência {.unnumbered}
 
-Para exportar um quadro de dados para a "área de transferência" do seu computador (para depois colar em outro software como Excel, Google Spreadsheets, etc.) você pode utilizar `write_clip()` do pacote **clipr***.   
+Para exportar um data frame para a "área de transferência" do seu computador (para depois colar em outro software como Excel, Google Spreadsheets, etc.) você pode utilizar `write_clip()` do pacote **clipr***.   
 
 ```{r, eval=F}
 # exporte a linelist para a área de transferência do seu sistema
@@ -829,11 +829,11 @@ rio::import_list("my_list.Rdata")
 <!-- ======================================================= -->
 ## Salvando gráficos {} 
 
-Instructions on how to save plots, such as those created by `ggplot()`, are discussed in depth in the [ggplot basics] page.  
+Instruções em como salvar gráficos, incluindo os criados pelo pacote `ggplot()`, são discutidos com profundidado na página [ggplot basics].  
 
-In brief, run `ggsave("my_plot_filepath_and_name.png")` after printing your plot. You can either provide a saved plot object to the `plot = ` argument, or only specify the destination file path (with file extension) to save the most recently-displayed plot. You can also control the `width = `, `height = `, `units = `, and `dpi = `.  
+Emr esumo, rode o código `ggsave("my_plot_filepath_and_name.png")` após exibir o seu gráfico. Você pode  prover um objeto de gráfico para o argumento `plot = `, ou especificar o endereço de salvamento (com extensão de arquivo desejada) para salvar o último gráfico exibido. Você pode tamb[ém controlar o tamanho e qualidade por meio dos argumentos: `width = `, `height = `, `units = ` e `dpi = `.  
 
-How to save a network graph, such as a transmission tree, is addressed in the page on [Transmission chains]. 
+Como salvar um gráfico de redes, como uma árvore de transmissão, é discutido na página [Transmission chains]. 
 
 
 <!-- ======================================================= -->

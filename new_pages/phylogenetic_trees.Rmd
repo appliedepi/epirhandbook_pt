@@ -9,7 +9,7 @@
 
 **Árvores filogenéticas** são utilizados para visualizar e descrever a relação e evolução dos organismos com base no sequenciamento de seu código genético.   
 
-Eles podem ser construídos a partir de seqüências genéticas usando métodos baseados na distância (como o método de união de vizinhos) ou métodos baseados em caracteres (como o método de máxima verossimilhança e o método Baysiano de Monte Carlo via Cadeias de Markov ). O sequenciamento de próxima geração (NGS) tornou-se mais acessível e está se tornando mais amplamente utilizado na saúde pública para descrever patógenos causadores de doenças infecciosas. Os dispositivos portáteis de seqüenciamento diminuem o tempo de retorno e mantêm promessas de disponibilizar dados para o apoio à investigação de surtos em tempo real. Os dados da NGS podem ser usados para identificar a origem ou fonte de uma variante de surto e sua propagação, bem como determinar a presença de genes de resistência antimicrobiana. Para visualizar a relação genética entre as amostras, é construída uma árvore filogenética.  
+Elas podem ser construídos a partir de seqüências genéticas usando métodos baseados na distância (como o método de união de vizinhos) ou métodos baseados em caracteres (como o método de máxima verossimilhança e o método Baysiano de Monte Carlo via Cadeias de Markov ). O sequenciamento de próxima geração (NGS) tornou-se mais acessível e está se tornando mais amplamente utilizado na saúde pública para descrever patógenos causadores de doenças infecciosas. Os dispositivos portáteis de seqüenciamento diminuem o tempo de retorno e mantêm promessas de disponibilizar dados para o apoio à investigação de surtos em tempo real. Os dados da NGS podem ser usados para identificar a origem ou fonte de uma variante de surto e sua propagação, bem como determinar a presença de genes de resistência antimicrobiana. Para visualizar a relação genética entre as amostras, é construída uma árvore filogenética.  
 
 Nesta página aprenderemos como utilizar o pacote **ggtree**, que permite a visualização combinada de árvores filogenéticas com dados adicionais de amostras sob a forma de um *data frame*. Isto nos permitirá observar padrões e melhorar a compreensão da dinâmica do surto.
 
@@ -22,12 +22,12 @@ tree <- ape::read.tree(here::here("data", "phylo", "Shigella_tree.txt"))
 sample_data <- read.csv(here::here("data","phylo", "sample_data_Shigella_tree.csv"),sep=",", na.strings=c("NA"), head = TRUE, stringsAsFactors=F)
 
 
-ggtree(tree, layout="circular", branch.length='none') %<+% sample_data + # the %<+% is used to add your dataframe with sample data to the tree
+ggtree(tree, layout="circular", branch.length='none') %<+% sample_data + # o operador %<+% é usado para unir o seu data frame dataframe com o sample data para a árvore
   aes(color=I(Belgium))+ # colore os ramos de acordo com a variável no seu data frame       
   scale_color_manual(name = "Sample Origin", # nome do seu esquema de cores (como aparecerá na leganda)          
                     breaks = c("Yes", "No"), # as difeerenres opções na sua variável
-                   labels = c("NRCSS Belgium", "Other"), #como você que que as diferentes opções nomeadas na sua leganda, permite formatação
-                 values= c("blue", "black"), #a coqye que você que que cada variável tenha          
+                   labels = c("NRCSS Belgium", "Other"), # como você quer que as diferentes opções sejam nomeadas na sua leganda, permite formatação
+                 values= c("blue", "black"), # a cor que você quer que cada variável tenha          
                  na.value = "black") + # coloque os valores faltantes (NA) como preto também
   new_scale_color()+ # permite que se adicione um outro esquema de cores para um outra variável
      geom_tippoint(aes(color=Continent), size=1.5)+ # coloque a ponta de acordo com o continente, você pode mudar a forma adicionando "shape"
@@ -112,16 +112,16 @@ Verificamos a formatação das `tip.labels` no arquivo `tree` observando as prim
 head(tree$tip.label) 
 ```
 
-Também nos certificamos de que a primeira coluna em nosso quadro de dados "Sample_data" seja "Sample_ID". Olhamos os nomes das colunas de nosso quadro de dados utilizando `colnames()` dm R **base**.
+Também nos certificamos de que a primeira coluna em nosso data frame "Sample_data" seja "Sample_ID". Olhamos os nomes das colunas de nosso data frame utilizando `colnames()` dm R **base**.
 
 ```{r}
 colnames(sample_data)   
 ```
 
-Olhamos para os `Sample_IDs` no quadro de dados para ter certeza de que a formatação é a mesma do que na `tip.label` (por exemplo, todas as letras são maiúsculas, sem sublinhados extras `_' entre letras e números, etc.)
+Olhamos para os `Sample_IDs` no data frame para ter certeza de que a formatação é a mesma do que na `tip.label` (por exemplo, todas as letras são maiúsculas, sem sublinhados extras `_' entre letras e números, etc.)
 
 ```{r}
-head(sample_data$Sample_ID) # we again inspect only the first 6 using head()
+head(sample_data$Sample_ID) # novamente inspecionamos os primeiros 6 usando head()
 ```
 
 Também podemos comparar se todas as amostras estão presentes no arquivo "tree" e vice-versa, gerando um vetor lógico de VERDADEIRO ou FALSO onde elas coincidem ou não. Estas não são impressas aqui, por simplicidade.  
@@ -138,7 +138,7 @@ Podemos usar estes vetores para mostrar qualquer identificação de amostra que 
 sample_data$Sample_ID[!tree$tip.label %in% sample_data$Sample_ID]
 ```
 
-Após a inspeção, podemos ver que o formato do `Sample_ID` no quadro de dados corresponde ao formato dos nomes das amostras nas `tip.labels`. Estas não precisam ser classificadas na mesma ordem para serem combinadas.
+Após a inspeção, podemos ver que o formato do `Sample_ID` no data frame corresponde ao formato dos nomes das amostras nas `tip.labels`. Estas não precisam ser classificadas na mesma ordem para serem combinadas.
 
 Estamos prontos para ir!
 
@@ -166,21 +166,21 @@ ggtree(tree, layout="circular", branch.length = "none") # árvore circular simpl
 
 ### Árvore simples com dados de amostras {.unnumbered}  
 
-O operador **%<+%*** é utilizado para conectar o quadro de dados `sample_data` ao arquivo `tree`.
+O operador **%<+%*** é utilizado para conectar o data frame `sample_data` ao arquivo `tree`.
 A anotação mais fácil de sua árvore é a adição dos nomes das amostras nas pontas, assim como a coloração dos pontos da ponta e, se desejado, dos ramos:
 
 Aqui está um exemplo de uma árvore circular: 
 
 ```{r, phylogenetic_trees_adding_sampledata, fig.align='center', warning=F, message=F}
 
-ggtree(tree, layout = "circular", branch.length = 'none') %<+% sample_data + # %<+% adds dataframe with sample data to tree
+ggtree(tree, layout = "circular", branch.length = 'none') %<+% sample_data + # %<+% unifica o datarframe com os dados de amostras à arvore
   aes(color = I(Belgium))+                       # colore os ramos de acordo com a variável no seu dataframe c
   scale_color_manual(
     name = "Sample Origin",                      # nome do seu esquema de cotes (irá aparecer assim na legenda) 
     breaks = c("Yes", "No"),                     # as diferentes opções na sua variável
-    labels = c("NRCSS Belgium", "Other"),        # como você quer que as diferenres opções sejam nomeadas na sua legenda, permite formatação 
+    labels = c("NRCSS Belgium", "Other"),        # como você quer que as diferentes opções sejam nomeadas na sua legenda, permite formatação 
     values = c("blue", "black"),                  # a cor que você atribuir à variável
-    na.value = "black") +                        # colore valores NA values como preto também
+    na.value = "black") +                        # colore valores NA como preto também
   new_scale_color()+                             # permite adicionar um novo esquema de cores para uma nova variável
     geom_tippoint(
       mapping = aes(color = Continent),          # cor das pontas por continente. Você pode mudar o formato adicionando "shape = "
@@ -324,7 +324,7 @@ Você também pode dividir com base em uma amostra específica, especificando qu
 sub_tree2 <- tree_subset(
   tree,
   "S17BD07692",
-  levels_back = 9) #  levels_back define quantos nós quer retroceder da ponra da amostra  
+  levels_back = 9) #  levels_back define quantos nós você quer retroceder da ponta da amostra  
 ```
 
 Vamos dar uma olhada na árvore do subconjunto 2:
@@ -395,7 +395,7 @@ p2 <- rotate(p1, 37) +
 p2   # printa
 ```
 
-no objeto `p1` e mudar o nó 37 para o topo e o nó 39 para o fundo. Armazenamos a árvore invertida em um novo objeto `p3`.
+Ou podemos usar a função `flip()` para rotacuonar o nó 36 do objeto `p1` e mudar o nó 37 para o topo e o nó 39 para o fundo. Armazenamos a árvore invertida em um novo objeto `p3`.
 
 ```{r}
 
