@@ -8,6 +8,7 @@ Welcome!
 
 This page reviews the essentials of R. It is not intended to be a comprehensive tutorial, but it provides the basics and can be useful for refreshing your memory. The section on [Resources for learning](#learning) links to more comprehensive tutorials.
 
+
 Parts of this page have been adapted with permission from the [R4Epis project](https://r4epis.netlify.app/).
 
 See the page on [Transition to R] for tips on switching to R from STATA, SAS, or Excel.
