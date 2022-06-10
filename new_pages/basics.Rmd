@@ -12,7 +12,6 @@ Partes desta página foram adaptadas com a permissão do [projecto R4Epis](https
 
 Ver a página em [Transição para R] para dicas sobre como mudar para R de STATA, SAS, ou Excel.
 
-Traduzido com a versão gratuita do tradutor - www.DeepL.com/Translator
 
 ```{r, echo=F}
 # import the cleaned ebola linelist
