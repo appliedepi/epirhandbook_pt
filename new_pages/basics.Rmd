@@ -1013,141 +1013,140 @@ Todos os objetos armazenados em R possuem uma *classe* que informa ao R como lid
 | list       | Uma lista é como um vetor, mas contém outros objetos que podem ser outras classes diferentes| Uma lista pode conter um único número, um dataframe, um vetor e até outra lista dentro dele!    |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
 
-**You can test the class of an object by providing its name to the function `class()`**. Note: you can reference a specific column within a dataset using the `$` notation to separate the name of the dataset and the name of the column.
+** Você pode testar a classe de um objeto fornecendo seu nome para a função `class()`**. Nota: você pode fazer referência a uma coluna específica dentro de um conjunto de dados utilizando a notação `$` para separar o nome do conjunto de dados e o nome da coluna.
 
 ```{r, echo=TRUE,}
-class(linelist)         # class should be a data frame or tibble
+class(linelist)         # a classe deve ser uma data frame ou tibble
 
-class(linelist$age)     # class should be numeric
+class(linelist$age)     # classe deve ser numérica 
 
-class(linelist$gender)  # class should be character
+class(linelist$gender)  # classe deve ser caractere 
 ```
 
-Sometimes, a column will be converted to a different class automatically by R. Watch out for this! For example, if you have a vector or column of numbers, but a character value is inserted... the entire column will change to class character.
+Às vezes, uma coluna será convertida automaticamente para uma classe diferente pelo R. Cuidado com isso! Por exemplo, se você tiver um vetor ou coluna de números, mas um valor de caractere for inserido... a coluna inteira mudará para caractere de classe.
 
 ```{r}
-num_vector <- c(1,2,3,4,5) # define vector as all numbers
-class(num_vector)          # vector is numeric class
-num_vector[3] <- "three"   # convert the third element to a character
-class(num_vector)          # vector is now character class
+num_vector <- c(1,2,3,4,5) # define um vetor só de números
+class(num_vector)          # este vetor é da classe numérico
+num_vector[3] <- "three"   # converte o terceiro elemento para um caractere
+class(num_vector)          # o vetor agora é classe caractere
 ```
 
-One common example of this is when manipulating a data frame in order to print a table - if you make a total row and try to paste/glue together percents in the same cell as numbers (e.g. `23 (40%)`), the entire numeric column above will convert to character and can no longer be used for mathematical calculations.**Sometimes, you will need to convert objects or columns to another class.**
+Um exemplo comum disso é quando se manipula um data frame para exibir uma tabela - se você fizer uma linha total e tentar colar/colar porcentagens na mesma célula dos números (por exemplo, `23 (40%)`), toda a coluna numérica acima será convertida em caractere e não poderá mais ser utilizada para cálculos matemáticos.** Algumas vezes, será necessário converter objetos ou colunas em outra classe.**
 
 +------------------+---------------------------------------------------------------------------------------+
-| Function         | Action                                                                                |
+| Funço        | Ação                                                                                |
 +==================+=======================================================================================+
-| `as.character()` | Converts to character class                                                           |
+| `as.character()` | Converte para a classe caractere                                                          |
 +------------------+---------------------------------------------------------------------------------------+
-| `as.numeric()`   | Converts to numeric class                                                             |
+| `as.numeric()`   | Converte para a classe numérica                                                           |
 +------------------+---------------------------------------------------------------------------------------+
-| `as.integer()`   | Converts to integer class                                                             |
+| `as.integer()`   |Converte para a classe inteiro                                                             |
 +------------------+---------------------------------------------------------------------------------------+
-| `as.Date()`      | Converts to Date class - Note: see section on [dates](#dates) for details             |
+| `as.Date()`      | Converte para a classe Data - Nota: Veja a seção sobre [datas](#dates) para detalhes      |
 +------------------+---------------------------------------------------------------------------------------+
-| `factor()`       | Converts to factor - Note: re-defining order of value levels requires extra arguments |
+| `factor()`       | Converte para a classe fator - Nota: Redefinir a ordem dos níveis requer argumentos extras |
 +------------------+---------------------------------------------------------------------------------------+
 
-Likewise, there are **base** R functions to check whether an object IS of a specific class, such as `is.numeric()`, `is.character()`, `is.double()`, `is.factor()`, `is.integer()`
+Da mesma forma, existem as funções do R **base** para verificar se um objeto é de uma classe específica, como `is.numeric()`, `is.character()`, `is.double()`, `is.factor()`, `is.integer()`
 
-Here is [more online material on classes and data structures in R](https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures/).
+Aqui está [mais material on-line sobre classes e estruturas de dados em R](https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures/).
 
 <!-- ======================================================= -->
 
-### Columns/Variables (`$`) {.unnumbered}
+### Colunas/Variáveis (`$`) {.unnumbered}
 
-**A column in a data frame is technically a "vector" (see table above)** - a series of values that must all be the same class (either character, numeric, logical, etc).
+**Uma coluna em um quadro de dados é tecnicamente um "vetor" (ver tabela acima)** - uma série de valores que devem ser todos da mesma classe (tanto caracter, numérico, lógico, etc.).
 
-A vector can exist independent of a data frame, for example a vector of column names that you want to include as explanatory variables in a model. To create a "stand alone" vector, use the `c()` function as below:
+Um vetor pode existir independentemente de um data frame, por exemplo, um vetor de nomes de colunas que você deseja incluir como variáveis explicativas em um modelo. Para criar um vetor  independente, utilize a função `c()` como abaixo:
 
 ```{r, warning=F, message=F}
-# define the stand-alone vector of character values
+# define o vetor independente de entradas dp tipo caractere 
 explanatory_vars <- c("gender", "fever", "chills", "cough", "aches", "vomit")
 
-# print the values in this named vector
+# printa os valores desse vetor nomeado  
 explanatory_vars
 ```
 
-**Columns in a data frame are also vectors and can be called, referenced, extracted, or created using the `$` symbol.** The `$` symbol connects the name of the column to the name of its data frame. In this handbook, we try to use the word "column" instead of "variable".
+**As colunas em uma data frame também são vetores e podem ser chamadas, referenciadas, extraídas ou criadas utilizando o símbolo `$`.** O símbolo `$` liga o nome da coluna ao nome de sua moldura de dados. Neste manual, tentamos utilizar a palavra "coluna" em vez de "variável".
 
 ```{r basics_objects_call, eval=F}
-# Retrieve the length of the vector age_years
-length(linelist$age) # (age is a column in the linelist data frame)
+# Obter o comprimento do vetor age
+length(linelist$age) # (age é uma coluna no data frame linelist)
 
 ```
 
-By typing the name of the dataframe followed by `$` you will also see a drop-down menu of all columns in the data frame. You can scroll through them using your arrow key, select one with your Enter key, and avoid spelling mistakes!
+Ao digitar o nome do data frame seguido de `$` você verá também um menu suspenso de todas as colunas  data frame. Você pode percorrê-las usando sua tecla de seta, selecionar uma com sua tecla Enter e evitar erros ortográficos!
 
 ```{r echo=F, out.width = "100%", fig.align = "center"}
 knitr::include_graphics(here::here("images", "Calling_Names.gif"))
 ```
 
-[***ADVANCED TIP:*** Some more complex objects (e.g. a list, or an `epicontacts` object) may have multiple levels which can be accessed through multiple dollar signs. For example `epicontacts$linelist$date_onset`]{style="color: darkgreen;"}
+[***DICA AVANÇADA:*** SAlguns objetos mais complexos (por exemplo, uma lista, ou um objeto 'epicontacts') podem ter múltiplos níveis que podem ser acessados através de múltiplos sinais de dólar. Por exemplo `epicontacts$linelist$date_onset`]{style="color: darkgreen;"}
 
 <!-- ======================================================= -->
 
-### Access/index with brackets (`[ ]`) {.unnumbered}
+### Accessar/indexar com colchetes (`[ ]`) {.unnumbered}
 
-You may need to view parts of objects, also called "indexing", which is often done using the square brackets `[ ]`. Using `$` on a dataframe to access a column is also a type of indexing.
+Talvez seja necessário visualizar partes de objetos, também chamadas de "indexação", o que muitas vezes é feito utilizando os colchetes `[ ]`. Utilizar `$` em um data frame para acessar uma coluna é também um tipo de indexação.
 
 ```{r}
-my_vector <- c("a", "b", "c", "d", "e", "f")  # define the vector
-my_vector[5]                                  # print the 5th element
+my_vector <- c("a", "b", "c", "d", "e", "f")  # define o vetor
+my_vector[5]                                  # printa o quinto elemento
 ```
 
-Square brackets also work to return specific parts of an returned output, such as the output of a `summary()` function:
+Os colchetes também funcionam para retornar partes específicas de uma saída retornada, tais como a saída de uma função summary():
 
 ```{r}
-# All of the summary
+# Todo o resumo
 summary(linelist$age)
 
-# Just the second element of the summary, with name (using only single brackets)
+# Apenas o segundo elemento,sem nome, usando colchetes simples
 summary(linelist$age)[2]
 
-# Just the second element, without name (using double brackets)
-summary(linelist$age)[[2]]
+# Apenas o segundo elemento,sem nome, usando colchetes duplos
 
-# Extract an element by name, without showing the name
+# Extrais um elemento pelo nome, sem mostrar o nome aparecer no console
 summary(linelist$age)[["Median"]]
 
 ```
 
-Brackets also work on data frames to view specific rows and columns. You can do this using the syntax `dataframe[rows, columns]`:
+Os colchetes também trabalham em data frames para visualizar linhas e colunas específicas. Você pode fazer isso utilizando a sintaxe `dataframe[linhas, colunas]`:
 
 ```{r basics_objects_access, eval=F}
-# View a specific row (2) from dataset, with all columns (don't forget the comma!)
+# Visualizar uma linha específica (2) de uma base de dados, com todas as colunas (não esqueça a vírgula!) 
 linelist[2,]
 
-# View all rows, but just one column
+# Vert todas as linhas, mas só uma coluna
 linelist[, "date_onset"]
 
-# View values from row 2 and columns 5 through 10
+# Ver valores da linha 2, e as colunas 5 a 10
 linelist[2, 5:10] 
 
-# View values from row 2 and columns 5 through 10 and 18
+# VVer valores da linha 2, e as colunas 5 a 10 e a 18
 linelist[2, c(5:10, 18)] 
 
-# View rows 2 through 20, and specific columns
+# Ver valores da linha 2 a 20 , e colunas específicas
 linelist[2:20, c("date_onset", "outcome", "age")]
 
-# View rows and columns based on criteria
-# *** Note the dataframe must still be named in the criteria!
+#Ver linhas e colunas baseado em critérios
+# *** Noque que o dataframe precira ainda ser nomeado no critério!  
 linelist[linelist$age > 25 , c("date_onset", "outcome", "age")]
 
-# Use View() to see the outputs in the RStudio Viewer pane (easier to read) 
-# *** Note the capital "V" in View() function
+# Use View() para ver as saídas no Painel Visualizador do RStudio Viewer (mais fácil de ler)
+# *** Note o  "V" maúsculo na função View() 
 View(linelist[2:20, "date_onset"])
 
-# Save as a new object
+# Salve como um novo objeto
 new_table <- linelist[2:20, c("date_onset")] 
 ```
 
-Note that you can also achieve the above row/column indexing on data frames and tibbles using **dplyr** syntax (functions `filter()` for rows, and `select()` for columns). Read more about these core functions in the [Cleaning data and core functions] page.
+Observe que você também pode alcançar a indexação de linha/coluna acima em dataframes e tibbles utilizando **dplyr** sintaxe (funções `filter()` para linhas, e `select()` para colunas). Leia mais sobre estas funções centrais na página [Dados de limpeza e principais funções].
 
-To filter based on "row number", you can use the **dplyr** function `row_number()` with open parentheses as part of a logical filtering statement. Often you will use the `%in%` operator and a range of numbers as part of that logical statement, as shown below. To see the *first* N rows, you can also use the special **dplyr** function `head()`.
+Para filtrar com base no "número da linha", você pode utilizar a função **dplyr** `row_number()` com parênteses abertos como parte de uma instrução de filtragem lógica. Muitas vezes você utilizará o operador `%in%` e uma faixa de números como parte dessa declaração lógica, como mostrado abaixo. Para ver as *primeiras* N fileiras , você também pode utilizar a função especial **dplyr** `head()`.
 
 ```{r, eval=F}
-# View first 100 rows
+# Visualizar as primeiras 100 linhas
 linelist %>% head(100)
 
 # Show row 5 only
@@ -1157,18 +1156,19 @@ linelist %>% filter(row_number() == 5)
 linelist %>% filter(row_number() %in% 2:20) %>% select(date_onset, outcome, age)
 ```
 
-When indexing an object of class **list**, single brackets always return with class list, even if only a single object is returned. Double brackets, however, can be used to access a single element and return a different class than list.\
-Brackets can also be written after one another, as demonstrated below.
+Ao indexar um objeto de classe **lista**, parênteses simples sempre retornam coma classe lista, mesmo que apenas um único objeto seja retornado. Entretanto, colchetes duplos podem ser usados para acessar um único elemento e retornar uma classe diferente da lista.\
+Os parênteses também podem ser escritos um após o outro, como demonstrado abaixo.
 
-This [visual explanation of lists indexing, with pepper shakers](https://r4ds.had.co.nz/vectors.html#lists-of-condiments) is humorous and helpful.
+Esta [explicação visual da indexação de listas, com pimenteiros](https://r4ds.had.co.nz/vectors.html#lists-of-condiments) é bem-humorada e útil.
+
 
 ```{r}
-# define demo list
+# define uma lista demo
 my_list <- list(
-  # First element in the list is a character vector
+  # Primeiro elemento na lista é um vetor do tipo caractere 
   hospitals = c("Central", "Empire", "Santa Anna"),
   
-  # second element in the list is a data frame of addresses
+  # segundo elemento na lista é um dataframe com endereços  
   addresses   = data.frame(
     street = c("145 Medical Way", "1048 Brown Ave", "999 El Camino"),
     city   = c("Andover", "Hamilton", "El Paso")
@@ -1176,41 +1176,41 @@ my_list <- list(
   )
 ```
 
-Here is how the list looks when printed to the console. See how there are two named elements:
+Veja como fica a lista quando exibida no console. Veja como há dois elementos nomeados:
 
--   `hospitals`, a character vector\
--   `addresses`, a data frame of addresses
+- `hospitals`,, um vetor de caracteres.
+- `addresses`, um quadro de dados de endereços
 
 ```{r}
 my_list
 ```
 
-Now we extract, using various methods:
+Agora nos extraímos usando vários métodos:
 
 ```{r}
-my_list[1] # this returns the element in class "list" - the element name is still displayed
+my_list[1] # esse retorna o elemanto da classe "lista" - o nome do elemento ainda é exibido 
 
-my_list[[1]] # this returns only the (unnamed) character vector
+my_list[[1]] # este retorna apenas o vetor de caracter (sem nome) 
 
-my_list[["hospitals"]] # you can also index by name of the list element
+my_list[["hospitals"]] # você também pode indexar pelo nome do elemento da lista  
 
-my_list[[1]][3] # this returns the third element of the "hospitals" character vector
+my_list[[1]][3] # Isto retorna o terceiro elemento do vetor de caracteres "hospitals" 
 
-my_list[[2]][1] # This returns the first column ("street") of the address data frame
+my_list[[2]][1] # Isto retorna a primeira coluna  ("street") da data frame de endereços
 
 ```
 
 <!-- ======================================================= -->
 
-### Remove objects {.unnumbered}
+### Remover objetos {.unnumbered}
 
-You can remove individual objects from your R environment by putting the name in the `rm()` function (no quote marks):
+Você pode remover objetos individuais de seu ambiente R colocando o nome na função `rm()` (sem aspas):
 
 ```{r, eval=F}
 rm(object_name)
 ```
 
-You can remove all objects (clear your workspace) by running:
+Você pode reomver todos os objetos (limpar o ambiente de trabalho) ao executar:
 
 ```{r, eval=F}
 rm(list = ls(all = TRUE))
@@ -1222,65 +1222,65 @@ rm(list = ls(all = TRUE))
 
 <!-- ======================================================= -->
 
-## Piping (`%>%`)
+## Piping (Encadeamento, `%>%`)
 
-**Two general approaches to working with objects are:**
+**Duas abordagens gerais para trabalhar com objetos são:**
 
 1)  **Pipes/tidyverse** - pipes send an object from function to function - emphasis is on the *action*, not the object\
-2)  **Define intermediate objects** - an object is re-defined again and again - emphasis is on the object
+2)  **Definir objetos intermediários** - um objeto é redefinido repetidamente - a ênfase está no objeto.
 
 <!-- ======================================================= -->
 
 ### **Pipes** {.unnumbered}
 
-**Simply explained, the pipe operator (`%>%`) passes an intermediate output from one function to the next.**\
-You can think of it as saying "then". Many functions can be linked together with `%>%`.
+**Explicado de forma simples, o operador do pipe (`%>%`) passa uma saída intermediária de uma função para a próxima.**\
+Você pode pensar nisso como dizendo "então". Muitas funções podem ser ligadas com `%>%`.
 
--   **Piping emphasizes a sequence of actions, not the object the actions are being performed on**\
--   Pipes are best when a sequence of actions must be performed on one object\
--   Pipes come from the package **magrittr**, which is automatically included in packages **dplyr** and **tidyverse**
--   Pipes can make code more clean and easier to read, more intuitive
+- **Piping enfatiza uma seqüência de ações, não o objeto sobre o qual as ações estão sendo realizadas**\
+- Pipes são melhores quando uma seqüência de ações deve ser executada em um único objeto.\
+- Os pipes vêm do pacote **magrittr***, que é automaticamente incluído nos pacotes **dplyr** e **tidyverse**
+- Os pipes podem tornar o código mais limpo e fácil de ler, mais intuitivo
 
-Read more on this approach in the tidyverse [style guide](https://style.tidyverse.org/pipes.html)
+Leia mais sobre esta abordagem no tidyverse [guia de estilo](https://style.tidyverse.org/pipes.html)
 
-Here is a fake example for comparison, using fictional functions to "bake a cake". First, the pipe method:
+Aqui está um exemplo falso para comparação, usando funções fictícias para "assar um bolo". Primeiro, o método do pipe:
 
 ```{r piping_example_pipe, eval=F}
-# A fake example of how to bake a cake using piping syntax
+# Um exemplo falso de como assar um bolo usando a sintaxe do pipe 
 
-cake <- flour %>%       # to define cake, start with flour, and then...
-  add(eggs) %>%   # add eggs
-  add(oil) %>%    # add oil
-  add(water) %>%  # add water
-  mix_together(         # mix together
+cake <- flour %>%       #para definir o bolo, comece com farinha, e então ...
+  add(eggs) %>%   # adicione ovos
+  add(oil) %>%    # adicione óleo
+  add(water) %>%  # adicione água
+  mix_together(         # misture
     utensil = spoon,
     minutes = 2) %>%    
-  bake(degrees = 350,   # bake
+  bake(degrees = 350,   # asse
        system = "fahrenheit",
        minutes = 35) %>%  
-  let_cool()            # let it cool down
+  let_cool()            # deixe esfriar
 ```
 
-Here is another [link](https://cfss.uchicago.edu/notes/pipes/#:~:text=Pipes%20are%20an%20extremely%20useful,code%20and%20combine%20multiple%20operations) describing the utility of pipes.
+Aqui está outro [link](https://cfss.uchicago.edu/notes/pipes/#:~:text=Pipes%20are%20an%20extremamente%20useful,code%20and%20combine%20multiple%20operations) descrevendo a utilidade dos pipes.
 
-Piping is not a **base** function. To use piping, the **magrittr** package must be installed and loaded (this is typically done by loading **tidyverse** or **dplyr** package which include it). You can [read more about piping in the magrittr documentation](https://magrittr.tidyverse.org/).
+O pipe não é uma função do R **base**. Para utilizar o pipe, o pacote **magrittr** deve ser instalado e carregado (isto é normalmente feito carregando os pacotes **tidyverse** ou **dplyr** que o inclui). Você pode [ler mais sobre pipe na documentação magrittr](https://magrittr.tidyverse.org/).
 
-Note that just like other R commands, pipes can be used to just display the result, or to save/re-save an object, depending on whether the assignment operator `<-` is involved. See both below:
+Observe que, assim como outros comandos R, os pipes podem ser utilizados apenas para exibir o resultado, ou para salvar/reservar um objeto, dependendo se o operador de atribuição `<-` está envolvido. Veja os dois abaixo:
 
 ```{r, eval=F}
-# Create or overwrite object, defining as aggregate counts by age category (not printed)
+# Criar ou sobrescrever um objeto, definindo como contagens agregadas por faixa-etária  (não "printado")
 linelist_summary <- linelist %>% 
   count(age_cat)
 ```
 
 ```{r}
-# Print the table of counts in the console, but don't save it
+# Printa a tabela de contagens no console, mas nao a salva  
 linelist %>% 
   count(age_cat)
 ```
 
 **`%<>%`**\
-This is an "assignment pipe" from the **magrittr** package, which *pipes an object forward and also re-defines the object*. It must be the first pipe operator in the chain. It is shorthand. The below two commands are equivalent:
+Este é um "tubo de atribuição" do pacote **magrittr**, que *encadeia um objeto para frente e também re-define o objeto*. Deve ser o primeiro operador pipe da cadeia. É um "atalho". Os dois comandos abaixo são equivalentes:
 
 ```{r, eval=F}
 linelist <- linelist %>%
@@ -1291,25 +1291,25 @@ linelist %<>% filter(age > 50)
 
 <!-- ======================================================= -->
 
-### Define intermediate objects {.unnumbered}
+### Definir objetos intermediários {.unnumbered}
 
-This approach to changing objects/dataframes may be better if:
+Esta abordagem para mudar objetos/dataframes pode ser melhor se:
 
--   You need to manipulate multiple objects\
--   There are intermediate steps that are meaningful and deserve separate object names
+- Você precisa manipular vários objetos...
+- Há etapas intermediárias que são significativas e merecem nomes de objetos separados
 
-**Risks:**
+**Riscos:**
 
--   Creating new objects for each step means creating lots of objects. If you use the wrong one you might not realize it!\
--   Naming all the objects can be confusing\
--   Errors may not be easily detectable
+- Criar novos objetos para cada etapa significa criar muitos objetos. Se você usar o errado, talvez não se dê conta disso!
+- Nomear todos os objetos pode ser confuso...
+- Os erros podem não ser facilmente detectáveis
 
-Either name each intermediate object, or overwrite the original, or combine all the functions together. All come with their own risks.
+Ou nomear cada objeto intermediário, ou sobrescrever o original, ou combinar todas as funções em conjunto. Todos vêm com seus próprios riscos.
 
-Below is the same fake "cake" example as above, but using this style:
+Abaixo está o mesmo exemplo falso de "bolo" como acima, mas usando este estilo:
 
 ```{r piping_example_redefine, eval=F}
-# a fake example of how to bake a cake using this method (defining intermediate objects)
+# um exemplo falso de como assar um bolo usado este método (definindo objetos intermediários) 
 batter_1 <- left_join(flour, eggs)
 batter_2 <- left_join(batter_1, oil)
 batter_3 <- left_join(batter_2, water)
@@ -1321,50 +1321,51 @@ cake <- bake(batter_4, degrees = 350, system = "fahrenheit", minutes = 35)
 cake <- let_cool(cake)
 ```
 
-Combine all functions together - this is difficult to read:
+Combine todas as funções em uma só - isso dificulta a leitura):
 
 ```{r eval=F}
-# an example of combining/nesting mutliple functions together - difficult to read
+# um exemplo de combinação/aninhamento de múltiplas funções  juntas - difícil de ler
 cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degrees = 350, system = "fahrenheit", minutes = 35))
 ```
 
 <!-- ======================================================= -->
 
-## Key operators and functions {#operators}
+## Principais operadores e funções {#operadores}
 
-This section details operators in R, such as:
+Esta seção detalha os operadores em R, como por exemplo:
 
--   Definitional operators\
--   Relational operators (less than, equal too..)\
--   Logical operators (and, or...)\
--   Handling missing values\
--   Mathematical operators and functions (+/-, \>, sum(), median(), ...)\
--   The `%in%` operator
+- Operadores de definição\
+- Operadores relacionais (menos do que, igual a...)
+- Operadores lógicos (e, ou...){\i1}
+- Lidando com valores faltantes...
+- Operadores matemáticos e funções (+/-, \>, sum(), median(), ...)\
+- O operador `%in%`
+
 
 <!-- ======================================================= -->
 
-### Assignment operators {.unnumbered}
+### Operador de atribuição  {.unnumbered}
 
 **`<-`**
 
-The basic assignment operator in R is `<-`. Such that `object_name <- value`.\
-This assignment operator can also be written as `=`. We advise use of `<-` for general R use.\
-We also advise surrounding such operators with spaces, for readability.
+O operador de atribuição básica em R é `<-'. De tal forma que `nome_objeto <- valor`.\
+Este operador de atribuição também pode ser escrito como `=``. Aconselhamos o uso de `<-` para uso geral em R. \\
+Aconselhamos também o uso de `<-` para uso geral em R. Aconselhamos também o uso de espaços em torno de tais operadores, para facilitar a leitura.
 
 **`<<-`**
 
-If [Writing functions], or using R in an interactive way with sourced scripts, then you may need to use this assignment operator `<<-` (from **base** R). This operator is used to define an object in a higher 'parent' R Environment. See this [online reference](https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html).
+Se você estiver [Escrevendo funções], ou utilizando R de forma interativa com scripts de origem, então você pode precisar utilizar este operador de atribuição `<<-` (do R **base**). Este operador é utilizado para definir um objeto em um ambiente R 'pai' superior. Veja isto [referência on-line](https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html).
 
 **`%<>%`**
 
-This is an "assignment pipe" from the **magrittr** package, which pipes an object forward and *also re-defines the object*. It must be the first pipe operator in the chain. It is shorthand, as shown below in two equivalent examples:
+Este é um "pipe de atribuição" do pacote **magrittr**, que canaliza um objeto para frente e *também re-define o objeto*. Deve ser o primeiro operador pipe da cadeia. É a abreviação, como mostrado abaixo em dois exemplos equivalentes:
 
 ```{r, eval=F}
 linelist <- linelist %>% 
   mutate(age_months = age_years * 12)
 ```
 
-The above is equivalent to the below:
+O código acima é equivalente ao abaixo: 
 
 ```{r, eval=F}
 linelist %<>% mutate(age_months = age_years * 12)
@@ -1372,47 +1373,47 @@ linelist %<>% mutate(age_months = age_years * 12)
 
 **`%<+%`**
 
-This is used to add data to phylogenetic trees with the **ggtree** package. See the page on [Phylogenetic trees] or this online [resource book](https://yulab-smu.top/treedata-book/).
+Isso é usado para adicionar dados a árvores filogenéticas com o pacote **ggtree**. Veja a página em [Árvores Filogenéticas] ou este [livro de recursos] online (https://yulab-smu.top/treedata-book/).
 
 <!-- ======================================================= -->
 
-### Relational and logical operators {.unnumbered}
+### Operadores relacionais e lógicos  {.unnumbered}
 
-Relational operators compare values and are often used when defining new variables and subsets of datasets. Here are the common relational operators in R:
+Os operadores relacionais comparam valores e são freqüentemente utilizados na definição de novas variáveis e subconjuntos de conjuntos de dados. Aqui estão os operadores relacionais comuns em R:
 
 +--------------------------+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Meaning                  | Operator   | Example      | Example Result                                                                                                                                         |
+| Significado                 | Operador   | Examplo      | Resultado do exemplo                                                                                                                                         |
 +==========================+============+==============+========================================================================================================================================================+
-| Equal to                 | `==`       | `"A" == "a"` | `FALSE` (because R is case sensitive) *Note that == (double equals) is different from = (single equals), which acts like the assignment operator `<-`* |
+| Igual a                | `==`       | `"A" == "a"` | `FALSE` (porque o R é sensível a letras maiúscula/minúsculas) *Note que == (iguais duplos) é diferente de = (símbolo de igual normal), que age como o operador de atribuição `<-`* |
 +--------------------------+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Not equal to             | `!=`       | `2 != 0`     | `TRUE`                                                                                                                                                 |
+| Não igual (diferente) `!=`       | `2 != 0`     | `TRUE`                                                                                                                                                 |
 +--------------------------+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Greater than             | `>`        | `4 > 2`      | `TRUE`                                                                                                                                                 |
+| Maior que            | `>`        | `4 > 2`      | `TRUE`                                                                                                                                                 |
 +--------------------------+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Less than                | `<`        | `4 < 2`      | `FALSE`                                                                                                                                                |
+| Menor que              | `<`        | `4 < 2`      | `FALSE`                                                                                                                                                |
 +--------------------------+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Greater than or equal to | `>=`       | `6 >= 4`     | `TRUE`                                                                                                                                                 |
+| Maior ou igual a  | `>=`       | `6 >= 4`     | `TRUE`                                                                                                                                                 |
 +--------------------------+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Less than or equal to    | `<=`       | `6 <= 4`     | `FALSE`                                                                                                                                                |
+| Menor ou igual a   | `<=`       | `6 <= 4`     | `FALSE`                                                                                                                                                |
 +--------------------------+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Value is missing         | `is.na()`  | `is.na(7)`   | `FALSE` (see page on [Missing data])                                                                                                                   |
+| Valor está faltante       | `is.na()`  | `is.na(7)`   | `FALSE` (veja página em [Dados faltantes])                                                                                                                   |
 +--------------------------+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Value is not missing     | `!is.na()` | `!is.na(7)`  | `TRUE`                                                                                                                                                 |
+| Valor não faltante     | `!is.na()` | `!is.na(7)`  | `TRUE`                                                                                                                                                 |
 +--------------------------+------------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Logical operators, such as AND and OR, are often used to connect relational operators and create more complicated criteria. Complex statements might require parentheses ( ) for grouping and order of application.
+Operadores lógicos, como AND e OR, geralmente são usados para conectar operadores relacionais e criar critérios mais complicados. Instruções complexas podem exigir parênteses ( ) para agrupamento e ordem de aplicação.
 
 +-------------+-----------------------------------------------------------------------+
-| Meaning     | Operator                                                              |
+| Significado    | Operador                                                              |
 +=============+=======================================================================+
 | AND         | `&`                                                                   |
 +-------------+-----------------------------------------------------------------------+
-| OR          | `|` (vertical bar)                                                    |
+| OR          | `|` (barra vertical)                                                    |
 +-------------+-----------------------------------------------------------------------+
-| Parentheses | `( )` Used to group criteria together and clarify order of operations |
+| Parentheses | `( )` Usado para agrupar critérios e clarificar a ordem das operações  |
 +-------------+-----------------------------------------------------------------------+
 
-For example, below, we have a linelist with two variables we want to use to create our case definition, `hep_e_rdt`, a test result and `other_cases_in_hh`, which will tell us if there are other cases in the household. The command below uses the function `case_when()` to create the new variable `case_def` such that:
+Por exemplo, abaixo, temos uma linelist com duas variáveis que queremos utilizar para criar nossa definição de caso, `hep_e_rdt`, um resultado de teste e `other_cases_in_hh`, que nos dirá se há outros casos na casa. O comando abaixo utiliza a função `case_when()` para criar a nova variável `case_def` de tal forma que:
 
 ```{r eval=FALSE}
 linelist_cleaned <- linelist %>%
@@ -1425,11 +1426,11 @@ linelist_cleaned <- linelist %>%
 ```
 
 +------------------------------------------------------------------------------------------------+--------------------------------------------+
-| Criteria in example above                                                                      | Resulting value in new variable "case_def" |
+| Critérios no exemplo acima                                                                      | Valor resultando na nova variável  "case_def" |
 +================================================================================================+============================================+
-| If the value for variables `rdt_result` and `other_cases_in_home` are missing                  | `NA` (missing)                             |
+| Se o valor das variáveis `rdt_result` e `other_cases_in_home` estiverem faltando                  | `NA` (faltante)                             |
 +------------------------------------------------------------------------------------------------+--------------------------------------------+
-| If the value in `rdt_result` is "Positive"                                                     | "Confirmed"                                |
+| Se o valor em `rdt_result` for "Positive"                                                     | "Confirmed"                                |
 +------------------------------------------------------------------------------------------------+--------------------------------------------+
 | If the value in `rdt_result` is NOT "Positive" AND the value in `other_cases_in_home` is "Yes" | "Probable"                                 |
 +------------------------------------------------------------------------------------------------+--------------------------------------------+
@@ -1440,147 +1441,148 @@ linelist_cleaned <- linelist %>%
 
 <!-- ======================================================= -->
 
-### Missing values {.unnumbered}
+###Valores faltantes {.unnumbered}
 
-In R, missing values are represented by the special value `NA` (a "reserved" value) (capital letters N and A - not in quotation marks). If you import data that records missing data in another way (e.g. 99, "Missing", or .), you may want to re-code those values to `NA`. How to do this is addressed in the [Import and export] page.
+Em R, os valores ausentes são representados pelo valor especial `NA` (um valor "reservado") (letras maiúsculas N e A - não entre aspas). Se você importar dados que registram dados ausentes de outra maneira (por exemplo, 99, "Missing" ou .), convém recodificar esses valores para `NA`. Como fazer isso é abordado na página [Importação e exportação].
 
-**To test whether a value is `NA`, use the special function `is.na()`**, which returns `TRUE` or `FALSE`.
+**Para testar se um valor é `NA`, use a função especial `is.na()`**, que retorna `TRUE` ou `FALSE`.
 
 ```{r basics_operators_missing}
-rdt_result <- c("Positive", "Suspected", "Positive", NA)   # two positive cases, one suspected, and one unknown
-is.na(rdt_result)  # Tests whether the value of rdt_result is NA
+rdt_result <- c("Positive", "Suspected", "Positive", NA)   # dois casos positivos, um suspeito e um desconhecido 
+is.na(rdt_result)  # Testa se o valor de  rdt_result é NA
 ```
 
-Read more about missing, infinite, `NULL`, and impossible values in the page on [Missing data]. Learn how to convert missing values when importing data in the page on [Import and export].
+
+Leia mais sobre valores ausentes, infinitos, `NULL` e impossíveis na página em [Valores faltantes]. Saiba como converter valores ausentes ao importar dados na página em [Importação e exportação].
 
 <!-- ======================================================= -->
 
-### Mathematics and statistics {.unnumbered}
+### Matemática and estatística {.unnumbered}
 
-All the operators and functions in this page are automatically available using **base** R.
+Todos os operadores e funções nesta página estão disponíveis automaticamente usando o pacote R **base**.
 
-#### Mathematical operators {.unnumbered}
+#### Operadores mmatemáticos {.unnumbered}
 
-These are often used to perform addition, division, to create new columns, etc. Below are common mathematical operators in R. Whether you put spaces around the operators is not important.
+Estes são frequentemente usados para realizar adição, divisão, para criar novas colunas, etc. Abaixo estão os operadores matemáticos comuns em R. Colocar ou não os espaços ao redor dos operadores não é importante.
 
-| Purpose             | Example in R |
+| Propósit            | Exemplo no R |
 |---------------------|--------------|
-| addition            | 2 + 3        |
-| subtraction         | 2 - 3        |
-| multiplication      | 2 \* 3       |
-| division            | 30 / 5       |
-| exponent            | 2\^3         |
-| order of operations | ( )          |
+| adição              | 2 + 3        |
+| subtração           | 2 - 3        |
+| multiplicação       | 2 \* 3       |
+| divisão  b          | 30 / 5       |
+| potência            | 2\^3         |
+| ordem das operações | ( )          |
 
-#### Mathematical functions {.unnumbered}
+#### Funções matemáticas {.unnumbered}
 
-| Purpose            | Function                              |
-|--------------------|---------------------------------------|
-| rounding           | round(x, digits = n)                  |
-| rounding           | janitor::round_half_up(x, digits = n) |
-| ceiling (round up) | ceiling(x)                            |
-| floor (round down) | floor(x)                              |
-| absolute value     | abs(x)                                |
-| square root        | sqrt(x)                               |
-| exponent           | exponent(x)                           |
-| natural logarithm  | log(x)                                |
-| log base 10        | log10(x)                              |
-| log base 2         | log2(x)                               |
+| Propósit                    | Função                                |
+|-----------------------------|---------------------------------------|
+| arredondamento              | round(x, digits = n)                  |
+| arredondamento              | janitor::round_half_up(x, digits = n) |
+| teto (arredondar para cima) | ceiling(x)                            |
+| chão (arredondar para baixo)| floor(x)                              |
+| valor obsoluto (módulo)     | abs(x)                                |
+| raiz quadrada               | sqrt(x)                               |
+| exponencial                 | exponent(x)                           |
+| logaritmo natural/neperiano | log(x)                                |
+| logaritmo na base 10        | log10(x)                              |
+| logaritmo na base 2         | log2(x)                               |
 
-Note: for `round()` the `digits =` specifies the number of decimal placed. Use `signif()` to round to a number of significant figures.
+Nota: para `round()` o `digits =` especifica o número de casas decimais colocadas. Use `signif()` para arredondar para um número de algarismos significativos.
 
-#### Scientific notation {.unnumbered}
+#### Notação científica {.unnumbered}
 
-The likelihood of scientific notation being used depends on the value of the `scipen` option.
+A probabilidade de notação científica ser usada depende do valor da opção `scipen`.
 
-From the documentation of `?options`: scipen is a penalty to be applied when deciding to print numeric values in fixed or exponential notation. Positive values bias towards fixed and negative towards scientific notation: fixed notation will be preferred unless it is more than 'scipen' digits wider.
+Da documentação de `?options`: scipen é uma penalidade a ser aplicada ao decidir imprimir valores numéricos em notação fixa ou exponencial. Os valores positivos tendem para a notação fixa e os negativos para a notação científica: a notação fixa será preferida, a menos que seja mais do que os dígitos 'scipen' mais largos.
 
-If it is set to a low number (e.g. 0) it will be "turned on" always. To "turn off" scientific notation in your R session, set it to a very high number, for example:
+Se estiver definido para um número baixo (por exemplo, 0), ele estará sempre "ligado". Para "desativar" a notação científica em sua sessão R, defina-a como um número muito alto, por exemplo:
 
 ```{r, eval=F}
-# turn off scientific notation
+# desligar a notação científica
 options(scipen=999)
 ```
 
-#### Rounding {.unnumbered}
+#### Arredondando {.unnumbered}
 
-[***DANGER:*** `round()` uses "banker's rounding" which rounds up from a .5 only if the upper number is even. Use `round_half_up()` from **janitor** to consistently round halves up to the nearest whole number. See [this explanation](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes)]{style="color: red;"}
+[***PERIGO:*** `round()` usa "arredondamento do banqueiro" que arredonda de .5 somente se o número superior for par. Use `round_half_up()` do **zelador** para arredondar consistentemente metades para o número inteiro mais próximo. Veja [esta explicação](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes)]{style="color: red;"}
 
 ```{r}
-# use the appropriate rounding function for your work
+# use a função de arredondamento adequanda para o seu trabalho 
 round(c(2.5, 3.5))
 
 janitor::round_half_up(c(2.5, 3.5))
 ```
 
-#### Statistical functions {.unnumbered}
+#### Funções estatísticas {.unnumbered}
 
-[***CAUTION:*** The functions below will by default include missing values in calculations. Missing values will result in an output of `NA`, unless the argument `na.rm = TRUE` is specified. This can be written shorthand as `na.rm = T`.]{style="color: orange;"}
+[***CUIDADO:*** As funções abaixo incluirão, por padrão, valores ausentes nos cálculos. Valores ausentes resultarão em uma saída de `NA`, a menos que o argumento `na.rm = TRUE` seja especificado. Isso pode ser escrito de forma abreviada como `na.rm = T`.]{style="color: orange;"}
 
-| Objective               | Function           |
-|-------------------------|--------------------|
-| mean (average)          | mean(x, na.rm=T)   |
-| median                  | median(x, na.rm=T) |
-| standard deviation      | sd(x, na.rm=T)     |
-| quantiles\*             | quantile(x, probs) |
-| sum                     | sum(x, na.rm=T)    |
-| minimum value           | min(x, na.rm=T)    |
-| maximum value           | max(x, na.rm=T)    |
-| range of numeric values | range(x, na.rm=T)  |
-| summary\*\*             | summary(x)         |
+| ObjetiVO                   | Função             |
+|----------------------------|--------------------|
+| média aritmética           | mean(x, na.rm=T)   |
+| mediana                    | median(x, na.rm=T) |
+| desvio padrão              | sd(x, na.rm=T)     |
+| quantis\*                  | quantile(x, probs) |
+| soma                       | sum(x, na.rm=T)    |
+| valor mínimo               | min(x, na.rm=T)    |
+| valor máximo               | max(x, na.rm=T)    |
+| range de valores numéricos | range(x, na.rm=T)  |
+| resumo\*\*                 | summary(x)         |
 
-Notes:
+Notas:
 
--   `*quantile()`: `x` is the numeric vector to examine, and `probs =` is a numeric vector with probabilities within 0 and 1.0, e.g `c(0.5, 0.8, 0.85)`
--   `**summary()`: gives a summary on a numeric vector including mean, median, and common percentiles
+- `*quantile()`: `x` é o vetor numérico a ser examinado e `probs =` é um vetor numérico com probabilidades entre 0 e 1,0, por exemplo, `c(0.5 , 0.8 , 0,.85)`
+- `**summary()`: fornece um resumo em um vetor numérico incluindo média, mediana e percentis comuns
 
-[***DANGER:*** If providing a vector of numbers to one of the above functions, be sure to wrap the numbers within `c()` .]{style="color: red;"}
+[***PERIGO:*** Ao fornecer um vetor de números para uma das funções acima, certifique-se de concatenar os números dentro de `c()` .]{style="color: red;"}
 
 ```{r}
-# If supplying raw numbers to a function, wrap them in c()
-mean(1, 6, 12, 10, 5, 0)    # !!! INCORRECT !!!  
+# Se fornecer números brutos para uma função, concatene-os antes com c()
+mean(1, 6, 12, 10, 5, 0)    # !!! INCORRETO !!!  
 
-mean(c(1, 6, 12, 10, 5, 0)) # CORRECT
+mean(c(1, 6, 12, 10, 5, 0)) # CORRETO
 ```
 
-#### Other useful functions {.unnumbered}
+#### Outras funções úteis {.unnumbered}
 
-+----------------------------+-------------------+-------------------------------------------------+
-| Objective                  | Function          | Example                                         |
++--------------------------------+-------------------+-------------------------------------------------+
+| Objetivo                       | Função          | Examplo                                        |
 +============================+===================+=================================================+
-| create a sequence          | seq(from, to, by) | `seq(1, 10, 2)`                                 |
+| criar uma sequência de números | seq(from, to, by) | `seq(1, 10, 2)`                                 |
 +----------------------------+-------------------+-------------------------------------------------+
-| repeat x, n times          | rep(x, ntimes)    | `rep(1:3, 2)` or `rep(c("a", "b", "c"), 3)`     |
+| repetir x, n vezes          | rep(x, ntimes)    | `rep(1:3, 2)` or `rep(c("a", "b", "c"), 3)`     |
 +----------------------------+-------------------+-------------------------------------------------+
-| subdivide a numeric vector | cut(x, n)         | `cut(linelist$age, 5)`                          |
+| subdividir um vetor numérico | cut(x, n)         | `cut(linelist$age, 5)`                          |
 +----------------------------+-------------------+-------------------------------------------------+
-| take a random sample       | sample(x, size)   | `sample(linelist$id, size = 5, replace = TRUE)` |
+| pegar uma amostra aleatória       | sample(x, size)   | `sample(linelist$id, size = 5, replace = TRUE)` |
 +----------------------------+-------------------+-------------------------------------------------+
 
 <!-- ======================================================= -->
 
 ### `%in%` {.unnumbered}
 
-A very useful operator for matching values, and for quickly assessing if a value is within a vector or dataframe.
+Um operador muito útil para combinar valores e avaliar rapidamente se um valor está dentro de um vetor ou dataframe.
 
 ```{r}
-my_vector <- c("a", "b", "c", "d")
+meu_vetor <- c("a", "b", "c", "d")
 ```
 
 ```{r}
-"a" %in% my_vector
-"h" %in% my_vector
+"a" %in% meu_vetor
+"h" %in% meu_vetor
 ```
 
-To ask if a value is **not** `%in%` a vector, put an exclamation mark (!) **in front** of the logic statement:
+Para perguntar se um valor **não** está em (`%in%`) é um vetor, coloque um ponto de exclamação (!) **na frente** da instrução lógica:
 
 ```{r}
-# to negate, put an exclamation in front
-!"a" %in% my_vector
-!"h" %in% my_vector
+# para negar, coloque a exclamação na frente 
+!"a" %in% meu_vetor
+!"h" %in% meu_vetor
 ```
 
-`%in%` is very useful when using the **dplyr** function `case_when()`. You can define a vector previously, and then reference it later. For example:
+`%in%` é muito útil ao usar a função **dplyr** `case_when()`. Você pode definir um vetor anteriormente e depois referenciá-lo. Por exemplo:
 
 ```{r eval=F}
 affirmative <- c("1", "Yes", "YES", "yes", "y", "Y", "oui", "Oui", "Si")
@@ -1599,9 +1601,9 @@ You can convert a character vector to a named regular expression with this comma
 affirmative <- c("1", "Yes", "YES", "yes", "y", "Y", "oui", "Oui", "Si")
 affirmative
 
-# condense to 
-affirmative_str_search <- paste0(affirmative, collapse = "|")  # option with base R
-affirmative_str_search <- str_c(affirmative, collapse = "|")   # option with stringr package
+# condensar
+affirmative_str_search <- paste0(affirmative, collapse = "|")  # opção com R base
+affirmative_str_search <- str_c(affirmative, collapse = "|")   # opção co pacote stringr
 
 affirmative_str_search
 ```
@@ -1612,47 +1614,47 @@ affirmative_str_search
 
 <!-- ======================================================= -->
 
-## Errors & warnings
+## Erros & avisos
 
-This section explains:
+Esta seção explica:
 
--   The difference between errors and warnings\
--   General syntax tips for writing R code\
--   Code assists
+- A diferença entre erros e avisos\
+- Dicas gerais de sintaxe para escrever código R\
+- Ajudas para o código.
 
-Common errors and warnings and troubleshooting tips can be found in the page on [Errors and help].
-
-<!-- ======================================================= -->
-
-### Error versus Warning {.unnumbered}
-
-When a command is run, the R Console may show you warning or error messages in red text.
-
--   A **warning** means that R has completed your command, but had to take additional steps or produced unusual output that you should be aware of.
-
--   An **error** means that R was not able to complete your command.
-
-Look for clues:
-
--   The error/warning message will often include a line number for the problem.
-
--   If an object "is unknown" or "not found", perhaps you spelled it incorrectly, forgot to call a package with library(), or forgot to re-run your script after making changes.
-
-If all else fails, copy the error message into Google along with some key terms - chances are that someone else has worked through this already!
+Erros e avisos comuns e dicas de solução de problemas podem ser encontrados na página em [Erros e ajuda].
 
 <!-- ======================================================= -->
 
-### General syntax tips {.unnumbered}
+### Erros versus Avisos {.unnumbered}
 
-A few things to remember when writing commands in R, to avoid errors and warnings:
+Quando um comando é executado, o Console R pode mostrar mensagens de aviso ou erro em texto vermelho.
 
--   Always close parentheses - tip: count the number of opening "(" and closing parentheses ")" for each code chunk
--   Avoid spaces in column and object names. Use underscore ( \_ ) or periods ( . ) instead
--   Keep track of and remember to separate a function's arguments with commas
--   R is case-sensitive, meaning `Variable_A` is *different* from `variable_A`
+- Um **aviso** significa que o R concluiu seu comando, mas teve que executar etapas adicionais ou produziu uma saída incomum da qual você deve estar ciente.
+
+- Um **erro** significa que o R não conseguiu completar seu comando.
+
+Procurar pistas:
+
+- A mensagem de erro/aviso geralmente inclui um número de linha para o problema.
+
+- Se um objeto "é desconhecido" ou "não encontrado", talvez você o tenha escrito incorretamente, esquecido de chamar um pacote com library() ou esquecido de executar novamente seu script após fazer alterações.
+
+Se tudo mais falhar, copie a mensagem de erro no Google junto com alguns termos-chave - é provável que alguém já tenha trabalhado com isso!
 
 <!-- ======================================================= -->
 
-### Code assists {.unnumbered}
+### Dicas gerais de sintaxe {.unnumbered}
 
-Any script (RMarkdown or otherwise) will give clues when you have made a mistake. For example, if you forgot to write a comma where it is needed, or to close a parentheses, RStudio will raise a flag on that line, on the right side of the script, to warn you.
+Algumas coisas para lembrar ao escrever comandos em R, para evitar erros e avisos:
+
+- Sempre feche os parênteses - dica: conte o número de abertura "(" e fechamento de parênteses ")" para cada pedaço de código
+- Evite espaços em nomes de colunas e objetos. Use sublinhado ( \_ ) ou pontos ( . )
+- Acompanhe e lembre-se de separar os argumentos de uma função com vírgulas
+- R diferencia maiúsculas de minúsculas, o que significa que `Variable_A` é *diferente* de `variable_A`
+
+<!-- ======================================================= -->
+
+### Ajudas de código {.unnumbered}
+
+Qualquer script (RMarkdown ou outro) dará pistas quando você cometer um erro. Por exemplo, se você esqueceu de escrever uma vírgula onde for necessário, ou de fechar um parêntese, o RStudio irá levantar uma bandeira nessa linha, no lado direito do script, para avisá-lo.
