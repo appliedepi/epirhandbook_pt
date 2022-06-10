@@ -15,7 +15,8 @@ A sintaxe é significativamente diferente dos gráficos gerados pelo R **base***
 Nesta página cobriremos os fundamentos da criação de gráficos com o pacote **ggplot2**. Veja a página [Dicas para o ggplot] para sugestões e técnicas avançadas para tornar seus gráficos realmente bonitos.  
 
 
-Há vários tutoriais extensos **ggplot2**  disponíveis na seção de recursos. Você também pode baixar esta [ *cheat shhet* (colinha) de visualização de dados ](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf) do site do RStudio. Se você quiser inspiração para formas de visualizar criativamente seus dados, sugerimos que você revise sites como o [galeria de gráficos R](https://www.r-graph-gallery.com/) e [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
+Há vários tutoriais completos de **ggplot2**  disponíveis na seção de recursos. Você também pode baixar esta [ *cheat sheet* (colinha) de visualização de dados ](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf) do site do RStudio. Se você quiser inspiração para formas de visualizar criativamente seus dados, sugerimos que você revise sites como o [galeria de gráficos R](https://www.r-graph-gallery.com/) e [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
+
 
 
 
@@ -28,7 +29,8 @@ Este trecho de código mostra o carregamento dos pacotes necessários para as an
 
 ```{r}
 pacman::p_load(
-  tidyverse,      # inclui ggplot2 e outras ferramentas de manimupar dados
+  tidyverse,      # inclui ggplot2 e outras ferramentas de manipular dados
+
   rio,            # importar/exportar
   here,           # localizador de arquivos
   stringr         # trabalhando com caracteres
