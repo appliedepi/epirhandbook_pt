@@ -12,7 +12,6 @@ Partes desta página foram adaptadas com a permissão do [projecto R4Epis](https
 
 Ver a página em [Transição para R] para dicas sobre como mudar para R de STATA, SAS, ou Excel.
 
-Traduzido com a versão gratuita do tradutor - www.DeepL.com/Translator
 
 ```{r, echo=F}
 # import the cleaned ebola linelist
@@ -38,7 +37,6 @@ A prática de conduzir a análise e gestão dos dados poor meio de uma linguagem
 
 A comunidade de usuários de R é enorme e colaborativa. Novos pacotes e ferramentas para resolver problemas da vida real são desenvolvidos diariamente, e recebe críticas e contribuições da comunidade de utilizadores. Como um exemplo, [R-Ladies](https://rladies.org/) é uma organização mundial cuja missão é promover a diversidade de género na comunidade R, e é uma das maiores organizações de utilizadores de R. É provável que tenha uma divisão perto de você!
 
-Traduzido com a versão gratuita do tradutor - www.DeepL.com/Translator
 
 ## Termos chave
 
