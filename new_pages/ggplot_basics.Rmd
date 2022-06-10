@@ -68,8 +68,10 @@ Ao preparar os dados para traçar o gráfico, é melhor fazer com que os dados a
 Algumas maneiras simples de prepararmos nossos dados para torná-los melhores para a visualização podem incluir tornar o conteúdo dos dados melhor para exibição - o que não necessariamente equivale a melhor para a manipulação de dados. Por exemplo:  
 
 * Substituir os valores `NA` em uma coluna do tipo caracteres pela *string* "Desconhecido".  
-* Considere converter a coluna para classe *fator* para que seus valores tenham níveis em uma ordem específica. 
-* Limpar algumas colunas para que elas tenham " valores amigáveis". Nomes que possuam sublinhado, por exemplo, sejam alterados para texto normal ou padrão título (ver [Caracteres e strings])  
+* Considerar converter a coluna para classe *fator* para que seus valores tenham níveis em uma ordem específica. 
+
+* Limpar algumas colunas para que os valores adequados à manipulações (_"data friendly"_), tais como valores que possuam sublinhado (_"underline"_), por exemplo, sejam alterados para texto normal ou padrão título (ver [Caracteres e strings])  
+
 
 
 Aqui estão alguns exemplos disso em ação.
@@ -106,7 +108,8 @@ symptoms_data <- linelist %>%
 Veja como são as primeiras 50 linhas desta mini-linelist  - veja como elas são formatadas de forma "larga" com cada sintoma como uma coluna:
 
 ```{r, message=FALSE, echo=F}
-# display the linelist data as a table
+# mostra os dados da linelist como uma tabela
+
 DT::datatable(head(symptoms_data, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
@@ -118,14 +121,16 @@ symptoms_data_long <- symptoms_data %>%    # comece com a "mini" linelist chamad
   pivot_longer(
     cols = -case_id,                       # pivote todas as colunas exceto case_id 
     names_to = "nome_sintoma",             # dê o nome para a nova coluna que contém os sintomas 
-    values_to = "sintoma_esta_presente") %>%  # dê o nompara a coluna que diz se o sintoma está presente 
+    values_to = "sintoma_esta_presente") %>%  # dê o nome para a coluna que diz se o sintoma está presente 
+
   
   mutate(sintoma_esta_presente = replace_na(sintoma_esta_presente, "desconhecido")) # converte NA para "desconhecido"
 
 ```
 
 
-Aqui estão as primeiras 50 linhas. Observe que o caso tem 5 fileiras - uma para cada sintoma possível. As novas colunas `nome_sintoma` e `sintoma_esta_presente` são o resultado do pivoteamento Note que este formato pode não ser muito útil para outras operações, mas é útil para a criação do gráfico.
+Aqui estão as primeiras 50 linhas. Observe que o caso tem 5 fileiras - uma para cada sintoma possível. As novas colunas `nome_sintoma` e `sintoma_esta_presente` são o resultado do pivoteamento. Note que este formato pode não ser muito útil para outras operações, mas é útil para a criação do gráfico.
+
 
 ```{r, message=FALSE, echo=F}
 DT::datatable(head(symptoms_data_long, 50), rownames = FALSE, filter="top", options = list(pageLength = 10, scrollX=T), class = 'white-space: nowrap' )
@@ -139,7 +144,8 @@ DT::datatable(head(symptoms_data_long, 50), rownames = FALSE, filter="top", opti
 <!-- ======================================================= -->
 ## Básico do ggplot {}
 
-**"gramática dos gráficos" - ggplot2**  
+**"Gramática dos gráficos" - ggplot2**  
+
 
 A criação de gráficos com o **ggplot2**  é baseada na "adição" de camadas de gráficos e de design uns sobre os outros, com cada comando adicionado aos anteriores com um símbolo de mais (`+`). O resultado é um objeto do tipo gráfico com várias camadas que pode ser salvo, modificado, impresso, exportado, etc.  
 
@@ -152,10 +158,12 @@ Os objetos de ggplot podem ser altamente complexos, mas a ordem básica das cama
 Um exemplo simples de código esqueleto é o seguinte. Vamos explicar cada componente nas seções abaixo.  
 
 ```{r, eval=F}
-# plote os dados das colunas do objeto my_data columnscomo pontos vermelhos
+# plote os dados das colunas do objeto my_data como pontos vermelhos
+
 
 ggplot(data = my_data)+                   # use a base de dados "my_data"
-  geom_point(                             # adcione uma camada de pontos 
+  geom_point(                             # adicione uma camada de pontos 
+
     mapping = aes(x = col1, y = col2),    # mapeie as colunas para os eixos
     color = "red")+                       # outras especificações para o geom
   labs()+                                 # aqui você pode adicionar títulos, rótulos dos eixos, etc. 
