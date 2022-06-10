@@ -12,7 +12,8 @@ O **ggplot2** é o pacote R mais popular de visualização de dados. Sua funçã
 A sintaxe é significativamente diferente dos gráficos gerados pelo R **base***, e tem uma curva de aprendizado associada a ela. A utilização do **ggplot2** geralmente exige que o usuário formate seus dados de uma forma altamente **compatível com o "tidyverse"**, o que em última análise torna a utilização conjunta destes pacotes muito eficaz.
 
 
-Nesta página cobriremos os fundamentos da criação de gráficos com o pacote **ggplot2**. Veja a página [Dicas para o ggplot] para sugestões e técnicas avançadas para tornar seus gráfivos realmente bonitos.  
+Nesta página cobriremos os fundamentos da criação de gráficos com o pacote **ggplot2**. Veja a página [Dicas para o ggplot] para sugestões e técnicas avançadas para tornar seus gráficos realmente bonitos.  
+
 
 Há vários tutoriais extensos **ggplot2**  disponíveis na seção de recursos. Você também pode baixar esta [ *cheat shhet* (colinha) de visualização de dados ](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf) do site do RStudio. Se você quiser inspiração para formas de visualizar criativamente seus dados, sugerimos que você revise sites como o [galeria de gráficos R](https://www.r-graph-gallery.com/) e [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
 
