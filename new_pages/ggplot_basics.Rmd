@@ -196,9 +196,11 @@ Em um gráfico você pode exibir um ou vários geoms. Cada um é adicionado aos 
 
 ## Mapeando dados ao gráfico {#ggplot_basics_mapping}  
 
-A maioria das "funções geom" devem ser informadas *do que usar* para criar suas formas - portanto, você deve dizer-lhes como devem *mapear (atribuir) colunas em seus dados* aos componentes da trama como os eixos, cores das formas, tamanhos das formas, etc. Para a maioria dos geoms, os componentes *essenciais* que devem ser mapeados para colunas nos dados são o eixo x, e (se necessário) o eixo y.  
+A maioria das "funções geom" devem ser informadas *do que usar* para criar suas formas - portanto, você deve dizer-lhes como devem *mapear (atribuir) colunas em seus dados* aos componentes do gráfico como os eixos, cores das formas, tamanhos das formas, etc. Para a maioria dos geoms, os componentes *essenciais* que devem ser mapeados para colunas nos dados são o eixo x, e (se necessário) o eixo y.  
 
-Este "mapeamento" ocorre com o `mapping = ` argumento. Os mapeamentos que você fornece ao `mapping` devem ser envolvidos na função `aes()`, assim você escreveria algo como `mapping = aes(x = col1, y = col2)`, como mostrado abaixo.
+
+Este "mapeamento" ocorre com o argumento `mapping = `. Os mapeamentos que você fornece ao `mapping` devem ser envolvidos na função `aes()`, assim você escreveria algo como `mapping = aes(x = col1, y = col2)`, como mostrado abaixo.
+
 
 Abaixo, no comando `ggplot()`, os dados são definidos como o caso `linelist`. No argumento `mapping = aes()` a coluna `age` é mapeada para o eixo x, e a coluna `wt_kg` é mapeada para o eixo y.  
 
@@ -219,17 +221,21 @@ ggplot(data = linelist, mapping = aes(x = age))+
 
 ### As estéticas do gráfico {.unnumbered}  
 
-Na terminologia ggplot, uma "estética" do gráfico tem um significado específico. Ela se refere a uma propriedade visual de *dados plotados*. Note que "estético" aqui se refere aos *dados que estão sendo plotados em geometriass/formas* - não ao display ao redor, como títulos, etiquetas de eixos, cor de fundo, que você pode associar com a palavra estética. No ggplot esses detalhes são chamados de "themes" (temas) e são ajustados dentro de um comando `theme()` (veja [esta seção](#ggplot_basics_themes)).  
+Na terminologia ggplot, uma "estética" do gráfico tem um significado específico. Ela se refere a uma propriedade visual de *dados plotados*. Note que "estético" aqui se refere aos *dados que estão sendo plotados em geometrias/formas* - não ao display ao redor, como títulos, etiquetas de eixos, cor de fundo, que você pode associar com a **palavra** "estética". No ggplot, esses detalhes são chamados de "themes" (temas) e são ajustados dentro de um comando `theme()` (veja [esta seção](#ggplot_basics_themes)).  
 
-Portanto, os objetos *aesthetics* podem ser cores, tamanhos, transparências, colocação, etc. *dos dados traçados*. Nem todos os geoms terão as mesmas opções de *aesthetics*, mas muitos podem ser usados pela maioria dos geoms. Aqui estão alguns exemplos:  
+
+Portanto, os objetos *aesthetics* podem ser cores, tamanhos, transparências, posição, etc. *dos dados traçados*. Nem todos os geoms terão as mesmas opções de *aesthetics*, mas muitos podem ser usados pela maioria dos geoms. Aqui estão alguns exemplos:  
+
 
 * `shape =` Mostra um ponto de `geom_point()` como um círculo, estrela, triângulo...  
 * `fill = ` A cor de preenchimento (ex. de uma barra ou boxplot)  
-* `color =` A linha exterior de uma barra ou blxplot, ou a cor do ponto se usar o `geom_point()`  
+* `color =` A linha exterior de uma barra ou boxplot, ou a cor do ponto se usar o `geom_point()`  
+
 * `size = ` tamanho (ex. grossura da linha, tamanho do ponto)  
 * `alpha = ` Transparencia (1 = opaco, 0 = invisível)  
 * `binwidth = ` Largura das classes do histograma
-* `width = ` largura das barras do gráfico de barras
+* `width = ` Largura das barras do gráfico de barras
+
 * `linetype =` Tipo de linha (ex. sólida, tracejada, pontilhada) 
 
 A esses objetos do gráfico podem ser atribuídos valores de duas maneiras:  
@@ -237,14 +243,17 @@ A esses objetos do gráfico podem ser atribuídos valores de duas maneiras:
 1) Atribuindo um valor estático (por exemplo, `color = "blue" `) a ser aplicado em todas as observações plotadas  
 2) Atribuído a uma coluna de dados (por exemplo, "color = hospital") de tal forma que a exibição de cada observação depende de seu valor nessa coluna  
 
-<!-- * A estes valores do tipo *aesthetics* podem ser atribuídos valores estáticos (por exemplo `size = 1`) ou eles podem ser mapeados a uma coluna existente no banco (por exemplo `size = age`).* Se você quiser que seja atribuído um valor estático , a atribuição é colocada *fora* o `mapping = aes()`. Se você quiser que esse elemento seja dependente do valor em cada linha de dados, a atribuição é feita *dentro* o `mapping = aes()`.   -->
+<!-- * A estes valores do tipo *aesthetics* podem ser atribuídos valores estáticos (por exemplo `size = 1`) ou eles podem ser mapeados a uma coluna existente no banco (por exemplo `size = age`).* Se você quiser que seja atribuído um valor estático, a atribuição é colocada *fora* do `mapping = aes()`. Se você quiser que esse elemento seja dependente do valor em cada linha de dados, a atribuição é feita *dentro* do `mapping = aes()`.   -->
+
 
 ### Configurar para um valor estático {.unnumbered}  
 
 Se você quiser que a estética do objeto do gráfico seja estática, ou seja - para ser a mesma para cada observação nos dados, você escreve sua atribuição dentro do geom desejado mas *fora* de qualquer `mapping = aes()`. Essas atribuições poderiam ser `size = 1` ou `color = "blue" `. Aqui estão dois exemplos:  
 
-* No primeiro exemplo, o `mapping = aes()` está no comando `ggplot()` e os eixos são mapeados para as colunas de idade e peso nos dados. A estética do gráfico `color = `, `size = `, e `alpha = ` (transparência) são atribuídos a valores estáticos. Para maior clareza, isto é feito na função `geom_point()`, pois você pode adicionar outros geometrias posteriormente que levariam valores diferentes.  
-* No segundo exemplo, o histograma requer apenas o eixo x mapeado para uma coluna. O histograma `binwidth = `, `color = `, `fill = ` (cor de preenchimento), e `alpha = ` ` são novamente definidos dentro do geom para valores estáticos.  
+* No primeiro exemplo, o `mapping = aes()` está no comando `ggplot()` e os eixos são mapeados para as colunas de idade e peso nos dados. A estética do gráfico `color = `, `size = `, e `alpha = ` (transparência) são atribuídos a valores estáticos. Para maior clareza, isto é feito na função `geom_point()`, pois você pode adicionar outras geometrias posteriormente que levariam valores diferentes.  
+
+* No segundo exemplo, o histograma requer apenas o eixo x mapeado para uma coluna. O histograma `binwidth = `, `color = `, `fill = ` (cor de preenchimento), e `alpha = ` são novamente definidos dentro do geom para valores estáticos.  
+
 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', warning=F, message=F}
 # gráfico de dispersão
@@ -257,42 +266,52 @@ ggplot(data = linelist, mapping = aes(x = age))+       #onfigurar mapeamento dos
     binwidth = 7,                # largura das classes
     color = "red",               # cor da linha da classe
     fill = "blue",               # cor de preenchimento da barra
-    alpha = 0.1)                 #transparência da barra
+    alpha = 0.1)                 # transparência da barra
+
 ```
 
 
 ### Responsivo a valores de uma coluna {.unnumbered}  
 
-A alternativa é mapear os argumentos da estética de um gráfico a uma coluna (variável) do seus dados. Nesta abordagem, a exibição deste *aesthetics* dependerá do valor desta observação naquela coluna dos dados. Se os valores da coluna forem contínuos, a escala de exibição (legenda) para aquele *aesthetics* será contínua. Se os valores da coluna forem discretos, a legenda exibirá cada valor e os dados plotados aparecerão como claramente "agrupados" (leia mais na seção [agrupamento](#ggplotgroups) desta página).  
+A alternativa é mapear os argumentos da estética de um gráfico a uma coluna (variável) do seus dados. Nesta abordagem, a exibição deste *aesthetics* dependerá do valor desta observação naquela coluna dos dados. Se os valores da coluna forem contínuos, a escala de exibição (legenda) para aquele *aesthetics* será contínua. Se os valores da coluna forem discretos, a legenda exibirá cada valor e os dados plotados aparecerão "agrupados" de forma distinta (leia mais na seção [agrupamento](#ggplotgroups) desta página).  
+
 
 Para conseguir isso, você mapeia esse *aesthetics* do gráfico para um nome de *coluna* (não entre aspas). Isto deve ser feito *em uma função `mapping = aes()` (nota: há vários lugares no código que você pode fazer estas atribuições de mapeamento, como discutido [abaixo](##ggplot_basics_map_loc))).  
 
 Dois exemplos estão abaixo.  
 
 * No primeiro exemplo, a *aesthetics* `color = ` (de cada ponto) é mapeada para a coluna `age` - e uma escala de cores apareceu na legenda! Por enquanto, basta observar que a escala existe - mostraremos como modificá-la em seções posteriores.  
-* No segundo exemplo, duas novas *aesthetics* do gráfico também são mapeados para colunas (`color = ` e `size = `), enquanto a *aesthetics* do gráfico `shape = ` e `alpha = ` são mapeados para valores estáticos fora de qualquer `mapping = aes()` função.   
+* No segundo exemplo, duas novas *aesthetics* do gráfico também são mapeados para colunas (`color = ` e `size = `), enquanto a *aesthetics* do gráfico `shape = ` e `alpha = ` são mapeados para valores estáticos fora de qualquer função `mapping = aes()`.   
+
 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', warning=F, message=F}
 # gráfico de dispersão
 
 ggplot(data = linelist,   # escolha os dados
        mapping = aes(     # mapeie as aesthetics para coluna de valores
-         x = age,           # mapeie o eixo x pata idade (coluna age)       
-         y = wt_kg,         # mapeie o eixo y pata peso (wt_kg)      
-         color = age) # mapeie a cor segundo a iddade
+         x = age,           # mapeie o eixo x para idade (coluna age)       
+
+         y = wt_kg,         # mapeie o eixo y para peso (wt_kg)      
+
+         color = age) # mapeie a cor segundo a idade
+
        )+     
   geom_point()         # mostre como pontos
 
 # gráfico de dispersão
 ggplot(data = linelist,   # escolha os dados
        mapping = aes(     # mapeie as aesthetics para coluna de valores
-         x = age,           # mapeie o eixo x pata idade (coluna age)    
-         y = wt_kg,         # mapeie o eixo y pata peso (wt_kg) 
+         x = age,           # mapeie o eixo x para idade (coluna age)    
+
+         y = wt_kg,         # mapeie o eixo y para peso (wt_kg) 
+
          color = age,       # mapeie a cor segundo a iddade
-         size = age))+      # mapeie o tamanho segundo a iddade
+         size = age))+      # mapeie o tamanho segundo a idade
+
   geom_point(             # mostre como pontos
     shape = "diamond",      # pontos como losangos (diamantes)
-    alpha = 0.3)            # tranparência do ponto a 30%
+    alpha = 0.3)            # transparência do ponto a 30%
+
 
 
 ```
@@ -301,7 +320,8 @@ ggplot(data = linelist,   # escolha os dados
 Nota: Os argumentos referentes aos eixos são sempre atribuídos a colunas dos dados (não a valores estáticos), e isto é sempre feito dentro de `mapping = aes()`.  
 
 
-Torna-se importante acompanhar as camadas e a *aesthetics* de seus lotes ao fazer lotes mais complexos - por exemplo, lotes com múltiplos *geoms*. No exemplo abaixo, a aesthetic `size = ` eé atribuída duas vezes - uma para `geom_point()` e outra para `geom_smooth()` - ambas as vezes como um valor estático.   
+Torna-se importante acompanhar as camadas e a *aesthetics* de seus gráficos à medida que vão ficando mais complexos - por exemplo, gráficos com múltiplos *geoms*. No exemplo abaixo, a aesthetic `size = ` é atribuída duas vezes - uma para `geom_point()` e outra para `geom_smooth()` - ambas as vezes como um valor estático.   
+
 
 ```{r, warning=F, message=F}
 ggplot(data = linelist,
@@ -315,7 +335,8 @@ ggplot(data = linelist,
     alpha = 0.5) +  
   geom_smooth(                  # adiciona uma linha de tendencia 
     method = "lm",              # com um método linear
-    size = 2)                   # tmanho (grossura da linha) de 2
+    size = 2)                   # tamanho (grossura da linha) de 2
+
 ```
 
 
