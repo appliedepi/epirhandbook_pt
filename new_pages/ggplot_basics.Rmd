@@ -271,7 +271,8 @@ ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+  # configurar mapeam
   geom_point(color = "darkgreen", size = 0.5, alpha = 0.2)         # configurar a estética estática dos pontos
 
 # histograma
-ggplot(data = linelist, mapping = aes(x = age))+       #onfigurar mapeamento dos dados e eixos 
+ggplot(data = linelist, mapping = aes(x = age))+       # configurar mapeamento dos dados e eixos 
+
   geom_histogram(              # mostra o histograma
     binwidth = 7,                # largura das classes
     color = "red",               # cor da linha da classe
@@ -315,7 +316,8 @@ ggplot(data = linelist,   # escolha os dados
 
          y = wt_kg,         # mapeie o eixo y para peso (wt_kg) 
 
-         color = age,       # mapeie a cor segundo a iddade
+         color = age,       # mapeie a cor segundo a idade
+
          size = age))+      # mapeie o tamanho segundo a idade
 
   geom_point(             # mostre como pontos
@@ -343,7 +345,8 @@ ggplot(data = linelist,
   geom_point(                   # addiciona pontos para cada linha de dados
     size = 1,
     alpha = 0.5) +  
-  geom_smooth(                  # adiciona uma linha de tendencia 
+  geom_smooth(                  # adiciona uma linha de tendência 
+
     method = "lm",              # com um método linear
     size = 2)                   # tamanho (grossura da linha) de 2
 
