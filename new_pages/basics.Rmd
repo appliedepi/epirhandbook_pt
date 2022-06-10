@@ -187,7 +187,7 @@ Esta ferramenta é freqüentemente usada para tirar "fotografias da tela" de pá
 
 ### Se orientando no RStudio  {.unnumbered}
 
-**Primeiramente, abra o RStudio.** Como os ícones deles podem ser muito parecidos, certifique-se de que você está abrindo *RStudio* e não R.
+**Primeiramente, abra o RStudio.** Como os ícones deles podem ser muito parecidos, certifique-se de que você está abrindo mesmo  o *RStudio* e não R.
 
 Para que o RStudio funcione, você também deve ter R instalado no computador (veja acima as instruções de instalação).
 
