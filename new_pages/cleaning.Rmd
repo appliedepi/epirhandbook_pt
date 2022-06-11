@@ -1597,14 +1597,14 @@ linelist <- filter(linelist, !is.na(case_id))
 Você também pode usar o R **base** para criar um subconjunto dos dados,  usando colchetes que refletem as [linhas, colunas] do  que você deseja reter.
 
 ```{r, eval=F}
-# dataframe <- dataframe[row conditions, column conditions] (blank means keep all)
+# dataframe <- dataframe[row conditions, column conditions] (se deixar a entrada em branco significa "todas as linhas ou todas as colunas")
 
 linelist <- linelist[!is.na(case_id), ]
 ```
 
 ### Revisar rapidamente registros {.unnumbered}
 
-Muitas vezes você quer rever rapidamente alguns registros, para apenas algumas colunas. A função do R **base** `View()` imprimirá um quadro de dados para visualização em seu RStudio.
+Muitas vezes você quer rever rapidamente alguns registros, para apenas algumas colunas. A função do R **base** `View()` exibirá um dataframe para visualização em seu RStudio.
 
 Veja a lineliste no RStudio:
 
@@ -1616,7 +1616,7 @@ Aqui estão dois exemplos de visualização de células específicas (linhas esp
 
 **Com funções dplyr `filter()` e `select()`:**
 
-Dentro de `View()`, encadeie o conjunto de dados com o pipetáveis (%>%) com a função `filter()` para manter certas linhas, e depois com a função `select()` para manter certas colunas. Por exemplo, para rever as datas de início e hospitalização de 3 casos específicos:
+Dentro de `View()`, encadeie o conjunto de dados com o pipe (%>%) com a função `filter()` para manter certas linhas, e depois com a função `select()` para manter certas colunas. Por exemplo, para rever as datas de início e hospitalização de 3 casos específicos:
 
 ```{r, eval=F}
 View(linelist %>%
@@ -1624,7 +1624,7 @@ View(linelist %>%
        select(date_onset, date_hospitalisation))
 ```
 
-Você consegue os mesmos resultados com a seguinte sintaxe do R  **base** , usando colchetes `[ ]` para subdividir o que você quer ver.
+Você consegue os mesmos resultados com a seguinte sintaxe do R **base** , usando colchetes `[ ]` para subdividir o que você quer ver.
 
 ```{r, eval=F}
 View(linelist[linelist$case_id %in% c("11f8ea", "76b97a", "47a5f5"), c("date_onset", "date_hospitalisation")])
@@ -1633,7 +1633,7 @@ View(linelist[linelist$case_id %in% c("11f8ea", "76b97a", "47a5f5"), c("date_ons
 #### Adiciotar a uma cadeia usando o pipe (%>%) {.unnumbered}
 
 ```{r}
-# LIMPEZA DA CADEIA 'PIPE' (inicie com dados brutos e canalize-os através de etapas de limpeza)
+#  CADEIA DE LIMPEZA 'PIPE' (inicie com dados brutos e canalize-os através de etapas de limpeza)
 ##################################################################################
 
 # inicie a cadeia pipe de limpeza
@@ -1644,7 +1644,7 @@ linelist <- linelist_raw %>%
     janitor::clean_names() %>% 
     
     # renomeie as colunas manualmente
-           # NOVO nome             # VELHO nome
+           # NOVO nome             # nome VELHO
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
            date_outcome         = date_of_outcome) %>% 
@@ -1652,7 +1652,7 @@ linelist <- linelist_raw %>%
     # remova coluna
     select(-c(row_num, merged_header, x28)) %>% 
   
-    # de-duplique
+    # remova duplicidades
     distinct() %>% 
 
     # adicione colunas
@@ -1678,7 +1678,7 @@ linelist <- linelist_raw %>%
                       "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
                       )) %>% 
     
-    mutate(hospital = replace_na(hospital, "Missing")) %>% 
+    mutate(hospital = replace_na(hospital, "Ausente")) %>% 
 
     # crie a coluna age_years (de age e age_unit)
     mutate(age_years = case_when(
@@ -1713,7 +1713,7 @@ linelist <- linelist_raw %>%
 ## Cálculo por linha
 
 Se você quiser realizar um cálculo dentro de uma linha, você pode utilizar `rowwise()` a partir de **dplyr***. Veja esta vinheta online em [cálculos em linha](https://cran.r-project.org/web/packages/dplyr/vignettes/rowwise.html).\
-Por exemplo, este código se aplica `rowwise()` e então cria uma nova coluna que soma o número das colunas de sintomas especificados que têm o valor "yes", para cada linha da lista de linhas. As colunas são especificadas dentro de `sum()` pelo nome dentro de um vetor `c()`. A coluna `rowwise()` é essencialmente um tipo especial de `group_by()`, portanto é melhor utilizar `ungroup()` quando você terminar (página em [Agrupar dados]).
+Por exemplo, este código se aplica `rowwise()` e então cria uma nova coluna que soma o número das colunas de sintomas especificados que têm o valor "yes" (sim), para cada linha da lista de linhas. As colunas são especificadas dentro de `sum()` pelo nome dentro de um vetor `c()`. A coluna `rowwise()` é essencialmente um tipo especial de `group_by()`, portanto é melhor utilizar `ungroup()` quando você terminar (página em [Agrupar dados]).
 
 ```{r,}
 linelist %>%
@@ -1751,7 +1751,7 @@ linelist %>%
 
 ## Organizar e ordenar
 
-Utilize a função **dplyr*** `arrange()` para ordenar ou ordenar as linhas por valores de coluna.
+Utilize a função **dplyr** `arrange()` para ordenar ou ordenar as linhas por valores de coluna.
 
 Simplesmente liste as colunas na ordem em que elas devem ser ordenadas. Especifique `.by_group = TRUE` se você quiser que a ordenação ocorra primeiro por quaisquer *grupos* aplicados aos dados (ver página em [Agrupar dados]).
 
@@ -1767,9 +1767,9 @@ linelist %>%
 ```
 
 ```{r, echo=F}
-# HIDDEN
+# ESCONDIDO
 #
-# convert one remaining old outbreak row to missing for ease
+# converte uma linha antiga remanescente para faltante para facilitar
 linelist <- linelist %>% 
   mutate(
     date_hospitalisation = case_when(
