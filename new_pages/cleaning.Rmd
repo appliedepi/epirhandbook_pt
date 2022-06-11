@@ -221,7 +221,7 @@ A renomeação manual das colunas é frequentemente necessária, mesmo após a e
 Abaixo, um comando de renomeação é adicionado a linha de pipe limpa. Espaços foram adicionados estrategicamente para alinhar o código para facilitar a leitura.
 
 ```{r}
-# CADEIA DE 'PIPE' LIMPA (inicia com dados brutos e pipes através de etapas de limpeza)
+# inicia com dados brutos e encadeia outras funções com o pipes até a limpeza
 ##################################################################################
 linelist <- linelist_raw %>%
     
@@ -229,7 +229,7 @@ linelist <- linelist_raw %>%
     janitor::clean_names() %>% 
     
     # colunas renomeadas manualmente
-           # NOVO nome             # VELHO nome
+           # NOVO nome             # nome VELHO
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
            date_outcome         = date_of_outcome)
@@ -256,7 +256,7 @@ Como um atalho, você também pode renomear colunas dentro das funções **dplyr
 
 ```{r, eval=F}
 linelist_raw %>% 
-  select(# NOVO nome             # VELHO nome
+  select(# NOVO nome             # nome VELHO
          date_infection       = `infection date`,    # renomear e MANTER APENAS estas colunas
          date_hospitalisation = `hosp date`)
 ```
@@ -299,10 +299,10 @@ linelist_raw <- openxlsx::readWorkbook("linelist_raw.xlsx", fillMergedCells = TR
 
 Utilize `select()` do **dplyr** para selecionar as colunas que você deseja reter e especificar sua ordem no quadro de dados,
 
-[***CUIDADO:*** Nos exemplos abaixo, o quadro de dados `linelist` é modificado com `select() e exibido, mas não salvo. Isto é para fins de demonstração. Os nomes das colunas modificadas são impressos por piping o banco de dados para `names()`.]{style="color: orange;"}
+[***CUIDADO:*** Nos exemplos abaixo, o quadro de dados `linelist` é modificado com `select() e exibido, mas não salvo. Isto é para fins de demonstração. Os nomes das colunas modificadas são exibidos ao fornecer banco de dados com o pipe para função `names()`.]{style="color: orange;"}
 
 
-**Aqui estão TODOS os nomes de colunas na lista de linhas, neste ponto da cadeia limpa de pipe:**
+**Aqui estão TODOS os nomes que a linelist tem até este ponto da cadeia de limpeza:**
 
 ```{r}
 names(linelist)
@@ -315,7 +315,7 @@ names(linelist)
 Coloque seus nomes no comando `select()`, sem aspas. Eles aparecerão no data frame na ordem que você fornecer. Observe que se você incluir uma coluna que não existe, o R retornará um erro (veja o uso de `any_of()` abaixo se você não quiser nenhum erro nesta situação).
 
 ```{r}
-# O conjunto de dados linelist é canalisado através do comando select(), e names() imprimem apenas os nomes das colunas
+# O conjunto de dados linelist é canalisado através do comando select(), e names() "printam" apenas os nomes das colunas
 linelist %>% 
   select(case_id, date_onset, date_hospitalisation, fever) %>% 
   names()  # exibir os nomes das colunas
@@ -340,7 +340,7 @@ Aqui estão outras funções auxiliares "tidyselect" que também trabalham *dent
 
 -   `last_col()` - a última coluna\
 
--   `where()` - aplica uma função a todas as colunas e seleciona aquelas que são VERDADEIRAS\
+-   `where()` - aplica uma função a todas as colunas e seleciona aquelas para as quais a função retorna TRUE (verdadeiro)\
 
 -   `contains()` - colunas contendo uma cadeia de caracteres
 
@@ -360,7 +360,7 @@ Aqui estão outras funções auxiliares "tidyselect" que também trabalham *dent
 
 -   `num_range()` - uma faixa numérica como x01, x02, x03\
 
--   `any_of()` - corresponde SE a coluna existir, mas não retorna nenhum erro se não for encontrada
+-   `any_of()` - faz a correspondência SE a coluna existir, mas não retorna nenhum erro se não for encontrada
 
     -   exemplo: `select(any_of(date_onset, date_death, cardiac_arrest))`
 
@@ -384,7 +384,7 @@ linelist %>%
   names()
 ```
 
-A função `matches()` funciona de forma semelhante a `contains()` mas pode ser fornecida uma expressão regular (ver página em [Caracteres e strings]), tais como múltiplos strings separados por OR barras dentro dos parênteses:
+A função `matches()` funciona de forma semelhante a `contains()` mas pode ser fornecida uma expressão regular (ver página em [Caracteres e strings]), tais como múltiplos strings separados por "barras de OU" dentro dos parênteses:
 
 ```{r}
 # procurado por combinações de caracteres múltiplos
