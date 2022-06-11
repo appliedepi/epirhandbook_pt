@@ -570,17 +570,20 @@ ggplot(malaria_data, aes(x = data_date, y = malaria_tot)) +
 
 ### Ordem dos fatores nas facetas {.unnumbered}  
 
-Veja este [post](https://juliasilge.com/blog/reorder-within/) em como reordenar os níveis de um fator *dentro* de cada faceta.  
+Veja este [post](https://juliasilge.com/blog/reorder-within/) sobre como reordenar os níveis de um fator *dentro* de cada faceta.  
+
 
 
 ## Armazenando gráficos
 
 ### Salvando gráficos {.unnumbered}
 
-Por padrão, quando você executa um comando 'ggplot()`, o gráfico será apresentado no painel RStudio Plots. Entretanto, você também pode salvar o gráfico como um objeto utilizando o operador de atribuição `<-` e dando-lhe um nome. Então ele não será exibido a menos que o próprio nome do objeto seja executado. Você também pode imprimi-lo envolvendo o nome do gráfico com `print()`, mas isto só é necessário em certas circunstâncias, como se o gráfico for criado dentro de um *loop* utilizado para imprimir vários gráficos de uma vez (veja a página [Iteração, laços e listas]).  
+Por padrão, quando você executa um comando 'ggplot()`, o gráfico será apresentado no painel Plots do RStudio. Entretanto, você também pode salvar o gráfico como um objeto utilizando o operador de atribuição `<-` e dando-lhe um nome. Então, ele não será exibido a menos que o próprio nome do objeto seja executado. Você também pode imprimi-lo envolvendo o nome do gráfico com `print()`, mas isto só é necessário em certas circunstâncias, como se o gráfico for criado dentro de um *loop* utilizado para imprimir vários gráficos de uma vez (veja a página [Iteração, laços e listas]).  
+
 
 ```{r, warning=F, message=F}
-# Atribuia o gráfico a um objeto
+# Atribua o gráfico a um objeto
+
 
 age_by_wt <- ggplot(data = linelist, mapping = aes(x = age_years, y = wt_kg, color = age_years))+
   geom_point(alpha = 0.1)
@@ -590,7 +593,8 @@ age_by_wt
 ```
 
 
-### Mofificando gráficos salvos {.unnumbered}  
+### Modificando gráficos salvos {.unnumbered}  
+
 
 Uma coisa legal sobre **ggplot2** é que você pode definir um gráfico (como acima), e depois adicionar camadas a ele começando com seu nome. Você não precisa repetir todos os comandos que criaram o gráfico original! 
 
@@ -604,23 +608,27 @@ age_by_wt+
 
 ### Exportando gráficos {.unnumbered}   
 
-A exportação de gráficos feitos no ggplot é facilitada com a função `ggsave()` de **ggplot2**. Também pode funcionar de duas maneiras:  
+A exportação de gráficos feitos no ggplot é facilitada com a função `ggsave()` de **ggplot2**. Ela pode funcionar de duas maneiras:  
+
 
 * Especifique o nome do objeto do gráfico, depois o caminho do arquivo e o nome com extensão  
   * Por exemplo: `ggsave(my_plot, here("plots", "my_plot.png"))`  
-* Executar o comando com apenas o parâmetro do caminho de arquivo, para salvar o último gráfico que foi feito  
+* Execute o comando com apenas o parâmetro do caminho de arquivo, para salvar o último gráfico que foi feito  
+
   * Por exemplo: `ggsave(here("plots", "my_plot.png"))`  
   
 Você pode exportar como png, pdf, jpeg, tiff, bmp, svg, ou vários outros tipos de arquivo, especificando a extensão do arquivo no caminho do arquivo.  
 
-Você também pode especificar os argumentos `width = `, (largura) `height = ` (altura), e `units = ` (ou "in", "cm", ou "mm"). Você também pode especificar `dpi = ` com um número para a resolução da imagem a ser salva (por exemplo, 300). Veja os detalhes da função entrando `?ggsave` ou lendo a [documentação online](https://ggplot2.tidyverse.org/reference/ggsave.html). 
+Você também pode especificar os argumentos `width = `, (largura) `height = ` (altura), e `units = ` (ou "in", "cm", ou "mm"). Você também pode especificar `dpi = ` com um número para a resolução da imagem a ser salva (por exemplo, 300). Veja os detalhes da função digitando `?ggsave` ou lendo a [documentação online](https://ggplot2.tidyverse.org/reference/ggsave.html). 
+
 
 Lembre-se de que você pode utilizar a sintaxe da função `here()` para fornecer o caminho de arquivo desejado. Consulte a página [Importar e exportar] para obter mais informações.    
 
 
 ## Rótulos
 
-Certamente você vai querer adicionar ou ajustar os rótulos (elementos de texto) do gráfico. Estes ajustes são mais facilmente feitas dentro da função `labs()` que é adicionada à trama com `+` tal como os geoms eram.  
+Certamente você vai querer adicionar ou ajustar os rótulos (elementos de texto) do gráfico. Estes ajustes são mais facilmente feitos dentro da função `labs()` que é adicionada ao gráfico com `+` tal como os geoms eram.  
+
 
 Dentro de `labs()` você pode fornecer *strings*  para estes parâmetros:  
 
@@ -640,7 +648,8 @@ age_by_wt <- ggplot(
          color = age))+     # mapeie a cor para a idade
   geom_point()+           # mostre os dados como pontos
   labs(
-    title = "Distribioção de idade e peso",
+    title = "Distribuição de idade e peso",
+
     subtitle = "Surto de Ebola fictício, 2014",
     x = "Idade em anos",
     y = "Peso em quilos",
@@ -650,7 +659,8 @@ age_by_wt <- ggplot(
 age_by_wt
 ```
 
-Observe como na atribuição do título utilizamos `str_glue()` do pacote **stringr** para implantar código R dinâmico dentro do texto da string. O legenda mostrará os "Dados a partir de": "data que reflete a data máxima de hospitalização na lista de discussão. Leia mais sobre isto na página em [Caracteres e strings].  
+Observe como na atribuição do título utilizamos `str_glue()` do pacote **stringr** para implantar código R dinâmico dentro do texto da string. O legenda mostrará os "Dados a partir de": "data que reflete a data máxima de hospitalização na linelist". Leia mais sobre isto na página em [Caracteres e strings].  
+
 
 Uma nota sobre a especificação do título da  *legenda*: Não há nenhum argumento de "título da legenda", pois você poderia ter múltiplas escalas em sua legenda. Dentro de `labs()`, você pode escrever o argumento da  *aesthetic* do gráfico utilizada para criar a legenda, e fornecer o título desta forma. Por exemplo, acima atribuímos `color = age` para criar a legenda. Portanto, fornecemos `color = ` a `labs()` e atribuímos o título da legenda desejada ("Idade" com I maiúsculo). Se você criar a legenda com `aes(fill = COLUMN)`, então em `labs()` você escreveria `fill = ` para ajustar o título dessa legenda. A seção sobre escalas de cores na página [Dicas para o ggplot] fornece mais detalhes sobre edição de legendas, e uma abordagem alternativa utilizando funções `scales_()`. 
 
