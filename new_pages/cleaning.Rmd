@@ -10,14 +10,14 @@ Para demonstrar a limpeza de dados, esta página começa por importar um conjunt
 
 ### Funções essenciais {.unnumbered}
 
-Este manual emfatiza a utilização das funções da família [**tidyverse**](https://www.tidyverse.org/) de pacotes do R. As funções essenciais do R demonstradas nesta página estão listadas abaixo.
+Este manual emfatiza a utilização das funções da família de pacotes [**tidyverse**](https://www.tidyverse.org/)do R. As funções essenciais do R demonstradas nesta página estão listadas abaixo.
 
-Muitas destas funções pertencem ao pacote do R [**dplyr**](https://dplyr.tidyverse.org/), que fornece funções "verbo" para resolver desafios de manipulação de dados (o nome é uma referência a um "quadro de dados -[plier](https://www.thefreedictionary.com/plier#:~:text=also%20ply%C2%B7er%20(pl%C4%AB%E2%80%B2,holding%2C%20bending%2C%20or%20cutting.)%22). **dplyr** é parte da família **tidyverse** de pacotes do R (os quais também incluem **ggplot2**, **tidyr**, **stringr**, **tibble**, **purrr**, **magrittr**, e **forcats** entre outros).
+Muitas destas funções pertencem ao pacote do R [**dplyr**](https://dplyr.tidyverse.org/), que fornece funções "verbo" para resolver desafios de manipulação de dados (o nome é uma referência a um "dataframe-[plier](https://www.thefreedictionary.com/plier#:~:text=also%20ply%C2%B7er%20(pl%C4%AB%E2%80%B2,holding%2C%20bending%2C%20or%20cutting.)%22) (N.T.: *plier* significa alicate, fazendo uma analogia da funcionalidade dessa ferramenta sobre um dataframe). O pacote **dplyr** é parte da família de pacotes **tidyverse** do R (os quais também incluem **ggplot2**, **tidyr**, **stringr**, **tibble**, **purrr**, **magrittr**, e **forcats** entre outros).
 
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | Função                                              | Utilidade                                                                 | Pacote                     |
 +=====================================================+===========================================================================+============================+
-| `%>%`                                               | "pipe" (passar) dados de uma função para a próxim                         | **magrittr**               |
+| `%>%`                                               | "pipe" (passar) dados de uma função para a próxima                         | **magrittr**               |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | `mutate()`                                          | criar, transformar, e redefinir colunas                                   | **dplyr**                  |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
@@ -27,17 +27,17 @@ Muitas destas funções pertencem ao pacote do R [**dplyr**](https://dplyr.tidyv
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | `clean_names()`                                     | padronizar a síntaxe de nomes de colunas                                  | **janitor**                |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
-| `as.character()`, `as.numeric()`, `as.Date()`, etc. | converter a classe de uma coluna                                          | **base** R                 |
+| `as.character()`, `as.numeric()`, `as.Date()`, etc. | converter a classe de uma coluna                                          | R **base**                 |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
-| `across()`                                          | transformar múltiplas colunas de uma vez \|                               | **dplyr**                  |
+| `across()`                                          | transformar múltiplas colunas de uma vez                                  | **dplyr**                  |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | Funções **tidyselect**                              | use lógica para selecionar colunas                                        | **tidyselect**             |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | `filter()`                                          | manter certas linhas                                                      | **dplyr**                  |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
-| `distinct()`                                        | desduplicar as linhas                                                     | **dplyr**                  |
+| `distinct()`                                        | remover linhas duplicadas (duplicidades)                                  | **dplyr**                  |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
-| `rowwise()`                                         | operações po/em cada linha                                                | **dplyr**                  |
+| `rowwise()`                                         | operações por/em cada linha                                               | **dplyr**                  |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | `add_row()`                                         | adicionar linhas manualmente                                              | **tibble**                 |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
@@ -49,16 +49,16 @@ Muitas destas funções pertencem ao pacote do R [**dplyr**](https://dplyr.tidyv
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | `replace_na()`, `na_if()`, `coalesce()`             | funções especiais de recodificação                                        | **tidyr**                  |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
-| `age_categories()` and `cut()`                      | criar grupos categóricos de uma coluna numérica                           | **epikit** e **base** do R |
+| `age_categories()` and `cut()`                      | criar grupos categóricos de uma coluna numérica                           | **epikit** e R **base**    |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | `clean_variable_spelling()`                         | recodificar/limpar valores usando um dicionário de dados                  | **linelist**               |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
-| `which()`                                           | aplicar critérios lógicos; retorna índices                                | **base** do R              |
+| `which()`                                           | aplicar critérios lógicos; retorna índices                                | R **base**                 |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 
 Se quiser ver como estas funções se comparam aos comandos Stata ou SAS, consulte a página em [Transição para o R].
 
-Você poderá encontrar uma estrutura alternativa de gestão de dados a partir do pacote do R **data.table** com operadores como `:=` e utilização frequente de colchetes `[ ]`. Esta abordagem e sintaxe é brevemente explicada na página [Tabela de dados].
+Você poderá encontrar uma estrutura alternativa de gestão de dados a partir do pacote do R **data.table** com operadores como `:=` e utilização frequente de colchetes `[ ]`. Estas abordagem e sintaxe são brevemente explicadas na página [Tabela de dados].
 
 ### Nomenclatura {.unnumbered}
 
