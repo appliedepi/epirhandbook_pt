@@ -749,7 +749,8 @@ linelist$bmi = linelist$wt_kg / (linelist$ht_cm / 100) ^ 2)
 **Abaixo, uma nova coluna é adicionada à cadeia pipe e algumas classes são convertidas.**
 
 ```{r }
-# CADEIA 'PIPE' LIMPA (começa com dados brutos e faz pipes através das etapas de limpeza)
+# CADEIA 'PIPE' DE LIMPEZA
+#(começa com dados brutos e faz pipes através das etapas de limpeza)
 ##################################################################################
 
 # inicie a cadeia pipe limpa
@@ -768,7 +769,7 @@ linelist <- linelist_raw %>%
     # remova coluna
     select(-c(row_num, merged_header, x28)) %>% 
   
-    # desduplicar
+    # remova duplicidade
     distinct() %>% 
   
     # ACIMA SÃO PASSOS DE LIMPEZA A MONTANTE JÁ DISCUTIDOS
@@ -919,11 +920,11 @@ Nesta linha, em sua declaração final, coloque `TRUE` no lado esquerdo, que cap
 
 [***PERIGO:*** **Valores no lado direito devem ser todos na mesma classe** - seja numérico, caractere, data, lógico, etc. Para atribuir valores em falta (`NA`), você talvez necessite usar as variações especiais de `NA` como `NA_character_`, `NA_real_` (para numérico ou POSIX), e `as.Date(NA)`. Leia mais em [Trabalhando com datas].]{style="color: red;"}
 
-### Valores perdidos {.unnumbered}
+### Valores faltantes {.unnumbered}
 
 Abaixo estão as funções especiais para manipular valores ausentes no contexto da limpeza de dados.
 
-Veja a página em [Dados ausentes] para dicas mais detahadas sobre como identificas e tratar os valores ausentes. Por exemplo, a função `is.na()`que logicamente testa  a falta de dados.
+Veja a página em [Campos em branco/faltantes] para dicas mais detahadas sobre como identificas e tratar os valores ausentes. Por exemplo, a função `is.na()`que logicamente testa  a falta de dados.
 
 **`replace_na()`**
 
@@ -931,16 +932,16 @@ Para alterar valores ausentes (`NA`) para um valor específico, como "Ausente", 
 
 ```{r}
 linelist <- linelist %>% 
-  mutate(hospital = replace_na(hospital, "Missing"))
+  mutate(hospital = replace_na(hospital, "Ausente"))
 ```
 
 **fct_explicit_na()**
 
-Esta é uma função do pacote **forcats**. O pacote **forcats** manipula colunas de classe Fator. Fatores são a forma do R manipular valores *ordenados* tais como `c("First", "Second", "Third")` ou para definir a ordem em que os valores (por exemplo, hospitais) aparecem em tabelas e gráficos. Veja a página de [Fatores].
+Esta é uma função do pacote **forcats**. O pacote **forcats** manipula colunas de classe Fator. Fatores são a forma do R manipular valores *ordenados* tais como `c("Primeiro", "Segundo", "Terceiro")` ou para definir a ordem em que os valores (por exemplo, hospitais) aparecem em tabelas e gráficos. Veja a página de [Fatores].
 
-Se seus dados forem de classe Fator e você tentar converter  `NA` para "Ausente" utilizando`replace_na()`, você receberá este erro: `invalid factor level, NA generated`. Você tentou adicionar "Ausente" como um valor, quando este não foi definido como um nível possível do fator, e ele foi rejeitado.
+Se seus dados forem de classe Fator e você tentar converter `NA` para "Ausente" utilizando `replace_na()`, você receberá este erro: `invalid factor level, NA generated`. Você tentou adicionar "Ausente" como um valor, quando este não foi definido como um nível possível do fator, e ele foi rejeitado.
 
-A maneira mais fácil de resolver isto é utilizar a função de **forcats** `fct_explicit_na()` que converte uma coluna para a classe fator, e converte os valores `NA` para o caractere "(Ausente)".
+A maneira mais fácil de resolver isto é utilizar a função de **forcats** `fct_explicit_na()` que converte uma coluna para a classe fator, e converte os valores `NA` para o caractere "(Missing)" (Ausente/Faltante).
 
 ```{r, eval=F}
 linelist %>% 
@@ -972,7 +973,7 @@ linelist <- linelist %>%
 
 ### Dicionário de limpeza {.unnumbered}
 
-Utilize o pacote R **linelist** e sua função `clean_variable_spelling()` para limpar um data frame com um *dicionário de limpeza*. **linelist** é um pacote desenvolvido por [RECON](https://github.com/reconhub/linelist) - o Consórcio R Epidemics.
+Utilize o pacote **linelist** do R e sua função `clean_variable_spelling()` para limpar um data frame com um *dicionário de limpeza*. O pacote **linelist** é  desenvolvido por [RECON](https://github.com/reconhub/linelist) - o Consórcio R Epidemics.
 
 1)  Criar um dicionário  de limpeza com 3 colunas:
 
@@ -1013,14 +1014,15 @@ Agora role para a direita para ver como os valores mudaram - particularmente `ge
 DT::datatable(head(linelist,50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Observe que os nomes das colunas no dicionário de limpeza devem corresponder aos nomes *neste ponto* do seu acripr de limpeza. Veja esta [referência online reference para o pacote linelist ](https://www.repidemicsconsortium.org/linelist/reference/clean_data.html) para obter mais detalhes.
+Observe que os nomes das colunas no dicionário de limpeza devem corresponder aos nomes *neste ponto* do seu script de limpeza. Veja esta [referência online para o pacote linelist ](https://www.repidemicsconsortium.org/linelist/reference/clean_data.html) para obter mais detalhes.
 
 #### Adicione a cadeia pipe {.unnumbered}
 
 **Abaixo, algumas novas colunas e transformações de colunas são adicionadas à cadeia pipe.** 
 
 ```{r}
-# LIMPEZA DA CADEIA 'PIPE' (inicie com dados brutos e canalize-os através de etapas de limpeza)
+# CADEIA 'PIPE' DE LIMPEZA
+# inicia com dados brutos e canaliza-os através de etapas de limpeza)
 ##################################################################################
 
 # inicie a cadeia pipe de limpeza
@@ -1031,7 +1033,7 @@ linelist <- linelist_raw %>%
     janitor::clean_names() %>% 
     
     # renomeie as colunas manualmente
-           # NOVO nome             # VELHO nome
+           # NOVO nome             # nome VELHO
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
            date_outcome         = date_of_outcome) %>% 
@@ -1039,7 +1041,7 @@ linelist <- linelist_raw %>%
     # remova coluna
     select(-c(row_num, merged_header, x28)) %>% 
   
-    # de-duplique
+    # remova duplicidade
     distinct() %>% 
   
     # adicione colunas
@@ -1089,7 +1091,7 @@ linelist <- linelist_raw %>%
 Aqui descrevemos algumas abordagens especiais para criar categorias a partir de colunas numéricas. Exemplos comuns incluem categorias de idade, grupos de valores de laboratório, etc. Aqui vamos discutir:
 
 -   `age_categories()`, do pacote **epikit** \
--   `cut()`, da **base** do R\
+-   `cut()`, do R **base**\
 -   `case_when()`\
 -   quebras de quantis com `quantile()` e `ntile()`
 
@@ -1098,7 +1100,7 @@ Aqui descrevemos algumas abordagens especiais para criar categorias a partir de 
 Para este exemplo, nós vamos criar uma coluna `age_cat` usando a coluna `age_years`.
 
 ```{r}
-#Verifique a classe da variável da linelist age
+# Verifique a classe da variável da linelist age
 class(linelist$age_years)
 ```
 
@@ -1113,7 +1115,7 @@ hist(linelist$age_years)
 summary(linelist$age_years, na.rm=T)
 ```
 
-[***CUIDADO:*** Às vezes, variáveis numéricas serão importadas como classe "character". sso ocorre se houver caracteres não numéricos em alguns dos valores, por exemplo, uma entrada de "2 meses" para idade ou (dependendo das configurações locais do R) se uma vírgula for usada na casa decimal (por exemplo, "4,5" para significar quatro anos e meio)..]{style="color: orange;"}
+[***CUIDADO:*** Às vezes, variáveis numéricas serão importadas como classe "character". Isso ocorre se houver caracteres não numéricos em alguns dos valores, por exemplo, uma entrada de "2 meses" para idade ou (dependendo das configurações locais do R) se uma vírgula for usada na casa decimal (por exemplo, "4,5" para significar quatro anos e meio)..]{style="color: orange;"}
 
 <!-- ======================================================= -->
 
@@ -1202,7 +1204,7 @@ Veja a página de Ajuda da função para mais detalhes (digite `?age_categories`
 
 ### `cut()` {.unnumbered}
 
-`cut()` é uma alternativa da **base** do R para `age_categories()`, mas eu acho que você verá porque `age_categories()` foi desenvolvida para simplificar este processo. Algumas diferenças notáveis da `age_categories()` são:
+`cut()` é uma alternativa do R **base** para `age_categories()`, mas eu acho que você verá porque `age_categories()` foi desenvolvida para simplificar este processo. Algumas diferenças notáveis da `age_categories()` são:
 
 - Você não precisa instalar/carregar outro pacote\
 - Você pode especificar se os grupos estão abertos/fechados à direita/esquerda\
@@ -1244,9 +1246,9 @@ table("Numeric Values" = linelist$age_years,   # nomes especificados na tabela p
       useNA = "always")                        # não esqueça de examinar os valores NA
 ```
 
-**Rotulem novamente os valores `NA`**
+**Rotule novamente os valores `NA`**
 
-você pode querer atribuir a valores `NA` um rótulo tal como "Ausente". Como a nova coluna é de classe Fator (valores restritos), você não pode simplesmente mudá-la com `replace_na()`, pois este valor será rejeitado. Em vez disso, utilize `fct_explicit_na()` de **forcats***, como explicado na página [Fatores].
+Você pode querer atribuir a valores `NA` um rótulo tal como "Ausente". Como a nova coluna é de classe Fator (valores restritos), você não pode simplesmente mudá-la com `replace_na()`, pois este valor será rejeitado. Em vez disso, utilize `fct_explicit_na()` de **forcats***, como explicado na página [Fatores].
 
 ```{r}
 linelist <- linelist %>% 
@@ -1262,7 +1264,7 @@ linelist <- linelist %>%
     # tornar explícitos os valores ausentes
     age_cat = fct_explicit_na(
       age_cat,
-      na_level = "Missing age")  # você pode especificar o rótulo
+      na_level = "Idade Ausente")  # você pode especificar o rótulo
   )    
 
 # tabela para ver contagens
@@ -1271,7 +1273,7 @@ table(linelist$age_cat, useNA = "always")
 
 **Fazer quebras e rótulos rapidamente***
 
-Para uma maneira rápida de fazer quebras e rotular vetores, use algo como abaixo. Veja a página [Básico do R] para referências em `seq()` e `rep()`.
+Para uma maneira rápida de fazer quebras e rotular vetores, use algo como abaixo. Veja a página [R - o básico] para referências em `seq()` e `rep()`.
 
 ```{r, eval=F}
 # Fazer pontos de quebra de 0 a 90 por 5
@@ -1288,13 +1290,13 @@ length(age_seq) == length(age_labels)
 
 Leia mais sobre `cut()` em sua página de Ajuda entrando em `?cut` no console R
 
-### Quebras quantílicas {.unnumbered}
+### Quebrar por quantil {.unnumbered}
 
-No entendimento comum, “quantis” ou “percentis” normalmente se referem a um valor abaixo do qual uma proporção de valores cai. Por exemplo, o 95º percentil de idades linelistseria a idade abaixo da qual 95% da idade é inferior.
+No entendimento comum, “quantis” ou “percentis” normalmente se referem a um valor abaixo do qual uma proporção de valores está contida. Por exemplo, o 95º percentil de idades dessa linelist seria a idade abaixo da qual estão 95% dos valores de idade.
 
 No entanto, na fala comum, “quartis” e “decis” também podem se referir aos *grupos de dados* igualmente divididos em 4 ou 10 grupos (observe que haverá mais um ponto de quebra do que grupo).
 
-Para obter pontos de quebra de quantil, você pode usar `quantile()` do pacote **stats** da **base** do R. Você fornece um vetor numérico (por exemplo, uma coluna em um conjunto de dados) e um vetor de valores numéricos de probabilidade variando de 0 a 1,0. Os pontos de interrupção são retornados como um vetor numérico. Explore os detalhes das metodologias estatísticas inserindo `?quantile`.
+Para obter pontos de quebra de quantil, você pode usar `quantile()` do pacote **stats** do R **base**. Você fornece um vetor numérico (por exemplo, uma coluna em um conjunto de dados) e um vetor de valores numéricos de probabilidade variando de 0 a 1,0. Os pontos de interrupção são retornados como um vetor numérico. Explore os detalhes das metodologias estatísticas inserindo `?quantile`.
 
 -   Se o seu vetor numérico de entrada tiver algum valor ausente, é melhor definir `na.rm = TRUE`\
 -   Defina `names = FALSE` para obter um vetor numérico sem nome
@@ -1339,7 +1341,7 @@ ntile_ranges <- ntile_data %>%
     max = max(age_years, na.rm=T)
   )
 
-# combine e imprima - note que valores estão presentes em múltiplos grupos
+# combine e "printe" - note que valores estão presentes em múltiplos grupos
 left_join(ntile_table, ntile_ranges, by = "even_groups")
 ```
 
@@ -1349,14 +1351,15 @@ left_join(ntile_table, ntile_ranges, by = "even_groups")
 
 É possível utilizar a função `case_when()` do **dplyr*** para criar categorias a partir de uma coluna numérica, mas é mais fácil utilizar `age_categories()` do **epikit*** ou `cut()` porque estas criarão automaticamente um fator ordenado.
 
-Se utilizar `case_when()`, por favor, revise o uso apropriado conforme descrito anteriormente na seção Re-codificar valores desta página. Esteja ciente também que todos os valores do lado direito devem ser da mesma classe. Assim, se você quiser `NA` no lado direito, você deve escrever "Missing" ou utilizar o valor `NA` especial  `NA_character_`.
+Se utilizar `case_when()`, por favor, revise o uso apropriado conforme descrito anteriormente na seção recodificar valores desta página. Esteja ciente também que todos os valores do lado direito devem ser da mesma classe. Assim, se você quiser `NA` no lado direito, você deve escrever "Ausente" ou utilizar o valor `NA` especial  `NA_character_`.
 
 ### Adicionar à cadeia pipe {.unnumbered} 
 
 Abaixo, é adicionado o código para criar duas colunas de idade categóricas à cadeia pipe de limpeza:
 
 ```{r}
-# LIMPEZA DA CADEIA 'PIPE' (inicie com dados brutos e canalize-os através de etapas de limpeza)
+# CADEIA DE LIMPEZA 'PIPE' 
+# (inicie com dados brutos e canalize-os através de etapas de limpeza)
 ##################################################################################
 
 # inicie a cadeia pipe de limpeza
@@ -1367,7 +1370,7 @@ linelist <- linelist_raw %>%
     janitor::clean_names() %>% 
     
     # renomeie as colunas manualmente
-           # NOVO nome             # VELHO nome
+           # NOVO nome             # nome VELHO
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
            date_outcome         = date_of_outcome) %>% 
@@ -1375,7 +1378,7 @@ linelist <- linelist_raw %>%
     # remova coluna
     select(-c(row_num, merged_header, x28)) %>% 
   
-    # de-duplique
+    # remova as duplicidades
     distinct() %>% 
 
     # adicione coluna
@@ -1401,7 +1404,7 @@ linelist <- linelist_raw %>%
                       "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
                       )) %>% 
     
-    mutate(hospital = replace_na(hospital, "Missing")) %>% 
+    mutate(hospital = replace_na(hospital, "Ausente")) %>% 
 
     # crie a coluna age_years (de age e age_unit)
     mutate(age_years = case_when(
