@@ -1452,7 +1452,7 @@ Se uma classe que você fornece estiver desligada, você verá um erro como este
 
 ### Colar linhas {.unnumbered}
 
-Para combinar conjuntos de dados unindo as linhas de um dataframe ao fundo de outro dataframe, pode-se utilizar `bind_rows()` do **dplyr****. Isto é explicado com mais detalhes na página [Juntando dados].
+Para combinar conjuntos de dados unindo as linhas de um dataframe ao fundo de outro dataframe, pode-se utilizar `bind_rows()` do **dplyr**. Isto é explicado com mais detalhes na página [Juntando dados].
 
 <!-- ======================================================= -->
 
@@ -1474,7 +1474,7 @@ Este exemplo simples redefine o dataframe `linelist` como ela mesma, tendo filtr
 
 Neste exemplo, a afirmação lógica é `gender == "f"`, que é perguntar se o valor na coluna`gender` é igual a "f" (sensível a maiúsculas e minúsculas). 
 
-Antes do filtri ser aplicado, o número de linhas da `linelist` é `nrow(linelist)`.
+Antes do filtro ser aplicado, o número de linhas da `linelist` é `nrow(linelist)`.
 
 ```{r, eval=F}
 linelist <- linelist %>% 
@@ -1540,9 +1540,9 @@ Podemos simplesmente filtrar por 'date_onset' para as linhas após junho de 2013
 *(Veja a página em [Trabalhando com datas] para mais informações sobre como trabalhar com datas e o pacote **lubridate**)*
 
 
-#### Deesenhe o filtro {.unnumbered}
+#### Desenhe o filtro {.unnumbered}
 
-Examine a tabulação cruzada para ter certeza que excluiímos somente as linhas corretas:
+Examine a tabulação cruzada para ter certeza que excluímos somente as linhas corretas:
 
 ```{r}
 table(Hospital  = linelist$hospital,                     # nome do hospital
@@ -1562,11 +1562,11 @@ Queremos excluir:
     - Excluir `nrow(linelist %>% filter(hospital %em% c('Hospital A', 'Hospital B') & is.na(date_onset)))`linhas dos Hospitais A & B com datas de início ausentes\
     - Fazer **não*** excluir `nrow(linelist %>% filter(!hospital %in% c('Hospital A', 'Hospital B') & is.na(date_onset)))` outras linhas com datas de início ausentes.
 
-Começamos com uma linelista de linha(linelist){\i1}`. Aqui está nossa declaração de filtro:
+Começamos com uma lineliste de `nrow(linelist){\i1}`. Aqui está nossa declaração de filtro:
 
 ```{r}
 linelist <- linelist %>% 
-  # mantém linhas onde o início é depois de 1 de Junho OU o início dos sintomos está faltante E o hospital é OUTRO que não A nem B 
+  # mantém linhas onde o início é depois de 1 de Junho OU o início dos sintomas está faltante E o hospital é OUTRO que não A nem B 
   filter(date_onset > as.Date("2013-06-01") | (is.na(date_onset) & !hospital %in% c("Hospital A", "Hospital B")))
 
 nrow(linelist)
