@@ -191,7 +191,8 @@ ggplot(data = linelist)
 
 Uma tela em branco certamente não é suficiente - precisamos criar geometrias (formas) a partir de nossos dados (por exemplo, gráficos de barra, histogramas, gráficos de dispersão, gráficos de caixa).  
 
-Isto é feito adicionando camadas "geoms" ao comando inicial `ggplot()`. Há muitas funções do **ggplot2**  que criam "geoms". Cada uma destas funções começa com "geom_", portanto, vamos nos referir a elas genericamente como `geom_XXXX()`. Há mais de 40 geoms em **ggplot2** e muitos outros criados por ventiladores. Veja-os na [galeria ggplot2](https://exts.ggplot2.tidyverse.org/gallery/). Alguns geoms comuns estão listados abaixo:  
+Isto é feito adicionando camadas "geoms" ao comando inicial `ggplot()`. Há muitas funções do **ggplot2**  que criam "geoms". Cada uma destas funções começa com "geom_", portanto, vamos nos referir a elas genericamente como `geom_XXXX()`. Há mais de 40 geoms em **ggplot2** e muitos outros criados por fãs e contribuidores. Veja-os na [galeria ggplot2](https://exts.ggplot2.tidyverse.org/gallery/). Alguns geoms comuns estão listados abaixo:  
+
 
 * Histogramas - `geom_histogram()`  
 * Gráficos de barras - `geom_bar()` ou `geom_col()` (veja ["Bar plot" seção](#ggplot_basics_bars))  
