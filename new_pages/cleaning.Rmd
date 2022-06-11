@@ -62,13 +62,13 @@ Você poderá encontrar uma estrutura alternativa de gestão de dados a partir d
 
 ### Nomenclatura {.unnumbered}
 
-Neste manual, referimos geralmente "colunas" e "linhas" em vez de "variáveis" e "observações". Como explicado neste manual sobre ["dados arrumados"](https://tidyr.tidyverse.org/articles/tidy-data.html), a maioria dos conjuntos de dados estatísticos epidemiológicos consistem estruturalmente em linhas, colunas e valores.
+Neste manual, utilizamos os termos "colunas" e "linhas" em vez de "variáveis" e "observações". Como explicado neste manual sobre ["dados arrumados"](https://tidyr.tidyverse.org/articles/tidy-data.html), a maioria dos conjuntos de dados estatísticos epidemiológicos consistem estruturalmente em linhas, colunas e valores.
 
-*Variáveis* ontêm os valores que medem o mesmo atributo subjacente (como o grupo etário, desfecho, ou data de início) *Observações* contêm todos os valores medidos na mesma unidade (por exemplo, uma pessoa, local, ou amostra de laboratório). Portanto, estes aspectos podem ser mais difíceis de definir de forma tangível.
+*Variáveis* contêm os valores que medem o mesmo atributo subjacente (como o faixa-etária, desfecho, ou data de início). *Observações* contêm todos os valores medidos na mesma unidade (por exemplo, uma pessoa, local, ou amostra de laboratório). Portanto, estes aspectos podem ser mais difíceis de definir de forma tangível.
 
-Em conjunto de dados "arrumados",cada coluna é uma variável, cada linha é uma observação, e cada célula é um único valor. Contudo, alguns conjuntos de dados que você encontra não se enquadrarão neste molde - um conjunto de dados de formato "amplo" pode ter uma variável dividida em várias colunas (ver um exemplo na página [Dados Pivotantes]). Da mesma forma, as observações podem ser divididas em várias linhas.
+Em um conjunto de dados "arrumados", cada coluna é uma variável, cada linha é uma observação, e cada célula é um único valor. Contudo, alguns conjuntos de dados que você encontra não se enquadrarão neste molde - um conjunto de dados de formato "amplo" (*wide*) pode ter uma variável dividida em várias colunas (ver um exemplo na página [Pivotando Dados]). Da mesma forma, as observações podem ser divididas em várias linhas.
 
-A maior parte deste manual trata da gestão e transformação de dados, referindo assim às estruturas de dados concretos de linhas e colunas é mais relevante do que as observações e variáveis mais abstractas. As excepções ocorrem principalmente em páginas sobre análise de dados, onde se verá mais referências a variáveis e observações.
+A maior parte deste manual trata da gestão e transformação de dados, referindo assim à estrutura concreta dos dados de linhas e colunas é mais relevante do que utilizar os termos observações/variáveis, que são mais abstratos. As exceções ocorrem principalmente em páginas sobre análise de dados, onde se verá mais referências a variáveis e observações.
 
 <!-- ======================================================= -->
 
