@@ -82,13 +82,13 @@ A maior parte deste manual trata da gestão e transformação de dados, referind
 
 Na análise epidemiológica e processamento de dados, as etapas de limpeza são frequentemente executadas sequencialmente, ligadas entre si. No R, isto manifesta-se frequentemente como um "pipeline" de limpeza, onde *o conjunto de dados bruto é passado ou "canalizado" de uma etapa de limpeza para outra*.
 
-Tais cadeias utilizam funções "verbo" **dplyr**\* e o operador pipe '%\>\$' do **magrittr**. Esta pipe começa com os dados "brutos" ("linelist_raw.xlsx") e termina com um data frame de R "limpo" (`linelist`) que pode ser utilizada, guardada, exportada, etc.
+Tais cadeias utilizam funções "verbo" **dplyr** e o operador pipe '%\>\%' do **magrittr**. Esta pipe começa com os dados "brutos" ("linelist_raw.xlsx") e termina com um data frame de R "limpo" (`linelist`) que pode ser utilizada, guardada, exportada, etc.
 
 Em uma cadeia de limpeza, a ordem das etapas é importante. As etapas de limpeza podem incluir:
 
 -   Importação de dados\
 -   Nomes de colunas limpos ou alterados\
--   Desduplicação\
+-   Remoção de duplicidades\
 -   Criação e transformação de colunas (por exemplo, re-codificação ou normalização de valores)\
 -   Linhas filtradas ou adicionadas
 
@@ -100,7 +100,7 @@ Em uma cadeia de limpeza, a ordem das etapas é importante. As etapas de limpeza
 
 ## Carregar pacotes
 
-Este pedaço de código mostra o carregamento das pacotes necessários para as análises. Neste manual, damos ênfase a `p_load()` do **pacman**, que instala o pacote se necessário *e* carrega-o para uso. Você pode também carregar pacotes instalados com `library()` da **base** do R. Veja a página do [Básico do R] para mais informações do pacotes do R.
+Este pedaço de código mostra o carregamento das pacotes necessários para as análises. Neste manual, damos ênfase a `p_load()` do **pacman**, que instala o pacote se necessário *e* carrega-o para uso. Você pode também carregar pacotes instalados com `library()` do R **base**. Veja a página do [R - o básico] para mais informações do pacotes do R.
 
 ```{r, message = F}
 pacman::p_load(
@@ -123,11 +123,11 @@ pacman::p_load(
 
 ### Importação {.unnumbered}
 
-Aqui nós importamos o arquivo de Excel linelist de casos "brutos" usando a função `import()` do pacote **rio**. O pacote **rio** rata de forma flexível muitos tipos de arquivos (por ex. .xlsx, .csv, .tsv, .rds. Ver a página em [Importar e exportar] para mais informações e dicas sobre situações não usuais (por exemplo, saltar linhas, definir valores em falta, importar Google sheets, etc.)
+Aqui nós importamos o arquivo de Excel linelist de casos "brutos" usando a função `import()` do pacote **rio**. O pacote **rio** trata de forma flexível muitos tipos de arquivos (por ex. .xlsx, .csv, .tsv, .rds. Ver a página em [Importar e exportar] para mais informações e dicas sobre situações não usuais (por exemplo, saltar linhas, definir valores em falta, importar Google sheets, etc.)
 
 Se quiser acompanhar, [clique para descarregar a linelist "bruta"](https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_raw.xlsx) (como arquivo .xlsx).
 
-Se o seu conjunto de dados for grande e demorar muito tempo a importar, pode ser útil que o comando de importação seja separado da cadeia pipe e que o "bruto" seja guardado como um ficheiro distinto. Isto também permite uma comparação fácil entre a versão original e a versão limpa.
+Se o seu conjunto de dados for grande e demorar muito tempo a importar, pode ser útil que o comando de importação seja separado da cadeia pipe e que o "bruto" seja guardado como um arquivo distinto. Isto também permite uma comparação fácil entre a versão original e a versão limpa.
 
 Abaixo, importamos o arquivo bruto do Excel e o salvamos como o dataframe linelist_raw. Presumimos que o arquivo esteja localizado no diretório de trabalho ou na raiz do projeto R e, portanto, nenhuma subpasta é especificada no caminho do arquivo.
 
@@ -141,7 +141,7 @@ linelist_raw <- rio::import(here::here("data", "case_linelists", "linelist_raw.x
 linelist_raw <- import("linelist_raw.xlsx")
 ```
 
-Você pode visualizar as primeiras 50 linhas do quadro de dados abaixo. Nota: a função do pacote **base** do R `head(n)` alpermite que você visualize apenas as primeiras `n` linhas no console do R.
+Você pode visualizar as primeiras 50 linhas do quadro de dados abaixo. Nota: a função contida no pacote R **base** `head(n)` permite que você visualize apenas as primeiras `n` linhas no console do R.
 
 ```{r message=FALSE, echo=F}
 # exibir os dados da linelist como uma tabela
@@ -170,26 +170,26 @@ skimr::skim_without_charts(linelist_raw)
 
 No R, os *nomes* das colunas são o "cabeçalho" ou valor do "topo" de uma coluna. Eles são usados para referir a colunas em código, e serve como um rotulo por omissão nas figuras.
 
-Outros softwares estatísticos como SAS e STATA utilizam *"etiquetas "* que coexistem como versões impressas mais longas dos nomes das colunas mais curtas. Embora o R ofereça a possibilidade de adicionar etiquetas de coluna aos dados, isto não é enfatizado na maioria das práticas. Para que os nomes das colunas sejam "amigáveis para impressão" de figuras, normalmente se ajusta sua exibição dentro dos comandos de plotagem que criam as saídas (por exemplo, títulos de eixos ou legendas de um gráfico, ou cabeçalhos de coluna em uma tabela impressa - veja a [seção de escalas da página de dicas ggplot](#ggplot_tips_scales) e páginas de [Tabelas para apresentação]). Se você quiser atribuir etiquetas de coluna nos dados, leia mais online [aqui](https://cran.r-project.org/web/packages/expss/vignettes/labels-support.html) e [aqui](https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html).
+Outros softwares estatísticos como SAS e STATA utilizam *"etiquetas "* que coexistem como versões impressas mais longas dos nomes das colunas mais curtas. Embora o R ofereça a possibilidade de adicionar etiquetas de coluna aos dados, isto não é enfatizado na maioria das práticas. Para que os nomes das colunas sejam "amigáveis para impressão" de figuras, normalmente se ajusta sua exibição dentro dos próprios comandos de criação dos gráficos e tabelas (por exemplo, títulos de eixos ou legendas de um gráfico, ou cabeçalhos de coluna em uma tabela impressa - veja a [seção de escalas da página de dicas ggplot](#ggplot_tips_scales) e páginas de [Tabelas para apresentação]). Se você quiser atribuir etiquetas de coluna nos dados, leia mais online [aqui](https://cran.r-project.org/web/packages/expss/vignettes/labels-support.html) e [aqui](https://cran.r-project.org/web/packages/labelled/vignettes/intro_labelled.html).
 
 Como os nomes de colunas no R são usados muito frequentemente, então eles devem ter uma sintaxe "limpa". Nós sugerimos o seguinte:
 
 -   Nomes curtos
 -   Sem espaços (substituir com sublinhados \_ )
--   Sem caracteres incomuns (&, \#, \<, \>, ...)\
--   Nomenclatura de estilo similar (por exemplo, todas as colunas de datas nomeadas como **data\_**início, **data\_**relato, **data\_**morte...)
+-   Sem caracteres especiais (&, \#, \<, \>, ...)\
+-   Nomenclatura de estilo similar (por exemplo, todas as colunas de datas nomeadas como **data_**início, **data\_**relato, **data\_**morte...)
 
-Os nomes das colunas de `linelist_raw` são impressos abaixo utilizando `names()` da **base** do R. Podemos ver isso inicialmente:
+Os nomes das colunas de `linelist_raw` são "printados" abaixo utilizando `names()` do R **base**. Podemos ver isso inicialmente:
 
--   Alguns nomes contêm espaços (por exemplo, `data de infecção`)\
--   Diferentes padrões de nomes são utilizados para datas (`data de início` vs. `data de infecção`)\
--   Deve ter havido um *cabeçalho combinado* nas duas últimas colunas no .xlsx. Sabemos disso porque o nome de duas colunas combinadas ("cabeçalho_combinado") foi atribuído pelo R à primeira coluna, e à segunda coluna foi atribuído um nome de espaço reservado "...28" (pois estava então vazia e é a 28ª coluna).
+-   Alguns nomes contêm espaços (por exemplo a data de infeccção `infecction date` )\
+-   Diferentes padrões de nomes são utilizados para datas (data de início vs data de infecção,  `date onset` vs. `infecction date`)\
+-   Deve ter havido um *cabeçalho combinado* nas duas últimas colunas no .xlsx. Sabemos disso porque o nome de duas colunas combinadas ("merged_header") foi atribuído pelo R à primeira coluna, e à segunda coluna foi atribuído um nome de espaço reservado "...28" (pois estava então vazia e é a 28ª coluna).
 
 ```{r}
 names(linelist_raw)
 ```
 
-[***NOTA:*** Para referenciar um nome de coluna que inclua espaços, rodeie o nome com apóstrofos, por exemplo: linelist\$`` ` '\x60infection date\x60'` ``. Note que no seu teclado, o apóstrofo (\`) é diferente das aspas simples (').]{style="color: black;"}
+[***NOTA:*** Para referenciar um nome de coluna que inclua espaços, rodeie o nome com o acentro grave (N.T. chamado vulgarmente de "crase"), por exemplo: linelist\$`` ` '\x60infection date\x60'` ``. Note que no seu teclado, o acento grave (\`) é diferente das aspas simples/apóstrofe (').]{style="color: black;"}
 
 ### Limpeza automática {.unnumbered}
 
