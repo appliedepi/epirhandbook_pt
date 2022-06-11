@@ -685,9 +685,9 @@ Aqui estão alguns recursos on-line sobre a utilização de `across()`: [creator
 
 ### `coalesce()` {.unnumbered}
 
-Esta função **dplyr** ncontra o primeiro valor não perdido em cada posição. Ela "preenche" os valores ausentes com o primeiro valor disponível em uma ordem especificada por você.
+Esta função **dplyr** encontra o primeiro valor não-faltante em cada posição. Ela "preenche" os valores ausentes com o primeiro valor disponível em uma ordem especificada por você.
 
-Aqui está um exemplo *fora do contexto de um data frame*: Digamos que você tem dois vetores, um contendo a vila de detecção do paciente e outro contendo a vila de residência do paciente. Você pode usar a coalesce para escolher o primeiro valor não desconsiderado para cada índice:
+Aqui está um exemplo *fora do contexto de um data frame*: Digamos que você tem dois vetores, um contendo a vila de detecção do paciente e outro contendo a vila de residência do paciente. Você pode usar a coalesce para escolher o primeiro valor não-faltante para cada índice:
 
 ```{r}
 village_detection <- c("a", "b", NA,  NA)
@@ -697,7 +697,7 @@ village <- coalesce(village_detection, village_residence)
 village    # imprima
 ```
 
-Isto funciona da mesma forma se você fornecer colunas de data frame: para cada linha, a função atribuirá o novo valor de coluna com o primeiro valor não descartado nas colunas que você forneceu (em ordem fornecida).
+Isto funciona da mesma forma se você fornecer colunas de data frame: para cada linha, a função atribuirá o novo valor de coluna com o primeiro valor não descartado nas colunas que você forneceu (na ordem fornecida).
 
 ```{r, eval=F}
 linelist <- linelist %>% 
@@ -736,9 +736,9 @@ Veja a página sobre [Curvas epidêmicas] para saber como plotar a incidência a
 Veja também:\
 `cumsum()`, `cummean()`, `cummin()`, `cummax()`, `cumany()`, `cumall()`
 
-### Usando a **base** do R {.unnumbered}
+### Usando o R **base**{.unnumbered}
 
-Para definir uma nova coluna (ou redefinir uma coluna) utilizando a **base** do R, escreva o nome do data frame, conectado com `$`, para a *nova* coluna (ou a colunas a ser modificada). Use o operador de atribuição `<-` para definir o(s) novo(s) valor(es). Relembre que quando usar a **base** do R voê deve especificar o nome do data frame antes do nome da coluna toda vez (por ex., `dataframe$column`). Aqui é um exemplo de criação da coluna `bmi` usando a **base** do R:
+Para definir uma nova coluna (ou redefinir uma coluna) utilizando o R **base**, escreva o nome do data frame, conectado com `$`, para a *nova* coluna (ou a colunas a ser modificada). Use o operador de atribuição `<-` para definir o(s) novo(s) valor(es). Relembre que quando usar o R **base** você deve especificar o nome do data frame antes do nome da coluna toda vez (por ex., `dataframe$column`). Aqui é um exemplo de criação da coluna `bmi` usando o R **base**:
 
 ```{r, eval=F}
 linelist$bmi = linelist$wt_kg / (linelist$ht_cm / 100) ^ 2)
@@ -749,7 +749,7 @@ linelist$bmi = linelist$wt_kg / (linelist$ht_cm / 100) ^ 2)
 **Abaixo, uma nova coluna é adicionada à cadeia pipe e algumas classes são convertidas.**
 
 ```{r }
-# CADEIA 'PIPE' LIMPA (começa com dados brutos e as pipes através das etapas de limpeza)
+# CADEIA 'PIPE' LIMPA (começa com dados brutos e faz pipes através das etapas de limpeza)
 ##################################################################################
 
 # inicie a cadeia pipe limpa
@@ -760,7 +760,7 @@ linelist <- linelist_raw %>%
     janitor::clean_names() %>% 
     
     # re-nomear colunas manualmente
-           # NOVO nome             # VELHO nome
+           # NOVO nome             # nome VELHO
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
            date_outcome         = date_of_outcome) %>% 
@@ -795,15 +795,15 @@ Aqui estão alguns cenários onde você precisa recodificar (mudar) os valores:
 
 Para alterar valores manualmente, você pode utilizar a função `recode()` dentro da função `mutate()`.
 
-Imagine que haja uma data sem sentido nos dados (por exemplo, "2014-14-15"): você poderia fixar a data manualmente nos dados da fonte bruta, ou, você poderia escrever a alteração na tubulação de limpeza via `mutate()` e `recode()`. Esta última é mais transparente e reprodutível para qualquer outra pessoa que procure entender ou repetir sua análise.
+Imagine que haja uma data sem sentido nos dados (por exemplo, "2014-14-15"): você poderia fixar a data manualmente nos dados da fonte bruta, ou, você poderia escrever a alteração no pipe de limpeza via `mutate()` e `recode()`. Esta última é mais transparente e reprodutível para qualquer outra pessoa que procure entender ou repetir sua análise.
 
 ```{r, eval=F}
-# corrigir valores incorretos                   # valor velho       # valor novo
+# corrigir valores incorretos          # valor velho       # valor novo
 linelist <- linelist %>% 
   mutate(date_onset = recode(date_onset, "2014-14-15" = "2014-04-15"))
 ```
 
-A linha `mutate()` aciima pode ser lida como: "mude a coluna `date_onset` para igualar a coluna `date_onset` re-codificada para que o VALOR VELHO seja alterado para o NOVO VALOR". Note que este padrão (VELHO = NOVO) para `recode()` é o oposto da maioria dos padrões de R (novo = velho). A comunidade de desenvolvedores do R está trabalhando na revisão deste padrão.
+A linha `mutate()` acima pode ser lida como: "mude a coluna `date_onset` para igualar a coluna `date_onset` re-codificada para que o VALOR VELHO seja alterado para o NOVO VALOR". Note que este padrão (VELHO = NOVO) para `recode()` é o oposto da maioria dos padrões de R (novo = velho). A comunidade de desenvolvedores do R está trabalhando na revisão deste padrão.
 
 **Aqui está outro exemplo de recodificação de múltiplos valores dentro de uma coluna.**
 
@@ -850,19 +850,19 @@ A seguir demonstramos como recodificar valores em uma coluna usando lógica e co
 
 #### `replace()` {.unnumbered}
 
-Para re-codificar com critérios lógicos simples, você pode utilizar `replace()` dentro de `mutate()`. `replace()` é uma função da **base*** do R. Utilize uma condição lógica para especificar as linhas a serem alteradas . A sintaxe geral é:
+Para re-codificar com critérios lógicos simples, você pode utilizar `replace()` dentro de `mutate()`. `replace()` é uma função do R **base***. Utilize uma condição lógica para especificar as linhas a serem alteradas . A sintaxe geral é:
 
 `mutate(col_to_change = replace(col_to_change, critério para linhas, new value))`.
 
-Uma situação comum para utilizar `replace()` é **alterar apenas um valor em uma linha, utilizando um identificador único de linha**. Abaixo, o gênero é alterado para "Female" na linha onde a coluna `case_id` é "2195".
+Uma situação comum para utilizar `replace()` é **alterar apenas um valor em uma linha, utilizando um identificador único de linha**. Abaixo, o gênero é alterado para "Female" (Feminino) na linha onde a coluna `case_id` é "2195".
 
 ```{r, eval=F}
-#  Exemplo: mudar o gênero de uma observação específica para "Feminino".  
+#  Exemplo: mudar o gênero de uma observação específica para  "Female" (Feminino).  
 linelist <- linelist %>% 
   mutate(gender = replace(gender, case_id == "2195", "Female"))
 ```
 
-O comando equivalente utilizando a síntaxe da **base** do R e colchetes indexadores `[ ]` está abaixo. Ele é lido como "Alterar o valor da coluna `gender` do dataframe `linelist` (para as linhas onde a coluna `case_id` do `linelist` tem o valor de '2195') para 'Female' ".
+O comando equivalente utilizando a síntaxe do R **base** e colchetes indexadores `[ ]` está abaixo. Ele é lido como "Alterar o valor da coluna `gender` do dataframe `linelist` (para as linhas onde a coluna `case_id` do `linelist` tem o valor de '2195') para 'Female' ".
 
 ```{r, eval=F}
 linelist$gender[linelist$case_id == "2195"] <- "Female"
@@ -881,6 +881,7 @@ linelist <- linelist %>%
 ```
 
 `if_else()` é uma versão especial de **dplyr** que manipula  datas. Observe que se o valor 'verdadeiro' é uma data, o valor 'falso' também deve qualificar uma data, portanto, utilizando o valor especial `NA_real_` em vez de apenas `NA`.
+
 ```{r, eval=F}
 #  Criar uma coluna de data de morte, que é NA, se o paciente não tiver morrido.
 linelist <- linelist %>% 
@@ -893,13 +894,13 @@ linelist <- linelist %>%
 knitr::include_graphics(here::here("images", "ifelse bad.png"))
 ```
 
-Fora do contexto de um data frame, se você quiser que um objetou tilizado em seu código mude seu valor, considere utilizar  `switch()` da **base** do R.
+Fora do contexto de um data frame, se você quiser que um objeto utilizado em seu código mude seu valor, considere utilizar `switch()` do R **base**.
  
 ### Lógica complexa {#clean_case_when .unnumbered}
 
-Use o`case_when()` do **dplyr** se você estiver recodificando em muitos grupos novos, ou se você precisar utilizar declarações lógicas complexas para recodificar valores. Esta função avalia cada linha no data frame,avalia se as linhas atendem aos critérios especificados e atribui o novo valor correto.
+Use o`case_when()` do **dplyr** se você estiver recodificando em muitos grupos novos, ou se você precisar utilizar declarações lógicas complexas para recodificar valores. Esta função avalia cada linha no data frame, avalia se as linhas atendem aos critérios especificados e atribui o novo valor correto.
 
-Os comandos `case_when()` consistem de declarações que têm um Lado Direito (RHS) e um Lado Esquerdo (LHS) separados por um "til" `~`. Os critérios lógicos estão no lado esquerdo e os valores de ajuste estão no lado direito de cada afirmação. As afirmações são separadas por vírgulas.
+Os comandos `case_when()` consistem de declarações que têm um Lado Direito (RHS, de Right-Hand Side em inglês) e um Lado Esquerdo (LHS, Left-Hand Side em inglês) separados por um "til" `~`. Os critérios lógicos estão no lado esquerdo e os valores de ajuste estão no lado direito de cada afirmação. As afirmações são separadas por vírgulas.
 
 Por exemplo, aqui utilizamos as colunas `age` e `age_unit` para criar uma coluna `age_years`:
 
@@ -912,9 +913,9 @@ linelist <- linelist %>%
             TRUE                 ~ NA_real_)) # qualquer outra circunstância, atribuir falta
 ```
 
-Como cada linha dos dados é avaliado, os critérios são aplicados/avaliados na ordem em que as declaraçõe `case_when()` são escritos - de cima para baixo. Se o critério de cima avaliar`TRUE` para uma dada linha, o valor RHS é atribuído, e os critérios restantes não são sequer testados para essa linha. Assim, é melhor escrever primeiro os critérios mais específicos, e por último os mais gerais.
+Como cada linha dos dados é avaliado, os critérios são aplicados/avaliados na ordem em que as declaraçõe `case_when()` são escritos - de cima para baixo. Se o critério de cima avaliar `TRUE` para uma dada linha, o valor RHS é atribuído, e os critérios restantes não são sequer testados para essa linha. Assim, é melhor escrever primeiro os critérios mais específicos, e por último os mais gerais.
 
-Nesta linha, em sua declaração final, coloque `TRUE` no lado esquerdo, que captará qualquer linha que não atenda a nenhum dos critérios anteriores. Ao lado direito desta declaração pode ser atribuído um valor como "check me!" ou perda.
+Nesta linha, em sua declaração final, coloque `TRUE` no lado esquerdo, que captará qualquer linha que não atenda a nenhum dos critérios anteriores. Ao lado direito desta declaração pode ser atribuído um valor como "checar!" ou perda.
 
 [***PERIGO:*** **Valores no lado direito devem ser todos na mesma classe** - seja numérico, caractere, data, lógico, etc. Para atribuir valores em falta (`NA`), você talvez necessite usar as variações especiais de `NA` como `NA_character_`, `NA_real_` (para numérico ou POSIX), e `as.Date(NA)`. Leia mais em [Trabalhando com datas].]{style="color: red;"}
 
