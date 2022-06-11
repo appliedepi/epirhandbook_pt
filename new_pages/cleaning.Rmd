@@ -221,7 +221,8 @@ A renomeação manual das colunas é frequentemente necessária, mesmo após a e
 Abaixo, um comando de renomeação é adicionado a linha de pipe limpa. Espaços foram adicionados estrategicamente para alinhar o código para facilitar a leitura.
 
 ```{r}
-# inicia com dados brutos e encadeia outras funções com o pipes até a limpeza
+# CADEIA 'PIPE' DE LIMPEZA
+# (inicia com dados brutos e encadeia funções com o pipe até a limpeza dos dados)
 ##################################################################################
 linelist <- linelist_raw %>%
     
@@ -413,7 +414,7 @@ linelist %>%
   names()
 ```
 
-Você também pode remover uma coluna utilizando a síntaxe da **base** do R, definindo-a como `NULL`. Por exemplo:
+Você também pode remover uma coluna utilizando a síntaxe do R **base**, definindo-a como `NULL`. Por exemplo:
 
 ```{r, eval=F}
 linelist$date_onset <- NULL   # elimina a coluna com a síntaxe da base do R 
@@ -436,10 +437,11 @@ names(linelist_age)
 Na `linelist_raw`, há algumas colunas que não precisamos: `row_num`, `merged_header`, e `x28`. Nós as removemos com um comando `select()` na cadeia pipe limpa:
 
 ```{r}
-# CADEIA 'PIPE' LIMPA (inicia com dados brutos e pipes através das etapas de limpeza)
+# CADEIA 'PIPE' DE LIMPEZA 
+#(inicia com dados brutos e encadeia funções com o pipe até a limpeza dos dados)
 ##################################################################################
 
-# inicie a cadeia pipe  de limpeza
+# inicie a cadeia pipe de limpeza
 ###########################
 linelist <- linelist_raw %>%
     
@@ -447,7 +449,7 @@ linelist <- linelist_raw %>%
     janitor::clean_names() %>% 
     
     # renomeie manualmente colunas
-           # NOVO nome             # VELHO nome
+           # NOVO nome             # nome VELHO
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
            date_outcome         = date_of_outcome) %>% 
@@ -465,9 +467,9 @@ linelist <- linelist_raw %>%
 
 <!-- ======================================================= -->
 
-## Desduplicação
+## Eliminação de duplicidades
 
-Consulte a página do manual de [De-duplicação] para obter opções extensivas sobre como de-duplicar os dados. Apenas um exemplo muito simples de desduplicação é apresentado aqui.
+Consulte a página do manual de [Eliminação de duplicidades] para obter opções extensivas sobre como de-duplicar os dados. Apenas um exemplo muito simples de eliminação de duplicidades é apresentado aqui.
 
 O pacote**dplyr** oferece a função `distinct()` function. Esta função examina cada linha e reduz o data frame para apenas as linhas únicas. Isto é, ele remove as linhas que são 100% duplicadas.
 
@@ -482,12 +484,13 @@ linelist <- linelist %>%
   distinct()
 ```
 
-Após a desduplicação, existem `nrow(linelist)` linhas. Qualquer linha removida teria sido 100% duplicada de outras linhas.
+Após a eliminação de duplicidades, existem `nrow(linelist)` linhas. Qualquer linha removida teria sido 100% duplicada de outras linhas.
 
 Abaixo, o comando `distinct()` é adicionado à cadeia de pipe de limpeza:
 
 ```{r}
-# CADEIA 'PIPE' DE LIMPEZA (inicia com dados brutos e pipes através das etapas de limpeza)
+# CADEIA 'PIPE' DE LIMPEZA 
+#(inicia com dados brutos e encadeia funções com o pipe até a limpeza dos dados)
 ##################################################################################
 
 # começa a limpeza da cadeia pipe
@@ -498,7 +501,7 @@ linelist <- linelist_raw %>%
     janitor::clean_names() %>% 
     
     # re-nomear colunas manualmente
-           # NOVO nome             # VELHO nome
+           # NOVO nome             # nome VELHO
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
            date_outcome         = date_of_outcome) %>% 
@@ -523,24 +526,24 @@ linelist <- linelist_raw %>%
 
 **Nós recomendamos usar a função dplyr `mutate()` para adicionar uma nova coluna, ou para modificar uma existente.**
 
-Abaixo está um exemplo de criação de uma nova coluna com `mutate()`. A sintaxe é: `mutate(new_coluna_name = value or transformation)`
+Abaixo está um exemplo de criação de uma nova coluna com `mutate()`. A sintaxe é: `mutate(novo_nome_de_coluna = valor ou transformação)`
 
 No Stata, isto é similar ao comando `generate`, mas o `mutate()` do R pode também ser usado para modificar uma coluna existente.
 
 ### Novas colunas {.unnumbered}
 
-O comando `mutate()` mais básico para criar uma nova coluna deve parecer como este. Ele cria uma nova coluna `new_col` onde o valor em cada linha é 10.
+O comando `mutate()` mais básico para criar uma nova coluna deve parecer como este. Ele cria uma nova coluna `nova_coluna` onde o valor em cada linha é 10.
 
 ```{r, eval=F}
 linelist <- linelist %>% 
-  mutate(new_col = 10)
+  mutate(nova_coluna = 10)
 ```
 
-Você também pode referenciar valores em outras colunas, para realizar cálculos. Abaixo, uma nova coluna `bmi` é criada para manter o Índice de Massa Corporal (IMC) para cada caso - como calculado utilizando a fórmula IMC = kg/m\^2, utilizando coluna `ht_cm` e coluna `wt_kg`.
+Você também pode referenciar valores em outras colunas, para realizar cálculos. Abaixo, uma nova coluna `bmi` é criada para manter o Índice de Massa Corporal (IMC, *Body Mass Index* em inglês) para cada caso - como calculado utilizando a fórmula IMC = kg/m\^2, utilizando coluna `ht_cm` e coluna `wt_kg`.
 
 ```{r}
 linelist <- linelist %>% 
-  mutate(bmi = wt_kg / (ht_cm/100)^2)
+  mutate(bmi = wt_kg / (ht_cm/100)^2) #bmi = IMC em portugês
 ```
 
 Se forem criadas várias colunas novas, separe cada uma delas com uma vírgula e uma nova linha. Abaixo estão exemplos de novas colunas, incluindo aquelas que consistem de valores de outras colunas combinadas utilizando `str_glue()` do pacote **stringr*** (veja a página em [Caracteres e strings].
@@ -574,9 +577,9 @@ DT::datatable(head(new_col_demo,50), rownames = FALSE, options = list(pageLength
 
 ### Converter a classe de coluna {.unnumbered}
 
-Colunas contendo valores que são datas, números ou valores lógicos (VERDADEIRO/FALSO) só se comportarão como esperado se forem corretamente classificadas. Há uma diferença entre "2" da classe caracteres e 2 da classe numérica!
+Colunas contendo valores que são datas, números ou valores lógicos (TRUE/FALSE, ou seja, verdadeiro/falso) só se comportarão como esperado se forem corretamente classificadas. Há uma diferença entre "2" da classe caracteres e 2 da classe numérica!
 
-Há maneiras de definir a classe da coluna durante os comandos de importação, mas isso é muitas vezes complicado. Veja a seção [Básico do R] sobre classes de objetos para saber mais sobre a conversão da classe de objetos e colunas.
+Há maneiras de definir a classe da coluna durante os comandos de importação, mas isso é muitas vezes complicado. Veja a seção [R - o básico] sobre classes de objetos para saber mais sobre a conversão da classe de objetos e colunas.
 
 Primeiro, vamos fazer algumas verificações em colunas importantes para ver se são a classe correta. Também vimos isso no início, quando corremos `skim()`.
 
@@ -599,7 +602,7 @@ linelist <- linelist %>%
   mutate(age = as.numeric(age))
 ```
 
-Em um modo similar, vocÊ pode usar `as.character()` e `as.logical()`. Para converter para a classe Fator, você pode usar `factor()` da **base** do R ou `as_factor()` do **forcats**. Leia mais sobre isso na página [Fatores].
+Em um modo similar, você pode usar `as.character()` e `as.logical()`. Para converter para a classe Fator, você pode usar `factor()` do R **base** ou `as_factor()` do **forcats**. Leia mais sobre isso na página [Fatores].
 
 Você deve ter cuidado ao converter para a classe Data. Vários métodos são explicados na página [Trabalhando com datas]. Normalmente, os valores de data bruta devem estar todos no mesmo formato para que a conversão funcione corretamente (por exemplo "MM/DD/YYYY", ou "DD MM YYYY"). Após a conversão para a classe Data, verifique seus dados para confirmar que cada valor foi convertido corretamente.
 
@@ -618,7 +621,7 @@ linelist %>%
   mutate(age_norm = age / mean(age, na.rm=T))
 ```
 
-Leia mais sobre a utilização de `mutate ()` em dataframes agrupados nesta [documentaçao do  mutate tidyverse](https://dplyr.tidyverse.org/reference/mutate.html).
+Leia mais sobre a utilização de `mutate ()` em dataframes agrupados nesta [documentaçao do mutate tidyverse](https://dplyr.tidyverse.org/reference/mutate.html).
 
 ### Transformar múltiplas colunas {#clean_across .unnumbered}
 
@@ -628,7 +631,7 @@ Especifique as colunas para o argumento `.cols =` e a(s) função(ões) a ser(em
 
 #### Seleção de coluna `across()` {.unnumbered}
 
-Especifique as colunas para o argumento `.cols =`. Você pode nomeá-las individualmente, ou usar as funções do helper do "tidyselect". Especifique a função para .fns =`. NObserve que utilizando o modo de função demonstrado abaixo, a função é escrita *sem* seus parênteses ( ).
+Especifique as colunas para o argumento `.cols =`. Você pode nomeá-las individualmente, ou usar as funções do helper do "tidyselect". Especifique a função para .fns =`. Observe que utilizando o modo de função demonstrado abaixo, a função é escrita *sem* seus parênteses ( ).
 
 Aqui a transformação `as.character()` é aplicada a colunas específicas nomeadas dentro de `across()`.
 
@@ -637,12 +640,12 @@ linelist <- linelist %>%
   mutate(across(.cols = c(temp, ht_cm, wt_kg), .fns = as.character))
 ```
 
-As funções do helper "tidyselect" estão disponíveis para ajudá-lo a especificar colunas. Elas são detalhadas acima na seção sobre Seleção e reordenação de colunas, e eles incluem: `everything()`, `last_col()`, `where()`, `starts_with()`, `ends_with()`, `contains()`, `matches()`, `num_range()` e `any_of()`.
+As funções auxiliares "tidyselect" estão disponíveis para ajudá-lo a especificar colunas. Elas são detalhadas acima na seção sobre Seleção e reordenação de colunas, e eles incluem: `everything()`, `last_col()`, `where()`, `starts_with()`, `ends_with()`, `contains()`, `matches()`, `num_range()` e `any_of()`.
 
 Aqui está um exemplo de como se pode mudar **todas as colunas*** para a classe de caracteres:
 
 ```{r, eval=F}
-#para mudar todas as colunas para a classe caractere
+# para mudar todas as colunas para a classe caractere
 linelist <- linelist %>% 
   mutate(across(.cols = everything(), .fns = as.character))
 ```
@@ -650,12 +653,12 @@ linelist <- linelist %>%
 Converter em caracteres todas as colunas onde o nome contém a string "data" (note a colocação de vírgulas e parênteses):
 
 ```{r, eval=F}
-#Mudar todas as colunas para classe de caracteres
+# para mudar todas as colunas para classe de caracteres
 linelist <- linelist %>% 
   mutate(across(.cols = contains("date"), .fns = as.character))
 ```
 
-Abaixo, um exemplo de mutação de colunas que atualmente são da classe POSIXct (uma classe de data/hora bruta que mostra os carimbos temporais) - em outras palavras, onde a função `is.POSIXct()` avalia para `TRUE`. Em seguida, queremos aplicar a função `as.Date()` a estas colunas para convertê-las em uma classe normal Date.
+Abaixo, um exemplo de transformação de colunas que atualmente são da classe POSIXct (uma classe de data/hora bruta que mostra marcações de hora) - em outras palavras, onde a função `is.POSIXct()` avalia para `TRUE`. Em seguida, queremos aplicar a função `as.Date()` a estas colunas para convertê-las em uma classe normal Date.
 
 ```{r, eval=F}
 linelist <- linelist %>% 
@@ -663,7 +666,7 @@ linelist <- linelist %>%
 ```
 
 - Note que dentro de `across()` também utilizamos a função `where()` como `is.POSIXct` está avaliando para TRUE ou FALSE.\
-- Note que `is.POSIXct()` é do pacote **lubridate**. Outras funções "is" similares como `is.character()`, `is.numeric()`, e `is.logical()` são da **base do R***.
+- Note que `is.POSIXct()` é do pacote **lubridate**. Outras funções "is" similares como `is.character()`, `is.numeric()`, e `is.logical()` são do R **base***.
 
 
 #### Funções`across()` {.unnumbered}
