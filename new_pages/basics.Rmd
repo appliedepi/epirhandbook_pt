@@ -972,7 +972,7 @@ knitr::include_graphics(here::here("images", "R_data_structures.png"))
 Em epidemiologia (e particularmente epidemiologia de campo), você encontrará *mais comumente* dataframes e vetores:
 
 +------------------+--------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+
-| Estrutura comun | Explicação                                                                                      | Examplo                                                                             |
+| Estrutura comun | Explicação                                                                                      | Exemplo                                                                             |
 +==================+==================================================================================================+=====================================================================================+
 | Vectores          | Um conteiner para uma sequencia de objetos singulates, de uma mesma classe  (es: numerico, caractere). | **"Variáveis" (colunas) em data frames são vetores** (ex: a coluna `age_years`). |
 +------------------+--------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------+
@@ -992,7 +992,7 @@ Todos os objetos armazenados em R possuem uma *classe* que informa ao R como lid
 +============+=========================================================================================================================================================================================+=======================================================================================================+
 | Character | Caracteres, esses são textos/palavras/frases **"dentro de aspas"**. Nenhuma operação matemática pode ser realizada com esses objetos.  | "Objetos do tipo caractere ficam entre aspas"                                                            |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-| Integer    | Números **inteirose** (sem decimais)                                                                                                                                           | -5, 14, or 2000                                                                                       |
+| Integer    | Números **inteiros** (sem decimais)                                                                                                                                           | -5, 14, or 2000                                                                                       |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
 | Numeric    | Números que **podem incluir decimais**. Se estiverem dentro de aspas, serão considerados como caractere                                                                      | 23.1 or 14                                                                                            |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
@@ -1009,7 +1009,7 @@ Todos os objetos armazenados em R possuem uma *classe* que informa ao R como lid
 | list       | Uma lista é como um vetor, mas contém outros objetos que podem ser outras classes diferentes| Uma lista pode conter um único número, um dataframe, um vetor e até outra lista dentro dele!    |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
 
-** Você pode testar a classe de um objeto fornecendo seu nome para a função `class()`**. Nota: você pode fazer referência a uma coluna específica dentro de um conjunto de dados utilizando a notação `$` para separar o nome do conjunto de dados e o nome da coluna.
+**Você pode testar a classe de um objeto fornecendo seu nome para a função `class()`**. Nota: você pode fazer referência a uma coluna específica dentro de um conjunto de dados utilizando a notação `$` para separar o nome do conjunto de dados e o nome da coluna.
 
 ```{r, echo=TRUE,}
 class(linelist)         # a classe deve ser uma data frame ou tibble
