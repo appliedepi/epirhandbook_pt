@@ -487,7 +487,7 @@ Em resumo: para usar as funções disponíveis em um pacote R, duas etapas devem
 
 2)  O pacote precisa ser **carregado** (a cada sessão de R que abrir)
 
-####Sua biblioteca {.unnumbered}
+#### Sua biblioteca {.unnumbered}
 
 Sua "biblioteca" é na verdade uma pasta em seu computador, contendo uma subpasta para cada pacote que foi instalado. Descubra onde R está instalado em seu computador, e procure uma pasta chamada "win-library". Por exemplo: `R\win-library\4.0` (a 4.0 é a versão R - você terá uma biblioteca diferente para cada versão R que você baixou).
 
@@ -722,7 +722,7 @@ Não há diferença entre escrever em um Rmarkdown versus um caderno R. Entretan
 Os aplicativos/websites shiny estão contidas em um script, que deve ser chamado de `app.R`. Este arquivo tem três componentes:
 
 1) Uma interface de usuário (ui)  \
-2) Uma função de servidor  
+2) Uma função de servidor  \
 3) Uma chamada para a função `shinyApp`.  
 
 Veja a página do manual em [Dashboards com Shiny], ou este tutorial online: [Tutorial com shiny](https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/)
@@ -733,11 +733,11 @@ Veja a página do manual em [Dashboards com Shiny], ou este tutorial online: [Tu
 
 Você pode colapsar/dobrar (do inglês *folding*) porções de código para facilitar a leitura de seu roteiro.
 
-Para isso, crie um cabeçalho de texto com \##, escreva seu cabeçalho, e siga-o com pelo menos 4 traços (-), hashes (\#) ou igual a (=). Quando você tiver feito isto, uma pequena seta aparecerá na "sarjeta" à esquerda (pelo número da linha). Você pode clicar nesta seta e o código abaixo até o próximo cabeçalho cair e um ícone de seta dupla aparecerá em seu lugar.
+Para isso, crie um cabeçalho de texto com \#, escreva seu cabeçalho, e siga-o com pelo menos 4 traços (-), hashes (\#) ou igual a (=). Quando você tiver feito isto, uma pequena seta aparecerá na "sarjeta" à esquerda (pelo número da linha). Você pode clicar nesta seta e o código abaixo até o próximo cabeçalho cair e um ícone de seta dupla aparecerá em seu lugar.
 
 Para expandir o código, clique novamente na seta na sarjeta, ou no ícone de duas fileiras. Há também atalhos de teclado como explicado na seção [RStudio](#rstudio) desta página.
 
-Ao criar cabeçalhos com \##, você também ativará o Índice na parte inferior de seu script (veja abaixo) que você pode usar para navegar em seu script. Você pode criar subtítulos adicionando mais símbolos, por exemplo, para primário, para secundário e para terciário.
+Ao criar cabeçalhos com \#, você também ativará o Índice na parte inferior de seu script (veja abaixo) que você pode usar para navegar em seu script. Você pode criar subtítulos adicionando mais \# símbolos, por exemplo, \#  para primário, \# \# para secundário e \#\#\# para terciário.
 
 Abaixo estão duas versões de um script de exemplo. À esquerda está o original com os cabeçalhos comentados. À direita, quatro traços foram escritos após cada cabeçalho, tornando-os colapsáveis. Dois deles foram colapsados, e você pode ver que a Tabela de Conteúdos na parte inferior agora mostra cada seção.
 
@@ -746,7 +746,7 @@ knitr::include_graphics(here::here("images", "code_folding1.png"))
 knitr::include_graphics(here::here("images", "code_folding2.png"))
 ```
 
-Outras áreas de código que são automaticamente elegíveis para fazer esse "dobramento" incluem as regiões entre chaves `{ }' tais como definições de funções ou blocos condicionais ( declarações "if else"). Pode ler mais sobre dobramento de código no RStudio [site](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections).
+Outras áreas de código que são automaticamente elegíveis para fazer esse "dobramento" incluem as regiões entre chaves `{ }` tais como definições de funções ou blocos condicionais ( declarações "if else"). Pode ler mais sobre dobramento de código no RStudio [site](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections).
 
 <!-- ======================================================= -->
 
