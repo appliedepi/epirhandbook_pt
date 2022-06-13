@@ -721,13 +721,13 @@ Não há diferença entre escrever em um Rmarkdown versus um caderno R. Entretan
 
 Os aplicativos/websites shiny estão contidas em um script, que deve ser chamado de `app.R`. Este arquivo tem três componentes:
 
-1) Uma interface de usuário (ui)  
+1) Uma interface de usuário (ui)  \
 2) Uma função de servidor  
-3) Uma chamada para a função `shinyApp'.  
+3) Uma chamada para a função `shinyApp`.  
 
 Veja a página do manual em [Dashboards com Shiny], ou este tutorial online: [Tutorial com shiny](https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/)
 
-*Nos tempos mais antigos, o arquivo acima era dividido em dois arquivos (`ui.R` e `server.R`)*
+*Nos tempos mais antigos, o arquivo acima era dividido em dois arquivos (`ui.R`  e `server.R`)*
 
 ### Código dobrável {.sem numeração}
 
