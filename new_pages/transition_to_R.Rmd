@@ -2,15 +2,16 @@
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-# Transition to R { }  
+# Transição para o R { }  
 
-Below, we provide some advice and resources if you are transitioning to R.  
+Abaixo, fornecemos alguns conselhos e recursos se você estiver fazendo a transição para o R.  
 
-R was introduced in the late 1990s and has since grown dramatically in scope. Its capabilities are so extensive that commercial alternatives have reacted to R developments in order to stay competitive! ([read this article comparing R, SPSS, SAS, STATA, and Python](https://www.inwt-statistics.com/read-blog/comparison-of-r-python-sas-spss-and-stata.html)).  
+O R foi lançado no final dos anos 90 e desde então, seu escopo tem crescido dramaticamente. Suas capacidades são tão amplas que programas alternativos comerciais reagiram ao surgimento do R para se manterem competitivas! ([leia este artigo comparando R, SPSS, SAS, STATA, e Python](https://www.inwt-statistics.com/read-blog/comparison-of-r-python-sas-spss-and-stata.html)).  
 
-Moreover, R is much easier to learn than it was 10 years ago. Previously, R had a reputation of being difficult for beginners. It is now much easier with friendly user-interfaces like RStudio, intuitive code like the **tidyverse**, and many tutorial resources.  
+Além disso, o R é muito mais fácil de aprender do que era há 10 anos. Anteriormente, o R tinha a reputação de ser difícil para os iniciantes. Agora é muito mais fácil de aprender, com interfaces de usuário amigáveis como RStudio, código intuitivo como o **tidyverse**, e muitos recursos tutoriais.  
 
-<span style="color: darkgreen;">**Do not be intimidated - come discover the world of R!**</span>  
+
+<span style="color: darkgreen;">**Não se sinta intimidado - venha descobrir o mundo do R!**</span>  
 
   
 
@@ -20,57 +21,57 @@ knitr::include_graphics(here::here("images", "transition_door.png"))
 
 
 
+## Partindo do Excel
 
-## From Excel  
+A transição do Excel diretamente para R é uma meta muito viável. Pode parecer assustador, mas você consegue fazer isso!  
 
-Transitioning from Excel directly to R is a very achievable goal. It may seem daunting, but you can do it!  
-
-It is true that someone with strong Excel skills can do very advanced activities in Excel alone - even using scripting tools like VBA. Excel is used across the world and is an essential tool for an epidemiologist. However, complementing it with R can dramatically improve and expand your work flows.  
-
-### Benefits {.unnumbered}  
-
-You will find that using R offers immense benefits in time saved, more consistent and accurate analysis, reproducibility, shareability, and faster error-correction. Like any new software there is a learning "curve" of time you must invest to become familiar. The dividends will be significant and immense scope of new possibilities will open to you with R.  
-
-Excel is a well-known software that can be easy for a beginner to use to produce simple analysis and visualizations with "point-and-click". In comparison, it can take a couple weeks to become comfortable with R functions and interface. However, R has evolved in recent years to become much more friendly to beginners.  
-
-Many Excel workflows rely on memory and on repetition - thus, there is much opportunity for error. Furthermore, generally the data cleaning, analysis methodology, and equations used are hidden from view. It can require substantial time for a new colleague to learn what an Excel workbook is doing and how to troubleshoot it. With R, all the steps are explicitly written in the script and can be easily viewed, edited, corrected, and applied to other datasets.   
+É verdade que alguém com fortes habilidades no Excel pode fazer atividades muito avançadas somente no Excel - até mesmo usando ferramentas de programação em código como VBA. O Excel é usado em todo o mundo e é uma ferramenta essencial para um epidemiologista. Entretanto, complementá-lo com R pode melhorar drasticamente e expandir seus fluxos de trabalho.  
 
 
-**To begin your transition from Excel to R you must adjust your mindset in a few important ways:**  
+### Benefícios{.unnumbered}  
+
+Você descobrirá que o uso de R oferece imensos benefícios, desde tempo economizado, análises mais consistentes e precisas, reprodutibilidade, compartilhabilidade e correção mais rápida de erros. Como qualquer software novo, há uma "curva" de aprendizado que reflete o tempo que você deve investir para se familiarizar em ele. Os dividendos serão significativos e um imenso escopo de novas possibilidades se abrirá para você com o R.  
+
+Excel é um software bem conhecido que pode ser fácil para um iniciante usar para produzir análises e visualizações simples com o "apontar e clicar". Em comparação, pode levar algumas semanas para se tornar confortável com as funções e a interface do R. No entanto, o R evoluiu nos últimos anos para se tornar muito mais amigável para iniciantes.  
+
+Muitos fluxos de trabalho do Excel dependem da memória e da repetição - portanto, há muitas oportunidades de erro. Além disso, geralmente a limpeza de dados, a metodologia de análise e as equações utilizadas são ocultadas da vista. Pode ser necessário um tempo substancial para que um novo colega aprenda o que uma pasta de trabalho Excel está fazendo e como resolvê-la. Com R, todas as etapas são explicitamente escritas no script e podem ser facilmente visualizadas, editadas, corrigidas e aplicadas a outros conjuntos de dados. 
 
 
-### Tidy data {.unnumbered}  
+**Para iniciar sua transição do Excel para o R, você deve ajustar sua mentalidade de algumas maneiras importantes:**  
 
-Use machine-readable "tidy" data instead of messy "human-readable" data. These are the three main requirements for "tidy" data, as explained in this tutorial on ["tidy" data in R](https://r4ds.had.co.nz/tidy-data.html):  
 
-* Each variable must have its own column  
-* Each observation must have its own row  
-* Each value must have its own cell  
+### Dados bem arrumados (*tidy data*) {.unnumbered}  
 
-To Excel users - think of the role that [Excel "tables"](https://exceljet.net/excel-tables) play in standardizing data and making the format more predictable.  
+Use dados "arrumados" (*tidy*), isto é, que sejam legíveis para a máquina em vez de dados bagunçados, que são apenas "legíveis para humanos". Estes são os três principais requisitos para dados do tipo "*tidy*", como explicado neste tutorial sobre [dados "tidy" em R](https://r4ds.had.co.nz/tidy-data.html):  
 
-An example of "tidy" data would be the case linelist used throughout this handbook - each variable is contained within one column, each observation (one case) has it's own row, and every value is in just one cell. Below you can view the first 50 rows of the linelist:  
+* Cada variável deve ter sua própria coluna  
+* Cada observação deve ter sua própria linha
+* Cada valor deve ter sua própria célula  
+
+Para os usuários do Excel - pense no papel que [as "tabelas" Excel](https://exceljet.net/excel-tables) desempenham na padronização dos dados e na maior previsibilidade do formato.  
+
+Um exemplo de dados "*tidy*" seria a lista (*linelist*) de casos utilizada ao longo deste manual - cada variável está contida dentro de uma coluna, cada observação (um caso) tem sua própria linha, e cada valor está em apenas uma célula. Abaixo você pode ver as primeiras 50 linhas desta *linelist*: 
 
 ```{r, echo=F}
-# import the linelist into R
+# importar a linelist para o R
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 ```
 
 ```{r, message=FALSE, echo=F}
-# display the linelist data as a table
+# mostra os dados da linelist como uma tabela
 DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-*The main reason one encounters non-tidy data is because many Excel spreadsheets are designed to prioritize easy reading by humans, not easy reading by machines/software.*  
+*O principal motivo pelo qual entramos dados não-arrumados por aí (*non-tidy*) se deve ao fato de muitas planilhas Excel serem projetadas para priorizar a leitura fácil por humanos, não a leitura fácil por máquinas/software.*  
 
-To help you see the difference, below are some fictional examples of **non-tidy data** that prioritize *human*-readability over *machine*-readability:  
+Para ajudá-lo a ver a diferença, abaixo estão alguns exemplos fictícios de **dados não-arrumados** que priorizam leitura por *humanos* em vez de leitura por *máquina*:  
 
 ```{r, echo=F, out.width = "100%", out.height="75%", fig.align = "center"}
 knitr::include_graphics(here::here("images", "Excel_nonTidy_1.png"))
 ```
 
 
-*Problems:* In the spreadsheet above, there are *merged cells* which are not easily digested by R. Which row should be considered the "header" is not clear. A color-based dictionary is to the right side and cell values are represented by colors - which is also not easily interpreted by R (nor by humans with color-blindness!). Furthermore, different pieces of information are combined into one cell (multiple partner organizations working in one area, or the status "TBC" in the same cell as "Partner D").  
+*Problemas:* Na planilha acima, há *células mescladas* que não são facilmente digeridas pelo R. Qual linha deve ser considerada o "cabeçalho" não está totalmente clara. Um dicionário baseado em cores está do lado direito e os valores das células são representados por cores - o que também não é facilmente interpretado pelo R (nem por humanos daltônicos!). Além disso, diferentes pedaços de informação são combinados em uma célula (múltiplas organizações parceiras trabalhando em uma área, ou o status "TBC" na mesma célula que "Parceiro (*partner*) D").     
 
 
 ```{r, echo=F, out.width = "100%", out.height="100%", fig.align = "center"}
@@ -78,25 +79,23 @@ knitr::include_graphics(here::here("images", "Excel_nonTidy_2.png"))
 ```
 
 
-*Problems:* In the spreadsheet above, there are numerous extra empty rows and columns within the dataset - this will cause cleaning headaches in R. Furthermore, the GPS coordinates are spread across two rows for a given treatment center. As a side note - the GPS coordinates are in two different formats!  
+*Problemas:* Na planilha acima, há numerosas linhas e colunas vazias extras dentro do conjunto de dados - isto causará dores de cabeça para a limpeza do banco no R. Além disso, as coordenadas GPS estão espalhadas por duas linhas para um determinado centro de tratamento. Como nota lateral - as coordenadas GPS estão em dois formatos diferentes!  
 
-"Tidy" datasets may not be as readable to a human eye, but they make data cleaning and analysis much easier! Tidy data can be stored in various formats, for example "long" or "wide""(see page on [Pivoting data]), but the principles above are still observed.
-
-
-### Functions {.unnumbered}  
-
-The R word "function" might be new, but the concept exists in Excel too as *formulas*. Formulas in Excel also require precise syntax (e.g. placement of semicolons and parentheses). All you need to do is learn a few new functions and how they work together in R.  
+Os conjuntos de dados "tidy" podem não ser tão legíveis a um olho humano, mas tornam a limpeza e análise dos dados muito mais fácil! Dados "tidy" podem ser armazenados em vários formatos, por exemplo "longo/comprido" (*long*)  ou "largo/amplo" (*wide*) (ver página em [Pivotando dados]), mas os princípios acima serão sempre observados.
 
 
+### Funções {.unnumbered}  
+
+A palavra "função" em R pode ser nova, mas o conceito também existe no Excel como *fórmulas*. As fórmulas no Excel também requerem sintaxe precisa (por exemplo, colocação de ponto-e-vírgula e parênteses). Tudo o que você precisa fazer é aprender algumas novas funções e como elas funcionam juntas em R.  
 
 ### Scripts {.unnumbered}  
 
-Instead of clicking buttons and dragging cells you will be writing *every* step and procedure into a "script". 
-Excel users may be familiar with "VBA macros" which also employ a scripting approach.  
+Em vez de clicar nos botões e arrastar as células, você estará escrevendo *todos* os passos e procedimentos em um "roteiro" (daqui em diante referido como *script*). 
+Os usuários do Excel podem estar familiarizados com "macros VBA" que também empregam uma abordagem de códigos de programação.  
 
-*The R script consists of step-by-step instructions.* This allows any colleague to read the script and easily see the steps you took. This also helps de-bug errors or inaccurate calculations. See the [R basics] section on scripts for examples.  
+*O script R consiste de instruções passo a passo.* Isto permite que qualquer colega leia o script e veja facilmente os passos que você deu. Isto também ajuda a eliminar erros ou cálculos imprecisos. Veja a seção [R - o básico] sobre scripts para exemplos.  
 
-Here is an example of an R script:  
+Aqui está um exemplo de um script em R:  
 
 ```{r, echo=F, out.width = "75%", out.height="75%", fig.align = "center"}
 knitr::include_graphics(here::here("images", "example_script.png"))
@@ -105,90 +104,81 @@ knitr::include_graphics(here::here("images", "example_script.png"))
 
 
 
+### Do Excel-para-R: recursos {.unnumbered}
 
-
-
-### Excel-to-R resources {.unnumbered}
-
-Here are some links to tutorials to help you transition to R from Excel:  
 
 * [R vs. Excel](https://www.northeastern.edu/graduate/blog/r-vs-excel/)  
-* [RStudio course in R for Excel users](https://rstudio-conf-2020.github.io/r-for-excel/)  
+* [curso RStudio em R para usuários do Excel](https://rstudio-conf-2020.github.io/r-for-excel/)  
 
 
-### R-Excel interaction {.unnumbered}  
+### Interação R-Excel {.unnumbered}  
 
-R has robust ways to import Excel workbooks, work with the data, export/save Excel files, and work with the nuances of Excel sheets.  
+R tem formas robustas de importar pastas de trabalho do Excel, trabalhar com os dados, exportar/guardar arquivos Excel e trabalhar com as nuances das planilhas Excel.  
 
-It is true that some of the more aesthetic Excel formatting can get lost in translation (e.g. italics, sideways text, etc.). If your work flow requires passing documents back-and-forth between R and Excel while retaining the original Excel formatting, try packages such as **openxlsx**.  
-
-
+É verdade que algumas das formatações mais estéticas do Excel podem se perder na tradução (por exemplo, itálico, texto lateral, etc.). Se seu fluxo de trabalho exigir a passagem de documentos entre R e Excel enquanto mantém a formatação original do Excel, tente pacotes como **openxlsx***.  
 
 
-
-
-
-## From Stata  
+## Partindo do Stata 
 <!-- ======================================================= -->
 
-**Coming to R from Stata**  
+**Vindo do Stata para R***  
 
-Many epidemiologists are first taught how to use Stata, and it can seem daunting to move into R. However, if you are a comfortable Stata user then the jump into R is certainly more manageable than you might think. While there are some key differences between Stata and R in how data can be created and modified, as well as how analysis functions are implemented – after learning these key differences you will be able to translate your skills.
+Muitos epidemiologistas são ensinados primeiro a usar Stata, e pode parecer assustador mudar para R. Entretanto, se você é um usuário confortável de Stata, então o salto para R é certamente mais manejável do que você possa pensar. Embora existam algumas diferenças chave entre Stata e R em como os dados podem ser criados e modificados, bem como a maneira que as funções de análise são implementadas - após aprender estas diferenças chave você será capaz de adaptar suas habilidades.
 
-Below are some key translations between Stata and R, which may be handy as your review this guide.
+Abaixo estão algumas traduções chave entre Stata e R, que podem ser úteis como sua revisão deste guia.
 
 
-**General notes**
+**Notas gerais**
 
 **STATA**                    | **R**  
 ---------------------------- | ---------------------------------------------    
-You can only view and manipulate one dataset at a time | You can view and manipulate multiple datasets at the same time, therefore you will frequently have to specify your dataset within the code
-Online community available through [https://www.statalist.org/](https://www.statalist.org/) | Online community available through [RStudio](https://community.rstudio.com/), [StackOverFlow](https://stackoverflow.com/questions/tagged/r), and [R-bloggers](https://www.r-bloggers.com/)
-Point and click functionality as an option | Minimal point and click functionality
-Help for commands available by `help [command]` | Help available by `[function]?` or search in the Help pane
-Comment code using * or /// or  /* TEXT */ | Comment code using #
-Almost all commands are built-in to Stata. New/user-written functions can be installed as **ado** files using **ssc install** [package] | R installs with **base** functions, but typical use involves installing other packages from CRAN (see page on [R basics])
-Analysis is usually written in a **do** file | Analysis written in an R script in the RStudio source pane. R markdown scripts are an alternative.
+Você só pode visualizar e manipular um conjunto de dados de cada vez | Você pode visualizar e manipular vários conjuntos de dados ao mesmo tempo, portanto você terá que especificar freqüentemente seu conjunto de dados dentro do código
+Comunidade online disponível por meio de [https://www.statalist.org/](https://www.statalist.org/) | Comunidade online disponível por meio de [RStudio](https://community.rstudio.com/), [StackOverFlow](https://stackoverflow.com/questions/tagged/r), e [R-bloggers](https://www.r-bloggers.com/)
+Funcionalidade "apontar e clicar" como opção | Funcionalidade "apontar e clicar" mínima
+Ajuda para comandos disponíveis por `help [comando]` | Ajuda disponível por `?função` ou busca no painel de Ajuda
+Comentar código usando * ou /// ou /* TEXTO */ | Comentar código usando #
+Quase todos os comandos são nativos ao Stata. Funções novas/escritas pelo usuário podem ser instaladas como arquivos **ado*** usando **ssc install** [pacote] | A instalação do R vem com funções **base** , mas o uso típico envolve a instalação de outros pacotes do CRAN (veja página em [R - o básico])
+A análise é geralmente escrita em um arquivo **do** | Análise escrita em um script R no painel de fontes do RStudio. Scripts em R Markdown são uma alternativa.
 
 
-**Working directory**  
+**Diretório de trabalho**  
 
 **STATA**                        | **R**  
 -------------------------------- | ---------------------------------------------
-Working directories involve absolute filepaths (e.g. "C:/usename/documents/projects/data/")| Working directories can be either absolute, or relative to a project root folder by using the **here** package (see [Import and export]) 
-See current working directory with **pwd** | Use `getwd()` or `here()` (if using the **here** package), with empty parentheses 
-Set working directory with **cd** “folder location” | Use `setwd(“folder location”)`, or `set_here("folder location)` (if using **here** package)
+Os diretórios de trabalho envolvem caminhos de arquivo absolutos (por exemplo, "C:/ nome do usuário/documentos/projetos/dados/")| Os diretórios de trabalho podem ser absolutos, ou relativos a uma pasta raiz do projeto usando o pacote **here** (ver [Importar e exportar]) 
+Ver diretório de trabalho atual com **pwd** | Utilize `getwd()` ou `here()` (se utilizar o pacote **here**), com parênteses vazios 
+Definir diretório de trabalho com **cd** "localização de pasta" | Utilize `setwd("localização de pasta")`, ou `set_here("localização de pasta")` (se estiver utilizando **here*** pacote)
 
-**Importing and viewing data**  
-
-**STATA**                    | **R**  
--------------------------------- | ---------------------------------------------
-Specific commands per file type | Use `import()` from **rio** package for almost all filetypes. Specific functions exist as alternatives (see [Import and export])
-Reading in csv files is done by **import delimited** “filename.csv” | Use `import("filename.csv")`
-Reading in xslx files is done by **import excel** “filename.xlsx” | Use `import("filename.xlsx")`
-Browse your data in a new window using the command **browse** | View a dataset in the RStudio source pane using `View(dataset)`. *You need to specify your dataset name to the function in R because multiple datasets can be held at the same time. Note capital "V" in this function*
-Get a high-level overview of your dataset using **summarize**, which provides the variable names and basic information | Get a high-level overview of your dataset using `summary(dataset)`
-
-**Basic data manipulation**  
+**Importando e visualizando dados**  
 
 **STATA**                    | **R**  
 -------------------------------- | ---------------------------------------------
-Dataset columns are often referred to as "variables" | More often referred to as "columns" or sometimes as "vectors" or "variables"
-No need to specify the dataset | In each of the below commands, you need to specify the dataset - see the page on [Cleaning data and core functions] for examples
-New variables are created using the command **generate** *varname* =  | Generate new variables using the function `mutate(varname = )`. See page on [Cleaning data and core functions] for details on all the below **dplyr** functions.
-Variables are renamed using **rename** *old_name new_name* | Columns can be renamed using the function `rename(new_name = old_name)`
-Variables are dropped using **drop** *varname* | Columns can be removed using the function `select()` with the column name in the parentheses following a minus sign
-Factor variables can be labeled using a series of commands such as **label define** | Labeling values can done by converting the column to Factor class and specifying levels. See page on [Factors]. Column names are not typically labeled as they are in Stata.
+Comandos específicos por tipo de arquivo | Utilize `import()` do pacote **rio** para quase todos os tipos de arquivo. Existem funções específicas como alternativas (ver [Importar e exportar])
+A leitura em arquivos csv é feita por **importar delimited** "filename.csv". | Use `import("nomedoarquivo.csv")`
+A leitura em arquivos xslx é feita por **import excel** "filename.xlsx" | Use `import("nomedoarquivo.xlsx")`
+Navegue seus dados em uma nova janela utilizando o comando **browse** | Visualize um conjunto de dados no painel de origem do RStudio utilizando `View(conjunto de dados)`. *Você precisa especificar o nome de seu conjunto de dados para a função em R porque vários conjuntos de dados podem ser mantidos ao mesmo tempo. Note "V" maiúsculo nesta função*.
+Obtenha uma visão geral do seu conjunto de dados utilizando **summarize**, que fornece os nomes das variáveis e informações básicas | Obtenha uma visão geral do seu conjunto de dados utilizando `summary(conjunto de dados)`.
 
-**Descriptive analysis**  
+**Manipulações básicas de dados**  
 
 **STATA**                    | **R**  
 -------------------------------- | ---------------------------------------------
-Tabulate counts of a variable using **tab** *varname* | Provide the dataset and column name to `table()` such as `table(dataset$colname)`. Alternatively, use `count(varname)` from the **dplyr** package, as explained in [Grouping data]
-Cross-tabulaton of two variables in a 2x2 table is done with **tab** *varname1 varname2* | Use `table(dataset$varname1, dataset$varname2` or `count(varname1, varname2)`
+As colunas do conjunto de dados são frequentemente referidas como "variáveis" | Mais frequentemente referidas como "colunas" ou às vezes como "vetores" ou "variáveis".
+Não é necessário especificar o conjunto de dados | Em cada um dos comandos abaixo, você precisa especificar o conjunto de dados - veja a página em [Limpeza de dados e principais funções] para exemplos
+Novas variáveis são criadas utilizando o comando **generate** *nome_var* = | Gerar novas variáveis utilizando a função `mutate(nome_var = )`. Consulte a página [Limpeza de dados e principais funções] para obter detalhes sobre todas as funções abaixo **dplyr***.
+As variáveis são renomeadas utilizando **rename** *nome_antigo nome_novo* | Colunas podem ser renomeadas utilizando a função `rename(novo_nome = nome_antigo)`
+As variáveis são descartadas utilizando **drop** *nome_var* | As colunas podem ser removidas utilizando a função `select()` com o nome da coluna entre parênteses, seguindo um sinal de subtração
+As variáveis fatoriais podem ser etiquetadas usando uma série de comandos como **label define** | Os valores de etiquetagem podem ser feitos convertendo a coluna para a classe fator e especificando níveis. Veja a página em [Fatores]. Os nomes das colunas não são tipicamente etiquetados como estão na Stata.
+
+**Análise descritiva**  
+
+**STATA**                    | **R**  
+-------------------------------- | ---------------------------------------------
+Tabula contagens de uma variável utilizando **tab** *nome_var* | Forneça o conjunto de dados e nome da coluna para `table()` tal como `table(dataset$nome_da_coluna)`. Alternativamente, utilize `count(nome_var)` do pacote **dplyr**, como explicado em [Agrupando dados].
+Uma tabela de contingência de duas variáveis em uma tabela 2x2 é feito com **tab** *nome_var1 nome_var2* | Use `table(dataset$nome_var1, dataset$nome_var2` ou `count(nome_var1, nome_var2)`
 
 
-While this list gives an overview of the basics in translating Stata commands into R, it is not exhaustive. There are many other great resources for Stata users transitioning to R that could be of interest:  
+Embora esta lista dê uma visão geral dos conceitos básicos na tradução dos comandos Stata em R, ela não é completa. Há muitos outros grandes recursos para os usuários da Stata em transição para R que poderiam ser de interesse:  
 
 * https://dss.princeton.edu/training/RStata.pdf  
 * https://clanfear.github.io/Stata_R_Equivalency/docs/r_stata_commands.html  
@@ -197,75 +187,75 @@ While this list gives an overview of the basics in translating Stata commands in
 
 
 
-## From SAS  
+## Partindo do SAS  
 <!-- ======================================================= -->
 
-**Coming from SAS to R**  
+**Vindo da SAS para R***  
 
-SAS is commonly used at public health agencies and academic research fields. Although transitioning to a new language is rarely a simple process, understanding key differences between SAS and R may help you start to navigate the new language using your native language. 
-Below outlines the key translations in data management and descriptive analysis between SAS and R.   
+O SAS é comumente usado em agências de saúde pública e campos de pesquisa acadêmica. Embora a transição para um novo idioma raramente seja um processo simples, compreender as diferenças-chave entre SAS e R pode ajudá-lo a começar a navegar no novo idioma usando seu idioma nativo. 
+A seguir, descrevemos as principais traduções no gerenciamento de dados e análise descritiva entre a SAS e o R.   
 
-**General notes**  
-
-**SAS**                          | **R**  
--------------------------------- | ---------------------------------------------
-Online community available through [SAS Customer Support](https://support.sas.com/en/support-home.html)|Online community available through RStudio, StackOverFlow, and R-bloggers
-Help for commands available by `help [command]`|Help available by [function]? or search in the Help pane
-Comment code using `* TEXT ;` or `/* TEXT */`|Comment code using #
-Almost all commands are built-in.  Users can write new functions using SAS macro, SAS/IML, SAS Component Language (SCL), and most recently, procedures `Proc Fcmp` and `Proc Proto`|R installs with **base** functions, but typical use involves installing other packages from CRAN (see page on [R basics])
-Analysis is usually conducted by writing a SAS program in the Editor window.|Analysis written in an R script in the RStudio source pane. R markdown scripts are an alternative.
-
-**Working directory**  
+**Notas gerais**  
 
 **SAS**                          | **R**  
 -------------------------------- | ---------------------------------------------
-Working directories can be either absolute, or relative to a project root folder by defining the root folder using `%let rootdir=/root path; %include “&rootdir/subfoldername/filename”`|Working directories can be either absolute, or relative to a project root folder by using the **here** package (see [Import and export])
-See current working directory with `%put %sysfunc(getoption(work));`|Use `getwd()` or `here()` (if using the **here** package), with empty parentheses
-Set working directory with `libname “folder location”`|Use `setwd(“folder location”)`, or `set_here("folder location)` if using **here** package
+Comunidade online disponível em [SAS Customer Support](https://support.sas.com/en/support-home.html)|Comunidade online disponível em RStudio, StackOverFlow, e R-bloggers
+Ajuda para os comandos disponíveis por `help [comando]`| Ajuda disponível por `?função` ou busca no painel de Ajuda
+Comentar código utilizando `* TEXT ;` ou `/* TEXT */` | Comentar código utilizando #
+Quase todos os comandos são nativos.  Os usuários podem escrever novas funções utilizando a macro SAS, SAS/IML, SAS Component Language (SCL) e, mais recentemente, procedimentos `Proc Fcmp` e `Proc Proto`|A instalação do R vem com as funções **base**, mas o uso típico envolve a instalação de outros pacotes do CRAN (veja a página em [R - o básico])
+A análise é geralmente conduzida escrevendo um programa SAS na janela do Editor. |Análise escrita em um script R no painel fonte do RStudio. Scripts em R Markdown são uma alternativa.
 
-
-**Importing and viewing data**  
-
-**SAS**                          | **R**  
--------------------------------- | ---------------------------------------------
-Use `Proc Import` procedure or using `Data Step Infile` statement.|Use `import()` from **rio** package for almost all filetypes. Specific functions exist as alternatives (see [Import and export])
-Reading in csv files is done by using `Proc Import datafile=”filename.csv” out=work.filename dbms=CSV; run;` OR using [Data Step Infile statement](http://support.sas.com/techsup/technote/ts673.pdf)|Use `import("filename.csv")`
-Reading in xslx files is done by using `Proc Import datafile=”filename.xlsx” out=work.filename dbms=xlsx; run;` OR using [Data Step Infile statement](http://support.sas.com/techsup/technote/ts673.pdf)|Use import("filename.xlsx")
-Browse your data in a new window by opening the Explorer window and select desired library and the dataset|View a dataset in the RStudio source pane using View(dataset). You need to specify your dataset name to the function in R because multiple datasets can be held at the same time. Note capital “V” in this function
-
-**Basic data manipulation**  
+**Diretório de trabalho**  
 
 **SAS**                          | **R**  
 -------------------------------- | ---------------------------------------------
-Dataset columns are often referred to as “variables”|More often referred to as “columns” or sometimes as “vectors” or “variables”
-No special procedures are needed to create a variable. New variables are created simply by typing the new variable name, followed by an equal sign, and then an expression for the value|Generate new variables using the function `mutate()`. See page on [Cleaning data and core functions] for details on all the below **dplyr** functions.
-Variables are renamed using `rename *old_name=new_name*`|Columns can be renamed using the function `rename(new_name = old_name)`
-Variables are kept using `**keep**=varname`|Columns can be selected using the function `select()` with the column name in the parentheses
-Variables are dropped using `**drop**=varname`|Columns can be removed using the function `select()` with the column name in the parentheses following a minus sign
-Factor variables can be labeled in the Data Step using `Label` statement|Labeling values can done by converting the column to Factor class and specifying levels. See page on [Factors]. Column names are not typically labeled.
-Records are selected using `Where` or `If` statement in the Data Step. Multiple selection conditions are separated using “and” command.|Records are selected using the function `filter()` with multiple selection conditions separated either by an AND operator (&) or a comma  
-Datasets are combined using `Merge` statement in the Data Step. The datasets to be merged need to be sorted first using `Proc Sort` procedure.|**dplyr** package offers a few functions for merging datasets. See page [Joining Data] for details.
+Os diretórios de trabalho podem ser absolutos ou relativos a uma pasta raiz do projeto, definindo a pasta raiz utilizando `%let rootdir=/root path; %include "&rootdir/subfoldername/nome_arqquivo"`|Os diretórios de trabalho podem ser absolutos ou relativos a uma pasta raiz do projeto utilizando o pacote **here** (ver [Importar e exportar])
+Veja o diretório de trabalho atual com `% de produção %sysfunc(getoption(work));`|Use `getwd()` ou `here()` (se utilizar o pacote **here**), com parênteses vazios
+Definir diretório de trabalho com `libname "localização de pasta"` | Use `setwd("localização de pasta")`, ou `set_here("localização de pasta)` se utilizar o pacote **here**.
 
-**Descriptive analysis**  
+
+**Importando e visualizando dados**  
 
 **SAS**                          | **R**  
 -------------------------------- | ---------------------------------------------
-Get a high-level overview of your dataset using `Proc Summary` procedure, which provides the variable names and descriptive statistics|Get a high-level overview of your dataset using `summary(dataset)` or `skim(dataset)` from the **skimr** package
-Tabulate counts of a variable using `proc freq data=Dataset; Tables varname; Run;`|See the page on [Descriptive tables]. Options include `table()` from **base** R, and `tabyl()` from **janitor** package, among others. Note you will need to specify the dataset and column name as R holds multiple datasets.
-Cross-tabulation of two variables in a 2x2 table is done with `proc freq data=Dataset; Tables rowvar*colvar; Run;`|Again, you can use `table()`, `tabyl()` or other options as described in the [Descriptive tables] page.  
+Utilize o procedimento `Proc Importar' ou utilize a declaração `Data Step Infile'.|Utilize a função `import()` do pacote **rio** para quase todos os tipos de arquivos. Existem funções específicas como alternativas (ver [Importar e exportar]).
+A leitura em arquivos csv é feita utilizando `Proc Import datafile="nome_arqquivo.csv" out=work.nome_arqquivo dbms=CSV; run;` ou usando [Data Step Infile statement](http://support.sas.com/techsup/technote/ts673.pdf)|Use `import("nome_arqquivo.csv")`
+A leitura em arquivos xslx é feita utilizando `Proc Import datafile="nome_arqquivo.xlsx" out=work.nome_arqquivo dbms=xlsx; run;` ou usando [Data Step Infile statement](http://support.sas.com/techsup/technote/ts673.pdf)|Use import("nome_arqquivo.xlsx")
+Navegue pelos seus dados em uma nova janela abrindo a janela do Explorer e selecione a biblioteca desejada e o conjunto de dados|Veja um conjunto de dados no painel de fontes do RStudio usando View(dataset). Você precisa especificar o nome de seu conjunto de dados para a função em R porque vários conjuntos de dados podem ser mantidos ao mesmo tempo. atenção para "V" maiúsculo nesta função
 
-**Some useful resources:**  
+**Manipulações básicas de dados**  
 
-[R for SAS and SPSS Users (2011)](https://www.amazon.com/SAS-SPSS-Users-Statistics-Computing/dp/1461406846/ref=sr_1_1?dchild=1&gclid=EAIaIQobChMIoqLOvf6u7wIVAhLnCh1c9w_DEAMYASAAEgJLIfD_BwE&hvadid=241675955927&hvdev=c&hvlocphy=9032185&hvnetw=g&hvqmt=e&hvrand=16854847287059617468&hvtargid=kwd-44746119007&hydadcr=16374_10302157&keywords=r+for+sas+users&qid=1615698213&sr=8-1)
+**SAS**                          | **R**  
+-------------------------------- | ---------------------------------------------
+As colunas do conjunto de dados são frequentemente referidas como "variáveis"|Mais frequentemente referidas como "colunas" ou às vezes como "vetores" ou "variáveis".
+Não são necessários procedimentos especiais para criar uma variável. Novas variáveis são criadas simplesmente digitando o novo nome da variável, seguido por um sinal de igual e, em seguida, uma expressão para o valor|Gere novas variáveis utilizando a função `mutate()`. Consulte a página [Limpeza de dadps e principais funções] para obter detalhes sobre todas as funções abaixo **dplyr**.
+As variáveis são renomeadas utilizando `renome *nome_antigo=nome_novo*`| As colunas podem ser renomeadas utilizando a função `rename(novo_nome = nome_antigo)`
+As variáveis são mantidas utilizando `**keep**=nome_var`|Colunas podem ser selecionadas utilizando a função `select()` com o nome da coluna entre parênteses
+As variáveis são descartadas utilizando `**drop**=nome da coluna` | As colunas podem ser removidas utilizando a função `select()` com o nome da coluna entre parênteses, seguindo um sinal de subtração
+As variáveis do tipo fator podem ser etiquetadas na Etapa de Dados, utilizando a declaração de 'Label' | Os valores do rótulo podem ser feitos convertendo a coluna para a classe Fator e especificando níveis. Veja a página em [Fatores]. Os nomes das colunas não são tipicamente rotulados.
+Os registros são selecionados utilizando a instrução `Where` ou `If` na Etapa de Dados. As condições de seleção múltipla são separadas utilizando o comando "and".| Os registros são selecionados utilizando a função `filter()` com condições de seleção múltipla separadas por um operador AND (&) ou por uma vírgula  
+Os conjuntos de dados são combinados utilizando a declaração `Merge` na Etapa de Dados. Os conjuntos de dados a serem fundidos precisam ser ordenados primeiro utilizando o procedimento `Proc Sort`.|O pacote **dplyr** oferece algumas funções para fundir conjuntos de dados. Consulte a página [Unindo Dados] para obter detalhes.
 
-[SAS and R, Second Edition (2014)](https://www.amazon.com/SAS-Management-Statistical-Analysis-Graphics-dp-1466584491/dp/1466584491/ref=dp_ob_title_bk)
+**Análise descritiva**  
+
+**SAS**                          | **R**  
+-------------------------------- | ---------------------------------------------
+Obtenha uma visão geral  do seu conjunto de dados utilizando o procedimento "Proc Summary", que fornece os nomes das variáveis e as estatísticas descritivas.| Obtenha uma visão geral do seu conjunto de dados utilizando o "summary(conjunto_de_dados)" ou "skimr(conjunto_de_dados)" do pacote **skimr**.
+Tabular contagens de uma variável utilizando `proc freq data=Dataset; Tables varname; Run;`| Ver a página em [Tabelas descritivas]. As opções incluem `table()` do R **base**, e `tabyl()` do pacote **janitor** , entre outras. Observe que você precisará especificar o conjunto de dados e o nome da coluna, pois R contém vários conjuntos de dados.
+A tabulação cruzada (tabela de contingência) de duas variáveis em uma tabela 2x2 é feita com `proc freq data=Dataset; Tables rowvar*colvar; Run;`|Novamente, você pode utilizar `table()`, `tabyl()` ou outras opções como descritas na página [Tabelas descritivas].   
+
+**Alguns recursos úteis:**  
+
+[R para usuários de SAS e SPSS (2011)](https://www.amazon.com/SAS-SPSS-Users-Statistics-Computing/dp/1461406846/ref=sr_1_1?dchild=1&gclid=EAIaIQobChMIoqLOvf6u7wIVAhLnCh1c9w_DEAMYASAAEgJLIfD_BwE&hvadid=241675955927&hvdev=c&hvlocphy=9032185&hvnetw=g&hvqmt=e&hvrand=16854847287059617468&hvtargid=kwd-44746119007&hydadcr=16374_10302157&keywords=r+for+sas+users&qid=1615698213&sr=8-1)
+
+[SAS e R, Segunda Edição (2014)](https://www.amazon.com/SAS-Management-Statistical-Analysis-Graphics-dp-1466584491/dp/1466584491/ref=dp_ob_title_bk)
 
 
 
-## Data interoperability  
+## Interoperabilidade de dados   
 <!-- ======================================================= -->
 
-See the [Import and export] page for details on how the R package **rio** can import and export files such as STATA .dta files, SAS .xpt and.sas7bdat files, SPSS .por and.sav files, and many others.  
+Veja a página [Importar e exportar] para detalhes sobre como o pacote **rio** do R pode importar e exportar arquivos como arquivos STATA .dta, arquivos SAS .xpt e.sas7bdat, arquivos SPSS .por e.sav, e muitos outros.   
 
 
 
