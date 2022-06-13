@@ -1,12 +1,11 @@
-# Fundamentos do R
-
+# R- o básico
 ```{r out.width = "100%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "basics_header_close.png"))
 ```
 
 Bem-vindo!
 
-Esta página analisa o essencial de R. Não pretende ser um tutorial abrangente, mas fornece o básico e pode ser útil para refrescar a sua memória. A secção [Recurso para a aprendizagem](#learning) liga a tutoriais mais abrangentes.
+Esta página analisa o essencial de R. Não pretende ser um tutorial abrangente, mas fornece o básico e pode ser útil para refrescar a sua memória. A secção [Recurso para a aprendizagem](#learning) tem links para a tutoriais mais abrangentes.
 
 Partes desta página foram adaptadas com a permissão do [projecto R4Epis](https://r4epis.netlify.app/).
 
@@ -23,24 +22,23 @@ pacman::p_load(apyramid)
 
 ## Porque usar o R?
 
-Segundo a definição do site [*R project*](https://www.r-project.org/about.html),  R é uma linguagem de programação e também um ambiente para computação estatística e gráfica. É altamente versátil, extensível, e orientado para a comunidade.
+Segundo a definição do site [*R project*](https://www.r-project.org/about.html), R é uma linguagem de programação e também um ambiente para computação estatística e gráfica. É altamente versátil, extensível, e orientado para a comunidade.
 
 **Custo**
 
-R é de utilização livre! Há uma política forte na comunidade para que o material seja gratuito e de fonte aberta.
+R é de utilização livre! Há uma política forte na comunidade para que o material seja gratuito e de código aberto.
 
 **Reprodutibilidade**
 
-A prática de conduzir a análise e gestão dos dados poor meio de uma linguagem de programação (em comparação com o Excel ou outra dessas ferramentas que requerem cliques manuais) melhora a  **reprodutibilidade**, torna a **detecção de erros** mais fácil, e alivia sua carga de trabalho.
+A prática de conduzir a análise e a gestão dos dados por meio de uma linguagem de programação (em comparação com o Excel ou outra dessas ferramentas que requerem cliques manuais) melhora a **reprodutibilidade**, torna a **detecção de erros** mais fácil e alivia sua carga de trabalho.
 
 **Comunidade**
 
-A comunidade de usuários de R é enorme e colaborativa. Novos pacotes e ferramentas para resolver problemas da vida real são desenvolvidos diariamente, e recebe críticas e contribuições da comunidade de utilizadores. Como um exemplo, [R-Ladies](https://rladies.org/) é uma organização mundial cuja missão é promover a diversidade de género na comunidade R, e é uma das maiores organizações de utilizadores de R. É provável que tenha uma divisão perto de você!
-
+A comunidade de usuários de R é enorme e colaborativa. Novos pacotes e ferramentas para resolver problemas da vida real são desenvolvidos diariamente e recebe críticas e contribuições da comunidade de utilizadores. Como um exemplo, [R-Ladies](https://rladies.org/) é uma organização mundial cuja missão é promover a diversidade de gênero na comunidade R, e é uma das maiores organizações de utilizadores de R. É provável que tenha uma divisão perto de você!
 
 ## Termos chave
 
-**RStudio** -RStudio é uma Interface Gráfica de Utilizador (GUI) para uma utilização mais fácil da linguagem  **R***. Leia mais [na secção RStudio](#rstudio).
+**RStudio** - RStudio é uma Interface Gráfica de Utilizador (GUI) para uma utilização mais fácil da linguagem  **R**. Leia mais [na secção RStudio](#rstudio).
 
 **Objetos** - Tudo o que se armazena em R - conjuntos de dados, variáveis, uma lista de nomes de cidades, um número total da população, mesmo saídas como gráficos - são *objetos* aos quais é *atribuído um nome* e *podem ser referenciados* em comandos posteriores. Ler mais [na secção Objectos](#objetos).
 
@@ -56,7 +54,7 @@ A comunidade de usuários de R é enorme e colaborativa. Novos pacotes e ferrame
 
 **Documentação de ajuda**
 
-Pesquisar na aba"Ajuda" do RStudio pela documentação sobre pacotes do R e funções específicas. Isto está dentro do painel que também contém "Arquivos", "Gráficos" e "Pacotes" (tipicamente no painel inferior direito). Como atalho, também se pode digitar o nome de um pacote ou função no console do R após um ponto de interrogação para abrir a página de Ajuda relevante. Não inclui parênteses.
+Pesquisar na aba "Ajuda" do RStudio pela documentação sobre pacotes do R e funções específicas. Isto está dentro do painel que também contém "Arquivos", "Gráficos" e "Pacotes" (tipicamente no painel inferior direito). Como atalho, também se pode digitar o nome de um pacote ou função no console do R após um ponto de interrogação para abrir a página de Ajuda relevante. Não inclui parênteses.
 
 Por exemplo: `?filter` ou `?diagrammeR`.
 
@@ -64,13 +62,13 @@ Por exemplo: `?filter` ou `?diagrammeR`.
 
 Há várias maneiras de aprender R interactivamente *dentro* do RStudio.
 
-O próprio RStudio oferece um painel Tutorial que é alimentado pelo pacote do R [**learnr**](https://blog.rstudio.com/2020/02/25/rstudio-1-3-integrated-tutorials/). Basta instalar este pacote e abrir um tutorial através da nova aba "Tutorial" no painel superior direito do RStudio (que também contém os separadores Ambiente e Histórico).
+O próprio RStudio oferece um painel Tutorial que é alimentado pelo pacote do R [**learnr**](https://blog.rstudio.com/2020/02/25/rstudio-1-3-integrated-tutorials/). Basta instalar este pacote e abrir um tutorial através da nova aba "Tutorial" no painel superior direito do RStudio, que também contém os separadores Environment (Ambiente) e History (Histórico).
 
 O pacote do R [**swirl**](https://swirlstats.com/) oferece cursos interativos no Console do R. Instale e carregue este pacote, depois execute o comando `swirl()` (parênteses vazios) no Console do R. Você verá avisos aparecerem no Console. Responda digitando no Console. Ele irá guiá-lo através de um curso à sua escolha.
 
 ### Página de dicas {.unnumbered}
 
-Há várias "cheatsheets" em pdf disponíveis no [website do RStudio](https://rstudio.com/resources/cheatsheets/), por exemplo:
+Há várias "cheatsheets" ("colinhas") em pdf disponíveis no [website do RStudio](https://rstudio.com/resources/cheatsheets/), por exemplo:
 
 -   Fatores com o pacote **forcats**
 -   Datas e horas com o pacote **lubridate**
@@ -136,13 +134,13 @@ Note que você deve instalar R e RStudio em um drive onde você tenha permissõe
 
 **Como atualizar o R e o RStudio**
 
-Sua versão de R é impressa no o Console R na inicialização. Você também pode executar o `sessionInfo()`.
+Sua versão de R é exibida ("printada") no o Console R na inicialização. Você também pode executar o `sessionInfo()`.
 
 Para atualizar o R, vá para o site mencionado acima e reinstale o R. Alternativamente, você pode utilizar o pacote **installr** (no Windows) executando `installr::updateR()`. Isto abrirá caixas de diálogo para ajudá-lo a baixar a última versão R e atualizar seus pacotes para a nova versão R. Mais detalhes podem ser encontrados na **installr** [documentação](https://www.r-project.org/nosvn/pandoc/installr.html).
 
-Esteja ciente de que a antiga versão R ainda existirá em seu computador. Você pode executar temporariamente uma versão antiga (antiga "instalação") do R clicando em "Ferramentas" -> "Opções Globais" no RStudio e escolhendo uma versão R. Isto pode ser útil se você quiser usar um pacote que não tenha sido atualizado para funcionar na versão mais nova do R.
+Esteja ciente de que a antiga versão R ainda existirá em seu computador. Você pode executar temporariamente uma versão antiga (antiga "instalação") do R clicando em "Tools" (Ferramentas) -> "Global Options" (Opções Globais)  no RStudio e escolhendo uma versão R. Isto pode ser útil se você quiser usar um pacote que não tenha sido atualizado para funcionar na versão mais nova do R.
 
-Para atualizar o RStudio, você pode ir ao site acima e fazer o download novamente do RStudio. Outra opção é clicar em "Ajuda" -\> "Verificar Atualizações" dentro do RStudio, mas isto pode não mostrar as últimas atualizações.
+Para atualizar o RStudio, você pode ir ao site acima e fazer o download novamente do RStudio. Outra opção é clicar em "Help" (Ajuda) -\> "Check for Updates" (Verificar Atualizações) dentro do RStudio, mas isto pode não mostrar as últimas atualizações.
 
 Para ver quais versões do R, RStudio, ou pacotes foram usados quando este Manual foi feito, veja a página em [Notas editoriais e técnicas].
 
@@ -169,7 +167,7 @@ tinytex::install_tinytex()
 
 #### Pandoc {.unnumbered}
 
-Sua versão de R é impressa no o Console R na inicialização. Você também pode executar o Pandoc é um conversor de documentos, um software separado do R. ** Ele vem junto com o RStudio e não deve precisar ser baixado.** Ele ajuda no processo de conversão de documentos Rmarkdown para formatos como .pdf e adição de funcionalidades complexas.
+Sua versão de R é impressa no o Console R na inicialização. Você também pode executar o Pandoc é um conversor de documentos, um software separado do R. **Ele vem junto com o RStudio e não deve precisar ser baixado.** Ele ajuda no processo de conversão de documentos Rmarkdown para formatos como .pdf e adição de funcionalidades complexas.
 
 #### RTools {.unnumbered}
 
@@ -212,7 +210,7 @@ O Console R, ou simplesmente Console, é por padrão o painel esquerdo ou inferi
 
 Se você está familiarizado com Stata, o Console R é como a Janela de Comando e também a Janela de Resultados.
 
-**O Painel Ambiente**
+**O Painel Ambiente (Environment)**
 
 Este painel, por padrão na parte superior direita, é mais freqüentemente usado para ver resumos breves de [objetos] (#objetos) no Ambiente R na sessão atual. Estes objetos podem incluir conjuntos de dados importados, modificados ou criados, parâmetros que você definiu (por exemplo, uma semana epidemiológica específica para a análise), ou vetores ou listas que você definiu durante a análise (por exemplo, nomes de regiões). Você pode clicar na seta ao lado de um nome de data frame para ver suas variáveis.
 
