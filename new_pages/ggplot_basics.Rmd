@@ -739,7 +739,8 @@ age_by_wt +
     
     plot.title = element_text(size = 30),          # ajusta o tamanho do título para 30
     plot.caption = element_text(hjust = 0),        # alinha a Legenda da figura a esquerda
-    plot.subtitle = element_text(face = "italic"), # italicize subtitle
+    plot.subtitle = element_text(face = "italic"), # deixa subtítulo em itálico
+
     
     axis.text.x = element_text(color = "red", size = 15, angle = 90), # ajusta o texto o eixo x 
     axis.text.y = element_text(size = 15),         # ajusta o texto o eixo y
