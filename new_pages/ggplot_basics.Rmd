@@ -365,7 +365,8 @@ O mapeamento das *aesthetics* dentro de `mapping = aes()` pode ser escrito em v�
 * Outros mapeamentos feitos dentro de um geom se aplicam somente a esse geom
 
 
-Da mesma forma, o *aesthetic*  `data = ` (do inglês dados) que especificados no topo `ggplot()` será aplicado por padrão a qualquer geom abaixo, mas você também poderia especificar dados novos para cada geom (mas isto é mais complicado).  
+Da mesma forma, o parâmetro  `data = ` (do inglês dados) especificado no primeiro comando `ggplot()` será aplicado por padrão a qualquer geom abaixo, mas você também poderia especificar dados novos para cada geom (mas isto é mais complicado).  
+
 
 Assim, cada um dos seguintes comandos irá criar o mesmo gráfico:  
 
@@ -540,7 +541,8 @@ Ao utilizar somente `facet_grid`, podemos adicionar `space = "free_y"` ou `space
 ggplot(malaria_data, aes(x = data_date, y = malaria_tot)) +
   geom_col(width = 1, fill = "darkred") +       # plote os dados de contagem como colunas
   theme_minimal()+                              # simplifique os painel de fundo
-  labs(                                         #adicione rótulos, título, etc.
+  labs(                                         # adicione rótulos, título, etc.
+
     x = "Data de registro",
     y = "Casos de malária",
     title = "Casos de malária por distrito - Eixos x e y 'livres'") +
@@ -669,7 +671,8 @@ Uma nota sobre a especificação do título da  *legenda*: Não há nenhum argum
 
 Uma das melhores partes do **ggplot2** é a quantidade de controle que você tem sobre o gráfico - você pode definir qualquer coisa! Como mencionado acima, o desenho do gráfico que *não* está relacionado às formas/geometrias dos dados são ajustados dentro da função `theme()`. Por exemplo, a cor de fundo do gráfico, presença/ausência de linhas de grade e a fonte/tamanho/cor/alinhamento do texto (títulos, subtítulos, legendas, texto do eixo...). Estes ajustes podem ser feitos de uma de duas maneiras:  
 
-*Adicionar um [*tema completo*](https://ggplot2.tidyverse.org/reference/ggtheme.html) `theme_()`função para fazer ajustes de varredura - estes incluem `theme_classic()`, `theme_minimal()`, `theme_escuro()`, `theme_light()`theme_grey()`, `theme_bw()` entre outros  
+*Adicionar um [*tema completo*](https://ggplot2.tidyverse.org/reference/ggtheme.html) `theme_()`função para fazer ajustes de varredura - estes incluem `theme_classic()`, `theme_minimal()`, `theme_dark()`, `theme_light()`theme_grey()`, `theme_bw()` entre outros  
+
 * Ajuste cada pequeno aspecto do gráfico individualmente dentro de `theme()`  
 
 
@@ -756,7 +759,8 @@ Argumento `theme()`                |O que é ajustado
 `axis.title = element_text()`      |Títulos e ambos eixos (ambos x e y) (parâmetros: size, face, color...)
 `axis.title.x = element_text()`    |Título do eixo x (use `.y` para apenas eixo Y)
 `axis.text = element_text()`       |Texto do eixo x (ambos x and y)
-`axis.text.x = element_text()`     |Axis text x-axis only (use `.y` para apenas eixo Y)  
+`axis.text.x = element_text()`     | Texto do eixo x (use `.y` para apenas eixo Y)  
+
 `axis.ticks = element_blank()`     |Remove marcações de escalas do eixo
 `axis.line = element_line()`       |Linhas do eixo (parâmetros: colour, linetype: solid dashed dotted etc)
 `strip.text = element_text()`      |Texto do rótulo da faceta (parâmetros: colour, face, size, angle...)
@@ -782,7 +786,8 @@ Por favor veja [a seção sobre escala de cores na página de dicas do ggplot](#
 
 Ao utilizar *pipes* (%>%) para limpar e transformar seus dados, é fácil passar os dados transformados em `ggplot()`.  
 
-Os *pipes* que passam o conjunto de dados de função para função passarão a ser um símbolo de mais `+` assim que a função `ggplot()` for chamada. Observe que, neste caso, não há necessidade de especificar o argumento `dados = `, pois este é automaticamente definido como o conjunto de dados que vinha sendo usado no *pipe*.  
+Os *pipes* que passam o conjunto de dados de função para função passarão a ser um símbolo de mais `+` assim que a função `ggplot()` for chamada. Observe que, neste caso, não há necessidade de especificar o argumento `data = ` (data), pois este é automaticamente definido como o conjunto de dados que vinha sendo usado no *pipe*.  
+
 
 Esta é a aparência que pode ter:  
 
@@ -816,7 +821,8 @@ linelist %>%                                                     # comece com a 
 
 ## Fazer gráficos de dados contínuos
 
-Ao longo desta página, você já viu muitos exemplos de plotagem de dados contínuos. Aqui nós os consolidamos brevemente e apresentamos algumas variações.  
+Ao longo desta página, você já viu muitos exemplos de gráficos de dados contínuos. Aqui nós os consolidamos brevemente e apresentamos algumas variações.  
+
 As visualizações aqui abordadas incluem:
 
 *Gráficos para uma variável contínua:  
@@ -964,7 +970,8 @@ Below is code for creating **violin plots** (`geom_violin`) and **jitter plots**
 ```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
 
 
-# A) Jitter plot por grupo
+# A) Gráfico de jitter por grupo
+
 ggplot(data = linelist %>% drop_na(outcome),      # remove valores faltantes
        mapping = aes(y = age,                     # variável contínua escolhida
            x = outcome,                           # variável de agrupamento
@@ -1157,9 +1164,11 @@ Para mostrarmos as detalhamentos por hospital, precisaríamos que nossa tabela c
 ```{r, fig.height = 4, fig.width=6}
 outcomes2 <- linelist %>% 
   drop_na(outcome) %>% 
-  count(hospital, outcome) %>%  # abtem contagens para hospital e desfecho 
+  count(hospital, outcome) %>%  # obtém contagens para hospital e desfecho 
+
   group_by(hospital) %>%        # Agrupa para que proporção esteja fora do total do hospital 
-  mutate(proportion = n/sum(n)*100) # Calcule as proporções
+  mutate(proportion = n/sum(n)*100) # Calcula as proporções
+
 
 head(outcomes2) # Veja uma prévia dos dados
 ```
