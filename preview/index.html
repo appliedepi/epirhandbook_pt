@@ -4,18 +4,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>R for applied epidemiology and public health | The Epidemiologist R Handbook</title>
+<title>Como usar este manual | Manual de R para Epidemiologistas</title>
 <meta name="author" content="the handbook team">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.8/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="The Epi R Handbook is a R reference manual for applied epidemiology and public health.">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="Como usar este manual | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="The Epi R Handbook is a R reference manual for applied epidemiology and public health.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Como usar este manual | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="The Epi R Handbook is a R reference manual for applied epidemiology and public health.">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.23/datatables.js"></script><link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
-<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -25,7 +37,7 @@
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">The Epidemiologist R Handbook</a>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -39,7 +51,8 @@
         <ul class="book-toc list-unstyled">
 <li><a class="active" href="index.html"></a></li>
 <li class="book-part">Preview pages</li>
-<li><a class="" href="transition-to-r.html"><span class="header-section-number">1</span> Transition to R</a></li>
+<li><a class="" href="pir%C3%A2mides-demogr%C3%A1ficas-e-escalas-likert.html"><span class="header-section-number">1</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="r---o-b%C3%A1sico.html"><span class="header-section-number">2</span> R - o básico</a></li>
 </ul>
 
         <div class="book-extra">
@@ -52,18 +65,15 @@
 <div class="inline-figure"><img src="images/Epi%20R%20Handbook%20Banner%20Beige%201500x500.png" width="100%" style="display: block; margin: auto;"></div>
 <meta name="description" content="The Epi R Handbook is an R reference manual for applied epidemiology and public health.">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- <span style="color: red;">**THIS IS A DRAFT.  REVIEWERS GIVE FEEDBACK AT THIS [LINK](https://forms.gle/4RNdRRLGx67xW9yq9)**.</span> --><!-- <span style="color: darkgreen;">**DO YOU LIKE THIS HANDBOOK? SHOULD SOMETHING BE CHANGED? PLEASE TELL US!**</span> --><!-- <form target="_blank" action="https://forms.gle/A5SnRVws7tPD15Js9"> --><!--     <input type="submit" value="FEEDBACK" /> --><!-- </form> --><!-- ======================================================= --><!-- ## An R reference manual for applied epidemiology and public health {.unnumbered} --><!-- <span style="color: brown;">**The Epi R Handbook is an R reference manual for applied epidemiology and public health.**</span> --><!-- ## About this handbook   --><div id="r-for-applied-epidemiology-and-public-health" class="section level2 unnumbered">
-<h2>R for applied epidemiology and public health<a class="anchor" aria-label="anchor" href="#r-for-applied-epidemiology-and-public-health"><i class="fas fa-link"></i></a>
-</h2>
-<p><strong>This handbook strives to:</strong></p>
+<!-- <span style="color: red;">**THIS IS A DRAFT.  REVIEWERS GIVE FEEDBACK AT THIS [LINK](https://forms.gle/4RNdRRLGx67xW9yq9)**.</span> --><!-- <span style="color: darkgreen;">**DO YOU LIKE THIS HANDBOOK? SHOULD SOMETHING BE CHANGED? PLEASE TELL US!**</span> --><!-- <form target="_blank" action="https://forms.gle/A5SnRVws7tPD15Js9"> --><!--     <input type="submit" value="FEEDBACK" /> --><!-- </form> --><!-- ======================================================= --><!-- ## An R reference manual for applied epidemiology and public health {.unnumbered} --><!-- <span style="color: brown;">**The Epi R Handbook is an R reference manual for applied epidemiology and public health.**</span> --><!-- ## About this handbook   --><p><strong>Este manual se esforça para:</strong></p>
 <ul>
-<li>Serve as a quick R code reference manual<br>
+<li>Servir como um manual rápido de referência do código R<br>
 </li>
-<li>Provide task-centered examples addressing common epidemiological problems<br>
+<li>Fornecer exemplos centrados em tarefas que abordam problemas epidemiológicos comuns<br>
 </li>
-<li>Assist epidemiologists transitioning to R<br>
+<li>Auxiliar os epidemiologistas na transição para o R<br>
 </li>
-<li>Be accessible in settings with low internet-connectivity via an <strong>[offline version][Download handbook and data]</strong>
+<li>Ser acessível em ambientes com baixa conectividade com a Internet através de um <strong>[versão offline][Baixar manual e dados]</strong>
 </li>
 </ul>
 <!-- * Use practical epi examples - cleaning case linelists, making transmission chains and epidemic curves, automated reports and dashboards, modeling incidence and making projections, demographic pyramids and rate standardization, record matching, outbreak detection, survey analysis, survival analysis, GIS basics, contact tracing, phylogenetic trees...   --><!-- **How is this different than other R books?**   --><!-- * It is community-driven - *written for epidemiologists by epidemiologists* in their spare time and leveraging experience in local, national, academic, and emergency settings   --><!-- Dual-column created based on the rmarkdown cookbook here: https://bookdown.org/yihui/rmarkdown-cookbook/multi-column.html --><p><br></p>
@@ -77,68 +87,72 @@
 a column separator --></p>
 </div>
 <div>
-<p><span style="color: black;"><strong>Written by epidemiologists, for epidemiologists</strong></span></p>
-<p>We are applied epis from around the world, writing in our spare time to offer this resource to the community. Your encouragement and feedback is most welcome:</p>
+<p><span style="color: black;">**Escrito por epidemiologistas, para epidemiologistas*</span></p>
+<p>Somos epidemiologistas aplicados de todo o mundo, escrevendo em nosso tempo livre para oferecer este recurso à comunidade. Seu encorajamento e feedback são muito bem-vindos:</p>
 <ul>
-<li>Structured <strong><a href="https://forms.gle/A5SnRVws7tPD15Js9">feedback form</a></strong><br>
+<li>
+<strong><a href="https://forms.gle/A5SnRVws7tPD15Js9">Formulário</a></strong> estruturado de feedback<br>
 </li>
-<li>Email <strong><a href="mailto:epiRhandbook@gmail.com" class="email">epiRhandbook@gmail.com</a></strong> or tweet <strong><a href="https://twitter.com/epirhandbook">@epiRhandbook</a></strong><br>
+<li>Email <strong><a href="mailto:epiRhandbook@gmail.com" class="email">epiRhandbook@gmail.com</a></strong> ou tweet <strong><a href="https://twitter.com/epirhandbook">@epiRhandbook</a></strong><br>
 </li>
-<li>Submit issues to our <strong><a href="https://github.com/epirhandbook/Epi_R_handbook">Github repository</a></strong>
+<li>Submeta issues no nosso <strong><a href="https://github.com/appliedepi/epiRhandbook_pt">repositório do Github</a></strong>
 </li>
 </ul>
 </div>
 </div>
 <!-- ======================================================= -->
-</div>
-<div id="how-to-use-this-handbook" class="section level2 unnumbered">
-<h2>How to use this handbook<a class="anchor" aria-label="anchor" href="#how-to-use-this-handbook"><i class="fas fa-link"></i></a>
+<div id="como-usar-este-manual" class="section level2 unnumbered">
+<h2>Como usar este manual<a class="anchor" aria-label="anchor" href="#como-usar-este-manual"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
-<li>Browse the pages in the Table of Contents, or use the search box</li>
-<li>Click the “copy” icons to copy code<br>
+<li>Navegue pelas páginas do Índice, ou use a caixa de busca</li>
+<li>Clique nos ícones “copiar” para copiar o código<br>
 </li>
-<li>You can follow-along with [the example data][Download handbook and data]<br>
+<li>Você pode seguir - junto com [os dados do exemplo][Fazer o Download do manual e dos dados].<br>
 </li>
-<li>See the “Resources” section of each page for further material</li>
+<li>Consulte a seção “Recursos” de cada página para obter mais material</li>
 </ul>
-<p><strong>Offline version</strong></p>
-<p>See instructions in the [Download handbook and data] page.</p>
-<p><strong>Languages</strong></p>
-<p>We want to translate this into languages other than English. If you can help, please contact us.</p>
+<p><strong>Versão off-line</strong>*</p>
+<p>Veja as instruções na página [Fazer o Download do manual e dos dados]].</p>
+<p><strong>Línguas</strong></p>
+<p>Esta é uma versão traduzida para Português. Se você quer colaborar em melhorá-la, corrigindo algum erro, ou traduzir para outra língua, por favor, nos contacte!</p>
 <!-- ======================================================= -->
 </div>
-<div id="acknowledgements" class="section level2 unnumbered">
-<h2>Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"><i class="fas fa-link"></i></a>
+<div id="agradecimentos" class="section level2" number="0.1">
+<h2>
+<span class="header-section-number">0.1</span> Agradecimentos<a class="anchor" aria-label="anchor" href="#agradecimentos"><i class="fas fa-link"></i></a>
 </h2>
-<p>This handbook is produced by a collaboration of epidemiologists from around the world drawing upon experience with organizations including local, state, provincial, and national health agencies, the World Health Organization (WHO), Médecins Sans Frontières / Doctors without Borders (MSF), hospital systems, and academic institutions.</p>
-<p>This handbook is <strong>not</strong> an approved product of any specific organization. Although we strive for accuracy, we provide no guarantee of the content in this book.</p>
-<div id="contributors" class="section level3 unnumbered">
-<h3>Contributors<a class="anchor" aria-label="anchor" href="#contributors"><i class="fas fa-link"></i></a>
+<p>Este manual é produzido por uma colaboração de epidemiologistas de todo o mundo, aproveitando a experiência de organizações que incluem agências de saúde locais, estaduais, provinciais e nacionais, a Organização Mundial da Saúde (OMS), Médicos Sem Fronteiras / Médicos sem Fronteiras (MSF), sistemas hospitalares e instituições acadêmicas.</p>
+<p>Este manual é <strong>não</strong>* um produto aprovado de qualquer organização específica. Embora nos esforcemos para ser precisos, não damos nenhuma garantia do conteúdo deste livro.</p>
+<div id="contribuintes" class="section level3 unnumbered">
+<h3>Contribuintes<a class="anchor" aria-label="anchor" href="#contribuintes"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Editor:</strong> <a href="https://www.linkedin.com/in/neale-batra/">Neale Batra</a></p>
-<p><strong>Project core team:</strong> <a href="https://www.linkedin.com/in/neale-batra/">Neale Batra</a>, <a href="https://github.com/aspina7">Alex Spina</a>, <a href="https://twitter.com/Ammer_B">Amrish Baidjoe</a>, Pat Keating, <a href="https://github.com/henryls1">Henry Laurenson-Schafer</a>, <a href="https://github.com/finlaycampbell">Finlay Campbell</a>, <a href="https://www.linkedin.com/in/paula-bianca-blomquist-53188186/">Paula Blomquist</a>, <a href="https://twitter.com/aminata_fadl">Aminata Ndiaye</a>, <a href="www.Twitter.com/isaacatflorence">Isaac Florence</a>, <a href="https://twitter.com/ishaberry2">Isha Berry</a>, <a href="https://mathildemousset.wordpress.com/research/">Mathilde Mousset</a>, <a href="https://www.linkedin.com/in/saramhollis/">Sara Hollis</a>, <a href="https://www.linkedin.com/in/liza-coyer-86022040/">Liza Coyer</a>, Kate Kelsey, Marie-Amélie Degail Chabrat, Joao Muianga</p>
-<p><strong>Authors</strong>: <a href="https://www.linkedin.com/in/neale-batra/">Neale Batra</a>, <a href="https://github.com/aspina7">Alex Spina</a>, <a href="https://www.linkedin.com/in/paula-bianca-blomquist-53188186/">Paula Blomquist</a>, <a href="https://github.com/finlaycampbell">Finlay Campbell</a>, <a href="https://github.com/henryls1">Henry Laurenson-Schafer</a>, <a href="www.Twitter.com/isaacatflorence">Isaac Florence</a>, <a href="https://www.linkedin.com/in/nataliefischer211/">Natalie Fischer</a>, <a href="https://twitter.com/aminata_fadl">Aminata Ndiaye</a>, <a href="https://www.linkedin.com/in/liza-coyer-86022040/">Liza Coyer</a>, <a href="https://twitter.com/jonny_polonsky">Jonathan Polonsky</a>, <a href="https://ch.linkedin.com/in/yurie-izawa-a1590319">Yurie Izawa</a>, <a href="https://twitter.com/cbailey_58?lang=en">Chris Bailey</a>, <a href="https://www.linkedin.com/in/daniel-molling-4005716a/">Daniel Molling</a>, <a href="https://twitter.com/ishaberry2">Isha Berry</a>, <a href="https://twitter.com/buajitti">Emma Buajitti</a>, <a href="https://mathildemousset.wordpress.com/research/">Mathilde Mousset</a>, <a href="https://www.linkedin.com/in/saramhollis/">Sara Hollis</a>, Wen Lin</p>
-<p><strong>Reviewers</strong>: Pat Keating, Annick Lenglet, Margot Charette, Danielly Xavier, Esther Kukielka, Michelle Sloan, Aybüke Koyuncu, Rachel Burke, Kate Kelsey, <a href="https://www.linkedin.com/in/berhe-etsay-5752b1154/">Berhe Etsay</a>, John Rossow, Mackenzie Zendt, James Wright, Laura Haskins, <a href="ffinger.github.io">Flavio Finger</a>, Tim Taylor, <a href="https://www.linkedin.com/in/jaehyoungtlee/">Jae Hyoung Tim Lee</a>, <a href="https://www.linkedin.com/in/brianna-bradley-bb8658155">Brianna Bradley</a>, <a href="https://www.linkedin.com/in/wenanoria">Wayne Enanoria</a>, Manual Albela Miranda, <a href="https://www.linkedin.com/in/molly-mantus-174550150/">Molly Mantus</a>, Pattama Ulrich, Joseph Timothy, Adam Vaughan, Olivia Varsaneux, Lionel Monteiro, Joao Muianga</p>
-<p><strong>Illustrations</strong>: Calder Fong</p>
+<p><strong>Equipe principal do projeto:</strong> <a href="https://www.linkedin.com/in/neale-batra/">Neale Batra</a>, <a href="https://github.com/aspina7">Alex Spina</a>, <a href="https://twitter.com/Ammer_B">Amrish Baidjoe</a>, Pat Keating, <a href="https://github.com/henryls1">Henry Laurenson-Schafer</a>, <a href="https://github.com/finlaycampbell">Finlay Campbell</a>, <a href="https://www.linkedin.com/in/paula-bianca-blomquist-53188186/">Paula Blomquist</a>, <a href="https://twitter.com/aminata_fadl">Aminata Ndiaye</a>, <a href="www.Twitter.com/isaacatflorence">Isaac Florence</a>, <a href="https://twitter.com/ishaberry2">Isha Berry</a>, <a href="https://mathildemousset.wordpress.com/research/">Mathilde Mousset</a>, <a href="https://www.linkedin.com/in/saramhollis/">Sara Hollis</a>, <a href="https://www.linkedin.com/in/liza-coyer-86022040/">Liza Coyer</a>, Kate Kelsey, Marie-Amélie Degail Chabrat, Joao Muianga</p>
+<p><strong>Autores</strong>: <a href="https://www.linkedin.com/in/neale-batra/">Neale Batra</a>, <a href="https://github.com/aspina7">Alex Spina</a>, <a href="https://www.linkedin.com/in/paula-bianca-blomquist-53188186/">Paula Blomquist</a>, <a href="https://github.com/finlaycampbell">Finlay Campbell</a>, <a href="https://github.com/henryls1">Henry Laurenson-Schafer</a>, <a href="www.Twitter.com/isaacatflorence">Isaac Florence</a>, <a href="https://www.linkedin.com/in/nataliefischer211/">Natalie Fischer</a>, <a href="https://twitter.com/aminata_fadl">Aminata Ndiaye</a>, <a href="https://www.linkedin.com/in/liza-coyer-86022040/">Liza Coyer</a>, <a href="https://twitter.com/jonny_polonsky">Jonathan Polonsky</a>, <a href="https://ch.linkedin.com/in/yurie-izawa-a1590319">Yurie Izawa</a>, <a href="https://twitter.com/cbailey_58?lang=en">Chris Bailey</a>, <a href="https://www.linkedin.com/in/daniel-molling-4005716a/">Daniel Molling</a>, <a href="https://twitter.com/ishaberry2">Isha Berry</a>, <a href="https://twitter.com/buajitti">Emma Buajitti</a>, <a href="https://mathildemousset.wordpress.com/research/">Mathilde Mousset</a>, <a href="https://www.linkedin.com/in/saramhollis/">Sara Hollis</a>, Wen Lin</p>
+<p><strong>Revisores</strong>: Pat Keating, Annick Lenglet, Margot Charette, Danielly Xavier, Esther Kukielka, Michelle Sloan, Aybüke Koyuncu, Rachel Burke, Kate Kelsey, <a href="https://www.linkedin.com/in/berhe-etsay-5752b1154/">Berhe Etsay</a>, John Rossow, Mackenzie Zendt, James Wright, Laura Haskins, <a href="ffinger.github.io">Flavio Finger</a>, Tim Taylor, <a href="https://www.linkedin.com/in/jaehyoungtlee/">Jae Hyoung Tim Lee</a>, <a href="https://www.linkedin.com/in/brianna-bradley-bb8658155">Brianna Bradley</a>, <a href="https://www.linkedin.com/in/wenanoria">Wayne Enanoria</a>, Manual Albela Miranda, <a href="https://www.linkedin.com/in/molly-mantus-174550150/">Molly Mantus</a>, Pattama Ulrich, Joseph Timothy, Adam Vaughan, Olivia Varsaneux, Lionel Monteiro, Joao Muianga</p>
+<p><strong>Ilustradores</strong>: Calder Fong</p>
+<p><strong>Tradutores da versão em língua portuguesa (Brasil)</strong>: Carolina Musso, César Augusto Galvão , Halian Vilela, Laís Relvas ,Felipe Cardoso tradução, Rafaela Tadei, Pauliana Galvão ; Nathalia Zini ; Paula Maiçara, João Pedro Angelici, Ademar Barbosa Dantas Junior, Eucilene Santana, Hudson Gabriel Virtuoso Fontenelle</p>
 <!-- **Editor-in-Chief:** Neale Batra  -->
 <!-- **Project core team:** Neale Batra, Alex Spina, Amrish Baidjoe, Pat Keating, Henry Laurenson-Schafer, Finlay Campbell   -->
 <!-- **Authors**: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, [Isaac Florence](www.Twitter.com/isaacatflorence), Natalie Fischer, Aminata Ndiaye, Liza Coyer, Jonathan Polonsky, Yurie Izawa, Chris Bailey, Daniel Molling, Isha Berry, Emma Buajitti, Mathilde Mousset, Sara Hollis, Wen Lin   -->
 <!-- **Reviewers**: Pat Keating, Mathilde Mousset, Annick Lenglet, Margot Charette, Isha Berry, Paula Blomquist, Natalie Fischer, Daniely Xavier, Esther Kukielka, Michelle Sloan, Aybüke Koyuncu, Rachel Burke, Daniel Molling, Kate Kelsey, Berhe Etsay, John Rossow, Mackenzie Zendt, James Wright, Wayne Enanoria, Laura Haskins, Flavio Finger, Tim Taylor, Jae Hyoung Tim Lee, Brianna Bradley, Manual Albela Miranda, Molly Mantus, Priscilla Spencer, Pattama Ulrich, Joseph Timothy, Adam Vaughan, Olivia Varsaneux, Lionel Monteiro, Joao Muianga   -->
 </div>
-<div id="funding-and-support" class="section level3 unnumbered">
-<h3>Funding and support<a class="anchor" aria-label="anchor" href="#funding-and-support"><i class="fas fa-link"></i></a>
+<div id="financiamento-e-apoio" class="section level3 unnumbered">
+<h3>Financiamento e apoio<a class="anchor" aria-label="anchor" href="#financiamento-e-apoio"><i class="fas fa-link"></i></a>
 </h3>
-<p>The handbook received supportive funding via a COVID-19 emergency capacity-building grant from <a href="https://www.tephinet.org/">TEPHINET</a>, the global network of Field Epidemiology Training Programs (FETPs).</p>
-<p>Administrative support was provided by the EPIET Alumni Network (<a href="https://epietalumni.net/">EAN</a>), with special thanks to Annika Wendland. EPIET is the European Programme for Intervention Epidemiology Training.</p>
-<p>Special thanks to Médecins Sans Frontières (MSF) Operational Centre Amsterdam (OCA) for their support during the development of this handbook.</p>
-<p><em>This publication was supported by Cooperative Agreement number NU2GGH001873, funded by the Centers for Disease Control and Prevention through TEPHINET, a program of The Task Force for Global Health. Its contents are solely the responsibility of the authors and do not necessarily represent the official views of the Centers for Disease Control and Prevention, the Department of Health and Human Services, The Task Force for Global Health, Inc. or TEPHINET.</em></p>
+<p>O manual recebeu financiamento de apoio através de uma subvenção de emergência COVID-19 da <a href="https://www.tephinet.org/">TEPHINET</a>, a rede global de Programas de Treinamento em Epidemiologia de Campo (FETPs).</p>
+<p>O apoio administrativo foi fornecido pela EPIET Alumni Network (<a href="https://epietalumni.net/">EAN</a>), com agradecimentos especiais à Annika Wendland. O EPIET é o Programa Europeu de Treinamento em Epidemiologia de Intervenção.</p>
+<p>Agradecimentos especiais aos Médicos Sem Fronteiras (MSF) Centro Operacional Amsterdã (OCA) por seu apoio durante o desenvolvimento deste manual.</p>
+<p><em>Esta publicação foi apoiada pelo Acordo Cooperativo número NU2GGH001873, financiado pelos Centros de Controle e Prevenção de Doenças através do TEPHINET, um programa da Força Tarefa para a Saúde Global. Seu conteúdo é de responsabilidade exclusiva dos autores e não representa necessariamente a visão oficial dos Centros de Controle e Prevenção de Doenças, do Departamento de Saúde e Serviços Humanos, The Task Force for Global Health, Inc. ou TEPHINET.</em></p>
 </div>
-<div id="inspiration" class="section level3 unnumbered">
-<h3>Inspiration<a class="anchor" aria-label="anchor" href="#inspiration"><i class="fas fa-link"></i></a>
+<div id="inspiração--" class="section level3" number="0.1.1">
+<h3>
+<span class="header-section-number">0.1.1</span> Inspiração {-}<a class="anchor" aria-label="anchor" href="#inspira%C3%A7%C3%A3o--"><i class="fas fa-link"></i></a>
 </h3>
-<p>The multitude of tutorials and vignettes that provided knowledge for development of handbook content are credited within their respective pages.</p>
-<p>More generally, the following sources provided inspiration for this handbook:<br><a href="https://r4epis.netlify.app/">The “R4Epis” project</a> (a collaboration between MSF and RECON)<br><a href="https://www.repidemicsconsortium.org/">R Epidemics Consortium (RECON)</a><br><a href="https://r4ds.had.co.nz/">R for Data Science book (R4DS)</a><br><a href="https://bookdown.org/yihui/bookdown/">bookdown: Authoring Books and Technical Documents with R Markdown</a><br><a href="https://www.netlify.com">Netlify</a> hosts this website</p>
+<p>A infinidade de tutoriais e vinhetas que forneceram conhecimento para o desenvolvimento do conteúdo do manual são creditados dentro de suas respectivas páginas.</p>
+<p>De modo mais geral, as seguintes fontes forneceram inspiração para este manual:</p>
+<p><a href="https://r4epis.netlify.app/">The “R4Epis” project</a> (colaboração entre MSF e RECON)<br><a href="https://www.repidemicsconsortium.org/">R Epidemics Consortium (RECON)</a><br><a href="https://r4ds.had.co.nz/">R for Data Science book (R4DS)</a><br><a href="https://bookdown.org/yihui/bookdown/">bookdown: Authoring Books and Technical Documents with R Markdown</a><br><a href="https://www.netlify.com">Netlify</a> hosts this website</p>
 <!-- ### Image credits {-}   -->
 <!-- Images in logo from US CDC Public Health Image Library) include [2013 Yemen looking for mosquito breeding sites](https://phil.cdc.gov/Details.aspx?pid=19623), [Ebola virus](https://phil.cdc.gov/Details.aspx?pid=23186), and [Survey in Rajasthan](https://phil.cdc.gov/Details.aspx?pid=19838).   -->
 </div>
@@ -161,7 +175,7 @@ a column separator --></p>
 <h3>Contribution<a class="anchor" aria-label="anchor" href="#contribution"><i class="fas fa-link"></i></a>
 </h3>
 <p>If you would like to make a content contribution, please contact with us first via Github issues or by email. We are implementing a schedule for updates and are creating a contributor guide.</p>
-<p>Please note that the epiRhandbook project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the epiRhandbook project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. Ao contribuir para este projeto, você concorda em respeitar seus termos.</p>
 
 </div>
 </div>
@@ -169,23 +183,19 @@ a column separator --></p>
 
 
 
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
 <div class="chapter-nav">
 <div class="empty"></div>
-<div class="next"><a href="transition-to-r.html"><span class="header-section-number">1</span> Transition to R</a></div>
+<div class="next"><a href="pir%C3%A2mides-demogr%C3%A1ficas-e-escalas-likert.html"><span class="header-section-number">1</span> Pirâmides demográficas e escalas Likert</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#section"></a></li>
-<li><a class="nav-link" href="#r-for-applied-epidemiology-and-public-health">R for applied epidemiology and public health</a></li>
-<li><a class="nav-link" href="#how-to-use-this-handbook">How to use this handbook</a></li>
+<li><a class="nav-link" href="#como-usar-este-manual">Como usar este manual</a></li>
 <li>
-<a class="nav-link" href="#acknowledgements">Acknowledgements</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#contributors">Contributors</a></li>
-<li><a class="nav-link" href="#funding-and-support">Funding and support</a></li>
-<li><a class="nav-link" href="#inspiration">Inspiration</a></li>
+<a class="nav-link" href="#agradecimentos"><span class="header-section-number">0.1</span> Agradecimentos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#contribuintes">Contribuintes</a></li>
+<li><a class="nav-link" href="#financiamento-e-apoio">Financiamento e apoio</a></li>
+<li><a class="nav-link" href="#inspira%C3%A7%C3%A3o--"><span class="header-section-number">0.1.1</span> Inspiração {-}</a></li>
 </ul>
 </li>
 <li>
@@ -215,7 +225,7 @@ a column separator --></p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-06-29.</p>
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2022-06-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

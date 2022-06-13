@@ -83,7 +83,7 @@ linelist %>%
 Também executamos um histograma rápido na coluna `idade` para garantir que esteja limpo e classificado corretamente:  
 
 ```{r}
-hist(linelist$idade)
+hist(linelist$age)
 ```
 
 
@@ -126,9 +126,9 @@ apyramid::age_pyramid(data = linelist,
                       split_by = "hospital")  
 ```
 
-#### Valores ausentes {.unnumbered}  
+#### Valores faltantes {.unnumbered}  
 
-As linhas que têm valores ausentes `NA` nas colunas `split_by = ` ou `age_group = `, se codificadas como `NA`, não irão acionar o facetamento mostrado acima. Por padrão, essas linhas não serão mostradas. No entanto, você pode especificar que eles apareçam em um gráfico de barras adjacente e como uma faixa etária separada no topo, especificando `na.rm = FALSE`.  
+As linhas que têm valores faltantes `NA` nas colunas `split_by = ` ou `age_group = `, se codificadas como `NA`, não irão acionar o facetamento mostrado acima. Por padrão, essas linhas não serão mostradas. No entanto, você pode especificar que eles apareçam em um gráfico de barras adjacente e como uma faixa etária separada no topo, especificando `na.rm = FALSE`.  
 
 ```{r, warning=F, message=F, echo=F}
 apyramid::age_pyramid(data = linelist,
@@ -149,11 +149,8 @@ apyramid::age_pyramid(
   age_group = "age_cat5",
   split_by = "gender",
   proportional = TRUE, # mostra as porcentagens, não contagens
-  show_midpoint = FALSE, # remove linha de ponto médio da barra
-  #pal = c("laranja", "roxo") # pode especificar cores alternativas aqui (mas não rótulos)
-  ...                 
-  
-  # comandos ggplot adicionais
+  show_midpoint = FALSE) + # remove linha de ponto médio da barra
+  #pal = c("laranja", "roxo") # pode especificar cores alternativas aqui (mas não rótulos)# comandos ggplot adicionais
   theme_minimal() + # fundo simplfy
   scale_fill_manual(# especificar cores E rótulos
     values = c("orange", "purple"),              
@@ -184,7 +181,7 @@ demo_agg <- linelist%>%
   pivot_wider(
     id_cols = age_cat5,
     names_from = gender,
-    values_from = cases) %>% 
+    values_from = casos) %>% 
   rename(`missing_gender` = `NA`)
 ```
 
@@ -263,7 +260,7 @@ Uma versão **simples** disso, usando `geom_histogram()`, está abaixo:
 
 ```{r, warning=F, message=F, echo=F}
   # começar ggplot
-  ggplot(mapping = aes(x = age, preenchimento = gender)) +
+  ggplot(mapping = aes(x = age, fill = gender))+
   
   # histograma feminino
   geom_histogram(data = linelist %>% filter(gender == "f"),
@@ -273,7 +270,7 @@ Uma versão **simples** disso, usando `geom_histogram()`, está abaixo:
   # histograma masculino (valores convertidos em negativos)
   geom_histogram(data = linelist %>% filter(gender == "m"),
                  breaks = seq(0,85,5),
-                 mapping = aes(y = ..count .. * (- 1)),
+                 mapping = aes(y=..count..*(-1)),
                  colour = "white") +
   
   # inverta os eixos X e Y
@@ -343,7 +340,7 @@ Finalmente, fazemos o `ggplot()` nos dados de porcentagem. Especificamos `scale_
   # scale_x_continuous(breaks = seq(0,100,5), labels = seq(0,100,5)) +
   scale_y_continuous(
     limits = c(min_per, max_per),
-    break = seq(from = floor (min_per), # sequência de valores, por 2s
+    breaks = seq(from = floor (min_per), # sequência de valores, por 2s
                  to = ceiling(max_per),
                  by = 2),
     labels = paste0(abs(seq(from = floor(min_per), # sequência de valores absolutos, por 2s, com "%"
@@ -373,7 +370,7 @@ Finalmente, fazemos o `ggplot()` nos dados de porcentagem. Especificamos `scale_
     axis.line = element_line(color = "black"),
     plot.title = element_text(hjust = 0.5), 
     plot.caption = element_text(hjust=0, size=11, face = "italic")
-    ))
+    )
 
 ```
 
@@ -453,7 +450,7 @@ Agora implemente o mesmo para a linelist do caso.  Um pouco diferente porque com
 # criar dados de caso por idade / sexo, com porcentagem do total
 #######################################################
 case_data <- linelist%>%
-  cout(age_cat5, gender, name = "counts")%>% # contagens por grupos de idade-gênero
+  count(age_cat5, gender, name = "counts")%>% # contagens por grupos de idade-gênero
   ungroup() %>% 
   mutate(
     percent = round(100*(counts / sum(counts, na.rm=T)),1), # calcular % do total para grupos de idade e gênero
@@ -519,7 +516,7 @@ ggplot() + # eixo x padrão é a idade em anos;
       fill = gender), # preencher de barras por gênero
     color = "black", # cor preta ao redor das barras
     alpha = 1, # não transparente 
-    width = 0,3) + # meia largura
+    width = 0.3) + # meia largura
   
   # vire os eixos X e Y para tornar a pirâmide vertical
   coord_flip()+
@@ -529,14 +526,14 @@ ggplot() + # eixo x padrão é a idade em anos;
   
   # definir eixo percentual 
   scale_y_continuous(
-    limites = c(min_per, max_per), # min e max definidos acima
+    limits = c(min_per, max_per), # min e max definidos acima
     breaks = seq(floor(min_per), ceiling(max_per), by = 2), # de min% a max% por 2 
     labels = paste0(# para os rótulos, cole ... 
               abs(seq(floor(min_per), ceiling(max_per), by = 2)), "%"))+                                                  
 
   # designar cores e rótulos de legenda manualmente
   scale_fill_manual(
-    valores = c("f" = "laranja", # atribuir cores aos valores nos dados
+    values = c("f" = "orange", # atribuir cores aos valores nos dados
                "m" = "darkgreen"),
     labels = c("f" = "Feminino",
                "m" = "Masculino"), # alterar rótulos que aparecem na legenda, ordem das notas
@@ -662,7 +659,7 @@ ggplot()+
        data = melted %>% filter(direction == "Negative"),
        mapping = aes(
          x = status,
-         y = ..contagem.. * (- 1), # contagens invertidas para negativas
+         y = ..count..*(-1), # contagens invertidas para negativas
          fill = Response),
        color = "black",
        closed = "left",
@@ -692,13 +689,13 @@ ggplot()+
                  ceiling(melted_max/10)*10),   
       
       # valores da escala do eixo x
-      break = seq(from = -ceiling (melted_max / 10) * 10,
+      breaks = seq(from = -ceiling (melted_max / 10) * 10,
                    to = ceiling(melted_max / 10) * 10,
                    by = 10),
       
       # rótulos da escala do eixo x
       labels = abs(unique(c(seq(-ceiling(melted_max/10)*10, 0, 10),
-                            seq(0, teto (derretido_max / 10) * 10, 10))))) +
+                            seq(0, ceiling(melted_max/ 10) * 10, 10))))) +
      
     # escalas de cores atribuídas manualmente 
     scale_fill_manual(
@@ -733,5 +730,5 @@ ggplot()+
 <!-- ======================================================= -->
 ## Recursos {}
 
-[apyramid documentation](https://cran.r-project.org/web/packages/apyramid/vignettes/intro.html)
+[Documentação do pacote apyramid](https://cran.r-project.org/web/packages/apyramid/vignettes/intro.html)
 
