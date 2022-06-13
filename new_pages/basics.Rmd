@@ -206,7 +206,7 @@ Para usuários da Stata, este painel é similar às janelas de seu Do-file e Dat
 
 **O Painel de Console R**
 
-O Console R, ou simplesmente Console, é por padrão o painel esquerdo ou inferior esquerdo do RStudio. Ele é a casa do "motor" R. É aqui que os comandos são realmente executados e as saídas não gráficas e as mensagens de erro/aviso aparecem. Você pode digitar e executar comandos diretamente no Console, mas perceba que estes comandos não são salvos como são ao executar comandos de um script.
+O Console R, ou simplesmente Console, é por padrão o painel esquerdo ou inferior esquerdo do RStudio. Ele é a casa do "motor" de R. É aqui que os comandos são realmente executados e as saídas não gráficas e as mensagens de erro/aviso aparecem. Você pode digitar e executar comandos diretamente no Console, mas perceba que estes comandos não são salvos como são ao executar comandos de um script.
 
 Se você está familiarizado com Stata, o Console R é como a Janela de Comando e também a Janela de Resultados.
 
