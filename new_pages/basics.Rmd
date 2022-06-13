@@ -959,7 +959,7 @@ linelist <- linelist %>%
 
 <!-- ======================================================= -->
 
-### Estruture de um objeto {.unnumbered}
+### Estrutura de um objeto {.unnumbered}
 
 **Os objetos podem ser um único dado (por exemplo, `meu_numero <- 24`) ou podem consistir em dados estruturados.**
 
@@ -998,15 +998,15 @@ Todos os objetos armazenados em R possuem uma *classe* que informa ao R como lid
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
 | Factor     | Fatores, são vatores que tem uma **ordem específica** ou hierarquia de valores                                                                                                                | Uma variável de status econômico com valores ordenados   |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-| Date       | **Uma vez que o R é informado que um certo grupo de dados corresponde a Data**, esses valores só podem ser apresentados e manipulados de algumas maneiras especiais. Veja a página sobre [Trabalhando com datas] para mais informações                 | 2018-04-12 ou 15/3/1954 ou Wed 4 Jan 1980                                                             |
+| Date       | **Uma vez que o R é informado que um certo grupo de dados corresponde a Data**, esses valores só podem ser apresentados e manipulados de algumas maneiras especiais. Veja a página sobre [Trabalhando com datas] para mais informações                 | 2018-04-12 ou 15/3/1954 ou Qua 4 Jan 1980                                                             |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
 | Logical    | Valores lógicos que precisam um dos dois valores especiais TRUE (verdadeiro) ou FALSE (note que eles **não** não "TRUE" e "FALSE" entre aspas)                                                               | TRUE ou FALSE                                                                                         |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
 | data.frame | A data frame is how R stores a **typical dataset**. It consists of vectors (columns) of data bound together, that all have the same number of observations (rows).                      | The example AJS dataset named `linelist_raw` contains 68 variables with 300 observations (rows) each. |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-| tibble     | tibble é uma variação do data frame, a principal diferença operacional é que eles imprimem mais bem no console (exibem as primeiras 10 linhas e apenas as colunas que cabem na tela)| Qualquer data frame, lista ou matriz pode ser convertido em um tibble com `as_tibble()`  |
+| tibble     | tibble é uma variação do data frame, a principal diferença operacional é que eles printam melhor no console (exibem as primeiras 10 linhas e apenas as colunas que cabem na tela)| Qualquer data frame, lista ou matriz pode ser convertido em um tibble com `as_tibble()`  |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-| list       | Uma lista é como um vetor, mas contém outros objetos que podem ser outras classes diferentes| Uma lista pode conter um único número, um dataframe, um vetor e até outra lista dentro dele!    |
+| list       | Uma lista é como um vetor, mas contém outros objetos que podem ser de outras classes diferentes| Uma lista pode conter um único número, um dataframe, um vetor e até outra lista dentro dele!    |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
 
 **Você pode testar a classe de um objeto fornecendo seu nome para a função `class()`**. Nota: você pode fazer referência a uma coluna específica dentro de um conjunto de dados utilizando a notação `$` para separar o nome do conjunto de dados e o nome da coluna.
@@ -1031,7 +1031,7 @@ class(num_vector)          # o vetor agora é classe caractere
 Um exemplo comum disso é quando se manipula um data frame para exibir uma tabela - se você fizer uma linha total e tentar colar/colar porcentagens na mesma célula dos números (por exemplo, `23 (40%)`), toda a coluna numérica acima será convertida em caractere e não poderá mais ser utilizada para cálculos matemáticos.** Algumas vezes, será necessário converter objetos ou colunas em outra classe.**
 
 +------------------+---------------------------------------------------------------------------------------+
-| Funço        | Ação                                                                                |
+| Função        | Ação                                                                                |
 +==================+=======================================================================================+
 | `as.character()` | Converte para a classe caractere                                                          |
 +------------------+---------------------------------------------------------------------------------------+
@@ -1052,7 +1052,7 @@ Aqui está [mais material on-line sobre classes e estruturas de dados em R](http
 
 ### Colunas/Variáveis (`$`) {.unnumbered}
 
-**Uma coluna em um quadro de dados é tecnicamente um "vetor" (ver tabela acima)** - uma série de valores que devem ser todos da mesma classe (tanto caracter, numérico, lógico, etc.).
+**Uma coluna em um data frame é tecnicamente um "vetor" (ver tabela acima)** - uma série de valores que devem ser todos da mesma classe (tanto caracter, numérico, lógico, etc.).
 
 Um vetor pode existir independentemente de um data frame, por exemplo, um vetor de nomes de colunas que você deseja incluir como variáveis explicativas em um modelo. Para criar um vetor  independente, utilize a função `c()` como abaixo:
 
@@ -1078,7 +1078,7 @@ Ao digitar o nome do data frame seguido de `$` você verá também um menu suspe
 knitr::include_graphics(here::here("images", "Calling_Names.gif"))
 ```
 
-[***DICA AVANÇADA:*** SAlguns objetos mais complexos (por exemplo, uma lista, ou um objeto 'epicontacts') podem ter múltiplos níveis que podem ser acessados através de múltiplos sinais de dólar. Por exemplo `epicontacts$linelist$date_onset`]{style="color: darkgreen;"}
+[***DICA AVANÇADA:*** Alguns objetos mais complexos (por exemplo, uma lista, ou um objeto 'epicontacts') podem ter múltiplos níveis que podem ser acessados através de múltiplos sinais de dólar. Por exemplo `epicontacts$linelist$date_onset`]{style="color: darkgreen;"}
 
 <!-- ======================================================= -->
 
@@ -1344,8 +1344,8 @@ Esta seção detalha os operadores em R, como por exemplo:
 
 **`<-`**
 
-O operador de atribuição básica em R é `<-'. De tal forma que `nome_objeto <- valor`.\
-Este operador de atribuição também pode ser escrito como `=``. Aconselhamos o uso de `<-` para uso geral em R. \\
+O operador de atribuição básica em R é `<-`. De tal forma que `nome_objeto <- valor`.\
+Este operador de atribuição também pode ser escrito como `=`. Aconselhamos o uso de `<-` para uso geral em R. \
 Aconselhamos também o uso de `<-` para uso geral em R. Aconselhamos também o uso de espaços em torno de tais operadores, para facilitar a leitura.
 
 **`<<-`**
@@ -1437,7 +1437,7 @@ linelist_cleaned <- linelist %>%
 
 <!-- ======================================================= -->
 
-###Valores faltantes {.unnumbered}
+### Valores faltantes {.unnumbered}
 
 Em R, os valores ausentes são representados pelo valor especial `NA` (um valor "reservado") (letras maiúsculas N e A - não entre aspas). Se você importar dados que registram dados ausentes de outra maneira (por exemplo, 99, "Missing" ou .), convém recodificar esses valores para `NA`. Como fazer isso é abordado na página [Importação e exportação].
 
@@ -1449,11 +1449,11 @@ is.na(rdt_result)  # Testa se o valor de  rdt_result é NA
 ```
 
 
-Leia mais sobre valores ausentes, infinitos, `NULL` e impossíveis na página em [Valores faltantes]. Saiba como converter valores ausentes ao importar dados na página em [Importação e exportação].
+Leia mais sobre valores ausentes, infinitos, `NULL` e impossíveis na página em [Campos em branco/faltantes]. Saiba como converter valores ausentes ao importar dados na página em [Importação e exportação].
 
 <!-- ======================================================= -->
 
-### Matemática and estatística {.unnumbered}
+### Matemática e estatística {.unnumbered}
 
 Todos os operadores e funções nesta página estão disponíveis automaticamente usando o pacote R **base**.
 
@@ -1461,18 +1461,18 @@ Todos os operadores e funções nesta página estão disponíveis automaticament
 
 Estes são frequentemente usados para realizar adição, divisão, para criar novas colunas, etc. Abaixo estão os operadores matemáticos comuns em R. Colocar ou não os espaços ao redor dos operadores não é importante.
 
-| Propósit            | Exemplo no R |
+| Propósito           | Exemplo no R |
 |---------------------|--------------|
 | adição              | 2 + 3        |
 | subtração           | 2 - 3        |
 | multiplicação       | 2 \* 3       |
-| divisão  b          | 30 / 5       |
+| divisão             | 30 / 5       |
 | potência            | 2\^3         |
 | ordem das operações | ( )          |
 
 #### Funções matemáticas {.unnumbered}
 
-| Propósit                    | Função                                |
+| Propósito                   | Função                                |
 |-----------------------------|---------------------------------------|
 | arredondamento              | round(x, digits = n)                  |
 | arredondamento              | janitor::round_half_up(x, digits = n) |
@@ -1502,7 +1502,7 @@ options(scipen=999)
 
 #### Arredondando {.unnumbered}
 
-[***PERIGO:*** `round()` usa "arredondamento do banqueiro" que arredonda de .5 somente se o número superior for par. Use `round_half_up()` do **zelador** para arredondar consistentemente metades para o número inteiro mais próximo. Veja [esta explicação](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes)]{style="color: red;"}
+[***PERIGO:*** A função `round()` usa "arredondamento do banqueiro" que arredonda de .5 somente se o número superior for par. Use `round_half_up()` do **janitor** para arredondar consistentemente metades para o número inteiro mais próximo. Veja [esta explicação](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes)]{style="color: red;"}
 
 ```{r}
 # use a função de arredondamento adequanda para o seu trabalho 
@@ -1515,7 +1515,7 @@ janitor::round_half_up(c(2.5, 3.5))
 
 [***CUIDADO:*** As funções abaixo incluirão, por padrão, valores ausentes nos cálculos. Valores ausentes resultarão em uma saída de `NA`, a menos que o argumento `na.rm = TRUE` seja especificado. Isso pode ser escrito de forma abreviada como `na.rm = T`.]{style="color: orange;"}
 
-| ObjetiVO                   | Função             |
+| Objetivo                  | Função             |
 |----------------------------|--------------------|
 | média aritmética           | mean(x, na.rm=T)   |
 | mediana                    | median(x, na.rm=T) |
