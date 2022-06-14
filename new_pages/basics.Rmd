@@ -5,7 +5,7 @@ knitr::include_graphics(here::here("images", "basics_header_close.png"))
 
 Bem-vindo!
 
-Esta página analisa o essencial de R. Não pretende ser um tutorial abrangente, mas fornece o básico e pode ser útil para refrescar a sua memória. A secção [Recurso para a aprendizagem](#learning) tem links para a tutoriais mais abrangentes.
+Esta página analisa o essencial de R. Ela não pretende ser um tutorial abrangente, mas fornece o básico e pode ser útil para refrescar a sua memória. A secção [Recurso para a aprendizagem](#learning) tem links para a tutoriais mais abrangentes.
 
 Partes desta página foram adaptadas com a permissão do [projecto R4Epis](https://r4epis.netlify.app/).
 
@@ -40,9 +40,9 @@ A comunidade de usuários de R é enorme e colaborativa. Novos pacotes e ferrame
 
 **RStudio** - RStudio é uma Interface Gráfica de Utilizador (GUI) para uma utilização mais fácil da linguagem  **R**. Leia mais [na secção RStudio](#rstudio).
 
-**Objetos** - Tudo o que se armazena em R - conjuntos de dados, variáveis, uma lista de nomes de cidades, um número total da população, mesmo saídas como gráficos - são *objetos* aos quais é *atribuído um nome* e *podem ser referenciados* em comandos posteriores. Ler mais [na secção Objectos](#objetos).
+**Objetos** - Tudo o que se armazena em R - conjuntos de dados, variáveis, uma lista de nomes de cidades, um número total da população, mesmo saídas como gráficos - são *objetos* aos quais é *atribuído um nome* e *podem ser referenciados* em comandos posteriores. Ler mais [na secção Objectos](#objects).
 
-**Funções** - Uma função é uma operação de código que aceita entradas e devolve uma saída transformada. Leia mais [na secção Funções](#funções).
+**Funções** - Uma função é uma operação de código que aceita entradas e devolve uma saída transformada. Leia mais [na secção Funções](#functions).
 
 **Pacotes** - Um pacote R é um pacote partilhável de funções. Leia mais [na secção Pacotes](#packages)
 
@@ -90,10 +90,10 @@ Este é um recurso online do R especificamente para [usuários do Excel](https:/
 R tem uma vibrante comunidade no twitter onde você pode aprender dicas, atalhos e notícias, siga estas contas:
 
 -   Siga nos! [\@epiRhandbook](https://twitter.com/epirhandbook)
--   R Function A Day [\@rfuntionaday](https://twitter.com/rfunctionaday) é um recurso *incrível*
--   R for Data Science [\@rstats4ds](https://twitter.com/rstats4ds?lang=en)
+-   R Function A Day (Uma função por dia) [\@rfuntionaday](https://twitter.com/rfunctionaday) é um recurso *incrível*
+-   R for Data Science (R para Ciência de Dados) [\@rstats4ds](https://twitter.com/rstats4ds?lang=en)
 -   RStudio [\@RStudio](https://twitter.com/rstudio?lang=en)
--   RStudio Tips [\@rstudiotips](https://twitter.com/rstudiotips)
+-   Dicas do RStudio[\@rstudiotips](https://twitter.com/rstudiotips)
 -   R-Bloggers [\@Rbloggers](https://twitter.com/Rbloggers)
 -   R-ladies [\@RLadiesGlobal](https://twitter.com/RLadiesGlobal)
 -   Hadley Wickham [\@hadleywickham](https://twitter.com/hadleywickham?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor)
@@ -114,6 +114,8 @@ O site do projeto [R4Epis](https://r4epis.netlify.app/) tem como objetivo “des
 
 [Introdução ao R e ao tidyverse (Francês)](https://juba.github.io/tidyverse/index.html)
 
+[Ciência de Dados em R (Português)](https://livro.curso-r.com/index.html)
+
 <!-- ======================================================= -->
 
 ## Instalação
@@ -122,13 +124,14 @@ O site do projeto [R4Epis](https://r4epis.netlify.app/) tem como objetivo “des
 
 **Como instalar o R**
 
-Visite o site <https://www.r-project.org/> e faça o *download*da versão mais recente do  R que seja adequada para o seu computador.
+Visite o site <https://www.r-project.org/> e faça o *download* da versão mais recente do R que seja adequada para o seu computador.
 
 **Como instalar o RStudio**
 
 Visite esse website <https://rstudio.com/products/rstudio/download/> e faça o *download* da versão gratuita mais recente para Desktop do RStudio que seja adequada para seu computador.
 
 **Permissões**
+
 Note que você deve instalar R e RStudio em um drive onde você tenha permissões de leitura e escrita. Caso contrário, sua capacidade de instalar pacotes R (um problema de ocorrência freqüente) será impactada. Se você encontrar problemas, tente abrir o RStudio clicando com o botão direito do mouse no ícone e selecionando "Executar como administrador". Outras dicas podem ser encontradas na página [R em unidades de rede].
 
 
@@ -157,7 +160,7 @@ Para ver quais versões do R, RStudio, ou pacotes foram usados quando este Manua
 TinyTex é uma distribuição do LaTeX customizada, útil quando for tentar produzir PDFs no R.
 Veja <https://yihui.org/tinytex/> para mais informações.
 
-Para instalar o TiniTex no R:
+Para instalar o TinyTex no R:
 
 ```{r, eval=F}
 install.packages('tinytex')
@@ -167,11 +170,11 @@ tinytex::install_tinytex()
 
 #### Pandoc {.unnumbered}
 
-Sua versão de R é impressa no o Console R na inicialização. Você também pode executar o Pandoc é um conversor de documentos, um software separado do R. **Ele vem junto com o RStudio e não deve precisar ser baixado.** Ele ajuda no processo de conversão de documentos Rmarkdown para formatos como .pdf e adição de funcionalidades complexas.
+Sua versão de R é impressa no o Console R na inicialização. Você também pode executar o Pandoc é um conversor de documentos, um software separado do R. **Ele vem junto com o RStudio , provavelmente não precisará ser baixado.** Ele ajuda no processo de conversão de documentos Rmarkdown para formatos como .pdf e adição de funcionalidades complexas.
 
 #### RTools {.unnumbered}
 
-RTools é uma coleção de softwares para construção de pacotes para R
+RTools é uma coleção de softwares para construção de pacotes para R.
 
 Instale desse website: <https://cran.r-project.org/bin/windows/Rtools/>
 
@@ -199,12 +202,12 @@ knitr::include_graphics(here::here("images", "RStudio_overview.png"))
 
 [***DICA:*** Se o seu RStudio mostrar apenas um painel esquerdo, é porque não há nenhum script aberto ainda]{style="color: black;"}
 
-**O Painel Fonte**
+**O Painel Fonte (Source)**
 Este painel, por padrão localizado na parte superior esquerda, é um espaço onde é possível editar, executar e salvar seus [scripts](#scripts). Os scripts contêm os comandos que você deseja executar. Este painel também pode exibir conjuntos de dados (quadros de dados) para visualização.
 
 Para usuários da Stata, este painel é similar às janelas de seu Do-file e Data Editor.
 
-**O Painel de Console R**
+**O Painel do Console R**
 
 O Console R, ou simplesmente Console, é por padrão o painel esquerdo ou inferior esquerdo do RStudio. Ele é a casa do "motor" de R. É aqui que os comandos são realmente executados e as saídas não gráficas e as mensagens de erro/aviso aparecem. Você pode digitar e executar comandos diretamente no Console, mas perceba que estes comandos não são salvos como são ao executar comandos de um script.
 
@@ -218,7 +221,7 @@ No Stata, isto é mais parecido com a janela Gerenciador de Variáveis.
 
 Este painel também contém a aba *History* onde você pode ver comandos que você pode ver anteriormente. Tem também uma aba "Tutorial" onde você pode completar tutoriais R interativos se você tiver o pacote **learnr** instalado. Tem também um painel "Conections" para conexões externas, e pode ter um painel "Git" se você optar por fazer interface com o Github.
 
-**Paineis Plots (Gráficos), Viewer, Packages (Pacotes), e Help (Ajuda)**
+**Paineis: Gráficos (Plots), Visualizador (Viewer), Pacotes (Packages), Ajuda (Help)**
 
 O painel inferior-direito inclui várias abas importantes. Gráficos típicos, incluindo mapas, serão exibidos no painel Plo. Saídas interativas ou HTML serão exibidas no painel do Visualizador (Viewer). O painel de Ajuda (Help) pode exibir documentação e arquivos de ajuda. O painel Arquivos (Files) é um navegador que pode ser usado para abrir ou excluir arquivos. O painel Pacotes (Packages) permite ver, instalar, atualizar, excluir, carregar/descarregar pacotes R, e ver qual versão do pacote você tem. Para saber mais sobre pacotes, veja a [seção pacotes](#packages) abaixo.
 
@@ -472,10 +475,10 @@ ggplot(case_incidence, aes(x = dates))+
 
 Um pacote R é um pacote compartilhável de código e documentação que contém funções pré-definidas. Os usuários da comunidade R desenvolvem pacotes o tempo todo, atendendo a problemas específicos, e é provável que alguém possa ajudar com seu trabalho inclusive! Você com certeza irá instalar e usar centenas de pacotes em seu uso de R.
 
-Na instalação, o R contém pacotes de  **"base"**  e funções que executam tarefas elementares e comuns. Mas muitos usuários do R criam funções especializadas, que são verificadas pela comunidade R e que você pode baixar como um  **package** (pacote) para seu próprio uso. Neste manual, os nomes dos pacotes estão escritos em **negrito***. Um dos aspectos mais desafiadores do R é que muitas vezes há muitas funções ou pacotes a serem escolhidos para complementar uma determinada tarefa.
+Na instalação, o R contém pacotes de  **"base"**  e funções que executam tarefas elementares e comuns. Mas muitos usuários do R criam funções especializadas, que são verificadas pela comunidade R e que você pode baixar como um  **package** (pacote) para seu próprio uso. Neste manual, os nomes dos pacotes estão escritos em **negrito**. Um dos aspectos mais desafiadores do R é que muitas vezes há muitas funções ou pacotes a serem escolhidos para complementar uma determinada tarefa.
 
 
-### Instalar e carregar{.unnumbered}
+### Instalar e carregar {.unnumbered}
 
 *As funções* estão contidas nos **pacotes** que podem ser baixados ("instalados") para seu computador a partir da Internet. Uma vez que um pacote é baixado, ele é armazenado em sua "biblioteca" (do inglês, *library*). Você pode então acessar as funções que ele contém durante sua sessão R atual "carregando" este pacote.
 
@@ -568,7 +571,7 @@ Se você quiser instalar de um "branch" (versão) diferente da principal, adicio
 p_load_gh("reconhub/epicontacts@timeline")
 ```
 
-Se não houver diferença entre a versão do Github e a versão em seu computador, nenhuma ação será tomada. Você pode "forçar" uma reinstalação utilizando `p_load_current_gh()` com o argumento `update = TRUE`. Leia mais sobre **pacman*** nesta [vinheta online](http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html)
+Se não houver diferença entre a versão do Github e a versão em seu computador, nenhuma ação será tomada. Você pode "forçar" uma reinstalação utilizando `p_load_current_gh()` com o argumento `update = TRUE`. Leia mais sobre **pacman** nesta [vinheta online](http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html)
 
 **Instale a partir de ZIP ou TAR**
 
@@ -614,17 +617,17 @@ Uma vez carregado um pacote para uma sessão, este estilo explícito não é mai
 
 Você pode atualizar os pacotes, reinstalando-os. Você também pode clicar no botão verde "Atualizar" em seu painel de Pacotes RStudio para ver quais pacotes têm novas versões para instalar. Esteja ciente de que seu código antigo pode precisar ser atualizado se houver uma grande revisão de como uma função funciona!
 
-### Apagar pacotes {.não numerados}
+### Apagar pacotes {.unnumbered}
 
 Utilize `p_delete()` de **pacman**, ou `remove.packages()` do R **base**. Alternativamente, procure a pasta que contém sua biblioteca e exclua manualmente a pasta.
 
-### Dependências {.não numeradas}
+### Dependências {.unnumbered}
 
 Os pacotes muitas vezes dependem de outros pacotes para funcionar. Estes são chamados de dependências. Se uma dependência falhar na instalação, então o pacote dependendo dela também pode falhar na instalação.
 
 Veja as dependências de um pacote com `p_depends()`, e veja quais pacotes dependem dele com `p_depends_reverse()`.
 
-### Funções mascaradas {.não numeradas}
+### Funções mascaradas {.unnumbered}
 
 Não é raro que dois ou mais pacotes contenham o mesmo nome de função. Por exemplo, o pacote **dplyr** tem uma função `filter()`, mas o pacote **stats** também. A função padrão `filter()` depende da ordem em que estes pacotes são carregados primeiro na sessão R - a última será o padrão para o comando `filter()`.
 
@@ -635,9 +638,9 @@ knitr::include_graphics(here::here("images", "masking_functions.png"))
 ```
 
 1) Especifique o nome do pacote no comando. Por exemplo, utilize `dplyr::filter()` 
-2) Reorganize a ordem na qual os pacotes são carregados (por exemplo, dentro de `p_load()`), e **inicie uma nova sessão R*.
+2) Reorganize a ordem na qual os pacotes são carregados (por exemplo, dentro de `p_load()`), e *inicie uma nova sessão R*.
 
-### Desprender / descarregar {.sem numeração}
+### Desprender / descarregar {.unnumbered}
 
 Para separar (descarregar) um pacote, use este comando, com o nome correto do pacote e apenas um "dois pontos". Note que isto pode não resolver o mascaramento.
 
@@ -665,7 +668,7 @@ Os scripts (que significa "roteiro" em inglês) são uma parte fundamental da pr
 - Controle de versão - para que você possa acompanhar as mudanças feitas por você ou colegas\
 - Comentando/anotando - para explicar a seus colegas o que você tem feito
 
-### Comentando {.sem numeração}
+### Comentando {.unnumbered}
 
 Em um script você também pode anotar ("fazer comentários") ao longo do seu código R. Comentar é útil para explicar a si mesmo e aos outros leitores o que você está fazendo. Você pode adicionar um comentário digitando o símbolo "hashtag" (\#) e escrevendo seu comentário depois dele. O texto comentado aparecerá em uma cor diferente da do código R.
 
@@ -684,7 +687,7 @@ linelist <- import("linelist_raw.xlsx") %>%   # também pode ser após o código
 - Divida seu código em seções lógicas...
 - Acompanhe seu código com uma descrição passo a passo em texto do que você está fazendo (por exemplo, passos numerados)
 
-### Estilo {.sem numeração}
+### Estilo {.unnumbered}
 
 É importante estar consciente de seu estilo de codificação - especialmente se estiver trabalhando em equipe. Defendemos o uso do **tidyverse** [guia de estilo](https://style.tidyverse.org/). Há também pacotes como **styler** e **lintr** que o ajudam a se adequar a este estilo.
 
@@ -693,7 +696,7 @@ Alguns pontos muito básicos para tornar seu código legível para outros:
 \* Ao nomear objetos, utilize apenas letras minúsculas, números e sublinhados `_`, por exemplo `my_data`.
 \* Utilize espaços frequentes, inclusive ao redor dos operadores, por exemplo `n = 1` e `age_new <- age_old + 3`
 
-### Exemplo de Script {.sem numeração}
+### Exemplo de Script {.unnumbered}
 
 Abaixo está um exemplo de um pequeno script R. Lembre-se, quanto melhor você explicar sucintamente seu código nos comentários, mais seus colegas vão gostar de você!
 
@@ -711,7 +714,7 @@ Vale a pena notar que usuários iniciantes de R também podem usar R Markdown - 
 
 <!-- ======================================================= -->
 
-### Notebooks R {.sem numeração}
+### Notebooks R {.unnumbered}
 
 Não há diferença entre escrever em um Rmarkdown versus um caderno R. Entretanto, a execução do documento difere ligeiramente. Consulte este [site](http://uc-r.github.io/r_notebook) para obter mais detalhes.
 
@@ -729,7 +732,7 @@ Veja a página do manual em [Dashboards com Shiny], ou este tutorial online: [Tu
 
 *Nos tempos mais antigos, o arquivo acima era dividido em dois arquivos (`ui.R`  e `server.R`)*
 
-### Código dobrável {.sem numeração}
+### Código dobrável {.unnumbered}
 
 Você pode colapsar/dobrar (do inglês *folding*) porções de código para facilitar a leitura de seu roteiro.
 
@@ -988,7 +991,7 @@ Observe que para criar um vetor que "independente" (não faz parte de um data fr
 Todos os objetos armazenados em R possuem uma *classe* que informa ao R como lidar com o objeto. Existem muitas classes possíveis, mas as mais comuns incluem:
 
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-| Classe      | Explicação                                                                                                                                                                          | Examplos                                                                                              |
+| Classe      | Explicação                                                                                                                                                                          | Exemplos                                                                                              |
 +============+=========================================================================================================================================================================================+=======================================================================================================+
 | Character | Caracteres, esses são textos/palavras/frases **"dentro de aspas"**. Nenhuma operação matemática pode ser realizada com esses objetos.  | "Objetos do tipo caractere ficam entre aspas"                                                            |
 +------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
@@ -1234,7 +1237,7 @@ Você pode pensar nisso como dizendo "então". Muitas funções podem ser ligada
 
 - **Piping enfatiza uma seqüência de ações, não o objeto sobre o qual as ações estão sendo realizadas**\
 - Pipes são melhores quando uma seqüência de ações deve ser executada em um único objeto.\
-- Os pipes vêm do pacote **magrittr***, que é automaticamente incluído nos pacotes **dplyr** e **tidyverse**
+- Os pipes vêm do pacote **magrittr**, que é automaticamente incluído nos pacotes **dplyr** e **tidyverse**
 - Os pipes podem tornar o código mais limpo e fácil de ler, mais intuitivo
 
 Leia mais sobre esta abordagem no tidyverse [guia de estilo](https://style.tidyverse.org/pipes.html)
