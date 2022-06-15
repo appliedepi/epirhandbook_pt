@@ -976,6 +976,11 @@ linelist <- linelist %>%
 
 Utilize o pacote **linelist** do R e sua função `clean_variable_spelling()` para limpar um data frame com um *dicionário de limpeza*. O pacote **linelist** é  desenvolvido por [RECON](https://github.com/reconhub/linelist) - o Consórcio R Epidemics.
 
+```{r include=F}
+pacman::p_load_current_gh("reconhub/linelist")
+```
+
+
 1)  Criar um dicionário  de limpeza com 3 colunas:
 
     -   Uma coluna "de" (o valor incorreto)\
