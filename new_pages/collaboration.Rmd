@@ -727,9 +727,9 @@ Esquemas legais para entender os branches: <https://speakerdeck.com/alicebartlet
 
 **Tutoriais de assuntos básicos e avançados**
 
-<https://tutorialzine.com/2016/06/learn-git-in-30-minutes>
-<https://dzone.com/articles/git-tutorial-commands-and-operations-in-git>
-<https://swcarpentry.github.io/git-novice/> (short course)
-<https://rsjakob.gitbooks.io/git/content/chapter1.html>
+<https://tutorialzine.com/2016/06/learn-git-in-30-minutes>\
+<https://dzone.com/articles/git-tutorial-commands-and-operations-in-git>\
+<https://swcarpentry.github.io/git-novice/> (short course)\
+<https://rsjakob.gitbooks.io/git/content/chapter1.html>\
 
 O [livro Pro Git](https://git-scm.com/book/en/v2) é considerado uma referência oficial. Mas embora alguns capítulos estejam ok, ele pode parecer um pouco _técnico_. Certamente será um bom recurso se você já tiver usado um pouco o Git e quiser aprender um pouco mais precisamente sobre o que acontece e como ir mais longe.

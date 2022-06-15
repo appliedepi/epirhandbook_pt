@@ -1335,7 +1335,7 @@ Esta seção detalha os operadores em R, como por exemplo:
 
 - Operadores de definição\
 - Operadores relacionais (menos do que, igual a...)
-- Operadores lógicos (e, ou...){\i1}
+- Operadores lógicos (e, ou...)\
 - Lidando com valores faltantes...
 - Operadores matemáticos e funções (+/-, \>, sum(), median(), ...)\
 - O operador `%in%`
@@ -1639,7 +1639,7 @@ Procurar pistas:
 
 - Se um objeto "é desconhecido" ou "não encontrado", talvez você o tenha escrito incorretamente, esquecido de chamar um pacote com library() ou esquecido de executar novamente seu script após fazer alterações.
 
-Se tudo mais falhar, copie a mensagem de erro no Google junto com alguns termos-chave - é provável que alguém já tenha trabalhado com isso!
+Se tudo mais falhar, copie a mensagem de erro no Google junto com alguns termos-chave: é provável que alguém já tenha trabalhado com isso!
 
 <!-- ======================================================= -->
 

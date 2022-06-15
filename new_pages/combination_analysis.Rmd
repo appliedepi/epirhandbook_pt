@@ -6,7 +6,7 @@ pacman::p_load(tidyverse,
                UpSetR,
                ggupset)
 
-# Adds new symptom variables to the linelist, with random "yes" or "no" values 
+# Adiciona variável de novos sintomas à linelist, vom valores "yes" e "não" (sim/não) aleatórioa
 linelist_sym <- linelist %>% 
   mutate(fever  = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.80, 0.20)),
          chills = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.20, 0.80)),

@@ -163,7 +163,7 @@ Use `str_glue_data()`, que é feito especialmente para obter dados de linhas do 
 
 ```{r}
 caso_tabela %>% 
-  str_glue_data("{zone}: {novos_cases} ({total_casos} total casos)")
+  str_glue_data("{zone}: {novos_casos} ({total_casos} total casos)")
 ```
 
 **Combine strings em linhas**
@@ -175,7 +175,7 @@ Se você estiver tentando "acumular" valores em uma coluna de um data frame, por
 Você pode fazer a frase aparecer em uma linha usando `str_c()` (especificando o data frame e os nomes das colunas) e fornecendo os argumentos `sep =` e `collapse =`.
 
 ```{r}
-str_c(caso_tabela$zone, caso_tabela$new_cases, sep = " = ", collapse = ";  ")
+str_c(caso_tabela$zone, caso_tabela$novos_casos, sep = " = ", collapse = ";  ")
 ```
 
 Você poderia adicionar o texto "Novos Casos:" ao início da instrução envolvendo a função com `str_c()` (se "Novos Casos:" estivesse dentro do `str_c()` original, ele apareceria várias vezes).

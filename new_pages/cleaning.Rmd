@@ -1,6 +1,6 @@
 # Limpeza de dados e principais funções
 
-```{r, out.height = "10%", fig.align = "center", echo=F}
+```{r, out.height = "10%", fig.align = "center", echo=F, message=FALSE, warning=FALSE}
 knitr::include_graphics(here::here("images", "cleaning.png"))
 ```
 
@@ -109,7 +109,8 @@ pacman::p_load(
   janitor,    # limpeza de dados e tabelas
   lubridate,  # trabalhando com datas
   epikit,     # funções de age_categories() 
-  tidyverse   # manejo e visualização de dados
+  tidyverse,  # manejo e visualização de dados
+  skimr
 )
 ```
 
@@ -282,7 +283,7 @@ Lembre as pessoas que fazem a entrada de dados que **dados legíveis por humanos
 
 Ao utilizar a função  `import()` do **rio**, o valor em uma célula mesclada será atribuído à primeira célula e as células subsequentes estarão vazias.
 
-Uma solução para lidar com células mescladas é importar os dados com a função `readWorkbook()` do pacote **openxlsx***. Defina o argumento `fillMergedCells = TRUE`. Isto dá o valor em uma célula mesclada a todas as células dentro da faixa mesclada.
+Uma solução para lidar com células mescladas é importar os dados com a função `readWorkbook()` do pacote **openxlsx**. Defina o argumento `fillMergedCells = TRUE`. Isto dá o valor em uma célula mesclada a todas as células dentro da faixa mesclada.
 
 ```{r, eval=F}
 linelist_raw <- openxlsx::readWorkbook("linelist_raw.xlsx", fillMergedCells = TRUE)
@@ -300,7 +301,7 @@ linelist_raw <- openxlsx::readWorkbook("linelist_raw.xlsx", fillMergedCells = TR
 
 Utilize `select()` do **dplyr** para selecionar as colunas que você deseja reter e especificar sua ordem no quadro de dados,
 
-[***CUIDADO:*** Nos exemplos abaixo, o quadro de dados `linelist` é modificado com `select() e exibido, mas não salvo. Isto é para fins de demonstração. Os nomes das colunas modificadas são exibidos ao fornecer banco de dados com o pipe para função `names()`.]{style="color: orange;"}
+[***CUIDADO:*** Nos exemplos abaixo, o quadro de dados `linelist` é modificado com `select()` e exibido, mas não salvo. Isto é para fins de demonstração. Os nomes das colunas modificadas são exibidos ao fornecer banco de dados com o pipe para função `names()`.]{style="color: orange;"}
 
 
 **Aqui estão TODOS os nomes que a linelist tem até este ponto da cadeia de limpeza:**
@@ -546,7 +547,7 @@ linelist <- linelist %>%
   mutate(bmi = wt_kg / (ht_cm/100)^2) #bmi = IMC em portugês
 ```
 
-Se forem criadas várias colunas novas, separe cada uma delas com uma vírgula e uma nova linha. Abaixo estão exemplos de novas colunas, incluindo aquelas que consistem de valores de outras colunas combinadas utilizando `str_glue()` do pacote **stringr*** (veja a página em [Caracteres e strings].
+Se forem criadas várias colunas novas, separe cada uma delas com uma vírgula e uma nova linha. Abaixo estão exemplos de novas colunas, incluindo aquelas que consistem de valores de outras colunas combinadas utilizando `str_glue()` do pacote **stringr** (veja a página em [Caracteres e strings].
 
 ```{r}
 new_col_demo <- linelist %>%                       
@@ -642,7 +643,7 @@ linelist <- linelist %>%
 
 As funções auxiliares "tidyselect" estão disponíveis para ajudá-lo a especificar colunas. Elas são detalhadas acima na seção sobre Seleção e reordenação de colunas, e eles incluem: `everything()`, `last_col()`, `where()`, `starts_with()`, `ends_with()`, `contains()`, `matches()`, `num_range()` e `any_of()`.
 
-Aqui está um exemplo de como se pode mudar **todas as colunas*** para a classe de caracteres:
+Aqui está um exemplo de como se pode mudar **todas as colunas** para a classe de caracteres:
 
 ```{r, eval=F}
 # para mudar todas as colunas para a classe caractere
@@ -666,7 +667,7 @@ linelist <- linelist %>%
 ```
 
 - Note que dentro de `across()` também utilizamos a função `where()` como `is.POSIXct` está avaliando para TRUE ou FALSE.\
-- Note que `is.POSIXct()` é do pacote **lubridate**. Outras funções "is" similares como `is.character()`, `is.numeric()`, e `is.logical()` são do R **base***.
+- Note que `is.POSIXct()` é do pacote **lubridate**. Outras funções "is" similares como `is.character()`, `is.numeric()`, e `is.logical()` são do R **base**.
 
 
 #### Funções`across()` {.unnumbered}
@@ -851,7 +852,7 @@ A seguir demonstramos como recodificar valores em uma coluna usando lógica e co
 
 #### `replace()` {.unnumbered}
 
-Para re-codificar com critérios lógicos simples, você pode utilizar `replace()` dentro de `mutate()`. `replace()` é uma função do R **base***. Utilize uma condição lógica para especificar as linhas a serem alteradas . A sintaxe geral é:
+Para re-codificar com critérios lógicos simples, você pode utilizar `replace()` dentro de `mutate()`. `replace()` é uma função do R **base**. Utilize uma condição lógica para especificar as linhas a serem alteradas . A sintaxe geral é:
 
 `mutate(col_to_change = replace(col_to_change, critério para linhas, new value))`.
 
@@ -1248,7 +1249,7 @@ table("Numeric Values" = linelist$age_years,   # nomes especificados na tabela p
 
 **Rotule novamente os valores `NA`**
 
-Você pode querer atribuir a valores `NA` um rótulo tal como "Ausente". Como a nova coluna é de classe Fator (valores restritos), você não pode simplesmente mudá-la com `replace_na()`, pois este valor será rejeitado. Em vez disso, utilize `fct_explicit_na()` de **forcats***, como explicado na página [Fatores].
+Você pode querer atribuir a valores `NA` um rótulo tal como "Ausente". Como a nova coluna é de classe Fator (valores restritos), você não pode simplesmente mudá-la com `replace_na()`, pois este valor será rejeitado. Em vez disso, utilize `fct_explicit_na()` de **forcats**, como explicado na página [Fatores].
 
 ```{r}
 linelist <- linelist %>% 
@@ -1271,7 +1272,7 @@ linelist <- linelist %>%
 table(linelist$age_cat, useNA = "always")
 ```
 
-**Fazer quebras e rótulos rapidamente***
+**Fazer quebras e rótulos rapidamente**
 
 Para uma maneira rápida de fazer quebras e rotular vetores, use algo como abaixo. Veja a página [R - o básico] para referências em `seq()` e `rep()`.
 
@@ -1349,7 +1350,7 @@ left_join(ntile_table, ntile_ranges, by = "even_groups")
 
 ### `case_when()` {.unnumbered}
 
-É possível utilizar a função `case_when()` do **dplyr*** para criar categorias a partir de uma coluna numérica, mas é mais fácil utilizar `age_categories()` do **epikit*** ou `cut()` porque estas criarão automaticamente um fator ordenado.
+É possível utilizar a função `case_when()` do **dplyr** para criar categorias a partir de uma coluna numérica, mas é mais fácil utilizar `age_categories()` do **epikit** ou `cut()` porque estas criarão automaticamente um fator ordenado.
 
 Se utilizar `case_when()`, por favor, revise o uso apropriado conforme descrito anteriormente na seção recodificar valores desta página. Esteja ciente também que todos os valores do lado direito devem ser da mesma classe. Assim, se você quiser `NA` no lado direito, você deve escrever "Ausente" ou utilizar o valor `NA` especial  `NA_character_`.
 
@@ -1560,7 +1561,7 @@ Queremos excluir:
 - A `nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` filas com início em 2012 e 2013 no hospital A, B, ou no Porto.
     - Excluir `nrow(linelist %>% filter(date_onset < as.Date("2013-06-01")))` filas com início em 2012 e 2013
     - Excluir `nrow(linelist %>% filter(hospital %em% c('Hospital A', 'Hospital B') & is.na(date_onset)))`linhas dos Hospitais A & B com datas de início ausentes\
-    - Fazer **não*** excluir `nrow(linelist %>% filter(!hospital %in% c('Hospital A', 'Hospital B') & is.na(date_onset)))` outras linhas com datas de início ausentes.
+    - Fazer **não** excluir `nrow(linelist %>% filter(!hospital %in% c('Hospital A', 'Hospital B') & is.na(date_onset)))` outras linhas com datas de início ausentes.
 
 Começamos com uma lineliste de `nrow(linelist){\i1}`. Aqui está nossa declaração de filtro:
 
@@ -1712,7 +1713,7 @@ linelist <- linelist_raw %>%
 
 ## Cálculo por linha
 
-Se você quiser realizar um cálculo dentro de uma linha, você pode utilizar `rowwise()` a partir de **dplyr***. Veja esta vinheta online em [cálculos em linha](https://cran.r-project.org/web/packages/dplyr/vignettes/rowwise.html).\
+Se você quiser realizar um cálculo dentro de uma linha, você pode utilizar `rowwise()` a partir de **dplyr**. Veja esta vinheta online em [cálculos em linha](https://cran.r-project.org/web/packages/dplyr/vignettes/rowwise.html).\
 Por exemplo, este código se aplica `rowwise()` e então cria uma nova coluna que soma o número das colunas de sintomas especificados que têm o valor "yes" (sim), para cada linha da lista de linhas. As colunas são especificadas dentro de `sum()` pelo nome dentro de um vetor `c()`. A coluna `rowwise()` é essencialmente um tipo especial de `group_by()`, portanto é melhor utilizar `ungroup()` quando você terminar (página em [Agrupar dados]).
 
 ```{r,}
@@ -1725,7 +1726,7 @@ linelist %>%
 
 Ao especificar a coluna a ser avaliada, talvez você queira utilizar as funções de ajuda "tidyselect" descritas na seção `select()` desta página. Você só tem que fazer um ajuste (porque não está utilizando-as dentro de uma função **dplyr** como `select()` ou `summarise()`).
 
-Coloque o critério de especificação de coluna dentro da função **dplyr*** `c_across()`. Isto porque `c_across` ([documentação](https://dplyr.tidyverse.org/reference/c_across.html)) é projetado para trabalhar com `rowwise()` especificamente. Por exemplo, o seguinte código:
+Coloque o critério de especificação de coluna dentro da função **dplyr** `c_across()`. Isto porque `c_across` ([documentação](https://dplyr.tidyverse.org/reference/c_across.html)) é projetado para trabalhar com `rowwise()` especificamente. Por exemplo, o seguinte código:
 
 - Aplica-se `rowwise()` assim a seguinte operação (`sum()`) é aplicada dentro de cada linha (não somando colunas inteiras)\
 - Cria nova coluna `num_NA_dates`, definida para cada linha como o número de colunas (com nome contendo "data") para as quais `is.na()` avaliadas para VERDADEIRO (estão faltando dados).\
