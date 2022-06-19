@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>1 R projects | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Um R project permite que seu trabalho seja agrupado em uma pasta portátil e independente. Dentro do projeto, todos os scripts, arquivos de dados, figuras / saídas e histórico relevantes são...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="1 R projects | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Um R project permite que seu trabalho seja agrupado em uma pasta portátil e independente. Dentro do projeto, todos os scripts, arquivos de dados, figuras / saídas e histórico relevantes são...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1 R projects | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Um R project permite que seu trabalho seja agrupado em uma pasta portátil e independente. Dentro do projeto, todos os scripts, arquivos de dados, figuras / saídas e histórico relevantes são...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Preview pages</li>
+<li><a class="active" href="r-projects.html"><span class="header-section-number">1</span> R projects</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="r-projects" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> R projects<a class="anchor" aria-label="anchor" href="#r-projects"><i class="fas fa-link"></i></a>
+</h1>
+<p>Um R project permite que seu trabalho seja agrupado em uma pasta portátil e independente. Dentro do projeto, todos os scripts, arquivos de dados, figuras / saídas e histórico relevantes são armazenados em subpastas e, mais importante, - o <em>diretório de trabalho</em> é a pasta raiz do projeto.</p>
+<div id="uso-sugerido" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Uso sugerido<a class="anchor" aria-label="anchor" href="#uso-sugerido"><i class="fas fa-link"></i></a>
+</h2>
+<p>Uma maneira comum, eficiente e sem problemas de usar R é combinar esses 3 elementos. Um projeto de trabalho discreto é hospedado em um R project. Cada elemento é descrito nas seções abaixo.</p>
+<ol style="list-style-type: decimal">
+<li>Um projeto <strong>R</strong>
+<ul>
+<li>Um ambiente de trabalho independente com pastas para dados, scripts, saídas, etc.<br>
+</li>
+</ul>
+</li>
+<li>O pacote <strong>here</strong> para caminhos de arquivo relativos
+<ul>
+<li>Os caminhos de arquivo são gravados em relação à pasta raiz do R project - consulte [Importar e exportar] para obter mais informações<br>
+</li>
+</ul>
+</li>
+<li>O pacote <strong>rio</strong> para importação / exportação
+<ul>
+<li>
+<code>import()</code> e <code>export()</code> manipulam qualquer tipo de arquivo por sua extensão (por exemplo, .csv, .xlsx, .png)</li>
+</ul>
+</li>
+</ol>
+<!-- ======================================================= -->
+</div>
+<div id="criação-de-um-r-project" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Criação de um R project<a class="anchor" aria-label="anchor" href="#cria%C3%A7%C3%A3o-de-um-r-project"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para criar um R project, selecione “Novo Projeto” no menu Arquivo.</p>
+<ul>
+<li>Se deseja criar uma nova pasta para o projeto, selecione “Novo diretório” e indique onde deseja que seja criado.<br>
+</li>
+<li>Se deseja criar o projeto dentro de uma pasta existente, clique em “Diretório existente” e indique a pasta.<br>
+</li>
+<li>Se você deseja clonar um repositório Github, selecione a terceira opção “Controle de Versão” e depois “Git”. Veja a página em [Controle de versão e colaboração com Git e Github] para mais detalhes.</li>
+</ul>
+<div class="inline-figure"><img src="images/create_project.png" width="75%" style="display: block; margin: auto;"></div>
+<p>O R project que você criar virá na forma de uma pasta contendo um arquivo <em>.Rproj</em>. Este arquivo é um atalho e provavelmente a principal maneira de abrir seu projeto. Você também pode abrir um projeto selecionando “Abrir Projeto” no menu Arquivo. Alternativamente, no canto superior direito do RStudio, você verá um ícone de R project e um menu suspenso de R projects disponíveis.</p>
+<p>Para sair de um R project, abra um novo projeto ou feche o projeto (Arquivo - Fechar Projeto).</p>
+<div id="alternar-projetos" class="section level3 unnumbered">
+<h3>Alternar projetos<a class="anchor" aria-label="anchor" href="#alternar-projetos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para alternar entre os projetos, clique no ícone do R project e no menu suspenso no canto superior direito do RStudio. Você verá opções para Fechar projeto, Abrir projeto e uma lista de projetos recentes.</p>
+<div class="inline-figure"><img src="images/Rproject_dropdown.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="configurações" class="section level3 unnumbered">
+<h3>Configurações<a class="anchor" aria-label="anchor" href="#configura%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+</h3>
+<p>Em geral, é aconselhável iniciar o RStudio a cada vez com uma “lousa em branco” - ou seja, com sua área de trabalho <strong>não</strong> preservada da sessão anterior. Isso significa que seus objetos e resultados não persistirão de sessão para sessão (você deve recriá-los executando seus scripts). Isso é bom, porque o forçará a escrever scripts melhores e evitará erros no longo prazo.</p>
+<p>Para configurar o RStudio para ter uma “lista limpa” a cada vez na inicialização:</p>
+<ul>
+<li>Selecione “Opções de projeto” no menu Ferramentas.<br>
+</li>
+<li>Na guia “Geral”, defina o RStudio para <strong>não</strong> restaurar .RData na área de trabalho na inicialização e para <strong>não</strong> salvar a área de trabalho em .RData ao sair.</li>
+</ul>
+</div>
+<div id="organização" class="section level3 unnumbered">
+<h3>Organização<a class="anchor" aria-label="anchor" href="#organiza%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>É comum ter subpastas em seu projeto. Considere ter pastas como “dados”, “scripts”, “figuras”, “apresentações”. Você pode adicionar pastas da maneira típica que faria com uma nova pasta para o seu computador. Como alternativa, consulte a página em [Interações de diretório] para saber como criar novas pastas com comandos R.</p>
+</div>
+<div id="controle-de-versão" class="section level3 unnumbered">
+<h3>Controle de versão<a class="anchor" aria-label="anchor" href="#controle-de-vers%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>Considere um sistema de controle de versão. Pode ser algo tão simples como ter datas nos nomes dos scripts (por exemplo, “transmission_analysis_2020-10-03.R”) e uma pasta de “arquivo”. Considere também ter um texto de cabeçalho comentado na parte superior de cada script com uma descrição, tags, autores e log de alterações.</p>
+<p>Um método mais complicado envolveria o uso do Github ou uma plataforma semelhante para controle de versão. Veja a página em [Controle de versão e colaboração com Git e Github].</p>
+<p>Uma dica é que você pode pesquisar um projeto ou pasta inteira usando a ferramenta “Localizar nos arquivos” (menu Editar). Ele pode pesquisar e até mesmo substituir strings em vários arquivos.</p>
+</div>
+</div>
+<div id="exemplos" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Exemplos<a class="anchor" aria-label="anchor" href="#exemplos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Abaixo estão alguns exemplos de importação / exportação / salvamento usando <code>here()</code> de dentro de um R project. Leia mais sobre como usar o pacote <strong>here</strong> na página [Importar e exportar].</p>
+<p><em>Importando <code>linelist_raw.xlsx</code> da pasta” data “em seu R project</em></p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"linelist_raw.xlsx"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><em>Exportando o objeto R <code>linelist</code> como” my_linelist.rds “para a pasta” clean “dentro da pasta” data “em seu R project.</em></p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">export</span><span class="op">(</span><span class="va">linelist</span>, <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"clean"</span>, <span class="st">"my_linelist.rds"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><em>Salvar o gráfico impresso mais recentemente como “epicurve_2021-02-15.png” dentro da pasta “epicurves” na pasta “saídas” em seu R project.</em></p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggsave</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"outputs"</span>, <span class="st">"epicurves"</span>, <span class="st">"epicurve_2021-02-15.png"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+<div id="recursos" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Página da web do RStudio em [usando R projects] (<a href="https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects" class="uri">https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects</a>)</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"></a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#r-projects"><span class="header-section-number">1</span> R projects</a></li>
+<li><a class="nav-link" href="#uso-sugerido"><span class="header-section-number">1.1</span> Uso sugerido</a></li>
+<li>
+<a class="nav-link" href="#cria%C3%A7%C3%A3o-de-um-r-project"><span class="header-section-number">1.2</span> Criação de um R project</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#alternar-projetos">Alternar projetos</a></li>
+<li><a class="nav-link" href="#configura%C3%A7%C3%B5es">Configurações</a></li>
+<li><a class="nav-link" href="#organiza%C3%A7%C3%A3o">Organização</a></li>
+<li><a class="nav-link" href="#controle-de-vers%C3%A3o">Controle de versão</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#exemplos"><span class="header-section-number">1.3</span> Exemplos</a></li>
+<li><a class="nav-link" href="#recursos"><span class="header-section-number">1.4</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2022-06-16.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
