@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>1 Interações de diretório | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Nesta página, cobrimos cenários comuns onde você cria, interage, salva e importa com diretórios (pastas).  1.1 Preparação  Pacote fs O fs é um pacote do tidyverse que facilita as interações de...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="1 Interações de diretório | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Nesta página, cobrimos cenários comuns onde você cria, interage, salva e importa com diretórios (pastas).  1.1 Preparação  Pacote fs O fs é um pacote do tidyverse que facilita as interações de...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1 Interações de diretório | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Nesta página, cobrimos cenários comuns onde você cria, interage, salva e importa com diretórios (pastas).  1.1 Preparação  Pacote fs O fs é um pacote do tidyverse que facilita as interações de...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.17/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Preview pages</li>
+<li><a class="active" href="intera%C3%A7%C3%B5es-de-diret%C3%B3rio.html"><span class="header-section-number">1</span> Interações de diretório</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="interações-de-diretório" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Interações de diretório<a class="anchor" aria-label="anchor" href="#intera%C3%A7%C3%B5es-de-diret%C3%B3rio"><i class="fas fa-link"></i></a>
+</h1>
+<p>Nesta página, cobrimos cenários comuns onde você cria, interage, salva e importa com diretórios (pastas).</p>
+<div id="preparação" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h2>
+<div id="pacote-fs" class="section level3 unnumbered">
+<h3>Pacote <strong>fs</strong><a class="anchor" aria-label="anchor" href="#pacote-fs"><i class="fas fa-link"></i></a>
+</h3>
+<p>O <strong>fs</strong> é um pacote do <strong>tidyverse</strong> que facilita as interações de diretório, melhorando algumas das funções do R <strong>base</strong>. Nas seções a seguir, usaremos frequentemente as funções do <strong>fs</strong>.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
+  <span class="va">fs</span>,             <span class="co"># Interações de arquivo / diretório</span>
+  <span class="va">rio</span>,            <span class="co"># Importar / Exportar</span>
+  <span class="va">here</span>,           <span class="co"># Caminhos de arquivo respectivos</span>
+  <span class="va">tidyverse</span><span class="op">)</span>      <span class="co"># Gerenciamento e visualização de dados</span></code></pre></div>
+</div>
+<div id="imprimir-diretório-como-uma-árvore-de-dendrograma" class="section level3 unnumbered">
+<h3>Imprimir diretório como uma árvore de dendrograma<a class="anchor" aria-label="anchor" href="#imprimir-diret%C3%B3rio-como-uma-%C3%A1rvore-de-dendrograma"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use a função <code>dir_tree()</code> do <strong>fs</strong>.</p>
+<p>Forneça o caminho da pasta do arquivo para <code>path =</code> e decida se deseja mostrar apenas um nível (<code>recurse = FALSE</code>) ou todos os arquivos em todos os subníveis (<code>recurse = TRUE</code>). Abaixo, usamos <code>here()</code> como uma abreviação para o projeto R e especificamos sua subpasta “data” (dados), que contém todos os dados usados para este manual de R. Nós o configuramos para exibir todos os arquivos na pasta supra citada e suas subpastas (por exemplo, “cache”, “epidemic models”, “population”, “shp”, and “weather”).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/dir_tree.html">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>## /home/cesargalvao/Documents/r_projects/revisao epi/epirhandbook_pt/data
+## ├── africa_countries.geo.json
+## ├── cache
+## │   └── epidemic_models
+## │       ├── 2015-04-30
+## │       │   ├── estimate_samples.rds
+## │       │   ├── estimated_reported_cases_samples.rds
+## │       │   ├── latest_date.rds
+## │       │   ├── reported_cases.rds
+## │       │   ├── summarised_estimated_reported_cases.rds
+## │       │   ├── summarised_estimates.rds
+## │       │   └── summary.rds
+## │       ├── epinow_res.rds
+## │       ├── epinow_res_small.rds
+## │       ├── generation_time.rds
+## │       └── incubation_period.rds
+## ├── case_linelists
+## │   ├── cleaning_dict.csv
+## │   ├── fluH7N9_China_2013.csv
+## │   ├── linelist_cleaned.rds
+## │   ├── linelist_cleaned.xlsx
+## │   └── linelist_raw.xlsx
+## ├── country_demographics.csv
+## ├── covid_incidence.csv
+## ├── covid_incidence_map.R
+## ├── district_count_data.xlsx
+## ├── example
+## │   ├── Central Hospital.csv
+## │   ├── Military Hospital.csv
+## │   ├── Missing.csv
+## │   ├── Other.csv
+## │   ├── Port Hospital.csv
+## │   ├── St. Mark's Maternity Hospital (SMMH).csv
+## │   ├── district_weekly_count_data.xlsx
+## │   ├── fluH7N9_China_2013.csv
+## │   ├── hospital_linelists.xlsx
+## │   └── linelists
+## │       ├── 20201007linelist.csv
+## │       ├── case_linelist20201006.csv
+## │       ├── case_linelist_2020-10-02.csv
+## │       ├── case_linelist_2020-10-03.csv
+## │       ├── case_linelist_2020-10-04.csv
+## │       ├── case_linelist_2020-10-05.csv
+## │       └── case_linelist_2020-10-08.xlsx
+## ├── facility_count_data.rds
+## ├── flexdashboard
+## │   ├── outbreak_dashboard.Rmd
+## │   ├── outbreak_dashboard.html
+## │   ├── outbreak_dashboard_shiny.Rmd
+## │   ├── outbreak_dashboard_test.Rmd
+## │   └── outbreak_dashboard_test.html
+## ├── fluH7N9_China_2013.csv
+## ├── gis
+## │   ├── africa_countries.geo.json
+## │   ├── covid_incidence.csv
+## │   ├── covid_incidence_map.R
+## │   ├── linelist_cleaned_with_adm3.rds
+## │   ├── population
+## │   │   ├── sle_admpop_adm3_2020.csv
+## │   │   └── sle_population_statistics_sierraleone_2020.xlsx
+## │   └── shp
+## │       ├── README.txt
+## │       ├── sle_adm3.CPG
+## │       ├── sle_adm3.dbf
+## │       ├── sle_adm3.prj
+## │       ├── sle_adm3.sbn
+## │       ├── sle_adm3.sbx
+## │       ├── sle_adm3.shp
+## │       ├── sle_adm3.shp.xml
+## │       ├── sle_adm3.shx
+## │       ├── sle_hf.CPG
+## │       ├── sle_hf.dbf
+## │       ├── sle_hf.prj
+## │       ├── sle_hf.sbn
+## │       ├── sle_hf.sbx
+## │       ├── sle_hf.shp
+## │       └── sle_hf.shx
+## ├── godata
+## │   ├── cases_clean.rds
+## │   ├── contacts_clean.rds
+## │   ├── followups_clean.rds
+## │   └── relationships_clean.rds
+## ├── likert_data.csv
+## ├── linelist_cleaned.rds
+## ├── linelist_cleaned.xlsx
+## ├── linelist_raw.xlsx
+## ├── make_evd_dataset-DESKTOP-JIEUMMI.R
+## ├── make_evd_dataset.R
+## ├── malaria_app
+## │   ├── app.R
+## │   ├── data
+## │   │   └── facility_count_data.rds
+## │   ├── funcs
+## │   │   └── plot_epicurve.R
+## │   ├── global.R
+## │   ├── malaria_app.Rproj
+## │   ├── server.R
+## │   └── ui.R
+## ├── malaria_facility_count_data.rds
+## ├── phylo
+## │   ├── Shigella_subtree_2.nwk
+## │   ├── Shigella_subtree_2.txt
+## │   ├── Shigella_tree.txt
+## │   └── sample_data_Shigella_tree.csv
+## ├── rmarkdown
+## │   ├── outbreak_report.Rmd
+## │   ├── outbreak_report.docx
+## │   ├── outbreak_report.html
+## │   ├── outbreak_report.pdf
+## │   ├── outbreak_report.pptx
+## │   ├── report_tabbed_example.Rmd
+## │   └── report_tabbed_example.html
+## ├── standardization
+## │   ├── country_demographics.csv
+## │   ├── country_demographics_2.csv
+## │   ├── deaths_countryA.csv
+## │   ├── deaths_countryB.csv
+## │   └── world_standard_population_by_sex.csv
+## ├── surveys
+## │   ├── population.xlsx
+## │   ├── survey_data.xlsx
+## │   └── survey_dict.xlsx
+## └── time_series
+##     ├── campylobacter_germany.xlsx
+##     └── weather
+##         ├── germany_weather2002.nc
+##         ├── germany_weather2003.nc
+##         ├── germany_weather2004.nc
+##         ├── germany_weather2005.nc
+##         ├── germany_weather2006.nc
+##         ├── germany_weather2007.nc
+##         ├── germany_weather2008.nc
+##         ├── germany_weather2009.nc
+##         ├── germany_weather2010.nc
+##         └── germany_weather2011.nc</code></pre>
+</div>
+</div>
+<div id="listar-arquivos-em-um-diretório" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Listar arquivos em um diretório<a class="anchor" aria-label="anchor" href="#listar-arquivos-em-um-diret%C3%B3rio"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para listar apenas os nomes dos arquivos em um diretório, você pode usar <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code> do R <strong>base</strong>. Por exemplo, este comando lista os nomes dos arquivos na subpasta “população” da pasta “dados” em um projeto R. O caminho de arquivo respectivo é fornecido usando <code>here()</code> (sobre o qual você pode ler mais na página [Importar e exportar]).</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Nomes de arquivos</span>
+<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"gis"</span>, <span class="st">"population"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "sle_admpop_adm3_2020.csv"                       
+## [2] "sle_population_statistics_sierraleone_2020.xlsx"</code></pre>
+<p>Para listar os caminhos completos dos arquivos do diretório, você pode usar <code>dir_ls()</code> de <strong>fs</strong>. Uma alternativa é <code><a href="https://rdrr.io/r/base/list.files.html">list.files()</a></code> do R <strong>base </strong>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Caminhos de arquivos</span>
+<span class="fu">dir_ls</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"gis"</span>, <span class="st">"population"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## /home/cesargalvao/Documents/r_projects/revisao epi/epirhandbook_pt/data/gis/population/sle_admpop_adm3_2020.csv
+## /home/cesargalvao/Documents/r_projects/revisao epi/epirhandbook_pt/data/gis/population/sle_population_statistics_sierraleone_2020.xlsx</code></pre>
+<p>Para obter todas as informações de metadados sobre cada arquivo em um diretório (por exemplo, caminho, data de modificação, etc.), você pode usar <code>dir_info()</code> de <strong>fs</strong>.</p>
+<p>Isso pode ser particularmente útil se você deseja extrair a hora da última modificação do arquivo, por exemplo, se deseja importar a versão mais recente. Para obter um exemplo disso, consulte a página [Importar e exportar].</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Informações do arquivo</span>
+<span class="fu">dir_info</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"gis"</span>, <span class="st">"population"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Aqui está o dataframe que retorna. Role para a direita para ver todas as colunas.</p>
+<div id="htmlwidget-7f3d3ed74f34edab2647" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7f3d3ed74f34edab2647">{"x":{"filter":"none","data":[["/home/cesargalvao/Documents/r_projects/revisao epi/epirhandbook_pt/data/gis/population/sle_admpop_adm3_2020.csv","/home/cesargalvao/Documents/r_projects/revisao epi/epirhandbook_pt/data/gis/population/sle_population_statistics_sierraleone_2020.xlsx"],["file","file"],[26771,57850],[33204,33204],["2022-06-15T00:47:04Z","2022-06-15T00:47:04Z"],["cesargalvao","cesargalvao"],["cesargalvao","cesargalvao"],[66311,66311],[1,1],[0,0],[4852652,4852654],[4096,4096],[56,120],[0,0],[0,0],["2022-06-18T22:31:56Z","2022-06-18T22:31:56Z"],["2022-06-18T22:31:56Z","2022-06-18T22:31:56Z"],["2022-06-18T22:31:56Z","2022-06-18T22:31:56Z"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>path<\/th>\n      <th>type<\/th>\n      <th>size<\/th>\n      <th>permissions<\/th>\n      <th>modification_time<\/th>\n      <th>user<\/th>\n      <th>group<\/th>\n      <th>device_id<\/th>\n      <th>hard_links<\/th>\n      <th>special_device_id<\/th>\n      <th>inode<\/th>\n      <th>block_size<\/th>\n      <th>blocks<\/th>\n      <th>flags<\/th>\n      <th>generation<\/th>\n      <th>access_time<\/th>\n      <th>change_time<\/th>\n      <th>birth_time<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3,7,8,9,10,11,12,13,14]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="informações-do-arquivo" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Informações do arquivo<a class="anchor" aria-label="anchor" href="#informa%C3%A7%C3%B5es-do-arquivo"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para extrair informações de metadados sobre um arquivo específico, você pode usar <code>file_info()</code> de <strong>fs</strong> (ou <code><a href="https://rdrr.io/r/base/file.info.html">file.info()</a></code> do R <strong>base</strong>).</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">file_info</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"case_linelists"</span>, <span class="st">"linelist_cleaned.rds"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div id="htmlwidget-13eccb4fdfcc81ec4ad7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-13eccb4fdfcc81ec4ad7">{"x":{"filter":"none","data":[["/home/cesargalvao/Documents/r_projects/revisao epi/epirhandbook_pt/data/case_linelists/linelist_cleaned.rds"],["file"],[290215],[33204],["2022-06-15T00:47:04Z"],["cesargalvao"],["cesargalvao"],[66311],[1],[0],[4852614],[4096],[568],[0],[0],["2022-06-18T22:31:56Z"],["2022-06-18T22:31:56Z"],["2022-06-18T22:31:56Z"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>path<\/th>\n      <th>type<\/th>\n      <th>size<\/th>\n      <th>permissions<\/th>\n      <th>modification_time<\/th>\n      <th>user<\/th>\n      <th>group<\/th>\n      <th>device_id<\/th>\n      <th>hard_links<\/th>\n      <th>special_device_id<\/th>\n      <th>inode<\/th>\n      <th>block_size<\/th>\n      <th>blocks<\/th>\n      <th>flags<\/th>\n      <th>generation<\/th>\n      <th>access_time<\/th>\n      <th>change_time<\/th>\n      <th>birth_time<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3,7,8,9,10,11,12,13,14]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Aqui usamos o <code>$</code> para indexar o resultado e retornar apenas o valor <code>modify_time</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">file_info</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"case_linelists"</span>, <span class="st">"linelist_cleaned.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">modification_time</span></code></pre></div>
+<pre><code>## [1] "2022-06-14 21:47:04 -03"</code></pre>
+</div>
+<div id="verifique-se-existe" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Verifique se existe<a class="anchor" aria-label="anchor" href="#verifique-se-existe"><i class="fas fa-link"></i></a>
+</h2>
+<div id="objetos-r" class="section level3 unnumbered">
+<h3>Objetos R<a class="anchor" aria-label="anchor" href="#objetos-r"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode usar <code><a href="https://rdrr.io/r/base/exists.html">exists()</a></code> do R <strong>base</strong> para verificar se um objeto existe <em>dentro do</em> R (forneça o nome do objeto entre aspas).</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/exists.html">exists</a></span><span class="op">(</span><span class="st">"linelist"</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Observe que alguns pacotes do R <strong>base</strong> usam nomes de objetos genéricos como “data” (que significa “dados” em inglês) nos bastidores, que aparecerão como TRUE a menos que <code>inherit = FALSE</code> seja especificado. Este é um dos motivos para não nomear o conjunto de dados como “data”.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/exists.html">exists</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/exists.html">exists</a></span><span class="op">(</span><span class="st">"data"</span>, inherit <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Se você está escrevendo uma função, deve usar <code><a href="https://rdrr.io/r/base/missing.html">missing()</a></code> do R <strong>base</strong> para verificar se um argumento está presente ou não, ao invés de <code><a href="https://rdrr.io/r/base/exists.html">exists()</a></code>.</p>
+</div>
+<div id="diretórios" class="section level3 unnumbered">
+<h3>Diretórios<a class="anchor" aria-label="anchor" href="#diret%C3%B3rios"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para verificar se existe um diretório, forneça o caminho do arquivo (e nome do arquivo) para <code>is_dir()</code> de <strong>fs</strong>. Role para a direita para ver que retorna <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">is_dir</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## /home/cesargalvao/Documents/r_projects/revisao epi/epirhandbook_pt/data 
+##                                                                    TRUE</code></pre>
+<p>Uma alternativa é <code><a href="https://rdrr.io/r/base/files.html">file.exists()</a></code> do R <strong>base</strong>.</p>
+</div>
+<div id="arquivos" class="section level3 unnumbered">
+<h3>Arquivos<a class="anchor" aria-label="anchor" href="#arquivos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para verificar se um arquivo específico existe, use <code>is_file()</code> de <strong>fs</strong>. Role para a direita para ver que retorna <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">is_file</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"case_linelists"</span>, <span class="st">"linelist_cleaned.rds"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## /home/cesargalvao/Documents/r_projects/revisao epi/epirhandbook_pt/data/case_linelists/linelist_cleaned.rds 
+##                                                                                                        TRUE</code></pre>
+<p>Uma alternativa no R <strong>base</strong> é <code><a href="https://rdrr.io/r/base/files.html">file.exists()</a></code>.</p>
+</div>
+</div>
+<div id="criar" class="section level2" number="1.5">
+<h2>
+<span class="header-section-number">1.5</span> Criar<a class="anchor" aria-label="anchor" href="#criar"><i class="fas fa-link"></i></a>
+</h2>
+<div id="diretórios-1" class="section level3 unnumbered">
+<h3>Diretórios<a class="anchor" aria-label="anchor" href="#diret%C3%B3rios-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para criar um novo diretório (pasta), você pode usar <code>dir_create()</code> de <strong>fs</strong>. Se o diretório já existir, ele não será criado novamente e não será retornado nenhum erro.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">dir_create</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"test"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Uma alternativa é <code><a href="https://rdrr.io/r/base/files2.html">dir.create()</a></code> do R <strong>base</strong>, que mostrará um erro se o diretório já existir. Em contraste, <code>dir_create()</code> neste cenário será silencioso.</p>
+</div>
+<div id="arquivos-1" class="section level3 unnumbered">
+<h3>Arquivos<a class="anchor" aria-label="anchor" href="#arquivos-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode criar um arquivo (vazio) com <code>file_create()</code> de <strong>fs</strong>. Se o arquivo já existir, ele não será criado novamente ou alterado.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">file_create</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"test.rds"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><code><a href="https://rdrr.io/r/base/files.html">file.create()</a></code> é uma alternativa no R <strong>base</strong>. Mas se o arquivo já existe, esta opção irá truncá-lo. Se você usar <code>file_create()</code> o arquivo não será alterado.</p>
+</div>
+<div id="criar-se-não-existir" class="section level3 unnumbered">
+<h3>Criar se não existir<a class="anchor" aria-label="anchor" href="#criar-se-n%C3%A3o-existir"><i class="fas fa-link"></i></a>
+</h3>
+<p>EM CONSTRUÇÃO</p>
+</div>
+</div>
+<div id="deletar" class="section level2" number="1.6">
+<h2>
+<span class="header-section-number">1.6</span> Deletar<a class="anchor" aria-label="anchor" href="#deletar"><i class="fas fa-link"></i></a>
+</h2>
+<div id="objetos-r-1" class="section level3 unnumbered">
+<h3>Objetos R<a class="anchor" aria-label="anchor" href="#objetos-r-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> do R <strong>base</strong> para remover um objeto R.</p>
+</div>
+<div id="diretórios-2" class="section level3 unnumbered">
+<h3>Diretórios<a class="anchor" aria-label="anchor" href="#diret%C3%B3rios-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code>dir_delete()</code> de <strong>fs</strong>.</p>
+</div>
+<div id="arquivos-2" class="section level3 unnumbered">
+<h3>Arquivos<a class="anchor" aria-label="anchor" href="#arquivos-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode excluir arquivos com <code>file_delete()</code> de <strong>fs</strong>.</p>
+</div>
+</div>
+<div id="executando-outros-arquivos" class="section level2" number="1.7">
+<h2>
+<span class="header-section-number">1.7</span> Executando outros arquivos<a class="anchor" aria-label="anchor" href="#executando-outros-arquivos"><i class="fas fa-link"></i></a>
+</h2>
+<div id="source" class="section level3 unnumbered">
+<h3>
+<code>source()</code><a class="anchor" aria-label="anchor" href="#source"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para executar um script R a partir de outro script R, você pode usar o comando <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> (do R <strong>base</strong>).</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span>, <span class="st">"cleaning_scripts"</span>, <span class="st">"clean_testing_data.R"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Isso é equivalente a visualizar o script R acima e clicar no botão “Source” (Fonte) no canto superior direito do script. Isso executará o script, mas silenciosamente (sem saída para o console do R), a menos que seja especificada esta intenção. Veja a página [Console interativo] para exemplos de uso da <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> para interagir com um usuário através do console R no modo pergunta e resposta.</p>
+<div class="inline-figure"><img src="images/source_button.png" width="82" height="300%" style="display: block; margin: auto;"></div>
+</div>
+<div id="render" class="section level3 unnumbered">
+<h3>
+<code>render()</code><a class="anchor" aria-label="anchor" href="#render"><i class="fas fa-link"></i></a>
+</h3>
+<p><code>render()</code> é uma variação de <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> mais frequentemente usada para scripts R markdown. Você fornece o <code>input =</code> que é o arquivo Rmarkdown (.Rmd), e também o <code>output_format =</code> (normalmente “html_document”, “pdf_document”, “word_document”, ““)</p>
+<p>Consulte a página [Relatórios com R Markdown] para obter mais detalhes. Veja também a documentação para <code>render()</code>
+<a href="https://rmarkdown.rstudio.com/docs/reference/render.html">aqui</a> ou inserindo <code>?render</code>.</p>
+</div>
+<div id="executar-arquivos-em-um-diretório" class="section level3 unnumbered">
+<h3>Executar arquivos em um diretório<a class="anchor" aria-label="anchor" href="#executar-arquivos-em-um-diret%C3%B3rio"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode criar um <em>for loop</em> e usá-lo em <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> para todos os arquivos em um diretório, identificado com <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code>.
+with <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code>.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">for</span><span class="op">(</span><span class="va">script</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">".R$"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>   <span class="co"># Para cada nome de script na pasta "scripts" do Projeto R (com extensão .R)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span>, <span class="va">script</span><span class="op">)</span><span class="op">)</span>                        <span class="co"># Fonte dos arquivos com nomes correspondentes aos encontrados na pasta de scripts</span>
+<span class="op">}</span></code></pre></div>
+<p>Se você deseja apenas executar determinados scripts, pode identificá-los pelos nomes da seguinte forma:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">scripts_to_run</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+     <span class="st">"epicurves.R"</span>,
+     <span class="st">"demographic_tables.R"</span>,
+     <span class="st">"survival_curves.R"</span>
+<span class="op">)</span>
+
+<span class="kw">for</span><span class="op">(</span><span class="va">script</span> <span class="kw">in</span> <span class="va">scripts_to_run</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span>, <span class="va">script</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p>Aqui está uma <a href="https://cran.r-project.org/web/packages/fs/vignettes/function-comparisons.html">comparação</a> das funções de <strong>fs</strong> e R <strong>base</strong>.</p>
+</div>
+<div id="importar-arquivos-em-um-diretório" class="section level3 unnumbered">
+<h3>Importar arquivos em um diretório<a class="anchor" aria-label="anchor" href="#importar-arquivos-em-um-diret%C3%B3rio"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consulte a página [Importar e exportar] para importar e exportar arquivos individuais.</p>
+<p>Consulte também a página [Importar e exportar] para métodos que importem automaticamente o arquivo mais recente, com base em uma data no nome do arquivo <em>ou</em> nos metadados do arquivo.</p>
+<p>Veja na página [Iteração, loops e listas] um exemplo com o pacote <strong>purrr</strong> demonstrando:</p>
+<ul>
+<li>Dividir um dataframe e salvá-lo como vários arquivos CSV</li>
+<li>Dividir um dataframe e salvar cada parte em uma planilha separada dentro de uma pasta de trabalho do Excel</li>
+<li>Importar vários arquivos CSV e combiná-los em um dataframe</li>
+<li>Importar uma pasta de trabalho do Excel com várias planilhas e combiná-las em um único dataframe</li>
+</ul>
+</div>
+</div>
+<div id="r-base" class="section level2" number="1.8">
+<h2>
+<span class="header-section-number">1.8</span> R <strong>base</strong><a class="anchor" aria-label="anchor" href="#r-base"><i class="fas fa-link"></i></a>
+</h2>
+<p>Veja abaixo as funções <code><a href="https://rdrr.io/r/base/list.files.html">list.files()</a></code> e <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code>, que realizam a mesma operação de listar arquivos dentro de um diretório especificado. Você pode especificar <code>ignore.case =</code> ou um padrão específico para procurar.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span>
+<span class="co"># dir(path = here("data"), pattern = ".csv")</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">"evd"</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>Se um arquivo estiver “aberto” no momento, ele será exibido em sua pasta com um til na frente, como “~$hospital_linelists.xlsx”.</p>
+<!-- ======================================================= -->
+</div>
+<div id="recursos" class="section level2" number="1.9">
+<h2>
+<span class="header-section-number">1.9</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="https://cran.r-project.org/web/packages/fs/vignettes/function-comparisons.html" class="uri">https://cran.r-project.org/web/packages/fs/vignettes/function-comparisons.html</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"></a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#intera%C3%A7%C3%B5es-de-diret%C3%B3rio"><span class="header-section-number">1</span> Interações de diretório</a></li>
+<li>
+<a class="nav-link" href="#prepara%C3%A7%C3%A3o"><span class="header-section-number">1.1</span> Preparação</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#pacote-fs">Pacote fs</a></li>
+<li><a class="nav-link" href="#imprimir-diret%C3%B3rio-como-uma-%C3%A1rvore-de-dendrograma">Imprimir diretório como uma árvore de dendrograma</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#listar-arquivos-em-um-diret%C3%B3rio"><span class="header-section-number">1.2</span> Listar arquivos em um diretório</a></li>
+<li><a class="nav-link" href="#informa%C3%A7%C3%B5es-do-arquivo"><span class="header-section-number">1.3</span> Informações do arquivo</a></li>
+<li>
+<a class="nav-link" href="#verifique-se-existe"><span class="header-section-number">1.4</span> Verifique se existe</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#objetos-r">Objetos R</a></li>
+<li><a class="nav-link" href="#diret%C3%B3rios">Diretórios</a></li>
+<li><a class="nav-link" href="#arquivos">Arquivos</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#criar"><span class="header-section-number">1.5</span> Criar</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#diret%C3%B3rios-1">Diretórios</a></li>
+<li><a class="nav-link" href="#arquivos-1">Arquivos</a></li>
+<li><a class="nav-link" href="#criar-se-n%C3%A3o-existir">Criar se não existir</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#deletar"><span class="header-section-number">1.6</span> Deletar</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#objetos-r-1">Objetos R</a></li>
+<li><a class="nav-link" href="#diret%C3%B3rios-2">Diretórios</a></li>
+<li><a class="nav-link" href="#arquivos-2">Arquivos</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#executando-outros-arquivos"><span class="header-section-number">1.7</span> Executando outros arquivos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#source">source()</a></li>
+<li><a class="nav-link" href="#render">render()</a></li>
+<li><a class="nav-link" href="#executar-arquivos-em-um-diret%C3%B3rio">Executar arquivos em um diretório</a></li>
+<li><a class="nav-link" href="#importar-arquivos-em-um-diret%C3%B3rio">Importar arquivos em um diretório</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#r-base"><span class="header-section-number">1.8</span> R base</a></li>
+<li><a class="nav-link" href="#recursos"><span class="header-section-number">1.9</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2022-06-21.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
