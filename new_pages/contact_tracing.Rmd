@@ -608,11 +608,11 @@ ggplot(data = long_prop)+       # usar dados longos, com proporção como Freq
     high = "orange")+
   theme(axis.text.x = element_text(angle = 90))+
   labs(                         # rótulos
-    x = "Target case age",
-    y = "Source case age",
-    title = "Who infected whom",
-    subtitle = "Frequency matrix of transmission events",
-    fill = "Proportion of all\ntranmsission events"     # título da legenda
+    x = "Idade dos casos alvo",
+    y = "Idade dos casos fonte",
+    title = "Quem infectou quem",
+    subtitle = "Matriz de frequências de eventos de transmissão",
+    fill = "Porporção de todos\neventos de transmissão"     # título da legenda
   )
 
 ```
