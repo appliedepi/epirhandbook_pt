@@ -1,7 +1,7 @@
 # Baixe o livro e os dados {}
 
 
-<! - Nota para si: Se você deseja criar um link de download para o Github, clique com o botão direito do mouse no botão "View Raw" no Github, copie o endereço e use-o no HTML abaixo. ->
+<!-- Nota para si: Se você deseja criar um link de download para o Github, clique com o botão direito do mouse no botão "View Raw" no Github, copie o endereço e use-o no HTML abaixo. -->
 
 
 
@@ -11,7 +11,7 @@
 Você pode baixar a versão offline deste livro como um arquivo HTML para que você possa ver o arquivo em seu navegador, mesmo se você não tiver mais acesso à Internet. Se você está considerando o uso offline do livro do Epi R, aqui estão algumas coisas a serem consideradas:  
 
 * Quando você abre o arquivo, pode levar um ou dois minutos para as imagens e o índice serem carregados  
-* O livro off-line tem um layout ligeiramente diferente - uma página muito longa com Índice à esquerda. Para pesquisar termos específicos, use Ctrl + f (Cmd-f)  
+* O livro off-line tem um layout ligeiramente diferente - uma página muito longa com Índice à esquerda. Para pesquisar termos específicos, use Ctrl+f (Cmd+f)  
 * Consulte a página [Pacotes sugeridos] para ajudá-lo a instalar os pacotes R apropriados antes que você perca a conectividade com a Internet  
 * Instale nosso pacote R **epirhandbook** que contém todos os dados de exemplo (processo de instalação descrito abaixo)  
 
@@ -21,9 +21,9 @@ Você pode baixar a versão offline deste livro como um arquivo HTML para que vo
 
 ### Use o link de download {.unnumbered}  
 
-Para acesso rápido, **clique com o botão direito** [neste link] (https://github.com/appliedepi/epirhandbook_eng/raw/master/offline_long/Epi_R_Handbook_offline.html) **e selecione "Salvar link como"**.  
+Para acesso rápido, **clique com o botão direito** [neste link](https://github.com/appliedepi/epirhandbook_eng/raw/master/offline_long/Epi_R_Handbook_offline.html) **e selecione "Salvar link como"**.  
 
-Se estiver em um Mac, use Cmd + clique. Se estiver em um celular, pressione e segure o link e selecione "Salvar link". O livro será baixado para o seu dispositivo. Se uma tela com código HTML bruto for exibida, certifique-se de seguir as instruções acima ou tente a Opção 2.  
+Se estiver em um Mac, use Cmd+clique. Se estiver em um celular, pressione e segure o link e selecione "Salvar link". O livro será baixado para o seu dispositivo. Se uma tela com código HTML bruto for exibida, certifique-se de seguir as instruções acima ou tente a Opção 2.  
 
 
 
@@ -63,13 +63,13 @@ download_book()
 
 ## Baixe os dados para acompanhar  
 
-Para "acompanhar" as páginas do livro, você pode baixar os dados e resultados de exemplo.  
+Para acompanhar as páginas do livro, você pode baixar os dados e resultados de exemplo.  
 
 ### Use nosso pacote R {.unnumbered}  
 
 A abordagem mais fácil para baixar todos os dados é instalar nosso pacote R **epirhandbook**. Ele contém uma função `get_data()` que salva todos os dados de exemplo em uma pasta de sua escolha em seu computador.  
 
-Para instalar nosso pacote R **epirhandbook**, execute o seguinte código. Este pacote não está no CRAN, então use a função `p_install_gh()` para instalá-lo. A entrada faz referência à nossa organização Github ("*applyepi*") e o pacote **epirhandbook**.  
+Para instalar nosso pacote R **epirhandbook**, execute o seguinte código. Este pacote não está no CRAN, então use a função `p_install_gh()` para instalá-lo. A entrada faz referência à nossa organização Github ("*appliedepi*") e o pacote **epirhandbook**.  
 
 ```{r, eval=F}
 # instale a última versão do pacote do livro do Epi R
@@ -105,7 +105,7 @@ get_data("linelist_cleaned.rds")
 
 Depois de usar `get_data()` para salvar um arquivo em seu computador, você ainda precisará importá-lo para R. Consulte a página [Importar e exportar] para obter detalhes.  
 
-Se desejar, você pode revisar todos os dados usados neste livro na **[pasta "data"] (https://github.com/appliedepi/epirhandbook_eng/tree/master/data)** de nosso repositório Github.  
+Se desejar, você pode revisar todos os dados usados neste livro na **[pasta "data"](https://github.com/appliedepi/epirhandbook_eng/tree/master/data)** de nosso repositório Github.  
 
 
 
@@ -186,9 +186,9 @@ A página [Rastreamento de contato] demonstrou a análise dos dados de rastreame
 
 
 
-<span style = "color: black;"> **_ NOTA: _** Dados de rastreamento de contato estruturado de outro software (por exemplo, KoBo, DHIS2 Tracker, CommCare) podem parecer diferentes. Se desejar contribuir com dados de amostra ou conteúdo alternativo para esta página, [entre em contato](# contact_us). </span> 
+<span style = "color: black;"> **_NOTA:_** Dados de rastreamento de contato estruturado de outro software (por exemplo, KoBo, DHIS2 Tracker, CommCare) podem parecer diferentes. Se desejar contribuir com dados de amostra ou conteúdo alternativo para esta página, [entre em contato](# contact_us). </span> 
 
-<span style = "color: darkgreen;"> **_ DICA: _** Se você estiver implantando Go.Data e quiser se conectar à API da sua instância, consulte a página Importar e exportar [(seção API)](# import_api) e a [Go.Data Community of Practice](https://community-godata.who.int/). </span>
+<span style = "color: darkgreen;"> **_DICA:_** Se você estiver implantando Go.Data e quiser se conectar à API da sua instância, consulte a página Importar e exportar [(seção API)](# import_api) e a [Go.Data Community of Practice](https://community-godata.who.int/). </span>
 
 
 ### GIS {.unnumbered}  
@@ -211,11 +211,11 @@ knitr::include_graphics(here::here("images", "download_shp.png"))
 
 #### Árvores filogenéticas {.numeradas}  
 
-Veja a página em [Árvores filogenéticas]. Arquivo Newick da árvore filogenética construída a partir do sequenciamento do genoma completo de 299 amostras de Shigella sonnei e dados de amostra correspondentes (convertidos em um arquivo de texto). As amostras belgas e os dados resultantes são gentilmente fornecidos pelo NRC belga para Salmonella e Shigella no âmbito de um projeto conduzido por um bolsista ECDC EUPHEM, e também serão publicados em um manuscrito. Os dados internacionais estão disponíveis abertamente em bases de dados públicas (ncbi) e foram publicados previamente.  
+Veja a página em [Árvores filogenéticas]. Arquivo Newick da árvore filogenética construída a partir do sequenciamento do genoma completo de 299 amostras de Shigella sonnei e dados de amostra correspondentes (convertidos em um arquivo de texto). As amostras belgas e os dados resultantes são gentilmente fornecidos pelo NRC belga para Salmonella e Shigella no âmbito de um projeto conduzido por um bolsista ECDC EUPHEM, e também serão publicados em um manuscrito. Os dados internacionais estão disponíveis abertamente em bases de dados públicas (NCBI) e foram publicados previamente.  
 
-* Para baixar o arquivo da árvore filogenética "Shigella_tree.txt", clique com o botão direito neste [link] (https://github.com/appliedepi/epirhandbook_eng/raw/master/data/phylo/Shigella_tree.txt) (Cmd + clique para Mac) e selecione "Salvar link como".  
+* Para baixar o arquivo da árvore filogenética "Shigella_tree.txt", clique com o botão direito neste [link](https://github.com/appliedepi/epirhandbook_eng/raw/master/data/phylo/Shigella_tree.txt) (Cmd + clique para Mac) e selecione "Salvar link como".  
 * Para baixar o "sample_data_Shigella_tree.csv" com informações adicionais sobre cada amostra, clique com o botão direito neste [link](https://github.com/appliedepi/epirhandbook_eng/raw/master/data/phylo/sample_data_Shigella_tree.csv) (Cmd + clique para Mac) e selecione "Salvar link como".  
-* Para ver a nova árvore de subconjunto criada, clique com o botão direito neste [link] (https://github.com/appliedepi/epirhandbook_eng/raw/master/data/phylo/Shigella_subtree_2.txt) (Cmd + clique para Mac) e selecione "Salvar link como". O arquivo .txt será baixado para o seu computador.  
+* Para ver a nova árvore de subconjunto criada, clique com o botão direito neste [link](https://github.com/appliedepi/epirhandbook_eng/raw/master/data/phylo/Shigella_subtree_2.txt) (Cmd + clique para Mac) e selecione "Salvar link como". O arquivo .txt será baixado para o seu computador.  
 
 
 Você pode então importar os arquivos .txt com `read.tree()` do pacote **ape**, conforme explicado na página.
@@ -264,14 +264,14 @@ standard_pop_data <- import("https://github.com/appliedepi/epirhandbook_eng/raw/
 
 #### Séries temporais e detecção de surto {#data_outbreak .unnumbered}  
 
-Consulte a página em [Séries temporais e detecção de surto]. Usamos casos de Campylobacter relatados na Alemanha 2002-2011, conforme disponível no pacote **surveillance** R. (*nb.* este conjunto de dados foi adaptado do original, em que 3 meses de dados foram excluídos do final de 2011 para fins de demonstração)
+Consulte a página em [Séries temporais e detecção de surto]. Usamos casos de Campylobacter relatados na Alemanha 2002-2011, conforme disponível no pacote **surveillance** R. (*nb.* este conjunto de dados foi adaptado do original, em que 3 meses de dados foram excluídos do final de 2011 para fins de demonstração).
 
 <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/campylobacter_germany.xlsx' class='download-button'>
 	Clique para fazer o download
 	<span> Campylobacter na Alemanha (.xlsx) </span>
 </a>
 
-Também usamos dados climáticos da Alemanha 2002-2011 (temperatura em graus Celsius e queda de chuva em milímetros). Eles foram baixados do conjunto de dados de reanálise do satélite Copernicus da UE usando o pacote **ecmwfr**. Você precisará baixar tudo isso e importá-los com `stars :: read_stars()` conforme explicado na página da série temporal.  
+Também usamos dados climáticos da Alemanha 2002-2011 (temperatura em graus Celsius e queda de chuva em milímetros). Eles foram baixados do conjunto de dados de reanálise do satélite Copernicus da UE usando o pacote **ecmwfr**. Você precisará baixar tudo isso e importá-los com `stars::read_stars()` conforme explicado na página da série temporal.  
 
 <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2002.nc' class='download-button'>
 	Clique para fazer o download

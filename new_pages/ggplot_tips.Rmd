@@ -61,7 +61,7 @@ No **ggplot2**, quando a aparência dos dados no gráfico (ex.: tamanho, cor, fo
 
 Uma coisa que pode ser inicialmente difícil de entender com o **ggplot2**, é o controle dos esquemas de cores. Observe que esta seção discute a cor dos *objetos no gráfico* (geometrias/formatos), como pontos, barras, linhas, bases, etc. Para ajustar a cor de textos adicionais, títulos, ou plano de fundo, veja a seção [Temas](#ggplot_basics_themes) da página sobre [Básico do ggplot].
 
-Para controlar a "cor" dos *objetos no gráfico*, você irá ajustar o argumento `color = ` (a cor *exterior* do item) ou o `fill = ` (a cor *interior* do item). Uma exceção a esse padrão é o `geom_point()`, em que você realmente só consegue ajustar `color = `, que ajusta a cor do ponto inteiro (interior e exterior).
+Para controlar a "cor" dos *objetos no gráfico*, você irá ajustar o argumento `color =` (a cor *exterior* do item) ou o `fill =` (a cor *interior* do item). Uma exceção a esse padrão é o `geom_point()`, em que você realmente só consegue ajustar `color =`, que ajusta a cor do ponto inteiro (interior e exterior).
 
 Ao ajustar a cor ou preenchimento (fill), você pode utilizar o nome das cores reconhecidas pelo R, como `"red"` (vermelho) (veja a [lista completa](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) ou digite `?colors`), ou um código hexadecimal específico para uma cor, como `"#ff0505"`.
 
@@ -76,7 +76,7 @@ ggplot(data = linelist, mapping = aes(x = age))+       # ajuste os dados e eixos
 
 
 
-Como explicado na seção [mapeando os dados para o gráfico](#ggplot_basics_mapping), da página [Básico do ggplot], aspectos estéticos como `fill = ` e `color = ` podem ser definidos *fora* do comando `mapping = aes()`, ou *dentro* dele. Se *fora* de `aes()`, o valor atribuído deve ser estático (ex.: `color = "blue"`) e irá ser aplicado para *todos* os dados colocados no gráfico pelo geom. Se *dentro*, a aparência estética deve ser mapeada para uma variável, como `color = hospital`, e a expressão irá variar de acordo com o valor desta linha nos dados. Alguns exemplos:
+Como explicado na seção [mapeando os dados para o gráfico](#ggplot_basics_mapping), da página [Básico do ggplot], aspectos estéticos como `fill =` e `color =` podem ser definidos *fora* do comando `mapping = aes()`, ou *dentro* dele. Se *fora* de `aes()`, o valor atribuído deve ser estático (ex.: `color = "blue"`) e irá ser aplicado para *todos* os dados colocados no gráfico pelo geom. Se *dentro*, a aparência estética deve ser mapeada para uma variável, como `color = hospital`, e a expressão irá variar de acordo com o valor desta linha nos dados. Alguns exemplos:
 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', warning=F, message=F}
 # Cor estática para pontos e para a linha
@@ -105,7 +105,7 @@ ggplot(data = linelist, mapping = aes(x = hospital))+
 
 ### Escalas {#ggplot_tips_scales .unnumbered}  
 
-Quando você mapear uma coluna para uma aparência estética do gráfico (ex.: `x = `, `y = `, `fill = `, `color = `...), seu gráfico irá ganhar uma escala/legenda. Veja acima como a escala pode ter valores contínuos, discretos, datas, etc. dependendo na classe da coluna atribuída. Se você tiver múltiplas estéticas mapeadas para as colunas, seu gráfico terá múltiplas escalas. 
+Quando você mapear uma coluna para uma aparência estética do gráfico (ex.: `x =`, `y =`, `fill =`, `color =`...), seu gráfico irá ganhar uma escala/legenda. Veja acima como a escala pode ter valores contínuos, discretos, datas, etc. dependendo na classe da coluna atribuída. Se você tiver múltiplas estéticas mapeadas para as colunas, seu gráfico terá múltiplas escalas. 
 
 Você pode controlar as escalas com a função `scales_()` apropriada. As funções de escala do **ggplot()** têm 3 partes, que são escritas assim: `scale_AESTHETIC_METHOD()`.  
 
@@ -119,9 +119,9 @@ Certifique-se de utilizar a função correta para a escala! Do contrário, seu c
 
 Cada tipo de escala possui seus próprios argumentos, embora existam alguns em comum. Busque uma função no R, como `?scale_color_discrete`, para ver a documentação dos argumentos dessa função.
 
-Para escalas contínuas, utilize `breaks = ` para fornecer uma sequência de valores com `seq()` (use `to = `, `from = `, e `by = ` como mostrado no exemplo abaixo). Ajuste `expand = c(0,0)` para eliminar espaços extras ao redor dos eixos (isto pode ser utilizado em qualquer escala `_x_` ou `_y_`).
+Para escalas contínuas, utilize `breaks =` para fornecer uma sequência de valores com `seq()` (use `to =`, `from =`, e `by =` como mostrado no exemplo abaixo). Ajuste `expand = c(0,0)` para eliminar espaços extras ao redor dos eixos (isto pode ser utilizado em qualquer escala `_x_` ou `_y_`).
 
-Para escalas discretas, você pode ajustar a ordem de aparecimento dos fatores com `breaks = ` e também ajustar os rótulos desses fatores com o argumento `labels = `. Forneça um vetor de caractere para cada um desses argumentos (veja exemplos abaixo). Você também pode excluir `NA` facilmente ao ajustar `na.translate = FALSE`.  
+Para escalas discretas, você pode ajustar a ordem de aparecimento dos fatores com `breaks =` e também ajustar os rótulos desses fatores com o argumento `labels =`. Forneça um vetor de caractere para cada um desses argumentos (veja exemplos abaixo). Você também pode excluir `NA` facilmente ao ajustar `na.translate = FALSE`.  
 
 As nuances de escalas de datas são abordados mais extensivamente na página [Curvas epidêmicas].
 
@@ -130,10 +130,10 @@ As nuances de escalas de datas são abordados mais extensivamente na página [Cu
 
 Um dos truques mais úteis é utilizar funções que alteram as escalas de forma "manual", de forma a explicitamente atribuir cores conforme você desejar. Estas são funções com a sintaxe `scale_xxx_manual()` (ex.: `scale_colour_manual()` ou `scale_fill_manual()`). Cada um dos argumentos a seguir são utilizados no exemplo abaixo.
 
-* Atribua cores para os valores dos dados com o argumento `values = `  
-* Especifique uma cor para `NA` com `na.value = `  
-* Mude como os valores são *escritos* na legenda com o argumento `labels = `  
-* Mude o título da legenda com `name = `  
+* Atribua cores para os valores dos dados com o argumento `values =`  
+* Especifique uma cor para `NA` com `na.value =`  
+* Mude como os valores são *escritos* na legenda com o argumento `labels =`  
+* Mude o título da legenda com `name =`  
 
 
 A seguir, nós criamos um gráfico de barras, mostramos como ele é por padrão, e, então, mostramos como fica após ajustarmos três escalas - a escala contínua do eixo y, a escala discreta do eixo x, e o ajuste manual do preenchimento (cor interior das barras).
@@ -181,7 +181,7 @@ ggplot(data = linelist)+
 
 Quando os dados são mapeados para os eixos do gráfico, estes também podem ser ajustados com comandos de escala. Um exemplo simples é ajustar a visualização de um eixo (ex.: eixo y) que é mapeado para uma coluna com dados contínuos.
 
-No caso de querermos ajustar as quebras ou visualização dos valores no gráfico, podemos utilizar o `scale_y_continuous()`, do ggplot. Como observado acima, utilize o argumento `breaks = ` para fornecer uma sequência de valores que irão servir como "quebras" na escala. Estes são os intervalos em que os números serão mostrados. Para este argumento, você pode fornecer um vetor `c()` contendo os valores dos intervalos desejados, ou você pode fornecer uma sequência regular de números utilizando a função `seq()` do R **base**. Esta função aceita `to = `, `from = `, e `by = `.
+No caso de querermos ajustar as quebras ou visualização dos valores no gráfico, podemos utilizar o `scale_y_continuous()`, do ggplot. Como observado acima, utilize o argumento `breaks =` para fornecer uma sequência de valores que irão servir como "quebras" na escala. Estes são os intervalos em que os números serão mostrados. Para este argumento, você pode fornecer um vetor `c()` contendo os valores dos intervalos desejados, ou você pode fornecer uma sequência regular de números utilizando a função `seq()` do R **base**. Esta função aceita `to =`, `from =`, e `by =`.
 
 ```{r, warning=F, message=F, out.width=c('50%', '50%'), fig.show='hold'}
 # PADRÃO - sem ajuste da escala
@@ -324,7 +324,7 @@ trans_matrix + scale_fill_viridis_c(option = "plasma")
 Agora veremos alguns exemplos de como ajustar os pontos de quebra da escala:
 
 * `scale_fill_gradient()` aceita duas cores (alta/baixa)
-* `scale_fill_gradientn()` aceita um vetor com qualquer quantidade de cores para `values = ` (valores intermediários serão intercalados)  
+* `scale_fill_gradientn()` aceita um vetor com qualquer quantidade de cores para `values =` (valores intermediários serão intercalados)  
 * Use [`scales::rescale()`](https://www.rdocumentation.org/packages/scales/versions/0.4.1/topics/rescale) para ajustar como as cores serão posicionadas no decorrer do gradiente; ele reajusta o seu vetor de posições para ser entre 0 e 1.
 
 
@@ -481,12 +481,12 @@ case_source_relationships %>%
 
 Para mostrar as distribuições nas extremidades de um gráfico de dispersão criado com `geom_point()`, você pode utilizar o pacote **ggExtra** e sua função `ggMarginal()`. Salve seu ggplot original como um objeto, e então o utilize com `ggMarginal()`, como mostrado abaixo. Aqui estão os argumentos chave:
 
-* Você precisa especificar `type = ` como "histogram", "density" "boxplot", "violin", ou "densigram".  
-* Por padrão, gráficos de dispersão marginal irão aparecer para ambos eixos. Você pode ajustar `margins = ` para "x" ou "y" se quiser apenas um deles.
-* Outros argumentos opcionais incluem `fill = ` (cor da barra), `color = ` (cor da linha), `size = ` (tamanho do gráfico relativo ao tamanho da margem, de forma que números maiores criam um gráfico de dispersão marginal menor).  
-* Você pode fornecer outros argumentos específicos para os eixos em `xparams = ` e `yparams = `. Por exemplo, para obter diferentes tamanhos dos containers do histograma, como mostrado abaixo.
+* Você precisa especificar `type =` como "histogram", "density" "boxplot", "violin", ou "densigram".  
+* Por padrão, gráficos de dispersão marginal irão aparecer para ambos eixos. Você pode ajustar `margins =` para "x" ou "y" se quiser apenas um deles.
+* Outros argumentos opcionais incluem `fill =` (cor da barra), `color =` (cor da linha), `size =` (tamanho do gráfico relativo ao tamanho da margem, de forma que números maiores criam um gráfico de dispersão marginal menor).  
+* Você pode fornecer outros argumentos específicos para os eixos em `xparams =` e `yparams =`. Por exemplo, para obter diferentes tamanhos dos containers do histograma, como mostrado abaixo.
 
-Os gráficos de dispersão marginal podem refletir os grupos (colunas que foram atribuídas a `color = ` no seu mapa estético do `ggplot()`). Se este for o caso, ajuste os argumentos `groupColour = ` ou `groupFill = `, do `ggMarginal()`, para `TRUE`, como mostrado abaixo.
+Os gráficos de dispersão marginal podem refletir os grupos (colunas que foram atribuídas a `color =` no seu mapa estético do `ggplot()`). Se este for o caso, ajuste os argumentos `groupColour =` ou `groupFill =`, do `ggMarginal()`, para `TRUE`, como mostrado abaixo.
 
 Leia mais [neste resumo](https://cran.r-project.org/web/packages/ggExtra/vignettes/ggExtra.html), na [galeria de gráficos em R](https://www.r-graph-gallery.com/277-marginal-histogram-for-ggplot2.html) ou a documentação da função no R, com `?ggMarginal`.  
 
@@ -526,7 +526,7 @@ scatter_plot_color <- ggplot(data = linelist %>% drop_na(gender))+
 ggMarginal(scatter_plot_color, type = "density", groupFill = TRUE)
 ```
 
-Coloque o argumento `size = ` para ajustar o tamanho relativo do gráfico de dispersão marginal. Números menores criam gráficos de dispersão marginal maiores. Você também ajusta `color = `. A seguir, um diagrama de caixa (boxplot) marginal, com a demonstração do argumento `margins = `, de forma que apareça apenas em um eixo:
+Coloque o argumento `size =` para ajustar o tamanho relativo do gráfico de dispersão marginal. Números menores criam gráficos de dispersão marginal maiores. Você também ajusta `color =`. A seguir, um diagrama de caixa (boxplot) marginal, com a demonstração do argumento `margins =`, de forma que apareça apenas em um eixo:
 
 ```{r, message=FALSE, warning=FALSE}
 # com boxplot 
@@ -543,14 +543,14 @@ ggMarginal(
 
 No **ggplot2**, também é possível adicionar texto aos gráficos. Entretanto, a limitação disto é a sobreposição dos rótulos de texto com os dados no gráfico, ficando com aparência confusa e difícil de interpretar. Não existe forma ideal de lidar com issso no pacote básico, mas existe um complemento do **ggplot2**, chamado de **ggrepel**, que lida com isso de forma bem simples!
 
-O pacote **ggrepel** fornece duas novas funções, `geom_label_repel()` e `geom_text_repel()`, que substituem `geom_label()` e `geom_text()`. Simplesmente utilize estas funções, em vez das originais do **ggplot2**, para produzir rótulos claros e bonitos. Dentro da função, mapeie a estética  `aes()` como sempre, mas inclua o argumento `label = `, onde você fornece a coluna com os valores que quer mostrar (ex.: id do paciente, ou nome, etc). Você pode criar mais rótulos complexos ao combinar colunas e linhas novas (`\n`) dentro de `str_glue()`, como mostrado abaixo.
+O pacote **ggrepel** fornece duas novas funções, `geom_label_repel()` e `geom_text_repel()`, que substituem `geom_label()` e `geom_text()`. Simplesmente utilize estas funções, em vez das originais do **ggplot2**, para produzir rótulos claros e bonitos. Dentro da função, mapeie a estética  `aes()` como sempre, mas inclua o argumento `label =`, onde você fornece a coluna com os valores que quer mostrar (ex.: id do paciente, ou nome, etc). Você pode criar mais rótulos complexos ao combinar colunas e linhas novas (`\n`) dentro de `str_glue()`, como mostrado abaixo.
 
 Algumas dicas:
 
 * Use `min.segment.length = 0` para sempre desenhar segmentos de linhas, ou `min.segment.length = Inf` para nunca desenhá-los
-* Use `size = ` fora de `aes()` para ajustar o tamanho do texto
-* Use `force = ` para mudar o grau de repulsão entre os rótulos e seus respectivos pontos (padrão é 1)
-* Inclua `fill = ` dentro de `aes()` para ter os rótulos coloridos de acordo com os valores
+* Use `size =` fora de `aes()` para ajustar o tamanho do texto
+* Use `force =` para mudar o grau de repulsão entre os rótulos e seus respectivos pontos (padrão é 1)
+* Inclua `fill =` dentro de `aes()` para ter os rótulos coloridos de acordo com os valores
   * A letra "a" pode aparecer na legenda - adicione `guides(fill = guide_legend(override.aes = aes(color = NA)))+` para removê-la
 
 Veja esse detalhado [tutorial](https://ggrepel.slowkow.com/articles/examples.html) para mais detalhes.
@@ -579,7 +579,7 @@ linelist %>%                                               # comece com a lineli
     y = "Tempo médio de espera (dias)")
 ```
 
-Você pode rotular apenas um subconjunto dos dados - ao utilizar a sintaxe padrão do `ggplot()` para fornecer diferentes `data = ` para cada camada `geom` do gráfico. Abaixo, todos os casos são colocados no gráfico, mas apenas alguns são rotulados.
+Você pode rotular apenas um subconjunto dos dados - ao utilizar a sintaxe padrão do `ggplot()` para fornecer diferentes `data =` para cada camada `geom` do gráfico. Abaixo, todos os casos são colocados no gráfico, mas apenas alguns são rotulados.
 
 ```{r, warning=F, message=FALSE}
 
@@ -673,7 +673,7 @@ ggplot(
 
 ```
 
-Isto também funciona bem com as funções de facetas - ele permite a produção de gráficos facetados com os dados no fundo em destaque, mas que não se aplica à faceta! Abaixo, nós contamos os casos por semana e criamos uma curva epidêmica por hospital (`color = ` e `facet_wrap()` ajustado para a coluna `hospital`).  
+Isto também funciona bem com as funções de facetas - ele permite a produção de gráficos facetados com os dados no fundo em destaque, mas que não se aplica à faceta! Abaixo, nós contamos os casos por semana e criamos uma curva epidêmica por hospital (`color =` e `facet_wrap()` ajustado para a coluna `hospital`).  
 
 ```{r, , warning=F, message=F}
 
@@ -936,7 +936,7 @@ Esta abordagem envolve criar dois gráficos distintos - um com um eixo y na esqu
 Para demonstrar esta técnica, iremos sobrepor uma curva epidêmica com uma linha de porcentagem semanal de pacientes que morreram. Nós usamos este exemplo pois o alinhamento de datas no eixo x é mais complexo do que, digamos, alinhar um gráfico de barras com outro gráfico. Algumas coisas a serem observadas:
 
 * A epicurva e a linha são agregadas em semanas antes de criarmos os gráficos, *e* os `date_breaks` e `date_labels` são idênticos - nós fizemos isto de forma que os eixos x dos dois gráficos é o mesmo quando sobrepostos.
-* O eixo y é movido para o lado direito, no gráfico 2, com o argumento `position = ` de `scale_y_continuous()`.  
+* O eixo y é movido para o lado direito, no gráfico 2, com o argumento `position =` de `scale_y_continuous()`.  
 * Ambos gráficos fazem uso do `theme_cowplot()`  
 
 Note que existe outro exemplo dessa técnica na página [Curvas epidêmicas] - a sobreposição da incidência acumulada acima da epicurva.
@@ -1028,7 +1028,7 @@ aligned_plotted                                                                #
 <!-- # transforme os valores nos dados -->
 
 <!-- malaria_facility_1 <- malaria_facility_1 %>% -->
-<!--   mutate(malaria_rdt_0_4_tf = `malaria_rdt_0-4` * tf_ratio) -->
+<!--   mutate(malaria_rdt_0_4_tf =`malaria_rdt_0-4` * tf_ratio) -->
 
 
 <!-- # crie o gráfico com dois eixos -->

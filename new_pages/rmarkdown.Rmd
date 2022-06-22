@@ -39,7 +39,7 @@ Para explicar alguns dos conceitos e pacotes envolvidos:
 knitr::include_graphics(here::here("images", "markdown/0_rmd.png"))
 ```
 
-(fonte: <https://rmarkdown.rstudio.com/authoring_quick_tour.html>):
+(Fonte: <https://rmarkdown.rstudio.com/authoring_quick_tour.html>):
 
 **Instalação**
 
@@ -94,9 +94,9 @@ Isso abrirá um novo script .Rmd.
 
 **O diretório de trabalho**
 
-O diretório de trabalho de um arquivo markdown é o local onde o próprio arquivo Rmd é salvo. Por exemplo, se o projeto R estiver dentro de `~/Documents/projectX` e o próprio arquivo Rmd estiver em uma subpasta` ~/Documents/projectX/markdownfiles/markdown.Rmd`, o código `read.csv(“ data.csv ”)` Dentro do markdown irá procurar por um arquivo csv na pasta `markdownfiles`, e não na pasta raiz do projeto onde os scripts dentro dos projetos normalmente procurariam automaticamente.
+O diretório de trabalho de um arquivo markdown é o local onde o próprio arquivo Rmd é salvo. Por exemplo, se o projeto R estiver dentro de `~/Documents/projectX` e o próprio arquivo Rmd estiver em uma subpasta` ~/Documents/projectX/markdownfiles/markdown.Rmd`, o código `read.csv("data.csv")` Dentro do markdown irá procurar por um arquivo csv na pasta `markdownfiles`, e não na pasta raiz do projeto onde os scripts dentro dos projetos normalmente procurariam automaticamente.
 
-Para se referir a arquivos em outro lugar, você precisará usar o caminho completo do arquivo ou usar o pacote **here**. O pacote **here** define o diretório de trabalho para a pasta raiz do projeto R e é explicado em detalhes nas páginas [Projetos R] e [Importar e exportar] deste manual. Por exemplo, para importar um arquivo chamado "data.csv" de dentro da pasta `projectX`, o código seria `import (here (“data.csv”))`.
+Para se referir a arquivos em outro lugar, você precisará usar o caminho completo do arquivo ou usar o pacote **here**. O pacote **here** define o diretório de trabalho para a pasta raiz do projeto R e é explicado em detalhes nas páginas [Projetos R] e [Importar e exportar] deste manual. Por exemplo, para importar um arquivo chamado "data.csv" de dentro da pasta `projectX`, o código seria `import(here(“data.csv”))`.
 
 Observe que o uso de `setwd()` em scripts R Markdown não é recomendado - ele se aplica apenas ao trecho de código em que está escrito.
 
@@ -156,14 +156,14 @@ Abaixo estão as principais maneiras de escrever este texto. Consulte a document
 
 #### Novas linhas {.unnumbered}
 
-Exclusivamente no R Markdown, para iniciar uma nova linha, insira \*dois espaços\*\* no final da linha anterior e pressione Enter / Return.
+Exclusivamente no R Markdown, para iniciar uma nova linha, insira **dois espaços** no final da linha anterior e pressione Enter / Return.
 
 #### Case {.unnumbered}
 
 Cerque seu texto normal com esses caracteres para alterar como ele aparece na saída.
 
-- Sublinhados (`_text_`) ou asterisco único (` *texto* `) para *itálico*
-- Asteriscos duplos (`** texto**`) para **texto em negrito**
+- Sublinhados (`_text_`) ou asterisco único (`*texto*`) para *itálico*
+- Asteriscos duplos (`**texto**`) para **texto em negrito**
 - Crases (`text`) para exibir o texto como código
 
 A aparência real da fonte pode ser definida usando modelos específicos (especificados nos metadados YAML; consulte as guias de exemplo).
@@ -211,7 +211,7 @@ Here are my bullets (there are two spaces after this colon):
 
 #### Comente o texto {.unnumbered}
 
-Você pode "comentar" o texto do R Markdown da mesma forma que pode usar o "\#" para comentar uma linha do código R em um bloco R. Basta destacar o texto e pressionar Ctrl+Shift+c (Cmd+Shift+c para Mac). O texto será circundado por setas e ficará verde. Ele não aparecerá na sua saída.
+Você pode "comentar" o texto do R Markdown da mesma forma que pode usar o "#" para comentar uma linha do código R em um bloco R. Basta destacar o texto e pressionar Ctrl+Shift+c (Cmd+Shift+c para Mac). O texto será circundado por setas e ficará verde. Ele não aparecerá na sua saída.
 
 
 ```{r out.width = "100%", fig.align = "center", echo=F}
@@ -236,9 +236,9 @@ Algumas notas sobre o conteúdo das chaves `{}`:
 - `aviso = FALSO` para não imprimir avisos produzidos pelo código R\
 - `mensagem = FALSO` para não imprimir nenhuma mensagem produzida pelo código R\
 - `incluir =` VERDADEIRO / FALSO se incluir saídas em partes (por exemplo, gráficos) no documento
-- `out.width =` e `out.height =` - fornecer no estilo `out.width =" 75% "`\
-- `fig.align =" center "` ajustar como uma figura é alinhada na página\
-- `fig.show = 'hold'` se o seu pedaço imprimir várias figuras e você quiser que elas sejam impressas lado a lado (par com `out.width = c ("33%", "67%")`. Também pode ser definido como `fig.show = 'asis'` para mostrá-los abaixo do código que os gera,`' hide'` para ocultar ou `'animate'` para concatenar múltiplos em uma animação.\
+- `out.width =` e `out.height =` - fornecer no estilo `out.width ="75%"`\
+- `fig.align = "center"` ajustar como uma figura é alinhada na página\
+- `fig.show = 'hold'` se o seu pedaço imprimir várias figuras e você quiser que elas sejam impressas lado a lado (par com `out.width = c("33%", "67%")`. Também pode ser definido como `fig.show = 'asis'` para mostrá-los abaixo do código que os gera,`'hide'` para ocultar ou `'animate'` para concatenar múltiplos em uma animação.\
 - Um cabeçalho de bloco deve ser escrito em *uma linha*\
 - Tente evitar pontos, sublinhados e espaços. Use hifens ( - ) se precisar de um separador.
 
@@ -303,7 +303,7 @@ knitr::include_graphics(here::here("path", "to", "image.png"))
 
 ### Tabelas {.numeradas}
 
-Crie uma tabela usando hifens ( - ) e barras ( \| ). O número de hifens antes/entre as barras permite o número de espaços na célula antes que o texto comece a quebrar.
+Crie uma tabela usando hifens ( - ) e barras ( | ). O número de hifens antes/entre as barras permite o número de espaços na célula antes que o texto comece a quebrar.
 
 
 ``` {.md}
@@ -322,7 +322,7 @@ O código acima produz a tabela abaixo:
 
 ### Seções com guias {.numeradas}
 
-Para saídas HTML, você pode organizar as seções em "guias". Basta adicionar `.tabset` nas chaves` {} `que são colocadas * após um título *. Quaisquer subtítulos abaixo desse título (até outro título do mesmo nível) aparecerão como guias nas quais o usuário pode clicar. Leia mais [aqui](https://bookdown.org/yihui/rmarkdown-cookbook/html-tabs.html)
+Para saídas HTML, você pode organizar as seções em "guias". Basta adicionar `.tabset` nas chaves `{}`que são colocadas * após um título *. Quaisquer subtítulos abaixo desse título (até outro título do mesmo nível) aparecerão como guias nas quais o usuário pode clicar. Leia mais [aqui](https://bookdown.org/yihui/rmarkdown-cookbook/html-tabs.html)
 
 
 ```{r out.width = "100%", fig.align = "center", echo=F}
@@ -332,7 +332,7 @@ knitr::include_graphics(here::here("images", "markdown/tabbed_view.gif"))
 ```
 
 
-Você pode adicionar uma opção adicional `.tabset-pills` após` .tabset` para dar às próprias guias uma aparência de pastilha. Esteja ciente de que, ao visualizar a saída HTML com guias, a funcionalidade de pesquisa Ctrl+f pesquisará apenas guias "ativas", não guias ocultas.
+Você pode adicionar uma opção adicional `.tabset-pills` após `.tabset` para dar às próprias guias uma aparência de pastilha. Esteja ciente de que, ao visualizar a saída HTML com guias, a funcionalidade de pesquisa Ctrl+f pesquisará apenas guias "ativas", não guias ocultas.
 
 
 <!-- ======================================================= -->
@@ -342,10 +342,8 @@ Você pode adicionar uma opção adicional `.tabset-pills` após` .tabset` para 
 Existem várias maneiras de estruturar seu R Markdown e quaisquer scripts R associados. Cada um tem vantagens e desvantagens:
 
 - R Markdown independente - tudo o que é necessário para o relatório é importado ou criado dentro do R Markdown
-
-    - Fonte de outros arquivos - Você pode executar scripts R externos com o comando `source()` e usar suas saídas no Rmd \
-    - Scripts filhos - um mecanismo alternativo para `source ()` \
-
+- Fonte de outros arquivos - Você pode executar scripts R externos com o comando `source()` e usar suas saídas no Rmd 
+- Scripts filhos - um mecanismo alternativo para `source()` 
 - Utilizar um "runfile" - Executar comandos em um script R *antes* de renderizar o R Markdown
 
 ### Rmd independente {.não numerado}
@@ -356,11 +354,11 @@ Tudo que você precisa para executar o markdown R é importado ou criado dentro 
 
 Neste cenário, uma organização lógica do script R Markdown pode ser:
 
-1) Defina as opções globais do **knitr**\
-2) Carregar pacotes\
-3) Importar dados\
-4) Dados do processo\
-5) Produza resultados (tabelas, gráficos, etc.)\
+1) Defina as opções globais do **knitr**
+2) Carregar pacotes
+3) Importar dados
+4) Dados do processo
+5) Produza resultados (tabelas, gráficos, etc.)
 6) Salve as saídas, se aplicável (.csv, .png, etc.)
 
 #### Fonte de outros arquivos {.unnumbered}
@@ -389,7 +387,7 @@ Por exemplo, você pode carregar os pacotes, carregar e limpar os dados e até m
 
 Essa abordagem é útil pelos seguintes motivos:
 
-- Mensagens de erro mais informativas - essas mensagens serão geradas a partir do script R, não do R Markdown. R Erros de Markdown tendem a dizer qual pedaço teve um problema, mas não revelam qual linha.\
+- Mensagens de erro mais informativas - essas mensagens serão geradas a partir do script R, não do R Markdown. R Erros de Markdown tendem a dizer qual pedaço teve um problema, mas não revelam qual linha.
 - Se aplicável, você pode executar longas etapas de processamento antes do comando `render()` - elas serão executadas apenas uma vez.
 
 No exemplo abaixo, temos um script R separado no qual pré-processamos um objeto `data` no ambiente R e então renderizamos o "create_output.Rmd" usando `render()`.
@@ -438,7 +436,7 @@ rmarkdown::render(input = "my_report.Rmd")
 
 Tal como acontece com "knit", as configurações padrão salvarão a saída Rmd na mesma pasta do script Rmd, com o mesmo nome de arquivo (além da extensão do arquivo). Por exemplo, "my_report.Rmd" quando exportado criará "my_report.docx" se você estiver exportando para um documento do Word. No entanto, usando `render()` você tem a opção de usar configurações diferentes. `render()` pode aceitar argumentos, incluindo:
 
-- `output_format =` Este é o formato de saída para converter (por exemplo, `"html_document"`, `"pdf_document"`, `" word_document "` ou `"all"`). Você também pode especificar isso no YAML dentro do script R Markdown. \
+- `output_format =` Este é o formato de saída para converter (por exemplo, `"html_document"`, `"pdf_document"`, `"word_document"` ou `"all"`). Você também pode especificar isso no YAML dentro do script R Markdown. \
 - `output_file =` Este é o nome do arquivo de saída (e caminho do arquivo). Isso pode ser criado por meio de funções R como `here()` ou `str_glue()` conforme demonstrado abaixo. \
 - `output_dir =` Este é um diretório de saída (pasta) para salvar o arquivo. Isso permite que você escolha uma alternativa diferente do diretório em que o arquivo Rmd é salvo. \
 - `output_options =` Você pode fornecer uma lista de opções que irão sobrescrever aquelas no script YAML (por exemplo)
@@ -490,9 +488,10 @@ params:
  date: 2021-04-10
  hospital: Central Hospital
 ---
+
 ```
 
-Em segundo plano, esses valores de parâmetro estão contidos em uma lista somente leitura chamada `params`. Assim, você pode inserir os valores dos parâmetros no código R da mesma forma que faria com outro objeto / valor R em seu ambiente. Simplesmente digite `params $` seguido do nome do parâmetro. Por exemplo, `params $ hospital` para representar o nome do hospital ("Hospital Central" por padrão).
+Em segundo plano, esses valores de parâmetro estão contidos em uma lista somente leitura chamada `params`. Assim, você pode inserir os valores dos parâmetros no código R da mesma forma que faria com outro objeto / valor R em seu ambiente. Simplesmente digite `params$` seguido do nome do parâmetro. Por exemplo, `params$hospital` para representar o nome do hospital ("Hospital Central" por padrão).
 
 Observe que os parâmetros também podem conter valores `true` ou `false` e, portanto, podem ser incluídos nas opções do **knitr** para um bloco R. Por exemplo, você pode definir `{r, eval = params$run}` em vez de `{r, eval = FALSE}`, e agora se o trecho é executado ou não depende do valor de um parâmetro `run:`.
 
@@ -537,9 +536,9 @@ rmarkdown::render(
 
 No entanto, digitar valores nesta janela pop-up está sujeito a erros e erros ortográficos. Você pode preferir adicionar restrições aos valores que podem ser inseridos nos menus suspensos. Você pode fazer isso adicionando no YAML várias especificações para cada entrada `params:`.
 
-- `label:` é como o título para aquele menu suspenso específico \
-- `value:` é o valor padrão (inicial) \
-- `input:` definido como `select` para o menu suspenso \
+- `label:` é como o título para aquele menu suspenso específico 
+- `value:` é o valor padrão (inicial) 
+- `input:` definido como `select` para o menu suspenso 
 - `choices:` Dê os valores elegíveis no menu suspenso
 
 Abaixo, essas especificações são escritas para o parâmetro `hospital`.
@@ -618,7 +617,7 @@ hospitals <- c("Central Hospital",
                 "St. Mark's Maternity Hospital (SMMH)") 
 ```
 
-Em seguida, alimentamos esses valores um de cada vez no comando `render()` usando um loop, que executa o comando uma vez para cada valor no vetor `hospitais`. A letra `i` representa a posição do índice (1 a 4) do hospital que está sendo usado nessa iteração, de modo que `hospital_list [1]` seria "Hospital Central". Esta informação é fornecida em dois lugares no comando `render()`:
+Em seguida, alimentamos esses valores um de cada vez no comando `render()` usando um loop, que executa o comando uma vez para cada valor no vetor `hospitais`. A letra `i` representa a posição do índice (1 a 4) do hospital que está sendo usado nessa iteração, de modo que `hospital_list[1]` seria "Hospital Central". Esta informação é fornecida em dois lugares no comando `render()`:
 
 1) Para o nome do arquivo, de forma que o nome do arquivo da primeira iteração, se produzido em 10 de abril de 2021, seria "Report_Central Hospital_2021-04-10.docx", salvo na subpasta 'output' do diretório de trabalho. \
 2) Para `params =` tal que o Rmd use o nome do hospital internamente sempre que o valor `params$hospital` é chamado (por exemplo, para filtrar o conjunto de dados para o hospital específico apenas). Neste exemplo, quatro arquivos seriam criados - um para cada hospital.
@@ -671,7 +670,7 @@ Como acima, crie um novo conjunto de slides ou use um arquivo PowerPoint existen
 
 
 ```{r out.width = "100%", fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "markdown/8_ppttemplate.png"))
+knitr::include_graphics(here::here("images", "markdown/8_ppttemplate.PNG"))
 ```
 
 Infelizmente, editar arquivos PowerPoint é um pouco menos flexível:
@@ -748,7 +747,7 @@ Para fazer isso com o pacote **DT**, como é usado em todo este manual, você po
 knitr::include_graphics(here::here("images", "markdown/10_dynamictable.png"))
 ```
 
-A função `datatable()` imprimirá o quadro de dados fornecido como uma tabela dinâmica para o leitor. Você pode definir `rownames = FALSE` para simplificar o lado esquerdo da tabela. `filter = "top"` fornece um filtro para cada coluna. No argumento `option ()` forneça uma lista de outras especificações. Abaixo, incluímos dois: `pageLength = 5` define o número de linhas que aparecem como 5 (as linhas restantes podem ser visualizadas através das setas), e `scrollX = TRUE` habilita uma barra de rolagem na parte inferior da tabela (para colunas que se estendem muito para a direita).
+A função `datatable()` imprimirá o quadro de dados fornecido como uma tabela dinâmica para o leitor. Você pode definir `rownames = FALSE` para simplificar o lado esquerdo da tabela. `filter = "top"` fornece um filtro para cada coluna. No argumento `option()` forneça uma lista de outras especificações. Abaixo, incluímos dois: `pageLength = 5` define o número de linhas que aparecem como 5 (as linhas restantes podem ser visualizadas através das setas), e `scrollX = TRUE` habilita uma barra de rolagem na parte inferior da tabela (para colunas que se estendem muito para a direita).
 
 Se seu conjunto de dados for muito grande, considere mostrar apenas as primeiras X linhas envolvendo o quadro de dados em `head()`.
 
@@ -759,9 +758,9 @@ Se seu conjunto de dados for muito grande, considere mostrar apenas as primeiras
 Alguns exemplos comuns desses widgets incluem:
 
 - Plotly (usado nesta página do manual e na página [Gráficos interativos])
-- visNetwork (usado na página [Cadeias de transmissão] deste manual) \
-- Folheto (usado na página [Noções básicas de GIS] deste manual) \
-- dygraphs (úteis para mostrar dados de séries temporais de forma interativa) \
+- visNetwork (usado na página [Cadeias de transmissão] deste manual) 
+- Folheto (usado na página [Noções básicas de GIS] deste manual) 
+- dygraphs (úteis para mostrar dados de séries temporais de forma interativa) 
 - DT (`datatable()`) (usado para mostrar tabelas dinâmicas com filtro, classificação, etc.)
 
 A função `ggplotly()` de **plotly** é particularmente fácil de usar. Veja a página [Gráficos interativos].

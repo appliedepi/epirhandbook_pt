@@ -72,15 +72,11 @@ Lembre-se que você pode resumir dados espaciais sem utilizar as ferramentas de 
 
 Existem alguns itens importantes que você precisará ter ou pensar a respeito para fazer um mapa. Esses incluem:
 
-  * Uma **base de dados** -- pode ser em formato de dados espaciais (tais como shapefiles, como mostrado acima) ou pode não ser em formato espacial (apenas um csv).
-  
-  * Se sua base de dados não estiver em um formato espacial você também vai precisar de uma **base de dados de referência**. Dados de referência consistem nas representações espaciais de dados e seus **atributos** relacionados, que deverão incluir material contendo o local e informações sobre o endereço de propriedades específicas.
-  
-    + Se você estiver trabalhando com fronteiras geográficas pré-definidas (por examplo, regiões administrativas), shapefiles de referências geralmente estão disponíveis gratuitamente para download nos sites das agências governamentais ou organizações de compartilhamento de dados. Se estiver em dúvida, um bom jeito de começar é buscar no Google por “[região] shapefile”
-    
-    + Se você tiver informação sobre endereços, mas não tiver latitude e longitude, talvez você precisa utilizar um  **motor de geocodificação** (*geocoding engine*) para coletar os dados de referências espaciais para seus regristros. 
-    
-  * Uma ideia sobre **como você quer apresentar** a informação em suas bases para seu público alvo. Existem muitos tipos diferentes de mapas, e é importante pensar sobre qual se encaixa melhor à suas necessidades.
+* Uma **base de dados** -- pode ser em formato de dados espaciais (tais como shapefiles, como mostrado acima) ou pode não ser em formato espacial (apenas um csv).
+* Se sua base de dados não estiver em um formato espacial você também vai precisar de uma **base de dados de referência**. Dados de referência consistem nas representações espaciais de dados e seus **atributos** relacionados, que deverão incluir material contendo o local e informações sobre o endereço de propriedades específicas.
+     + Se você estiver trabalhando com fronteiras geográficas pré-definidas (por examplo, regiões administrativas), shapefiles de referências geralmente estão disponíveis gratuitamente para download nos sites das agências governamentais ou organizações de compartilhamento de dados. Se estiver em dúvida, um bom jeito de começar é buscar no Google por “[região] shapefile”
+     + Se você tiver informação sobre endereços, mas não tiver latitude e longitude, talvez você precisa utilizar um  **motor de geocodificação** (*geocoding engine*) para coletar os dados de referências espaciais para seus regristros. 
+* Uma ideia sobre **como você quer apresentar** a informação em suas bases para seu público alvo. Existem muitos tipos diferentes de mapas, e é importante pensar sobre qual se encaixa melhor à suas necessidades.
 
 ### Tipos de mapas para visualizar seus dados {.unnumbered}
 
@@ -273,7 +269,7 @@ DT::datatable(head(sle_hf, 50), rownames = FALSE, options = list(pageLength = 5,
 <!-- ======================================================= -->
 ## Criando gráficos das coordenadas {  }
 
-A forma mais fácil de criar um gráfico de coordenadas X-Y (longitude/latitude, pontos), nessa situação dos casos, é desenhenhá-los como pontos diretamente do objeto `linelist_sf`  que criamos na seção de preparação.
+A forma mais fácil de criar um gráfico de coordenadas X-Y (longitude/latitude, pontos), nessa situação dos casos, é desenhenhá-los como pontos diretamente do objeto `linelist_sf` que criamos na seção de preparação.
 
 O pacote **tmap** oferece algumas capacidades simples de fazer mapas tanto de forma estática ( modo "plot") quanto interativa ( modo de visualização - "view") com apenas algumas linhas de código. A sintaxe do **tmap** é parecida com a do  **ggplot2**, de forma que os comandos são somados uns aos outros com o operador `+`. Veja mais detalhes nessa [vignette](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html). 
 
@@ -389,7 +385,8 @@ Agora podemos descrever nossos casos por unidade administrativa - algo que não 
 ```{r, warning=F, message=F}
 # Cria um novo dataframe contendo as contagens de casos por unidade administrativa
 case_adm3 <- linelist_adm %>%          # inicia com a lineliste contendo as novas colunas administrativas 
-  as_tibble() %>%                      # converte para tibble para melhor exibição 
+  as_tibble() %>%                      # converte para tibble para melhor exibição
+  filter(!is.na(admin3pcod))%>%
   group_by(admin3pcod, admin3name) %>% # agrupa por unidade administrativa, por nome e pcode 
   summarise(cases = n()) %>%           # resume e conta as linhas 
   arrange(desc(cases))                 # organiza em ordem descentente 
@@ -514,7 +511,7 @@ linelist_sf_hf_2k <- linelist_sf_hf %>%
   select(case_id, osm_id.x, nearest_clinic, amenity.x, osm_id.y)
 ```
 
-Agora podemos contar os resultados: ` nrow(linelist_sf_hf_2k[is.na(linelist_sf_hf_2k$osm_id.y),])` dos 1000 casos não intersectam com nenhuma área de influência (esses valores estão faltando), e então residem a mais de 30 min a pé da da unidade de saúde mais próxima.
+Agora podemos contar os resultados: `nrow(linelist_sf_hf_2k[is.na(linelist_sf_hf_2k$osm_id.y), ])` dos 1000 casos não intersectam com nenhuma área de influência (esses valores estão faltando), e então residem a mais de 30 min a pé da da unidade de saúde mais próxima.
 
 ```{r}
 # Casos que não intesectaram com nenhuma das áreas de influência das unidades de saúde
@@ -646,6 +643,7 @@ tm_shape(case_adm3_sf) +                # adiciona polígonos ao mapa
 ```
 
 ## Criando mapas com ggplot2
+
 Se você já está familiarizado em usar o **ggplot2**, você pode usar esse pacote para criar mapas estáticos de seus dados. A função `geom_sf()` vai desenhar diferentes objetos baseados em quais características (pontos, linhas ou polígonos) estão em seus dados. Por exemplo, você pode usar `geom_sf()` em um `ggplot()` utilizando dados `sf` com geometria de polígonos para criar um mapa coroplético.
 
 Para ilustrar como isso funciona, podemos iniciar com os polígonos do shapefile de ADM3 que utilizamos anteriormente. Lembre-se que esses são regiões de Níveis Administrativos 3 em Serra Leoa:
@@ -653,7 +651,9 @@ Para ilustrar como isso funciona, podemos iniciar com os polígonos do shapefile
 ```{r}
 sle_adm3
 ```
+
 Podemos utilizar a função `left_join()` do pacote **dplyr** para adicionar dados que queremos mapear ao objeto shapefile. Nesse caso, vamos utilizar o dataframe `case_adm3` que criamos anterioremente para resumir a contagem de casos por regiões administrativas; no entanto, podemos utilizar essa mesma abordagem para mapear qualquer dado armazenado no dataframe.
+
 ```{r}
 sle_adm3_dat <- sle_adm3 %>% 
   inner_join(case_adm3, by = "admin3pcod") # inner join = mantém apenas se existir em ambos os objetos
@@ -686,6 +686,7 @@ ggplot(data=sle_adm3_dat) +
 ```
 
 Podemos customizar a aparência de nosso mapa utilizando a gramática que é consistente no **ggplot2**, por exemplo:
+
 ```{r, fig.align = "center"}
 ggplot(data=sle_adm3_dat) +                           
   geom_sf(aes(fill=cases)) +						
@@ -737,6 +738,7 @@ Se executarmos esse mapa base nesse momento, utilizando `autoplot.OpenStreetMap(
 ```{r, warning=F, message=F}
 autoplot.OpenStreetMap(map)
 ```
+
 Assim, nossa intenção é converter o mapa para latitude/longitude com a função `openproj()` do pacote **OpenStreetMap**. Nós passamos para a função o mapa base `map` e também o Sistema de Referência de Coordenadas (SRC) que queremos. Fazemos isso passando a string do tipo "proj.4" para a projeção WGS 1984, mas você pode passar o SRC de outras formas também. (veja [esta página](https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/understand-epsg-wkt-and-other-crs-definition-file-types/) para compreender melhor do que se trata uma string do tipo proj.4)  
 
 ```{r, warning=F, message=F}
@@ -756,7 +758,7 @@ Veja os tutoriais [aqui](http://data-analytics.net/cep/Schedule_files/geospatial
 
 ## Mapas de calor de densidade com contornos {}
 
-Abaixo descrevemos como gerar um mapa de calor de densidade com contornos para os dados dos casos , sobre um mapa base, a partir de uma linelist (uma linha por caso).  
+Abaixo descrevemos como gerar um mapa de calor de densidade com contornos para os dados dos casos, sobre um mapa base, a partir de uma linelist (uma linha por caso).  
 
 1) Cria o *tile* do mapa base a partir do OpenStreetMap, como descrito acima.
 2) Adiciona os casos da `linelist` utilizando as colunas de latitude e longitude 
@@ -780,6 +782,7 @@ autoplot.OpenStreetMap(map_latlon)+                 # inicia com o mapa base
        title = "Cumulative cases")
 
 ```
+
 O mapa acima pode ser difícil de interpretar, principalmente pelos pontos se soprepondo. Então, você pode, ao invés, gerar um mapa de densidade 2d utilizando a função  `stat_density_2d()` do **ggplot2**. Você ainda estará utilizando as coordenadas lat/lon da linelist, mas uma estimativa de densidade por kernel 2D será calculada e os resultados serão mostrados como linhas de contorno - como em um mapa topográfico. Leia a [documentação aqui](https://ggplot2.tidyverse.org/reference/geom_density_2d.html).  
 
 
@@ -870,6 +873,7 @@ autoplot.OpenStreetMap(map_latlon)+
 
 <!-- SPATIAL STATISTICS SECTION IS UNDER DEVELOPMENT --> 
 ## Estatística espacial
+
 Grande parte de nossa discussão até aqui estava focada na visualização de dados espaciais. Em alguns casos, você também pode estar interessado em *estatística espacial* para quantificar as relações espaciais entre os atributotos de seu dados. Essa seção vai passar uma visão global sobre alguns conceitos chave da estatística espacial, e sugerir alguns recursos que podem explorados caso você deseje fazer uma análise espacial mais aprofundada.
 
 ### Relações espaciais {.unnumbered}  
@@ -890,6 +894,7 @@ round(sle_adjmat, digits = 2)
 A matriz exibida acima mostra as relações entre as 9 regiões de nossa base `sle_adm3`. Um score de 0 indica duas regiões que não são vizinhas, enquanto quaisquer outros valores diferentes de zero indicam uma relação de vizinhança. Os valores na matriz estão escalados de forma que a linha de cada região tenha um peso total de 1. 
 
 Uma melhor forma de visualizar essas relações de vizinhança é gerando um gráfico para elas:
+
 ```{r, fig.align='center', results='hide'}
 plot(sle_adm3_dat$geometry) +                                           # cria gráficos com as fronteiras das regiões 
   spdep::plot.nb(sle_nb,as(sle_adm3_dat, 'Spatial'), col='grey', add=T) # adiciona relações de vizinhança
@@ -897,9 +902,8 @@ plot(sle_adm3_dat$geometry) +                                           # cria g
 
 Utilizamos uma abordagem de adjacência para identificar polígonos vizinhos; os vizinhos identificados também podem ser chamados de  **vizinhos baseados em contiguidade** _(contiguity-based neighbors)_. Mas, essa é apenas um das formas de escolher quais regiões são esperadas de possuírem uma relação geográfica. As abordagens alternativas mais comuns para identificar relações geográficas geram **vizinhos baseados em distância** _(distance-based neighbors)_; basicamente, eles são:
   
-  * **K-vizinhos mais próximos** _(K-nearest neighbors)_ - Baseados nas distâncias entre centróides (centros geograficamente-pesados dos polígonos de cada região), seleciona as *n* regiões mais próximas como vizinhas. Um limite de proximidade de máxima-distância também pode ser especificado. Em **spdep**, você pode usar `knearneigh()` (veja [documentação](https://r-spatial.github.io/spdep/reference/knearneigh.html)).
-  
-  * **Vizinhos por limite de distância** - Seleciona todos os vizinhos contidos em um limite de distância. Em **spdep**, essa relação de vizinhos pode ser identificada utilizando a função `dnearneigh()` (veja [documentação](https://www.rdocumentation.org/packages/spdep/versions/1.1-7/topics/dnearneigh)).
+* **K-vizinhos mais próximos** _(K-nearest neighbors)_ - Baseados nas distâncias entre centróides (centros geograficamente-pesados dos polígonos de cada região), seleciona as *n* regiões mais próximas como vizinhas. Um limite de proximidade de máxima-distância também pode ser especificado. Em **spdep**, você pode usar `knearneigh()` (veja [documentação](https://r-spatial.github.io/spdep/reference/knearneigh.html)).
+* **Vizinhos por limite de distância** - Seleciona todos os vizinhos contidos em um limite de distância. Em **spdep**, essa relação de vizinhos pode ser identificada utilizando a função `dnearneigh()` (veja [documentação](https://www.rdocumentation.org/packages/spdep/versions/1.1-7/topics/dnearneigh)).
 
 ### Autocorrelação espacial {.unnumbered}  
 
@@ -917,10 +921,10 @@ moran_i                                            # imprime os resultados do te
 ```
 A saída da função `moran.test()` nos mostra um valor do I de Moran de ` round(moran_i$estimate[1],2)`. Isso indica a presença de autocorrelação espacial em nossos dados - especificamente, que regiões com números parecidos de casos de Ebola estão potencialmente próximos entre si. O p-valor fornecido por `moran.test()` é gerado por comparação à expectativa, sob a hipótese nula, de não haver autocorrelação espacial, e pode ser utilizado caso você precise mostrar os resultados de um teste de hipóteses formal.
 
-
 **I de Moran Local** - Podemos decompor o I de Moran (global) calculado acima para identificar uma autocorrelação espacial *localizada*; ou seja, para identificar agrupamentos específicos em nossos dados. Essa estatística, que as vezes é chamada de **Indicador Local de Associação Espacial** _Local Indicator of Spatial Association (LISA)_, resume a extensão da autocorrelação espacial sobre cada região individual. Ela pode ser útil para achar regiões "quentes" ou "frias" no mapa.
 
 Para mostrar um exemplo, podemos calcular e mapear I's de Moran locais para as contagens de casos de Ebola utilizados acima, com a função `local_moran()` do pacote **spdep**:
+
 ```{r, fig.align='center'}
 # calcula o I de Moran local
 local_moran <- spdep::localmoran(                  
@@ -980,6 +984,7 @@ sle_adm3_dat <- sle_adm3_dat %>%
 ```
 
 Podemos visualizar rapidamente os padrões espaciais das duas variáveis lado a lado, para ver se eles se parecem:
+
 ```{r, fig.align='center', warning=F, message=F}
 tmap_mode("plot")
 
@@ -1009,9 +1014,8 @@ A estatística L de Lee pode ser útil para fazer esses tipos de inferência sob
 
 Talvez você queira fazer inferências estatísticas a respeito dos relacionamentos entre variáveis nos seus dados espaciais. Nesses casos, pode ser útil considerar técnicas de *regressão espacial* - ou seja, abordagens para regressão que consideram explicitamente a organização espacial das unidades dos seus dados. Algumas razões que podem fazer você considerar modelos de regressão espacial, em vez de modelos de regressão padrão tais como GLMs, incluem:
 
-  * Modelos padrão de regressão assumem que os resíduos são independentes uns dos outros. Na presença de fortes *autocorrelações espaciais*, os resíduos de um modelo padrão de regressão têm a potencialidade de estarem espacialmente autocorrelacionados também, portanto, violando essa premissa. Isso pode levar a problemas com a interpretação dos resultados do modelo, o que para o caso, um modelo espacial seria mais adequado.
-  
-  * Modelos de regressão também assumem, tipicamente, que o efeito de uma variável *x* é constante sobre todas as observações. No caso de *heterogeneidade espacial*, os efeitos que queremos estimar podem variar sobre o espaço, e podemos estar interessados em quantificar essas diferenças. Nesse caso, modelos de regressão espacial oferecem mais flexibilidade para estimar e interpretar os efeitos.
+* Modelos padrão de regressão assumem que os resíduos são independentes uns dos outros. Na presença de fortes *autocorrelações espaciais*, os resíduos de um modelo padrão de regressão têm a potencialidade de estarem espacialmente autocorrelacionados também, portanto, violando essa premissa. Isso pode levar a problemas com a interpretação dos resultados do modelo, o que para o caso, um modelo espacial seria mais adequado.
+* Modelos de regressão também assumem, tipicamente, que o efeito de uma variável *x* é constante sobre todas as observações. No caso de *heterogeneidade espacial*, os efeitos que queremos estimar podem variar sobre o espaço, e podemos estar interessados em quantificar essas diferenças. Nesse caso, modelos de regressão espacial oferecem mais flexibilidade para estimar e interpretar os efeitos.
   
 Os detalhes das abordagens de regressão espacial estão além do escopo desse manual. Essa seção vai, ao invés, passar uma visão global dos modelos de regressão espacial mais comuns e seus usos, e sugerir referências que podem ser úteis caso você queira explorar essa área mais a fundo.
 
@@ -1030,22 +1034,11 @@ knitr::include_graphics(here::here("images", "gis_lmflowchart.jpg"))
 <!-- ======================================================= -->
 ## Recursos {  }
 
-* Pacote Simple Features [vignette](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)
-
-
+* Pacote Simple Features [vignette](https://cran.r-project.org/web/packages/sf/vignettes/sf1.htm)
 * Pacote tmap [vignette](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html)
-
-
 * ggmap: [Visualização Espacial com ggplot2](https://journal.r-project.org/archive/2013-1/kahle-wickham.pdf)
-
-
 * [Introdução à produção de mapas com R, visão geral de diferentes pacotes](https://bookdown.org/nicohahn/making_maps_with_r5/docs/introduction.html)  
-
 * Dados Espaciais no R [(EarthLab course)](https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/)
-
 * Análise de Dados Espaciais Aplicada com R [livro](https://link.springer.com/book/10.1007/978-1-4614-7618-4)
-
 * **SpatialEpiApp** - um [Shiny app que pode ser baixado como um pacote R](https://github.com/Paula-Moraga/SpatialEpiApp), permitindo que você insira seus próprios dados e faça a criação de mapas, análises de agrupamento _(clusters)_ e estatísticas espaciais.  
-
-
 * Introdução à Economoetria Espacial com R [workshop](http://www.econ.uiuc.edu/~lab/workshop/Spatial_in_R.html)

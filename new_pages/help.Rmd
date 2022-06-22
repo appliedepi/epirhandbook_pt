@@ -1,9 +1,9 @@
 
-# Conseguir ajuda  
+# Conseguindo ajuda  
 
 Esta página aborda sobre como obter ajuda postando um problema (issue) no Github ou postando um exemplo reprodutível ("reprex" ou MRE para *Minimal reprodutible exemple*) em um fórum online.
 
-## Issues (Problemas) (Github)
+## Issues (problemas) do Github
 
 Muitos pacotes e projetos R têm seu código hospedado no site Github.com. Você pode se comunicar diretamente com os autores através do site, postando um "Problema".
 
@@ -33,9 +33,9 @@ Fornecer um exemplo reprodutível ("reprex") é a chave para obter ajuda com sua
 
 * Demonstrar o problema que você encontrou  
 * Ser *o mais curto possível*, incluindo apenas os dados e o código necessário para reproduzir o seu problema
-* Ser *reprodutível*, de modo que todos os objetos (por exemplo, dados), e pacotes sejam incluídos (por exemplo, `library ()` ou `p_load ()`)
+* Ser *reprodutível*, de modo que todos os objetos (por exemplo, dados), e pacotes sejam incluídos (por exemplo, `library()` ou `p_load()`)
 
-*Além disso, certifique-se de não postar nenhum dado sensível com o reprex!* Você pode criar dataframes de exemplo ou usar um dos dataframes embutidos no R (insira `data ()` para abrir uma lista desses conjuntos de dados).
+*Além disso, certifique-se de não postar nenhum dado sensível com o reprex!* Você pode criar dataframes de exemplo ou usar um dos dataframes embutidos no R (insira `data()` para abrir uma lista desses conjuntos de dados).
 
 ### O pacote **reprex** {.unnumbered}  
 
@@ -90,7 +90,7 @@ knitr::include_graphics(here::here("images", "errors_reprex_RStudio1.png"))
 * Você pode fornecer um diretório de trabalho para `wd =`
 * Você pode ler mais sobre os argumentos e possíveis variações em [documentation]() ou inserindo `?Reprex`
 
-No exemplo acima, o comando `ggplot ()` não rodou porque o argumento `date_format =` não está correto - deveria ser `date_labels =`. 
+No exemplo acima, o comando `ggplot()` não rodou porque o argumento `date_format =` não está correto - deveria ser `date_labels =`. 
 
 ### Dados mínimos {.unnumbered}  
 
@@ -98,7 +98,7 @@ As pessoas que vão te ajudar precisam ser capazes de usar seus dados - de prefe
 
 Para criar um conjunto de dados mínimos, considere anonimizar e usar apenas um subconjunto das observações.
 
-EM CONSTRUÇÃO - você também pode usar a função `dput ()` para criar um conjunto mínimo de dados.
+EM CONSTRUÇÃO - você também pode usar a função `dput()` para criar um conjunto mínimo de dados.
 
 ## Postar em um fórum  
 

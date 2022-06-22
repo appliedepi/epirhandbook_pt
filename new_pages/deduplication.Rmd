@@ -102,7 +102,7 @@ obs %>%
 ```{r, message=FALSE, echo=F}
 obs %>% 
   janitor::get_dupes() %>% 
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 10, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 10, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Veja os [dados originais](#dedup_data)  
@@ -118,7 +118,7 @@ obs %>%
 ```{r, message=FALSE, echo=F}
 obs %>% 
   janitor::get_dupes(-recordID) %>% 
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 10, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 10, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Você também pode especificar positivamente as colunas a serem consideradas. Abaixo, apenas as linhas que possuem os mesmos valores nas colunas `name` e `purpose` são retornadas. Observe como "amrish" agora tem `dupe_count` igual a 3 para refletir seus três encontros de "contato".  
@@ -134,7 +134,7 @@ obs %>%
 ```{r, message=FALSE, echo=F}
 obs %>% 
   janitor::get_dupes(name, purpose) %>% 
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 7, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 7, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Veja os [dados originais](#dedup_data).  
@@ -171,7 +171,7 @@ obs %>%
 obs %>% 
   distinct(across(-recordID), # reduz o data frame para apenas linhas únicas (mantém a primeira de todas as duplicidades)
            .keep_all = TRUE) %>%
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 6, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 6, scrollX = T), class = 'white-space: nowrap')
 ```
 
 <span style="color: orange;">**_CUIDADO:_** Se estiver usando `distinct()` em dados agrupados, a função será aplicada a cada grupo.</span>
@@ -196,7 +196,7 @@ obs %>%
 obs %>% 
   distinct(name, purpose, .keep_all = TRUE) %>% # mantém as linhas únicas por nome e propósito, mantém todas as colunas
   arrange(name) %>% 
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 6, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 6, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Veja os [dados originais](#dedup_data).  
@@ -284,7 +284,7 @@ Existem várias variações:  Estes devem ser fornecidos com uma coluna e um nú
 
 
 ```{r}
-obs %>% slice_max(encontro, n = 1) # retorna linhas com o maior número de encontro
+obs %>% slice_max(encounter, n = 1) # retorna linhas com o maior número de encontro
 ```
 
 Use argumentos `n = ` ou `prop = ` para especificar o número ou a proporção de linhas a serem mantidas. Se não estiver usando a função em uma cadeia de pipes, forneça primeiro o argumento de dados (por exemplo, `slice(data, n = 2)`). Veja `?slice` para mais informações. 
@@ -335,7 +335,7 @@ obs %>%
   slice_max(date, # mantém linha por grupo com valor máximo de data 
             n = 1, # mantém apenas a linha mais alta
             with_ties = F) %>% # se houver empate (de data), pegue a primeira linha
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 8, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 8, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Acima, por exemplo, podemos ver que apenas a linha de Amrish em 5 de janeiro foi mantida, e apenas a linha de Brian em 7 de janeiro foi mantida. Veja os [dados originais](#dedup_data).  
@@ -369,10 +369,10 @@ obs %>%
   # SEGUNDO - se houver empate, selecione a linha com o horário mais recente; empates proibidos
   slice_max(lubridate::hm(time), n = 1, with_ties = FALSE) %>% 
   
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 8, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 8, scrollX = T), class = 'white-space: nowrap')
 ```
 
-*No exemplo acima, também seria possível dividir por número de `encontro`, mas mostramos a fatia em `data` e `hora` para fins de exemplo.*  
+*No exemplo acima, também seria possível dividir por número de `encounter`, mas mostramos a fatia em `data` e `hora` para fins de exemplo.*  
 
 <span style="color: darkgreen;">**_DICA:_** Para usar `slice_max()` ou `slice_min()` em uma coluna "character", altere-a para uma classe de fator *ordenada*!</span> extensão>
 
@@ -396,7 +396,7 @@ obs_keep <- obs %>%
 
 
 # 2. Marcar data frame original
-obs_marcado <- obs %>%
+obs_marked <- obs %>%
 
   # cria uma nova coluna dup_record
   mutate(dup_record = case_when(
@@ -405,7 +405,7 @@ obs_marcado <- obs %>%
     recordID %in% obs_keep$recordID ~ "Para análise", 
     
     # tudo o mais marcado como "Ignorar" para fins de análise
-    VERDADEIRO ~ "Ignorar"))
+    TRUE ~ "Ignorar"))
 
 # imprimir
 obs_marked
@@ -427,7 +427,7 @@ Neste exemplo, as colunas "chave" sobre as quais você deseja medir a integridad
 
 Então a nova coluna `key_completeness` é criada com `mutate()`. O novo valor em cada linha é definido como uma fração calculada: o número de valores não omissos nessa linha entre as colunas-chave, dividido pelo número de colunas-chave.  
 
-Isso envolve a função `rowSums()` do R **base**. Também é usado `.`, que dentro do  encadeamento do código (pipe - %>%) se refere ao data frame naquele ponto do pipe (neste caso, está sendo subconjunto com colchetes ` []`).  
+Isso envolve a função `rowSums()` do R **base**. Também é usado `.`, que dentro do  encadeamento do código (pipe - %>%) se refere ao data frame naquele ponto do pipe (neste caso, está sendo subconjunto com colchetes `[]`).  
 
 *Role para a direita para ver mais linhas**  
 
@@ -446,7 +446,7 @@ key_cols = c("personID", "name", "symptoms_ever")
 
 obs %>% 
   mutate(key_completeness = rowSums(!is.na(.[,key_cols]))/length(key_cols)) %>% 
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Veja os [dados originais](#dedup_data).  
@@ -489,9 +489,9 @@ cases_rolled <- obs %>%
   arrange(date, .by_group = TRUE) %>% 
   
   # Para cada coluna, cole todos os valores dentro das linhas agrupadas, separados por ";"
-  summarise()%>%
+  summarise(
     across(everything(), # aplica-se a todas as colunas
-           ~paste0(na.omit(.x), recolher = "; "))) # função é definida que combina valores não-NA
+           ~paste0(na.omit(.x), collapse = "; ")))) # função é definida que combina valores não-NA
 ```
 
 O resultado é uma linha por grupo (`ID`), com entradas organizadas por data e coladas juntas. *Role para a esquerda para ver mais linhas*    
@@ -507,11 +507,11 @@ obs %>%
   arrange(date, .by_group = TRUE) %>% 
   
   # Para cada coluna, cole todos os valores dentro das linhas agrupadas, separados por ";"
-  summarise()%>%
+  summarise(
     across(everything(), # aplica-se a todas as colunas
-           ~paste0(na.omit(.x), recolher = "; "))) %>% # função é definida que combina valores não-NA
+           ~paste0(na.omit(.x), collapse = "; "))) %>% # função é definida que combina valores não-NA
 
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Veja os [dados originais](#dedup_data).  
@@ -524,9 +524,9 @@ Veja os [dados originais](#dedup_data).
 cases_rolled <- obs %>% 
   group_by(personID) %>% 
   arrange(date, .by_group = TRUE) %>% 
-  summarise()%>%
+  summarise(
     across(everything(), # aplica-se a todas as colunas
-           ~paste0(unique(na.omit(.x)), recolher = "; "))) # função é definida que combina valores únicos não-NA
+           ~paste0(unique(na.omit(.x)), collapse = "; "))) # função é definida que combina valores únicos não-NA
 ```
 
 ```{r, message=FALSE, echo=F}
@@ -534,11 +534,11 @@ cases_rolled <- obs %>%
 obs %>% 
   group_by(personID) %>% 
   arrange(date, .by_group = TRUE) %>% 
-  summarise()%>%
+  summarise(
     across(everything(), # aplica-se a todas as colunas
-           ~paste0(unique(na.omit(.x)), recolher = "; "))) %>% # função é definida que combina valores únicos não-NA
+           ~paste0(unique(na.omit(.x)), collapse = "; "))) %>% # função é definida que combina valores únicos não-NA
 
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
+  DT::datatable(rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 
@@ -550,9 +550,9 @@ Neste caso "_roll" para significar que foi agregado:
 cases_rolled <- obs %>% 
   group_by(personID) %>% 
   arrange(date, .by_group = TRUE) %>% 
-  summarise()%>%
+  summarise(
     across(everything(),                
-           list(roll = ~paste0(na.omit(.x), recolher = "; ")))) # _roll é anexado aos nomes das colunas
+           list(roll = ~paste0(na.omit(.x), collapse = "; ")))) # _roll é anexado aos nomes das colunas
 ```
 
 ```{r, message=FALSE, echo=F}
@@ -561,10 +561,10 @@ cases_rolled <- obs %>%
 obs %>% 
   group_by(personID) %>% 
   arrange(date, .by_group = TRUE) %>% 
-  summarise()%>%
+  summarise(
     across(everything(),                
-           list(roll = ~paste0(na.omit(.x), recolher = "; ")))) %>% # _roll é anexado aos nomes das colunas
-  DT::datatable(pop, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
+           list(roll = ~paste0(na.omit(.x), collapse = "; ")))) %>% # _roll é anexado aos nomes das colunas
+  DT::datatable(rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 
@@ -594,7 +594,7 @@ Agora você pode ver na coluna `symptoms_ever` que se a pessoa ALGUMA VEZ disse 
 
 ```{r, message=FALSE, echo=F}
 # exibe os dados da linelist como uma tabela
-DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 10, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(cases_clean, rownames = FALSE, options = list(pageLength = 10, scrollX = T), class = 'white-space: nowrap')
 ```
 
 

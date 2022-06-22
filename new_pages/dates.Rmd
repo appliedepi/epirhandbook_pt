@@ -38,7 +38,7 @@ pacman::p_load(
 
 ### Importação dos dados {.unnumbered}
 
-Importamos o conjunto de dados de casos de uma simulação de epidemia de Ebola. Se você deseja baixar os dados para acompanhar passo a passo, consulte as instruções na página [Baixar manual e dados]. Assumimos que o arquivo está no diretório de trabalho, portanto, nenhuma subpasta é especificada neste caminho de arquivo.
+Importamos o conjunto de dados de casos de uma simulação de epidemia de Ebola. Se você deseja baixar os dados para acompanhar passo a passo, consulte as instruções na página [Baixar manual e dados]. Presumimos que o arquivo está no diretório de trabalho, portanto, nenhuma subpasta é especificada neste caminho de arquivo.
 
 ```{r,  echo=F}
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
@@ -70,7 +70,7 @@ Com o pacote **lubridate**, essas informações também pode ser retornadas com 
 
 ## Converter para Data
 
-Depois de importar um conjunto de dados para o R, os valores da coluna com datas podem ser semelhantes a"1989/12/30", "05/06/2014", ou "13 Janeiro 2020". Nesses casos, é provável que o R ainda esteja lendo esses valores como caracteres. O R deve ser *informado* que esses valores são datas... e o que esse fomato de data representa (qual parte é referente ao dia, mês, ano, etc).
+Depois de importar um conjunto de dados para o R, os valores da coluna com datas podem ser semelhantes a "1989/12/30", "05/06/2014", ou "13 Janeiro 2020". Nesses casos, é provável que o R ainda esteja lendo esses valores como caracteres. O R deve ser *informado* que esses valores são datas... e o que esse fomato de data representa (qual parte é referente ao dia, mês, ano, etc).
 
 Uma vez informado, o R converte esses valores para a classe Date. Em segundo plano, o R armazenará as datas como números (o número de dias a partir de sua data de "origem" 1 de janeiro de 1970). Você não fará interface com o número da data com frequência, mas isso permite que R trate as datas como variáveis contínuas e permita operações especiais, como calcular a distância entre as datas.
 
@@ -78,7 +78,7 @@ Por padrão, os valores da classe Date em R são exibidos como AAAA-MM-DD. Poste
 
 A seguir, apresentamos duas abordagens para converter uma coluna de valores de caracteres para a classe Date.
 
-<span style="color: darkgreen;">**_DICA:_** Você pode checar a classe atual de uma coluna utilizando a função `class()`presente na **base** do R , como por exemplo `class(linelist$date_onset)`. </span>               
+[***DICA:*** Você pode checar a classe atual de uma coluna utilizando a função `class()`presente na **base** do R , como por exemplo `class(linelist$date_onset)`. ]{style="color: darkgreen;"}
 
 ### R **base** {.unnumbered}
 
@@ -86,14 +86,14 @@ A seguir, apresentamos duas abordagens para converter uma coluna de valores de c
 
 Para o uso da função `as.Date()` é preciso que:
 
--   Você especifique o formato **existente** da data como um caractere bruto ou então que especifique a data de origem, caso forneça datas como números (consulte a seção sobre datas do Excel)\
--   Se foi usado em uma coluna de caracteres, todos os valores de data devem ter o mesmo formato exato (se este não for o caso, tente `guess_dates()` do pacote **linelist**)
+-   Você especifique o formato **existente** da data como um caractere bruto ou então que especifique a data de origem, caso forneça datas como números (consulte a seção sobre datas do Excel);
+-   Se foi usado em uma coluna de caracteres, todos os valores de data devem ter o mesmo formato exato (se este não for o caso, tente `guess_dates()` do pacote **linelist**).
 
 **Primeiro**, verifique a classe de sua coluna com `class()` do R **base**. Se você não tem certeza ou está confuso sobre a classe de seus dados (por exemplo, você vê "POSIXct", etc.) pode ser mais fácil primeiro converter a coluna para a classe *Character* com a função `as.character()`, e depois converter para a classe *Date*.
 
-**Segundo**, dentro da função `as.Date()`, use o argumento `format =` para informar ao R o formato *atual* dos componentes da data como caractere - quais caracteres se referem ao mês, dia e ano, e como eles são separados. Se seus valores já estiverem em um dos formatos de data padrão do R ("AAAA-MM-DD" ou "AAAA / MM / DD"), o argumento `format =` não é necessário.
+**Segundo**, dentro da função `as.Date()`, use o argumento `format =` para informar ao R o formato *atual* dos componentes da data como caractere - quais caracteres se referem ao mês, dia e ano, e como eles são separados. Se seus valores já estiverem em um dos formatos de data padrão do R ("AAAA-MM-DD" ou "AAAA/MM/DD"), o argumento `format =` não é necessário.
 
-Para `format =`, forneça uma sequência de caracteres (entre aspas) que representa o formato de data atual usando as abreviações especiais "strptime" abaixo. Por exemplo, se as datas dos caracteres estão atualmente no formato "DD / MM / AAAA", como "24/04/1968", você usaria `format = "%d/%m/%Y"` para converter os valores em datas. **É necessário colocar o formato entre aspas. E não se esqueça de quaisquer barras ou travessões!**
+Para `format =`, forneça uma sequência de caracteres (entre aspas) que representa o formato de data atual usando as abreviações especiais "strptime" abaixo. Por exemplo, se as datas dos caracteres estão atualmente no formato "DD/MM/AAAA", como "24/04/1968", você usaria `format = "%d/%m/%Y"` para converter os valores em datas. **É necessário colocar o formato entre aspas. E não se esqueça de quaisquer barras ou travessões!**
 
 ```{r eval=F}
 # Converter para classe data
@@ -114,8 +114,7 @@ A maioria das abreviações de *strptime* estão listadas abaixo. Você pode ver
 %U = Número da semana (01-53, domingo é o início da semana)\
 %m = Número do mês (por exemplo, 01, 02, 03, 04)\
 %b = Mês abreviado (Jan, Fev, etc.)\
-%B = Mês completo (Janeiro, Fevereiro, etc.)\ 
-%y = Ano em 2 dígitos (por exemplo, 89)\
+%B = Mês completo (Janeiro, Fevereiro, etc.)  %y = Ano em 2 dígitos (por exemplo, 89)\
 %Y = Ano em 4 dígitos (por exemplo, 1989)\
 %h = horas (relógio de 24 horas)\
 %M = minutos\
@@ -124,9 +123,9 @@ A maioria das abreviações de *strptime* estão listadas abaixo. Você pode ver
 %z = deslocamento do GMT\
 %Z = fuso horário (caractere)
 
-<span style="color: darkgreen;">**_DICA:_** TO argumento `format =` da função `as.Date()` não está informando ao R o formato que deseja que as datas tenham, mas sim como identificar as partes da data da forma como elas estão, *antes* de rodar o comando.</span>
+[***DICA:*** TO argumento `format =` da função `as.Date()` não está informando ao R o formato que deseja que as datas tenham, mas sim como identificar as partes da data da forma como elas estão, *antes* de rodar o comando.]{style="color: darkgreen;"}
 
-<span style="color: darkgreen;">**_DICA:_** Certifique-se de que no argumento `format =` você usa o separador de data (por exemplo, /, -, ou espaço) que está presente em suas datas.</span>        
+[***DICA:*** Certifique-se de que no argumento `format =` você usa o separador de data (por exemplo, /, -, ou espaço) que está presente em suas datas.]{style="color: darkgreen;"}
 
 Uma vez que os valores estão na classe Date, o R os exibirá no formato padrão, que é AAAA-MM-DD.
 
@@ -173,7 +172,7 @@ dmy("11 October 2020")
 
 <!-- ``` -->
 
-Se estiver usando o piping (%>%), a conversão de uma coluna de caracteres para datas com **lubridate** pode ser feita assim:
+Se estiver usando o pipe `%>%`, a conversão de uma coluna de caracteres para datas com **lubridate** pode ser feita assim:
 
 ```{r, eval=F}
 linelist <- linelist %>%
@@ -219,8 +218,7 @@ As datas do Excel geralmente são importadas para o R como esses valores numéri
 
 Isso não irá funcionar se as datas do Excel contidas no R estiverem como caracteres, assim, confirme se os números estão classificados como Numérico!
 
-<span style="color: black;">**_NOTA:_** Você deve fornecer a data de origem no formato de data padrão do R ("AAAA-MM-DD").</span>                              
-
+[***NOTA:*** Você deve fornecer a data de origem no formato de data padrão do R ("AAAA-MM-DD").]{style="color: black;"}
 
 ```{r, eval = FALSE}
 # Um exemplo de fornecimento da 'data de origem' do Excel ao converter datas numéricas do Excel
@@ -233,7 +231,9 @@ data_cleaned <- data %>%
 
 ## Datas bagunçadas
 
-A função `guess_dates()` do pacote **linelist** tenta ler uma coluna de data "bagunçada" contendo datas em muitos formatos diferentes e converte as datas para um formato padrão. Você pode [ler mais online sobre `guess_dates()`](https://www.repidemicsconsortium.org/linelist/reference/guess_dates.html). Se `guess_dates()` ainda não estiver disponível no CRAN para R 4.0.2, tente instalar via `pacman::p_load_gh("reconhub/linelist")`.
+A função `guess_dates()` do pacote **linelist** tenta ler uma coluna de data "bagunçada" contendo datas em muitos formatos diferentes e converte as datas para um formato padrão. Você pode [ler mais online sobre `guess_dates()`](https://www.repidemicsconsortium.org/linelist/reference/guess_dates.html). Se `guess_dates()` ainda não estiver disponível no CRAN para R 4.0.2, tente instalar via `pacman::p_load_gh("reconhub/linelist")`[^dates-1].
+
+[^dates-1]: Recentemente o Github exige o uso e configuração dos PAT, *Personal Access Token*. Verifique a página oficial do Github sobre o assunto aqui: <https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token>
 
 Por exemplo, o `guess_dates` vê um vetor dos seguintes caracteres de datas "03 Jan 2018", "07/03/1982", e "08/20/85" e os converteria para a classe Date como: `2018-01-03`, `1982-03-07`, e `1985-08-20`.
 
@@ -324,7 +324,7 @@ linelist <- linelist %>%
     # use str_glue() para combinar as colunas de data-e-horas em uma coluna de caracteres
     # em seguida, use ymd_hm() para converter em datetime
   mutate(
-    date_time_of_admission = str_glue("{date_hospitalisation} {time_admission_clean}") %>% 
+    date_time_of_admission = str_glue("{date_hospitalisation}{time_admission_clean}") %>% 
       ymd_hm()
   )
 
@@ -374,7 +374,7 @@ Para saber mais sobre `case_when()` , consulte a página [Limpeza dos daos e fun
 
 ## Trabalhando com datas
 
-`lubridate` também pode ser usado para uma variedade de outras funções, como **extrair aspectos de uma data / data e hora, realizar cálculos aritiméticos de data ou calcular intervalos de data**
+`lubridate` também pode ser usado para uma variedade de outras funções, como **extrair aspectos de uma data / data e hora, realizar cálculos aritiméticos de data ou calcular intervalos de data**.
 
 Aqui, definimos uma data que será usada para os exemplos:
 
@@ -512,9 +512,9 @@ format(Sys.Date(), "%Y Week %W")
 
 Observe que se estiver usando `str_glue()`, esteja ciente de que dentro das aspas duplas esperadas ", você deve usar apenas aspas simples (como acima).
 
-### Mês-Ano {.unnumbered}
+### Mês-ano {.unnumbered}
 
-Para converter uma coluna de Data para o formato Mês-ano, sugerimos que você use a função `as.yearmon()` do pacote **zoo**. Isso converte a data para a classe "yearmon" e mantém a ordem adequada. Em contraste, o uso de `format(column, "%Y %B")` irá converter para a classe Caractere e irá ordenar os valores alfabeticamente (incorretamente).
+Para converter uma coluna de Data para o formato mês-ano, sugerimos que você use a função `as.yearmon()` do pacote **zoo**. Isso converte a data para a classe "yearmon" e mantém a ordem adequada. Em contraste, o uso de `format(column, "%Y %B")` irá converter para a classe Caractere e irá ordenar os valores alfabeticamente (incorretamente).
 
 Abaixo, uma nova coluna `yearmonth` é criada a partir da coluna `date_onset`, usando a função `as.yearmon()`. A ordem padrão (correta) dos valores resultantes é mostrada na tabela.
 
@@ -560,9 +560,9 @@ Se você estiver interessado apenas em ajustar as datas para *exibição* por se
 
 Veja a página em [Dados de agrupamento] para uma explicação completa de dados de agrupamento com `count()`, `group_by()`, e `summarise()`. Um breve exemplo está mostrado abaixo.
 
-1)  Crie uma nova coluna 'semana' com `mutate()`, usando `floor_date()` com `unit = "week"`\
-2)  Obtenha contagens de linhas (casos) por semana com `count()`; remova quaisquer casos com data ausente\
-3)  Conclua com `complete()` do **tidyr** para garantir que todas as semanas apareçam nos dados - mesmo aquelas sem linhas / casos. Por padrão, os valores de contagem para quaisquer "novas" linhas são NA, mas você pode torná-los 0 com o argumento `fill =`, que espera uma lista nomeada (abaixo, `n` é o nome da coluna de contagens).
+1)  Crie uma nova coluna 'semana' com `mutate()`, usando `floor_date()` com `unit = "week"`;
+2)  Obtenha contagens de linhas (casos) por semana com `count()`; remova quaisquer casos com data ausente;
+3)  Conclua com `complete()` do **tidyr** para garantir que todas as semanas apareçam nos dados - mesmo aquelas sem linhas/casos. Por padrão, os valores de contagem para quaisquer "novas" linhas são NA, mas você pode torná-los 0 com o argumento `fill =`, que espera uma lista nomeada (abaixo, `n` é o nome da coluna de contagens).
 
 ```{r}
 # Faça um conjunto de dados agregado de contagens de casos semanais
