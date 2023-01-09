@@ -10,7 +10,7 @@ knitr::include_graphics(here::here("images", "likert.png"))
 ```
 
 
-As pirâmides demográficas são úteis para mostrar as distribuições de idade e de sexo. Um código semelhante pode ser usado para visualizar os resultados de perguntas de pesquisa do tipo Likert (por exemplo "Concordo plenamente", "Concordo", "Neutro", "Discordo",  "Discordo totalmente"). Nesta página, cobrimos o seguinte:  
+As pirâmides demográficas são úteis para mostrar as distribuições de idade e sexo. Um código semelhante pode ser usado para visualizar os resultados de perguntas de pesquisa do tipo Likert (por exemplo "Concordo plenamente", "Concordo", "Neutro", "Discordo",  "Discordo totalmente"). Nesta página, cobrimos o seguinte:  
 
 * Pirâmides rápidas e fáceis usando o pacote **apyramid**  
 * Pirâmides mais personalizáveis usando `ggplot()`  

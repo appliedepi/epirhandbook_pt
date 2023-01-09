@@ -1,16 +1,13 @@
 
 # Rastreio de contatos
 
-
 Esta página demonstra uma análise descritiva dos dados de rastreio de contatos, acrescentando algumas considerações-chave e abordagens únicas a este tipo de dados.
 
-Esta página faz referência a muitas das competências centrais de gestão e visualização de dados em R, cobertas em outras páginas (por exemplo, limpeza de dados, pivoteamento, tabelas, análises de séries temporais). Contudo, destacaremos exemplos específicos de rastreio de contatos que têm sido úteis para a tomada de decisões operacionais. Por exemplo, está inclusa a visualização de dados de seguimento de rastreio de contatos ao longo do tempo ou através de áreas geográficas, ou a produção de tabelas
-de Indicadores de Desempenho Chave (KPI, do inglês *Key Performance Indicator*) limpas para supervisores de rastreio de contatos.
+Esta página faz referência a muitas das competências centrais de gestão e visualização de dados em R, cobertas em outras páginas (por exemplo, limpeza de dados, pivoteamento, tabelas, análises de séries temporais). Contudo, destacaremos exemplos específicos de rastreio de contatos que têm sido úteis para a tomada de decisões operacionais. Por exemplo, está inclusa a visualização de dados de seguimento de rastreio de contatos ao longo do tempo ou através de áreas geográficas, ou a produção de tabelas de Indicadores de Desempenho Chave (KPI, do inglês *Key Performance Indicator*) limpas para supervisores de rastreio de contatos.
 
 Para fins de demonstração, utilizaremos amostras de dados de rastreio de contatos da plataforma [Go.Data](https://www.who.int/tools/godata). Os princípios aqui abordados serão aplicados aos dados de rastreio de contatos de outras plataformas - você poderá apenas precisar passar por diferentes etapas de pré-processamento de dados, dependendo da estrutura da base.
 
-Leia mais sobre o projeto Go.Data no site [Github Documentation site](https://worldhealthorganization.github.io/godata/) ou [Community
-of Practice](https://community-godata.who.int/).
+Leia mais sobre o projeto Go.Data no site [Github Documentation site](https://worldhealthorganization.github.io/godata/) ou [Community of Practice](https://community-godata.who.int/).
 
 ## Preparação
 
@@ -60,13 +57,9 @@ Clique para fazer o download dos dados de acompanhamento dos contatos
 
 <!-- ``` -->
 
-Na sua forma original nos arquivos passíveis de download, os dados são exibidos como fornecidos pela API do Go.Data (saiba mais sobre [APIs
-aqui](#import_api)). Para fins de exemplo, aqui vamos limpar os dados para facilitar a leitura nesta página. Se estiver usando uma extensão
-Go.Data, pode ver instruções completas sobre como recuperar os seus dados
-[aqui](https://github.com/WorldHealthOrganization/godata/tree/master/analytics/r-reporting).
+Na sua forma original nos arquivos passíveis de download, os dados são exibidos como fornecidos pela API do Go.Data (saiba mais sobre [APIs aqui](#import_api)). Para fins de exemplo, aqui vamos limpar os dados para facilitar a leitura nesta página. Se estiver usando uma extensão Go.Data, pode ver instruções completas sobre como recuperar os seus dados [aqui](https://github.com/WorldHealthOrganization/godata/tree/master/analytics/r-reporting).
 
-Abaixo, os conjuntos de dados são importados utilizando a função `import()` do pacote **rio**. Veja a página [Importar e exportar] para
-várias formas de importação de dados. Utilizamos `here()` para especificar o caminho do arquivo - forneça o caminho específico do arquivo para o seu computador. Em seguida, utilizamos `select()` para selecionar apenas certas colunas dos dados, simplificando para efeitos de demonstração.
+Abaixo, os conjuntos de dados são importados utilizando a função `import()` do pacote **rio**. Veja a página [Importar e exportar] para várias formas de importação de dados. Utilizamos `here()` para especificar o caminho do arquivo - forneça o caminho específico do arquivo para o seu computador. Em seguida, utilizamos `select()` para selecionar apenas certas colunas dos dados, simplificando para efeitos de demonstração.
 
 #### Dados do caso {.unnumbered}
 
@@ -88,10 +81,10 @@ DT::datatable(cases, rownames = FALSE, options = list(pageLength = 5, scrollX=T)
 
 Estes dados são uma tabela de todos os contatos e suas informações. Mais uma vez, forneça o seu próprio caminho para o arquivo. Após a importação, realizamos alguns passos preliminares de limpeza de dados, incluindo:
 
--   Definir a age_class (faixa-etária) como fator e inverter a ordem desses níveis, de modo que as idades menores sejam as primeiras a aparecer
+-   Definir a age_class (faixa-etária) como fator e inverter a ordem desses níveis, de modo que as idades menores sejam as primeiras a aparecer;
 -   Selecionar apenas algumas colunas específicas, ao mesmo tempo que se
-    renomeia uma delas
--   Atribuir artificialmente às linhas cuja coluna `admin_2_name` estiver o nome "Djembe", melhorando a clareza da visualização de alguns exemplos
+    renomeia uma delas;
+-   Atribuir artificialmente às linhas cuja coluna `admin_2_name` estiver o nome "Djembe", melhorando a clareza da visualização de alguns exemplos;
 
 ```{r}
 contacts <- import(here("data", "godata", "contacts_clean.rds")) %>% 
@@ -274,8 +267,7 @@ Em nosso exemplo com Go.Data, estes dados são armazenados nos dados de acompanh
 DT::datatable(head(followups, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-[**CUIDADO:** Cuidado com as duplicatas ao lidar com dados de acompanhamento; podem haver vários seguimentos errôneos no mesmo dia para um determinado contato. Talvez pareça um erro, mas reflete a realidade - por exemplo, um investigador poderia submeter um formulário de acompanhamento no início do dia, quando não foi possível contactar o indivíduo e, mais tarde, submeter um segundo formulário quando conseguir contato. Dependerá do contexto operacional a forma como você quer lida com duplicatas - apenas certifique-se de documentar sua abordagem
-claramente.]{style="color: orange;"}
+[**CUIDADO:** Cuidado com as duplicatas ao lidar com dados de acompanhamento; podem haver vários seguimentos errôneos no mesmo dia para um determinado contato. Talvez pareça um erro, mas reflete a realidade - por exemplo, um investigador poderia submeter um formulário de acompanhamento no início do dia, quando não foi possível contactar o indivíduo e, mais tarde, submeter um segundo formulário quando conseguir contato. Dependerá do contexto operacional a forma como você quer lida com duplicatas - apenas certifique-se de documentar sua abordagem claramente.]{style="color: orange;"}
 
 Vamos *ver* quantas linhas "duplicadas" nós temos:
 
@@ -285,8 +277,7 @@ followups %>%
   filter(n > 1)                             # ver registros onde a contagem é maior que 1
 ```
 
-Em nossos dados de exemplo, os únicos registros aos quais isto se aplica são os que faltam um ID! Podemos removê-los. Mas, para fins de demonstração vamos mostrar os passos para remoção de duplicidades, de forma que haja apenas um acompanhamento por pessoa por dia. Para mais detalhes, veja a página [Eliminação de duplicidades]. Vamos supor que o registro mais recente é o correto. Também aproveitamos a oportunidade para limpar a coluna `followup_number` (o "dia" de acompanhamento que deve variar de 1
-- 14).
+Em nossos dados de exemplo, os únicos registros aos quais isto se aplica são os que faltam um ID! Podemos removê-los. Mas, para fins de demonstração vamos mostrar os passos para remoção de duplicidades, de forma que haja apenas um acompanhamento por pessoa por dia. Para mais detalhes, veja a página [Eliminação de duplicidades]. Vamos supor que o registro mais recente é o correto. Também aproveitamos a oportunidade para limpar a coluna `followup_number` (o "dia" de acompanhamento que deve variar de 1 - 14).
 
 ```{r, warning=F, message=F}
 followups_clean <- followups %>%
@@ -353,7 +344,7 @@ ggplot(data = followups_clean)+
 
 ### Análises por grupo {.unnumbered}
 
-Talvez esses dados de acompanhamento estejam sendo vistos diariamente ou semanalmente para a tomada de decisões operacionais. Você pode considerar mais significativo a desagregação por área geográfica ou por equipe de rastreamento de contatos. Podemos fazer isso ajustando as colunas fornecidas no `group_byr()`.
+Talvez esses dados de acompanhamento estejam sendo vistos diariamente ou semanalmente para a tomada de decisões operacionais. Você pode considerar mais significativo a desagregação por área geográfica ou por equipe de rastreamento de contatos. Podemos fazer isso ajustando as colunas fornecidas no `group_by()`.
 
 ```{r, warning=F, message=F}
 
@@ -398,16 +389,16 @@ plot_by_region
 
 ## Tabelas KPI
 
-Há uma série de diferentes indicadores-Chave de Desempenho (KPIs, de *Key Performance Indicators*  em inglês) que podem ser calculados e rastreados em diferentes níveis de desagregação e ao longo de diferentes períodos de tempo para monitorar o desempenho do rastreamento de contatos. Uma vez que você tenha os cálculos e o formato básico da tabela; é bastante fácil trocar por diferentes KPIs.
+Há uma série de diferentes indicadores-Chave de Desempenho (KPIs, de *Key Performance Indicators* em inglês) que podem ser calculados e rastreados em diferentes níveis de desagregação e ao longo de diferentes períodos de tempo para monitorar o desempenho do rastreamento de contatos. Uma vez que você tenha os cálculos e o formato básico da tabela; é bastante fácil trocar por diferentes KPIs.
 
-Existem várias fontes de rastreamento de contatos KPIs, tais como este (de [ResolveToSaveLives.org (https://contacttracingplaybook.resolvetosavelives.org/checklists/metrics)).A maior parte do trabalho será caminhar através de sua estrutura de dados e pensar em todos os critérios de inclusão/exclusão. Mostramos alguns exemplos abaixo; usando a estrutura de metadados Go.Data:
+Existem várias fontes de rastreamento de contatos KPIs, tais como este (de [ResolveToSaveLives.org](https://contacttracingplaybook.resolvetosavelives.org/checklists/metrics)).A maior parte do trabalho será caminhar através de sua estrutura de dados e pensar em todos os critérios de inclusão/exclusão. Mostramos alguns exemplos abaixo; usando a estrutura de metadados Go.Data:
 
 +-------------+-------------------+--------------------+--------------+
 | Categoria   | Indicador         | Numerador Go.Data  | Denominador  |
 |             |                   |                    | Go.Data      |
 +=============+===================+====================+==============+
-| Indicador   | \% casos          | CONTAR `case_id`   | CONTAGEM DE  |
-| de processo | entrevistados e   | ONDE               | `case_id`    |
+| Indicador   | \% casos          | COUNT OF `case_id` | COUNT OF     |
+| de processo | entrevistados e   | WHERE              | `case_id`    |
 | (Velocidade | isolados em até   | (`                 |              |
 | de rastreio | 24h da informação | date_of_reporting` |              |
 | do contato) |                   | -                  |              |
@@ -419,41 +410,38 @@ Existem várias fontes de rastreamento de contatos KPIs, tais como este (de [Res
 |             |                   | -                  |              |
 |             |                   | `da                |              |
 |             |                   | te_of_data_entry`) |              |
-|             |                   | \< 1 dia           |              |
+|             |                   | \< 1 day           |              |
 +-------------+-------------------+--------------------+--------------+
-| Indicador   | \% de contatos    | CONTAGEM DE        | CONTAGEM DE  |
-| de processo | notificados e em  | `contact_id` ONDE  | `contact_id` |
+| Indicador   | \% de contatos    | COUNT OF           |  COUNT OF    |
+| de processo | notificados e em  | `contact_id` WHERE | `contact_id` |
 | -           | quarentena em até | `followup_status`  |              |
 | velocidade  | 24h da exposição  | == "SEEN_NOT_OK"   |              |
-| de rastreio |                   | OU "SEEN_OK" E     |              |
+| de rastreio |                   | OR "SEEN_OK" AND   |              |
 | do contato  |                   | `date_of_followup` |              |
 |             |                   | -                  |              |
 |             |                   | `                  |              |
 |             |                   | date_of_reporting` |              |
-|             |                   | \< 1 dia           |              |
+|             |                   | \< 1 day           |              |
 +-------------+-------------------+--------------------+--------------+
-| Indicador   | \% de novos casos | CONTAR `case_id`   | CONTAGEM DE  |
-| de processo | sintomaticos      | ONDE               | `case_id`    |
+| Indicador   | \% de novos casos | COUNT OF `case_id` | COUNT OF     |
+| de processo | sintomaticos      | WHERE              | `case_id`    |
 | -           | testados e        | (`                 |              |
 | Completude  | entrevistados em  | date_of_reporting` |              |
 | da testagem | até 3 dias do     | - `date_of_onset`) |              |
-|             | início de         | \< =3 dias         |              |
+|             | início de         | \< =3 days         |              |
 |             | sintomas          |                    |              |
 +-------------+-------------------+--------------------+--------------+
-| Indicador   | \% novos casos    | CONTAR `case_id`   | CONTAGEM DE  |
-| de          | entre lista de    | ONDE               | `case_id`    |
+| Indicador   | \% novos casos    | COUNT OF `case_id` | COUNT OF     |
+| de          | entre lista de    | WHERE              | `case_id`    |
 | resultados  | contatos          | `was_contact` ==   |              |
 | - Geral     | existente         | "TRUE"             |              |
 +-------------+-------------------+--------------------+--------------+
 
-Abaixo, iremos passar por um exercício de exemplo de criação de uma tabela que mostra o acompanhamento dos contatos ao longo de áreas administrativas.
-No final, tornaremos essa tabela apresentável com o pacote **formattable** (mas você poderia usar outros pacotes, como **flextable** - veja [Tabelas para apresentação]).
+Abaixo, iremos passar por um exercício de exemplo de criação de uma tabela que mostra o acompanhamento dos contatos ao longo de áreas administrativas. No final, tornaremos essa tabela apresentável com o pacote **formattable** (mas você poderia usar outros pacotes, como **flextable** - veja [Tabelas para apresentação]).
 
 A criação de tabelas como esta, dependerá da sua estrutura de dados de rastreamento de contatos. Visite a página [Tabelas descritivas] para aprender como resumir os dados usando as funções do **dplyr**.
 
-Criaremos uma tabela que será dinâmica e mudará de acordo com a mudança dos dados. Para tornar os resultados interessantes, estabeleceremos uma data de reporte
-(`report_date`), que nos permite simular o funcionamento da tabela em um determinado dia (escolhemos 10 de Junho de
-2020). Os dados são filtrados até essa data.
+Criaremos uma tabela que será dinâmica e mudará de acordo com a mudança dos dados. Para tornar os resultados interessantes, estabeleceremos uma data de relato (`report_date`), que nos permite simular o funcionamento da tabela em um determinado dia (escolhemos 10 de Junho de 2020). Os dados são filtrados até essa data.
 
 ```{r, warning=F, message=F}
 # Criar a "Report date" para simular simular a execução do relatório com dados "a partir" desta data
@@ -468,9 +456,10 @@ Agora, com base em nossa estrutura de dados, faremos o seguinte:
 
 1)  Comece com os `followups` e use o *summarise* para que contenha, em cada contato único:
 
--   A data do último registro (não importa o status do encontro)
--   A data do último encontro em que o contato foi "visto"
--   O status do encontro naquela última vez em que o contato foi "visto" (por exemplo, com sintomas ou sem sintomas)
+- A data do último registro (não importa o status do encontro)
+- A data do último encontro em que o contato foi "visto"
+- O status do encontro naquela última vez em que o contato foi "visto" (por exemplo, com sintomas ou sem sintomas)
+
 2)  Junte estes dados aos dados de contato, que contêm outras informações como o status geral de contato, data do último exposição a um caso, etc. Também calcularemos as métricas de interesse para cada contato, tais como dias desde a última exposição 
 3)  Agrupamos os dados de contato melhorados por região geográfica (`admin_2_name`) e calculamos estatísticas resumidas por região
 5)  Finalmente, formatamos a tabela para apresentação
@@ -575,8 +564,7 @@ Quando novos contatos são criados, o Go.Data armazena essa informação de rela
 DT::datatable(head(relationships, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Como feito anteriormente para a pirâmide etária comparando casos e contatos, podemos selecionar as poucas variáveis necessárias e criar
-colunas com faixas etárias categóricas, tanto para fontes (casos) quanto para alvos (contatos).
+Como feito anteriormente para a pirâmide etária comparando casos e contatos, podemos selecionar as poucas variáveis necessárias e criar colunas com faixas etárias categóricas, tanto para fontes (casos) quanto para alvos (contatos).
 
 ```{r}
 heatmap_ages <- relationships %>% 
@@ -620,11 +608,11 @@ ggplot(data = long_prop)+       # usar dados longos, com proporção como Freq
     high = "orange")+
   theme(axis.text.x = element_text(angle = 90))+
   labs(                         # rótulos
-    x = "Target case age",
-    y = "Source case age",
-    title = "Who infected whom",
-    subtitle = "Frequency matrix of transmission events",
-    fill = "Proportion of all\ntranmsission events"     # título da legenda
+    x = "Idade dos casos alvo",
+    y = "Idade dos casos fonte",
+    title = "Quem infectou quem",
+    subtitle = "Matriz de frequências de eventos de transmissão",
+    fill = "Porporção de todos\neventos de transmissão"     # título da legenda
   )
 
 ```

@@ -2,7 +2,7 @@
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-# Pivotando dados {}
+# Pivoteando dados {}
 
 
 ```{r, warning=F, message=F, out.height = c('50%'), fig.align="center", fig.show='hold', echo=F}
@@ -51,7 +51,7 @@ pacman::p_load(
 Nesta página, iremos utilizar um banco fictício de casos diários de malária, divididos por local e grupos de idade. Se você quiser acompanhar a análise, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/malaria_facility_count_data.rds' class='download-button'>clique aqui para baixar (como arquivo `.rds` )<span></a>. Importe os dados com a função `import()` do pacote **rio**  (a função suporta vários tipos de arquivo como .xlsx, .csv, .rds - cheque a página [Importar e exportar] para mais detalhes).  
 
 ```{r, echo=F}
-count_data <- rio::import(here::here("data", "malaria_facility_count_data.rds")) %>% 
+count_data <- rio::import(here::here("data", "malaria_facility_count_data.rds")) %>%
   as_tibble()
 ```
 
@@ -143,7 +143,7 @@ vamos ver `pivot_longer()` em ação...
 
 Queremos usar a função `pivot_longer()` do **tidyr** para converter os dados do formato "largo" (wide) para o formato "longo" (long). Especificamente, converter as quatro colunas numéricas com as contagens dos casos de malária em duas novas colunas: uma com os grupos de idade (*age groups*) e uma com os *valores* correspondentes.  
 
-```{r, eval=f}
+```{r, eval=F}
 df_long <- count_data %>% 
   pivot_longer(
     cols = c(`malaria_rdt_0-4`, `malaria_rdt_5-14`, `malaria_rdt_15`, `malaria_tot`)
@@ -243,7 +243,7 @@ count_data %>%
 
 
 
-### Pivotando dados de múltiplas classes {.unnumbered}
+### Pivoteando dados de múltiplas classes {.unnumbered}
 
 O exemplo acima funciona bem em situações em que todas as colunas que você quer pivotar para o formato "longo" são da mesma classe (caracter, numérico, lógico, etc...) 
 
@@ -296,8 +296,7 @@ Assim, o nome e a separação das novas colunas são baseados nos termos "em vol
 
 ```{r}
 
-df_long <- 
-  df %>% 
+df_long <- df %>% 
   pivot_longer(
     cols = -id,
     names_to = c("observation", ".value"),
@@ -316,8 +315,7 @@ Também podemos converter a coluna `observation` para o formato `numeric` remove
 
 ```{r}
 
-df_long <- 
-  df_long %>% 
+df_long <- df_long %>% 
   mutate(
     date = date %>% lubridate::as_date(),
     observation = 
@@ -511,7 +509,7 @@ Mas menos útil para apresentar em uma tabela, então vamos praticar e converter
 ```{r}
 df_combined %>% 
   pivot_wider(
-    id_cols = c(Facility, Year, Cases),
+    id_cols = Facility,
     names_from = "Year",
     values_from = "Cases"
   ) %>% 

@@ -99,7 +99,7 @@ case_ages <- linelist%>%
 
 ```{r, message=FALSE, echo=F}
 # exibir o shapefile como uma tabela
-DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(case_ages, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
 ```
 
 #### Criar um data frame de infectantes {.unnumbered}  
@@ -115,7 +115,7 @@ infectors <- linelist %>%
 
 ```{r, message=FALSE, echo=F}
 # exibir o shapefile como uma tabela
-DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(case_ages, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Em seguida, usamos junções para obter as idades dos infectantes. Isso não é simples, pois na `linelist`, as idades do infectador não são listadas como tal. Alcançamos esse resultado juntando a 'linelist' dos casos a dos infectantes. Começamos com os infectantes e fazemos um `left_join()` ( ou seja, o adicionamos) com o `linelist`, de forma que o data frame de infectates seja a "linha de base" e a coluna `infector id` do lado esquerdo se junte à coluna `case_id` na `linelist` a direita.  
@@ -125,21 +125,21 @@ Assim, os dados do registro do caso do infectante na linelist (incluindo a idade
 ```{r}
 infector_ages <- infectors%>% # começam com infectores
   left_join(# adiciona os dados da linelist para cada infectador  
-    linelist %>%
-    by = c ("infector" = "case_id"))%>% # corresponde ao infector às suas informações como um caso
+    linelist,
+    by = c("infector" = "case_id"))%>% # corresponde ao infector às suas informações como um caso
   select(infector, age_cat)%>% # mantém apenas as colunas de interesse
   rename("infector_age_cat" = "age_cat")   # rename for clarity
 ```
 
 ```{r, message=FALSE, echo=F}
 # exibir o shapefile como uma tabela
-DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(case_ages, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Em seguida, combinamos os casos e suas idades com os infectantes e suas idades. Cada um desses data frame tem a coluna `infector`, então ela é usada para a junção. As primeiras linhas são exibidas abaixo:    
 
 ```{r}
-idades_complete <- case_ages%>%  
+ages_complete <- case_ages%>%  
   left_join(
     infector_ages,
     by = "infector")%>% # utilizando a coluna `infector`coomo chave para a junção
@@ -149,7 +149,7 @@ idades_complete <- case_ages%>%
 
 ```{r, message=FALSE, echo=F}
 # exibir o shapefile como uma tabela
-DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(case_ages, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Abaixo, uma tabulação cruzada simples de contagens entre os casos e os grupos de idade dos infectantes. Rótulos foram adicionadas para maior clareza.  
@@ -164,13 +164,13 @@ Podemos converter esta tabela em um dataframe com `data.frame()` do R **base**, 
 
 ```{r}
 long_counts <- data.frame(table(
-    cases = idades_complete$case_age_cat,
+    cases = ages_complete$case_age_cat,
     infectors = ages_complete$infector_age_cat))
 ```
 
 ```{r, message=FALSE, echo=F}
 # exibir o shapefile como uma tabela
-DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(case_ages, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
 ```
 
 
@@ -184,7 +184,7 @@ long_prop <- data.frame(prop.table(table(
 
 ```{r, message=FALSE, echo=F}
 # exibir o shapefile como uma tabela
-DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(case_ages, rownames = FALSE, options = list(pageLength = 50, scrollX = T), class = 'white-space: nowrap')
 ```
 
 
@@ -269,7 +269,7 @@ Para conseguir isso, faremos as seguintes etapas de gerenciamento de dados:
 
 Abaixo, demonstramos passo a passo:  
 
-```{r, mensagem = FALSO, aviso = FALSO}
+```{r, mensagem = FALSE, aviso = FALSE}
 # Crie um conjunto de dados de resumo semanal
 agg_weeks <- facility_count_data%>% 
   
@@ -296,7 +296,7 @@ agg_weeks <- agg_weeks %>%
 A nova coluna da semana pode ser vista na extremidade direita do quadro de dados  
 
 ```{r, echo=F}
-DT::datatable(demo_agg, rownames = FALSE, options = list(pageLength = 30, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(head(agg_weeks,30), rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Agora agrupamos os dados em semana-instalação e os resumimos para produzir estatísticas por semana-instalação.  Consulte a página em [Tabelas descritivas] para dicas. O próprio agrupamento não altera o quadro de dados, mas impacta como as estatísticas de resumo subsequentes são calculadas.  
@@ -319,26 +319,26 @@ agg_weeks <- agg_weeks %>%
 ```
 
 ```{r, echo=F}
-DT::datatable(demo_agg, rownames = FALSE, options = list(pageLength = 30, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(head(agg_weeks,30), rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Por fim, executamos o comando abaixo para garantir que TODAS as semanas-estabelecimento possíveis estejam presentes nos dados, mesmo que não existissem antes.  
 
-Estamos usando um `right_join()` em si mesmo (o conjunto de dados é representado por "."), Mas foi expandido para incluir todas as combinações possíveis das colunas `semana` e `localização_nome`. Veja a documentação sobre a função `expand()` na página [Pivoting]. Antes de executar este código, o conjunto de dados contém linhas `nrow (agg_weeks)`.   
+Estamos usando um `right_join()` em si mesmo (o conjunto de dados é representado por "."), Mas foi expandido para incluir todas as combinações possíveis das colunas `semana` e `localização_nome`. Veja a documentação sobre a função `expand()` na página [Pivoting]. Antes de executar este código, o conjunto de dados contém linhas `nrow(agg_weeks)`.   
 
 ```{r, warning=F, message=F, echo=F}
 # Crie um quadro de dados de cada semana-estabelecimento possível
-Expandido_weeks <- agg_weeks%>% 
-  mutate(week = as.factor (week))%>% # converte a data em um fator para que expand() funcione corretamente
-  tidyr::expand(., week, location_name)%>% # expand data frame para incluir todas as combinações possíveis de semana-estabelecimento
+expanded_weeks <- agg_weeks%>% 
+  mutate(week = as.factor(week))%>% # converte a data em um fator para que expand() funcione corretamente
+  tidyr::expand(week)%>% # expand data frame para incluir todas as combinações possíveis de semana-estabelecimento
                                              # Nota: "." representa o conjunto de dados naquele momento no encadeamento do código (pipe)
   mutate(week = as.Date(week)) # reconverter a semana para a classe Date para que o right_join subsequente funcione
 ```
 
-Aqui está `extended_weeks`:  
+Aqui está `expanded_weeks`:  
 
 ```{r, echo=F}
-DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(case_ages, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Antes de executar este código, `agg_weeks` contém linhas `nrow(agg_weeks)`.   
@@ -346,7 +346,7 @@ Antes de executar este código, `agg_weeks` contém linhas `nrow(agg_weeks)`.
 ```{r}
 # Use uma junção à direita com a lista expandida semana-estabelecimento para preencher as lacunas que faltam nos dados
 agg_weeks <- agg_weeks %>%      
-  right_join(extended_weeks)%>% # Certifique-se de que todas as combinações possíveis de estabelecimento-semana apareçam nos dados
+  right_join(expanded_weeks)%>% # Certifique-se de que todas as combinações possíveis de estabelecimento-semana apareçam nos dados
   mutate(p_days_reported = replace_na(p_days_reported, 0)) # converter valores ausentes para 0                           
 ```
 
@@ -377,7 +377,7 @@ Um gráfico de calor básico é produzido abaixo, usando as cores e escalas padr
 ```{r}
 ggplot(data = agg_weeks)+
   geom_tile(
-    aes(x = semana,
+    aes(x = week,
         y = location_name,
         fill = p_days_reported))
 ```
@@ -391,7 +391,7 @@ ggplot(data = agg_weeks)+
   
   # mostrar dados como quadrados
   geom_tile(
-    aes(x = semana,
+    aes(x = week,
         y = location_name,
         fill = p_days_reported),      
     color = "white") + # linhas de grade brancas
@@ -414,15 +414,15 @@ ggplot(data = agg_weeks)+
     legend.title = element_text(size=12, face="bold"),
     legend.text  = element_text(size=10, face="bold"),
     legend.key.height = grid::unit(1, "cm"), # altura da chave da legenda
-    legend.key.width = grid::unit(0,6, "cm"), # largura da chave da legenda
+    legend.key.width = grid::unit(0.6, "cm"), # largura da chave da legenda
     
     axis.text.x = element_text(size=12),              # axis text size
     axis.text.y = element_text(vjust = 0.2), # alinhamento do texto do eixo
     axis.ticks = element_line(size=0.4),               
-    axis.title = element_text(size = 12, face = "negrito"), # tamanho do título do eixo e negrito
+    axis.title = element_text(size = 12, face = "bold"), # tamanho do título do eixo e negrito
     
     plot.title = element_text(hjust=0,size=14,face="bold"),  # title right-aligned, large, bold
-    plot.caption = element_text(hjust = 0, face = "itálico") # legenda alinhado à direita e itálico
+    plot.caption = element_text(hjust = 0, face = "italic") # legenda alinhado à direita e itálico
     )+
   
   # rótulos de gráfico
@@ -457,7 +457,7 @@ facility_order <- agg_weeks %>%
 Veja o data frame abaixo:  
 
 ```{r, echo=F}
-DT::datatable(case_data, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(case_ages, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 
@@ -468,7 +468,6 @@ Agora use uma coluna do data frame acima (`facility_order$location_name`) para s
 ```{r, warning=F, message=F, echo=F}
 # Carregar pacote 
 pacman::p_load(forcats)
-
 # criar fator e definir níveis manualmente
 agg_weeks <- agg_weeks %>% 
   mutate(location_name = fct_relevel(
@@ -480,10 +479,9 @@ E agora os dados são adicionados a um gráfico novamente, com location_name sen
 
 ```{r, message=FALSE, warning=FALSE}
 ggplot(data = agg_weeks)+ 
-  
   # mostrar dados como quadrados
   geom_tile(
-    aes(x = semana,
+    aes(x = week,
         y = location_name,
         fill = p_days_reported),      
     color = "white") + # linhas de grade brancas
@@ -506,15 +504,15 @@ ggplot(data = agg_weeks)+
     legend.title = element_text(size=12, face="bold"),
     legend.text  = element_text(size=10, face="bold"),
     legend.key.height = grid::unit(1, "cm"), # altura da chave da legenda
-    legend.key.width = grid::unit(0,6, "cm"), # largura da chave da legenda
+    legend.key.width = grid::unit(0.6, "cm"), # largura da chave da legenda
     
     axis.text.x = element_text(size=12),              # axis text size
     axis.text.y = element_text(vjust = 0.2), # alinhamento do texto do eixo
     axis.ticks = element_line(size=0.4),               
-    axis.title = element_text(size = 12, face = "negrito"), # tamanho do título do eixo e negrito
+    axis.title = element_text(size = 12, face = "bold"), # tamanho do título do eixo e negrito
     
     plot.title = element_text(hjust=0,size=14,face="bold"),  # title right-aligned, large, bold
-    plot.caption = element_text(hjust = 0, face = "itálico") # legenda alinhado à direita e itálico
+    plot.caption = element_text(hjust = 0, face = "italic") # legenda alinhado à direita e itálico
     )+
   
   # rótulos de gráfico
@@ -543,7 +541,6 @@ O seguinte código foi adicionado: `geom_text(aes(label = p_days_reported))`. Is
   
 ```{r, message=FALSE, warning=FALSE}
 ggplot(data = agg_weeks)+ 
-  
   # mostrar dados como quadrados
   geom_tile(
     aes(x = week,
@@ -577,15 +574,15 @@ ggplot(data = agg_weeks)+
     legend.title = element_text(size=12, face="bold"),
     legend.text  = element_text(size=10, face="bold"),
     legend.key.height = grid::unit(1, "cm"), # altura da chave da legenda
-    legend.key.width = grid::unit(0,6, "cm"), # largura da chave da legenda
+    legend.key.width = grid::unit(0.6, "cm"), # largura da chave da legenda
     
     axis.text.x = element_text(size=12),              # axis text size
     axis.text.y = element_text(vjust = 0.2), # alinhamento do texto do eixo
     axis.ticks = element_line(size=0.4),               
-    axis.title = element_text(size = 12, face = "negrito"), # tamanho do título do eixo e negrito
+    axis.title = element_text(size = 12, face = "bold"), # tamanho do título do eixo e negrito
     
     plot.title = element_text(hjust=0,size=14,face="bold"),  # title right-aligned, large, bold
-    plot.caption = element_text(hjust = 0, face = "itálico") # legenda alinhado à direita e itálico
+    plot.caption = element_text(hjust = 0, face = "italic") # legenda alinhado à direita e itálico
     )+
   
   # rótulos de gráfico
@@ -605,7 +602,7 @@ ggplot(data = agg_weeks)+
 
 [scale_fill_gradient()](https://ggplot2.tidyverse.org/reference/scale_gradient.html)  
 
-[Galeria de gráfico R - mapa de calor] (https://ggplot2.tidyverse.org/reference/scale_gradient.html)  
+[Galeria de gráfico R - mapa de calor](https://ggplot2.tidyverse.org/reference/scale_gradient.html)  
 
 
 

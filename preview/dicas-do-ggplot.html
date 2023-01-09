@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>1 Dicas do ggplot | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot]. Existem...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="1 Dicas do ggplot | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot]. Existem...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1 Dicas do ggplot | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot]. Existem...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.17/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Preview pages</li>
+<li><a class="active" href="dicas-do-ggplot.html"><span class="header-section-number">1</span> Dicas do ggplot</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="dicas-do-ggplot" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Dicas do ggplot<a class="anchor" aria-label="anchor" href="#dicas-do-ggplot"><i class="fas fa-link"></i></a>
+</h1>
+<p>Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot].</p>
+<p>Existem diversos <a href="https://ggplot2.tidyverse.org/">tutoriais sobre o <strong>ggplot2</strong></a> disponíveis na seção de Recursos ao final deste capítulo. Você também pode baixar essa <a href="https://rstudio.com/resources/cheatsheets/">colinha sobre visualização de dados com o ggplot</a> do site do RStudio. Nós recomendamos fortemente que você busque inspiração de gráficos <a href="https://www.r-graph-gallery.com/">na galeria de gráficos do R</a> e no <a href="https://www.data-to-viz.com/caveats.html">Data-to-viz</a>.</p>
+<!-- ======================================================= -->
+<div id="preparando-o-ambiente-r" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Preparando o ambiente R<a class="anchor" aria-label="anchor" href="#preparando-o-ambiente-r"><i class="fas fa-link"></i></a>
+</h2>
+<div id="carregue-os-pacotes" class="section level3 unnumbered">
+<h3>Carregue os pacotes<a class="anchor" aria-label="anchor" href="#carregue-os-pacotes"><i class="fas fa-link"></i></a>
+</h3>
+<p>O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função <code>p_load()</code>, do <strong>pacman</strong>, que instala os pacotes, caso não estejam instalados, <em>e</em> os carrega no R para utilização. Também é possível carregar os pacotes instalados utilizando a função <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>, do R <strong>base</strong>. Para mais informações sobre pacotes do R, veja a página [Básico do R].</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
+  <span class="va">tidyverse</span>,      <span class="co"># inclue ggplot2 e outros pacotes</span>
+  <span class="va">rio</span>,            <span class="co"># importar/exportar</span>
+  <span class="va">here</span>,           <span class="co"># localizador de arquivos</span>
+  <span class="va">stringr</span>,        <span class="co"># trabalhando com caracteres</span>
+  <span class="va">scales</span>,         <span class="co"># transforme números</span>
+  <span class="va">ggrepel</span>,        <span class="co"># etiquetas colocadas de forma inteligente</span>
+  <span class="va">gghighlight</span>,    <span class="co"># destaque uma parte do gráfico</span>
+  <span class="va">RColorBrewer</span>    <span class="co"># escalas de cores</span>
+<span class="op">)</span></code></pre></div>
+</div>
+<div id="importe-os-dados" class="section level3 unnumbered">
+<h3>Importe os dados<a class="anchor" aria-label="anchor" href="#importe-os-dados"><i class="fas fa-link"></i></a>
+</h3>
+<p>Nesta página, nós importamos um conjunto de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds" class="download-button">clique para baixar a linelist “limpa”</a> (as .rds file). Importe os dados com a função <code>import()</code>, do pacote <strong>rio</strong> (ela trabalha com uma variedade de tipos de arquivos, como .xlsx, .csv, .rds - veja a página [Importar e exportar] para detalhes).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></code></pre></div>
+<p>As primeiras 50 linhas da linelist são mostradas abaixo.</p>
+<div id="htmlwidget-86aaf4fa360fc147e52a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-86aaf4fa360fc147e52a">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Missing","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Missing","Missing","Missing","Missing","Port Hospital","Military Hospital","Missing","Missing","Other","Port Hospital","Port Hospital","Port Hospital","Missing","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Missing","Other","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Missing","Military Hospital","Other","Missing","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Central Hospital","Military Hospital","Other","Other","Other","Missing","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Missing"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.46183062600728,8.46272931462646,8.46144367534271,8.46191259217774,8.47292327643506,8.48401630165138,8.45837125340844,8.47761705512509,8.47570184950483,8.47779946878972,8.47145134147474,8.47804840685363,8.48528034195779,8.46957530395867,8.45957352078114,8.47404889511544,8.48802917129884,8.473437335922,8.48408263734462,8.46242233645879,8.47026822126572,8.46398447480533,8.4641347894342,8.45623094629607,8.48334624336805,8.47493999153642,8.47832062438022,8.4693933891765,8.48480589906514,8.47121232619015,8.48438437371817,8.48466158574339,8.47714159984428,8.46238127010609,8.45568597813113,8.4632880274758,8.47940722413856,8.46353857052336,8.46178968158864,8.47508713872833,8.45825808128071,8.4532568143863,8.4732571907655,8.47911586641933,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.8184429761563,16.0652496292635,22.4965706447188,71.4144019043841,41.6171224732461,62.0953890870657,0,16.8376536925366,22.7903289734443,53.4119897959184,24.2802636142907,22.4600343506408,54.320987654321,41.0578432556455,28.5664819944598,17.0320552013276,25.0412914912888,38.7172182043977,27.3876813705495,31.5555555555556,14.8069075945662,30.8839811199813,26.6193433895297,59.375,96.6183574879227,19.2394748755093,84.9403122130395,18.4199377406104,27.7722674072605,41.3223140495868,17.2080666586161,24.1671624033314,15.7218971089178,428.994082840237,27.9930220292912,243.261012491782,20.2395007589813,30.527446435638,25.15589569161,47,39.04,31.0661643201798,77.9683671196257,29.5165961238583,166.493236212279,100.308641975309,37.76,20.6037803457852,23.458562375267],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+</div>
+</div>
+<div id="ggplot_tips_colors" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Escalas para as cores, preenchimentos, eixos, etc.<a class="anchor" aria-label="anchor" href="#ggplot_tips_colors"><i class="fas fa-link"></i></a>
+</h2>
+<p>No <strong>ggplot2</strong>, quando a aparência dos dados no gráfico (ex.: tamanho, cor, formato, preenchimento, eixo do gráfico) é mapeada para colunas nos dados, a visualização exata pode ser ajustada com o comando de “escala” correspondente. Nesta seção, nós explicamos alguns ajustes comuns de escalas.</p>
+<div id="esquemas-de-cores" class="section level3" number="1.2.1">
+<h3>
+<span class="header-section-number">1.2.1</span> Esquemas de cores<a class="anchor" aria-label="anchor" href="#esquemas-de-cores"><i class="fas fa-link"></i></a>
+</h3>
+<p>Uma coisa que pode ser inicialmente difícil de entender com o <strong>ggplot2</strong>, é o controle dos esquemas de cores. Observe que esta seção discute a cor dos <em>objetos no gráfico</em> (geometrias/formatos), como pontos, barras, linhas, bases, etc. Para ajustar a cor de textos adicionais, títulos, ou plano de fundo, veja a seção <a href="#ggplot_basics_themes">Temas</a> da página sobre [Básico do ggplot].</p>
+<p>Para controlar a “cor” dos <em>objetos no gráfico</em>, você irá ajustar o argumento <code>color =</code> (a cor <em>exterior</em> do item) ou o <code>fill =</code> (a cor <em>interior</em> do item). Uma exceção a esse padrão é o <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code>, em que você realmente só consegue ajustar <code>color =</code>, que ajusta a cor do ponto inteiro (interior e exterior).</p>
+<p>Ao ajustar a cor ou preenchimento (fill), você pode utilizar o nome das cores reconhecidas pelo R, como <code>"red"</code> (vermelho) (veja a <a href="http://sape.inf.usi.ch/quick-reference/ggplot2/colour">lista completa</a> ou digite <code><a href="https://rdrr.io/r/grDevices/colors.html">?colors</a></code>), ou um código hexadecimal específico para uma cor, como <code>"#ff0505"</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># histograma - </span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>       <span class="co"># ajuste os dados e eixos</span>
+  <span class="fu">geom_histogram</span><span class="op">(</span>              <span class="co"># mostre o histograma</span>
+    binwidth <span class="op">=</span> <span class="fl">7</span>,                <span class="co"># largura dos containers</span>
+    color <span class="op">=</span> <span class="st">"red"</span>,               <span class="co"># cor da linha dos containers</span>
+    fill <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span>          <span class="co"># cor interior dos containers (preenchimento)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="672"></div>
+<p>Como explicado na seção <a href="#ggplot_basics_mapping">mapeando os dados para o gráfico</a>, da página [Básico do ggplot], aspectos estéticos como <code>fill =</code> e <code>color =</code> podem ser definidos <em>fora</em> do comando <code>mapping = aes()</code>, ou <em>dentro</em> dele. Se <em>fora</em> de <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>, o valor atribuído deve ser estático (ex.: <code>color = "blue"</code>) e irá ser aplicado para <em>todos</em> os dados colocados no gráfico pelo geom. Se <em>dentro</em>, a aparência estética deve ser mapeada para uma variável, como <code>color = hospital</code>, e a expressão irá variar de acordo com o valor desta linha nos dados. Alguns exemplos:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Cor estática para pontos e para a linha</span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="va">wt_kg</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>     
+  <span class="fu">geom_point</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">50</span>, color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cor estática para os pontos e linha"</span><span class="op">)</span>
+
+<span class="co"># Cor mapeada para uma coluna contínua</span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="va">wt_kg</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>     
+  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">temp</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>         
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cor mapeada para uma coluna contínua"</span><span class="op">)</span>
+
+<span class="co"># Cor mapeada para uma coluna discreta</span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="va">wt_kg</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>     
+  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>         
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cor mapeada para uma coluna discreta"</span><span class="op">)</span>
+
+<span class="co"># gráfico de barras, preenchimento com uma coluna discreta, cor para um valor estático</span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">hospital</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>     
+  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"yellow"</span><span class="op">)</span><span class="op">+</span>         
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Preenchimento mapeado para uma coluna discreta, cor estática"</span><span class="op">)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-10-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-10-3.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-10-4.png" width="50%"></p>
+</div>
+<div id="ggplot_tips_scales" class="section level3 unnumbered">
+<h3>Escalas<a class="anchor" aria-label="anchor" href="#ggplot_tips_scales"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quando você mapear uma coluna para uma aparência estética do gráfico (ex.: <code>x =</code>, <code>y =</code>, <code>fill =</code>, <code>color =</code>…), seu gráfico irá ganhar uma escala/legenda. Veja acima como a escala pode ter valores contínuos, discretos, datas, etc. dependendo na classe da coluna atribuída. Se você tiver múltiplas estéticas mapeadas para as colunas, seu gráfico terá múltiplas escalas.</p>
+<p>Você pode controlar as escalas com a função <code>scales_()</code> apropriada. As funções de escala do <strong>ggplot()</strong> têm 3 partes, que são escritas assim: <code>scale_AESTHETIC_METHOD()</code>.</p>
+<ol style="list-style-type: decimal">
+<li>A primeira parte, <code>scale_()</code>, é fixa.</li>
+<li>A segunda parte, o AESTHETIC, deve ser a estética que você quer ajustar a escala para (<code>_fill_</code>, <code>_shape_</code>, <code>_color_</code>, <code>_size_</code>, <code>_alpha_</code>…) - as opções aqui também incluem <code>_x_</code> e <code>_y_</code>.<br>
+</li>
+<li>A terceira parte, o METHOD, será ou <code>_discrete()</code>, <code>continuous()</code>, <code>_date()</code>, <code>_gradient()</code>, ou <code>_manual()</code>, de acordo com a classe da coluna e <em>como</em> você quer controlar ela. Existem outras classes, mas estes são frequentemente os mais utilizados.</li>
+</ol>
+<p>Certifique-se de utilizar a função correta para a escala! Do contrário, seu comando de escala não mudará nada no gráfico. Se você tiver múltiplas escalas, pode utilizar múltiplas funções de escala para ajusta-las! Por exemplo:</p>
+</div>
+<div id="argumentos-de-escala" class="section level3 unnumbered">
+<h3>Argumentos de escala<a class="anchor" aria-label="anchor" href="#argumentos-de-escala"><i class="fas fa-link"></i></a>
+</h3>
+<p>Cada tipo de escala possui seus próprios argumentos, embora existam alguns em comum. Busque uma função no R, como <code><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">?scale_color_discrete</a></code>, para ver a documentação dos argumentos dessa função.</p>
+<p>Para escalas contínuas, utilize <code>breaks =</code> para fornecer uma sequência de valores com <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code> (use <code>to =</code>, <code>from =</code>, e <code>by =</code> como mostrado no exemplo abaixo). Ajuste <code>expand = c(0,0)</code> para eliminar espaços extras ao redor dos eixos (isto pode ser utilizado em qualquer escala <code>_x_</code> ou <code>_y_</code>).</p>
+<p>Para escalas discretas, você pode ajustar a ordem de aparecimento dos fatores com <code>breaks =</code> e também ajustar os rótulos desses fatores com o argumento <code>labels =</code>. Forneça um vetor de caractere para cada um desses argumentos (veja exemplos abaixo). Você também pode excluir <code>NA</code> facilmente ao ajustar <code>na.translate = FALSE</code>.</p>
+<p>As nuances de escalas de datas são abordados mais extensivamente na página [Curvas epidêmicas].</p>
+</div>
+<div id="ajustes-manuais" class="section level3 unnumbered">
+<h3>Ajustes manuais<a class="anchor" aria-label="anchor" href="#ajustes-manuais"><i class="fas fa-link"></i></a>
+</h3>
+<p>Um dos truques mais úteis é utilizar funções que alteram as escalas de forma “manual”, de forma a explicitamente atribuir cores conforme você desejar. Estas são funções com a sintaxe <code>scale_xxx_manual()</code> (ex.: <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual()</a></code> ou <code><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual()</a></code>). Cada um dos argumentos a seguir são utilizados no exemplo abaixo.</p>
+<ul>
+<li>Atribua cores para os valores dos dados com o argumento <code>values =</code><br>
+</li>
+<li>Especifique uma cor para <code>NA</code> com <code>na.value =</code><br>
+</li>
+<li>Mude como os valores são <em>escritos</em> na legenda com o argumento <code>labels =</code><br>
+</li>
+<li>Mude o título da legenda com <code>name =</code>
+</li>
+</ul>
+<p>A seguir, nós criamos um gráfico de barras, mostramos como ele é por padrão, e, então, mostramos como fica após ajustarmos três escalas - a escala contínua do eixo y, a escala discreta do eixo x, e o ajuste manual do preenchimento (cor interior das barras).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># PADRÃO - sem ajuste de escalas</span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Padrão - sem ajuste de escalas"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672"></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># ESCALAS AJUSTADAS</span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
+  
+  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">+</span>
+  
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>                   <span class="co"># simplifique o fundo do gráfico</span>
+  
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>                <span class="co"># escala contínua para o eixo y (contagens)</span>
+    expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,                 <span class="co"># sem espaços extras</span>
+    breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>,
+                 to <span class="op">=</span> <span class="fl">3000</span>,
+                 by <span class="op">=</span> <span class="fl">500</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  
+  <span class="fu">scale_x_discrete</span><span class="op">(</span>                   <span class="co"># escala discreta para o eixo x (gênero)</span>
+    expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,                  <span class="co"># sem espaços extras</span>
+    drop <span class="op">=</span> <span class="cn">FALSE</span>,                     <span class="co"># mostre todos os níveis de factor (mesmo que não estejam nos dados)</span>
+    na.translate <span class="op">=</span> <span class="cn">FALSE</span>,             <span class="co"># remove desfechos clínicos desconhecidos (NA) do gráfico</span>
+    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Died"</span>, <span class="st">"Recovered"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="co"># Mude a visualização dos valores</span>
+    
+  
+  <span class="fu">scale_fill_manual</span><span class="op">(</span>                  <span class="co"># Especifique manualmente o preenchimento (cor interior da barra)</span>
+    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"m"</span> <span class="op">=</span> <span class="st">"violetred"</span>,     <span class="co"># valores de referência nos dados para atribuir cores</span>
+               <span class="st">"f"</span> <span class="op">=</span> <span class="st">"aquamarine"</span><span class="op">)</span>,
+    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"m"</span> <span class="op">=</span> <span class="st">"Homem"</span>,          <span class="co"># renomeie a legenda (use "=" para fazer atribuições e evitar erros)</span>
+              <span class="st">"f"</span> <span class="op">=</span> <span class="st">"Mulher"</span>,
+              <span class="st">"Desconhecido"</span><span class="op">)</span>,
+    name <span class="op">=</span> <span class="st">"Gênero"</span>,                  <span class="co"># título da legenda</span>
+    na.value <span class="op">=</span> <span class="st">"grey"</span>                 <span class="co"># atribua uma cor para dados em branco</span>
+  <span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Com as escalas ajustadas"</span><span class="op">)</span> <span class="co"># Ajuste o título da legenda do preenchimento</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-11-2.png" width="672"></div>
+</div>
+<div id="escalas-contínuas-dos-eixos" class="section level3 unnumbered">
+<h3>Escalas contínuas dos eixos<a class="anchor" aria-label="anchor" href="#escalas-cont%C3%ADnuas-dos-eixos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quando os dados são mapeados para os eixos do gráfico, estes também podem ser ajustados com comandos de escala. Um exemplo simples é ajustar a visualização de um eixo (ex.: eixo y) que é mapeado para uma coluna com dados contínuos.</p>
+<p>No caso de querermos ajustar as quebras ou visualização dos valores no gráfico, podemos utilizar o <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous()</a></code>, do ggplot. Como observado acima, utilize o argumento <code>breaks =</code> para fornecer uma sequência de valores que irão servir como “quebras” na escala. Estes são os intervalos em que os números serão mostrados. Para este argumento, você pode fornecer um vetor <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> contendo os valores dos intervalos desejados, ou você pode fornecer uma sequência regular de números utilizando a função <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code> do R <strong>base</strong>. Esta função aceita <code>to =</code>, <code>from =</code>, e <code>by =</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># PADRÃO - sem ajuste da escala</span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Padrão - sem ajuste da escala"</span><span class="op">)</span>
+
+<span class="co"># </span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>
+    breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>
+      from <span class="op">=</span> <span class="fl">0</span>,
+      to <span class="op">=</span> <span class="fl">3000</span>,
+      by <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
+  <span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Intervalo do eixo y ajustado"</span><span class="op">)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-12-2.png" width="50%"></p>
+<div id="mostre-as-porcentagens" class="section level4 unnumbered">
+<h4>Mostre as porcentagens<a class="anchor" aria-label="anchor" href="#mostre-as-porcentagens"><i class="fas fa-link"></i></a>
+</h4>
+<p>Caso os seus dados originais sejam proporções, você pode facilmente mostra-los como porcentagens com “%” ao adicionar <code>labels = scales::percent</code> nos seus comandos de escala, como mostrado abaixo.</p>
+<p>Embora uma alternativa seria converter os valores para caracteres, e, então, adicionar o “%” como caracter no final, esta abordagem irá causar problemas uma vez que seus dados não serão mais variáveis numéricas contínuas.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Proporções originais do eixo y</span>
+<span class="co">#############################</span>
+<span class="va">linelist</span> <span class="op">%&gt;%</span>                                   <span class="co"># inicie com a linelist</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span>                       <span class="co"># agrupe os dados por hospital</span>
+  <span class="fu">summarise</span><span class="op">(</span>                                   <span class="co"># crie uma coluna de resumo dos dados</span>
+    n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,                                     <span class="co"># total de casos (linhas) em um grupo</span>
+    deaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">==</span> <span class="st">"Death"</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,   <span class="co"># número de mortes nos grupos</span>
+    prop_death <span class="op">=</span> <span class="va">deaths</span><span class="op">/</span><span class="va">n</span><span class="op">)</span> <span class="op">%&gt;%</span>                   <span class="co"># proporção de mortes por grupo</span>
+  <span class="fu">ggplot</span><span class="op">(</span>                                      <span class="co"># inicie o gráfico</span>
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
+      x <span class="op">=</span> <span class="va">hospital</span>,
+      y <span class="op">=</span> <span class="va">prop_death</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> 
+  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Mostre as proporções originais do eixo y"</span><span class="op">)</span>
+
+
+
+<span class="co"># Mostre as proporções do eixo y como porcentagens</span>
+<span class="co">########################################</span>
+<span class="va">linelist</span> <span class="op">%&gt;%</span>         
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>
+    n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,
+    deaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">==</span> <span class="st">"Death"</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,
+    prop_death <span class="op">=</span> <span class="va">deaths</span><span class="op">/</span><span class="va">n</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span>
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
+      x <span class="op">=</span> <span class="va">hospital</span>,
+      y <span class="op">=</span> <span class="va">prop_death</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Mostre o eixo y como porcentagem (%)"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>
+    labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/percent_format.html">percent</a></span>                    <span class="co"># mostre as proporções como porcentagens</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-13-2.png" width="50%"></p>
+</div>
+<div id="escala-logarítmica" class="section level4 unnumbered">
+<h4>Escala logarítmica<a class="anchor" aria-label="anchor" href="#escala-logar%C3%ADtmica"><i class="fas fa-link"></i></a>
+</h4>
+<p>Para transformar um eixo contínuo em uma escala logarítmica, adicione <code>trans = "log2"</code> no comando da escala. Para os propósitos deste exemplo, criamos um quadro de dados de regiões com seus respectivos <code>preparedness_index</code> e valores de casos acumulados.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">plot_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+  region <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"E"</span>, <span class="st">"F"</span>, <span class="st">"G"</span>, <span class="st">"H"</span>, <span class="st">"I"</span><span class="op">)</span>,
+  preparedness_index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">8.8</span>, <span class="fl">7.5</span>, <span class="fl">3.4</span>, <span class="fl">3.6</span>, <span class="fl">2.1</span>, <span class="fl">7.9</span>, <span class="fl">7.0</span>, <span class="fl">5.6</span>, <span class="fl">1.0</span><span class="op">)</span>,
+  cases_cumulative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">45</span>, <span class="fl">80</span>, <span class="fl">20</span>, <span class="fl">21</span>, <span class="fl">7</span>, <span class="fl">51</span>, <span class="fl">30</span>, <span class="fl">1442</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">plot_data</span></code></pre></div>
+<pre><code>##   region preparedness_index cases_cumulative
+## 1      A                8.8               15
+## 2      B                7.5               45
+## 3      C                3.4               80
+## 4      D                3.6               20
+## 5      E                2.1               21
+## 6      F                7.9                7
+## 7      G                7.0               51
+## 8      H                5.6               30
+## 9      I                1.0             1442</code></pre>
+<p>Os casos acumulados para a região “I” são drasticamente maiores do que todas as outras regiões. Em circunstâncias como esta, você pode optar por mostrar o eixo y utilizando uma escala logarítmica, de forma que o leitor possa ver diferenças entre as regiões com menos casos acumulados.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Eixo y original</span>
+<span class="va">preparedness_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">plot_data</span>,  
+       mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
+         x <span class="op">=</span> <span class="va">preparedness_index</span>,
+         y <span class="op">=</span> <span class="va">cases_cumulative</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">+</span>            <span class="co"># pontos para cada região</span>
+  <span class="fu">geom_text</span><span class="op">(</span>
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">region</span><span class="op">)</span>,
+    vjust <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span><span class="op">+</span>                  <span class="co"># adicione os rótulos em texto</span>
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">preparedness_plot</span>                  <span class="co"># visualize o gráfico original</span>
+
+
+<span class="co"># visualize o eixo y transformado</span>
+<span class="va">preparedness_plot</span><span class="op">+</span>                   <span class="co"># inicie com o gráfico salvo acima</span>
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log2"</span><span class="op">)</span> <span class="co"># adicione a transformação para o eixo y</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-15-2.png" width="50%"></p>
+</div>
+</div>
+<div id="escalas-em-gradiente" class="section level3 unnumbered">
+<h3>Escalas em gradiente<a class="anchor" aria-label="anchor" href="#escalas-em-gradiente"><i class="fas fa-link"></i></a>
+</h3>
+<p>O preenchimento de escadas em gradiente de cores pode envolver detalhes adicionais. Normalmente, os ajustes padrões são bons, mas você pode querer ajustar os valores, limites de corte, etc.</p>
+<p>Para demonstrar como ajustar uma escala contínua de cor, nós iremos utilizar um conjunto de dados da página [Rastreamento de contatos], que contém as idades dos casos e dos seus casos-fonte.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">case_source_relationships</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"godata"</span>, <span class="st">"relationships_clean.rds"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">source_age</span>, <span class="va">target_age</span><span class="op">)</span> </code></pre></div>
+<p>Abaixo, produzimos um arquivo “raster” de um gráfico de densidade de calor. Não iremos discorrer sobre como criar o gráfico (veja o link no parágrafo acima), mas sim como ajustar a escala de cor. Veja mais sobre a função <code><a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">stat_density2d()</a></code> do <strong>ggplot2</strong> <a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">aqui</a>. Observe como a escala <code>fill</code> é <em>contínua</em>.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trans_matrix</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">case_source_relationships</span>,
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">source_age</span>, y <span class="op">=</span> <span class="va">target_age</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">stat_density2d</span><span class="op">(</span>
+    geom <span class="op">=</span> <span class="st">"raster"</span>,
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">after_stat</span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>,
+    contour <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>A seguir, mostramos algumas variações na escala de preenchimento:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trans_matrix</span>
+<span class="va">trans_matrix</span> <span class="op">+</span> <span class="fu">scale_fill_viridis_c</span><span class="op">(</span>option <span class="op">=</span> <span class="st">"plasma"</span><span class="op">)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-18-2.png" width="50%"></p>
+<p>Agora veremos alguns exemplos de como ajustar os pontos de quebra da escala:</p>
+<ul>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient()</a></code> aceita duas cores (alta/baixa)</li>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradientn()</a></code> aceita um vetor com qualquer quantidade de cores para <code>values =</code> (valores intermediários serão intercalados)<br>
+</li>
+<li>Use <a href="https://www.rdocumentation.org/packages/scales/versions/0.4.1/topics/rescale"><code>scales::rescale()</code></a> para ajustar como as cores serão posicionadas no decorrer do gradiente; ele reajusta o seu vetor de posições para ser entre 0 e 1.</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">trans_matrix</span> <span class="op">+</span> 
+  <span class="fu">scale_fill_gradient</span><span class="op">(</span>     <span class="co"># escala de gradiente com 2 cores</span>
+    low <span class="op">=</span> <span class="st">"aquamarine"</span>,    <span class="co"># valor baixo</span>
+    high <span class="op">=</span> <span class="st">"purple"</span>,       <span class="co"># valor alto</span>
+    na.value <span class="op">=</span> <span class="st">"grey"</span>,     <span class="co"># valor para NA</span>
+    name <span class="op">=</span> <span class="st">"Densidade"</span><span class="op">)</span><span class="op">+</span>     <span class="co"># Título da legenda</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Especifique manualmente as cores para valores altos/baixos"</span><span class="op">)</span>
+
+<span class="co"># 3+ cores na escala</span>
+<span class="va">trans_matrix</span> <span class="op">+</span> 
+  <span class="fu">scale_fill_gradientn</span><span class="op">(</span>    <span class="co"># escala de 3-cores (baixo/médio/alto)</span>
+    colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"yellow"</span>,<span class="st">"red"</span><span class="op">)</span> <span class="co"># forneça cores no vetor</span>
+  <span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Escala de 3 cores"</span><span class="op">)</span>
+
+<span class="co"># Uso de rescale() para ajustar a posição de cores na escala</span>
+<span class="va">trans_matrix</span> <span class="op">+</span> 
+  <span class="fu">scale_fill_gradientn</span><span class="op">(</span>    <span class="co"># forneça qualquer número de cores</span>
+    colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"yellow"</span>,<span class="st">"red"</span>, <span class="st">"black"</span><span class="op">)</span>,
+    values <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/rescale.html">rescale</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span>, <span class="fl">0.07</span>, <span class="fl">0.10</span>, <span class="fl">0.15</span>, <span class="fl">0.20</span>, <span class="fl">0.3</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="co"># a posições para as cores é reescalado entre 0 e 1</span>
+    <span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cores não são posicionadas igualmente"</span><span class="op">)</span>
+
+<span class="co"># uso de limites para os valores de corte que recebem a cor de preenchimento</span>
+<span class="va">trans_matrix</span> <span class="op">+</span> 
+  <span class="fu">scale_fill_gradientn</span><span class="op">(</span>    
+    colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"yellow"</span>,<span class="st">"red"</span><span class="op">)</span>,
+    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.0002</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Restrinja os limites dos valores, resultando em um espaço cinza"</span><span class="op">)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-19-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-19-3.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-19-4.png" width="50%"></p>
+</div>
+<div id="paletas-de-cores" class="section level3 unnumbered">
+<h3>Paletas de cores<a class="anchor" aria-label="anchor" href="#paletas-de-cores"><i class="fas fa-link"></i></a>
+</h3>
+<div id="colorbrewer-e-viridis" class="section level4 unnumbered">
+<h4>Colorbrewer e Viridis<a class="anchor" aria-label="anchor" href="#colorbrewer-e-viridis"><i class="fas fa-link"></i></a>
+</h4>
+<p>Geralmente, se você quiser paletas pré-definidas, pode usar as funções <code>scale_xxx_brewer</code> ou <code>scale_xxx_viridis_y</code>.</p>
+<p>As funções ‘brewer’ colorem a partir das paletas do <a href="colorbrewer.org">colorbrewer.org</a>.</p>
+<p>As funções ‘viridis’ colorem das paletas viridis (amigável para deficientes visuais!), que “fornece mapas de cores que são uniformes, tanto nas cores quanto no preto-e-branco. Elas também foram desenhadas para serem percebidas por usuários com formas comuns de cegueiras de cor.” (leia mais <a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">aqui</a> e <a href="https://bids.github.io/colormap/">aqui</a>). Defina se a paleta é discreta, contínua, ou contida ao especificar isto no final da função (ex.: discreta é <code>scale_xxx_viridis_d</code>).</p>
+<p>É recomendado que você teste as cores de seu gráfico neste <a href="https://www.color-blindness.com/coblis-color-blindness-simulator/">simulador de cegueira de cor</a>. Se você tiver um esquema de cores vermelho/verde, tente um esquema “quente-frio” (vermelho-azul) no lugar, como descrito <a href="https://www.visualisingdata.com/2019/08/five-ways-to-design-for-red-green-colour-blindness/#:~:text=The%20pink%2Dred%20through%20to,green%20hues%20used%20by%20default.">aqui</a></p>
+<p>Aqui é um exemplo da página [Básico do ggplot], utilizando diferentes esquemas de cores.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">symp_plot</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>                                         <span class="co"># inicie com a linelist</span>
+  <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">case_id</span>, <span class="va">fever</span>, <span class="va">chills</span>, <span class="va">cough</span>, <span class="va">aches</span>, <span class="va">vomit</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>     <span class="co"># selecione as colunas</span>
+  <span class="fu">pivot_longer</span><span class="op">(</span>                                                  <span class="co"># faça o pivoteamento longo</span>
+    cols <span class="op">=</span> <span class="op">-</span><span class="va">case_id</span>,                                  
+    names_to <span class="op">=</span> <span class="st">"symptom_name"</span>,
+    values_to <span class="op">=</span> <span class="st">"symptom_is_present"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>                                                        <span class="co"># substitua os campos em branco</span>
+    symptom_is_present <span class="op">=</span> <span class="fu">replace_na</span><span class="op">(</span><span class="va">symptom_is_present</span>, <span class="st">"unknown"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span>                                                        <span class="co"># inicie o ggplot!</span>
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">symptom_name</span>, fill <span class="op">=</span> <span class="va">symptom_is_present</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_bar</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>                    
+  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>
+    x <span class="op">=</span> <span class="st">"Sintoma"</span>,
+    y <span class="op">=</span> <span class="st">"Status do sintoma (proporção)"</span>
+  <span class="op">)</span>
+
+<span class="va">symp_plot</span>  <span class="co"># visualize com as cores padrão</span>
+
+<span class="co">#################################</span>
+<span class="co"># visualize com cores especificadas manualmente</span>
+<span class="va">symp_plot</span> <span class="op">+</span>
+  <span class="fu">scale_fill_manual</span><span class="op">(</span>
+    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yes"</span> <span class="op">=</span> <span class="st">"black"</span>,         <span class="co"># defina as cores de forma explícita</span>
+               <span class="st">"no"</span> <span class="op">=</span> <span class="st">"white"</span>,
+               <span class="st">"unknown"</span> <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span>,
+    breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yes"</span>, <span class="st">"no"</span>, <span class="st">"unknown"</span><span class="op">)</span>, <span class="co"># ordene os fatores corretamente</span>
+    name <span class="op">=</span> <span class="st">""</span>                           <span class="co"># configure a legenda para não ter título</span>
+
+  <span class="op">)</span> 
+
+<span class="co">#################################</span>
+<span class="co"># visualize com as cores discretas do pacote viridis</span>
+<span class="va">symp_plot</span> <span class="op">+</span>
+  <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>
+    breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yes"</span>, <span class="st">"no"</span>, <span class="st">"unknown"</span><span class="op">)</span>,
+    name <span class="op">=</span> <span class="st">""</span>
+  <span class="op">)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-20-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-20-3.png" width="50%"></p>
+<!-- ======================================================= -->
+</div>
+</div>
+</div>
+<div id="altere-a-ordem-das-variáveis-discretas" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Altere a ordem das variáveis discretas<a class="anchor" aria-label="anchor" href="#altere-a-ordem-das-vari%C3%A1veis-discretas"><i class="fas fa-link"></i></a>
+</h2>
+<p>Geralmente, alterar a ordem em que as variáveis discretas aparecem no gráfico é difícil de entender para novatos no <code>ggplot2</code>. Entretanto, ao compreender o mecanismo que o <code>ggplot2</code> usa para trabalhar com variáveis discretas, fica mais fácil de entender como alterar. No geral, se uma variável discreta é utilizada, ela é automaticamente convertida para a classe <code>factor</code>- que, por padrão, ordena os factors por ordem alfabética. Para trabalhar com isso, você simplesmente precisa reordenar os níveis de factor para refletirem na ordem que você gostaria que eles aparecessem no gráfico. Para informações mais detalhadas sobre como reordenar objetos da classe <code>factor</code>, veja a seção sobre factor neste guia.</p>
+<p>Nós podemos utilizar um exemplo comum com grupos de idade - por padrão, o grupo de 5-9 anos será colocado no meio dos grupos ordenados (considerando a ordem alfanumérica), mas nós podemos movê-lo para atrás do grupo de 0-4 anos do gráfico ao renivelar os factors.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu">drop_na</span><span class="op">(</span><span class="va">age_cat5</span><span class="op">)</span>,                         <span class="co"># remova as linhas em que age_cat5 está ausente</span>
+  mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">age_cat5</span>, <span class="st">"5-9"</span>, after <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># renivele os factors</span>
+
+  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Grupo de idade"</span>, y <span class="op">=</span> <span class="st">"Número de hospitalizações"</span>,
+       title <span class="op">=</span> <span class="st">"Quantidade total de hospitalizações por grupo de idade"</span><span class="op">)</span> <span class="op">+</span>
+  
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672"></div>
+<div id="pacote-ggthemr" class="section level4 unnnumbered" number="1.3.0.1">
+<h4>
+<span class="header-section-number">1.3.0.1</span> Pacote <strong>ggthemr</strong><a class="anchor" aria-label="anchor" href="#pacote-ggthemr"><i class="fas fa-link"></i></a>
+</h4>
+<p>Adicionalmente, considere utilizar o pacote <strong>ggthemr</strong>, que pode ser baixado do Github utilizando <a href="https://github.com/Mikata-Project/ggthemr">essas instruções</a>. Ele oferece paletas de cores muito agradáveis estéticamente, mas tenha ciência de que estas geralmente possuem um número máximo de valores, o que é um fator limitante caso você queira mais de 7 ou 8 cores.</p>
+</div>
+</div>
+<div id="linhas-de-contorno" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Linhas de contorno<a class="anchor" aria-label="anchor" href="#linhas-de-contorno"><i class="fas fa-link"></i></a>
+</h2>
+<p>Gráficos de contorno são úteis quando você tem muitos pontos que podem se sobrepor (“overplotting”). Iremos utilizar os dados sobre as fontes dos casos utilizados acima para fazer um gráfico, mas de forma mais simples utilizando <code><a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">stat_density2d()</a></code> e <code><a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">stat_density2d_filled()</a></code> para produzir níveis discretos de contorno - como um mapa topográfico. Veja mais sobre as estatísticas utilizadas <a href="https://ggplot2.tidyverse.org/reference/geom_density_2d.html">aqui</a>.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">case_source_relationships</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">source_age</span>, y <span class="op">=</span> <span class="va">target_age</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">stat_density2d</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"stat_density2d() + geom_point()"</span><span class="op">)</span>
+
+
+<span class="va">case_source_relationships</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">source_age</span>, y <span class="op">=</span> <span class="va">target_age</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">stat_density2d_filled</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"stat_density2d_filled()"</span><span class="op">)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-22-2.png" width="50%"></p>
+</div>
+<div id="distribuições-marginais" class="section level2" number="1.5">
+<h2>
+<span class="header-section-number">1.5</span> Distribuições marginais<a class="anchor" aria-label="anchor" href="#distribui%C3%A7%C3%B5es-marginais"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para mostrar as distribuições nas extremidades de um gráfico de dispersão criado com <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code>, você pode utilizar o pacote <strong>ggExtra</strong> e sua função <code>ggMarginal()</code>. Salve seu ggplot original como um objeto, e então o utilize com <code>ggMarginal()</code>, como mostrado abaixo. Aqui estão os argumentos chave:</p>
+<ul>
+<li>Você precisa especificar <code>type =</code> como “histogram”, “density” “boxplot”, “violin”, ou “densigram”.<br>
+</li>
+<li>Por padrão, gráficos de dispersão marginal irão aparecer para ambos eixos. Você pode ajustar <code>margins =</code> para “x” ou “y” se quiser apenas um deles.</li>
+<li>Outros argumentos opcionais incluem <code>fill =</code> (cor da barra), <code>color =</code> (cor da linha), <code>size =</code> (tamanho do gráfico relativo ao tamanho da margem, de forma que números maiores criam um gráfico de dispersão marginal menor).<br>
+</li>
+<li>Você pode fornecer outros argumentos específicos para os eixos em <code>xparams =</code> e <code>yparams =</code>. Por exemplo, para obter diferentes tamanhos dos containers do histograma, como mostrado abaixo.</li>
+</ul>
+<p>Os gráficos de dispersão marginal podem refletir os grupos (colunas que foram atribuídas a <code>color =</code> no seu mapa estético do <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>). Se este for o caso, ajuste os argumentos <code>groupColour =</code> ou <code>groupFill =</code>, do <code>ggMarginal()</code>, para <code>TRUE</code>, como mostrado abaixo.</p>
+<p>Leia mais <a href="https://cran.r-project.org/web/packages/ggExtra/vignettes/ggExtra.html">neste resumo</a>, na <a href="https://www.r-graph-gallery.com/277-marginal-histogram-for-ggplot2.html">galeria de gráficos em R</a> ou a documentação da função no R, com <code>?ggMarginal</code>.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Instale/carregue o pacote ggExtra</span>
+<span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">ggExtra</span><span class="op">)</span>
+
+<span class="co"># Gráfico básico de distribuição de peso e idade</span>
+<span class="va">scatter_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">wt_kg</span>, x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Gráfico de distribuição de peso e idade"</span><span class="op">)</span></code></pre></div>
+<p>Para adicionar histogramas marginais, utilize <code>type = "histogram"</code>. Opcionalmente, você pode ajustar <code>groupFill = TRUE</code> para obter histogramas empilhados.</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># com histogramas</span>
+<span class="fu">ggMarginal</span><span class="op">(</span>
+  <span class="va">scatter_plot</span>,                     <span class="co"># adicione histogramas marginais</span>
+  type <span class="op">=</span> <span class="st">"histogram"</span>,               <span class="co"># especifique histogram</span>
+  fill <span class="op">=</span> <span class="st">"lightblue"</span>,               <span class="co"># preenchimento das barras</span>
+  xparams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,    <span class="co"># outros parâmetros para a dispersão marginal do eixo x</span>
+  yparams <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>     <span class="co"># outros parâmetros para a dispersão marginal do eixo y</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672"></div>
+<p>Gráfico de densidade marginal com valores agrupados/coloridos:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Gráfico de dispersão, colorido de acordo com o desfecho clínico (outcome) do paciente</span>
+<span class="co"># Coluna de desfecho é atribuída como cor no ggplot. groupFill no ggMarginal ajustado para TRUE</span>
+<span class="va">scatter_plot_color</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu">drop_na</span><span class="op">(</span><span class="va">gender</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">wt_kg</span>, x <span class="op">=</span> <span class="va">age</span>, color <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Gráfico de dispersão por peso e idade"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span>
+
+<span class="fu">ggMarginal</span><span class="op">(</span><span class="va">scatter_plot_color</span>, type <span class="op">=</span> <span class="st">"density"</span>, groupFill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672"></div>
+<p>Coloque o argumento <code>size =</code> para ajustar o tamanho relativo do gráfico de dispersão marginal. Números menores criam gráficos de dispersão marginal maiores. Você também ajusta <code>color =</code>. A seguir, um diagrama de caixa (boxplot) marginal, com a demonstração do argumento <code>margins =</code>, de forma que apareça apenas em um eixo:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># com boxplot </span>
+<span class="fu">ggMarginal</span><span class="op">(</span>
+  <span class="va">scatter_plot</span>,
+  margins <span class="op">=</span> <span class="st">"x"</span>,      <span class="co"># mostre apenas o gráfico de dispersão marginal do eixo x</span>
+  type <span class="op">=</span> <span class="st">"boxplot"</span><span class="op">)</span>   </code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672"></div>
+<!-- ======================================================= -->
+</div>
+<div id="rotulagem-inteligente" class="section level2" number="1.6">
+<h2>
+<span class="header-section-number">1.6</span> Rotulagem inteligente<a class="anchor" aria-label="anchor" href="#rotulagem-inteligente"><i class="fas fa-link"></i></a>
+</h2>
+<p>No <strong>ggplot2</strong>, também é possível adicionar texto aos gráficos. Entretanto, a limitação disto é a sobreposição dos rótulos de texto com os dados no gráfico, ficando com aparência confusa e difícil de interpretar. Não existe forma ideal de lidar com issso no pacote básico, mas existe um complemento do <strong>ggplot2</strong>, chamado de <strong>ggrepel</strong>, que lida com isso de forma bem simples!</p>
+<p>O pacote <strong>ggrepel</strong> fornece duas novas funções, <code>geom_label_repel()</code> e <code>geom_text_repel()</code>, que substituem <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_label()</a></code> e <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text()</a></code>. Simplesmente utilize estas funções, em vez das originais do <strong>ggplot2</strong>, para produzir rótulos claros e bonitos. Dentro da função, mapeie a estética <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> como sempre, mas inclua o argumento <code>label =</code>, onde você fornece a coluna com os valores que quer mostrar (ex.: id do paciente, ou nome, etc). Você pode criar mais rótulos complexos ao combinar colunas e linhas novas (<code>\n</code>) dentro de <code>str_glue()</code>, como mostrado abaixo.</p>
+<p>Algumas dicas:</p>
+<ul>
+<li>Use <code>min.segment.length = 0</code> para sempre desenhar segmentos de linhas, ou <code>min.segment.length = Inf</code> para nunca desenhá-los</li>
+<li>Use <code>size =</code> fora de <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> para ajustar o tamanho do texto</li>
+<li>Use <code>force =</code> para mudar o grau de repulsão entre os rótulos e seus respectivos pontos (padrão é 1)</li>
+<li>Inclua <code>fill =</code> dentro de <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> para ter os rótulos coloridos de acordo com os valores
+<ul>
+<li>A letra “a” pode aparecer na legenda - adicione <code>guides(fill = guide_legend(override.aes = aes(color = NA)))+</code> para removê-la</li>
+</ul>
+</li>
+</ul>
+<p>Veja esse detalhado <a href="https://ggrepel.slowkow.com/articles/examples.html">tutorial</a> para mais detalhes.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">ggrepel</span><span class="op">)</span>
+
+<span class="va">linelist</span> <span class="op">%&gt;%</span>                                               <span class="co"># comece com a linelist</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span>                                   <span class="co"># agrupe por hospital</span>
+  <span class="fu">summarise</span><span class="op">(</span>                                               <span class="co"># crie um novo conjunto de dados com o resumo dos valores por hospital</span>
+    n_cases <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,                                           <span class="co"># número de casos por hospital</span>
+    delay_mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">days_onset_hosp</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,<span class="fl">1</span><span class="op">)</span>,    <span class="co"># demora média por hospital</span>
+  <span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">n_cases</span>, y <span class="op">=</span> <span class="va">delay_mean</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>      <span class="co"># envie o quadro de dados para o ggplot</span>
+  <span class="fu">geom_point</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">+</span>                                    <span class="co"># adicione os pontos</span>
+  <span class="fu">geom_label_repel</span><span class="op">(</span>                                        <span class="co"># adicione os rótulos dos pontos</span>
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
+      label <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span>
+        <span class="st">"{hospital}\n{n_cases} casos, {delay_mean} dias"</span><span class="op">)</span>  <span class="co"># como o rótulo é mostrado</span>
+      <span class="op">)</span>, 
+    size <span class="op">=</span> <span class="fl">3</span>,                                              <span class="co"># tamanho do texto nos rótulos</span>
+    min.segment.length <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">+</span>                               <span class="co"># mostre todos os segmentos de linhas</span>
+  <span class="fu">labs</span><span class="op">(</span>                                                    <span class="co"># adicione os rótulos dos eixos</span>
+    title <span class="op">=</span> <span class="st">"Tempo médio de espera para admissão, por hospital"</span>,
+    x <span class="op">=</span> <span class="st">"Número de casos"</span>,
+    y <span class="op">=</span> <span class="st">"Tempo médio de espera (dias)"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="672"></div>
+<p>Você pode rotular apenas um subconjunto dos dados - ao utilizar a sintaxe padrão do <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> para fornecer diferentes <code>data =</code> para cada camada <code>geom</code> do gráfico. Abaixo, todos os casos são colocados no gráfico, mas apenas alguns são rotulados.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="co"># Todos os pontos em cinza</span>
+  <span class="fu">geom_point</span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">linelist</span>,                                   <span class="co"># todos os dados fornecidos para essa camada</span>
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">ht_cm</span>, y <span class="op">=</span> <span class="va">wt_kg</span><span class="op">)</span>,
+    color <span class="op">=</span> <span class="st">"grey"</span>,
+    alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">+</span>                                              <span class="co"># cinza e semi-transparente</span>
+  
+  <span class="co"># Poucos pontos em preto</span>
+  <span class="fu">geom_point</span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">days_onset_hosp</span> <span class="op">&gt;</span> <span class="fl">15</span><span class="op">)</span>,  <span class="co"># dados filtrados nesta camada</span>
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">ht_cm</span>, y <span class="op">=</span> <span class="va">wt_kg</span><span class="op">)</span>,
+    alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">+</span>                                                <span class="co"># padrão preto e não transparente</span>
+  
+  <span class="co"># rótulos de pontos para alguns pontos</span>
+  <span class="fu">geom_label_repel</span><span class="op">(</span>
+    data <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">days_onset_hosp</span> <span class="op">&gt;</span> <span class="fl">15</span><span class="op">)</span>,  <span class="co"># filtre os dados para os rótulos</span>
+    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>
+      x <span class="op">=</span> <span class="va">ht_cm</span>,
+      y <span class="op">=</span> <span class="va">wt_kg</span>,
+      fill <span class="op">=</span> <span class="va">outcome</span>,                                          <span class="co"># cor dos rótulos por desfecho</span>
+      label <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"Demora: {days_onset_hosp}d"</span><span class="op">)</span><span class="op">)</span>, <span class="co"># rótulo criado com str_glue()</span>
+    min.segment.length <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span>                                  <span class="co"># mostre os segmentos de linha para todos</span>
+  
+  <span class="co"># remova a letra "a" de dentro das caixas de legenda</span>
+  <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  
+  <span class="co"># rótulos dos eixos</span>
+  <span class="fu">labs</span><span class="op">(</span>
+    title <span class="op">=</span> <span class="st">"Casos com longa demora até admissão"</span>,
+    y <span class="op">=</span> <span class="st">"peso (kg)"</span>,
+    x <span class="op">=</span> <span class="st">"altura (cm)"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672"></div>
+<!-- ======================================================= -->
+</div>
+<div id="eixos-de-tempo" class="section level2" number="1.7">
+<h2>
+<span class="header-section-number">1.7</span> Eixos de tempo<a class="anchor" aria-label="anchor" href="#eixos-de-tempo"><i class="fas fa-link"></i></a>
+</h2>
+<p>Trabalhar com eixos de tempo no ggplot pode ser cansativo, mas é mais fácil com algumas funções chave. Lembre que, ao trabalhar com tempo ou datas, você deve garantir que as variáveis corretas estejam formatadas como das classes date ou datetime - veja a página [Trabalhando com datas] para mais informações, ou a página [Curvas epidêmicas], na seção sobre o ggplot, para exemplos.</p>
+<p>O conjunto de funções mais útil para trabalhar com datas no <code>ggplot2</code> são as funções de escala (<code><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_datetime()</a></code>, e os seus cognatos do eixo y). Estas funções permitem definir a frequência dos rótulos dos eixos, e como formatar esses rótulos. Para descobrir como formatar datas, veja a seção <em>working with dates</em> novamente! Você pode utilizar os argumentos <code>date_breaks</code> e <code>date_labels</code> para especificar como as datas devem aparecer:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>date_breaks</code> permite especificar a frequência das quebras dos eixos - você pode utilizar uma string (ex.: <code>"3 months"</code>, ou “<code>2 days"</code>)</p></li>
+<li><p><code>date_labels</code> permite definir o formato das datas mostradas. Você pode utilizar uma string de formatação de datas (ex.: <code>"%b-%d-%Y"</code>):</p></li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># crie uma epicurva por data de início dos sintomas, quando disponível</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_x_date</span><span class="op">(</span>
+    <span class="co"># 1 quebra a cada mês</span>
+    date_breaks <span class="op">=</span> <span class="st">"1 months"</span>,
+    <span class="co"># rótulos devem mostrar o mês, então a data</span>
+    date_labels <span class="op">=</span> <span class="st">"%b %d"</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="672"></div>
+<!-- ======================================================= -->
+</div>
+<div id="destacando" class="section level2" number="1.8">
+<h2>
+<span class="header-section-number">1.8</span> Destacando<a class="anchor" aria-label="anchor" href="#destacando"><i class="fas fa-link"></i></a>
+</h2>
+<p>Destacar elementos específicos em um gráfico é uma forma útil de chamar a atenção para algo nos dados, enquanto também fornece informação na distribuição dos dados no conjunto inteiro. Embora isto não seja feito de forma fácil no <strong>ggplot2</strong> básico, existe um pacote externo que pode ajudar nisso, conhecido como <strong>gghighlight</strong>. Ele é fácil de usar dentro da sintaxe do ggplot.</p>
+<p>O pacote <strong>gghighlight</strong> utiliza a função <code><a href="https://rdrr.io/pkg/gghighlight/man/gghighlight.html">gghighlight()</a></code> para realizar os destaques. Para usar esta função, forneça um argumento lógico - o que pode ter muitos desfechos, mas iremos mostrar um exemplo da distribuição de idade dos casos em nosso linelist, ao destacar pelo desfecho clínico.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># carregue o pacote gghighlight</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yutannihilation/gghighlight/">gghighlight</a></span><span class="op">)</span>
+
+<span class="co"># substitua os valores NA por "unknown" na variável de desfecho</span>
+<span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>outcome <span class="op">=</span> <span class="fu">replace_na</span><span class="op">(</span><span class="va">outcome</span>, <span class="st">"Unknown"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># produza um histograma de todos os casos de acordo com a idade</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
+  data <span class="op">=</span> <span class="va">linelist</span>,
+  mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_years</span>, fill <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">gghighlight</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gghighlight/man/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">==</span> <span class="st">"Death"</span><span class="op">)</span>     <span class="co"># destaque as situações onde o desfecho do paciente foi óbito.</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672"></div>
+<p>Isto também funciona bem com as funções de facetas - ele permite a produção de gráficos facetados com os dados no fundo em destaque, mas que não se aplica à faceta! Abaixo, nós contamos os casos por semana e criamos uma curva epidêmica por hospital (<code>color =</code> e <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code> ajustado para a coluna <code>hospital</code>).</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># produz um histograma de todos os casos por idade</span>
+<span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span>week <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_hospitalisation</span>, <span class="st">"week"</span><span class="op">)</span>,
+        <span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">n</span>, color <span class="op">=</span> <span class="va">hospital</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">gghighlight</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gghighlight/man/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>                      <span class="co"># destaque as situações em que o paciente morreu</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">hospital</span><span class="op">)</span>                              <span class="co"># crie facetas de acordo com o desfecho</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672"></div>
+</div>
+<div id="criando-gráficos-de-múltiplos-conjuntos-de-dados" class="section level2" number="1.9">
+<h2>
+<span class="header-section-number">1.9</span> Criando gráficos de múltiplos conjuntos de dados<a class="anchor" aria-label="anchor" href="#criando-gr%C3%A1ficos-de-m%C3%BAltiplos-conjuntos-de-dados"><i class="fas fa-link"></i></a>
+</h2>
+<p>Observe que alinhar adequadamente os eixos para criar gráficos de conjuntos de dados múltilos no mesmo gráfico pode ser difícil. Considere uma das seguintes estratégias:</p>
+<ul>
+<li>Una os dados antes de criar o gráfico, e então converta para o formato “longo” com uma coluna associando os dados</li>
+<li>Use <strong>cowplot</strong> ou um pacote similar para combinar dois gráficos (veja abaixo)</li>
+</ul>
+<!-- ======================================================= -->
+</div>
+<div id="combine-os-gráficos" class="section level2" number="1.10">
+<h2>
+<span class="header-section-number">1.10</span> Combine os gráficos<a class="anchor" aria-label="anchor" href="#combine-os-gr%C3%A1ficos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Dois pacotes bem úteis para combinar gráficos são o <strong>cowplot</strong> e o <strong>patchwork</strong>. Nesta página, iremos focar no <strong>cowplot</strong>, e, ocasionalmente, usaremos o <strong>patchwork</strong>.</p>
+<p>Aqui está uma <a href="https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html">introdução ao cowplot</a>. Você pode ler a documentação mais extensa para cada função <a href="https://www.rdocumentation.org/packages/cowplot/versions/1.1.1">aqui</a>. Nós iremos mostrar alguns dos casos de uso e funções mais comuns a seguir.</p>
+<p>O pacote <strong>cowplot</strong> funciona em tandem com <strong>ggplot2</strong> - essencialmente, você o utiliza para organizar e combinar ggplots e suas legendas em figuras compostas. Este pacote também aceita gráficos do R <strong>base</strong>.</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
+  <span class="va">tidyverse</span>,      <span class="co"># manipulação e visualização de dados</span>
+  <span class="va">cowplot</span>,        <span class="co"># combine os gráficos</span>
+  <span class="va">patchwork</span>       <span class="co"># combine os gráficos</span>
+<span class="op">)</span></code></pre></div>
+<p>Enquanto facetear (descrito na página [Básico do ggplot]) é uma abordagem conveniente para criar gráficos, as vezes não é possível obter os resultados desejados com essa abordagem. Aqui, você pode escolher combinar os gráficos ao uni-los em um gráfico maior. Existem três pacotes bem conhecidos, que são ótimos para isso - <strong>cowplot</strong>, <strong>gridExtra</strong>, e <strong>patchwork</strong>. Entretanto, estes pacotes fazem basicamente a mesma coisa, de forma que iremos focar no <strong>cowplot</strong> nesta seção.</p>
+<div id="plot_grid" class="section level3 unnumbered">
+<h3>
+<code>plot_grid()</code><a class="anchor" aria-label="anchor" href="#plot_grid"><i class="fas fa-link"></i></a>
+</h3>
+<p>O pacote <strong>cowplot</strong> tem uma grande variedade de funções, mas o uso mais fácil dele é com <code>plot_grid()</code>. Isto é, efetivamente, uma forma de organizar gráficos pré-definidos em forma de uma rede. Nós podemos aplicar em outro exemplo com os dados de malária - aqui nós fizemos um gráfico com o total de casos por distrito, e também mostramos a curva epidêmica pelo tempo.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">malaria_data</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"malaria_facility_count_data.rds"</span><span class="op">)</span><span class="op">)</span> 
+
+<span class="co"># gráfico do total de casos por distrito</span>
+<span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">malaria_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">District</span>, y <span class="op">=</span> <span class="va">malaria_tot</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+    x <span class="op">=</span> <span class="st">"Distrito"</span>,
+    y <span class="op">=</span> <span class="st">"Número total de casos"</span>,
+    title <span class="op">=</span> <span class="st">"Quantidade total de casos de malária por distrito"</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="co"># curva epidêmica pelo tempo</span>
+<span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">malaria_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">data_date</span>, y <span class="op">=</span> <span class="va">malaria_tot</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+    x <span class="op">=</span> <span class="st">"Data de envio dos dados"</span>,
+    y <span class="op">=</span>  <span class="st">"número de casos"</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>,
+                  <span class="co"># 1 coluna e duas linhas - empilhadas uma sobre a outra</span>
+                   ncol <span class="op">=</span> <span class="fl">1</span>,
+                   nrow <span class="op">=</span> <span class="fl">2</span>,
+                   <span class="co"># gráfico de cima é 2/3 da altura do segundo</span>
+                   rel_heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="672"></div>
+</div>
+<div id="combine-as-legendas" class="section level3 unnumbered">
+<h3>Combine as legendas<a class="anchor" aria-label="anchor" href="#combine-as-legendas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Caso os seus gráficos tenham a mesma legenda, combina-las é relativamente fácil. Simplesmente use a abordagem acima do <strong>cowplot</strong> para combinar os gráficos, mas remova a legenda de um deles (de-duplique).</p>
+<p>Caso seus gráficos tenham legendas diferentes, você precisa usar uma abordagem alternativa:</p>
+<ol style="list-style-type: decimal">
+<li>Crie e salve seus gráficos <em>sem as legendas</em> utilizando <code>theme(legend.position = "none")</code><br>
+</li>
+<li>Extraia as legendas de cada gráfico utilizando <code>get_legend()</code>, como mostrado abaixo - <em>mas extraia as legendas dos gráficos modificados para, na verdade, mostrar a legenda</em><br>
+</li>
+<li>Combine as legendas em um painel de legendas</li>
+<li>Combine os gráficos e o painel de legendas</li>
+</ol>
+<p>Para fins de demonstração, primeiro mostramos os dois gráficos separados, e, então organizados em uma grade com suas próprias legendas (feio e uso ineficiente de espaço):</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu">recode</span><span class="op">(</span><span class="va">hospital</span>, <span class="st">"St. Mark's Maternity Hospital (SMMH)"</span> <span class="op">=</span> <span class="st">"St. Marks"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="va">hospital</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hospital</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="fl">4</span>, na.value <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Casos por desfecho clínico"</span><span class="op">)</span>
+
+
+<span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu">recode</span><span class="op">(</span><span class="va">hospital</span>, <span class="st">"St. Mark's Maternity Hospital (SMMH)"</span> <span class="op">=</span> <span class="st">"St. Marks"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="va">hospital</span>, <span class="va">age_cat</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hospital</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">age_cat</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="fl">1</span>, na.value <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Casos por idade"</span><span class="op">)</span></code></pre></div>
+<p>Aqui esta como os dois gráficos ficam quando combinados usando <code>plot_grid()</code>, mas sem combinar as suas legendas:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672"></div>
+<p>E agora nós mostramos como combinar as legendas. Essencialmente, o que fazemos é criar cada gráfico <em>sem</em> sua legenda (<code>theme(legend.position = "none"</code>), e então definimos cada legenda dos gráficos <em>separadamente</em>, usando a função <code>get_legend()</code> do <strong>cowplot</strong>. Quando extraimos a legenda do gráfico salvo, precisamos adicionar <code>+</code> a legenda de volta, incluindo o argumento de posição (“right”) e ajustes menores para alinhar as legendas e seus títulos. Então, combinamos as legendas verticalmente, e os dois gráficos com a nova legenda combinada. Voilà!</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Crie o gráfico 1 sem a legenda</span>
+<span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu">recode</span><span class="op">(</span><span class="va">hospital</span>, <span class="st">"St. Mark's Maternity Hospital (SMMH)"</span> <span class="op">=</span> <span class="st">"St. Marks"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="va">hospital</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hospital</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="fl">4</span>, na.value <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Casos por desfecho clínico"</span><span class="op">)</span>
+
+
+<span class="co"># Crie o gráfico 2 sem a legenda</span>
+<span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu">recode</span><span class="op">(</span><span class="va">hospital</span>, <span class="st">"St. Mark's Maternity Hospital (SMMH)"</span> <span class="op">=</span> <span class="st">"St. Marks"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="va">hospital</span>, <span class="va">age_cat</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hospital</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">age_cat</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="fl">1</span>, na.value <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
+    legend.position <span class="op">=</span> <span class="st">"none"</span>,
+    axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+    axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Casos por idade"</span><span class="op">)</span>
+
+
+<span class="co"># extraia a legenda do gráfico 1 (de gráfico1 + legenda)</span>
+<span class="va">leg_p1</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/get_legend.html">get_legend</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span>
+                                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span>,        <span class="co"># extraia a legenda vertical</span>
+                                      legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="co"># de forma que as legendas alinhem</span>
+                                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Desfecho"</span><span class="op">)</span><span class="op">)</span>                 <span class="co"># título da legenda</span>
+<span class="co"># extraia a legenda do gráfico 2 (de gráfico 2 + legend)</span>
+<span class="va">leg_p2</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/get_legend.html">get_legend</a></span><span class="op">(</span><span class="va">p2</span> <span class="op">+</span> 
+                                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span>,         <span class="co"># extraia a legenda vertical</span>
+                                      legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.5</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>  <span class="co"># de forma que as legendas alinhem</span>
+                                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Categoria de idade"</span><span class="op">)</span><span class="op">)</span>             <span class="co"># título da legenda</span>
+
+<span class="co"># crie um gráfico em branco para alinhar a legenda</span>
+<span class="co">#blank_p &lt;- patchwork::plot_spacer() + theme_void()</span>
+
+<span class="co"># crie um painel de legendas, pode ser um sobre o outro (ou utilize o espaçados comentado acima)</span>
+<span class="va">legends</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span><span class="va">leg_p1</span>, <span class="va">leg_p2</span>, nrow <span class="op">=</span> <span class="fl">2</span>, rel_heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.3</span>, <span class="fl">.7</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># combine os dois gráficos e o painel de legendas criado</span>
+<span class="va">combined</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, <span class="va">legends</span>, ncol <span class="op">=</span> <span class="fl">3</span>, rel_widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.4</span>, <span class="fl">.4</span>, <span class="fl">.2</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">combined</span>  <span class="co"># visualize o gráfico</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="672"></div>
+<p>Esta solução foi apresentada <a href="https://stackoverflow.com/questions/52060601/ggplot-multiple-legends-arrangement">neste post</a> com pequenos ajustes para alinhar as legendas <a href="https://github.com/wilkelab/cowplot/issues/33">deste post</a>.</p>
+<p><span style="color: darkgreen;"><strong><em>DICA:</em></strong> Nota interessante - o “cow” no <strong>cowplot</strong> vem do nome do criador do pacote - Claus O. Wilke.</span></p>
+</div>
+<div id="inserção-de-gráficos" class="section level3 unnumbered">
+<h3>Inserção de gráficos<a class="anchor" aria-label="anchor" href="#inser%C3%A7%C3%A3o-de-gr%C3%A1ficos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode inserir um gráfico em outros utilizando <strong>cowplot</strong>. Aqui estão pontos para estar ciente:</p>
+<ul>
+<li>Defina o gráfico principal com <code>theme_half_open()</code>, do <strong>cowplot</strong>; é recomendado colocar a legenda no topo ou na base do gráfico</li>
+<li>Defina o gráfico a ser inserido. O melhor é usar um gráfico que não precise de legenda. Você pode remover os elementos de tema deste gráfico com <code><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank()</a></code>, como mostrado abaixo.</li>
+<li>Os combine ao aplicar a função <code>ggdraw()</code> no gráfico principal, e então adicionando <code>draw_plot()</code> no gráfico a ser inserido, e especificando as coordenadas (x e y da extremidade baixa a esquerda), altura e comprimento proporcionais ao tamanho do gráfico principal.</li>
+</ul>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Defina o gráfico principal</span>
+<span class="va">main_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span>, fill <span class="op">=</span> <span class="va">hospital</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="fl">1</span>, na.value <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span><span class="op">+</span> 
+  <span class="fu">theme_half_open</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Curva epidêmica e desfechos clínicos por hospital"</span><span class="op">)</span>
+
+
+<span class="co"># Crie o gráfico a ser inserido</span>
+<span class="va">inset_plot</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu">recode</span><span class="op">(</span><span class="va">hospital</span>, <span class="st">"St. Mark's Maternity Hospital (SMMH)"</span> <span class="op">=</span> <span class="st">"St. Marks"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="va">hospital</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hospital</span>, y <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="fl">4</span>, na.value <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span><span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,
+          axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Casos por desfecho"</span><span class="op">)</span> 
+
+
+<span class="co"># Combine o gráfico principal com o gráfico a ser inserido</span>
+<span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/ggdraw.html">ggdraw</a></span><span class="op">(</span><span class="va">main_plot</span><span class="op">)</span><span class="op">+</span>
+     <span class="fu">draw_plot</span><span class="op">(</span><span class="va">inset_plot</span>,
+               x <span class="op">=</span> <span class="fl">.6</span>, y <span class="op">=</span> <span class="fl">.55</span>,    <span class="co">#x = .07, y = .65,</span>
+               width <span class="op">=</span> <span class="fl">.4</span>, height <span class="op">=</span> <span class="fl">.4</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="100%"></div>
+<p>Esta técnica é melhor explicada nestes dois resumos:</p>
+<p><a href="https://wilkelab.org/cowplot/articles/drawing_with_on_plots.html">Wilke lab</a><br><a href="https://www.rdocumentation.org/packages/cowplot/versions/1.1.1/topics/draw_plot">Documentação do draw_plot()</a></p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="eixos-duplos" class="section level2" number="1.11">
+<h2>
+<span class="header-section-number">1.11</span> Eixos duplos<a class="anchor" aria-label="anchor" href="#eixos-duplos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Um segundo eixo y é, frequentemente, solicitado em um gráfico <code>ggplot2</code>. Embora existam fortes debates sobre a validade destes gráficos na comunidade de visualização de dados, em que geralmente não são recomendados, o seu chefe pode requisitá-los. Abaixo, apresentamos um método para obtê-los: utilizando o pacote <strong>cowplot</strong> para combinar dois gráficos separados.</p>
+<p>Esta abordagem envolve criar dois gráficos distintos - um com um eixo y na esquerda, e outro com o eixo y na direita. Ambos utilizarão um específico <code>theme_cowplot()</code> e terão o mesmo eixo x. Então, em um terceiro comando, os dois gráficos serão alinhados e sobrepostos. As funcionalidades do <strong>cowplot</strong>, das quais esta é apenas uma delas, são descritas em detalhes neste <a href="https://wilkelab.org/cowplot/articles/aligning_plots.html">site</a>.</p>
+<p>Para demonstrar esta técnica, iremos sobrepor uma curva epidêmica com uma linha de porcentagem semanal de pacientes que morreram. Nós usamos este exemplo pois o alinhamento de datas no eixo x é mais complexo do que, digamos, alinhar um gráfico de barras com outro gráfico. Algumas coisas a serem observadas:</p>
+<ul>
+<li>A epicurva e a linha são agregadas em semanas antes de criarmos os gráficos, <em>e</em> os <code>date_breaks</code> e <code>date_labels</code> são idênticos - nós fizemos isto de forma que os eixos x dos dois gráficos é o mesmo quando sobrepostos.</li>
+<li>O eixo y é movido para o lado direito, no gráfico 2, com o argumento <code>position =</code> de <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous()</a></code>.<br>
+</li>
+<li>Ambos gráficos fazem uso do <code>theme_cowplot()</code>
+</li>
+</ul>
+<p>Note que existe outro exemplo dessa técnica na página [Curvas epidêmicas] - a sobreposição da incidência acumulada acima da epicurva.</p>
+<p><strong>Crie o primeiro gráfico</strong><br>
+Este é, essencialmente, uma epicurva. Nós utilizamos <code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_area()</a></code> apenas para demonstrar o seu uso (área abaixo de uma linha, por padrão)</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">cowplot</span><span class="op">)</span>            <span class="co"># carregue/instale o cowplot</span>
+
+<span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>                 <span class="co"># salve o gráfico como um objeto</span>
+     <span class="fu">count</span><span class="op">(</span>
+       epiweek <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_onset</span>, <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html">geom_area</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span><span class="op">+</span>
+          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span><span class="op">(</span>
+               date_breaks <span class="op">=</span> <span class="st">"month"</span>,
+               date_labels <span class="op">=</span> <span class="st">"%b"</span><span class="op">)</span><span class="op">+</span>
+     <span class="fu">theme_cowplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+       y <span class="op">=</span> <span class="st">"Casos semanais"</span>
+     <span class="op">)</span>
+
+<span class="va">p1</span>                                      <span class="co"># veja o gráfico </span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672"></div>
+<p><strong>Crie o segundo gráfico</strong><br>
+Crie o segundo gráfico mostrando uma linha com a porcentagem semanal de óbitos.</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>         <span class="co"># salve seu gráfico como um objeto</span>
+     <span class="fu">group_by</span><span class="op">(</span>
+       epiweek <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_onset</span>, <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+     <span class="fu">summarise</span><span class="op">(</span>
+       n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,
+       pct_death <span class="op">=</span> <span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">==</span> <span class="st">"Death"</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">pct_death</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span><span class="op">(</span>
+               date_breaks <span class="op">=</span> <span class="st">"month"</span>,
+               date_labels <span class="op">=</span> <span class="st">"%b"</span><span class="op">)</span><span class="op">+</span>
+          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>
+               position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span><span class="op">+</span>
+          <span class="fu">theme_cowplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+            x <span class="op">=</span> <span class="st">"Semana epidemiológica de aparecimento dos sintomas"</span>,
+            y <span class="op">=</span> <span class="st">"Percentual semanal de mortes"</span>,
+            title <span class="op">=</span> <span class="st">"Incidência semanal de casos e percentual de mortes"</span>
+          <span class="op">)</span>
+
+<span class="va">p2</span>     <span class="co"># veja o gráfico</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672"></div>
+<p>Agora alinhamos o gráfico usando a função <code>align_plots()</code>, especificando os alinhamentos horizontal e vertical (“hv”, poderia também ser “h”, “v”, “none”). Também especificamos o alinhamento de todos os eixos (“top”, “bottom”, “left”, e “right”) com “tblr”. O resultado é da classe list (2 elementos).</p>
+<p>Então, desenhamos os dois gráficos juntos utilizando <code>ggdraw()</code> (do <strong>cowplot</strong>) e referenciando as outras duas partes do objeto <code>aligned_plots</code>.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">aligned_plots</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/align_plots.html">align_plots</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, align<span class="op">=</span><span class="st">"hv"</span>, axis<span class="op">=</span><span class="st">"tblr"</span><span class="op">)</span>         <span class="co"># alinhe os dois gráficos e os salve como uma lista</span>
+<span class="va">aligned_plotted</span> <span class="op">&lt;-</span> <span class="fu">ggdraw</span><span class="op">(</span><span class="va">aligned_plots</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu">draw_plot</span><span class="op">(</span><span class="va">aligned_plots</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>  <span class="co"># sobreponha os gráficos e salve o gráfico visualizado</span>
+<span class="va">aligned_plotted</span>                                                                <span class="co"># visualize os gráficos sobrepostos</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="672"></div>
+<!-- ### Transformação estatística {.unnumbered}   -->
+<!-- Outra forma de fazer isto é criar o segundo eixo como uma transformação do segundo eixo.  -->
+<!-- Diferenças nos valores dos eixos serão puramente estéticas - se você quiser mostrar duas variáveis diferentes em um gráfico, com diferentes escalas do eixo y para cada variável, não funcionará sem algum trabalho por trás. Para obtêr este efeito, você precisará transformar uma das suas variáveis nos dados, e então aplicar a mesma transformação *de forma reversa* ao especificar os rótulos dos eixos. Baseado nisto, você pode especificar a transformação de forma explícita (ex.: variável a é 10x maior do que a variável b, ou calcular ela no código (ex.: qual a proporção entre os valores máximos e mínimos de cada conjunto de dados). -->
+<!-- A sintaxe para dicionar um segundo eixo é bem direta! Quando usar uma função `scale_xxx_xxx()` (ex.: `scale_y_continuous()`), use o argumento `sec.axis` para chamar a função `sec_axis()`. O argumento `trans` nesta função permite especificar a transformação do rótulo para o eixo - forneça este rótulo na sintaxe do tidyverse.  -->
+<!-- Por exemplo, se quisermos mostrar o número de testes rápidos positivos para malária nos dados de malária, para a unidade 1, mostrando 0-4 anos de idade e todos os casos em um gráfico: -->
+<!-- ```{r, , warning=F, message=F} -->
+<!-- # pegue os dados de malária da unidade 1 -->
+<!-- malaria_facility_1 <- malaria_data %>% -->
+<!--   filter(location_name == "Facility 1") -->
+<!-- # calcule a razão entre malaria_rdt_0-4 e malaria_tot  -->
+<!-- tf_ratio <- max(malaria_facility_1$malaria_tot, na.rm = T) / max(malaria_facility_1$`malaria_rdt_0-4`, na.rm = T) -->
+<!-- # transforme os valores nos dados -->
+<!-- malaria_facility_1 <- malaria_facility_1 %>% -->
+<!--   mutate(malaria_rdt_0_4_tf =`malaria_rdt_0-4` * tf_ratio) -->
+<!-- # crie o gráfico com dois eixos -->
+<!-- ggplot(malaria_facility_1, aes(x = data_date)) + -->
+<!--   geom_line(aes(y = malaria_tot, col = "Total cases")) + -->
+<!--   geom_line(aes(y = malaria_rdt_0_4_tf, col = "Cases: 0-4 years old")) + -->
+<!--   scale_y_continuous( -->
+<!--     name = "Total cases", -->
+<!--     sec.axis = sec_axis(trans = ~ . / tf_ratio, name = "Casos: 0-4 anos de idade") -->
+<!--   ) + -->
+<!--   labs(x = "data de obtenção dos dados") + -->
+<!--   theme_minimal() + -->
+<!--   theme(legend.title = element_blank()) -->
+<!-- ``` -->
+<!-- ## Sparklines   -->
+<!-- UNDER CONSTRUCTION   -->
+<!-- (perhaps move to Tables for presentation page) -->
+</div>
+<div id="pacotes-para-te-ajudar" class="section level2" number="1.12">
+<h2>
+<span class="header-section-number">1.12</span> Pacotes para te ajudar<a class="anchor" aria-label="anchor" href="#pacotes-para-te-ajudar"><i class="fas fa-link"></i></a>
+</h2>
+<p>Existem ótimos pacotes do R desenhados especificamente para ajudar a navegar no <strong>ggplot2</strong>:</p>
+<div id="aponte-e-clique-no-ggplot2-com-equisse" class="section level3 unnumbered">
+<h3>Aponte-e-clique no <strong>ggplot2</strong> com <strong>equisse</strong><a class="anchor" aria-label="anchor" href="#aponte-e-clique-no-ggplot2-com-equisse"><i class="fas fa-link"></i></a>
+</h3>
+<p>“Este complemento permite que você explore seus dados de forma interativa, ao visualiza-los com o pacote ggplot2. Ele permite desenhar gráficos de barras, curvas, gráficos de dispersão, hsitogramas, boxplots e objetos sf, e, então, exportar o gráfico e gerar o código de geração do gráfico.”</p>
+<p>Instale e então o execute o pacote por meio do menu do RStudio ou com <code>esquisse::esquisser()</code>.</p>
+<p>Veja a página do <a href="https://github.com/dreamRs/esquisse">Github</a></p>
+<p><a href="https://dreamrs.github.io/esquisse/index.html">Documentação</a></p>
+</div>
+</div>
+<div id="dicas-diversas" class="section level2" number="1.13">
+<h2>
+<span class="header-section-number">1.13</span> Dicas diversas<a class="anchor" aria-label="anchor" href="#dicas-diversas"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exibição-dos-números" class="section level3 unnumbered">
+<h3>Exibição dos números<a class="anchor" aria-label="anchor" href="#exibi%C3%A7%C3%A3o-dos-n%C3%BAmeros"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode desabilitar a notação científica ao executar este comando antes de criar o gráfico.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen<span class="op">=</span><span class="fl">999</span><span class="op">)</span></code></pre></div>
+<p>Ou aplicar <code>number_format()</code>, do pacote <strong>scales</strong>, para um valor ou coluna específica, como mostrado abaixo.</p>
+<p>Use funções do pacote <strong>scales</strong> para facilmente ajustar como os números são mostrados. Isto pode ser aplicado para colunas em seus dados, mas aqui são mostrados em números individuais para fins de exemplo.</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/number.html">number</a></span><span class="op">(</span><span class="fl">6.2e5</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "620 000"</code></pre>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/number.html">number</a></span><span class="op">(</span><span class="fl">1506800.62</span>,  accuracy <span class="op">=</span> <span class="fl">0.1</span>,<span class="op">)</span></code></pre></div>
+<pre><code>## [1] "1 506 800.6"</code></pre>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma</a></span><span class="op">(</span><span class="fl">1506800.62</span>, accuracy <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "1,506,800.62"</code></pre>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma</a></span><span class="op">(</span><span class="fl">1506800.62</span>, accuracy <span class="op">=</span> <span class="fl">0.01</span>,  big.mark <span class="op">=</span> <span class="st">"."</span> , decimal.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "1.506.800,62"</code></pre>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/percent_format.html">percent</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "10%"</code></pre>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html">dollar</a></span><span class="op">(</span><span class="fl">56</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "$56"</code></pre>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/scientific_format.html">scientific</a></span><span class="op">(</span><span class="fl">100000</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "1e+05"</code></pre>
+</div>
+</div>
+<div id="recursos-extras" class="section level2" number="1.14">
+<h2>
+<span class="header-section-number">1.14</span> Recursos extras<a class="anchor" aria-label="anchor" href="#recursos-extras"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para inspiração,
+<a href="https://www.tidyverse.org/blog/2018/07/ggplot2-3-0-0/">galeria de gráficos do ggplot</a></p>
+<p>Recomendação de formas de apresentação de dados
+Centro Europeu de Prevenção e Controle de Doenças <a href="https://ecdc.europa.eu/sites/portal/files/documents/Guidelines%20for%20presentation%20of%20surveillance%20data-final-with-cover-for-we....pdf">Recomendações para apresentação de dados de vigilância</a></p>
+<p>Facetas e rotuladores
+<a href="http://www.cookbook-r.com/Graphs/Facets_(ggplot2)/#modifying-facet-label-text">Utilizando rotuladores para feixes de facetas</a>
+<a href="https://ggplot2.tidyverse.org/reference/labellers.html">Rotuladores</a></p>
+<p>Ajustando a ordem com factors
+<a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a><br><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_inorder</a><br><a href="https://cmdlinetips.com/2019/02/how-to-reorder-a-boxplot-in-r/">Como reordenar um boxplot</a><br><a href="https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2.html">Reordene uma variável no ggplot2</a><br><a href="https://r4ds.had.co.nz/factors.html">R para Ciência dos Dados - Factors</a></p>
+<p>Legendas<br><a href="https://stackoverflow.com/questions/38425908/reverse-stacking-order-without-affecting-legend-order-in-ggplot2-bar-charts">Ajuste a ordem da legenda</a></p>
+<p>Títulos
+<a href="https://stackoverflow.com/questions/64701500/left-align-ggplot-caption">Alinhamento do título</a></p>
+<p>Rótulos<br><a href="https://ggrepel.slowkow.com/articles/examples.html">ggrepel</a></p>
+<p>Colinhas
+<a href="http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/">Lindos gráficos com ggplot2</a></p>
+<!-- TO DO - Under construction -->
+<!-- * Straight horizontal, vertical, or other line -->
+<!-- You can also add straight lines to your plot with `geom_hline()` (horizontal), `geom_vline()` (vertical) or `geom_abline()` (with a specified y intercept and slope) -->
+<!-- Using option `label_wrap_gen` in facet_wrap to have multiple strip lines -->
+<!-- labels and colors of strips -->
+<!-- Axis text vertical adjustment -->
+<!-- rotation -->
+<!-- Labellers -->
+<!-- limit range with limit() and coord_cartesian(), ylim(), or scale_x_continuous() -->
+<!-- theme_classic() -->
+<!-- expand = c(0,0) -->
+<!-- coord_flip() -->
+<!-- tick marks -->
+<!-- ggrepel -->
+<!-- animations -->
+<!-- remove -->
+<!-- remove title -->
+<!-- using fill = or color = in labs() -->
+<!-- flip order / don't flip order -->
+<!-- move location -->
+<!-- color?    theme(legend.title = element_text(colour="chocolate", size=16, face="bold"))+ scale_color_discrete(name="This color is\ncalled chocolate!?") -->
+<!-- Color of boxes behind points in legend  -->
+<!--      theme(legend.key=element_rect(fill='pink'))   or use fill = NA to remove them. http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/  -->
+<!-- Change size of symbols in legend only guides(colour = guide_legend(override.aes = list(size=4))) -->
+<!-- Turn off a layer in the legend -->
+<!-- geom_text(data=nmmaps, aes(date, temp, label=round(temp)), size=4) -->
+<!-- geom_text(data=nmmaps, aes(date, temp, label=round(temp), size=4), show_guide=FALSE) -->
+<!-- Force a legend even if there is no aes().  -->
+<!-- ggplot(nmmaps, aes(x=date, y=o3))+ -->
+<!--      geom_line(aes(color="Important line"))+ -->
+<!--      geom_point(aes(color="My points")) -->
+<!-- Control the shape in the legend with guides - a list with linetype and shape -->
+<!-- ggplot(nmmaps, aes(x=date, y=o3))+geom_line(aes(color="Important line"))+ -->
+<!--    geom_point(aes(color="Point values"))+ -->
+<!--   scale_colour_manual(name='', values=c('Important line'='grey', 'Point values'='red'), guide='legend') + -->
+<!--   guides(colour = guide_legend(override.aes = list(linetype=c(1,0) -->
+<!--                                                       , shape=c(NA, 16)))) -->
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"></a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#dicas-do-ggplot"><span class="header-section-number">1</span> Dicas do ggplot</a></li>
+<li>
+<a class="nav-link" href="#preparando-o-ambiente-r"><span class="header-section-number">1.1</span> Preparando o ambiente R</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#carregue-os-pacotes">Carregue os pacotes</a></li>
+<li><a class="nav-link" href="#importe-os-dados">Importe os dados</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#ggplot_tips_colors"><span class="header-section-number">1.2</span> Escalas para as cores, preenchimentos, eixos, etc.</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#esquemas-de-cores"><span class="header-section-number">1.2.1</span> Esquemas de cores</a></li>
+<li><a class="nav-link" href="#ggplot_tips_scales">Escalas</a></li>
+<li><a class="nav-link" href="#argumentos-de-escala">Argumentos de escala</a></li>
+<li><a class="nav-link" href="#ajustes-manuais">Ajustes manuais</a></li>
+<li><a class="nav-link" href="#escalas-cont%C3%ADnuas-dos-eixos">Escalas contínuas dos eixos</a></li>
+<li><a class="nav-link" href="#escalas-em-gradiente">Escalas em gradiente</a></li>
+<li><a class="nav-link" href="#paletas-de-cores">Paletas de cores</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#altere-a-ordem-das-vari%C3%A1veis-discretas"><span class="header-section-number">1.3</span> Altere a ordem das variáveis discretas</a></li>
+<li><a class="nav-link" href="#linhas-de-contorno"><span class="header-section-number">1.4</span> Linhas de contorno</a></li>
+<li><a class="nav-link" href="#distribui%C3%A7%C3%B5es-marginais"><span class="header-section-number">1.5</span> Distribuições marginais</a></li>
+<li><a class="nav-link" href="#rotulagem-inteligente"><span class="header-section-number">1.6</span> Rotulagem inteligente</a></li>
+<li><a class="nav-link" href="#eixos-de-tempo"><span class="header-section-number">1.7</span> Eixos de tempo</a></li>
+<li><a class="nav-link" href="#destacando"><span class="header-section-number">1.8</span> Destacando</a></li>
+<li><a class="nav-link" href="#criando-gr%C3%A1ficos-de-m%C3%BAltiplos-conjuntos-de-dados"><span class="header-section-number">1.9</span> Criando gráficos de múltiplos conjuntos de dados</a></li>
+<li>
+<a class="nav-link" href="#combine-os-gr%C3%A1ficos"><span class="header-section-number">1.10</span> Combine os gráficos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#plot_grid">plot_grid()</a></li>
+<li><a class="nav-link" href="#combine-as-legendas">Combine as legendas</a></li>
+<li><a class="nav-link" href="#inser%C3%A7%C3%A3o-de-gr%C3%A1ficos">Inserção de gráficos</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#eixos-duplos"><span class="header-section-number">1.11</span> Eixos duplos</a></li>
+<li>
+<a class="nav-link" href="#pacotes-para-te-ajudar"><span class="header-section-number">1.12</span> Pacotes para te ajudar</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#aponte-e-clique-no-ggplot2-com-equisse">Aponte-e-clique no ggplot2 com equisse</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#dicas-diversas"><span class="header-section-number">1.13</span> Dicas diversas</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exibi%C3%A7%C3%A3o-dos-n%C3%BAmeros">Exibição dos números</a></li></ul>
+</li>
+<li><a class="nav-link" href="#recursos-extras"><span class="header-section-number">1.14</span> Recursos extras</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2022-06-20.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
