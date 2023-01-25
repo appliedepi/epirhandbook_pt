@@ -145,7 +145,7 @@ cluster_counts <- tibble(cluster = c("village_1", "village_2", "village_3", "vil
 
 ```
 
-### Dados limpos {.unnumbered}
+### Limpar dados {.unnumbered}
 
 Abaixo, garantimos que a coluna de datas esteja no formato apropriado. Há várias outras maneiras de fazer isso (veja a página [Trabalhando com datas](https://epirhandbook.com/working-with-dates.html) para mais detalhes), porém a utilização do dicionário para definir datas é rápida e fácil.
 
@@ -637,7 +637,7 @@ source_population <- population %>%
   
   
 ## Traçar a população não ponderada da amostra 
-sample_population <- plot_age_pyramid(survey_data, 
+sample_population <- age_pyramid(survey_data, 
                  age_group = "age_group", 
                  split_by = "sex",
                  proportion = TRUE) + 
@@ -656,7 +656,7 @@ weighted_population <- survey_design %>%
   ## garantir que as variáveis sejam fatores
   mutate(age_group = factor(age_group), 
          sex = factor(sex)) %>%
-  plot_age_pyramid(
+  age_pyramid(
     age_group = "age_group",
     split_by = "sex", 
     proportion = TRUE) +
@@ -690,42 +690,28 @@ conhecidos por vários nomes diferentes, incluindo aluvial, sankey e conjuntos p
 
 ```{r visualise_population_flow}
 
-## resumir dados
+## resuma os dados 
 flow_table <- survey_data %>%
-  count(startcause, endcause, sex) %>%  # obter contagens
-  gather_set_data(x = c("startcause", "endcause")) %>%     # mudar o formato do gráfico
-  mutate(x = fct_relevel(x, c("startcause", "endcause")),  # definir "startcause" como nível primário
-         x = fct_recode(x, 
-                        "Start \n cause" = "startcause",   # adicionar quebra de linha (\n) após o início
-                        "End \n cause"   = "endcause")
-        )
+  count(startcause, endcause, sex) %>%  # faz contagem
+  gather_set_data(x = c("startcause", "endcause"))     # muda o formato para gráfico
 
 
-## Trace seu conjunto de dados 
-  ## eixo x é a causa inicial e final
-  ## O gather_set_data gera um ID para cada combinação possível
-  ## dividindo por y, temos o possíveis combos de início/fim
-  ## valor n é dado como contagem (também pode ser alterado para proporção)
+## trace um gráfico 
+  ## no eixo x estão as causas do início e fim
+  ## a função gather_set_datagera um ID para cada combinação
+  ## dividindo (splitting) pelo y te da um combo de possibilidades de início/fim 
+  ## valor (value) como "n" fornece a contagem (também pode ser usado com proporção)
 ggplot(flow_table, aes(x, id = id, split = y, value = n)) +
-  ## colorir linhas de acordo com o sexo
+  ##linhas coloridas segundo sexo
   geom_parallel_sets(aes(fill = sex), alpha = 0.5, axis.width = 0.2) +
-  ## preencher as caixas de legenda na cor cinza
+  ## preenche as caixas de rotulagem com cinza
   geom_parallel_sets_axes(axis.width = 0.15, fill = "grey80", color = "grey80") +
-  ## mudar a cor e ângulo do texto (precisa ser ajustado)
+  ## muda a cor do tetxo e ângulo (precisa ser ajustado)
   geom_parallel_sets_labels(color = "black", angle = 0, size = 5) +
-  ## eixos y e x ajustados (provavelmente precisa de mais espaço vertical)
-  scale_x_discrete(name = NULL, expand = c(0, 0.2)) + 
-  ## remover legenda dos eixos
-  theme(
-    title = element_text(size = 26),
-    text = element_text(size = 26),
-    axis.line = element_blank(),
-    axis.ticks = element_blank(),
-    axis.text.y = element_blank(),
-    panel.background = element_blank(),
-    legend.position = "bottom",                    # mover a leganda para baixo
-    legend.title = element_blank(),                # remover título
-  )
+  ## remove rótulos dos eixos
+  theme_void()+
+  ## move a legenda para baixo
+  theme(legend.position = "bottom")               
 
 ```
 

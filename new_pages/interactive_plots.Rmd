@@ -214,6 +214,7 @@ agg_weeks <- facility_count_data %>%
     malaria_tot     = sum(malaria_tot, na.rm = T),
     n_days_reported = length(unique(data_date)),
     p_days_reported = round(100*(n_days_reported / n_days))) %>% 
+  ungroup(location_name, week) %>% 
   right_join(tidyr::expand(., week, location_name)) %>% 
   mutate(week = aweek::week2date(week))
 
@@ -240,12 +241,12 @@ metrics_plot <- ggplot(agg_weeks,
     plot.title = element_text(hjust=0,size=14,face="bold"),
     plot.caption = element_text(hjust = 0, face = "italic")
     )+
-  labs(x = "Week",
-       y = "Facility name",
-       fill = "Reporting\nperformance (%)",
-       title = "Percent of days per week that facility reported data",
-       subtitle = "District health facilities, April-May 2019",
-       caption = "7-day weeks beginning on Mondays.")
+  labs(x = "Semana",
+       y = "Nome do Estabelecimento",
+       fill = "Performance de \n reporte (%)",
+       title = "Porcentagem de dia por semana que o estabelecimento \n reportou dados",
+       subtitle = "Estabelecimento de saúdes distritais, Abril-Maio 2019",
+       caption = "Semanas de 7 diad começando às segundas")
 
 metrics_plot # mostrar gráfico
 ```

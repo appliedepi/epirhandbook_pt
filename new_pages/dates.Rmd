@@ -29,7 +29,7 @@ Esse trecho de código mostra o carregamento dos pacotes necessários para esta 
 
 pacman::p_load(
   lubridate,  # pacote geral para manipulação e conversão de datas  
-  linelist,   # possui a função de "adivinhar" datas desorganizadas
+  parsedate,   # possui a função de "adivinhar" datas desorganizadas
   aweek,      # outra opção para conversão de datas em semanas, e de semanas em datas 
   zoo,        # funções adicionais de data/hora
   tidyverse,  # gerenciamento e visualização dos dados  
@@ -78,7 +78,7 @@ Por padrão, os valores da classe Date em R são exibidos como AAAA-MM-DD. Poste
 
 A seguir, apresentamos duas abordagens para converter uma coluna de valores de caracteres para a classe Date.
 
-[***DICA:*** Você pode checar a classe atual de uma coluna utilizando a função `class()`presente na **base** do R , como por exemplo `class(linelist$date_onset)`. ]{style="color: darkgreen;"}
+[***DICA:*** Você pode checar a classe atual de uma coluna utilizando a função `class()`presente na **base** do R , como por exemplo `class(linelist$date_onset)`.]{style="color: darkgreen;"}
 
 ### R **base** {.unnumbered}
 
@@ -87,7 +87,7 @@ A seguir, apresentamos duas abordagens para converter uma coluna de valores de c
 Para o uso da função `as.Date()` é preciso que:
 
 -   Você especifique o formato **existente** da data como um caractere bruto ou então que especifique a data de origem, caso forneça datas como números (consulte a seção sobre datas do Excel);
--   Se foi usado em uma coluna de caracteres, todos os valores de data devem ter o mesmo formato exato (se este não for o caso, tente `guess_dates()` do pacote **linelist**).
+-   Se foi usado em uma coluna de caracteres, todos os valores de data devem ter o mesmo formato exato (se este não for o caso, tente `parse_date()` do pacote **parsedate**).
 
 **Primeiro**, verifique a classe de sua coluna com `class()` do R **base**. Se você não tem certeza ou está confuso sobre a classe de seus dados (por exemplo, você vê "POSIXct", etc.) pode ser mais fácil primeiro converter a coluna para a classe *Character* com a função `as.character()`, e depois converter para a classe *Date*.
 
@@ -231,35 +231,20 @@ data_cleaned <- data %>%
 
 ## Datas bagunçadas
 
-A função `guess_dates()` do pacote **linelist** tenta ler uma coluna de data "bagunçada" contendo datas em muitos formatos diferentes e converte as datas para um formato padrão. Você pode [ler mais online sobre `guess_dates()`](https://www.repidemicsconsortium.org/linelist/reference/guess_dates.html). Se `guess_dates()` ainda não estiver disponível no CRAN para R 4.0.2, tente instalar via `pacman::p_load_gh("reconhub/linelist")`[^dates-1].
+A função `parse_date()` do pacote **parsedate** tenta ler uma coluna de data "bagunçada" contendo datas em muitos formatos diferentes e converte as datas para um formato padrão. Você pode [ler mais online sobre `parse_date()`](https://readr.tidyverse.org/reference/parse_datetime.html).
 
-[^dates-1]: Recentemente o Github exige o uso e configuração dos PAT, *Personal Access Token*. Verifique a página oficial do Github sobre o assunto aqui: <https://docs.github.com/pt/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token>
-
-Por exemplo, o `guess_dates` vê um vetor dos seguintes caracteres de datas "03 Jan 2018", "07/03/1982", e "08/20/85" e os converteria para a classe Date como: `2018-01-03`, `1982-03-07`, e `1985-08-20`.
+Por exemplo, o `parse_date()` vê um vetor dos seguintes caracteres de datas "03 Jan 2018", "07/03/1982", e "08/20/85" e os converteria para a classe Date como: `2018-01-03`, `1982-03-07`, e `1985-08-20`.
 
 ```{r, }
-linelist::guess_dates(c("03 Jan 2018",
+parsedate::parse_date(c("03 Jan 2018",
                         "07/03/1982",
                         "08/20/85"))
 ```
 
-Alguns argumentos opcionais para `guess_dates()` que você pode incluir são:
-
--   `error_tolerance` - A proporção dos dados de entrada que não podem ser identificadas como datas a serem toleradas (o padrão é 0,1 ou 10%)
-
--   `last_date` - a última data válida (o padrão é a data atual)\
-
--   `first_date` - a primeira data válida. O padrão é cinquenta anos antes de last_date.
-
 ```{r eval = FALSE}
-# Um exemplo usando guess_dates na coluna dater_onset
-linelist <- linelist %>%                 # o conjunto de dados é chamado de linelist
-  mutate(
-    date_onset = linelist::guess_dates(  # a função guess_dates() do pacote "linelist"
-      date_onset,
-      error_tolerance = 0.1,
-      first_date = "2016-01-01"
-    )
+# Um exemplo usando parse_date() na coluna `date_onset` (data de início de sintomas)
+linelist <- linelist %>%      
+  mutate(date_onset = parse_date(date_onset))
 ```
 
 <!-- ======================================================= -->
@@ -270,24 +255,23 @@ Conforme mencionado anteriormente, o R também oferece suporte para dados de cla
 
 ### Converter datas com horas {.unnumbered}
 
-Um objeto `datetime` padrão object é formatado com a data primeiro, que é seguida por um componente de hora - por exemplo, *01 de janeiro de 2020*, *16:30*. Assim como acontece com as datas, isso pode ser formatado de muitas maneiras e vários níveis de precisão (horas, minutos, segundos) que podem ser fornecidos.
+Um objeto `datetime` padrão é formatado com a data primeiro, que é seguida por um componente de hora - por exemplo, *01 de janeiro de 2020*, *16:30*. Assim como acontece com as datas, isso pode ser formatado de muitas maneiras e vários níveis de precisão (horas, minutos, segundos) que podem ser fornecidos.
 
 Felizmente, as funções auxiliares do **lubridate** também existem para ajudar a converter essas junções para objetos `datetime`. Essas funções são extensões das funções auxiliares de data, com `_h` (apenas horas fornecidas), `_hm` (horas e minutos fornecidos), ou `_hms` (horas, minutos e segundos fornecidos) anexado ao final (por exemplo, `dmy_hms()`). Eles podem ser usados conforme mostrado abaixo:
 
-Converte *datetime* contendo apenas horas para o objeto datetime
+Converte "data e hora" contendo apenas horas para o objeto do tipo *datetime*
 
-```{r}
+```{r warning=FALSE}
 ymd_h("2020-01-01 16hrs")
-ymd_h("2020-01-01 4PM")
 ```
 
-Converte *datetime* com horas e minutos para o objeto datetime
+Converte "data e hora" com horas e minutos para o objeto do tipo *datetime*
 
 ```{r}
 dmy_hm("01 January 2020 16:20")
 ```
 
-Converte *datetime* com horas, minutos e segundos para o objeto datetime
+Converte "data e hora" com horas, minutos e segundos para o objeto do tipo *datetime*
 
 ```{r}
 mdy_hms("01 January 2020, 16:20:40")
@@ -319,10 +303,10 @@ linelist <- linelist %>%
       is.na(time_admission),   # se horário estiver faltando
       median(time_admission),  # atribua a mediana
       time_admission           # se não estiver faltando, mantenha como está
-  ) %>%
+  )) %>%
   
     # use str_glue() para combinar as colunas de data-e-horas em uma coluna de caracteres
-    # em seguida, use ymd_hm() para converter em datetime
+    # em seguida, use ymd_hm() para converter em formato datetime
   mutate(
     date_time_of_admission = str_glue("{date_hospitalisation}{time_admission_clean}") %>% 
       ymd_hm()

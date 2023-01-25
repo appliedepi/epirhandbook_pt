@@ -51,7 +51,7 @@ Muitas destas funções pertencem ao pacote do R [**dplyr**](https://dplyr.tidyv
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | `age_categories()` and `cut()`                      | criar grupos categóricos de uma coluna numérica                           | **epikit** e R **base**    |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
-| `clean_variable_spelling()`                         | recodificar/limpar valores usando um dicionário de dados                  | **linelist**               |
+| `match_df()`                                        | recodificar/limpar valores usando um dicionário de dados                  | **matchmaker**             |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
 | `which()`                                           | aplicar critérios lógicos; retorna índices                                | R **base**                 |
 +-----------------------------------------------------+---------------------------------------------------------------------------+----------------------------+
@@ -108,6 +108,7 @@ pacman::p_load(
   here,       # caminhos de arquicos relacionados
   janitor,    # limpeza de dados e tabelas
   lubridate,  # trabalhando com datas
+  matchmaker, # limpeza baseada no dicionário
   epikit,     # funções de age_categories() 
   tidyverse,  # manejo e visualização de dados
   skimr
@@ -911,8 +912,8 @@ linelist <- linelist %>%
   mutate(age_years = case_when(
             age_unit == "years"  ~ age,       # se a idade for dada em anos
             age_unit == "months" ~ age/12,    # se a idade for dada em meses
-            is.na(age_unit)      ~ age,       # se falta a unidade de idade, suponha anos
-            TRUE                 ~ NA_real_)) # qualquer outra circunstância, atribuir falta
+            is.na(age_unit)      ~ age))       # se falta a unidade de idade, suponha anos) 
+                                             # qualquer outra circunstância, atribui NA (falta)
 ```
 
 Como cada linha dos dados é avaliado, os critérios são aplicados/avaliados na ordem em que as declaraçõe `case_when()` são escritos - de cima para baixo. Se o critério de cima avaliar `TRUE` para uma dada linha, o valor RHS é atribuído, e os critérios restantes não são sequer testados para essa linha. Assim, é melhor escrever primeiro os critérios mais específicos, e por último os mais gerais.
@@ -974,12 +975,7 @@ linelist <- linelist %>%
 
 ### Dicionário de limpeza {.unnumbered}
 
-Utilize o pacote **linelist** do R e sua função `clean_variable_spelling()` para limpar um data frame com um *dicionário de limpeza*. O pacote **linelist** é  desenvolvido por [RECON](https://github.com/reconhub/linelist) - o Consórcio R Epidemics.
-
-```{r include=F}
-pacman::p_load_current_gh("reconhub/linelist")
-```
-
+Utilize o pacote **matchmaker** do R e sua função `match_df()` para limpar um data frame com um *dicionário de limpeza*. 
 
 1)  Criar um dicionário  de limpeza com 3 colunas:
 
@@ -1003,13 +999,17 @@ cleaning_dict <- rio::import(here("data", "case_linelists", "cleaning_dict.csv")
 cleaning_dict <- import("cleaning_dict.csv")
 ```
 
-3)  Passe a linelist bruta para `clean_variable_spelling()`, especificando para `wordlists =` o data frame do dicionário de limpeza. O argumento `spelling_vars =` pode ser usado para especificar qual coluna do dicionário se refere às colunas (3º por padrão), ou pode ser definido como `NULL` para que o dicionário se aplique a todas as colunas de caracteres e fatores. Note que esta função pode levar muito tempo para ser executada.
+3)  Passe a linelist bruta para `match_df()`, especificando para `dictionary = ` o data frame do dicionário de limpeza. O argumento `from = ` deve ter o nome da coluna que ontem os valores "antigos", o argumento `by = ` deve ser a coluna do dicionário que contem os valores "novos", e o terceiro argumento lista a coluna sobre a qual fazer a mudança.  
+
+Leia mais sobre em  [package documentation](https://cran.r-project.org/web/packages/matchmaker/vignettes/intro.html) digitando `?match_df` no console. Note que essa função pode demorar um tempo longo de execução em uma base de dados grande. 
 
 ```{r}
-linelist <- linelist %>% 
-  linelist::clean_variable_spelling(
-    wordlists = cleaning_dict,
-    spelling_vars = "col",        # coluna do dicionário contendo nomes das colunas, padrão da 3ª coluna do dicionário
+linelist <- linelist %>%     # sua base de dados
+     matchmaker::match_df(
+          dictionary = cleaning_dict,  # nome do dicionário
+          from = "from",               # coluna com as variáveis a serem substituidas (o padrão é a col 1)
+          to = "to",                   # coluna ocm os valores finais (padrão é col 2)
+          by = "col"                   # coluna com nome de colunas (padrão é col 3)
   )
 ```
 
