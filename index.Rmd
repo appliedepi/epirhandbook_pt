@@ -88,7 +88,7 @@ a column separator -->
 :::
 
 ::: {}
-<span style="color: black;">**Escrito por epidemiologistas, para epidemiologistas*</span>
+<span style="color: black;">**Escrito por epidemiologistas, para epidemiologistas**</span>
 
 Somos epidemiologistas aplicados de todo o mundo, escrevendo em nosso tempo livre para oferecer este recurso à comunidade. Seu encorajamento e feedback são muito bem-vindos:
 
@@ -142,7 +142,7 @@ Este manual é **não*** um produto aprovado de qualquer organização específi
 
 **Ilustradores**: Calder Fong  
 
-**Tradutores da versão em língua portuguesa (Brasil)**: Carolina Musso, César Augusto Galvão , Halian Vilela, Laís Relvas ,Felipe Cardoso tradução, Rafaela Tadei,  Pauliana Galvão ;  Nathalia Zini ;  Paula Maiçara,  João Pedro Angelici,   Ademar Barbosa Dantas Junior, Eucilene Santana, Hudson Gabriel Virtuoso Fontenelle
+**Tradutores da versão em língua portuguesa (Brasil)**: Carolina Musso, César Augusto Galvão , Halian Vilela, Laís Relvas ,Felipe Cardoso tradução, Rafaela Tadei,  Pauliana Galvão,   Nathalia Zini, Paula Maiçara,  João Pedro Angelici,   Ademar Barbosa Dantas Junior, Eucilene Santana, Hudson Gabriel Virtuoso Fontenele
 
 
 <!-- **Editor-in-Chief:** Neale Batra  -->

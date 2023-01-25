@@ -971,7 +971,7 @@ all_districts <- c("All", unique(malaria_data$District))
 # quadro de dados de nomes de locais por distrito
 installation_list <- malaria_data%>%
   group_by(location_name, District)%>%
-  resumir()%>% 
+  summarise()%>% 
   ungroup()
 
 ```
@@ -984,7 +984,7 @@ all_districts
 
 
 ```{r}
-facility_list
+installation_list
 ```
 
 
@@ -1196,7 +1196,7 @@ mainPanel(
 Vamos aplicar isso à nossa interface do usuário. Também queremos usar o pacote **DT** aqui - este é um ótimo pacote para fazer tabelas interativas a partir de dados pré-existentes. Podemos ver que está sendo usado para `DT :: datatableOutput()` neste exemplo.
 
 ```{r, echo = FALSE}
-biblioteca (DT)
+library(DT)
 ```
 
 ```{r, eval = FALSE}

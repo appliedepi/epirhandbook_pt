@@ -74,7 +74,7 @@ pacman::p_load(
           # parametros, # alternativa a limpar os resultados de regressões. 
           # see,        # alternativa para vizualizar gráfico de floresta. 
      
-     # modelagem de epidemmias
+     # modelagem de epidemias
      ###################
      epicontacts,  # Analisando rede de transmissão t
      EpiNow2,      # Estimando Rt 
@@ -95,7 +95,7 @@ pacman::p_load(
      ggnewscale,       # adicionar novos esquemas de cores
 
      
-     # Gráficos - tipoes específicos
+     # Gráficos - tipos específicos
      ########################
      DiagrammeR,       # diagramas utilizando linguagem DOT
      incidence2,       # curvas epidêmicas
