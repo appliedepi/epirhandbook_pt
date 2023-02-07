@@ -30,10 +30,11 @@ Este trecho de código mostra o carregamento dos pacotes necessários para as an
 ```{r}
 pacman::p_load(
   tidyverse,      # inclui ggplot2 e outras ferramentas de manipular dados
-
   rio,            # importar/exportar
   here,           # localizador de arquivos
-  stringr         # trabalhando com caracteres
+  stringr,        # trabalhando com caracteres
+  ggforce,        # pacote auxiliar o ggplot2, fornece algumas funções de ajuste de pontos
+  janitor         # pacote para limpeza de dados
 )
 ```
 
@@ -826,14 +827,14 @@ Ao longo desta página, você já viu muitos exemplos de gráficos de dados cont
 
 As visualizações aqui abordadas incluem:
 
-*Gráficos para uma variável contínua:  
+* Gráficos para uma variável contínua:  
   * **Histograma**, um gráfico clássico para apresentar a distribuição de uma variável contínua. 
   * **Diagramas de caixa** (box-plots), para mostrar os percentis 25%, 50% e 75%, pontas de cauda da distribuição e outliers ([limitações importantes](https://www.data-to-viz.com/caveat/boxplot.html)).  
   * **Gráfico Jitter**, para mostrar todos os valores como pontos que estão 'tremidos' para que possam (principalmente) ser todos vistos, mesmo onde dois têm o mesmo valor.  
   * **Gráfico Violino**, mostrar a distribuição de uma variável contínua com base na largura simétrica do 'violino'. 
   * **Gráfico Sina**, são uma combinação de gráficos de jitter e violino, onde são mostrados pontos individuais mas na forma simétrica da distribuição (via **ggforce** pacote). (Nota do Tradutor: Jitter em inglês significa "agitado, nervoso" e se remete ao fato dos pontos, nesse gráfico ficarem mais "espalhados" de forma a não ficarem sobrepostos )
-  * **Gráfico de dispersão** Para duas variáveis contínuas.  
-  * **Gráficos de calor** para três variáveis contínuas (ligados à página [gráficos de calor])    
+* **Gráfico de dispersão** Para duas variáveis contínuas.  
+* **Gráficos de calor** para três variáveis contínuas (ligados à página [gráficos de calor])    
 
 
 
@@ -1064,7 +1065,7 @@ A primeira coisa a entender sobre seus dados categóricos é se eles em sua form
 * Se seus dados já estiverem agregados em contagens ou proporções, você provavelmente utilizará `geom_col()`    
 
 #### Classe da coluna e ordenamento dos valores {.unnumbered}  
-Em seguida, examine a classe das colunas que você deseja traçar. Examinamos `hospital`, primeiro com a função `class()` do R **base**,  e com `tabyl()` dO pacote **janitor**.   
+Em seguida, examine a classe das colunas que você deseja traçar. Examinamos `hospital`, primeiro com a função `class()` do R **base**,  e com `tabyl()` do pacote **janitor**.   
 
 ```{r}
 # Veja a classe da coluna hospital - podemos ver que é um caracter
@@ -1155,7 +1156,7 @@ Abaixo está o código utilizando `geom_col` para criar gráficos de barras simp
 ```{r, fig.height = 3, fig.width=4.5}
 # Desfecho em todos os casos
 ggplot(outcomes) + 
-  geom_col(aes(x=outcome, y = proportion)) +
+  geom_col(aes(x=outcome, y = proporcao)) +
   labs(subtitle = "Número de casos recuperados e óbitos de Ebola")
 
 ```
