@@ -1,4 +1,4 @@
-# Trabalhando com datas
+# Trabalhando com datas {#dates}
 
 ```{r, out.width=c('50%'), fig.align='center', echo=F, message=F}
 knitr::include_graphics(here::here("images", "Dates_500x500.png"))

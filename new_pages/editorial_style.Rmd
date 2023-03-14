@@ -1,4 +1,4 @@
-# Notas editoriais e técnicas { }
+# Notas editoriais e técnicas {#editorial-style}
 
 Nesta página descrevemos a abordagem filosófica, o estilo e as decisões editoriais específicas tomadas durante a criação deste manual.  
 

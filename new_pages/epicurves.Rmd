@@ -1,5 +1,5 @@
 
-# Curvas epidêmicas { }  
+# Curvas epidêmicas {#epicurves}  
 
 ```{r, out.width=c('75%'), echo=F, message=F}
 knitr::include_graphics(here::here("images", "epicurve_top.png"))

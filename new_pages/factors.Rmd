@@ -1,4 +1,4 @@
-# Fatores
+# Fatores {#factors}
 
 ```{r, out.width=c('100%'), echo=F, message=F}
 knitr::include_graphics(here::here("images", "Factors_1500x500.png"))

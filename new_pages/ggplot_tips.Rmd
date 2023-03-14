@@ -1,5 +1,5 @@
 
-# Dicas do ggplot {}
+# Dicas do ggplot {#ggplot-tips}
 
 Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot].
 

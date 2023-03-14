@@ -1,4 +1,4 @@
-# Iterações, loops e listas
+# Iterações, loops e listas {#iteration}
 
 Os epidemiologistas muitas vezes se deparam com análises repetidas em subgrupos, como países, distritos ou faixas etárias. Estas são apenas algumas das muitas situações envolvendo *iteração*. Codificar suas operações iterativamente usando as abordagens abaixo ajudará você a executar essas tarefas repetitivas mais rapidamente, reduzir a chance de erro e reduzir o comprimento do código.
 

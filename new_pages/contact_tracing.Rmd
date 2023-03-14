@@ -1,5 +1,5 @@
 
-# Rastreio de contatos
+# Rastreamento de contatos {#contact-tracing}
 
 Esta página demonstra uma análise descritiva dos dados de rastreio de contatos, acrescentando algumas considerações-chave e abordagens únicas a este tipo de dados.
 
