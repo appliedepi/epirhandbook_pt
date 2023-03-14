@@ -777,7 +777,7 @@ rolling_avg <- incidence(                    # crie um objeto do tipo incidence
   i2extras::add_rolling_average(before = 6)  # adicione médias móveis (neste caso, por gênero)
 
 # faça o gráfico
-plot(rolling_avg, n.breaks = 3) # foi facetado automaticamente devido à média móvel dos grupos
+plot(rolling_avg) # foi facetado automaticamente devido à média móvel dos grupos
 ```
 
 Para aprender sobre como aplicar médias móveis de forma mais geral nos dados, veja a página deste manual sobre [Médias móveis].

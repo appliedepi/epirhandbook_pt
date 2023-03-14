@@ -43,8 +43,9 @@ pacman::p_load(
      tidyverse,           # gerenciamento e visualização dos dados
      stringr,             # limpar caracteres e strings
      frailtypack,         # necessário para dsr, para modelos de fragilidade
-     dsr,                 # padronização das taxas
      PHEindicatormethods) # alternativa para padronização das taxas
+
+pacman::p_load_gh("cran/dsr") # foi removido do CRAN
 ```
 
 
@@ -100,7 +101,7 @@ Primeiro, nós carregamos os dados demográficos (contanges de homens e mulheres
 
 ```{r, echo=F}
 # País A
-A_demo <- rio::import(here::here("data", "standardization", "country_demographics.csv")) %>% 
+A_demo <- rio::import(here::here("data", "standardization", "country_demographics.csv"))%>% 
      mutate(Country = "A") %>% 
      select(Country, everything()) %>% # reorganiza os dados
      mutate(age_cat5 = str_replace_all(age_cat5, "\\+", "")) # remoção + simbologia
