@@ -240,7 +240,7 @@ proptab_multiple <- function(my_data, var_to_tab){
   with(my_data,
        rbind( # Vincula os resultados das duas funções seguintes por linha
         # Tabula a variável de interesse: fornece apenas números
-          table(my_data[[var_to_tab]], useNA = "não"),
+          table(my_data[[var_to_tab]], useNA = "no"),
           # Calcula as proporções para cada variável de interesse e arredonda o resultado para 2 decimais
          round(prop.table(table(my_data[[var_to_tab]]))*100,2)
          )
@@ -341,14 +341,18 @@ chart_outcome_province <- function(data_used, prov){
     adorn_totals(where = "row") %>% 
     adorn_percentages(denominator = "col", )%>%
     mutate(
-        perc_outcome= round(n*100,2))
+        perc_outcome= round(n*100,2),
+        outcome=ifelse(outcome=="Death", "Óbito",
+                       ifelse(outcome=="Recover","Recuperado", outcome)))
+ 
+
   
   
   tab_prov %>%
     filter(outcome != "Total") %>% 
   highcharter::hchart(
     "pie", hcaes(x = outcome, y = perc_outcome),
-    name = paste0("Distibution of the outcome in:", prov)
+    name = paste0("Distribuição do desfecho em:", prov)
     )
   
 }
@@ -402,8 +406,8 @@ indic_3 <-  flu_china %>%
 # Junte os três conjuntos de dados de indicadores
 
 table_indic_all <- indic_1 %>% 
-  dplyr::left_join(indic_2, by = "provincia") %>% 
-        left_join(indic_3, by = "provincia")
+  dplyr::left_join(indic_2, by = "province") %>% 
+        left_join(indic_3, by = "province")
 
 
 # Imprima os indicadores em uma flextable
@@ -411,12 +415,12 @@ table_indic_all <- indic_1 %>%
 
 print_indic_prov <-  function(table_used, prov){
   
-  # Primeiro, transforme um pouco o quadro de dados para facilitar a impressão
+  # Primeiro, transforme um pouco o quadro de dados para facilitar a visualização
  indic_prov <- table_used %>%
     filter(province==prov) %>%
-    pivot_longer(names_to = "Indicadores", cols = 2:4) %>% 
+    pivot_longer(names_to = "Indicadores", cols = 2:4)%>% 
    mutate( indic_label = factor(Indicadores,
-   levels= c("atraso_inicio_hosp","perc_recuperacao","mediana_idade"),
+   levels= c("mean_delay_onset_hosp","perc_recovery","median_age_cases"),
    labels=c("Atraso entre início e internação", "Percentual de recuperação", "Idade mediana dos casos"))
    ) %>% 
     ungroup(province) %>% 
