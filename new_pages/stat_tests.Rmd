@@ -252,10 +252,19 @@ Para realizar testes estatísticos de comparação com a função `tbl_summary`,
 Compare as proporções de uma variável categórica em dois grupos. O teste estatístico padrão para a função `add_p()` para uma variável categórica é o teste Qui-quadrado de independência com correção de continuidade. Entretanto, caso alguma contagem seja abaixo de 5, o teste exato de Fisher é utilizado em seu lugar.
 
 ```{r chi_gt}
+
+theme_gtsummary_language("pt") # acrescentando tradução para o portugues
+
 linelist %>% 
-  select(gender, outcome) %>%    # selecione as variáveis de interesse
-  tbl_summary(by = outcome) %>%  # produza uma tabela resumo e especifique a variável de agrupamento
-  add_p()                        # especifique qual teste estatístico realizar
+  select(gender, outcome) %>% # selecione as variáveis de interesse
+  mutate(outcome=ifelse(outcome=="Death", "Óbito",
+                        ifelse(outcome=="Recover", "Recuperado",outcome))) %>%  #só traduzindo 
+  tbl_summary(by = outcome, # produza uma tabela resumo e especifique a variável de agrupamento
+              label = list( gender ~"gênero")) %>% # traduzindo o rótulo
+  add_p()                        # especifique qual teste estatístico realizar %>% 
+
+
+
 ```
 
 
@@ -268,9 +277,12 @@ Por exemplo, compare a média das idades de acordo com a evolução clínica do 
 
 linelist %>% 
   select(age_years, outcome) %>%             # selecione as variáveis de interesse
+  mutate(outcome=ifelse(outcome=="Death", "Óbito",
+                        ifelse(outcome=="Recover", "Recuperado",outcome))) %>%  #só traduzindo 
   tbl_summary(                               # produza uma tabela resumo
     statistic = age_years ~ "{mean} ({sd})", # especifique quais estatísticas mostrar
-    by = outcome) %>%                        # especifique a variável de agrupamento
+    by = outcome, # especifique a variável de agrupamento
+    label = list(age_years ~ "idade")) %>%   # traduzindo                     
   add_p(age_years ~ "t.test")                # especifique quais testes realizar
 
 
@@ -284,9 +296,12 @@ Compare a distribuição de uma variável contínua em dois grupos. O padrão é
 
 linelist %>% 
   select(age_years, outcome) %>%                       # selecione as variáveis de interesse
+  mutate(outcome=ifelse(outcome=="Death", "Óbito",
+                        ifelse(outcome=="Recover", "Recuperado",outcome))) %>% # traduzindo
   tbl_summary(                                         # produz uma tabela resumo
     statistic = age_years ~ "{median} ({p25}, {p75})", # especifique quais estatísticas mostrar (estes valores são padrão e podem ser removidos)
-    by = outcome) %>%                                  # especifique a variável de agrupamento
+    by = outcome, # especifique a variável de agrupamento
+    label = list( age_years ~ "idade")) %>%    # traduxindo                              
   add_p(age_years ~ "wilcox.test")                     # especifique qual teste realizar (existem testes padrão, então é possível deixar os parênteses em branco)
 
 
@@ -300,9 +315,12 @@ Compare a distribuição de uma variável contínua em dois ou mais grupos, inde
 
 linelist %>% 
   select(age_years, outcome) %>%                       # selecione as variáveis de interesse
+  mutate(outcome=ifelse(outcome=="Death", "Óbito",
+                        ifelse(outcome=="Recover", "Recuperado",outcome))) %>% # traduzindo
   tbl_summary(                                         # produza tabelas resumo
-    statistic = age_years ~ "{median} ({p25}, {p75})", # especifique quais estatísticas mostrar (existem valores padrão, então pode deixar os parênteses em branco)
-    by = outcome) %>%                                  # especifique a variável de agrupamento
+    statistic = age_years ~ "{median} ({p25}, {p75})", # especifique quais estatísticas mostrar (existem valores padrão, então pode-se deixar os parênteses em branco)
+    by = outcome, # especifique a variável de agrupamento
+    label = list(age_years ~ "idade")) %>%     # traduzindo                             
   add_p(age_years ~ "kruskal.test")                    # especifique qual teste realizar
 
 

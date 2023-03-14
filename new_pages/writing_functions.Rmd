@@ -342,8 +342,8 @@ chart_outcome_province <- function(data_used, prov){
     adorn_percentages(denominator = "col", )%>%
     mutate(
         perc_outcome= round(n*100,2),
-        outcome=ifelse(outcome=="Death", "Óbito",
-                       ifelse(outcome=="Recover","Recuperado", outcome)))
+        outcome=ifelse(outcome=="Death", "Óbito",  #só traduzindo para ficar com rótulos
+                       ifelse(outcome=="Recover","Recuperado", outcome))) # em português
  
 
   
