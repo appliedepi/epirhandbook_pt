@@ -76,7 +76,7 @@ Abaixo, a função `skim()` é aplicada a todos os dados do objeto `linelist,` c
 skim(linelist)
 ```
 
-```{r  echo=F}
+```{r  eval=F}
 # exclui a apresentação de dados com histogramas irregulares
 skim_without_charts(linelist)
 ```
@@ -205,11 +205,11 @@ Por padrão, o tabyl vai gerar uma tabela 'crua' no seu console do R.
 Adicionalmente, você pode obter a tabela no tabyl e utiliza-la nas funções do pacote **flextable**, ou outros pacotes similares, para gerar uma tabela no formato de imagem no RStudio Viewer, que pode ser exportada nos formatos .png, .jpeg, .html, etc. Isto é discutido na página [Tabelas para apresentação]. Observe que, caso você gere a tabela desta forma e utilize a função `adorn_titles()`, você precisa aplicar o atributo `placement = "combined"`.
 
 ```{r}
-linelist %>%
-  tabyl(age_cat, gender) %>% 
-  adorn_totals(where = "col") %>% 
-  adorn_percentages(denominator = "col") %>% 
-  adorn_pct_formatting() %>% 
+linelist %>%                                  # fonte dos dados
+  tabyl(age_cat, gender) %>%                  # geração da tabela cruzada
+  adorn_totals(where = "row") %>%             # adiciona uma linha "Total", com os totais
+  adorn_percentages(denominator = "col") %>%  # converte as quantidades absolutas para proporções
+  adorn_pct_formatting() %>%                  # converte as proporções para porcentagens
   adorn_ns(position = "front") %>% 
   adorn_title(
     row_name = "Age Category",
@@ -242,8 +242,8 @@ linelist %>%
   adorn_pct_formatting() %>% 
   adorn_ns(position = "front") %>% 
   adorn_title(
-    row_name = "Age Category",
-    col_name = "Gender",
+    row_name = "Faixa-Etária",
+    col_name = "Gênero",
     placement = "combined") %>% 
   flextable::flextable() %>%                     # converte para imagem
   flextable::autofit() %>%                       # garante apenas uma linha por coluna
@@ -450,12 +450,12 @@ summary_table %>%
   select(-c(delay_mean, delay_sd)) %>%                       # remova as duas colunas utilizadas   
   adorn_totals(where = "row") %>%                            # adiciona uma linha com os totais
   select(                                                    # reorganize e renomeie as colunas
-    "Hospital Name"   = hospital,
-    "Cases"           = cases,
-    "Max delay"       = delay_max,
-    "Mean (sd)"       = delay,
-    "Delay 3+ days"   = delay_3,
-    "% delay 3+ days" = pct_delay_3
+    "Nome do Hospital"   = hospital,
+    "Casos"           = cases,
+    "Atraso máximo"       = delay_max,
+    "Média (dp)"       = delay,
+    "Atraso 3+ dias"   = delay_3,
+    "% atrasos 3+ dias" = pct_delay_3
     )
 ```
 
@@ -808,6 +808,11 @@ Para introduzir a função `tbl_summary()`, nós vamos primeiro demostrar seu fu
 O comportamento padrão do `tbl_summary()` é incrível - ele utiliza as colunas fornecidas e cria uma tabela resumo em apenas um comando. Esta função realiza as estatísticas apropriadas de acordo com a classe da coluna: média e intervalo interquartil (IQR) para colunas numéricas, e contagens (%) para colunas categóricas. Valores em branco são convertidos para "Unknown". Notas de rodapé são adicionadas para explicar as estatísticas utilizadas, enquanto a quantidade total N é mostrada no topo.
 
 ```{r, warning=F, message=F}
+
+# Use a função abaixo para que a tabela saia em portugês
+
+theme_gtsummary_language("pt")
+
 linelist %>% 
   select(age_years, gender, outcome, fever, temp, hospital) %>%  # mantenha apenas as colunas de interesse
   tbl_summary()                                                  # função no modo padrão
