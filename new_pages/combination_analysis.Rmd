@@ -6,45 +6,46 @@ pacman::p_load(tidyverse,
                UpSetR,
                ggupset)
 
-# Adiciona variável de novos sintomas à linelist, vom valores "yes" e "não" (sim/não) aleatórioa
+# Adiciona variável de novos sintomas à linelist, com valores "yes" (sim) e "no" (não)  aleatórios
+
 linelist_sym <- linelist %>% 
-  mutate(fever  = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.80, 0.20)),
-         chills = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.20, 0.80)),
-         cough  = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.9, 0.15)),
-         aches  = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.10, 0.90)),
-         vomit = sample(c("yes", "no"), nrow(linelist), replace = T))
+  mutate(febre  = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.80, 0.20)),
+         calafrio = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.20, 0.80)),
+         tosse  = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.9, 0.15)),
+         dores  = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.10, 0.90)),
+         vômito = sample(c("yes", "no"), nrow(linelist), replace = T))
 
 linelist_sym_2 <- linelist_sym %>% 
   
-  # convert the "yes" and "no" values into the symptom name itself
-  mutate(fever = case_when(fever == "yes" ~ 1,          # if old value is "yes", new value is "fever"
-                           TRUE           ~ 0),   # if old value is anything other than "yes", the new value is NA
+  # converte os valores  "yes" (sim) e "no" (não) para o nome do sintoma
+  mutate(febre = case_when(febre == "yes" ~ 1,  # se era "yes", o novo valor é  febre
+                           TRUE           ~ 0),   # se o valor for qualquer coisa diferente de "sim", o novo valor é  NA
          
-         chills = case_when(chills == "yes" ~ 1,
+         calafrio = case_when(calafrio == "yes" ~ 1, 
                            TRUE           ~ 0),
          
-         cough = case_when(cough == "yes" ~ 1,
+         tosse = case_when(tosse == "yes" ~ 1,
                            TRUE           ~ 0),
          
-         aches = case_when(aches == "yes" ~ 1,
+         dores = case_when(dores == "yes" ~ 1,
                            TRUE           ~ 0),
          
-         vomit = case_when(vomit == "yes" ~ 1,
+         vômito = case_when(vômito == "yes" ~ 1,
                            TRUE           ~ 0))
 
 # Make the plot
 UpSetR::upset(
-  select(linelist_sym_2, fever, chills, cough, aches, vomit),
-  sets = c("fever", "chills", "cough", "aches", "vomit"),
+  select(linelist_sym_2, febre, calafrio, tosse, dores, vômito),
+  sets = c("febre", "calafrio", "tosse", "dores", "vômito"),
   order.by = "freq",
-  sets.bar.color = c("blue", "red", "yellow", "darkgreen", "orange"), # optional colors
+  sets.bar.color = c("blue", "red", "yellow", "darkgreen", "orange"), # cores opcionais
   empty.intersections = "on",
   # nsets = 3,
   number.angles = 0,
   point.size = 3.5,
   line.size = 2, 
-  mainbar.y.label = "Symptoms Combinations",
-  sets.x.label = "Patients with Symptom")
+  mainbar.y.label = "Combinação de Sintomas",
+  sets.x.label = "Pacientes com Sintomas")
 
 ```
 
@@ -78,9 +79,9 @@ O código abaixo realiza o carregamento dos pacotes necessários para a análise
 
 ```{r, warning=F, message=F}
 pacman::p_load(
-  tidyverse,     # data management and visualization
-  UpSetR,        # special package for combination plots
-  ggupset)       # special package for combination plots
+  tidyverse,     # manupulação de dados e visualização
+  UpSetR,        # pacote especial para gráficos de combinção 
+  ggupset)       # pacote especial para gráficos de combinção 
 ```
 
 <!-- ======================================================= -->
@@ -92,20 +93,20 @@ Para iniciar, importaremos a linelist dos casos de uma epidemia simulada do Ebol
 
 
 ```{r, echo=F}
-# import the linelist into R
+# importe a lisnelist para o R
 linelist_sym <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
 ```
 
 ```{r, eval=F}
-# import case linelist 
+# importe a linelit de casos 
 linelist_sym <- import("linelist_cleaned.rds")
 ```
 
 
-Essa linelist inclui cinco variáveis do tipo "sim/não" ("yes/no") a respeito dos sintomas relatados. Nós vamos precisar transformar essas variáveis um pouco para poder utilizar o pacote **ggupset** para fazer nosso gráfico. Confira os dados (role para a direita para ver as variáveis dos sintomas).
+Essa linelist inclui cinco variáveis do tipo "sim/não" ("sim/no") a respeito dos sintomas relatados. Nós vamos precisar transformar essas variáveis um pouco para poder utilizar o pacote **ggupset** para fazer nosso gráfico. Confira os dados (role para a direita para ver as variáveis dos sintomas).
 
 ```{r, message=FALSE, echo=F}
-# display the linelist data as a table
+# mostre a linelist como uma tabela do tipo"data table"
 DT::datatable(head(linelist_sym, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
@@ -118,29 +119,33 @@ Para estarmos alinhados com o formato esperado pelo pacote **ggupset** vamos con
  
 
 ```{r, warning=F, message=F}
-# create column with the symptoms named, separated by semicolons
+# criar uma coluna com todos os sintomas separados por ponto-vírgula 
 linelist_sym_1 <- linelist_sym %>% 
-  
-  # convert the "yes" and "no" values into the symptom name itself
+  rename(febre=fever, # só traduzindo
+         calafrio=chills,
+         tosse=cough,
+         dores=aches,
+         vômito = vomit) %>% 
+  # converte os valores de "yes" e "no" no nome do sintoma
   mutate(
-    fever = case_when(
-      fever == "yes" ~ "fever",          # if old value is "yes", new value is "fever"
-      TRUE           ~ NA_character_),   # if old value is anything other than "yes", the new value is NA
+    febre = case_when(
+      febre == "yes" ~ "febre",          #se o valor era "sim", o novo valor é "febre"
+      TRUE           ~ NA_character_),   # se o valor era diferente de "sim", o novo valor é NA
          
-    chills = case_when(
-       chills == "yes" ~ "chills",
+    calafrio = case_when(
+       calafrio == "yes" ~ "calafrio",
        TRUE           ~ NA_character_),
     
-    cough = case_when(
-      cough == "yes" ~ "cough",
+    tosse = case_when(
+      tosse == "yes" ~ "tosse",
       TRUE           ~ NA_character_),
          
-    aches = case_when(
-      aches == "yes" ~ "aches",
+    dores = case_when(
+      dores == "yes" ~ "dores",
       TRUE           ~ NA_character_),
          
-    vomit = case_when(
-      vomit == "yes" ~ "vomit",
+    vômito = case_when(
+      vômito == "yes" ~ "vômito",
       TRUE           ~ NA_character_)
     )
 ```
@@ -155,12 +160,12 @@ Veja a página de [Caracteres e strings] para aprender mais sobre a função `un
 ```{r, warning=F, message=F}
 linelist_sym_1 <- linelist_sym_1 %>% 
   unite(col = "all_symptoms",
-        c(fever, chills, cough, aches, vomit), 
+        c(febre, calafrio, tosse, dores, vômito), 
         sep = "; ",
         remove = TRUE,
         na.rm = TRUE) %>% 
   mutate(
-    # make a copy of all_symptoms column, but of class "list" (which is required to use ggupset() in next step)
+    # faz uma cópia de da coluna all_symptoms, mas na classe lista (que é requisito do ggupset() no próximo passo)
     all_symptoms_list = as.list(strsplit(all_symptoms, "; "))
     )
 ```
@@ -192,13 +197,13 @@ geom_bar() +
 scale_x_upset(
   reverse = FALSE,
   n_intersections = 10,
-  sets = c("fever", "chills", "cough", "aches", "vomit"))+
+  sets = c("febre", "calafrio", "tosse", "dores", "vômito"))+
 labs(
-  title = "Signs & symptoms",
-  subtitle = "10 most frequent combinations of signs and symptoms",
-  caption = "Caption here.",
-  x = "Symptom combination",
-  y = "Frequency in dataset")
+  title = "Sinais e Sintomas",
+  subtitle = "10 combinações mais frequentes de sinais e sintomas",
+  caption = "Rodapé aqui",
+  x = "Combinação de Sintomas",
+  y = "Frequência na base de dados")
 
 ```
   
@@ -225,27 +230,31 @@ Precisamos converter os valores dos sintomas da `linelist` para 1 / 0.
 # Make using upSetR
 
 linelist_sym_2 <- linelist_sym %>% 
-  
-  # convert the "yes" and "no" values into the symptom name itself
+  rename(febre=fever, # só traduzindo
+         calafrio=chills,
+         tosse=cough,
+         dores=aches,
+         vômito = vomit) %>% # só traduzindo
+  # converte os valores de "sim" e "não" nos nomes dos sintomas
   mutate(
-    fever = case_when(
-      fever == "yes" ~ 1,    # if old value is "yes", new value is 1
-      TRUE           ~ 0),   # if old value is anything other than "yes", the new value is 0
+    febre = case_when(
+      febre == "yes" ~ 1,    # se o valor antigo era "yes", então o novo valor é 1
+      TRUE           ~ 0),   # se o valor era qualquer coisa diferente de "yes", o novo valor é 0
          
-    chills = case_when(
-      chills == "yes" ~ 1,
+    calafrio = case_when(
+      calafrio == "yes" ~ 1,
       TRUE           ~ 0),
          
-    cough = case_when(
-      cough == "yes" ~ 1,
+    tosse = case_when(
+      tosse == "yes" ~ 1,
       TRUE           ~ 0),
          
-    aches = case_when(
-      aches == "yes" ~ 1,
+    dores = case_when(
+      dores == "yes" ~ 1,
       TRUE           ~ 0),
          
-    vomit = case_when(
-      vomit == "yes" ~ 1,
+    vômito = case_when(
+      vômito == "yes" ~ 1,
       TRUE           ~ 0)
     )
 ```
@@ -256,17 +265,17 @@ Agora vamos fazer o gráfico utilizando a função `upset()` - utilizando apenas
 
 # Make the plot
 UpSetR::upset(
-  select(linelist_sym_2, fever, chills, cough, aches, vomit),
-  sets = c("fever", "chills", "cough", "aches", "vomit"),
+  select(linelist_sym_2, febre, calafrio, tosse, dores, vômito),
+  sets = c("febre", "calafrio", "tosse", "dores", "vômito"),
   order.by = "freq",
-  sets.bar.color = c("blue", "red", "yellow", "darkgreen", "orange"), # optional colors
+  sets.bar.color = c("blue", "red", "yellow", "darkgreen", "orange"), # cores opcionais
   empty.intersections = "on",
   # nsets = 3,
   number.angles = 0,
   point.size = 3.5,
   line.size = 2, 
-  mainbar.y.label = "Symptoms Combinations",
-  sets.x.label = "Patients with Symptom")
+  mainbar.y.label = "Combinação de sintomas",
+  sets.x.label = "Pacientes com Sintomas")
 
 ```
 
