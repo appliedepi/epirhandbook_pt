@@ -1,5 +1,5 @@
 
-# Normalização de taxas { }  
+# Normalização de taxas {#standardization}  
 
 Esta página irá descrever duas maneiras de normalizar os dados, como hospitalizações ou mortalidade, com características como idade e sexo.
 

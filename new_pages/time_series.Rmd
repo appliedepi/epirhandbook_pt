@@ -1,5 +1,5 @@
 
-# Séries temporais e detecção de surtos { }  
+# Séries temporais e detecção de surtos {#time-series}  
 
 <!-- ======================================================= -->
 ## Visão geral do tópico {  }
@@ -191,7 +191,6 @@ file_paths <- list.files(
 
 ## mantenha apenas os arquivos que tenham o nome de interesse atual
 file_paths <- file_paths[str_detect(file_paths, "germany")]
-
 ## leia todos os arquivos como um objeto stars
 data <- stars::read_stars(file_paths)
 ```
@@ -580,10 +579,10 @@ model <- glm_nb_model(
     fourier)
 
 ## ajuste seu modelo utilizando os dados de contagem
-fitted_model <- trending::fit(model, counts)
+fitted_model <- trending::fit(data.frame(model), counts)
 
 ## calcule os intervalos de confiança e predição
-observed <- predict(fitted_model, simulate_pi = FALSE)
+observed <- predict(data.frame(fitted_model), simulate_pi = FALSE)
 
 ## faça um gráfico da sua regressão
 ggplot(data = observed, aes(x = epiweek)) + 
@@ -787,7 +786,7 @@ model <- glm_nb_model(
 fitted_model <- trending::fit(model, counts)
 
 ## calcule os intervalos de confiança e de predição
-observed <- predict(fitted_model, simulate_pi = FALSE)
+observed <- predict(data.frame(fitted_model), simulate_pi = FALSE)
 
 ```
 

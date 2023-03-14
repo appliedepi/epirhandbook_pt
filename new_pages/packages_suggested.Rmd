@@ -1,4 +1,4 @@
-# Pacotes sugeridos
+# Pacotes sugeridos {#packages-suggested}
 
 Abaixo está uma longa lista de pacotes sugeridos para trabalho epidemiológico comum em R. Você pode copiar este código, executá-lo, e todos estes pacotes serão instalados a partir de CRAN e carregados para uso na sessão R atual. Se um pacote já estiver instalado, ele será carregado apenas para uso.  
 

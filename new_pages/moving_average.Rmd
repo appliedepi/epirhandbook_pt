@@ -1,4 +1,4 @@
-# Médias móveis
+# Médias móveis {#moving-average}
 
 ```{r, out.width=c("100%"), echo=F}
 knitr::include_graphics(here::here("images", "moving_avg_epicurve.png"))

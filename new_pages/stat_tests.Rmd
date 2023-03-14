@@ -1,4 +1,4 @@
-# Testes estatísticos simples { }
+# Testes estatísticos simples {#stat-tests}
 
 
 Esta página demonstra como realizar testes estatísticos simples com os pacotes R **base**, **rstatix**, e **gtsummary**.  
