@@ -1,5 +1,5 @@
 
-# Análise de Combinações { }  
+# Análise de Combinações {#combination-analysis}  
 
 ```{r echo=F, out.width= "75%", warning=F, message=F}
 pacman::p_load(tidyverse,

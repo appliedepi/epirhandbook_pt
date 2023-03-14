@@ -1,5 +1,5 @@
 
-# Gráficos de calor {}  
+# Gráficos de calor {#heatmaps}  
 
 
 Os gráficos de calor, também conhecidos como "mapas de calor" ou "blocos/ladrilhos de calor" (do inglês heat tiles) , podem ser visualizações úteis ao tentar exibir 3 variáveis (eixo x, eixo y e preenchimento). Abaixo, demonstramos dois exemplos:  

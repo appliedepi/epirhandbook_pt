@@ -1,6 +1,6 @@
 
 
-# Organização de relatórios de rotina {  }  
+# Organização de relatórios de rotina {#reportfactory}  
 
 Esta página cobre o pacote **reportfactory**, que é um *acompanhamento do uso do R Markdown para relatórios*. 
 

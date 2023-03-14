@@ -1,4 +1,4 @@
-# Controle de versão e colaboração com Git e Github
+# Controle de versão e colaboração com Git e Github {#collaboration}
 
 Este capítulo apresenta uma visão geral do uso do Git para programar em colaboração com outras pessoas. Tutoriais mais completos podem ser encontrados abaixo na seção Recursos.
 

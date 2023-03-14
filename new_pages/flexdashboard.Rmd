@@ -1,5 +1,5 @@
 
-# Painéis com R Markdown { }
+# Painéis com R Markdown {#flexdashboard}
 
 ```{r out.width = "100%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "flexdashboard_output.png"))

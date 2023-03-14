@@ -1,5 +1,5 @@
 
-# Painéis com Shiny { }  
+# Painéis com Shiny {#shiny-basics}  
 
 Os painéis costumam ser uma ótima maneira de compartilhar resultados de análises com outras pessoas. Produzir um painel com **shiny** requer um conhecimento relativamente avançado da linguagem R, mas oferece uma personalização e possibilidades incríveis.  
 

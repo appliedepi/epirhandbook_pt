@@ -1,5 +1,5 @@
 
-# Conseguindo ajuda  
+# Conseguindo ajuda  {#help}
 
 Esta página aborda sobre como obter ajuda postando um problema (issue) no Github ou postando um exemplo reprodutível ("reprex" ou MRE para *Minimal reprodutible exemple*) em um fórum online.
 

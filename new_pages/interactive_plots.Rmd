@@ -1,5 +1,5 @@
 
-# Gráficos interativos { }  
+# Gráficos interativos {#interactive-plots}  
 A visualização de dados é cada vez mais necessária para questionamento do público. Consequentemente, a criação de gráficos interativos torna-se algo comum. Há várias formas de torná-los interativos, sendo as duas mais comuns: **plotly** e **shiny**. 
 
 Nesta página iremos focar na conversão de um gráfico já existente no `ggplot()`  em um gráfico interativo, utilizando o **plotly**. Para saber mais sobre o **shiny**, veja na no capítulo [Paineis com  Shiny](https://epirhandbook.com/en/dashboards-with-shiny.html#dashboards-with-shiny). Importante lembrar que este formato de gráfico interativo tem limitações, utilizados apenas em documentos do R Markdown em formato HTML*, não sendo possível em documentos com formatos em PDF ou Word.

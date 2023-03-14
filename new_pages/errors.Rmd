@@ -1,4 +1,4 @@
-# Erros comuns  
+# Erros comuns  {#errors}
 
 Esta página inclui uma lista de erros comuns e sugere soluções para solucioná-los.
 
