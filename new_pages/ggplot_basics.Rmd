@@ -30,7 +30,7 @@ Este trecho de código mostra o carregamento dos pacotes necessários para as an
 ```{r}
 pacman::p_load(
   tidyverse,      # inclui ggplot2 e outras ferramentas de manipular dados
-
+  ggforce,        # extensão ggplot
   rio,            # importar/exportar
   here,           # localizador de arquivos
   stringr         # trabalhando com caracteres
@@ -102,7 +102,13 @@ Por exemplo, digamos que queremos fazer um gráfico de dados que estão em um fo
 
 ```{r}
 symptoms_data <- linelist %>% 
-  select(c(case_id, fever, chills, cough, aches, vomit))
+  rename(tosse=cough,
+         febre=fever, 
+         vômito=vomit,
+         dores=aches,
+         calafrio=chills) %>%  #traduzindo
+  select(c(case_id, febre, calafrio, tosse, dores, vômito)) 
+     
 ```
 
 Veja como são as primeiras 50 linhas desta mini-linelist  - veja como elas são formatadas de forma "larga" com cada sintoma como uma coluna:
@@ -220,6 +226,10 @@ Depois de um `+`, os comandos de plotagem continuam. Uma forma é criada com a f
 ```{r, warning=F, message=F}
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+
   geom_point()
+
+# o nome dos eixos fica automaticamente com o nome da variável na base
+# que está em inglês. É possível traduzir na base ou usando a camada
+# labs() para escrever o nome dos eixos como se quer
 ```
 
 Como outro exemplo, os seguintes comandos utilizam os mesmos dados, um mapeamento um pouco diferente e um *geom* diferente. A função `geom_histogram()` requer apenas uma coluna mapeada para o eixo x, pois as contagens do eixo y são geradas automaticamente. 
@@ -269,7 +279,7 @@ Se você quiser que a estética do objeto do gráfico seja estática, ou seja - 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', warning=F, message=F}
 # gráfico de dispersão
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+  # configurar mapeamento dos dados e eixos 
-  geom_point(color = "darkgreen", size = 0.5, alpha = 0.2)         # configurar a estética estática dos pontos
+  geom_point(color = "darkgreen", size = 0.5, alpha = 0.2)   # configurar a estética estática dos pontos
 
 # histograma
 ggplot(data = linelist, mapping = aes(x = age))+       # configurar mapeamento dos dados e eixos 
@@ -686,22 +696,22 @@ Escreva-os com parênteses vazios.
 
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+  
   geom_point(color = "darkgreen", size = 0.5, alpha = 0.2)+
-  labs(title = "Theme classic")+
+  labs(title = "Tema classic")+
   theme_classic()
 
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+  
   geom_point(color = "darkgreen", size = 0.5, alpha = 0.2)+
-  labs(title = "Theme bw")+
+  labs(title = "Tema bw")+
   theme_bw()
 
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+  
   geom_point(color = "darkgreen", size = 0.5, alpha = 0.2)+
-  labs(title = "Theme minimal")+
+  labs(title = "Tema minimal")+
   theme_minimal()
 
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+  
   geom_point(color = "darkgreen", size = 0.5, alpha = 0.2)+
-  labs(title = "Theme gray")+
+  labs(title = "Tema gray")+
   theme_gray()
   
 
@@ -793,8 +803,14 @@ Os *pipes* que passam o conjunto de dados de função para função passarão a 
 Esta é a aparência que pode ter:  
 
 ```{r, warning=F, message=F}
-linelist %>%                                                     # comece com a linelist
-  select(c(case_id, fever, chills, cough, aches, vomit)) %>%     # selecione as colunas
+linelist %>%   # comece com a linelist
+ rename(tosse=cough,
+         febre=fever, 
+         vômito=vomit,
+         dores=aches,
+         calafrio=chills) %>%  #traduzindo o nome dos sintomas pois a base está em inglês
+  select(c(case_id, febre, calafrio, tosse, dores, vômito)) %>%   # selecione as colunas
+  
   pivot_longer(                                                  # faça o pivotamento para ficar mais longo
     cols = -case_id,                                  
     names_to = "nome_sintoma",
@@ -1140,6 +1156,8 @@ Digamos que temos este conjunto de dados "resultados":
 ```{r, echo = F}
 outcomes <- linelist %>% 
   drop_na() %>% 
+  mutate(outcome=ifelse(outcome=="Death","Óbito", #traduzindo
+                        ifelse(outcome=="Recover","Recuperado", outcome))) %>% 
   group_by(outcome) %>% 
   count %>% 
   ungroup() %>% # desagrupar para que proporção esteja fora do total
@@ -1155,7 +1173,7 @@ Abaixo está o código utilizando `geom_col` para criar gráficos de barras simp
 ```{r, fig.height = 3, fig.width=4.5}
 # Desfecho em todos os casos
 ggplot(outcomes) + 
-  geom_col(aes(x=outcome, y = proportion)) +
+  geom_col(aes(x=outcome, y = proporcao)) +
   labs(subtitle = "Número de casos recuperados e óbitos de Ebola")
 
 ```
