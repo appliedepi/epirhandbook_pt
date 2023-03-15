@@ -165,7 +165,7 @@ Obtenha uma visão geral do seu conjunto de dados utilizando **summarize**, que 
 -------------------------------- | ---------------------------------------------
 As colunas do conjunto de dados são frequentemente referidas como "variáveis" | Mais frequentemente referidas como "colunas" ou às vezes como "vetores" ou "variáveis".
 Não é necessário especificar o conjunto de dados | Em cada um dos comandos abaixo, você precisa especificar o conjunto de dados - veja a página em [Limpeza de dados e principais funções](#cleaning) para exemplos
-Novas variáveis são criadas utilizando o comando **generate** *nome_var* = | Gerar novas variáveis utilizando a função `mutate(nome_var = )`. Consulte a página [Limpeza de dados e principais funções] para obter detalhes sobre todas as funções abaixo **dplyr***.
+Novas variáveis são criadas utilizando o comando **generate** *nome_var* = | Gerar novas variáveis utilizando a função `mutate(nome_var = )`. Consulte a página [Limpeza de dados e principais funções](#cleaning) para obter detalhes sobre todas as funções abaixo **dplyr***.
 As variáveis são renomeadas utilizando **rename** *nome_antigo nome_novo* | Colunas podem ser renomeadas utilizando a função `rename(novo_nome = nome_antigo)`
 As variáveis são descartadas utilizando **drop** *nome_var* | As colunas podem ser removidas utilizando a função `select()` com o nome da coluna entre parênteses, seguindo um sinal de subtração
 As variáveis fatoriais podem ser etiquetadas usando uma série de comandos como **label define** | Os valores de etiquetagem podem ser feitos convertendo a coluna para a classe fator e especificando níveis. Veja a página em [Fatores](#factors). Os nomes das colunas não são tipicamente etiquetados como estão na Stata.

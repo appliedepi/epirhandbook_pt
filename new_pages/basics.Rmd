@@ -396,7 +396,7 @@ R é uma linguagem que é orientada em torno de funções, portanto você deve s
 - Substituir o processo repetitivo de copia e cola, que pode ser propenso a erros.
 - Dar nomes memoráveis aos pedaços de código
 
-Como escrever uma função é abordado em profundidade na página [Funções de escrita].
+Como escrever uma função é abordado em profundidade na página [Escrevendo funções](#writing-functions).
 
 <!-- A function is given a name and defined with the assignment operator `<-` to a special **base** R function called `function()`. Within the parentheses, the arguments that the function will accept are defined. This is followed by curly brackets `{ }`, within which the actual code of the function is written.     -->
 
@@ -838,7 +838,7 @@ Abaixo está um exemplo de um caminho de arquivo "absoluto" ou "endereço comple
 
 **Caminhos relativos**
 
-Geralmente, recomendamos fornecer caminhos de arquivo "relativos" - ou seja, o caminho *relativo* à raiz do seu projeto R. Você pode fazer isso usando o pacote **here** conforme explicado na página [projetos R](#r-projects. Um caminho de arquivo relativo pode ser assim:
+Geralmente, recomendamos fornecer caminhos de arquivo "relativos" - ou seja, o caminho *relativo* à raiz do seu projeto R. Você pode fazer isso usando o pacote **here** conforme explicado na página [projetos R](#r-projects). Um caminho de arquivo relativo pode ser assim:
 
 ```{r, eval=F}
 # Import csv linelist from the data/linelist/clean/ sub-folders of an R project

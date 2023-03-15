@@ -35,7 +35,7 @@ Oferecemos um pacote R denominado **epirhandbook**. Inclui uma função `downloa
 
 Este pacote também contém uma função `get_data()` que baixa todos os dados de exemplo para o seu computador.  
 
-Execute o seguinte código para instalar nosso pacote R **epirhandbook** do [repositório Github *applyepi*] (https://github.com/appliedepi/epirhandbook). Este pacote não está no CRAN, então use a função especial `p_install_gh()` para instalá-lo do Github.  
+Execute o seguinte código para instalar nosso pacote R **epirhandbook** do [repositório Github *applyepi*](https://github.com/appliedepi/epirhandbook). Este pacote não está no CRAN, então use a função especial `p_install_gh()` para instalá-lo do Github.  
 
 
 ```{r, eval=F}

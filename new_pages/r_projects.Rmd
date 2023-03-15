@@ -106,7 +106,7 @@ ggsave(here("outputs", "epicurves", "epicurve_2021-02-15.png"))
 <!-- ======================================================= -->
 ## Recursos {}
 
-Página da web do RStudio em [usando R projects] (https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects)
+Página da web do RStudio em [usando R projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects)
 
 
 
