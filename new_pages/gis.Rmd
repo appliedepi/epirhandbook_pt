@@ -126,12 +126,17 @@ pacman::p_load(
   here,          # para localizar arquivos 
   tidyverse,     # para limpar, manipular e gerar gráficos com os dados (inclui o pacote ggplot2)
   sf,            # para gerenciar dados espaciais utilizando o formato Simple Feature 
-  tmap,          # para produzir mapas simples, funciona tanto para mapas interativos quanto estáticos 
-  janitor,       # para limpar nomes das colunas 
+  stars,          # para produzir mapas simples, funciona tanto para mapas interativos quanto estáticos 
+  janitor, # para limpar nomes das colunas 
+  terra, #dependencia tmap
+  tmap,
   OpenStreetMap, # para adicionar o mapa-base do OpenStreeMap ao mapa do ggplot
-  spdep          # estatísticas espaciais
+  tmaptools,
+  spdep
+  
   ) 
-                  
+    
+
 ```
 
 Você pode ter uma visão geral de todos os pacotes do R que lidam com dados espaciais em [CRAN "Spatial Task View"](https://cran.r-project.org/web/views/Spatial.html).  

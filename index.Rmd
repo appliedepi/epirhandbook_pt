@@ -111,7 +111,7 @@ Somos epidemiologistas aplicados de todo o mundo, escrevendo em nosso tempo livr
 * Você pode seguir - junto com [os dados do exemplo][Fazer o Download do manual e dos dados].  
 * Consulte a seção "Recursos" de cada página para obter mais material  
 
-**Versão off-line***  
+**Versão off-line**
 
 Veja as instruções na página [Fazer o Download do manual e dos dados]].  
 
@@ -127,7 +127,7 @@ Esta é uma versão traduzida para Português. Se você quer colaborar em melhor
 
 Este manual é produzido por uma colaboração de epidemiologistas de todo o mundo, aproveitando a experiência de organizações que incluem agências de saúde locais, estaduais, provinciais e nacionais, a Organização Mundial da Saúde (OMS), Médicos Sem Fronteiras / Médicos sem Fronteiras (MSF), sistemas hospitalares e instituições acadêmicas.
 
-Este manual é **não*** um produto aprovado de qualquer organização específica. Embora nos esforcemos para ser precisos, não damos nenhuma garantia do conteúdo deste livro.  
+Este manual é **não** um produto aprovado de qualquer organização específica. Embora nos esforcemos para ser precisos, não damos nenhuma garantia do conteúdo deste livro.  
 
 
 ### Colaboradores {-}
