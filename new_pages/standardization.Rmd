@@ -472,7 +472,7 @@ refpopCountryB <- country_data %>%
 # Calcule taxas para o país A indiretamente normalizada por idade e sexo
 mortality_is_rate_phe_A <- country_data %>%
      filter(Country == "A") %>%
-     PHEindicatormethods::phe_isr(
+     PHEindicatormethods::calculate_ISRate(
           x = Deaths,                 # coluna com o número observado de eventos
           n = Population,             # coluna com população não padronizada para cada estrato
           x_ref = refpopCountryB$Deaths,  # quantidade referência de mortes  para cada estrato

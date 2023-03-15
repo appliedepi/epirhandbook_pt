@@ -20,7 +20,7 @@ Ao lidar com dados, *pivotar* (pivoting) pode ser entendido como um dos dois pro
 1. A criação de *tabelas dinâmicas* (pivot tables), que são tabelas com estatísticas que resumem os dados de um tabela maior.
 2. A conversão de uma tabela do formato **longo** (long) para o formato **largo** (wide), ou vice-versa.
 
-**Nessa página, iremos nos focar na segunda definição**. A primeira é um passo crucial em análise de dados que está coberto em outras partes do livro, nos capítulos de [Agrupamento de Dados] e [Tabelas Descritivas].
+**Nessa página, iremos nos focar na segunda definição**. A primeira é um passo crucial em análise de dados que está coberto em outras partes do livro, nos capítulos de [Agrupamento de Dados](#grouping) e [Tabelas Descritivas](#tables-descriptive).
 
 Essa página discute os formatos dos dados. É importante estar atento à ideia de "dados tidy" (tidy data), na qual cada varíavel tem sua própria coluna, cada observação tem sua própria linha e cada valor tem sua própria célula. Você pode ler mais sobre esse tópico online [em seu capítulo do livro R para Ciência de Dados (em inglês)](https://r4ds.had.co.nz/tidy-data.html). 
 
@@ -32,7 +32,7 @@ Essa página discute os formatos dos dados. É importante estar atento à ideia 
 
 ### Carregue os pacotes R {.unnumbered}  
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Básico do R].  
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Introdução ao R](#basics).  
 
 ```{r}
 pacman::p_load(
@@ -48,7 +48,7 @@ pacman::p_load(
 
 ### Dados de Malária {-}  
 
-Nesta página, iremos utilizar um banco fictício de casos diários de malária, divididos por local e grupos de idade. Se você quiser acompanhar a análise, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/malaria_facility_count_data.rds' class='download-button'>clique aqui para baixar (como arquivo `.rds` )<span></a>. Importe os dados com a função `import()` do pacote **rio**  (a função suporta vários tipos de arquivo como .xlsx, .csv, .rds - cheque a página [Importar e exportar] para mais detalhes).  
+Nesta página, iremos utilizar um banco fictício de casos diários de malária, divididos por local e grupos de idade. Se você quiser acompanhar a análise, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/malaria_facility_count_data.rds' class='download-button'>clique aqui para baixar (como arquivo `.rds` )<span></a>. Importe os dados com a função `import()` do pacote **rio**  (a função suporta vários tipos de arquivo como .xlsx, .csv, .rds - cheque a página [Importar e exportar](#importing) para mais detalhes).  
 
 ```{r, echo=F}
 count_data <- rio::import(here::here("data", "malaria_facility_count_data.rds")) %>%
@@ -70,7 +70,7 @@ DT::datatable(head(count_data, 50), rownames = FALSE, options = list(pageLength 
 
 ### Casos da Linelist {-}  
 
-Nas seções finais dessa página também iremos utilizar dados de uma epidemia simulada de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (como um arquivo .rds). Importe os dados com a função `import()` do pacote **rio**  (a função suporta vários tipos de arquivo como .xlsx, .csv, .rds - cheque a página [Importar e exportar] para mais detalhes).  
+Nas seções finais dessa página também iremos utilizar dados de uma epidemia simulada de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (como um arquivo .rds). Importe os dados com a função `import()` do pacote **rio**  (a função suporta vários tipos de arquivo como .xlsx, .csv, .rds - cheque a página [Importar e exportar](#importing) para mais detalhes).  
 ```{r, echo=F}
 # import the linelist into R
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
@@ -156,7 +156,7 @@ perceba que o data frame recém criado (`df_long`) possui mais linhas (12,152 vs
 
 Além de mais longo, o novo banco também tem menos colunas (8 vs 10), uma vez que os dados que estavam armazenados nas quatro colunas (aquelas que começavam com o prefixo `malaria_`) passaram a ser armazenados em apenas duas.
 
-Uma vez que os nomes de todas essas quatro colunas começam com o prefixo `malaria_`, poderíamos ter utilizado uma função muito útil para fazer "tidyselect" - com `starts_with()` poderíamos chegar no mesmo resultado (veja a página [Cleaning data and core functions] para conhecer mais dessas funções de auxílio).  
+Uma vez que os nomes de todas essas quatro colunas começam com o prefixo `malaria_`, poderíamos ter utilizado uma função muito útil para fazer "tidyselect" - com `starts_with()` poderíamos chegar no mesmo resultado (veja a página [Limpeza de dados e principais funções](#cleaning) para conhecer mais dessas funções de auxílio).  
 
 ```{r}
 # provide column with a tidyselect helper function
@@ -309,9 +309,9 @@ df_long
 
 __Toques finais__:
 
-Note que a coluna `date` está atualmente com a classe *caractere* - nós podemos convertê-la facilmente em sua classe apropriada utilizando as funções `mutate()` e `as_date()` descritas na página [Trabalhando com datas].  
+Note que a coluna `date` está atualmente com a classe *caractere* - nós podemos convertê-la facilmente em sua classe apropriada utilizando as funções `mutate()` e `as_date()` descritas na página [Trabalhando com datas](#dates).  
 
-Também podemos converter a coluna `observation` para o formato `numeric` removendo o prefixo "obs" e convertendo para numérico. Podemos fazer isso com a função `str_remove_all()` do pacote **stringr** (veja a página [Caracteres and strings]).  
+Também podemos converter a coluna `observation` para o formato `numeric` removendo o prefixo "obs" e convertendo para numérico. Podemos fazer isso com a função `str_remove_all()` do pacote **stringr** (veja a página [Caracteres and strings](#characters-strings)).  
 
 ```{r}
 
@@ -356,7 +356,7 @@ knitr::include_graphics(here::here("images", "pivoting", "pivot_wider_new.png"))
 
 Em algumas instâncias, pode ser necessário converter uma base para o formato mais largo (wide) utilizando a função `pivot_wider()`.
 
-Um caso de uso típico é quando queremos transformar o resultado de uma análise em um formato mais "palatável" ao leitor (tal como em [Table for presentation][Tables for presentation]). Normalmente, isso envolve transformar uma base em que a informação para um sujeito está espalhada em múltiplas linhas em um formato em que aquela informação esteja armazenada em apenas uma.
+Um caso de uso típico é quando queremos transformar o resultado de uma análise em um formato mais "palatável" ao leitor (tal como em [Tabelas para apresentação](#tables-presentation)). Normalmente, isso envolve transformar uma base em que a informação para um sujeito está espalhada em múltiplas linhas em um formato em que aquela informação esteja armazenada em apenas uma.
 
 ### Dados {.unnumbered}
 
@@ -405,7 +405,7 @@ table_wide <-
 table_wide
 ```
 
-Essa tabela é muito mais legível e assim, melhor para utilização em relatórios. Você pode convertê-la em tabelas elegantes e bonitas utilizando vários pacotes, incluindo **flextable** e **knitr**. Esse processo é elaborado na página [Tabelas para apresentação].  
+Essa tabela é muito mais legível e assim, melhor para utilização em relatórios. Você pode convertê-la em tabelas elegantes e bonitas utilizando vários pacotes, incluindo **flextable** e **knitr**. Esse processo é elaborado na página [Tabelas para apresentação](#tables-presentation).  
 
 ```{r}
 table_wide %>% 

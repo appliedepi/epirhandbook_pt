@@ -116,9 +116,9 @@ Esta opção envolve o download dos dados arquivo por arquivo de nosso repositó
 
 #### "Linelist" de casos {.unnumbered}
 
-Este é um surto fictício de Ebola, expandido pela equipe do livro a partir do conjunto de dados de prática `ebola_sim` no pacote **surtos**.  
+Este é um surto fictício de Ebola, expandido pela equipe do livro a partir do conjunto de dados de prática `ebola_sim` no pacote **outbreaks**.  
 
-* <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_raw.xlsx' class='download-button'> Clique para baixar a *linelist* "bruta" (.xlsx) </span> </a>. A linelist do caso "bruta" é uma planilha do Excel com dados confusos. Use-o para acompanhar a página [Dados de limpeza e funções principais](#cleaning).  
+* <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_raw.xlsx' class='download-button'> Clique para baixar a *linelist* "bruta" (.xlsx) </span> </a>. A linelist do caso "bruta" é uma planilha do Excel com dados confusos. Use-o para acompanhar a página [Limpeza de dados e funções principais](#cleaning).  
 
 Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o linelist "limpo" (clean) </a> (as .rds file). Use este arquivo para todas as outras páginas deste livro que usam a lista de linha. Um arquivo .rds é um tipo de arquivo específico de R que preserva classes de coluna. Isso garante que você terá apenas uma limpeza mínima para fazer após importar os dados para R.  
 
@@ -158,9 +158,9 @@ likert_data <- import("https://raw.githubusercontent.com/appliedepi/epirhandbook
 ```
 
 
-#### Flexdashboard {.unnumbered}  
+#### Painéis com flexdashboard {.unnumbered}  
 
-Abaixo estão os links para o arquivo associado à página em [Dashboards com R Markdown](#flexdashboard):  
+Abaixo estão os links para o arquivo associado à página em [Painéis (Dashboards) com R Markdown](#flexdashboard):  
 
 * Para baixar o R Markdown para o painel de surto, clique com o botão direito neste [link](https://github.com/appliedepi/epirhandbook_eng/raw/master/data/flexdashboard/outbreak_dashboard.Rmd) (Cmd + clique para Mac) e selecione "Salvar link como".  
 * Para baixar o painel HTML, clique com o botão direito neste [link](https://github.com/appliedepi/epirhandbook_eng/raw/master/data/flexdashboard/outbreak_dashboard_test.html) (Cmd + clique para Mac) e selecione "Salvar link como".  
@@ -191,7 +191,7 @@ A página [Rastreamento de contato](#contact-tracing) demonstra a análise dos d
 <span style = "color: darkgreen;"> **_DICA:_** Se você estiver implantando Go.Data e quiser se conectar à API da sua instância, consulte a página Importar e exportar [(seção API)](# import_api) e a [Go.Data Community of Practice](https://community-godata.who.int/). </span>
 
 
-### GIS {.unnumbered}  
+### Sobre o GIS {.unnumbered}  
 
 Os shapefiles têm muitos arquivos de subcomponentes, cada um com uma extensão de arquivo diferente. Um arquivo terá a extensão ".shp", mas outros podem ter ".dbf", ".prj", etc.  
 
