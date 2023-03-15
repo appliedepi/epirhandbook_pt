@@ -142,7 +142,7 @@ Este manual é **não** um produto aprovado de qualquer organização específic
 
 **Ilustradores**: Calder Fong  
 
-**Tradutores da versão em língua portuguesa (Brasil)**: Carolina Musso, César Augusto Galvão , Halian Vilela, Laís Relvas ,Felipe Cardoso tradução, Rafaela Tadei,  Pauliana Galvão,   Nathalia Zini, Paula Maiçara,  João Pedro Angelici,   Ademar Barbosa Dantas Junior, Eucilene Santana, Hudson Gabriel Virtuoso Fontenele
+**Tradutores da versão em língua portuguesa (Brasil)**: Carolina Musso, César Augusto Galvão , Halian Vilela, Laís Relvas, Felipe Cardoso tradução, Rafaela Tadei,  Pauliana Galvão,   Nathalia Zini, Paula Maiçara,  João Pedro Angelici,   Ademar Barbosa Dantas Junior, Eucilene Santana, Hudson Gabriel Virtuoso Fontenele
 
 
 <!-- **Editor-in-Chief:** Neale Batra  -->
