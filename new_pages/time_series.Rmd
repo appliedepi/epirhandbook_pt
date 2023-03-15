@@ -47,7 +47,8 @@ pacman::p_load(rio,          # Importar arquivos
                stars,        # para ler arquivos em .nc (dados climáticos)
                units,        # para definir unidades de medida (dados climáticos)
                yardstick,    # para avaliar a acurácia do modelo
-               surveillance  # para detecção de aberrações
+               surveillance, # para detecção de aberrações
+               ncmeta        # ler arquivos .nc
                )
 ``` 
 
@@ -171,7 +172,7 @@ for (i in 2002:2011) {
   file <- wf_request(user     = "XXXXX",  # ID do usuário (para autenticação)
                      request  = request,  # o pedido
                      transfer = TRUE,     # baixe o arquivo
-                     path     = here::here("data", "Weather")) ## diretório para salvar os dados
+                     path     = here::here("data", "weather")) ## diretório para salvar os dados
   }
 
 ```
@@ -189,10 +190,13 @@ file_paths <- list.files(
   here::here("data", "time_series", "weather"), # substitua com o seu próprio endereço de arquivos
   full.names = TRUE)
 
+
 ## mantenha apenas os arquivos que tenham o nome de interesse atual
-file_paths <- file_paths[str_detect(file_paths, "germany")]
+ file_paths <- file_paths[str_detect(file_paths, "germany")]
 ## leia todos os arquivos como um objeto stars
-data <- stars::read_stars(file_paths)
+ data <- stars::read_stars(file_paths)
+
+
 ```
 
 Uma vez que estes arquivos foram importados como o objeto `data`, nós iremos convertê-los para um quadro de dados (*data frame*).

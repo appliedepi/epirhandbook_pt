@@ -154,11 +154,11 @@ DT::datatable(head(linelist_raw,50), rownames = FALSE, options = list(pageLength
 
 Você pode usar a função `skim()` do pacote **skimr** para obter uma visão geral de todo o dataframe (ver página em [Tabelas descritivas](#tables-descriptive) para mais informações). As colunas são resumidas por classe/tipo, como caractere, numérico. Nota: "POSIXct" é um tipo de classe de data bruta (ver [Trabalhando com datas](#dates)).
 
-```{r, eval=F}
+```{r}
 skimr::skim(linelist_raw)
 ```
 
-```{r, eval=F}
+```{r, eval=F, echo=F}
 skimr::skim_without_charts(linelist_raw)
 ```
 
