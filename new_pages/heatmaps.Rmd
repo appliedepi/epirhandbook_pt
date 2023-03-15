@@ -303,7 +303,7 @@ Agora agrupamos os dados em semana-instalação e os resumimos para produzir est
 
 As linhas superiores são mostradas abaixo. Observe como as colunas mudaram completamente para refletir as estatísticas de resumo desejadas. Cada linha reflete uma semana-instalação.  
 
-```{r, warning=F, message=F, echo=F}
+```{r, warning=F, message=F}
 agg_weeks <- agg_weeks %>%   
 
   # Grupo em semana-estabelecimento
@@ -326,18 +326,16 @@ Por fim, executamos o comando abaixo para garantir que TODAS as semanas-estabele
 
 Estamos usando um `right_join()` em si mesmo (o conjunto de dados é representado por "."), Mas foi expandido para incluir todas as combinações possíveis das colunas `semana` e `localização_nome`. Veja a documentação sobre a função `expand()` na página [Pivoting]. Antes de executar este código, o conjunto de dados contém linhas `nrow(agg_weeks)`.   
 
-```{r, warning=F, message=F, echo=F}
+```{r, warning=F, message=F}
 # Crie um dataframe com todas as possibilidades de combinação semana-estabelecimento
 expanded_weeks <- agg_weeks%>% 
-  tidyr::expand(location_name,week)%>% # expand data frame para incluir todas as combinações possíveis de semana-estabelecimento
-                                             # Nota: "." representa o conjunto de dados naquele momento no encadeamento do código (pipe)
-  mutate(week = as.Date(week)) # reconverter a semana para a classe Date para que o right_join subsequente funcione
+  tidyr::expand(week) # expanda data frame para incluir todas as combinações possíveis de semana-estabelecimento
 ```
 
 Aqui está `expanded_weeks`:  
 
 ```{r, echo=F}
-DT::datatable(case_ages, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
+DT::datatable(expanded_weeks, rownames = FALSE, options = list(pageLength = 5, scrollX = T), class = 'white-space: nowrap')
 ```
 
 Antes de executar este código, `agg_weeks` contém linhas `nrow(agg_weeks)`.   
