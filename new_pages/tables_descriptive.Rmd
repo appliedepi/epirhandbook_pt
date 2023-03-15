@@ -6,7 +6,7 @@ knitr::include_graphics(here::here("images", "descriptive_tables.png"))
 
 Esta página demonstra o uso dos pacotes **janitor**, **dplyr**, **gtsummary**, **rstatix**, e R **base** para gerar um resumo dos dados e criar tabelas com estatísticas descritivas.
 
-*Esta página explica como* criar\* as tabelas básicas e detalhadas, enquanto que a página [Tabelas para apresentações] descreve como formatar e imprimir essas tabelas de forma visualmente agradável.\*
+*Esta página explica como* criar\* as tabelas básicas e detalhadas, enquanto que a página [Tabelas para apresentações](#tables-presentation) descreve como formatar e imprimir essas tabelas de forma visualmente agradável.\*
 
 Cada um destes pacotes tem vantagens e desvantagens em relação à simplicidade do código, acessibilidade dos resultados gerados, e qualidade da impressão destes resultados. Utilize esta página para decidir qual abordagem funciona melhor para a sua realidade.
 
@@ -24,7 +24,7 @@ Você tem várias opções para produzir tabelas simples e tabelas cruzadas (tam
 
 ### Carregue os pacotes R {.unnumbered}
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do r **base**. Para mais informações sobre os pacotes do R, veja a página [Básico do R].
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do r **base**. Para mais informações sobre os pacotes do R, veja a página [Introdução ao R](#basics).
 
 ```{r, warning=F, message=F}
 pacman::p_load(
@@ -42,7 +42,7 @@ pacman::p_load(
 
 ### Importe os dados no R {.unnumbered}
 
-Nós iremos importar o banco de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar os passos abaixo, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique aqui para fazer o download do banco de dados 'limpo'</a> (como arquivo .rds). Importe seus dados utilizando a função `import()` do pacote **rio** (esta função importa muitos tipos de arquivos, como .xlsx, .rds, .csv - veja a página [Importar e exportar] para detalhes).
+Nós iremos importar o banco de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar os passos abaixo, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique aqui para fazer o download do banco de dados 'limpo'</a> (como arquivo .rds). Importe seus dados utilizando a função `import()` do pacote **rio** (esta função importa muitos tipos de arquivos, como .xlsx, .rds, .csv - veja a página [Importar e exportar](#importing) para detalhes).
 
 ```{r, echo=F}
 # importe o banco de dados
@@ -104,11 +104,11 @@ summary(linelist$age_years)[[2]] # obtém apenas o resultado da análise no índ
 # summary(linelist$age_years)[["1st Qu."]]  
 ```
 
-Você pode obter estatísticas individuais com outras funções do R **base**, como `max()`, `min()`, `median()`, `mean()`, `quantile()`, `sd()`, e `range()`. Veja a página [Básico do R] para uma lista completa.
+Você pode obter estatísticas individuais com outras funções do R **base**, como `max()`, `min()`, `median()`, `mean()`, `quantile()`, `sd()`, e `range()`. Veja a página [Introdução ao R](#basics) para uma lista completa.
 
 [***CUIDADO:*** Caso seus dados contenham campos em branco, o R quer que você saiba disso e irá gerar `NA` na análise. Isso só não irá ocorrer caso você 'peça' para o R ignorar esses campos em branco nas funções matemáticas acima. Isso pode ser realizado com o argumento]{style="color: orange;"}`na.rm = TRUE`[.]{style="color: orange;"}
 
-Você pode usar a função `get_summary_stats()`, do **rstatix**, para obter o resumo estatístico *em formato de quadro de dados (data frame)*. Isso pode ser útil na execução de comandos posteriores ou para criação de gráficos com os valores. Veja a página [Testes estatísticos simples] para mais detalhes do pacote **rstatix** e suas funções.
+Você pode usar a função `get_summary_stats()`, do **rstatix**, para obter o resumo estatístico *em formato de quadro de dados (data frame)*. Isso pode ser útil na execução de comandos posteriores ou para criação de gráficos com os valores. Veja a página [Testes estatísticos simples](#stat-tests) para mais detalhes do pacote **rstatix** e suas funções.
 
 ```{r}
 linelist %>% 
@@ -134,7 +134,7 @@ linelist %>% tabyl(age_cat)
 
 Como observado acima, se existirem campos em branco na coluna analisada, eles são mostrados em uma linha chamada `<NA>`. Você pode omitir estes campos com o atributo `show_na = FALSE`. Se não existirem campos em branco, essa linha não irá aparecer. Se estes campos existirem, todas as proporções são geradas como 'brutas' (coluna 'percent' gerada, em que a quantidade de campos `NA` está inclusa no denominador) e 'válidas' (coluna 'valid_percent', onde a quantidade de campos `NA` não é considerada no cálculo).
 
-Se a coluna for um fator (da classe Factor) e apenas alguns níveis dessa classe estiverem presentes em seus dados, todos os níveis desta classe serão mostrados na tabela de análise. Você pode omitir essa característica ao usar o atributo `show_missing_levels = FALSE`. Leia mais na página [Factors].
+Se a coluna for um fator (da classe Factor) e apenas alguns níveis dessa classe estiverem presentes em seus dados, todos os níveis desta classe serão mostrados na tabela de análise. Você pode omitir essa característica ao usar o atributo `show_missing_levels = FALSE`. Leia mais na página [Fatores](#factors).
 
 ### Tabulação cruzada (tabela de contingência) {.unnumbered}
 
@@ -202,7 +202,7 @@ linelist %>%                                  # fonte dos dados
 
 Por padrão, o tabyl vai gerar uma tabela 'crua' no seu console do R.
 
-Adicionalmente, você pode obter a tabela no tabyl e utiliza-la nas funções do pacote **flextable**, ou outros pacotes similares, para gerar uma tabela no formato de imagem no RStudio Viewer, que pode ser exportada nos formatos .png, .jpeg, .html, etc. Isto é discutido na página [Tabelas para apresentação]. Observe que, caso você gere a tabela desta forma e utilize a função `adorn_titles()`, você precisa aplicar o atributo `placement = "combined"`.
+Adicionalmente, você pode obter a tabela no tabyl e utiliza-la nas funções do pacote **flextable**, ou outros pacotes similares, para gerar uma tabela no formato de imagem no RStudio Viewer, que pode ser exportada nos formatos .png, .jpeg, .html, etc. Isto é discutido na página [Tabelas para apresentação](#tables-presentation). Observe que, caso você gere a tabela desta forma e utilize a função `adorn_titles()`, você precisa aplicar o atributo `placement = "combined"`.
 
 ```{r}
 linelist %>%                                  # fonte dos dados
@@ -232,7 +232,7 @@ linelist %>%
 
 ### Salvando a tabela do tabyl {.unnumbered}
 
-Se você converteu a tabela para uma imagem 'bonita' utilizando um pacote como **flextable**, você pode salvar ela com as funções desse pacote - utilizando as funções `save_as_html()`, `save_as_word()`, `save_as_ppt()`, e `save_as_image()` do **flextable** (discutido em detalhes na página [Tabelas para apresentação]). No código abaixo, a tabela é salva em um documento Word, onde poderá ser editada manualmente.
+Se você converteu a tabela para uma imagem 'bonita' utilizando um pacote como **flextable**, você pode salvar ela com as funções desse pacote - utilizando as funções `save_as_html()`, `save_as_word()`, `save_as_ppt()`, e `save_as_image()` do **flextable** (discutido em detalhes na página [Tabelas para apresentação](#tables-presentation)). No código abaixo, a tabela é salva em um documento Word, onde poderá ser editada manualmente.
 
 ```{r, eval=F}
 linelist %>%
@@ -265,7 +265,7 @@ age_by_outcome <- linelist %>%
 chisq.test(age_by_outcome)
 ```
 
-Veja a página [Testes estatísticos simples] para mais códigos e dicas sobre estatística.
+Veja a página [Testes estatísticos simples](#stat-tests) para mais códigos e dicas sobre estatística.
 
 ### Outras dicas {.unnumbered}
 
@@ -277,7 +277,7 @@ Veja a página [Testes estatísticos simples] para mais códigos e dicas sobre e
 
 **dplyr** faz parte dos pacotes **tidyverse**, sendo uma ferramenta de gestão de dados muito comum. Criar tabelas com as funções `summarise()` e `count()` do **dplyr** é uma abordagem útil para obter resumos estatísticos, resumos *por grupos*, ou para utilizá-las no `ggplot()`.
 
-A função `summarise()` cria uma *nova tabela resumo dos dados.* Se os dados *não são agrupados*, esta função gera uma tabela de dados de uma linha com os resumos estatísticos desejados do banco de dados inteiro. Se os dados são *agrupados*, a nova tabela terá um linha por *grupo* (veja a página [Agrupando dados]).
+A função `summarise()` cria uma *nova tabela resumo dos dados.* Se os dados *não são agrupados*, esta função gera uma tabela de dados de uma linha com os resumos estatísticos desejados do banco de dados inteiro. Se os dados são *agrupados*, a nova tabela terá um linha por *grupo* (veja a página [Agrupando dados](#grouping)).
 
 Dentro dos parênteses da função `summarise()`, você pode incluir os nomes de cada nova coluna, seguido pelo sinal de igual e uma função estatística a ser utilizada.
 
@@ -313,7 +313,7 @@ linelist %>%
 
 Você pode mudar o nome da coluna resultante `n` para um diferente, ao especificar o novo nome com o atributo `name =`.
 
-Os resultados das contagens de duas ou mais colunas usadas para agrupar os dados são gerados no formato "longo", com as contagens na coluna `n`. Veja a página sobre [Pivoting data] para aprender sobre as tabelas nos formatos "longos" e "amplos".
+Os resultados das contagens de duas ou mais colunas usadas para agrupar os dados são gerados no formato "longo", com as contagens na coluna `n`. Veja a página sobre [Pivotando dados](#pivoting) para aprender sobre as tabelas nos formatos "longos" e "amplos".
 
 ```{r}
 linelist %>% 
@@ -326,7 +326,7 @@ Se você estiver tabelando uma coluna da classe *factor*, é possível fazer com
 
 Está técnica é útil para padronizar suas tabelas/gráficos. Por exemplo, se você estiver criando figuras para diferentes sub-grupos, ou precisar criar um mesmo tipo de figura para relatórios de rotina. Em cada uma dessas circuntâncias, os valores nos dados podem variar, mas é possível definir níveis que continuem constantes.
 
-Veja a página sobre [Factors] para mais informações.
+Veja a página sobre [Fatores](#factors) para mais informações.
 
 ### Proporções {#tbl_dplyr_prop .unnumbered}
 
@@ -361,7 +361,7 @@ DT::datatable(age_by_outcome, rownames = FALSE, options = list(pageLength = 12, 
 
 ### Visualização dos dados {.unnumbered}
 
-Utilizar a função `ggplot()` com os dados de uma tabela no formato "longo", como a mostrada acima, é relativamente simples. Esses dados, no formato "longo", são facilmente aceitos pelo `ggplot()`. Veja mais exemplos nas páginas [básico do ggplot] e [dicas do ggplot].
+Utilizar a função `ggplot()` com os dados de uma tabela no formato "longo", como a mostrada acima, é relativamente simples. Esses dados, no formato "longo", são facilmente aceitos pelo `ggplot()`. Veja mais exemplos nas páginas [básico do ggplot](#ggplot-basics) e [dicas do ggplot](#ggplot-tips).
 
 ```{r, warning=F, message=F}
 linelist %>%                      # inicie com a linelist
@@ -436,13 +436,13 @@ linelist %>%
 
 A função `str_glue()`, do pacote **stringr**, é útil para combinar valores de diferentes colunas em uma nova coluna. Geralmente, essa função é aplicada *após* utilizar a função `summarise()`.
 
-Na página sobre [Caracteres e strings], várias opções para combinar colunas são discutidas, incluindo as funções `unite()` e `paste0()`. Entretanto, nós recomendamos a função `str_glue()` por ser mais flexível do que `unite()` e possuir uma sintaxe mais simples do que `paste0()`.
+Na página sobre [Caracteres e strings](#characters-strings), várias opções para combinar colunas são discutidas, incluindo as funções `unite()` e `paste0()`. Entretanto, nós recomendamos a função `str_glue()` por ser mais flexível do que `unite()` e possuir uma sintaxe mais simples do que `paste0()`.
 
 Abaixo, a tabela `summary_table` (criada acima) é modificada de forma que as colunas `delay_mean` e `delay_sd` sejam combinadas. A nova coluna é gerada com os dados formatados utilizando parênteses, e as colunas utilizadas são removidas.
 
 Então, para tornar a coluna mais apresentável, uma linha com os totais é adicionada com a função `adorn_totals()`, do pacote **janitor** (que ignora colunas não-numéricas). Finalmente, nós utilizamos a função `select()`, do pacote **dplyr**, para reordenar as colunas e renomeá-las como desejado.
 
-Também é possível utilizar as funções do **flextable** para exportar a tabela para Word, .png, .jpeg, .html, Powerpoint, RMarkdown, etc.! (veja a página [Tabelas para apresentações]).
+Também é possível utilizar as funções do **flextable** para exportar a tabela para Word, .png, .jpeg, .html, Powerpoint, RMarkdown, etc.! (veja a página [Tabelas para apresentações](#tables-presentation)).
 
 ```{r}
 summary_table %>% 
@@ -586,7 +586,7 @@ linelist %>%
 
 ### Utilizando o pivot_wider() {#tbls_pivot_wider .unnumbered}
 
-Se você preferir sua tabela no formato "largo", você pode transformar ela utilizando a função `pivot_wider()`, do pacote **tidyr**. Você provavelmente precisará renomear as colunas com a função `rename()`. Para mais informações, veja a página sobre [Pivoting os dados].
+Se você preferir sua tabela no formato "largo", você pode transformar ela utilizando a função `pivot_wider()`, do pacote **tidyr**. Você provavelmente precisará renomear as colunas com a função `rename()`. Para mais informações, veja a página sobre [Pivoteando os dados](#pivoting).
 
 O exemplo abaixo utiliza a tabela `age_by_outcome` com formato "longo", da [seção de proporções](#tbl_dplyr_prop). Para faciliar o entendimento, nós criamos essa tabela novamente, e mostramos como é seu formato "longo":
 
@@ -635,7 +635,7 @@ linelist %>%
 
 #### Uso da função `summarise()` nos dados "totais" seguido por `bind_rows()` {.unnumbered}
 
-Se sua tabela consistir for feita de resumos estatísticos como `median()`, `mean()`, etc, a função`adorn_totals()` utilizada acima *não* será suficiente. Assim, para obter o resumo estatístico de todo o banco de dados, você precisa calcular eles com uma função `summarise()` separada e, então, conectar os resultados à tabela resumo inicial. Para fazer essa conexão, você pode usar a função `bind_rows()`, do pacote **dplyr**, descrito na página [Unindo dados]. Abaixo está um exemplo:
+Se sua tabela consistir for feita de resumos estatísticos como `median()`, `mean()`, etc, a função`adorn_totals()` utilizada acima *não* será suficiente. Assim, para obter o resumo estatístico de todo o banco de dados, você precisa calcular eles com uma função `summarise()` separada e, então, conectar os resultados à tabela resumo inicial. Para fazer essa conexão, você pode usar a função `bind_rows()`, do pacote **dplyr**, descrito na página [Agrupando dados](#grouping). Abaixo está um exemplo:
 
 Você pode criar uma tabela resumo com os resultados da intersecção *por hospital*, com as funções `group_by()` e `summarise()` da seguinte forma:
 
@@ -663,7 +663,7 @@ totals <- linelist %>%
 totals # exporte a tabela gerada
 ```
 
-Agora, nós podemos unir as duas tabelas geradas. Observe que a tabela `by_hospital` tem 4 colunas, enquanto a tabela `totals` tem 3 colunas. Ao utilizar a função `bind_rows()`, as colunas são combinadas por nome, onde cada espaço extra (linhas a mais) são preenchidos com `NA` (ex.: na coluna `hospital` os campos das duas novas linhas de `totals`). Após unir as linhas, nós iremos converter esses espaços em branco para "Total" utilizando a função `replace_na()` (veja a página [Limpando os dados e funções essenciais]).
+Agora, nós podemos unir as duas tabelas geradas. Observe que a tabela `by_hospital` tem 4 colunas, enquanto a tabela `totals` tem 3 colunas. Ao utilizar a função `bind_rows()`, as colunas são combinadas por nome, onde cada espaço extra (linhas a mais) são preenchidos com `NA` (ex.: na coluna `hospital` os campos das duas novas linhas de `totals`). Após unir as linhas, nós iremos converter esses espaços em branco para "Total" utilizando a função `replace_na()` (veja a página [Limpando os dados e funções essenciais](#cleaning)).
 
 ```{r}
 table_long <- bind_rows(by_hospital, totals) %>% 
@@ -676,7 +676,7 @@ Aqui está a nova tabela com as linhas "Total" no final.
 DT::datatable(table_long, rownames = FALSE, options = list(pageLength = 12, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-Esta tabela está no formato "longo/comprido", que pode ser o desejado. *Opcionalmente*, você pode *mudar* essa tabela para o formato *largo*, de forma a torná-la mais fácil de interpretar. Veja a seção acima sobre como transformar a tabela para o formato "largo", ou na página [Pivoting dados]. Você também pode adicionar mais colunas, e ajustá-las de forma que considere mais agradável. Segue o código:
+Esta tabela está no formato "longo/comprido", que pode ser o desejado. *Opcionalmente*, você pode *mudar* essa tabela para o formato *largo*, de forma a torná-la mais fácil de interpretar. Veja a seção acima sobre como transformar a tabela para o formato "largo", ou na página [Pivoteando dados](#pivoting). Você também pode adicionar mais colunas, e ajustá-las de forma que considere mais agradável. Segue o código:
 
 ```{r}
 table_long %>% 
@@ -699,7 +699,7 @@ table_long %>%
 
 ```
 
-Após isso, você pode exportar essa tabela como uma imagem - abaixo, o resultado é exportado com o pacote **flextable**. Para mais detalhes sobre esse exemplo, e sobre como produzir uma imagem dessa forma, leia a página [Tabelas para apresentações].
+Após isso, você pode exportar essa tabela como uma imagem - abaixo, o resultado é exportado com o pacote **flextable**. Para mais detalhes sobre esse exemplo, e sobre como produzir uma imagem dessa forma, leia a página [Tabelas para apresentações](#tables-descriptive).
 
 ```{r echo=FALSE, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
 
@@ -799,7 +799,7 @@ table
 
 Se você quer exportar seu resumo estatístico em um gráfico 'bonito', pronto para publicação, você pode usar o pacote **gtsummary** e sua função `tbl_summary()`. Em um primeiro momento, o código pode parecer complexo, mas as tabelas geradas são lindas e exportadas para o seu painel do RStudio Viewer como uma imagem HTML. Veja um tutorial mais detalhado [aqui](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html).
 
-Você também pode adicionar os resultados dos testes estatísticos nas tabelas geradas pelo **gtsummary**. Este processo está decrito na seção do **gtsummary**, da página [testes estatísticos simples](#stats_gt).
+Você também pode adicionar os resultados dos testes estatísticos nas tabelas geradas pelo **gtsummary**. Este processo está decrito na seção do **gtsummary**, da página [testes estatísticos simples](#stat-tests).
 
 Para introduzir a função `tbl_summary()`, nós vamos primeiro demostrar seu funcionamento básico, que produz uma tabela bonita e extensa. Então, examinaremos em detalhes como fazer ajustes finos e tabelas mais customizadas.
 
@@ -828,7 +828,7 @@ Você pode estratificar a sua tabela utilizando uma coluna (ex.: `outcome`), ao 
 **`statistic =`**\
 Use as equações para especificar quais estatísticas mostrar e como mostrá-las. Existem dois lados para essa equação, separados por um til `~`. Do lado direito, entre aspas, é colocado o teste estatístico desejado, e no lado esquerdo são colocadas as colunas em que esse teste será aplicado.
 
--   O lado direito da equação utiliza a sintaxe da função `str_glue()`, do pacote **stringr** (veja mais em [Caractéres e Strings]), com o texto a ser mostrado entre aspas e o teste estatístico dentro de colchetes encaracolados `{ }`. Você pode incluir estatísticas como "n" (para contagens), "N" (para denominador), "mean" (média), "median" (mediana), "sd" (desvio padrão), "max" (valor máximo), "min" (valor mínimo), percentis "p\#\#" como "p25", ou percentual do total como "p". Utilize o comando `?tbl_summary` para mais detalhes.\
+-   O lado direito da equação utiliza a sintaxe da função `str_glue()`, do pacote **stringr** (veja mais em [Caractéres e Strings](#characters-strings)), com o texto a ser mostrado entre aspas e o teste estatístico dentro de colchetes encaracolados `{ }`. Você pode incluir estatísticas como "n" (para contagens), "N" (para denominador), "mean" (média), "median" (mediana), "sd" (desvio padrão), "max" (valor máximo), "min" (valor mínimo), percentis "p\#\#" como "p25", ou percentual do total como "p". Utilize o comando `?tbl_summary` para mais detalhes.\
 -   No lado esquerdo da equação, você pode especificar colunas por nome (ex.: `age` ou `c(age, gender)`) ou utilizando funções auxiliares como `all_continuous()`, `all_categorical()`, `contains()`, `starts_with()`, etc.
 
 Uma exemplo simples da equação `statistic =` é mostrado abaixo, onde apenas a média da coluna `age_years` é obtida:
@@ -903,7 +903,7 @@ linelist %>%
     )
 ```
 
-Existem diversas formas de modificar essas tabelas, como adicionar valores do p, ajustar cores e títulos, etc. Muitas destas modificações estão descritas na documentação (digite `?tbl_summary` no Console), e algumas destas são mostradas na seção sobre [testes estatísticos](https://epirhandbook.com/simple-statistical-tests.html).
+Existem diversas formas de modificar essas tabelas, como adicionar valores do p, ajustar cores e títulos, etc. Muitas destas modificações estão descritas na documentação (digite `?tbl_summary` no Console), e algumas destas são mostradas na seção sobre [testes estatísticos](#stat-tests).
 
 
 ## Pacote R **base**
@@ -950,7 +950,7 @@ Converter um objeto `table()` diretamente para um quadro de dado (*data frame*)s
 2)  Adicione os totais (opcional) ao aplicar a tabela na função `addmargins()`\
 3)  Utilize a tabela na função do R **base** `as.data.frame.matrix()`\
 4)  Transforme a tabela utilizando a função do pacote **tibble,** `rownames_to_column()`, especificando o nome da primeira coluna\
-5)  Exporte, Visualize, ou exporte como desejado. Neste exemplo, nós utilizamos a função `flextable()`, do pacote **flextable**, como descrito na página [Tabelas para apresentação]. Isto irá exportar a tabela para o RStudio viewer como uma linda imagem HTML.
+5)  Exporte, Visualize, ou exporte como desejado. Neste exemplo, nós utilizamos a função `flextable()`, do pacote **flextable**, como descrito na página [Tabelas para apresentação](#tables-presentation). Isto irá exportar a tabela para o RStudio viewer como uma linda imagem HTML.
 
 ```{r, warning=F, message=F}
 table(fct_explicit_na(linelist$age_cat), fct_explicit_na(linelist$outcome)) %>% 

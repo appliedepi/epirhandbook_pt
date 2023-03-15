@@ -174,13 +174,13 @@ Aqui está um exemplo de uma árvore circular:
 ```{r, phylogenetic_trees_adding_sampledata, fig.align='center', warning=F, message=F}
 
 ggtree(tree, layout = "circular", branch.length = 'none') %<+% sample_data + # %<+% unifica o datarframe com os dados de amostras à arvore
-  aes(color = I(Belgium))+                       # colore os ramos de acordo com a variável no seu dataframe c
+  aes(color = (Belgium))+                       # colore os ramos de acordo com a variável no seu dataframe c
   scale_color_manual(
     name = "Sample Origin",                      # nome do seu esquema de cotes (irá aparecer assim na legenda) 
     breaks = c("Yes", "No"),                     # as diferentes opções na sua variável
     labels = c("NRCSS Belgium", "Other"),        # como você quer que as diferentes opções sejam nomeadas na sua legenda, permite formatação 
     values = c("blue", "black"),                  # a cor que você atribuir à variável
-    na.value = "black") +                        # colore valores NA como preto também
+    na.value = "black")+                        # colore valores NA como preto também
   new_scale_color()+                             # permite adicionar um novo esquema de cores para uma nova variável
     geom_tippoint(
       mapping = aes(color = Continent),          # cor das pontas por continente. Você pode mudar o formato adicionando "shape = "
@@ -188,13 +188,14 @@ ggtree(tree, layout = "circular", branch.length = 'none') %<+% sample_data + # %
   scale_color_brewer(
     name = "Continent",                    # nome do seu esquema de cotes (irá aparecer assim na legenda) 
     palette = "Set1",                      #  escolhemos uma paleta de cores do pacote Brewer 
-    na.value = "grey") +                    # para valores NA escolhemos o cinza 
+    na.value = "grey")+                    # para valores NA escolhemos o cinza 
   geom_tiplab(                             # adiciona o nome da amostra para a ponta do ramo 
     color = 'black',                       # (adiciona quantas linhas de texto desejar, mas talvez precise ajustar o valor de partida para coloca-los proximos uns aos outros. 
     offset = 1,
     size = 1,
     geom = "text",
-    align = TRUE)+    
+    #align = TRUE
+    )+
   ggtitle("Árvore filogenética de Shigella sonnei")+       # título do seu gráfico
   theme(
     axis.title.x = element_blank(), # remove título de eixo x
@@ -416,7 +417,8 @@ ggtree(sub_tree2) %<+% sample_data +     # Usamos o operador %<+% para juntar co
   geom_tiplab(                          # rotula as pontas dos ramos com  os nomes das amotras 
     size = 2.5,
     offset = 0.001,
-    align = TRUE) + 
+    #align = TRUE
+    ) + 
   theme_tree2()+
   xlim(0, 0.015)+                       # configura os limite do eixo x 
   geom_tippoint(aes(color=Country),     # colore a ponta de acordo com o continente  
@@ -432,7 +434,8 @@ ggtree(sub_tree2) %<+% sample_data +     # Usamos o operador %<+% para juntar co
     size = 3,
     linetype = "blank" ,
     geom = "text",
-    align = TRUE)+ 
+    #align = TRUE
+    )+ 
   geom_tiplab(                          # adiciona histórico de viagem nas pontas em vermelho 
     aes(label = Travel_history),
     color = 'red',
@@ -440,7 +443,8 @@ ggtree(sub_tree2) %<+% sample_data +     # Usamos o operador %<+% para juntar co
     size = 3,
     linetype = "blank",
     geom = "text",
-    align = TRUE)+ 
+    #align = TRUE
+    )+ 
   ggtitle("Árvore filogenética de de estirpes de Belgian S. sonnei com histórico de viagens")+  # adiciona título 
   xlab("distância genética (0.001 = 4 nucleotídeos de diferença)")+   # adiciona legenda do eixo x
   theme(
