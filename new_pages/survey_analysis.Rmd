@@ -84,7 +84,7 @@ são especificado na planilha de escolhas. Na planilha de escolhas, a coluna "na
 em uma recodificação.]{style="color: darkgreen;"}
 
 [**CUIDADO:** O conjunto de dados do exemplo não é o mesmo que uma exportação (como em Kobo você exporta diferentes níveis de questionários individualmente) - 
-veja o seção de dados da pesquisa abaixo para fundir as diferentes níveis] {estilo="cor: laranja;"}
+veja o seção de dados da pesquisa abaixo para fundir as diferentes níveis]{style="color: orange;"}
 
 O conjunto de dados é importado utilizando a função `import()` do pacote **rio**. Veja a página [Importar e exportação](https://epirhandbook.com/import-and-export.html) para outrasmaneiras de importar dados.
 
@@ -176,7 +176,7 @@ survey_data <- survey_data %>%
 
 ## definir a variável de faixa etária
 survey_data <- survey_data %>% 
-     mutate(age_group = age_categories(age_years, 
+     mutate(age_group = epikit::age_categories(age_years, 
                                     breakers = c(0, 3, 15, 30, 45)
                                     ))
 
@@ -418,7 +418,7 @@ baseados no **srvyr**. A única exceção é que o pacote **gtsummary** só acei
 O pacote **survey** utiliza, do forma eficaz, codificação em **R base**, e por isso não é possível utilizar os *pipes* (`%>%`) ou outra sintaxe do **dplyr**. 
 Com o pacote **survey**, utilizamos a função `svydesign()` para definir um objeto de pesquisa com agrupamentos (cluster), pesos e estratificações apropriados.
 
-[**NOTA:** precisamos utilizar o til (`~`) em frente às variáveis, pois o pacote usa a sintaxe **R base** para atribuição variáveis baseada em fórmulas].{style="color: black;"}
+[**NOTA:** precisamos utilizar o til (`~`) em frente às variáveis, pois o pacote usa a sintaxe **R base** para atribuição variáveis baseada em fórmulas.]{style="color: black;"}
 
 ```{r survey_design}
 
