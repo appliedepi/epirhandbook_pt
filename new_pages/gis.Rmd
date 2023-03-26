@@ -157,7 +157,7 @@ linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.r
 
 ```{r, eval=F}
 # importa a linelist de casos limpa 
-linelist <- import("linelist_cleaned.rds")  
+linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))  
 ```
 
 Next we select a random sample of 1000 rows using `sample()` from **base** R.   
@@ -211,7 +211,7 @@ Em seguida usamos a função `clean_names()` do pacote **janitor** para padroniz
 ```{r}
 # nível ADM3 limpo
 sle_adm3 <- sle_adm3_raw %>%
-  clean_names() %>% # padronizar o nome das colunas
+  janitor::clean_names() %>% # padronizar o nome das colunas
   filter(admin2name %in% c("Western Area Urban", "Western Area Rural")) # filtrar para manter certas áreas
 ```
 
@@ -233,7 +233,7 @@ Novamente, esses dados podem ser baixadados do site da HDX (link [aqui](https://
 ```{r}
 # População por nível ADM3
 sle_adm3_pop <- import(here("data", "gis", "population", "sle_admpop_adm3_2020.csv")) %>%
-  clean_names()
+  janitor::clean_names()
 ```
 
 Essa é a aparência do arquivo de população. Role para a direita para ver como cada jurisdição tem colunas com a população masculina (`male`), feminina (`female`), e a população `total`, e as subdivisões nas colunas columns por grupo de idade.
@@ -256,7 +256,7 @@ Nós importamos o shapefile dos pontos das unidades com `read_sf()`, e novamente
 ```{r}
 # shapefile das unidades de saúde do OSM (open street map) 
 sle_hf <- sf::read_sf(here("data", "gis", "shp", "sle_hf.shp")) %>% 
-  clean_names() %>%
+  janitor::clean_names() %>%
   filter(amenity %in% c("hospital", "clinic", "doctors"))
 ```
 
@@ -360,21 +360,16 @@ Abaixo, vamos fazer a intersecção espacial dos locais de nossos casos (pontos)
 3) Utilize `select()` para manter apenas algumas das novas colunas das fronteiras administrativas  
 
 ```{r, warning=F, message=F}
-linelist_adm <- linelist_sf %>%
-  
-  # faça join do arquivo com as fronteiras administrativas com o da linelist, baseado na intersecção espacial
+linelist_adm <- linelist_sf %>%  # faça join do arquivo com as fronteiras administrativas com o da linelist, baseado na intersecção espacial
   sf::st_join(sle_adm3, join = st_intersects)
 ```
 
 Todas as colunas de `sle_adms` foram adicionadas à linelist! Agora cada caso possui colunas detalhando os níveis administativos onde eles se encontram. Nesse exemplo, queremos manter apenas duas das novas colunas (admin level 3), então usamos `select()` nos nomes das colunas antigas e apenas nas duas novas que temos interesse:  
 
 ```{r, warning=F, message=F}
-linelist_adm <- linelist_sf %>%
-  
-  # faça join do arquivo com as fronteiras administrativas com o da linelist, baseado na intersecção espacial
+linelist_adm <- linelist_sf %>%   # faça join do arquivo com as fronteiras administrativas com o da linelist, baseado na intersecção espacial
   sf::st_join(sle_adm3, join = st_intersects) %>% 
-  
-  # Mantém os nomes das colunas antigas e as duas novas de interessa das áreas administrativas
+   # Mantém os nomes das colunas antigas e as duas novas de interessa das áreas administrativas
   select(names(linelist_sf), admin3name, admin3pcod)
 ```
 
