@@ -22,10 +22,10 @@ tree <- ape::read.tree(here::here("data", "phylo", "Shigella_tree.txt"))
 sample_data <- read.csv(here::here("data","phylo", "sample_data_Shigella_tree.csv"),sep=",", na.strings=c("NA"), head = TRUE, stringsAsFactors=F)
 
 
-ggtree(tree, layout="circular", branch.length='none') %<+% sample_data + # o operador %<+% é usado para unir o seu data frame dataframe com o sample data para a árvore
+ggtree(tree, layout="circular", branch.length='none') %<+% sample_data + # o operador %<+% é usado para unir o seu dataframe com os dados amostrados para a árvore
   aes(color=I(Belgium))+ # colore os ramos de acordo com a variável no seu data frame       
   scale_color_manual(name = "Sample Origin", # nome do seu esquema de cores (como aparecerá na leganda)          
-                    breaks = c("Yes", "No"), # as difeerenres opções na sua variável
+                    breaks = c("Yes", "No"), # as diferentes opções na sua variável
                    labels = c("NRCSS Belgium", "Other"), # como você quer que as diferentes opções sejam nomeadas na sua leganda, permite formatação
                  values= c("blue", "black"), # a cor que você quer que cada variável tenha          
                  na.value = "black") + # coloque os valores faltantes (NA) como preto também
