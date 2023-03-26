@@ -148,7 +148,7 @@ Nos exemplos a seguir, nós:
 * calculamos a altura média e o peso dos casos com 18 anos ou mais, de acordo com o sexo e desfecho (se eles se recuperaram ou vieram a óbito)
 * contamos o número de casos com tempo de internação > 7 dias, de acordo com o mês e o hospital em que foram admitidos
 
-````{r}
+```{r}
 linelist[, .N, .(hospital)] # número de casos por hospital
 linelist[age > 18, .(mean_wt = mean(wt_kg, na.rm = T),
                              mean_ht = mean(ht_cm, na.rm = T)), .(gender, outcome)] #NAs representam as categorias em que os dados estão faltando
@@ -158,7 +158,7 @@ linelist[days_onset_hosp > 7, .N, .(month = month(date_hospitalisation), hospita
 
 Data.table também permite expressões em serquência:
 
-````{r}
+```{r}
 
 linelist[, .N, .(hospital)][order(-N)][1:3] #1º seleciona todos os casos por hospital, 2º ordena os casos em ordem decrescente, 3º seleciona um subconjunto dos 3 hospitais com o maior número de casos
 
@@ -167,7 +167,7 @@ linelist[, .N, .(hospital)][order(-N)][1:3] #1º seleciona todos os casos por ho
 
 Nestes exemplos, estamos seguindo a suposição de que uma linha no data table é igual a um novo caso, e assim podemos usar o **.N** para representar o número de linhas no data table. Outra função útil para representar o número de casos únicos é `uniqueN()`, que retorna o número de valores únicos em uma determinada entrada. Como ilustrado aqui:
 
-````{r}
+```{r}
 
 linelist[, .(uniqueN(gender))] # lembre que o envelope .() no argumento j retorna um data table
 
@@ -175,14 +175,14 @@ linelist[, .(uniqueN(gender))] # lembre que o envelope .() no argumento j retorn
 
 A resposta é 3, pois os valores únicos na coluna de gênero são m, f e N/A. Compare com a função `unique()` do R Base, que retorna todos os valores únicos em uma determinada entrada:
 
-````{r}
+```{r}
 
 linelist[, .(unique(gender))]
 ```
 
 Para encontrar o número de casos únicos em um determinado mês, escrevemos o seguinte:
 
-````{r}
+```{r}
 
 linelist[, .(uniqueN(case_id)), .(month = month(date_hospitalisation))]
 
@@ -192,7 +192,7 @@ linelist[, .(uniqueN(case_id)), .(month = month(date_hospitalisation))]
 
 O operador `:=` é utilizado para adicionar ou atualizar dados em um data table. A adição de colunas pode ser feita das seguintes maneiras:
 
-````{r}
+```{r}
 
 linelist[, adult := age >= 18] # adiciona uma coluna
 linelist[, c("child", "wt_lbs") := .(age < 18, wt_kg*2.204)] #para adicionar múltiplas colunas é necessário usar as sintaxes c(""), list() ou .() syntax
