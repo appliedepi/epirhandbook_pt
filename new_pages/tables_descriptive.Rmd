@@ -71,12 +71,12 @@ Ao utilizar o pacote **skimr**, você pode obter um resumo detalhado e esteticam
 
 Abaixo, a função `skim()` é aplicada a todos os dados do objeto `linelist,` criado no código acima. Após execução do código, uma visão geral dos dados e um resumo de cada coluna (por classe) são gerados.
 
-```{r eval=F}
+```{r}
 ## obtenha informações sobre cada variável no banco de dados
 skim(linelist)
 ```
 
-```{r  eval=F}
+```{r  eval=F, echo=F}
 # exclui a apresentação de dados com histogramas irregulares
 skim_without_charts(linelist)
 ```

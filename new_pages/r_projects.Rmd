@@ -12,7 +12,7 @@ Uma maneira comum, eficiente e sem problemas de usar R é combinar esses 3 eleme
 1) Um projeto **R**  
      - Um ambiente de trabalho independente com pastas para dados, scripts, saídas, etc.  
 2) O pacote **here** para caminhos de arquivo relativos  
-     - Os caminhos de arquivo são gravados em relação à pasta raiz do R project - consulte [Importar e exportar] para obter mais informações  
+     - Os caminhos de arquivo são gravados em relação à pasta raiz do R project - consulte [Importar e exportar](#importing) para obter mais informações  
 3) O pacote **rio** para importação / exportação  
      - `import()` e `export()` manipulam qualquer tipo de arquivo por sua extensão (por exemplo, .csv, .xlsx, .png)  
      
@@ -26,7 +26,7 @@ Para criar um R project, selecione "Novo Projeto" no menu Arquivo.
 
 * Se deseja criar uma nova pasta para o projeto, selecione "Novo diretório" e indique onde deseja que seja criado.  
 * Se deseja criar o projeto dentro de uma pasta existente, clique em "Diretório existente" e indique a pasta.  
-* Se você deseja clonar um repositório Github, selecione a terceira opção "Controle de Versão" e depois "Git". Veja a página em [Controle de versão e colaboração com Git e Github] para mais detalhes.  
+* Se você deseja clonar um repositório Github, selecione a terceira opção "Controle de Versão" e depois "Git". Veja a página em [Controle de versão e colaboração com Git e Github](#collaboration) para mais detalhes.  
 
 
 ```{r out.width = "75%", fig.align = "center", echo=F}
@@ -61,14 +61,14 @@ Para configurar o RStudio para ter uma "lista limpa" a cada vez na inicializaç�
 
 ### Organização {.unnumbered}  
 
-É comum ter subpastas em seu projeto. Considere ter pastas como "dados", "scripts", "figuras", "apresentações". Você pode adicionar pastas da maneira típica que faria com uma nova pasta para o seu computador. Como alternativa, consulte a página em [Interações de diretório] para saber como criar novas pastas com comandos R.  
+É comum ter subpastas em seu projeto. Considere ter pastas como "dados", "scripts", "figuras", "apresentações". Você pode adicionar pastas da maneira típica que faria com uma nova pasta para o seu computador. Como alternativa, consulte a página em [Interações de diretório](#directories) para saber como criar novas pastas com comandos R.  
 
 
 ### Controle de versão {.unnumbered}  
 
 Considere um sistema de controle de versão. Pode ser algo tão simples como ter datas nos nomes dos scripts (por exemplo, "transmission_analysis_2020-10-03.R") e uma pasta de "arquivo". Considere também ter um texto de cabeçalho comentado na parte superior de cada script com uma descrição, tags, autores e log de alterações.  
 
-Um método mais complicado envolveria o uso do Github ou uma plataforma semelhante para controle de versão. Veja a página em [Controle de versão e colaboração com Git e Github].  
+Um método mais complicado envolveria o uso do Github ou uma plataforma semelhante para controle de versão. Veja a página em [Controle de versão e colaboração com Git e Github](#collaboration).  
 
 Uma dica é que você pode pesquisar um projeto ou pasta inteira usando a ferramenta "Localizar nos arquivos" (menu Editar). Ele pode pesquisar e até mesmo substituir strings em vários arquivos.  
 
@@ -79,7 +79,7 @@ Uma dica é que você pode pesquisar um projeto ou pasta inteira usando a ferram
 
 ## Exemplos  
 
-Abaixo estão alguns exemplos de importação / exportação / salvamento usando `here()` de dentro de um R project. Leia mais sobre como usar o pacote **here** na página [Importar e exportar].  
+Abaixo estão alguns exemplos de importação / exportação / salvamento usando `here()` de dentro de um R project. Leia mais sobre como usar o pacote **here** na página [Importar e exportar](#importing).  
 
 
 *Importando `linelist_raw.xlsx` da pasta" data "em seu R project*  
@@ -106,7 +106,7 @@ ggsave(here("outputs", "epicurves", "epicurve_2021-02-15.png"))
 <!-- ======================================================= -->
 ## Recursos {}
 
-Página da web do RStudio em [usando R projects] (https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects)
+Página da web do RStudio em [usando R projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects)
 
 
 
