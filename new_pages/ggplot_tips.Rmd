@@ -1,7 +1,7 @@
 
 # Dicas do ggplot {#ggplot-tips}
 
-Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot].
+Nesta página, iremos abordar dicas e truques para criar gráficos inteligentes e bonitos com o ggplot. Para aprender os fundamentos do ggplot, veja a página sobre [básico do ggplot](#ggplot-basics).
 
 Existem diversos [tutoriais sobre o **ggplot2**](https://ggplot2.tidyverse.org/) disponíveis na seção de Recursos ao final deste capítulo. Você também pode baixar essa [colinha sobre visualização de dados com o ggplot](https://rstudio.com/resources/cheatsheets/) do site do RStudio. Nós recomendamos fortemente que você busque inspiração de gráficos [na galeria de gráficos do R](https://www.r-graph-gallery.com/) e no [Data-to-viz](https://www.data-to-viz.com/caveats.html). 
 
@@ -12,7 +12,7 @@ Existem diversos [tutoriais sobre o **ggplot2**](https://ggplot2.tidyverse.org/)
 
 ### Carregue os pacotes {.unnumbered}
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar os pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre  pacotes do R, veja a página [Básico do R].  
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar os pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre  pacotes do R, veja a página [Introdução ao R](#basics).  
 
 ```{r}
 pacman::p_load(
@@ -29,7 +29,7 @@ pacman::p_load(
 
 ### Importe os dados {.unnumbered}  
 
-Nesta página, nós importamos um conjunto de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (as .rds file). Importe os dados com a função `import()`, do pacote **rio** (ela trabalha com uma variedade de tipos de arquivos, como .xlsx, .csv, .rds - veja a página [Importar e exportar] para detalhes).  
+Nesta página, nós importamos um conjunto de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (as .rds file). Importe os dados com a função `import()`, do pacote **rio** (ela trabalha com uma variedade de tipos de arquivos, como .xlsx, .csv, .rds - veja a página [Importar e exportar](#importing) para detalhes).  
 
 ```{r,  echo=F}
 linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
@@ -59,7 +59,7 @@ No **ggplot2**, quando a aparência dos dados no gráfico (ex.: tamanho, cor, fo
 
 ### Esquemas de cores
 
-Uma coisa que pode ser inicialmente difícil de entender com o **ggplot2**, é o controle dos esquemas de cores. Observe que esta seção discute a cor dos *objetos no gráfico* (geometrias/formatos), como pontos, barras, linhas, bases, etc. Para ajustar a cor de textos adicionais, títulos, ou plano de fundo, veja a seção [Temas](#ggplot_basics_themes) da página sobre [Básico do ggplot].
+Uma coisa que pode ser inicialmente difícil de entender com o **ggplot2**, é o controle dos esquemas de cores. Observe que esta seção discute a cor dos *objetos no gráfico* (geometrias/formatos), como pontos, barras, linhas, bases, etc. Para ajustar a cor de textos adicionais, títulos, ou plano de fundo, veja a seção [Temas](#ggplot_basics_themes) da página sobre [Básico do ggplot](#ggplot-basics).
 
 Para controlar a "cor" dos *objetos no gráfico*, você irá ajustar o argumento `color =` (a cor *exterior* do item) ou o `fill =` (a cor *interior* do item). Uma exceção a esse padrão é o `geom_point()`, em que você realmente só consegue ajustar `color =`, que ajusta a cor do ponto inteiro (interior e exterior).
 
@@ -76,7 +76,7 @@ ggplot(data = linelist, mapping = aes(x = age))+       # ajuste os dados e eixos
 
 
 
-Como explicado na seção [mapeando os dados para o gráfico](#ggplot_basics_mapping), da página [Básico do ggplot], aspectos estéticos como `fill =` e `color =` podem ser definidos *fora* do comando `mapping = aes()`, ou *dentro* dele. Se *fora* de `aes()`, o valor atribuído deve ser estático (ex.: `color = "blue"`) e irá ser aplicado para *todos* os dados colocados no gráfico pelo geom. Se *dentro*, a aparência estética deve ser mapeada para uma variável, como `color = hospital`, e a expressão irá variar de acordo com o valor desta linha nos dados. Alguns exemplos:
+Como explicado na seção [mapeando os dados para o gráfico](#ggplot_basics_mapping), da página [Básico do ggplot](#ggplot-basics), aspectos estéticos como `fill =` e `color =` podem ser definidos *fora* do comando `mapping = aes()`, ou *dentro* dele. Se *fora* de `aes()`, o valor atribuído deve ser estático (ex.: `color = "blue"`) e irá ser aplicado para *todos* os dados colocados no gráfico pelo geom. Se *dentro*, a aparência estética deve ser mapeada para uma variável, como `color = hospital`, e a expressão irá variar de acordo com o valor desta linha nos dados. Alguns exemplos:
 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', warning=F, message=F}
 # Cor estática para pontos e para a linha
@@ -123,7 +123,7 @@ Para escalas contínuas, utilize `breaks =` para fornecer uma sequência de valo
 
 Para escalas discretas, você pode ajustar a ordem de aparecimento dos fatores com `breaks =` e também ajustar os rótulos desses fatores com o argumento `labels =`. Forneça um vetor de caractere para cada um desses argumentos (veja exemplos abaixo). Você também pode excluir `NA` facilmente ao ajustar `na.translate = FALSE`.  
 
-As nuances de escalas de datas são abordados mais extensivamente na página [Curvas epidêmicas].
+As nuances de escalas de datas são abordados mais extensivamente na página [Curvas epidêmicas](#epicurves).
 
 
 ### Ajustes manuais {.unnumbered}  
@@ -293,7 +293,7 @@ preparedness_plot+                   # inicie com o gráfico salvo acima
 
 O preenchimento de escadas em gradiente de cores pode envolver detalhes adicionais. Normalmente, os ajustes padrões são bons, mas você pode querer ajustar os valores, limites de corte, etc.
 
-Para demonstrar como ajustar uma escala contínua de cor, nós iremos utilizar um conjunto de dados da página [Rastreamento de contatos], que contém as idades dos casos e dos seus casos-fonte.
+Para demonstrar como ajustar uma escala contínua de cor, nós iremos utilizar um conjunto de dados da página [Rastreamento de contatos](#contact-tracing), que contém as idades dos casos e dos seus casos-fonte.
 
 
 ```{r, warning=F, message=F}
@@ -371,9 +371,9 @@ As funções 'brewer' colorem a partir das paletas do [colorbrewer.org](colorbre
 
 As funções 'viridis' colorem das paletas viridis (amigável para deficientes visuais!), que "fornece mapas de cores que são uniformes, tanto nas cores quanto no preto-e-branco. Elas também foram desenhadas para serem percebidas por usuários com formas comuns de cegueiras de cor." (leia mais [aqui](https://ggplot2.tidyverse.org/reference/scale_viridis.html) e [aqui](https://bids.github.io/colormap/)). Defina se a paleta é discreta, contínua, ou contida ao especificar isto no final da função (ex.: discreta é `scale_xxx_viridis_d`).
 
-É recomendado que você teste as cores de seu gráfico neste [simulador de cegueira de cor](https://www.color-blindness.com/coblis-color-blindness-simulator/). Se você tiver um esquema de cores vermelho/verde, tente um esquema "quente-frio" (vermelho-azul) no lugar, como descrito [aqui](https://www.visualisingdata.com/2019/08/five-ways-to-design-for-red-green-colour-blindness/#:~:text=The%20pink%2Dred%20through%20to,green%20hues%20used%20by%20default.)  
+É recomendado que você teste as cores de seu gráfico neste [simulador de daltonismo](https://www.color-blindness.com/coblis-color-blindness-simulator/). Se você tiver um esquema de cores vermelho/verde, tente um esquema "quente-frio" (vermelho-azul) no lugar, como descrito [aqui](https://www.visualisingdata.com/2019/08/five-ways-to-design-for-red-green-colour-blindness/#:~:text=The%20pink%2Dred%20through%20to,green%20hues%20used%20by%20default.)  
 
-Aqui é um exemplo da página [Básico do ggplot], utilizando diferentes esquemas de cores.
+Aqui é um exemplo da página [Básico do ggplot](#ggplot-basics), utilizando diferentes esquemas de cores.
 
 ```{r, out.width=c('50%'), fig.show='hold', warning=F, message=F} 
 symp_plot <- linelist %>%                                         # inicie com a linelist
@@ -624,7 +624,7 @@ ggplot()+
 <!-- ======================================================= -->
 ## Eixos de tempo {}
 
-Trabalhar com eixos de tempo no ggplot pode ser cansativo, mas é mais fácil com algumas funções chave. Lembre que, ao trabalhar com tempo ou datas, você deve garantir que as variáveis corretas estejam formatadas como das classes date ou datetime - veja a página [Trabalhando com datas] para mais informações, ou a página [Curvas epidêmicas], na seção sobre o ggplot, para exemplos.
+Trabalhar com eixos de tempo no ggplot pode ser cansativo, mas é mais fácil com algumas funções chave. Lembre que, ao trabalhar com tempo ou datas, você deve garantir que as variáveis corretas estejam formatadas como das classes date ou datetime - veja a página [Trabalhando com datas](#dates) para mais informações, ou a página [Curvas epidêmicas](#epicurves), na seção sobre o ggplot, para exemplos.
 
 O conjunto de funções mais útil para trabalhar com datas no `ggplot2` são as funções de escala (`scale_x_date()`, `scale_x_datetime()`, e os seus cognatos do eixo y). Estas funções permitem definir a frequência dos rótulos dos eixos, e como formatar esses rótulos. Para descobrir como formatar datas, veja a seção _working with dates_ novamente! Você pode utilizar os argumentos `date_breaks` e `date_labels` para especificar como as datas devem aparecer:
 
@@ -723,7 +723,7 @@ pacman::p_load(
 ```
 
 
-Enquanto facetear (descrito na página [Básico do ggplot]) é uma abordagem conveniente para criar gráficos, as vezes não é possível obter os resultados desejados com essa abordagem. Aqui, você pode escolher combinar os gráficos ao uni-los em um gráfico maior. Existem três pacotes bem conhecidos, que são ótimos para isso - **cowplot**, **gridExtra**, e **patchwork**. Entretanto, estes pacotes fazem basicamente a mesma coisa, de forma que iremos focar no **cowplot** nesta seção.
+Enquanto facetear (descrito na página [Básico do ggplot](#ggplot-basics)) é uma abordagem conveniente para criar gráficos, as vezes não é possível obter os resultados desejados com essa abordagem. Aqui, você pode escolher combinar os gráficos ao uni-los em um gráfico maior. Existem três pacotes bem conhecidos, que são ótimos para isso - **cowplot**, **gridExtra**, e **patchwork**. Entretanto, estes pacotes fazem basicamente a mesma coisa, de forma que iremos focar no **cowplot** nesta seção.
 
 ### `plot_grid()` {.unnumbered}
 
@@ -939,7 +939,7 @@ Para demonstrar esta técnica, iremos sobrepor uma curva epidêmica com uma linh
 * O eixo y é movido para o lado direito, no gráfico 2, com o argumento `position =` de `scale_y_continuous()`.  
 * Ambos gráficos fazem uso do `theme_cowplot()`  
 
-Note que existe outro exemplo dessa técnica na página [Curvas epidêmicas] - a sobreposição da incidência acumulada acima da epicurva.
+Note que existe outro exemplo dessa técnica na página [Curvas epidêmicas](#epicurves) - a sobreposição da incidência acumulada acima da epicurva.
 
 **Crie o primeiro gráfico**  
 Este é, essencialmente, uma epicurva. Nós utilizamos `geom_area()` apenas para demonstrar o seu uso (área abaixo de uma linha, por padrão)
