@@ -30,7 +30,7 @@ O comando do R **base** `aggregate()` como alternativa
      
 ### Carregar pacotes {.unnumbered}  
      
-Este trecho de código mostra o carregamento dos pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` de **pacman**, que instala o pacote se necessário *e* o carrega para utilização. Você também pode carregar os pacotes instalados com `library()` do R **base**. Veja a página em [R básico] para mais informações sobre os pacotes R. 
+Este trecho de código mostra o carregamento dos pacotes necessários para as análises. Neste manual, enfatizamos `p_load()` de **pacman**, que instala o pacote se necessário *e* o carrega para utilização. Você também pode carregar os pacotes instalados com `library()` do R **base**. Veja a página em [Introdução ao R](#basics) para mais informações sobre os pacotes R. 
 
 ```{r}
 pacman::p_load(
@@ -45,7 +45,7 @@ pacman::p_load(
 
 ### Importar datos {.unnumbered}
 
-Nós importamos os dados de casos de uma epidemia simulada de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o linelist "limpo" </a> (as .rds file). O conjunto de dados é importado utilizando a função `import()` do pacote **rio**. Veja a página em [Importar e exportar] para várias formas de importação de dados.
+Nós importamos os dados de casos de uma epidemia simulada de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o linelist "limpo" </a> (as .rds file). O conjunto de dados é importado utilizando a função `import()` do pacote **rio**. Veja a página em [Importar e exportar](#importing) para várias formas de importação de dados.
 
 ```{r, echo=F}
 linelist <- rio::import(here("data", "case_linelists", "linelist_cleaned.rds"))
@@ -166,7 +166,7 @@ linelist %>%
 
 ## Resumir os dados (Summarise) {#group_summarise} 
 
-Consulte a seção **dplyr** da página [Tabelas descritivas] para obter uma descrição detalhada de como produzir tabelas resumidas com `summarise()`. Aqui abordamos brevemente como seu comportamento muda quando aplicado a dados agrupados.  
+Consulte a seção **dplyr** da página [Tabelas descritivas](#tables-descriptive) para obter uma descrição detalhada de como produzir tabelas resumidas com `summarise()`. Aqui abordamos brevemente como seu comportamento muda quando aplicado a dados agrupados.  
 
 A função **dplyr** `summarise()` (ou `summarize()`) pega um dataframe e o converte em um *novo* dataframe resumido, com colunas contendo as estatísticas resumidas que você definiu. Em dataframe não agrupados, as estatísticas resumidas serão calculadas a partir de todas as linhas. A aplicação de `summarise()` aos dados agrupados produz estas estatísticas resumidas *para cada grupo*.  
 
@@ -291,7 +291,7 @@ Para adicionar linhas de totais mais complexas que envolvam estatísticas resumi
 
 ## Agrupoando por data
 
-Ao agrupar os dados por data, você deve ter (ou criar) uma coluna para a unidade de data de interesse - por exemplo "dia", "epiweek", "mês", etc. Você pode fazer esta coluna utilizando `floor_date()` from **lubridate**, como explicado na seção [Semanas Epidemiológicas](#dates_epi_wks) da página [Trabalhando com datas]. Uma vez que você tenha esta coluna, você pode utilizar `count()` from **dplyr*** para agrupar as linhas por esses valores de data únicos e obter contagens agregadas. 
+Ao agrupar os dados por data, você deve ter (ou criar) uma coluna para a unidade de data de interesse - por exemplo "dia", "epiweek", "mês", etc. Você pode fazer esta coluna utilizando `floor_date()` from **lubridate**, como explicado na seção [Semanas Epidemiológicas](#dates_epi_wks) da página [Trabalhando com datas](#dates). Uma vez que você tenha esta coluna, você pode utilizar `count()` from **dplyr*** para agrupar as linhas por esses valores de data únicos e obter contagens agregadas. 
 
 Uma etapa adicional comum para situações de datas, é "preencher" quaisquer datas na seqüência que não estejam presentes nos dados. Utilize `complete()` do **tidyr*** para que a série de datas agregadas seja *completa* incluindo *todas as unidades de data possíveis* dentro do intervalo. Sem esta etapa, uma semana sem casos reportados pode não aparecer em seus dados!  
 
@@ -425,7 +425,7 @@ linelist %>%
 `slice_min()` - seleciona n linhas com os valores mais altos da coluna `order_by = `, use `with_ties = TRUE` para manter os vínculos
 `slice_max()` - seleciona os menores valores da coluna `order_by = ` column, , use `with_ties = TRUE` para manter os vínculos
 
-Veja a página [De-duplication] para meis exemplos e detalhes de `slice()`.  
+Veja a página [Eliminando duplicidades](#deduplication) para meis exemplos e detalhes de `slice()`.  
 
 
 ### Filtrar por tamanho do grupo {#group_filter_grp_size .unnumbered} 

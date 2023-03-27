@@ -46,7 +46,7 @@ pacman::p_load(
 
 ### Importar os dados {.unnumbered}
 
-Nesta página, faremos referência ocasional à `linelist`, uma lista de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, clique para realizar o download "[clean linelist](https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds)" (como arquivo .rds). Importe dados com a função `import()` do pacote **rio** (ele lida com muitos tipos de arquivo como .xlsx, .csv, .rds - veja a página \[Importar e exportar\] para detalhes).
+Nesta página, faremos referência ocasional à `linelist`, uma lista de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, clique para realizar o download "[clean linelist](https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds)" (como arquivo .rds). Importe dados com a função `import()` do pacote **rio** (ele lida com muitos tipos de arquivo como .xlsx, .csv, .rds - veja a página [Importar e exportar](#importing) para detalhes).
 
 ```{r, echo=F}
 # importe a linelist para o R
@@ -168,7 +168,7 @@ caso_tabela %>%
 
 **Combine strings em linhas**
 
-Se você estiver tentando "acumular" valores em uma coluna de um data frame, por exemplo, combinar valores de várias linhas em apenas uma linha, colando-os juntos com um separador, consulte a seção da página [Eliminação de duplicidades] em ["acumulando" valores](#str_rollup).
+Se você estiver tentando "acumular" valores em uma coluna de um data frame, por exemplo, combinar valores de várias linhas em apenas uma linha, colando-os juntos com um separador, consulte a seção da página [Eliminação de duplicidades](#deduplication) em ["acumulando" valores](#str_rollup).
 
 **Data frame para uma linha**
 
@@ -246,7 +246,7 @@ str_split(string = "jaundice, fever, chills",
           pattern = ",")
 ```
 
-Se o resultado de saída for salvo, você poderá acessar o enésimo valor de divisão com a sintaxe de colchetes. Para acessar um valor específico, você pode usar uma sintaxe como esta: `the_returned_object[[1]][2]`, que acessaria o segundo valor da primeira string avaliada ("febre"). Consulte a página [R - o básico] para obter mais detalhes sobre como acessar os elementos.
+Se o resultado de saída for salvo, você poderá acessar o enésimo valor de divisão com a sintaxe de colchetes. Para acessar um valor específico, você pode usar uma sintaxe como esta: `the_returned_object[[1]][2]`, que acessaria o segundo valor da primeira string avaliada ("febre"). Consulte a página [Introdução ao R](#basics) para obter mais detalhes sobre como acessar os elementos.
 
 ```{r}
 pt1_symptoms <- str_split("jaundice, fever, chills", ",")

@@ -38,7 +38,7 @@ O alvo de inferência para a análise de sobrevivência é então o tempo entre 
 
 Para realizar análises de sobrevivência em R, um dos pacotes mais utilizados é o pacote **survival**. Primeiro o instalamos e depois o carregamos, bem como os outros pacotes que serão utilizados nesta secção:
 
-Neste manual enfatizamos `p_load()` do **pacman**, que instala o pacote se necessário *e* carrega-o para utilização. Pode também carregar os pacotes instalados com `library()` do R **base** . Veja a página em [R - o basico] para mais informações sobre os pacotes R.
+Neste manual enfatizamos `p_load()` do **pacman**, que instala o pacote se necessário *e* carrega-o para utilização. Pode também carregar os pacotes instalados com `library()` do R **base** . Veja a página em [Introdução ao R](#basics) para mais informações sobre os pacotes R.
 
 ```{r, echo=F, message=FALSE, warning=FALSE}
 
@@ -63,7 +63,7 @@ Esta página explora análises de sobrevivência usando a *linelist* usada na ma
 
 Importar conjunto de dados
 
-Importamos o conjunto de dados de casos de uma epidemia simulada de Ebola. Se quiser acompanhar, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para fazer o download da *linelist* "limpa" </a> (as .rds file). Importe os dados com a função `import()` do pacote **rio** (suporta muitos formatos de arquivos .xlsx, .csv, .rds - veja a página [Importar e exportar] para mais detalhes).
+Importamos o conjunto de dados de casos de uma epidemia simulada de Ebola. Se quiser acompanhar, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para fazer o download da *linelist* "limpa" </a> (as .rds file). Importe os dados com a função `import()` do pacote **rio** (suporta muitos formatos de arquivos .xlsx, .csv, .rds - veja a página [Importar e exportar](#importing) para mais detalhes).
 
 ```{r echo=F}
 # importar linelist
@@ -155,7 +155,7 @@ linelist_surv %>%
   head(10)
 ```
 
-Também podemos fazer tabulações cruzadas entre as colunas  `age_cat_small` e `gender` para obter mais detalhes acercada distribuição dessas novas colunas por gênero. Usamos `tabyl()` e a função *adorn* do pacote **janitor**, como descrito na página [Tabelas descritivas].
+Também podemos fazer tabulações cruzadas entre as colunas  `age_cat_small` e `gender` para obter mais detalhes acercada distribuição dessas novas colunas por gênero. Usamos `tabyl()` e a função *adorn* do pacote **janitor**, como descrito na página [Tabelas descritivas](#tables-descriptive).
 
 <!-- Para isso, usamos a função `stat.table()` do pacote **Epi**. -->
 

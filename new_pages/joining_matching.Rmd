@@ -24,7 +24,7 @@ Nessa página vamos demonstrar como escrever código para:
 
 ### Carregue os pacotes R {.unnumbered}
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Básico do R].   
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Introdução ao R](#basics).   
 
 ```{r}
 pacman::p_load(
@@ -40,7 +40,7 @@ pacman::p_load(
 
 ### Importe dados {.unnumbered}
 
-Para iniciar, importaremos a versão limpa da linelist de casos de uma epidemia simulada de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (com um arquivo .rds). Importe os dados com a função `import()` do pacote **rio** (ela manipula vários tipos de arquivo, tais como .xlsx, .csv, .rds - veja na página [Importando and exportando] para detalhes).  
+Para iniciar, importaremos a versão limpa da linelist de casos de uma epidemia simulada de Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (com um arquivo .rds). Importe os dados com a função `import()` do pacote **rio** (ela manipula vários tipos de arquivo, tais como .xlsx, .csv, .rds - veja na página [Importando and exportando](#importing) para detalhes).  
 
 ```{r, echo=F}
 # importa a linelist para o R
@@ -143,7 +143,7 @@ Você pode ver que apesar de alguns dos hospitais existirem em ambos dataframes,
 
 **Alinhando valores**  
 
-Vamos começar limpando os valores do dataframe `hosp_info`. Como explicado na página [Limpando dados e funções principais], podemos recodificar valores com critérios lógicos utilizando a função `case_when()` do pacote **dplyr**. Para os quatro hospitais que existem em ambos os dataframes, vamos mudar os valores para alinhar com os valores da `linelist_mini`. Para os outros hospitais, deixaremos os valores como estão (`TRUE ~ hosp_name`).   
+Vamos começar limpando os valores do dataframe `hosp_info`. Como explicado na página [Limpando dados e funções principais](#cleaning), podemos recodificar valores com critérios lógicos utilizando a função `case_when()` do pacote **dplyr**. Para os quatro hospitais que existem em ambos os dataframes, vamos mudar os valores para alinhar com os valores da `linelist_mini`. Para os outros hospitais, deixaremos os valores como estão (`TRUE ~ hosp_name`).   
 
 <span style="color: orange;">**_CUIDADO:_** Tipicamente, quando estamos limpando dataframes devemos criar uma nova coluna (ex: `hosp_name_clean`), mas para facilitar a demonstração vamos mostrar diretamente a modificação da antiga coluna</span>
 
@@ -167,7 +167,7 @@ Os nomes dos hospitais que aparecem em ambos os dataframes estão alinhados. Exi
 unique(hosp_info$hosp_name)
 ```
 
-Antes de fazer um join, geralmente o mais fácil é converter uma coluna completamente para letras minúsculas (lowercase) ou letras maiúsculas (uppercase). Se você precisar converter todos os valores de uma coluna para MAIÚSCULO ou minúsculo, utilize a função `mutate()` e envolva a coluna com alguma dessas funções do pacote **stringr**, como mostrado na página [Caracteres e strings].  
+Antes de fazer um join, geralmente o mais fácil é converter uma coluna completamente para letras minúsculas (lowercase) ou letras maiúsculas (uppercase). Se você precisar converter todos os valores de uma coluna para MAIÚSCULO ou minúsculo, utilize a função `mutate()` e envolva a coluna com alguma dessas funções do pacote **stringr**, como mostrado na página [Caracteres e strings](#characters-strings).  
 
 `str_to_upper()`  
 `str_to_upper()`  
@@ -780,14 +780,14 @@ Para anexar linhas de um dataframe no final de outro dataframe, utilize a funç�
 
 * Diferente da versão `row.bind()` do R **base**, `bind_rows()` do **dplyr** não exige que a ordem das colunas seja a mesma em ambos os dataframes. Contanto que os nomes das colunas estejam grafados de forma idêntica, a função vai alinhá-las corretamente.   
 * Você poder, opcionalmente, especificar o argumento `.id = `. Passe um nome de coluna para o argumento. Isso vai produzir uma nova coluna que serve para identificar de qual dataframe cada linha veio originalmente.
-* Você pode usar `bind_rows()` em uma `lista` de dataframes que tenham estrutura semelhante para combiná-los em um só. Veja um exemplo na página [Iteração, loops e listas] que envolve a importação de múltimplas linelists com **purrr**.  
+* Você pode usar `bind_rows()` em uma `lista` de dataframes que tenham estrutura semelhante para combiná-los em um só. Veja um exemplo na página [Iteração, loops e listas](#iteration) que envolve a importação de múltimplas linelists com **purrr**.  
 
 
 Um exemplo comum de anexação de linhas é anexar uma linha de "total" no final de uma tabela descritiva feita utilizando a função `summarise()` do **dplyr**. Abaixo nós criamos uma tabela de contagem de casos e medianas dos valores de CT por hospital com uma linha total.
 
 A função `summarise()` é utilizada em dados agrupados por hospital para retornar um dataframe sumárizado por hospital. Porém, a função `summarise()` não gera colunas de "totais" automaticamente, então, nós criamos uma sumarizando os dados *novamente*, mas com os dados não agrupados por hospital. Isso produz um segundo dataframe de apenas uma linha. Nós podemos anexar (bind) esses dataframes um ao outro para chegar na tabela final.
 
-Veja outros exemplos práticos como esse nas páginas [Tabelas descritivas] e [Tabelas para apresentação].  
+Veja outros exemplos práticos como esse nas páginas [Tabelas descritivas](#tables-descriptive) e [Tabelas para apresentação](#tables-presentation).  
 
 
 ```{r}
@@ -832,7 +832,7 @@ Agora podemos anexar as linhas com `bind_rows()`.
 combined <- bind_rows(hosp_summary, totals)
 ```
 
-Agora podemos visualizar o resultado. Veja como na última linha, um valor vazio, `NA`, preenche a coluna `hospital` que não estava em `hosp_summary`. Como explicado na página [Tabelas para apresentação], você pode preencher essa célula com "Total" utilizando `replace_na()`.  
+Agora podemos visualizar o resultado. Veja como na última linha, um valor vazio, `NA`, preenche a coluna `hospital` que não estava em `hosp_summary`. Como explicado na página [Tabelas para apresentação](#tables-presentation), você pode preencher essa célula com "Total" utilizando `replace_na()`.  
 
 ```{r message=FALSE, echo=F}
 DT::datatable(combined, rownames = FALSE, options = list(pageLength = nrow(10)))
@@ -888,7 +888,7 @@ Quando utilizamos `match()`, a sintaxe é `match(ORDEM DO VETOR ALVO, COLUNA PAR
 match(case_info$hospital, contact_fu$hospital)
 ```
 
-Você pode utilizar esse vetor numérico para reordenar o dataframe - coloque ele entre colchetes `[ ]` *antes da vírgula*. Leia mais sobre a sintaxe de subconjuntos com colchetes no **base** R na página [Básico do R]. O comando abaixo cria um novo dataframe, definido como o anterior em que as linhas estão ordenadas de acordo com o vetor numérico acima.
+Você pode utilizar esse vetor numérico para reordenar o dataframe - coloque ele entre colchetes `[ ]` *antes da vírgula*. Leia mais sobre a sintaxe de subconjuntos com colchetes no **base** R na página [Introdução ao R](#basics). O comando abaixo cria um novo dataframe, definido como o anterior em que as linhas estão ordenadas de acordo com o vetor numérico acima.
 
 ```{r}
 contact_fu_aligned <- contact_fu[match(case_info$hospital, contact_fu$hospital), ]

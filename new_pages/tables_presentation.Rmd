@@ -103,9 +103,9 @@ table
 
 Esta seção demonstra como converter *data frames* resumo dos seus dados em tabelas prontas para apresentação com o uso do pacote **flextable**. Estas tabelas podem ser inseridas em slides do programa powerpoint, em páginas HTML ou documentos em formatos PDF ou Word, entre outros.
 
-É preciso compreender que, *antes* de usar o pacote **flextable**, você deve criar a tabela resumida como um data frame. Você pode utilizar os métodos das [Tabelas Descritivas] ou [Pivotando dados], tais como: tabulações, tabulações cruzadas, pivotamento e calcular estatísticas descritivas. O data frame resultantes pode então ser utilizado na função **flextable** para formatar a visualização. 
+É preciso compreender que, *antes* de usar o pacote **flextable**, você deve criar a tabela resumida como um data frame. Você pode utilizar os métodos das [Tabelas Descritivas](#tables-descriptive) ou [Pivoteando dados](#pivoting), tais como: tabulações, tabulações cruzadas, pivotamento e calcular estatísticas descritivas. O data frame resultantes pode então ser utilizado na função **flextable** para formatar a visualização. 
 
-Há muitos outros pacotes R que podem ser usados para elaborar tabelas para apresentação – aqui, nós escolhemos destacar o pacote “flextable” nesta seção. Um exemplo usando o pacote **knitr** e sua função `kable()` pode ser encontrado na página de [Rastreamento de Contatos]. Da mesma maneira, o pacote **DT** é evidenciado na seção de [Paineis com Shiny]. Outros programas, tais como o **GT** e o **huxtable** são mencionados na página de pacotes sugeridos [Pacotes sugeridos].
+Há muitos outros pacotes R que podem ser usados para elaborar tabelas para apresentação – aqui, nós escolhemos destacar o pacote “flextable” nesta seção. Um exemplo usando o pacote **knitr** e sua função `kable()` pode ser encontrado na página de [Rastreamento de Contatos](#contact-tracing). Da mesma maneira, o pacote **DT** é evidenciado na seção de [Paineis com Shiny](#shiny-basics). Outros programas, tais como o **GT** e o **huxtable** são mencionados na página de pacotes sugeridos [Pacotes sugeridos](#packages-suggested).
 
 
 <!-- ======================================================= -->
@@ -113,7 +113,7 @@ Há muitos outros pacotes R que podem ser usados para elaborar tabelas para apre
 
 ### Carregando pacotes {.unnumbered} 
 
-Instalar e carregar o pacote **flextable**. Neste manual, nós destacamos o `p_load()` do **pacman**, o qual instala o pacote, se necessário, *e* o carrega para ser utilizado. Você também pode carregar os pacotes com `library()` presente no R **base**. Veja a seção sobre [R - o básico] para obter mais informações sobre os pacotes “R”.
+Instalar e carregar o pacote **flextable**. Neste manual, nós destacamos o `p_load()` do **pacman**, o qual instala o pacote, se necessário, *e* o carrega para ser utilizado. Você também pode carregar os pacotes com `library()` presente no R **base**. Veja a seção sobre [Introdução ao R](#basics) para obter mais informações sobre os pacotes “R”.
 
 
 ```{r}
@@ -128,7 +128,7 @@ pacman::p_load(
 
 ### Importando dados {.unnumbered}  
 
-Para começar, nós importamos a *linelist* dos casos que simulam uma epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o "clean "linelist </a> (como arquivo .rds). Importe dados com a função `import()` do pacote **rio** (ele trabalho com vários tipos de arquivo, tais como: .xlsx, .csv, .rds - você pode visualizar a seção [Importar e exportar] para outros detalhes).
+Para começar, nós importamos a *linelist* dos casos que simulam uma epidemia de Ebola. Se você quiser acompanhar, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar o "clean "linelist </a> (como arquivo .rds). Importe dados com a função `import()` do pacote **rio** (ele trabalho com vários tipos de arquivo, tais como: .xlsx, .csv, .rds - você pode visualizar a seção [Importar e exportar](#importing) para outros detalhes).
 
 
 ```{r, echo=F}
@@ -150,10 +150,10 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 
 ### Preparar a tabela {.unnumbered}  
 
-*Antes* de começar a utilizar o pacote **flextable** você precisará *criar* a sua tabela como um data frame. Veja a seção em [Tabelas descritivas] e [Pivotando dados] para aprender a criar um quadro de dados utilizando pacotes como **janitor*** e **dplyr***. 
+*Antes* de começar a utilizar o pacote **flextable** você precisará *criar* a sua tabela como um data frame. Veja a seção em [Tabelas descritivas](#tables-descriptive) e [Pivotando dados](#pivoting) para aprender a criar um quadro de dados utilizando pacotes como **janitor*** e **dplyr***. 
 Você deverá organizar o conteúdo em linhas e colunas conforme você queira que seja exibido. Então,  o conjunto de dados será passado para o comando **flextable*** para ser exibido com cores, cabeçalhos, fontes, etc. 
  
-Abaixo está um exemplo da página [Tabelas descritivas] de conversão dos casos na `linelist` dentro de um conjunto de dados que resume os resultados dos pacientes e os valores de CT (limiar de detecção, da sigla em inglês "cycle threshold") por hospital, com uma linha de Totais na parte inferior. A saída é salva como o objeto `table`.
+Abaixo está um exemplo da página [Tabelas descritivas](#tables-descriptive) de conversão dos casos na `linelist` dentro de um conjunto de dados que resume os resultados dos pacientes e os valores de CT (limiar de detecção, da sigla em inglês "cycle threshold") por hospital, com uma linha de Totais na parte inferior. A saída é salva como o objeto `table`.
 
 
 ```{r message=FALSE, warning=FALSE}
@@ -539,7 +539,7 @@ print(my_table, preview = "pptx") # Exemplo Powerpoint
 
 Esta tabela poderá ser integrada em um documento automatizado, uma saída R markdown, se o objeto tabela for chamado dentro do *chunk* do R markdown. Isto significa que a tabela poderá ser atualizada como parte de um relatório em que os dados podem ser alterados, e os números podem ser atualizados.
 
-Veja detalhes na seção [Relatórios com R Markdown] deste manual.
+Veja detalhes na seção [Relatórios com R Markdown](#rmarkdown) deste manual.
 
 <!-- ======================================================= -->
 ## Recursoa {  }

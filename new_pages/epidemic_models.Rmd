@@ -119,7 +119,7 @@ fazer previsões da incidência de casos.
 
 Este pedaço de código mostra o carregamento dos pacotes necessários para as análises.
 Neste manual, enfatizamos o uso de `p_load()`, do pacote **pacman**, que instala o pacote, caso necessário, *e* o inicia para uso.
-Você também pode carregar pacotes instalados com `library()`, do R **base**. Veja a página sobre [Básico do R] para mais informações sobre pacotes no R.
+Você também pode carregar pacotes instalados com `library()`, do R **base**. Veja a página sobre [Introdução ao R](#basics) para mais informações sobre pacotes no R.
 
 	
 ```{r epidemic_models_packages, }
@@ -137,7 +137,7 @@ pacman::p_load(
 )
 ```
 	
-Nesta seção, iremos utilizar a linelist dos casos limpa para todas as análises. Se você quiser acomapnhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (como arquivo .rds). Veja a página [Download do manual e dados] para baixar todos os dados utilizados como exemplo neste manual.
+Nesta seção, iremos utilizar a linelist dos casos limpa para todas as análises. Se você quiser acomapnhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (como arquivo .rds). Veja a página [Download do manual e dados](#data-used) para baixar todos os dados utilizados como exemplo neste manual.
 
 ```{r, echo=F}
 # importe a linelist para o R
@@ -258,7 +258,7 @@ distribuição a partir da linelist ao calcular o intervalo entre o tempo de inf
 de pares infectores-infectados. Para fazer isto, nós utilizamos a função `get_pairwise`
 do pacote **epicontacts**, que nos permite calcular diferenças
 entre os pares a partir das propriedades da linelist sobre os pares de transmissão. Nós primeiro criamos um
-objeto epicontact (veja a página [Cadeias de transmissão] para mais
+objeto epicontact (veja a página [Cadeias de transmissão](#transmission-chains) para mais
 detalhes):
 
 ```{r epidemic_models_epicontacts, eval=F}
@@ -460,7 +460,7 @@ Dados de incidência podem ser fornecidos para o **EpiEstim** como um vetor, um 
 e infecções adquiridas localmente; veja a documentação em `?estimate_R` para
 mais detalhes.
 
-Nós iremos criar a entrada de dados usando **incidence2**. Veja a página sobre [Curvas epidêmicas] para mais exemplos com o pacote **incidence2**. Já que existem updates no pacote **incidence2** que não fornecem a entrada necessária do `estimateR()`, existem algumas pequenas etapas adicionais necessárias. O objeto incidence consiste de uma tabela tibble com as datas e as respectivas contagens. Nós usamos `complete()`, do pacote **tidyr**, para garantir que todas as datas sejam incluídas (até as datas sem casos), e então `rename()` as colunas para gerarem o que é esperado pela função  `estimate_R()` em uma etapa posterior.
+Nós iremos criar a entrada de dados usando **incidence2**. Veja a página sobre [Curvas epidêmicas](#epicurves) para mais exemplos com o pacote **incidence2**. Já que existem updates no pacote **incidence2** que não fornecem a entrada necessária do `estimateR()`, existem algumas pequenas etapas adicionais necessárias. O objeto incidence consiste de uma tabela tibble com as datas e as respectivas contagens. Nós usamos `complete()`, do pacote **tidyr**, para garantir que todas as datas sejam incluídas (até as datas sem casos), e então `rename()` as colunas para gerarem o que é esperado pela função  `estimate_R()` em uma etapa posterior.
 
 ```{r epidemic_models_epiestim_incidence,}
 ## obtenha a incidência a partir da data de início dos sintomas
@@ -517,7 +517,7 @@ entre as datas de início dos sintomas dos pares infectante-infectado.Como fizem
 nós iremos agora utilizar a função `get_pairwise`, do pacote **epicontacts**,
 que nos permite calcular as diferenças entre os pares de transmissão nas
 características na linelsit. Primeiro, criamos um objeto epicontact
-(veja a página [Cadeias de transmissão] para mais detalhes):
+(veja a página [Cadeias de transmissão](#transmission-chains) para mais detalhes):
 
 ```{r epidemic_models_epicontacts_epiestim, eval=F}
 ## gere os contatos
@@ -848,7 +848,7 @@ também estimar o intervalo seriado a partir da linelist ao calcular o intervalo
 entre as datas de início dos sintomas dos pares infectante-infectado. Como fizemos na seção do **EpiNow2**,
 nós iremos utilizar a função `get_pairwise` do pacote **epicontacts**, que nos permite calcular diferenças em pares das propriedades
 da linelist nos pares de transmissão. Primeiro, criamos um objeto epicontact
-(veja a página [Cadeias de transmissão] para mais detalhes):
+(veja a página [Cadeias de transmissão](#transmission-chains) para mais detalhes):
 
 ```{r epidemic_models_epicontacts_projections, eval=F}
 ## crie os contacts

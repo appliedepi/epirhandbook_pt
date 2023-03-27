@@ -21,7 +21,7 @@ Está página irá abordar como:
 
 ### Carregue os pacotes {.unnumbered}  
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Básico do R].  
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Introdução ao R](#basics).  
 
 ```{r}
 pacman::p_load(
@@ -35,7 +35,7 @@ pacman::p_load(
 
 ### Importe os dados {.unnumbered}
 
-Nós iremos importar o banco de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar os passos abaixo, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique aqui para fazer o download do banco de dados 'limpo'</a> (como arquivo .rds). Importe seus dados utilizando a função `import()` do pacote **rio** (esta função importa muitos tipos de arquivos, como .xlsx, .rds, .csv - veja a página [Importar e exportar] para detalhes).
+Nós iremos importar o banco de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar os passos abaixo, <a href='https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique aqui para fazer o download do banco de dados 'limpo'</a> (como arquivo .rds). Importe seus dados utilizando a função `import()` do pacote **rio** (esta função importa muitos tipos de arquivos, como .xlsx, .rds, .csv - veja a página [Importar e exportar](#importing) para detalhes).
 
 ```{r, echo=F}
 # importe os dados no R
@@ -80,7 +80,7 @@ Durante a limpeza dos dados, você também pode realizar o oposto - alterando to
 ### Versões de `NA` {.unnumbered}  
 
 Para boa parte dos casos, `NA` representa os campos em branco e tudo funciona bem. Entretanto, em algumas circunstâncias você pode precisar de *variações* do `NA`, específicas para uma classe de objeto (caractere, numérico, etc). Isto será raro, mas esteja ciente dessa possibilidade.
-O cenário típico para isso ocorre ao criar uma nova coluna com a função `case_when()`, do pacote **dplyr**. Como descrito na página sobre [Limpeza dos dados e funções essenciais](#clean_case_when), esta função verifica cada linha do banco de dados, avalia se cumprem regras lógicas (lado direito do código), e atribuem um novo valor correto (lado esquerdo do código). *Importante: todos os valores no lado direito da fórmula precisam ser da mesma classe*.
+O cenário típico para isso ocorre ao criar uma nova coluna com a função `case_when()`, do pacote **dplyr**. Como descrito na página sobre [Limpeza dos dados e principais funções](#clean_case_when), esta função verifica cada linha do banco de dados, avalia se cumprem regras lógicas (lado direito do código), e atribuem um novo valor correto (lado esquerdo do código). *Importante: todos os valores no lado direito da fórmula precisam ser da mesma classe*.
 
 ```{r, eval=F}
 linelist <- linelist %>% 
@@ -203,7 +203,7 @@ na.omit(my_vector)
 
 ### `drop_na()` {.unnumbered}  
 
-Esta é uma função do pacote **tidyr**, que é útil em um [pipeline de limpeza de dados][Limpando os dados e funções essenciais]. Se executada com os parênteses vazios, ela remove linhas com *qualquer* um dos campos esteja em brancos. Se o nome das colunas são especificados em parênteses, linhas com campos em branco apenas nestas colunas serão excluídas. Você pode também utilizar a sintaxe do "tidyselect" para especificar as colunas.
+Esta é uma função do pacote **tidyr**, que é útil em um [pipeline de limpeza de dados](#cleaning). Se executada com os parênteses vazios, ela remove linhas com *qualquer* um dos campos esteja em brancos. Se o nome das colunas são especificados em parênteses, linhas com campos em branco apenas nestas colunas serão excluídas. Você pode também utilizar a sintaxe do "tidyselect" para especificar as colunas.
 
 ```{r, eval=F}
 linelist %>% 
@@ -388,7 +388,7 @@ outcome_missing <- linelist %>%
   filter(stringr::str_detect(statistic, "_p_"))                  # mantenha apenas os valores proporcionais
 ```
 
-Então nóstraçamos um gráfico das proporções dos campos em branco como uma linha, de acordo com a semana. A página sobre [básico do ggplot] pode ser utilizada se você não tiver familiaridade com o pacote **ggplot2** de visuzalização de dados.
+Então nóstraçamos um gráfico das proporções dos campos em branco como uma linha, de acordo com a semana. A página sobre [básico do ggplot](#ggplot-basics) pode ser utilizada se você não tiver familiaridade com o pacote **ggplot2** de visuzalização de dados.
 
 ```{r, message=F, warning=F}
 ggplot(data = outcome_missing)+
@@ -471,7 +471,7 @@ As vezes, pode ser mais fácil salvar o texto em um objeto em comandos anteriore
 <!-- ======================================================= -->
 ### `NA` na classe factors {.unnumbered}
 
-Se a sua coluna de interesse for um fator (da classe factors), utilize a função `fct_explicit_na()`, do pacote **forcats**, para converter os valores do tipo `NA` para valores do tipo caractere. Veja mais detalhes na página [Factors]. Por padrão, o novo valor atribuído é "(Missing)", mas pode ser ajustado através do argumento `na_level =`.
+Se a sua coluna de interesse for um fator (da classe factors), utilize a função `fct_explicit_na()`, do pacote **forcats**, para converter os valores do tipo `NA` para valores do tipo caractere. Veja mais detalhes na página [Fatores](#factors). Por padrão, o novo valor atribuído é "(Missing)", mas pode ser ajustado através do argumento `na_level =`.
 
 ```{r}
 pacman::p_load(forcats)   # carregue o pacote
@@ -569,7 +569,7 @@ Este é o mesmo tipo de abordagem feita por alguns métodos mais avançados, com
 
 Última observação levada adiante (LOCF, do inglês "Last observation carried forward") e observação de base levada adiante (BOCF, do inglês "baseline observation carried forward") são métodos de imputação para séries temporais/dados longitudinais. A ideia é utilizar o último valor observado para atribuir nos campos em branco. Quando valores múltiplos são perdidos sucessivamente, o método busca pelo último valor observado.
 
-A função `fill()`, do pacote **tidyr**, pode ser utilizada para realizar imputação por LOCF e BOCF (entretanto, outros pacotes como **HMISC**, **zoo**, e **data.table** também incluem métodos para fazer isto). Para mostrar a sintaxe do `fill()`, nós iremos criar um simples banco de dados com série temporal contendo o número de casos de uma doença para cada quadrimestre dos anos 2000 e 2001. Entretanto, os valores para os quadrimestres após Q1 estão faltando, então nós iremos imputá-los. A sintaxe do `fill()` também é demonstrada na página sobre [Pivoteamento dos dados].  
+A função `fill()`, do pacote **tidyr**, pode ser utilizada para realizar imputação por LOCF e BOCF (entretanto, outros pacotes como **HMISC**, **zoo**, e **data.table** também incluem métodos para fazer isto). Para mostrar a sintaxe do `fill()`, nós iremos criar um simples banco de dados com série temporal contendo o número de casos de uma doença para cada quadrimestre dos anos 2000 e 2001. Entretanto, os valores para os quadrimestres após Q1 estão faltando, então nós iremos imputá-los. A sintaxe do `fill()` também é demonstrada na página sobre [Pivoteamento dos dados](#pivoting).  
 
 ```{r}
 #criando um banco de dados simples
