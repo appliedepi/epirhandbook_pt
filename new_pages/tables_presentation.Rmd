@@ -15,6 +15,9 @@ pacman::p_load(
   officer,        # Funções auxiliares para tabelas
   tidyverse)      # visualização, resumo e gerenciamento dos dados
 
+width <- flextable::width
+
+
 table <- linelist %>% 
   # filtro
   ########
