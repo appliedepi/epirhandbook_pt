@@ -2,7 +2,7 @@
 # Gráficos interativos {#interactive-plots}  
 A visualização de dados é cada vez mais necessária para questionamento do público. Consequentemente, a criação de gráficos interativos torna-se algo comum. Há várias formas de torná-los interativos, sendo as duas mais comuns: **plotly** e **shiny**. 
 
-Nesta página iremos focar na conversão de um gráfico já existente no `ggplot()`  em um gráfico interativo, utilizando o **plotly**. Para saber mais sobre o **shiny**, veja na no capítulo [Paineis com  Shiny](https://epirhandbook.com/en/dashboards-with-shiny.html#dashboards-with-shiny). Importante lembrar que este formato de gráfico interativo tem limitações, utilizados apenas em documentos do R Markdown em formato HTML*, não sendo possível em documentos com formatos em PDF ou Word.
+Nesta página iremos focar na conversão de um gráfico já existente no `ggplot()`  em um gráfico interativo, utilizando o **plotly**. Para saber mais sobre o **shiny**, veja na no capítulo [Paineis com  Shiny](#shiny-basics). Importante lembrar que este formato de gráfico interativo tem limitações, utilizados apenas em documentos do R Markdown em formato HTML*, não sendo possível em documentos com formatos em PDF ou Word.
 
 No exemplo abaixo, tem-se um gráfico de  curva epidêmica, que foi transformado para ser interativo,  usando a integração de **ggplot2** e **plotly**(_Passe o mouse sobre o grafico, amplie ou clique nos itens na legenda_). 
 
@@ -39,7 +39,7 @@ p %>%
 
 ### Carregando os pacotes  {.unnumbered} 
 
-Esta parte de código(chunk) mostra o carregamento de pacotes necessários para as análises, com destaque `p_load()` do **pacman**, que instala o pacote se necessário e o carrega para uso. Você também pode carregar utilizando a função `library()` - "R base". Para mais informações sobre pacotes consulte o capítulo [R - O Básico](https://epirhandbook.com/en/r-basics.html#r-basics). 
+Esta parte de código(chunk) mostra o carregamento de pacotes necessários para as análises, com destaque `p_load()` do **pacman**, que instala o pacote se necessário e o carrega para uso. Você também pode carregar utilizando a função `library()` - "R base". Para mais informações sobre pacotes consulte o capítulo [Introdução ao R](#basics). 
 
 ```{r}
 pacman::p_load(
@@ -60,7 +60,7 @@ Nessa seção, assumimos que que você está começando com um gráfico `ggplot(
 
 ### Importar os dados {.unnumbered}
 
-Para começar, importe a lista de casos (limpa/organizada) de uma epidemia simulada de Ebola. Se quiser acompanhar o script, <ahref='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar a linelist “limpa”</a> (como arquivo .rds). Importe dados com a função  *import()* do pacote rio (ele lida com vários tipos de arquivos como .xlsx, .csv, .rds - veja a página [Importar e exportar] para mais detalhes).
+Para começar, importe a lista de casos (limpa/organizada) de uma epidemia simulada de Ebola. Se quiser acompanhar o script, <ahref='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'> clique para baixar a linelist “limpa”</a> (como arquivo .rds). Importe dados com a função  *import()* do pacote rio (ele lida com vários tipos de arquivos como .xlsx, .csv, .rds - veja a página [Importar e exportar](#importing) para mais detalhes).
 
 
 

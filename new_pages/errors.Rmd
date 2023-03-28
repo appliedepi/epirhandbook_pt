@@ -6,7 +6,7 @@ Esta página inclui uma lista de erros comuns e sugere soluções para solucion�
 
 Os erros no R podem ser enigmáticos às vezes, então use o Google como seu amigo. Pesquise a mensagem de erro com "R" e procure as postagens recentes em [StackExchange.com](StackExchange.com), [stackoverflow.com](stackoverflow.com), [community.rstudio.com](community.rstudio.com), twitter (#rstats) e outros fóruns de perguntas e respostas usados por programadores. Tente encontrar postagens recentes que resolveram problemas semelhantes.
 
-Se você não conseguir encontrar uma resposta para o seu problema, mesmo depois de pesquisar muito, considere criar um *exemplo reprodutível* ("reprex", ou um MRE para *Minimal Reproducible Exemple* ) e postar a pergunta você mesmo. Consulte a página [Obtendo ajuda] para dicas sobre como criar e postar um exemplo reprodutível em fóruns.
+Se você não conseguir encontrar uma resposta para o seu problema, mesmo depois de pesquisar muito, considere criar um *exemplo reprodutível* ("reprex", ou um MRE para *Minimal Reproducible Exemple* ) e postar a pergunta você mesmo. Consulte a página [Obtendo ajuda](#help) para dicas sobre como criar e postar um exemplo reprodutível em fóruns.
 
 ## Erros comuns  
 

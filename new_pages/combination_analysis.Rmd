@@ -75,7 +75,7 @@ O primeiro método que mostraremos utiliza o pacote **ggupset**, e o segundo uti
 
 ### Carregue os pacotes R {.unnumbered}  
 
-O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Básico do R].   
+O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função `p_load()`, do **pacman**, que instala os pacotes, caso não estejam instalados, *e* os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função `library()`, do R **base**. Para mais informações sobre os pacotes do R, veja a página [Introdução ao R](#basics).   
 
 ```{r, warning=F, message=F}
 pacman::p_load(
@@ -88,7 +88,7 @@ pacman::p_load(
 ### Importe os dados {.unnumbered}  
 
 
-Para iniciar, importaremos a linelist dos casos de uma epidemia simulada do Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (como um arquivo .rds). Importe os dados com a função `import()` do pacote **rio**  (a função suporta vários tipos de arquivo como .xlsx, .csv, .rds - cheque a página [Importar e exportar] para mais detalhes).  
+Para iniciar, importaremos a linelist dos casos de uma epidemia simulada do Ebola. Se você quiser acompanhar, <a href='https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds' class='download-button'>clique para baixar a linelist "limpa"</a> (como um arquivo .rds). Importe os dados com a função `import()` do pacote **rio**  (a função suporta vários tipos de arquivo como .xlsx, .csv, .rds - cheque a página [Importar e exportar](#importing) para mais detalhes).  
 
 
 
@@ -155,7 +155,7 @@ Agora nós geramos duas colunas finais:
 1. Concatenando (unindo) todos os sintomas do paciente (uma coluna de caracteres)  
 2. Convertendo a coluna acima para a classe *list*, para que ela possa ser passada ao pacote **ggupset** para fazer o gráfico.  
 
-Veja a página de [Caracteres e strings] para aprender mais sobre a função `unite()` do pacote **stringr**
+Veja a página de [Caracteres e strings](#characters-strings) para aprender mais sobre a função `unite()` do pacote **stringr**
 
 ```{r, warning=F, message=F}
 linelist_sym_1 <- linelist_sym_1 %>% 
