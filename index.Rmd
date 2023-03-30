@@ -55,7 +55,7 @@ knitr::include_graphics(here::here("images", "Epi R Handbook banner beige 1500x5
 * Servir como um manual rápido de referência do código R  
 * Fornecer exemplos centrados em tarefas que abordam problemas epidemiológicos comuns  
 * Auxiliar os epidemiologistas na transição para o R  
-* Ser acessível em ambientes com baixa conectividade com a Internet através de um **[versão offline](Baixar manual e dados)**  
+* Ser acessível em ambientes com baixa conectividade com a Internet por meio de uma **[versão offline](#data-used)**  
 
 <!-- * Use practical epi examples - cleaning case linelists, making transmission chains and epidemic curves, automated reports and dashboards, modeling incidence and making projections, demographic pyramids and rate standardization, record matching, outbreak detection, survey analysis, survival analysis, GIS basics, contact tracing, phylogenetic trees...   -->
 
@@ -108,12 +108,12 @@ Somos epidemiologistas aplicados de todo o mundo, escrevendo em nosso tempo livr
 
 * Navegue pelas páginas do Índice, ou use a caixa de busca
 * Clique nos ícones "copiar" para copiar o código  
-* Você pode seguir - junto com [os dados do exemplo][Fazer o Download do manual e dos dados].  
+* Você pode seguir - junto com [os dados do exemplo](#data-used).  
 * Consulte a seção "Recursos" de cada página para obter mais material  
 
 **Versão off-line**
 
-Veja as instruções na página [Fazer o Download do manual e dos dados]].  
+Veja as instruções na página [Fazer o Download do manual e dos dados](#data-used).  
 
 
 **Línguas**  
@@ -142,7 +142,7 @@ Este manual é **não** um produto aprovado de qualquer organização específic
 
 **Ilustradores**: Calder Fong  
 
-**Tradutores da versão em língua portuguesa (Brasil)**: Carolina Musso, César Augusto Galvão , Halian Vilela, Laís Relvas, Felipe Cardoso tradução, Rafaela Tadei,  Pauliana Galvão,   Nathalia Zini, Paula Maiçara,  João Pedro Angelici,   Ademar Barbosa Dantas Junior, Eucilene Santana, Hudson Gabriel Virtuoso Fontenele
+**Tradutores da versão em língua portuguesa (Brasil)**: Carolina Musso, César Augusto Galvão , Halian Vilela, Laís Relvas, Felipe Cardoso, Rafaela Tadei,  Pauliana Galvão,   Nathalia Zini, Paula Maiçara,  João Pedro Angelici,   Ademar Barbosa Dantas Junior, Eucilene Santana, Hudson Gabriel Virtuoso Fontenele
 
 
 <!-- **Editor-in-Chief:** Neale Batra  -->
