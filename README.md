@@ -52,7 +52,7 @@ Este manual é produzido por uma colaboração de epidemiologistas de todo o mun
 Este manual é **não** um produto aprovado de qualquer organização específica. Embora nos esforcemos para ser precisos, não damos nenhuma garantia do conteúdo deste livro.  
 
 
-### Colaboradores {-}
+### Colaboradores
 
 **Editor:** [Neale Batra](https://www.linkedin.com/in/neale-batra/) 
 
@@ -74,7 +74,7 @@ Este manual é **não** um produto aprovado de qualquer organização específic
 <!-- **Reviewers**: Pat Keating, Mathilde Mousset, Annick Lenglet, Margot Charette, Isha Berry, Paula Blomquist, Natalie Fischer, Daniely Xavier, Esther Kukielka, Michelle Sloan, Aybüke Koyuncu, Rachel Burke, Daniel Molling, Kate Kelsey, Berhe Etsay, John Rossow, Mackenzie Zendt, James Wright, Wayne Enanoria, Laura Haskins, Flavio Finger, Tim Taylor, Jae Hyoung Tim Lee, Brianna Bradley, Manual Albela Miranda, Molly Mantus, Priscilla Spencer, Pattama Ulrich, Joseph Timothy, Adam Vaughan, Olivia Varsaneux, Lionel Monteiro, Joao Muianga   -->
 
 
-### Financiamento e apoio {-}  
+### Financiamento e apoio
 
 O manual recebeu financiamento de apoio através de uma subvenção de emergência COVID-19 da [TEPHINET](https://www.tephinet.org/), a rede global de Programas de Treinamento em Epidemiologia de Campo (FETPs).  
 
@@ -103,9 +103,9 @@ De modo mais geral, as seguintes fontes forneceram inspiração para este manual
 <!-- Images in logo from US CDC Public Health Image Library) include [2013 Yemen looking for mosquito breeding sites](https://phil.cdc.gov/Details.aspx?pid=19623), [Ebola virus](https://phil.cdc.gov/Details.aspx?pid=23186), and [Survey in Rajasthan](https://phil.cdc.gov/Details.aspx?pid=19838).   -->
 
 
-## Termos de Uso e Contribuição {-}
+## Termos de Uso e Contribuição
 
-### Licença {.unnumbered}
+### Licença
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src= "https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Esta obra está licenciada sob uma <a rel="license" href= "http://creativecommons.org/licenses/by-nc-sa/4.0/">Licença Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>.
 
@@ -113,11 +113,11 @@ De modo mais geral, as seguintes fontes forneceram inspiração para este manual
 Cursos acadêmicos e programas de treinamento de epidemiologistas são bem-vindos para usar este manual com seus alunos. Se você tiver dúvidas sobre o uso pretendido, envie um e-mail para **epiRhandbook@gmail.com**.
 
 
-### Citação {.unnumbered}
+### Citação
 
 Batra, Neale, et ai. O Manual do Epidemiologista R. 2021. <a rel="license" href="https://zenodo.org/badge/231610102.svg"><img alt="DOI" style="border-width:0" src="https://zenodo.org/badge/231610102.svg" /></a><br />
 
-### Contribuição {.unnumbered}
+### Contribuição
 
 Se você quiser fazer uma contribuição de conteúdo, entre em contato conosco primeiro por meio de questões do Github ou por e-mail. Estamos implementando um cronograma de atualizações e criando um guia do contribuidor.
 
