@@ -458,7 +458,7 @@ knitr::kable(mortality_ds_rate_phe)
 
 Para normalização indireta, você precisa de uma população de referência com o número de óbitos e a quantidade da população por estrato. Neste exemplo, nós iremos calcular as taxas para o país A *utilizando o país B como população de referência*, uma vez que a população de referência em `standard_pop_clean` não possui a quantidade de mortes por estrato.
 
-Abaixo, primeiro criamos a população de referência do país B. Então, passamos os dados populacionais e de mortalidade do país A, combinamos ele com a população de referência, e passamos para a função `phe_isr()`, para obter taxas indiretamente normalizadas. Claro, você pode fazer isto vice versa.
+Abaixo, primeiro criamos a população de referência do país B. Então, passamos os dados populacionais e de mortalidade do país A, combinamos ele com a população de referência, e passamos para a função `calculate_ISRate()`, para obter taxas indiretamente normalizadas. Claro, você pode fazer isto vice versa.
 
 De nota - no exemplo abaixo, a população de referência é fornecida como um data frame separado. Neste caso, nós garantimos que os vetores `x = `, `n = `, `x_ref = ` e `n_ref = ` são todos ordenados pelos mesmos valores da categoria de padronização (estrato) como nos nossos dados específicos dos países, uma vez que os registros serão ligados pela posição na tabela.
 
