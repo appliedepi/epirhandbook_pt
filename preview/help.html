@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>1 Conseguindo ajuda | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Esta página aborda sobre como obter ajuda postando um problema (issue) no Github ou postando um exemplo reprodutível (“reprex” ou MRE para Minimal reprodutible exemple) em um fórum online.  1.1...">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
+<meta property="og:title" content="1 Conseguindo ajuda | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Esta página aborda sobre como obter ajuda postando um problema (issue) no Github ou postando um exemplo reprodutível (“reprex” ou MRE para Minimal reprodutible exemple) em um fórum online.  1.1...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="1 Conseguindo ajuda | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Esta página aborda sobre como obter ajuda postando um problema (issue) no Github ou postando um exemplo reprodutível (“reprex” ou MRE para Minimal reprodutible exemple) em um fórum online.  1.1...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<p>
+
+    Você precisa de ajuda para aprender R? Inscreva-se no curso de introdução ao R da Applied Epi, experimente nossos tutoriais gratuitos sobre o R, publique em nosso fórum de perguntas e respostas ou solicite nosso suporte ao R.
+
+    </p>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Previsualização das páginas</li>
+<li><a class="active" href="help.html"><span class="header-section-number">1</span> Conseguindo ajuda</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="help" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Conseguindo ajuda<a class="anchor" aria-label="anchor" href="#help"><i class="fas fa-link"></i></a>
+</h1>
+<p>Esta página aborda sobre como obter ajuda postando um problema (issue) no Github ou postando um exemplo reprodutível (“reprex” ou MRE para <em>Minimal reprodutible exemple</em>) em um fórum online.</p>
+<div id="issues-problemas-do-github" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Issues (problemas) do Github<a class="anchor" aria-label="anchor" href="#issues-problemas-do-github"><i class="fas fa-link"></i></a>
+</h2>
+<p>Muitos pacotes e projetos R têm seu código hospedado no site Github.com. Você pode se comunicar diretamente com os autores através do site, postando um “Problema”.</p>
+<p>Leia mais sobre como armazenar seu trabalho no Github na página <a href="#collaboration">Colaboração e Github</a>.</p>
+<p>No Github, cada projeto está contido em um <em>repositório</em>. Cada repositório contém código, dados, saídas, documentação de ajuda etc. Existe também um veículo de comunicação com os autores denominado “Problemas”.</p>
+<p>Veja abaixo a página do Github para o pacote <strong>incidence2</strong> (usado para fazer curvas epidêmicas). Você pode ver a guia “Issues” (Problemas, em imglês) destacada em amarelo. Você pode ver que existem 5 questões em aberto.</p>
+<div class="inline-figure"><img src="images/errors_Github_issues.png" width="948"></div>
+<p>Nesta guia <em>Issues</em> você pode ver os problemas em aberto. Revise-os para garantir que seu problema não foi resolvido ainda. Você pode abrir um novo problema clicando no botão verde à direita. Para fazer isso, será necessário ter uma conta Github.</p>
+<div class="inline-figure"><img src="images/errors_Github_issues2.png" width="910"></div>
+<p>Siga as instruções abaixo para fornecer um exemplo mínimo e reproduzível do seu problema. Por favor, seja educado(a)! A maioria das pessoas que desenvolve pacotes e projetos R estão fazendo isso no seu tempo livre (como este manual!).</p>
+<p>Para ler materiais mais avançados sobre como lidar com problemas no seu repositório, verifique a <a href="https://guides.github.com/features/issues/">documentação sobre problemas do Github</a>.</p>
+</div>
+<div id="exemplo-reprodutível" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Exemplo reprodutível<a class="anchor" aria-label="anchor" href="#exemplo-reprodut%C3%ADvel"><i class="fas fa-link"></i></a>
+</h2>
+<p>Fornecer um exemplo reprodutível (“reprex”) é a chave para obter ajuda com sua postagem ou problema no Github. As pessoas querem ajudá-lo, mas você precisa dar um exemplo com o qual elas possam trabalhar em seus próprios computadores. O exemplo deve:</p>
+<ul>
+<li>Demonstrar o problema que você encontrou<br>
+</li>
+<li>Ser <em>o mais curto possível</em>, incluindo apenas os dados e o código necessário para reproduzir o seu problema</li>
+<li>Ser <em>reprodutível</em>, de modo que todos os objetos (por exemplo, dados), e pacotes sejam incluídos (por exemplo, <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> ou <code>p_load()</code>)</li>
+</ul>
+<p><em>Além disso, certifique-se de não postar nenhum dado sensível com o reprex!</em> Você pode criar dataframes de exemplo ou usar um dos dataframes embutidos no R (insira <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> para abrir uma lista desses conjuntos de dados).</p>
+<div id="o-pacote-reprex" class="section level3 unnumbered">
+<h3>O pacote <strong>reprex</strong><a class="anchor" aria-label="anchor" href="#o-pacote-reprex"><i class="fas fa-link"></i></a>
+</h3>
+<p>O pacote <strong>reprex</strong> pode ajudá-lo a fazer um exemplo reprodutível:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>reprex</strong> é instalado com <strong>tidyverse</strong>, então carregue qualquer um dos pacotes</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># intale/carregue o tidyverse (que inclui o reprex)</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span></span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Inicie um script R que gere seu problema, passo a passo, começando com o carregamento de pacotes e dados.</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># carregar pacotes</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span>     <span class="va">tidyverse</span>,  <span class="co"># manipulação de dados e visualização</span></span>
+<span>     <span class="va">outbreaks</span><span class="op">)</span>  <span class="co"># exemplos de dados de surtos </span></span>
+<span></span>
+<span><span class="co"># linelist lista dos casos da epidemia de gripe</span></span>
+<span><span class="va">outbreak_raw</span> <span class="op">&lt;-</span> <span class="fu">outbreaks</span><span class="fu">::</span><span class="va">fluH7N9_china_2013</span>  <span class="co">#recuperar conjunto de dados do pacote de surtos</span></span>
+<span></span>
+<span><span class="co"># Limpar conjunto de dados</span></span>
+<span><span class="va">outbreak</span> <span class="op">&lt;-</span> <span class="va">outbreak_raw</span> <span class="op">%&gt;%</span> </span>
+<span>     <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>, <span class="va">as.Date</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Visualizar epidemia</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">outbreak</span><span class="op">)</span><span class="op">+</span></span>
+<span>     <span class="fu">geom_histogram</span><span class="op">(</span></span>
+<span>          mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_of_onset</span><span class="op">)</span>,</span>
+<span>          binwidth <span class="op">=</span> <span class="fl">7</span></span>
+<span>     <span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">scale_x_date</span><span class="op">(</span></span>
+<span>    date_format <span class="op">=</span> <span class="st">"%d %m"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><em>Copie</em> todo o código para a área de transferência e execute o seguinte comando:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">reprex</span><span class="fu">::</span><span class="fu"><a href="https://reprex.tidyverse.org/reference/reprex.html">reprex</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Você verá uma saída HTML aparecer no painel RStudio Viewer. Ele conterá todo o seu código e quaisquer avisos, erros ou resultados de plotagem. Essa saída também é copiada para sua área de transferência, para que você possa publicá-la diretamente em um problema do Github ou em uma postagem do fórum.</p>
+<div class="inline-figure"><img src="images/errors_reprex_RStudio1.png" width="100%"></div>
+<ul>
+<li>Se você definir <code>session_info = TRUE</code>, a saída de <code><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html">sessioninfo ::session_info()</a></code> incluírá suas versões do R e dos pacotes R</li>
+<li>Você pode fornecer um diretório de trabalho para <code>wd =</code>
+</li>
+<li>Você pode ler mais sobre os argumentos e possíveis variações em <a href="">documentation</a> ou inserindo <code>?Reprex</code>
+</li>
+</ul>
+<p>No exemplo acima, o comando <code>ggplot()</code> não rodou porque o argumento <code>date_format =</code> não está correto - deveria ser <code>date_labels =</code>.</p>
+</div>
+<div id="dados-mínimos" class="section level3 unnumbered">
+<h3>Dados mínimos<a class="anchor" aria-label="anchor" href="#dados-m%C3%ADnimos"><i class="fas fa-link"></i></a>
+</h3>
+<p>As pessoas que vão te ajudar precisam ser capazes de usar seus dados - de preferência, eles precisam ser capazes de criá-los <em>com código</em>.</p>
+<p>Para criar um conjunto de dados mínimos, considere anonimizar e usar apenas um subconjunto das observações.</p>
+<p>EM CONSTRUÇÃO - você também pode usar a função <code><a href="https://rdrr.io/r/base/dput.html">dput()</a></code> para criar um conjunto mínimo de dados.</p>
+</div>
+</div>
+<div id="postar-em-um-fórum" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Postar em um fórum<a class="anchor" aria-label="anchor" href="#postar-em-um-f%C3%B3rum"><i class="fas fa-link"></i></a>
+</h2>
+<p>Leia muitas postagens do fórum. Entenda quais postagens são bem escritas e quais não são.</p>
+<ol style="list-style-type: decimal">
+<li><p>Primeiro, decida se deseja fazer a pergunta. Você revisou <em>extensivamente</em> o site do fórum, tentando vários termos de pesquisa, para ver se sua pergunta já foi feita?</p></li>
+<li><p>Dê um título informativo à sua pergunta (não algo como “Socorro! Isso não está funcionando!”).</p></li>
+<li><p>Escreva sua pergunta:</p></li>
+</ol>
+<ul>
+<li>Apresente sua situação e problema</li>
+<li>Faça um link com postagens de problemas semelhantes e explique porque eles não responderam à sua pergunta</li>
+<li>Inclua qualquer informação relevante para ajudar alguém que não conhece o contexto do seu trabalho</li>
+<li>Dê um exemplo reprodutível mínimo com as informações do seu trabalho</li>
+<li>Use ortografia, gramática e pontuação adequadas e divida sua pergunta em parágrafos para que seja mais fácil de ler</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Depois de postar, monitore sua pergunta para responder a qualquer pedido de esclarecimento. Seja educado(a) e cortês - muitas vezes as pessoas que respondem estão oferecendo seu tempo para ajudá-lo. Se você tiver uma pergunta de acompanhamento, considere se deve ser uma pergunta postada separada.</p></li>
+<li><p>Marque a pergunta como respondida, <em>se</em> obtiver uma resposta que atenda à solicitação <em>original</em>. Isso ajuda outras pessoas a reconhecerem rapidamente a solução mais tarde.</p></li>
+</ol>
+<p>Leia estas postagens sobre <a href="https://stackoverflow.com/help/how-to-ask">como fazer uma boa pergunta</a> e sobre o<a href="https://stackoverflow.com/conduct">código de conduta do Stack overflow</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="recursos" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Página do Tidyverse sobre como <a href="https://www.tidyverse.org/help/#:~:text=When%20you%20want%20to%20make,to%20load%20the%20reprex%20package.&amp;text=Enter%20reprex()%20in%20the,preview%20of%20your%20rendered%20reprex.">obter ajuda!</a></p>
+<p>Dicas para <a href="https://xiangxing98.github.io/R_Learning/R_Reproducible.nb.html#producing-a-minimal-dataset">produzir um conjunto mínimo de dados</a></p>
+<p>Documentação para a <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/dput">função dput</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"></a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#help"><span class="header-section-number">1</span> Conseguindo ajuda</a></li>
+<li><a class="nav-link" href="#issues-problemas-do-github"><span class="header-section-number">1.1</span> Issues (problemas) do Github</a></li>
+<li>
+<a class="nav-link" href="#exemplo-reprodut%C3%ADvel"><span class="header-section-number">1.2</span> Exemplo reprodutível</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#o-pacote-reprex">O pacote reprex</a></li>
+<li><a class="nav-link" href="#dados-m%C3%ADnimos">Dados mínimos</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#postar-em-um-f%C3%B3rum"><span class="header-section-number">1.3</span> Postar em um fórum</a></li>
+<li><a class="nav-link" href="#recursos"><span class="header-section-number">1.4</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-07-18.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

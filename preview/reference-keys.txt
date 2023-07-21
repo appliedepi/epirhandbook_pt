@@ -1,5 +1,5 @@
 agradecimentos
-conseguir-ajuda
+help
 issues-problemas-do-github
 exemplo-reprodutível
 postar-em-um-fórum

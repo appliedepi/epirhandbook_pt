@@ -21,7 +21,6 @@ documentclass: book
 
 
 
-
 #  {-}
 
 ```{r, out.width = "100%", fig.align = "center", echo=F}
@@ -42,6 +41,8 @@ knitr::include_graphics(here::here("images", "Epi R Handbook banner beige 1500x5
 <!--     <input type="submit" value="FEEDBACK" /> -->
 <!-- </form> -->
 
+
+
 <!-- ======================================================= -->
 <!-- ## An R reference manual for applied epidemiology and public health {.unnumbered} -->
 
@@ -50,33 +51,25 @@ knitr::include_graphics(here::here("images", "Epi R Handbook banner beige 1500x5
 
 <!-- ## About this handbook   -->
 
-**Este manual se esforça para:**  
+## R for applied epidemiology and public health {-}  
 
-* Servir como um manual rápido de referência do código R  
-* Fornecer exemplos centrados em tarefas que abordam problemas epidemiológicos comuns  
-* Auxiliar os epidemiologistas na transição para o R  
-* Ser acessível em ambientes com baixa conectividade com a Internet através de um **[versão offline](Baixar manual e dados)**  
+**Usage**: This handbook has been used over **1 million times by 450,000 people** around the world.
 
-<!-- * Use practical epi examples - cleaning case linelists, making transmission chains and epidemic curves, automated reports and dashboards, modeling incidence and making projections, demographic pyramids and rate standardization, record matching, outbreak detection, survey analysis, survival analysis, GIS basics, contact tracing, phylogenetic trees...   -->
+**Objective:** Serve as a quick R code reference manual (online and **[offline](#data-used)**) with task-centered examples that address common epidemiological problems.  
 
+**Are you just starting with R?** Try our **[free interactive tutorials](https://www.appliedepi.org/tutorial/)** or synchronous, virtual **[intro course](https://www.appliedepi.org/live/)** used by US CDC, WHO, and 75+ other health agencies and Field Epi Training Programs worldwide.  
 
-
-<!-- **How is this different than other R books?**   -->
-
-<!-- * It is community-driven - *written for epidemiologists by epidemiologists* in their spare time and leveraging experience in local, national, academic, and emergency settings   -->
-
-<!-- Dual-column created based on the rmarkdown cookbook here: https://bookdown.org/yihui/rmarkdown-cookbook/multi-column.html -->
-
+**Languages:** [French (Français)](https://epirhandbook.com/fr), [Spanish (Español)](https://epirhandbook.com/es/), [Vietnamese (Tiếng Việt)](https://epirhandbook.com/vn/), [Japanese (日本)](https://epirhandbook.com/jp/), [Turkish (Türkçe)](https://epirhandbook.com/tr/)  
 
 
 <br>
-
+<span style="color: black;">**Written by epidemiologists, for epidemiologists**</span>
 
 :::: {style="display: flex;"}
 
 ::: {}
 ```{r, out.width = "100%", fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "epiRhandbook_HexSticker_500x500.png"))
+knitr::include_graphics(here::here("images", "Applied_Epi_logo.png"))
 ```
 :::
 
@@ -88,17 +81,24 @@ a column separator -->
 :::
 
 ::: {}
-<span style="color: black;">**Escrito por epidemiologistas, para epidemiologistas*</span>
 
-Somos epidemiologistas aplicados de todo o mundo, escrevendo em nosso tempo livre para oferecer este recurso à comunidade. Seu encorajamento e feedback são muito bem-vindos:
+**[Applied Epi](http://www.appliedepi.org)** is a nonprofit organisation and grassroots movement of frontline epis from around the world. We write in our spare time to offer this resource to the community. Your encouragement and feedback is most welcome:  
 
-* **[Formulário](https://forms.gle/A5SnRVws7tPD15Js9)** estruturado de feedback  
-* Email **epiRhandbook@gmail.com** ou tweet **[\@epiRhandbook](https://twitter.com/epirhandbook)**  
-* Submeta issues no nosso **[repositório do Github ](https://github.com/appliedepi/epiRhandbook_pt)**  
+* Visit our **[website](http://www.appliedepi.org)** and **[join our contact list](https://forms.gle/9awNd8syypTSYUsn7)**  
+* **contact@appliedepi.org**, tweet **[\@appliedepi](https://twitter.com/appliedepi)**, or **[LinkedIn](www.linkedin.com/company/appliedepi)**  
+* Submit issues to our **[Github repository](https://github.com/appliedepi/epiRhandbook_eng)**  
 
+**We offer live R training** from instructors with decades of applied epidemiology experience - email us to discuss.
 :::
 
 ::::
+
+
+<form target="_blank" action="https://www.paypal.com/donate" method="post" target="_top">
+<input type="hidden" name="hosted_button_id" value="YTEZELC8VBXV6" />
+<input type="image" src="https://github.com/appliedepi/epiRhandbook_eng/raw/master/images/donate_button_long.png" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" />
+</form>
 
 
 
@@ -108,12 +108,12 @@ Somos epidemiologistas aplicados de todo o mundo, escrevendo em nosso tempo livr
 
 * Navegue pelas páginas do Índice, ou use a caixa de busca
 * Clique nos ícones "copiar" para copiar o código  
-* Você pode seguir - junto com [os dados do exemplo][Fazer o Download do manual e dos dados].  
+* Você pode seguir - junto com [os dados do exemplo](#data-used).  
 * Consulte a seção "Recursos" de cada página para obter mais material  
 
-**Versão off-line***  
+**Versão off-line**
 
-Veja as instruções na página [Fazer o Download do manual e dos dados]].  
+Veja as instruções na página [Fazer o Download do manual e dos dados](#data-used).  
 
 
 **Línguas**  
@@ -127,7 +127,7 @@ Esta é uma versão traduzida para Português. Se você quer colaborar em melhor
 
 Este manual é produzido por uma colaboração de epidemiologistas de todo o mundo, aproveitando a experiência de organizações que incluem agências de saúde locais, estaduais, provinciais e nacionais, a Organização Mundial da Saúde (OMS), Médicos Sem Fronteiras / Médicos sem Fronteiras (MSF), sistemas hospitalares e instituições acadêmicas.
 
-Este manual é **não*** um produto aprovado de qualquer organização específica. Embora nos esforcemos para ser precisos, não damos nenhuma garantia do conteúdo deste livro.  
+Este manual é **não** um produto aprovado de qualquer organização específica. Embora nos esforcemos para ser precisos, não damos nenhuma garantia do conteúdo deste livro.  
 
 
 ### Colaboradores {-}
@@ -142,7 +142,7 @@ Este manual é **não*** um produto aprovado de qualquer organização específi
 
 **Ilustradores**: Calder Fong  
 
-**Tradutores da versão em língua portuguesa (Brasil)**: Carolina Musso, César Augusto Galvão , Halian Vilela, Laís Relvas ,Felipe Cardoso tradução, Rafaela Tadei,  Pauliana Galvão ;  Nathalia Zini ;  Paula Maiçara,  João Pedro Angelici,   Ademar Barbosa Dantas Junior, Eucilene Santana, Hudson Gabriel Virtuoso Fontenelle
+**Tradutores da versão em língua portuguesa (Brasil)**: [Carolina Musso](https://www.linkedin.com/in/carolina-musso-29b627128/), [César Augusto Galvão](https://www.linkedin.com/mwlite/in/cesaraspgalvao) , [Halian Vilela](https://www.linkedin.com/in/halian/), Laís Relvas, Felipe Cardoso, Rafaela Tadei,  [Pauliana Galvão](https://www.linkedin.com/in/pauliana-galvão-2462ab48/), [Nathalia Zini](https://www.linkedin.com/in/nathalia-zini-b12a58196/), [Paula Maçaira](https://www.linkedin.com/in/paulamacaira/), [João Pedro Angelici](https://www.linkedin.com/in/joão-pedro-angelici-4b2701193/), [Ademar Barbosa Dantas Junior](https://www.linkedin.com/in/ademar-dantas-junior/), [Eucilene Santana](https://www.linkedin.com/in/eucilene-santana-92856234/), [Hudson Gabriel Virtuoso Fontenele](https://www.linkedin.com/in/hudson-fontenele-04b148180/)
 
 
 <!-- **Editor-in-Chief:** Neale Batra  -->
@@ -192,7 +192,7 @@ De modo mais geral, as seguintes fontes forneceram inspiração para este manual
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src= "https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Esta obra está licenciada sob uma <a rel="license" href= "http://creativecommons.org/licenses/by-nc-sa/4.0/">Licença Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>.
 
 
-Cursos acadêmicos e programas de treinamento de epidemiologistas são bem-vindos para usar este manual com seus alunos. Se você tiver dúvidas sobre o uso pretendido, envie um e-mail para **epiRhandbook@gmail.com**.
+Cursos acadêmicos e programas de treinamento de epidemiologistas são bem-vindos para usar este manual com seus alunos. Se você tiver dúvidas sobre o uso pretendido, envie um e-mail para **contact@appliedepi.org**.
 
 
 ### Citação {.unnumbered}
@@ -247,7 +247,7 @@ options(scipen=1, digits=7)
 
 <!--chapter:end:index.Rmd-->
 
-# (PART) Preview pages {.unnumbered}
+# (PART) Previsualização das páginas {.unnumbered}
 ```{r include=FALSE, cache=FALSE}
 
 # clear workspace
@@ -292,7 +292,7 @@ options(scipen=1, digits=7)
 <!--chapter:end:new_pages/cat_preview.Rmd-->
 
 
-# Conseguir ajuda  
+# Conseguindo ajuda  {#help}
 
 Esta página aborda sobre como obter ajuda postando um problema (issue) no Github ou postando um exemplo reprodutível ("reprex" ou MRE para *Minimal reprodutible exemple*) em um fórum online.
 
@@ -300,7 +300,7 @@ Esta página aborda sobre como obter ajuda postando um problema (issue) no Githu
 
 Muitos pacotes e projetos R têm seu código hospedado no site Github.com. Você pode se comunicar diretamente com os autores através do site, postando um "Problema".
 
-Leia mais sobre como armazenar seu trabalho no Github na página [Colaboração e Github]. 
+Leia mais sobre como armazenar seu trabalho no Github na página [Colaboração e Github](#collaboration). 
 
 No Github, cada projeto está contido em um *repositório*. Cada repositório contém código, dados, saídas, documentação de ajuda etc. Existe também um veículo de comunicação com os autores denominado "Problemas".  
 
