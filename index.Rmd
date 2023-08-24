@@ -56,7 +56,9 @@ knitr::include_graphics(here::here("images", "Epi R Handbook Banner Portuguese 1
 
 **Você está começando a aprender R agora?** Conheça nossos [**tutoriais interativos gratuitos**](https://www.appliedepi.org/tutorial/) ou o [**curso introdutório**](https://www.appliedepi.org/live/) síncrono e virtual utilizado pelo CDC dos EUA, pela OMS, e mais de 75 outras agências de saúde e programas de treinamento em Epidemiologia de Campo.
 
-**Idiomas:** [Inglês (English)](https://www.epirhandbook.com/en), [Francês (Français)](https://epirhandbook.com/fr), [Espanhol (Español)](https://epirhandbook.com/es/), [Vietnamita (Tiếng Việt)](https://epirhandbook.com/vn/), [Japonês (日本)](https://epirhandbook.com/jp/), [Turco (Türkçe)](https://epirhandbook.com/tr/)
+**Idiomas:** [Inglês (English)](https://www.epirhandbook.com/en), [Francês (Français)](https://epirhandbook.com/fr), [Espanhol (Español)](https://epirhandbook.com/es/), [Vietnamita (Tiếng Việt)](https://epirhandbook.com/vn/), [Japonês (日本)](https://epirhandbook.com/jp/), [Turco (Türkçe)](https://epirhandbook.com/tr/)  
+
+Esta é uma versão traduzida para Português. Se você quer colaborar em melhorá-la, corrigindo algum erro, ou traduzir para outro idoma, por favor, nos contate!
 
 <br> [**Escrito por epidemiologistas, para epidemiologistas**]{style="color: black;"}
 
@@ -106,13 +108,11 @@ a column separator -->
 
 Veja as instruções na página [Fazer o Download do manual e dos dados](#data-used).
 
-**Idiomas**
 
-Esta é uma versão traduzida para Português. Se você quer colaborar em melhorá-la, corrigindo algum erro, ou traduzir para outro idoma, por favor, nos contate!
 
 <!-- ======================================================= -->
 
-## Agradecimentos
+## Agradecimentos {.unnumbered}
 
 Este manual é produzido por uma colaboração de epidemiologistas de todo o mundo, aproveitando a experiência de organizações que incluem agências de saúde locais, estaduais, provinciais e nacionais, a Organização Mundial da Saúde (OMS), Médicos Sem Fronteiras / Médicos sem Fronteiras (MSF), sistemas hospitalares e instituições acadêmicas.
 
@@ -121,8 +121,6 @@ Este manual **não** é um produto aprovado de qualquer organização específic
 ### Colaboradores {.unnumbered}
 
 **Editor:** [Neale Batra](https://www.linkedin.com/in/neale-batra/)
-
-**Equipe principal do projeto:** [Neale Batra](https://www.linkedin.com/in/neale-batra/), [Alex Spina](https://github.com/aspina7), [Amrish Baidjoe](https://twitter.com/Ammer_B), Pat Keating, [Henry Laurenson-Schafer](https://github.com/henryls1), [Finlay Campbell](https://github.com/finlaycampbell), [Paula Blomquist](https://www.linkedin.com/in/paula-bianca-blomquist-53188186/), [Aminata Ndiaye](https://twitter.com/aminata_fadl), [Isaac Florence](www.Twitter.com/isaacatflorence), [Isha Berry](https://twitter.com/ishaberry2), [Mathilde Mousset](https://mathildemousset.wordpress.com/research/), [Sara Hollis](https://www.linkedin.com/in/saramhollis/), [Liza Coyer](https://www.linkedin.com/in/liza-coyer-86022040/), Kate Kelsey, Marie-Amélie Degail Chabrat, Joao Muianga
 
 **Autores**: [Neale Batra](https://www.linkedin.com/in/neale-batra/), [Alex Spina](https://github.com/aspina7), [Paula Blomquist](https://www.linkedin.com/in/paula-bianca-blomquist-53188186/), [Finlay Campbell](https://github.com/finlaycampbell), [Henry Laurenson-Schafer](https://github.com/henryls1), [Isaac Florence](www.Twitter.com/isaacatflorence), [Natalie Fischer](https://www.linkedin.com/in/nataliefischer211/), [Aminata Ndiaye](https://twitter.com/aminata_fadl), [Liza Coyer](https://www.linkedin.com/in/liza-coyer-86022040/), [Jonathan Polonsky](https://twitter.com/jonny_polonsky), [Yurie Izawa](https://ch.linkedin.com/in/yurie-izawa-a1590319), [Chris Bailey](https://twitter.com/cbailey_58?lang=en), [Daniel Molling](https://www.linkedin.com/in/daniel-molling-4005716a/), [Isha Berry](https://twitter.com/ishaberry2), [Emma Buajitti](https://twitter.com/buajitti), [Mathilde Mousset](https://mathildemousset.wordpress.com/research/), [Sara Hollis](https://www.linkedin.com/in/saramhollis/), Wen Lin
 
