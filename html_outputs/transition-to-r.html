@@ -4,38 +4,62 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>4 Transition to R | The Epidemiologist R Handbook</title>
+<title>4 Transição para o R | Manual de R para Epidemiologistas</title>
 <meta name="author" content="the handbook team">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.9/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Abaixo, fornecemos alguns conselhos e recursos se você estiver fazendo a transição para o R. O R foi lançado no final dos anos 90 e desde então, seu escopo tem crescido dramaticamente. Suas...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="4 Transição para o R | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Abaixo, fornecemos alguns conselhos e recursos se você estiver fazendo a transição para o R. O R foi lançado no final dos anos 90 e desde então, seu escopo tem crescido dramaticamente. Suas...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4 Transição para o R | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Abaixo, fornecemos alguns conselhos e recursos se você estiver fazendo a transição para o R. O R foi lançado no final dos anos 90 e desde então, seu escopo tem crescido dramaticamente. Suas...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.18/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
-<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
-<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
-<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
-<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/vis-4.20.1/vis.css" rel="stylesheet">
-<script src="libs/vis-4.20.1/vis.min.js"></script><script src="libs/visNetwork-binding-2.0.9/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<script src="libs/plotly-basic-1.57.1/plotly-basic-1.57.1.min.js"></script><script src="libs/plotly-cartesian-1.57.1/plotly-cartesian-1.57.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-8.1.2/css/motion.css" rel="stylesheet">
-<script src="libs/highcharts-8.1.2/highcharts.js"></script><script src="libs/highcharts-8.1.2/highcharts-3d.js"></script><script src="libs/highcharts-8.1.2/highcharts-more.js"></script><script src="libs/highcharts-8.1.2/modules/stock.js"></script><script src="libs/highcharts-8.1.2/modules/map.js"></script><script src="libs/highcharts-8.1.2/modules/annotations.js"></script><script src="libs/highcharts-8.1.2/modules/data.js"></script><script src="libs/highcharts-8.1.2/modules/drilldown.js"></script><script src="libs/highcharts-8.1.2/modules/item-series.js"></script><script src="libs/highcharts-8.1.2/modules/offline-exporting.js"></script><script src="libs/highcharts-8.1.2/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-8.1.2/modules/exporting.js"></script><script src="libs/highcharts-8.1.2/modules/export-data.js"></script><script src="libs/highcharts-8.1.2/modules/funnel.js"></script><script src="libs/highcharts-8.1.2/modules/heatmap.js"></script><script src="libs/highcharts-8.1.2/modules/treemap.js"></script><script src="libs/highcharts-8.1.2/modules/sankey.js"></script><script src="libs/highcharts-8.1.2/modules/dependency-wheel.js"></script><script src="libs/highcharts-8.1.2/modules/organization.js"></script><script src="libs/highcharts-8.1.2/modules/solid-gauge.js"></script><script src="libs/highcharts-8.1.2/modules/streamgraph.js"></script><script src="libs/highcharts-8.1.2/modules/sunburst.js"></script><script src="libs/highcharts-8.1.2/modules/vector.js"></script><script src="libs/highcharts-8.1.2/modules/wordcloud.js"></script><script src="libs/highcharts-8.1.2/modules/xrange.js"></script><script src="libs/highcharts-8.1.2/modules/tilemap.js"></script><script src="libs/highcharts-8.1.2/modules/venn.js"></script><script src="libs/highcharts-8.1.2/modules/gantt.js"></script><script src="libs/highcharts-8.1.2/modules/timeline.js"></script><script src="libs/highcharts-8.1.2/modules/parallel-coordinates.js"></script><script src="libs/highcharts-8.1.2/modules/bullet.js"></script><script src="libs/highcharts-8.1.2/modules/coloraxis.js"></script><script src="libs/highcharts-8.1.2/modules/dumbbell.js"></script><script src="libs/highcharts-8.1.2/modules/lollipop.js"></script><script src="libs/highcharts-8.1.2/modules/series-label.js"></script><script src="libs/highcharts-8.1.2/plugins/motion.js"></script><script src="libs/highcharts-8.1.2/custom/reset.js"></script><script src="libs/highcharts-8.1.2/modules/boost.js"></script><script src="libs/highchart-binding-0.8.2/highchart.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
-</head>
-<body data-spy="scroll" data-target="#toc">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<p>
+
+    Você precisa de ajuda para aprender R? Inscreva-se no curso de introdução ao R da Applied Epi, experimente nossos tutoriais gratuitos sobre o R, publique em nosso fórum de perguntas e respostas ou solicite nosso suporte ao R.
+
+    </p>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
 <div class="container-fluid">
 <div class="row">
   <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     <div class="d-flex align-items-start justify-content-between">
       <h1>
-        <a href="index.html" title="">The Epidemiologist R Handbook</a>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
       </h1>
       <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
     </div>
@@ -48,63 +72,61 @@
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html"></a></li>
-<li class="book-part">About this book</li>
-<li><a class="" href="editorial-and-technical-notes.html"><span class="header-section-number">1</span> Editorial and technical notes</a></li>
-<li><a class="" href="download-handbook-and-data.html"><span class="header-section-number">2</span> Download handbook and data</a></li>
-<li class="book-part">Basics</li>
-<li><a class="" href="r-basics.html"><span class="header-section-number">3</span> R Basics</a></li>
-<li><a class="active" href="transition-to-r.html"><span class="header-section-number">4</span> Transition to R</a></li>
-<li><a class="" href="suggested-packages-1.html"><span class="header-section-number">5</span> Suggested packages</a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="active" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
 <li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
-<li><a class="" href="import-and-export.html"><span class="header-section-number">7</span> Import and export</a></li>
-<li class="book-part">Data Management</li>
-<li><a class="" href="cleaning-data-and-core-functions.html"><span class="header-section-number">8</span> Cleaning data and core functions</a></li>
-<li><a class="" href="working-with-dates.html"><span class="header-section-number">9</span> Working with dates</a></li>
-<li><a class="" href="characters-and-strings.html"><span class="header-section-number">10</span> Characters and strings</a></li>
-<li><a class="" href="factors.html"><span class="header-section-number">11</span> Factors</a></li>
-<li><a class="" href="pivoting-data.html"><span class="header-section-number">12</span> Pivoting data</a></li>
-<li><a class="" href="grouping-data.html"><span class="header-section-number">13</span> Grouping data</a></li>
-<li><a class="" href="joining-data.html"><span class="header-section-number">14</span> Joining data</a></li>
-<li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
-<li><a class="" href="iteration-loops-and-lists.html"><span class="header-section-number">16</span> Iteration, loops, and lists</a></li>
-<li class="book-part">Analysis</li>
-<li><a class="" href="descriptive-tables.html"><span class="header-section-number">17</span> Descriptive tables</a></li>
-<li><a class="" href="simple-statistical-tests.html"><span class="header-section-number">18</span> Simple statistical tests</a></li>
-<li><a class="" href="univariate-and-multivariable-regression.html"><span class="header-section-number">19</span> Univariate and multivariable regression</a></li>
-<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Missing data</a></li>
-<li><a class="" href="standardised-rates.html"><span class="header-section-number">21</span> Standardised rates</a></li>
-<li><a class="" href="moving-averages.html"><span class="header-section-number">22</span> Moving averages</a></li>
-<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">23</span> Time series and outbreak detection</a></li>
-<li><a class="" href="epidemic-modeling.html"><span class="header-section-number">24</span> Epidemic modeling</a></li>
-<li><a class="" href="contact-tracing-1.html"><span class="header-section-number">25</span> Contact tracing</a></li>
-<li><a class="" href="survey-analysis.html"><span class="header-section-number">26</span> Survey analysis</a></li>
-<li><a class="" href="survival-analysis.html"><span class="header-section-number">27</span> Survival analysis</a></li>
-<li><a class="" href="gis-basics.html"><span class="header-section-number">28</span> GIS basics</a></li>
-<li class="book-part">Data Visualization</li>
-<li><a class="" href="tables-for-presentation.html"><span class="header-section-number">29</span> Tables for presentation</a></li>
-<li><a class="" href="ggplot-basics.html"><span class="header-section-number">30</span> ggplot basics</a></li>
-<li><a class="" href="ggplot-tips.html"><span class="header-section-number">31</span> ggplot tips</a></li>
-<li><a class="" href="epidemic-curves.html"><span class="header-section-number">32</span> Epidemic curves</a></li>
-<li><a class="" href="demographic-pyramids-and-likert-scales.html"><span class="header-section-number">33</span> Demographic pyramids and Likert-scales</a></li>
-<li><a class="" href="heat-plots.html"><span class="header-section-number">34</span> Heat plots</a></li>
-<li><a class="" href="diagrams-and-charts.html"><span class="header-section-number">35</span> Diagrams and charts</a></li>
-<li><a class="" href="combinations-analysis.html"><span class="header-section-number">36</span> Combinations analysis</a></li>
-<li><a class="" href="transmission-chains.html"><span class="header-section-number">37</span> Transmission chains</a></li>
-<li><a class="" href="phylogenetic-trees-1.html"><span class="header-section-number">38</span> Phylogenetic trees</a></li>
-<li><a class="" href="interactive-plots.html"><span class="header-section-number">39</span> Interactive plots</a></li>
-<li class="book-part">Reports and dashboards</li>
-<li><a class="" href="reports-with-r-markdown.html"><span class="header-section-number">40</span> Reports with R Markdown</a></li>
-<li><a class="" href="organizing-routine-reports.html"><span class="header-section-number">41</span> Organizing routine reports</a></li>
-<li><a class="" href="dashboards-with-r-markdown.html"><span class="header-section-number">42</span> Dashboards with R Markdown</a></li>
-<li><a class="" href="dashboards-with-shiny.html"><span class="header-section-number">43</span> Dashboards with Shiny</a></li>
-<li class="book-part">Miscellaneous</li>
-<li><a class="" href="writing-functions-1.html"><span class="header-section-number">44</span> Writing functions</a></li>
-<li><a class="" href="directory-interactions.html"><span class="header-section-number">45</span> Directory interactions</a></li>
-<li><a class="" href="version-control-and-collaboration-with-git-and-github.html"><span class="header-section-number">46</span> Version control and collaboration with Git and Github</a></li>
-<li><a class="" href="common-errors.html"><span class="header-section-number">47</span> Common errors</a></li>
-<li><a class="" href="getting-help.html"><span class="header-section-number">48</span> Getting help</a></li>
-<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">49</span> R on network drives</a></li>
-<li><a class="" href="data-table.html"><span class="header-section-number">50</span> Data Table</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
 </ul>
 
         <div class="book-extra">
@@ -112,92 +134,90 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="transition-to-r" class="section level1" number="4">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="transition-to-R" class="section level1" number="4">
 <h1>
-<span class="header-section-number">4</span> Transition to R<a class="anchor" aria-label="anchor" href="#transition-to-r"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4</span> Transição para o R<a class="anchor" aria-label="anchor" href="#transition-to-R"><i class="fas fa-link"></i></a>
 </h1>
-<p>Below, we provide some advice and resources if you are transitioning to R.</p>
-<p>R was introduced in the late 1990s and has since grown dramatically in scope. Its capabilities are so extensive that commercial alternatives have reacted to R developments in order to stay competitive! (<a href="https://www.inwt-statistics.com/read-blog/comparison-of-r-python-sas-spss-and-stata.html">read this article comparing R, SPSS, SAS, STATA, and Python</a>).</p>
-<p>Moreover, R is much easier to learn than it was 10 years ago. Previously, R had a reputation of being difficult for beginners. It is now much easier with friendly user-interfaces like RStudio, intuitive code like the <strong>tidyverse</strong>, and many tutorial resources.</p>
-<p><span style="color: darkgreen;"><strong>Do not be intimidated - come discover the world of R!</strong></span></p>
+<p>Abaixo, fornecemos alguns conselhos e recursos se você estiver fazendo a transição para o R.</p>
+<p>O R foi lançado no final dos anos 90 e desde então, seu escopo tem crescido dramaticamente. Suas capacidades são tão amplas que programas alternativos comerciais reagiram ao surgimento do R para se manterem competitivas! (<a href="https://www.inwt-statistics.com/read-blog/comparison-of-r-python-sas-spss-and-stata.html">leia este artigo comparando R, SPSS, SAS, STATA, e Python</a>).</p>
+<p>Além disso, o R é muito mais fácil de aprender do que era há 10 anos. Anteriormente, o R tinha a reputação de ser difícil para os iniciantes. Agora é muito mais fácil de aprender, com interfaces de usuário amigáveis como RStudio, código intuitivo como o <strong>tidyverse</strong>, e muitos recursos tutoriais.</p>
+<p><span style="color: darkgreen;"><strong>Não se sinta intimidado - venha descobrir o mundo do R!</strong></span></p>
 <div class="inline-figure"><img src="images/transition_door.png" width="75%" height="75%" style="display: block; margin: auto;"></div>
-<div id="from-excel" class="section level2" number="4.1">
+<div id="partindo-do-excel" class="section level2" number="4.1">
 <h2>
-<span class="header-section-number">4.1</span> From Excel<a class="anchor" aria-label="anchor" href="#from-excel"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.1</span> Partindo do Excel<a class="anchor" aria-label="anchor" href="#partindo-do-excel"><i class="fas fa-link"></i></a>
 </h2>
-<p>Transitioning from Excel directly to R is a very achievable goal. It may seem daunting, but you can do it!</p>
-<p>It is true that someone with strong Excel skills can do very advanced activities in Excel alone - even using scripting tools like VBA. Excel is used across the world and is an essential tool for an epidemiologist. However, complementing it with R can dramatically improve and expand your work flows.</p>
-<div id="benefits" class="section level3 unnumbered">
-<h3>Benefits<a class="anchor" aria-label="anchor" href="#benefits"><i class="fas fa-link"></i></a>
+<p>A transição do Excel diretamente para R é uma meta muito viável. Pode parecer assustador, mas você consegue fazer isso!</p>
+<p>É verdade que alguém com fortes habilidades no Excel pode fazer atividades muito avançadas somente no Excel - até mesmo usando ferramentas de programação em código como VBA. O Excel é usado em todo o mundo e é uma ferramenta essencial para um epidemiologista. Entretanto, complementá-lo com R pode melhorar drasticamente e expandir seus fluxos de trabalho.</p>
+<div id="benefícios" class="section level3 unnumbered">
+<h3>Benefícios<a class="anchor" aria-label="anchor" href="#benef%C3%ADcios"><i class="fas fa-link"></i></a>
 </h3>
-<p>You will find that using R offers immense benefits in time saved, more consistent and accurate analysis, reproducibility, shareability, and faster error-correction. Like any new software there is a learning “curve” of time you must invest to become familiar. The dividends will be significant and immense scope of new possibilities will open to you with R.</p>
-<p>Excel is a well-known software that can be easy for a beginner to use to produce simple analysis and visualizations with “point-and-click”. In comparison, it can take a couple weeks to become comfortable with R functions and interface. However, R has evolved in recent years to become much more friendly to beginners.</p>
-<p>Many Excel workflows rely on memory and on repetition - thus, there is much opportunity for error. Furthermore, generally the data cleaning, analysis methodology, and equations used are hidden from view. It can require substantial time for a new colleague to learn what an Excel workbook is doing and how to troubleshoot it. With R, all the steps are explicitly written in the script and can be easily viewed, edited, corrected, and applied to other datasets.</p>
-<p><strong>To begin your transition from Excel to R you must adjust your mindset in a few important ways:</strong></p>
+<p>Você descobrirá que o uso de R oferece imensos benefícios, desde tempo economizado, análises mais consistentes e precisas, reprodutibilidade, compartilhabilidade e correção mais rápida de erros. Como qualquer software novo, há uma “curva” de aprendizado que reflete o tempo que você deve investir para se familiarizar em ele. Os dividendos serão significativos e um imenso escopo de novas possibilidades se abrirá para você com o R.</p>
+<p>Excel é um software bem conhecido que pode ser fácil para um iniciante usar para produzir análises e visualizações simples com o “apontar e clicar”. Em comparação, pode levar algumas semanas para se tornar confortável com as funções e a interface do R. No entanto, o R evoluiu nos últimos anos para se tornar muito mais amigável para iniciantes.</p>
+<p>Muitos fluxos de trabalho do Excel dependem da memória e da repetição - portanto, há muitas oportunidades de erro. Além disso, geralmente a limpeza de dados, a metodologia de análise e as equações utilizadas são ocultadas da vista. Pode ser necessário um tempo substancial para que um novo colega aprenda o que uma pasta de trabalho Excel está fazendo e como resolvê-la. Com R, todas as etapas são explicitamente escritas no script e podem ser facilmente visualizadas, editadas, corrigidas e aplicadas a outros conjuntos de dados.</p>
+<p><strong>Para iniciar sua transição do Excel para o R, você deve ajustar sua mentalidade de algumas maneiras importantes:</strong></p>
 </div>
-<div id="tidy-data" class="section level3 unnumbered">
-<h3>Tidy data<a class="anchor" aria-label="anchor" href="#tidy-data"><i class="fas fa-link"></i></a>
+<div id="dados-bem-arrumados-tidy-data" class="section level3 unnumbered">
+<h3>Dados bem arrumados (<em>tidy data</em>)<a class="anchor" aria-label="anchor" href="#dados-bem-arrumados-tidy-data"><i class="fas fa-link"></i></a>
 </h3>
-<p>Use machine-readable “tidy” data instead of messy “human-readable” data. These are the three main requirements for “tidy” data, as explained in this tutorial on <a href="https://r4ds.had.co.nz/tidy-data.html">“tidy” data in R</a>:</p>
+<p>Use dados “arrumados” (<em>tidy</em>), isto é, que sejam legíveis para a máquina em vez de dados bagunçados, que são apenas “legíveis para humanos”. Estes são os três principais requisitos para dados do tipo “<em>tidy</em>”, como explicado neste tutorial sobre <a href="https://r4ds.had.co.nz/tidy-data.html">dados “tidy” em R</a>:</p>
 <ul>
-<li>Each variable must have its own column<br>
+<li>Cada variável deve ter sua própria coluna<br>
 </li>
-<li>Each observation must have its own row<br>
-</li>
-<li>Each value must have its own cell</li>
+<li>Cada observação deve ter sua própria linha</li>
+<li>Cada valor deve ter sua própria célula</li>
 </ul>
-<p>To Excel users - think of the role that <a href="https://exceljet.net/excel-tables">Excel “tables”</a> play in standardizing data and making the format more predictable.</p>
-<p>An example of “tidy” data would be the case linelist used throughout this handbook - each variable is contained within one column, each observation (one case) has it’s own row, and every value is in just one cell. Below you can view the first 50 rows of the linelist:</p>
-<div id="htmlwidget-19849bc652a09c59d09f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-19849bc652a09c59d09f">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Missing","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Missing","Missing","Missing","Missing","Port Hospital","Military Hospital","Missing","Missing","Other","Port Hospital","Port Hospital","Port Hospital","Missing","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Missing","Other","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Missing","Military Hospital","Other","Missing","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Central Hospital","Military Hospital","Other","Other","Other","Missing","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Missing"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.46183062600728,8.46272931462646,8.46144367534271,8.46191259217774,8.47292327643506,8.48401630165138,8.45837125340844,8.47761705512509,8.47570184950483,8.47779946878972,8.47145134147474,8.47804840685363,8.48528034195779,8.46957530395867,8.45957352078114,8.47404889511544,8.48802917129884,8.473437335922,8.48408263734462,8.46242233645879,8.47026822126572,8.46398447480533,8.4641347894342,8.45623094629607,8.48334624336805,8.47493999153642,8.47832062438022,8.4693933891765,8.48480589906514,8.47121232619015,8.48438437371817,8.48466158574339,8.47714159984428,8.46238127010609,8.45568597813113,8.4632880274758,8.47940722413856,8.46353857052336,8.46178968158864,8.47508713872833,8.45825808128071,8.4532568143863,8.4732571907655,8.47911586641933,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.8184429761563,16.0652496292635,22.4965706447188,71.4144019043841,41.6171224732461,62.0953890870657,0,16.8376536925366,22.7903289734443,53.4119897959184,24.2802636142907,22.4600343506408,54.320987654321,41.0578432556455,28.5664819944598,17.0320552013276,25.0412914912888,38.7172182043977,27.3876813705495,31.5555555555556,14.8069075945662,30.8839811199813,26.6193433895297,59.375,96.6183574879227,19.2394748755093,84.9403122130395,18.4199377406104,27.7722674072605,41.3223140495868,17.2080666586161,24.1671624033314,15.7218971089178,428.994082840237,27.9930220292912,243.261012491782,20.2395007589813,30.527446435638,25.15589569161,47,39.04,31.0661643201798,77.9683671196257,29.5165961238583,166.493236212279,100.308641975309,37.76,20.6037803457852,23.458562375267],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><em>The main reason one encounters non-tidy data is because many Excel spreadsheets are designed to prioritize easy reading by humans, not easy reading by machines/software.</em></p>
-<p>To help you see the difference, below are some fictional examples of <strong>non-tidy data</strong> that prioritize <em>human</em>-readability over <em>machine</em>-readability:</p>
+<p>Para os usuários do Excel - pense no papel que <a href="https://exceljet.net/excel-tables">as “tabelas” Excel</a> desempenham na padronização dos dados e na maior previsibilidade do formato.</p>
+<p>Um exemplo de dados “<em>tidy</em>” seria a lista (<em>linelist</em>) de casos utilizada ao longo deste manual - cada variável está contida dentro de uma coluna, cada observação (um caso) tem sua própria linha, e cada valor está em apenas uma célula. Abaixo você pode ver as primeiras 50 linhas desta <em>linelist</em>:</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d9f4b82e48cb80599f62" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d9f4b82e48cb80599f62">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Ausente","Ausente","Ausente","Ausente","Port Hospital","Military Hospital","Ausente","Ausente","Other","Port Hospital","Port Hospital","Port Hospital","Ausente","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Ausente","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Ausente","Military Hospital","Other","Ausente","Ausente","Port Hospital","Port Hospital","Port Hospital","Ausente","Central Hospital","Military Hospital","Other","Other","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Ausente"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.461830626007281,8.462729314626459,8.461443675342711,8.46191259217774,8.472923276435059,8.48401630165138,8.458371253408441,8.477617055125091,8.47570184950483,8.477799468789719,8.47145134147474,8.478048406853629,8.48528034195779,8.469575303958671,8.45957352078114,8.474048895115439,8.488029171298839,8.473437335922,8.484082637344621,8.46242233645879,8.470268221265719,8.463984474805329,8.464134789434199,8.456230946296071,8.48334624336805,8.47493999153642,8.47832062438022,8.469393389176499,8.48480589906514,8.47121232619015,8.48438437371817,8.484661585743391,8.477141599844281,8.462381270106089,8.455685978131131,8.4632880274758,8.47940722413856,8.46353857052336,8.461789681588639,8.47508713872833,8.458258081280711,8.4532568143863,8.4732571907655,8.479115866419329,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.81844297615629,16.06524962926347,22.49657064471879,71.41440190438405,41.61712247324614,62.09538908706566,0,16.83765369253662,22.79032897344431,53.41198979591836,24.28026361429067,22.46003435064077,54.32098765432099,41.05784325564545,28.56648199445983,17.03205520132763,25.04129149128882,38.7172182043977,27.3876813705495,31.55555555555556,14.80690759456621,30.88398111998135,26.61934338952972,59.37499999999999,96.61835748792272,19.23947487550928,84.94031221303948,18.41993774061044,27.77226740726046,41.32231404958677,17.20806665861611,24.16716240333135,15.72189710891781,428.9940828402366,27.99302202929125,243.2610124917817,20.23950075898128,30.52744643563797,25.15589569160998,47,39.04,31.06616432017979,77.96836711962574,29.51659612385831,166.4932362122789,100.3086419753086,37.76,20.60378034578518,23.45856237526698],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p><em>O principal motivo pelo qual entramos dados não-arrumados por aí (</em>non-tidy<em>) se deve ao fato de muitas planilhas Excel serem projetadas para priorizar a leitura fácil por humanos, não a leitura fácil por máquinas/software.</em></p>
+<p>Para ajudá-lo a ver a diferença, abaixo estão alguns exemplos fictícios de <strong>dados não-arrumados</strong> que priorizam leitura por <em>humanos</em> em vez de leitura por <em>máquina</em>:</p>
 <div class="inline-figure"><img src="images/Excel_nonTidy_1.png" width="100%" height="75%" style="display: block; margin: auto;"></div>
-<p><em>Problems:</em> In the spreadsheet above, there are <em>merged cells</em> which are not easily digested by R. Which row should be considered the “header” is not clear. A color-based dictionary is to the right side and cell values are represented by colors - which is also not easily interpreted by R (nor by humans with color-blindness!). Furthermore, different pieces of information are combined into one cell (multiple partner organizations working in one area, or the status “TBC” in the same cell as “Partner D”).</p>
+<p><em>Problemas:</em> Na planilha acima, há <em>células mescladas</em> que não são facilmente digeridas pelo R. Qual linha deve ser considerada o “cabeçalho” não está totalmente clara. Um dicionário baseado em cores está do lado direito e os valores das células são representados por cores - o que também não é facilmente interpretado pelo R (nem por humanos daltônicos!). Além disso, diferentes pedaços de informação são combinados em uma célula (múltiplas organizações parceiras trabalhando em uma área, ou o status “TBC” na mesma célula que “Parceiro (<em>partner</em>) D”).</p>
 <div class="inline-figure"><img src="images/Excel_nonTidy_2.png" width="100%" height="100%" style="display: block; margin: auto;"></div>
-<p><em>Problems:</em> In the spreadsheet above, there are numerous extra empty rows and columns within the dataset - this will cause cleaning headaches in R. Furthermore, the GPS coordinates are spread across two rows for a given treatment center. As a side note - the GPS coordinates are in two different formats!</p>
-<p>“Tidy” datasets may not be as readable to a human eye, but they make data cleaning and analysis much easier! Tidy data can be stored in various formats, for example “long” or “wide”"(see page on <a href="pivoting-data.html#pivoting-data">Pivoting data</a>), but the principles above are still observed.</p>
+<p><em>Problemas:</em> Na planilha acima, há numerosas linhas e colunas vazias extras dentro do conjunto de dados - isto causará dores de cabeça para a limpeza do banco no R. Além disso, as coordenadas GPS estão espalhadas por duas linhas para um determinado centro de tratamento. Como nota lateral - as coordenadas GPS estão em dois formatos diferentes!</p>
+<p>Os conjuntos de dados “tidy” podem não ser tão legíveis a um olho humano, mas tornam a limpeza e análise dos dados muito mais fácil! Dados “tidy” podem ser armazenados em vários formatos, por exemplo “longo/comprido” (<em>long</em>) ou “largo/amplo” (<em>wide</em>) (ver página em <a href="pivoting.html#pivoting">Pivotando dados</a>), mas os princípios acima serão sempre observados.</p>
 </div>
-<div id="functions-1" class="section level3 unnumbered">
-<h3>Functions<a class="anchor" aria-label="anchor" href="#functions-1"><i class="fas fa-link"></i></a>
+<div id="funções" class="section level3 unnumbered">
+<h3>Funções<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
 </h3>
-<p>The R word “function” might be new, but the concept exists in Excel too as <em>formulas</em>. Formulas in Excel also require precise syntax (e.g. placement of semicolons and parentheses). All you need to do is learn a few new functions and how they work together in R.</p>
+<p>A palavra “função” em R pode ser nova, mas o conceito também existe no Excel como <em>fórmulas</em>. As fórmulas no Excel também requerem sintaxe precisa (por exemplo, colocação de ponto-e-vírgula e parênteses). Tudo o que você precisa fazer é aprender algumas novas funções e como elas funcionam juntas em R.</p>
 </div>
 <div id="scripts-1" class="section level3 unnumbered">
 <h3>Scripts<a class="anchor" aria-label="anchor" href="#scripts-1"><i class="fas fa-link"></i></a>
 </h3>
-<p>Instead of clicking buttons and dragging cells you will be writing <em>every</em> step and procedure into a “script”.
-Excel users may be familiar with “VBA macros” which also employ a scripting approach.</p>
-<p><em>The R script consists of step-by-step instructions.</em> This allows any colleague to read the script and easily see the steps you took. This also helps de-bug errors or inaccurate calculations. See the <a href="r-basics.html#r-basics">R basics</a> section on scripts for examples.</p>
-<p>Here is an example of an R script:</p>
+<p>Em vez de clicar nos botões e arrastar as células, você estará escrevendo <em>todos</em> os passos e procedimentos em um “roteiro” (daqui em diante referido como <em>script</em>).
+Os usuários do Excel podem estar familiarizados com “macros VBA” que também empregam uma abordagem de códigos de programação.</p>
+<p><em>O script R consiste de instruções passo a passo.</em> Isto permite que qualquer colega leia o script e veja facilmente os passos que você deu. Isto também ajuda a eliminar erros ou cálculos imprecisos. Veja a seção <a href="basics.html#basics">Introdução ao R</a> sobre scripts para exemplos.</p>
+<p>Aqui está um exemplo de um script em R:</p>
 <div class="inline-figure"><img src="images/example_script.png" width="75%" height="75%" style="display: block; margin: auto;"></div>
 </div>
-<div id="excel-to-r-resources" class="section level3 unnumbered">
-<h3>Excel-to-R resources<a class="anchor" aria-label="anchor" href="#excel-to-r-resources"><i class="fas fa-link"></i></a>
+<div id="do-excel-para-r-recursos" class="section level3 unnumbered">
+<h3>Do Excel-para-R: recursos<a class="anchor" aria-label="anchor" href="#do-excel-para-r-recursos"><i class="fas fa-link"></i></a>
 </h3>
-<p>Here are some links to tutorials to help you transition to R from Excel:</p>
 <ul>
 <li>
 <a href="https://www.northeastern.edu/graduate/blog/r-vs-excel/">R vs. Excel</a><br>
 </li>
-<li><a href="https://rstudio-conf-2020.github.io/r-for-excel/">RStudio course in R for Excel users</a></li>
+<li><a href="https://rstudio-conf-2020.github.io/r-for-excel/">curso RStudio em R para usuários do Excel</a></li>
 </ul>
 </div>
-<div id="r-excel-interaction" class="section level3 unnumbered">
-<h3>R-Excel interaction<a class="anchor" aria-label="anchor" href="#r-excel-interaction"><i class="fas fa-link"></i></a>
+<div id="interação-r-excel" class="section level3 unnumbered">
+<h3>Interação R-Excel<a class="anchor" aria-label="anchor" href="#intera%C3%A7%C3%A3o-r-excel"><i class="fas fa-link"></i></a>
 </h3>
-<p>R has robust ways to import Excel workbooks, work with the data, export/save Excel files, and work with the nuances of Excel sheets.</p>
-<p>It is true that some of the more aesthetic Excel formatting can get lost in translation (e.g. italics, sideways text, etc.). If your work flow requires passing documents back-and-forth between R and Excel while retaining the original Excel formatting, try packages such as <strong>openxlsx</strong>.</p>
+<p>R tem formas robustas de importar pastas de trabalho do Excel, trabalhar com os dados, exportar/guardar arquivos Excel e trabalhar com as nuances das planilhas Excel.</p>
+<p>É verdade que algumas das formatações mais estéticas do Excel podem se perder na tradução (por exemplo, itálico, texto lateral, etc.). Se seu fluxo de trabalho exigir a passagem de documentos entre R e Excel enquanto mantém a formatação original do Excel, tente pacotes como <strong>openxlsx</strong>*.</p>
 </div>
 </div>
-<div id="from-stata" class="section level2" number="4.2">
+<div id="partindo-do-stata" class="section level2" number="4.2">
 <h2>
-<span class="header-section-number">4.2</span> From Stata<a class="anchor" aria-label="anchor" href="#from-stata"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.2</span> Partindo do Stata<a class="anchor" aria-label="anchor" href="#partindo-do-stata"><i class="fas fa-link"></i></a>
 </h2>
 <!-- ======================================================= -->
-<p><strong>Coming to R from Stata</strong></p>
-<p>Many epidemiologists are first taught how to use Stata, and it can seem daunting to move into R. However, if you are a comfortable Stata user then the jump into R is certainly more manageable than you might think. While there are some key differences between Stata and R in how data can be created and modified, as well as how analysis functions are implemented – after learning these key differences you will be able to translate your skills.</p>
-<p>Below are some key translations between Stata and R, which may be handy as your review this guide.</p>
-<p><strong>General notes</strong></p>
+<p><strong>Vindo do Stata para R</strong>*</p>
+<p>Muitos epidemiologistas são ensinados primeiro a usar Stata, e pode parecer assustador mudar para R. Entretanto, se você é um usuário confortável de Stata, então o salto para R é certamente mais manejável do que você possa pensar. Embora existam algumas diferenças chave entre Stata e R em como os dados podem ser criados e modificados, bem como a maneira que as funções de análise são implementadas - após aprender estas diferenças chave você será capaz de adaptar suas habilidades.</p>
+<p>Abaixo estão algumas traduções chave entre Stata e R, que podem ser úteis como sua revisão deste guia.</p>
+<p><strong>Notas gerais</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="38%">
@@ -209,39 +229,40 @@ Excel users may be familiar with “VBA macros” which also employ a scripting 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>You can only view and manipulate one dataset at a time</td>
-<td>You can view and manipulate multiple datasets at the same time, therefore you will frequently have to specify your dataset within the code</td>
+<td>Você só pode visualizar e manipular um conjunto de dados de cada vez</td>
+<td>Você pode visualizar e manipular vários conjuntos de dados ao mesmo tempo, portanto você terá que especificar freqüentemente seu conjunto de dados dentro do código</td>
 </tr>
 <tr class="even">
-<td>Online community available through <a href="https://www.statalist.org/">https://www.statalist.org/</a>
+<td>Comunidade online disponível por meio de <a href="https://www.statalist.org/">https://www.statalist.org/</a>
 </td>
-<td>Online community available through <a href="https://community.rstudio.com/">RStudio</a>, <a href="https://stackoverflow.com/questions/tagged/r">StackOverFlow</a>, and <a href="https://www.r-bloggers.com/">R-bloggers</a>
+<td>Comunidade online disponível por meio de <a href="https://community.rstudio.com/">RStudio</a>, <a href="https://stackoverflow.com/questions/tagged/r">StackOverFlow</a>, e <a href="https://www.r-bloggers.com/">R-bloggers</a>
 </td>
 </tr>
 <tr class="odd">
-<td>Point and click functionality as an option</td>
-<td>Minimal point and click functionality</td>
+<td>Funcionalidade “apontar e clicar” como opção</td>
+<td>Funcionalidade “apontar e clicar” mínima</td>
 </tr>
 <tr class="even">
-<td>Help for commands available by <code>help [command]</code>
+<td>Ajuda para comandos disponíveis por <code>help [comando]</code>
 </td>
-<td>Help available by <code>[function]?</code> or search in the Help pane</td>
+<td>Ajuda disponível por <code>?função</code> ou busca no painel de Ajuda</td>
 </tr>
 <tr class="odd">
-<td>Comment code using * or /// or /* TEXT */</td>
-<td>Comment code using #</td>
+<td>Comentar código usando * ou /// ou /* TEXTO */</td>
+<td>Comentar código usando #</td>
 </tr>
 <tr class="even">
-<td>Almost all commands are built-in to Stata. New/user-written functions can be installed as <strong>ado</strong> files using <strong>ssc install</strong> [package]</td>
-<td>R installs with <strong>base</strong> functions, but typical use involves installing other packages from CRAN (see page on <a href="r-basics.html#r-basics">R basics</a>)</td>
+<td>Quase todos os comandos são nativos ao Stata. Funções novas/escritas pelo usuário podem ser instaladas como arquivos <strong>ado</strong>* usando <strong>ssc install</strong> [pacote]</td>
+<td>A instalação do R vem com funções <strong>base</strong> , mas o uso típico envolve a instalação de outros pacotes do CRAN (veja página em <a href="basics.html#basics">Introdução ao R</a>)</td>
 </tr>
 <tr class="odd">
-<td>Analysis is usually written in a <strong>do</strong> file</td>
-<td>Analysis written in an R script in the RStudio source pane. R markdown scripts are an alternative.</td>
+<td>A análise é geralmente escrita em um arquivo <strong>do</strong>
+</td>
+<td>Análise escrita em um script R no painel de fontes do RStudio. Scripts em R Markdown são uma alternativa.</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Working directory</strong></p>
+<p><strong>Diretório de trabalho</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="41%">
@@ -253,21 +274,21 @@ Excel users may be familiar with “VBA macros” which also employ a scripting 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Working directories involve absolute filepaths (e.g. “C:/usename/documents/projects/data/”)</td>
-<td>Working directories can be either absolute, or relative to a project root folder by using the <strong>here</strong> package (see <a href="import-and-export.html#import-and-export">Import and export</a>)</td>
+<td>Os diretórios de trabalho envolvem caminhos de arquivo absolutos (por exemplo, “C:/ nome do usuário/documentos/projetos/dados/”)</td>
+<td>Os diretórios de trabalho podem ser absolutos, ou relativos a uma pasta raiz do projeto usando o pacote <strong>here</strong> (ver <a href="importing.html#importing">Importar e exportar</a>)</td>
 </tr>
 <tr class="even">
-<td>See current working directory with <strong>pwd</strong>
+<td>Ver diretório de trabalho atual com <strong>pwd</strong>
 </td>
-<td>Use <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> or <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> (if using the <strong>here</strong> package), with empty parentheses</td>
+<td>Utilize <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> ou <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> (se utilizar o pacote <strong>here</strong>), com parênteses vazios</td>
 </tr>
 <tr class="odd">
-<td>Set working directory with <strong>cd</strong> “folder location”</td>
-<td>Use <code>setwd(“folder location”)</code>, or <code>set_here("folder location)</code> (if using <strong>here</strong> package)</td>
+<td>Definir diretório de trabalho com <strong>cd</strong> “localização de pasta”</td>
+<td>Utilize <code>setwd("localização de pasta")</code>, ou <code>set_here("localização de pasta")</code> (se estiver utilizando <strong>here</strong>* pacote)</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Importing and viewing data</strong></p>
+<p><strong>Importando e visualizando dados</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="41%">
@@ -279,33 +300,31 @@ Excel users may be familiar with “VBA macros” which also employ a scripting 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Specific commands per file type</td>
-<td>Use <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> from <strong>rio</strong> package for almost all filetypes. Specific functions exist as alternatives (see <a href="import-and-export.html#import-and-export">Import and export</a>)</td>
+<td>Comandos específicos por tipo de arquivo</td>
+<td>Utilize <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> do pacote <strong>rio</strong> para quase todos os tipos de arquivo. Existem funções específicas como alternativas (ver <a href="importing.html#importing">Importar e exportar</a>)</td>
 </tr>
 <tr class="even">
-<td>Reading in csv files is done by <strong>import delimited</strong> “filename.csv”</td>
-<td>Use <code><a href="https://rdrr.io/pkg/rio/man/import.html">import("filename.csv")</a></code>
+<td>A leitura em arquivos csv é feita por <strong>importar delimited</strong> “filename.csv”.</td>
+<td>Use <code>import("nomedoarquivo.csv")</code>
 </td>
 </tr>
 <tr class="odd">
-<td>Reading in xslx files is done by <strong>import excel</strong> “filename.xlsx”</td>
-<td>Use <code><a href="https://rdrr.io/pkg/rio/man/import.html">import("filename.xlsx")</a></code>
+<td>A leitura em arquivos xslx é feita por <strong>import excel</strong> “filename.xlsx”</td>
+<td>Use <code>import("nomedoarquivo.xlsx")</code>
 </td>
 </tr>
 <tr class="even">
-<td>Browse your data in a new window using the command <strong>browse</strong>
+<td>Navegue seus dados em uma nova janela utilizando o comando <strong>browse</strong>
 </td>
-<td>View a dataset in the RStudio source pane using <code><a href="https://rdrr.io/r/utils/View.html">View(dataset)</a></code>. <em>You need to specify your dataset name to the function in R because multiple datasets can be held at the same time. Note capital “V” in this function</em>
-</td>
+<td>Visualize um conjunto de dados no painel de origem do RStudio utilizando <code>View(conjunto de dados)</code>. <em>Você precisa especificar o nome de seu conjunto de dados para a função em R porque vários conjuntos de dados podem ser mantidos ao mesmo tempo. Note “V” maiúsculo nesta função</em>.</td>
 </tr>
 <tr class="odd">
-<td>Get a high-level overview of your dataset using <strong>summarize</strong>, which provides the variable names and basic information</td>
-<td>Get a high-level overview of your dataset using <code><a href="https://rdrr.io/r/base/summary.html">summary(dataset)</a></code>
-</td>
+<td>Obtenha uma visão geral do seu conjunto de dados utilizando <strong>summarize</strong>, que fornece os nomes das variáveis e informações básicas</td>
+<td>Obtenha uma visão geral do seu conjunto de dados utilizando <code>summary(conjunto de dados)</code>.</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Basic data manipulation</strong></p>
+<p><strong>Manipulações básicas de dados</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="41%">
@@ -317,36 +336,36 @@ Excel users may be familiar with “VBA macros” which also employ a scripting 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Dataset columns are often referred to as “variables”</td>
-<td>More often referred to as “columns” or sometimes as “vectors” or “variables”</td>
+<td>As colunas do conjunto de dados são frequentemente referidas como “variáveis”</td>
+<td>Mais frequentemente referidas como “colunas” ou às vezes como “vetores” ou “variáveis”.</td>
 </tr>
 <tr class="even">
-<td>No need to specify the dataset</td>
-<td>In each of the below commands, you need to specify the dataset - see the page on <a href="cleaning-data-and-core-functions.html#cleaning-data-and-core-functions">Cleaning data and core functions</a> for examples</td>
+<td>Não é necessário especificar o conjunto de dados</td>
+<td>Em cada um dos comandos abaixo, você precisa especificar o conjunto de dados - veja a página em <a href="cleaning.html#cleaning">Limpeza de dados e principais funções</a> para exemplos</td>
 </tr>
 <tr class="odd">
-<td>New variables are created using the command <strong>generate</strong> <em>varname</em> =</td>
-<td>Generate new variables using the function <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate(varname = )</a></code>. See page on <a href="cleaning-data-and-core-functions.html#cleaning-data-and-core-functions">Cleaning data and core functions</a> for details on all the below <strong>dplyr</strong> functions.</td>
+<td>Novas variáveis são criadas utilizando o comando <strong>generate</strong> <em>nome_var</em> =</td>
+<td>Gerar novas variáveis utilizando a função <code>mutate(nome_var = )</code>. Consulte a página <a href="cleaning.html#cleaning">Limpeza de dados e principais funções</a> para obter detalhes sobre todas as funções abaixo <strong>dplyr</strong>*.</td>
 </tr>
 <tr class="even">
-<td>Variables are renamed using <strong>rename</strong> <em>old_name new_name</em>
+<td>As variáveis são renomeadas utilizando <strong>rename</strong> <em>nome_antigo nome_novo</em>
 </td>
-<td>Columns can be renamed using the function <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename(new_name = old_name)</a></code>
+<td>Colunas podem ser renomeadas utilizando a função <code>rename(novo_nome = nome_antigo)</code>
 </td>
 </tr>
 <tr class="odd">
-<td>Variables are dropped using <strong>drop</strong> <em>varname</em>
+<td>As variáveis são descartadas utilizando <strong>drop</strong> <em>nome_var</em>
 </td>
-<td>Columns can be removed using the function <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> with the column name in the parentheses following a minus sign</td>
+<td>As colunas podem ser removidas utilizando a função <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> com o nome da coluna entre parênteses, seguindo um sinal de subtração</td>
 </tr>
 <tr class="even">
-<td>Factor variables can be labeled using a series of commands such as <strong>label define</strong>
+<td>As variáveis fatoriais podem ser etiquetadas usando uma série de comandos como <strong>label define</strong>
 </td>
-<td>Labeling values can done by converting the column to Factor class and specifying levels. See page on <a href="factors.html#factors">Factors</a>. Column names are not typically labeled as they are in Stata.</td>
+<td>Os valores de etiquetagem podem ser feitos convertendo a coluna para a classe fator e especificando níveis. Veja a página em <a href="factors.html#factors">Fatores</a>. Os nomes das colunas não são tipicamente etiquetados como estão na Stata.</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Descriptive analysis</strong></p>
+<p><strong>Análise descritiva</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="41%">
@@ -358,20 +377,19 @@ Excel users may be familiar with “VBA macros” which also employ a scripting 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Tabulate counts of a variable using <strong>tab</strong> <em>varname</em>
+<td>Tabula contagens de uma variável utilizando <strong>tab</strong> <em>nome_var</em>
 </td>
-<td>Provide the dataset and column name to <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> such as <code><a href="https://rdrr.io/r/base/table.html">table(dataset$colname)</a></code>. Alternatively, use <code>count(varname)</code> from the <strong>dplyr</strong> package, as explained in <a href="grouping-data.html#grouping-data">Grouping data</a>
-</td>
+<td>Forneça o conjunto de dados e nome da coluna para <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> tal como <code>table(dataset$nome_da_coluna)</code>. Alternativamente, utilize <code>count(nome_var)</code> do pacote <strong>dplyr</strong>, como explicado em <a href="grouping.html#grouping">Agrupando dados</a>.</td>
 </tr>
 <tr class="even">
-<td>Cross-tabulaton of two variables in a 2x2 table is done with <strong>tab</strong> <em>varname1 varname2</em>
+<td>Uma tabela de contingência de duas variáveis em uma tabela 2x2 é feito com <strong>tab</strong> <em>nome_var1 nome_var2</em>
 </td>
-<td>Use <code>table(dataset$varname1, dataset$varname2</code> or <code>count(varname1, varname2)</code>
+<td>Use <code>table(dataset$nome_var1, dataset$nome_var2</code> ou <code>count(nome_var1, nome_var2)</code>
 </td>
 </tr>
 </tbody>
 </table></div>
-<p>While this list gives an overview of the basics in translating Stata commands into R, it is not exhaustive. There are many other great resources for Stata users transitioning to R that could be of interest:</p>
+<p>Embora esta lista dê uma visão geral dos conceitos básicos na tradução dos comandos Stata em R, ela não é completa. Há muitos outros grandes recursos para os usuários da Stata em transição para R que poderiam ser de interesse:</p>
 <ul>
 <li>
 <a href="https://dss.princeton.edu/training/RStata.pdf" class="uri">https://dss.princeton.edu/training/RStata.pdf</a><br>
@@ -382,15 +400,15 @@ Excel users may be familiar with “VBA macros” which also employ a scripting 
 <li><a href="http://r4stats.com/books/r4stata/" class="uri">http://r4stats.com/books/r4stata/</a></li>
 </ul>
 </div>
-<div id="from-sas" class="section level2" number="4.3">
+<div id="partindo-do-sas" class="section level2" number="4.3">
 <h2>
-<span class="header-section-number">4.3</span> From SAS<a class="anchor" aria-label="anchor" href="#from-sas"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3</span> Partindo do SAS<a class="anchor" aria-label="anchor" href="#partindo-do-sas"><i class="fas fa-link"></i></a>
 </h2>
 <!-- ======================================================= -->
-<p><strong>Coming from SAS to R</strong></p>
-<p>SAS is commonly used at public health agencies and academic research fields. Although transitioning to a new language is rarely a simple process, understanding key differences between SAS and R may help you start to navigate the new language using your native language.
-Below outlines the key translations in data management and descriptive analysis between SAS and R.</p>
-<p><strong>General notes</strong></p>
+<p><strong>Vindo da SAS para R</strong>*</p>
+<p>O SAS é comumente usado em agências de saúde pública e campos de pesquisa acadêmica. Embora a transição para um novo idioma raramente seja um processo simples, compreender as diferenças-chave entre SAS e R pode ajudá-lo a começar a navegar no novo idioma usando seu idioma nativo.
+A seguir, descrevemos as principais traduções no gerenciamento de dados e análise descritiva entre a SAS e o R.</p>
+<p><strong>Notas gerais</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="41%">
@@ -402,32 +420,32 @@ Below outlines the key translations in data management and descriptive analysis 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Online community available through <a href="https://support.sas.com/en/support-home.html">SAS Customer Support</a>
+<td>Comunidade online disponível em <a href="https://support.sas.com/en/support-home.html">SAS Customer Support</a>
 </td>
-<td>Online community available through RStudio, StackOverFlow, and R-bloggers</td>
+<td>Comunidade online disponível em RStudio, StackOverFlow, e R-bloggers</td>
 </tr>
 <tr class="even">
-<td>Help for commands available by <code>help [command]</code>
+<td>Ajuda para os comandos disponíveis por <code>help [comando]</code>
 </td>
-<td>Help available by [function]? or search in the Help pane</td>
+<td>Ajuda disponível por <code>?função</code> ou busca no painel de Ajuda</td>
 </tr>
 <tr class="odd">
-<td>Comment code using <code>* TEXT ;</code> or <code>/* TEXT */</code>
+<td>Comentar código utilizando <code>* TEXT ;</code> ou <code>/* TEXT */</code>
 </td>
-<td>Comment code using #</td>
+<td>Comentar código utilizando #</td>
 </tr>
 <tr class="even">
-<td>Almost all commands are built-in. Users can write new functions using SAS macro, SAS/IML, SAS Component Language (SCL), and most recently, procedures <code>Proc Fcmp</code> and <code>Proc Proto</code>
+<td>Quase todos os comandos são nativos. Os usuários podem escrever novas funções utilizando a macro SAS, SAS/IML, SAS Component Language (SCL) e, mais recentemente, procedimentos <code>Proc Fcmp</code> e <code>Proc Proto</code>
 </td>
-<td>R installs with <strong>base</strong> functions, but typical use involves installing other packages from CRAN (see page on <a href="r-basics.html#r-basics">R basics</a>)</td>
+<td>A instalação do R vem com as funções <strong>base</strong>, mas o uso típico envolve a instalação de outros pacotes do CRAN (veja a página em <a href="basics.html#basics">Introdução ao R</a>)</td>
 </tr>
 <tr class="odd">
-<td>Analysis is usually conducted by writing a SAS program in the Editor window.</td>
-<td>Analysis written in an R script in the RStudio source pane. R markdown scripts are an alternative.</td>
+<td>A análise é geralmente conduzida escrevendo um programa SAS na janela do Editor.</td>
+<td>Análise escrita em um script R no painel fonte do RStudio. Scripts em R Markdown são uma alternativa.</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Working directory</strong></p>
+<p><strong>Diretório de trabalho</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="41%">
@@ -439,23 +457,23 @@ Below outlines the key translations in data management and descriptive analysis 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Working directories can be either absolute, or relative to a project root folder by defining the root folder using <code>%let rootdir=/root path; %include “&amp;rootdir/subfoldername/filename”</code>
+<td>Os diretórios de trabalho podem ser absolutos ou relativos a uma pasta raiz do projeto, definindo a pasta raiz utilizando <code>%let rootdir=/root path; %include "&amp;rootdir/subfoldername/nome_arqquivo"</code>
 </td>
-<td>Working directories can be either absolute, or relative to a project root folder by using the <strong>here</strong> package (see <a href="import-and-export.html#import-and-export">Import and export</a>)</td>
+<td>Os diretórios de trabalho podem ser absolutos ou relativos a uma pasta raiz do projeto utilizando o pacote <strong>here</strong> (ver <a href="importing.html#importing">Importar e exportar</a>)</td>
 </tr>
 <tr class="even">
-<td>See current working directory with <code>%put %sysfunc(getoption(work));</code>
+<td>Veja o diretório de trabalho atual com <code>% de produção %sysfunc(getoption(work));</code>
 </td>
-<td>Use <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> or <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> (if using the <strong>here</strong> package), with empty parentheses</td>
+<td>Use <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> ou <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> (se utilizar o pacote <strong>here</strong>), com parênteses vazios</td>
 </tr>
 <tr class="odd">
-<td>Set working directory with <code>libname “folder location”</code>
+<td>Definir diretório de trabalho com <code>libname "localização de pasta"</code>
 </td>
-<td>Use <code>setwd(“folder location”)</code>, or <code>set_here("folder location)</code> if using <strong>here</strong> package</td>
+<td>Use <code>setwd("localização de pasta")</code>, ou <code>set_here("localização de pasta)</code> se utilizar o pacote <strong>here</strong>.</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Importing and viewing data</strong></p>
+<p><strong>Importando e visualizando dados</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="41%">
@@ -467,27 +485,27 @@ Below outlines the key translations in data management and descriptive analysis 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Use <code>Proc Import</code> procedure or using <code>Data Step Infile</code> statement.</td>
-<td>Use <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> from <strong>rio</strong> package for almost all filetypes. Specific functions exist as alternatives (see <a href="import-and-export.html#import-and-export">Import and export</a>)</td>
+<td>Utilize o procedimento <code>Proc Importar' ou utilize a declaração</code>Data Step Infile’.</td>
+<td>Utilize a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> do pacote <strong>rio</strong> para quase todos os tipos de arquivos. Existem funções específicas como alternativas (ver <a href="importing.html#importing">Importar e exportar</a>).</td>
 </tr>
 <tr class="even">
-<td>Reading in csv files is done by using <code>Proc Import datafile=”filename.csv” out=work.filename dbms=CSV; run;</code> OR using <a href="http://support.sas.com/techsup/technote/ts673.pdf">Data Step Infile statement</a>
+<td>A leitura em arquivos csv é feita utilizando <code>Proc Import datafile="nome_arqquivo.csv" out=work.nome_arqquivo dbms=CSV; run;</code> ou usando <a href="http://support.sas.com/techsup/technote/ts673.pdf">Data Step Infile statement</a>
 </td>
-<td>Use <code><a href="https://rdrr.io/pkg/rio/man/import.html">import("filename.csv")</a></code>
+<td>Use <code>import("nome_arqquivo.csv")</code>
 </td>
 </tr>
 <tr class="odd">
-<td>Reading in xslx files is done by using <code>Proc Import datafile=”filename.xlsx” out=work.filename dbms=xlsx; run;</code> OR using <a href="http://support.sas.com/techsup/technote/ts673.pdf">Data Step Infile statement</a>
+<td>A leitura em arquivos xslx é feita utilizando <code>Proc Import datafile="nome_arqquivo.xlsx" out=work.nome_arqquivo dbms=xlsx; run;</code> ou usando <a href="http://support.sas.com/techsup/technote/ts673.pdf">Data Step Infile statement</a>
 </td>
-<td>Use import(“filename.xlsx”)</td>
+<td>Use import(“nome_arqquivo.xlsx”)</td>
 </tr>
 <tr class="even">
-<td>Browse your data in a new window by opening the Explorer window and select desired library and the dataset</td>
-<td>View a dataset in the RStudio source pane using View(dataset). You need to specify your dataset name to the function in R because multiple datasets can be held at the same time. Note capital “V” in this function</td>
+<td>Navegue pelos seus dados em uma nova janela abrindo a janela do Explorer e selecione a biblioteca desejada e o conjunto de dados</td>
+<td>Veja um conjunto de dados no painel de fontes do RStudio usando View(dataset). Você precisa especificar o nome de seu conjunto de dados para a função em R porque vários conjuntos de dados podem ser mantidos ao mesmo tempo. atenção para “V” maiúsculo nesta função</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Basic data manipulation</strong></p>
+<p><strong>Manipulações básicas de dados</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="41%">
@@ -499,45 +517,44 @@ Below outlines the key translations in data management and descriptive analysis 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Dataset columns are often referred to as “variables”</td>
-<td>More often referred to as “columns” or sometimes as “vectors” or “variables”</td>
+<td>As colunas do conjunto de dados são frequentemente referidas como “variáveis”</td>
+<td>Mais frequentemente referidas como “colunas” ou às vezes como “vetores” ou “variáveis”.</td>
 </tr>
 <tr class="even">
-<td>No special procedures are needed to create a variable. New variables are created simply by typing the new variable name, followed by an equal sign, and then an expression for the value</td>
-<td>Generate new variables using the function <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>. See page on <a href="cleaning-data-and-core-functions.html#cleaning-data-and-core-functions">Cleaning data and core functions</a> for details on all the below <strong>dplyr</strong> functions.</td>
+<td>Não são necessários procedimentos especiais para criar uma variável. Novas variáveis são criadas simplesmente digitando o novo nome da variável, seguido por um sinal de igual e, em seguida, uma expressão para o valor</td>
+<td>Gere novas variáveis utilizando a função <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>. Consulte a página <a href="cleaning.html#cleaning">Limpeza de dadps e principais funções</a> para obter detalhes sobre todas as funções abaixo <strong>dplyr</strong>.</td>
 </tr>
 <tr class="odd">
-<td>Variables are renamed using <code>rename *old_name=new_name*</code>
+<td>As variáveis são renomeadas utilizando <code>renome *nome_antigo=nome_novo*</code>
 </td>
-<td>Columns can be renamed using the function <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename(new_name = old_name)</a></code>
+<td>As colunas podem ser renomeadas utilizando a função <code>rename(novo_nome = nome_antigo)</code>
 </td>
 </tr>
 <tr class="even">
-<td>Variables are kept using <code>**keep**=varname</code>
+<td>As variáveis são mantidas utilizando <code>**keep**=nome_var</code>
 </td>
-<td>Columns can be selected using the function <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> with the column name in the parentheses</td>
+<td>Colunas podem ser selecionadas utilizando a função <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> com o nome da coluna entre parênteses</td>
 </tr>
 <tr class="odd">
-<td>Variables are dropped using <code>**drop**=varname</code>
+<td>As variáveis são descartadas utilizando <code>**drop**=nome da coluna</code>
 </td>
-<td>Columns can be removed using the function <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> with the column name in the parentheses following a minus sign</td>
+<td>As colunas podem ser removidas utilizando a função <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> com o nome da coluna entre parênteses, seguindo um sinal de subtração</td>
 </tr>
 <tr class="even">
-<td>Factor variables can be labeled in the Data Step using <code>Label</code> statement</td>
-<td>Labeling values can done by converting the column to Factor class and specifying levels. See page on <a href="factors.html#factors">Factors</a>. Column names are not typically labeled.</td>
+<td>As variáveis do tipo fator podem ser etiquetadas na Etapa de Dados, utilizando a declaração de ‘Label’</td>
+<td>Os valores do rótulo podem ser feitos convertendo a coluna para a classe Fator e especificando níveis. Veja a página em <a href="factors.html#factors">Fatores</a>. Os nomes das colunas não são tipicamente rotulados.</td>
 </tr>
 <tr class="odd">
-<td>Records are selected using <code>Where</code> or <code>If</code> statement in the Data Step. Multiple selection conditions are separated using “and” command.</td>
-<td>Records are selected using the function <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> with multiple selection conditions separated either by an AND operator (&amp;) or a comma</td>
+<td>Os registros são selecionados utilizando a instrução <code>Where</code> ou <code>If</code> na Etapa de Dados. As condições de seleção múltipla são separadas utilizando o comando “and”.</td>
+<td>Os registros são selecionados utilizando a função <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> com condições de seleção múltipla separadas por um operador AND (&amp;) ou por uma vírgula</td>
 </tr>
 <tr class="even">
-<td>Datasets are combined using <code>Merge</code> statement in the Data Step. The datasets to be merged need to be sorted first using <code>Proc Sort</code> procedure.</td>
-<td>
-<strong>dplyr</strong> package offers a few functions for merging datasets. See page <a href="joining-data.html#joining-data">Joining Data</a> for details.</td>
+<td>Os conjuntos de dados são combinados utilizando a declaração <code>Merge</code> na Etapa de Dados. Os conjuntos de dados a serem fundidos precisam ser ordenados primeiro utilizando o procedimento <code>Proc Sort</code>.</td>
+<td>O pacote <strong>dplyr</strong> oferece algumas funções para fundir conjuntos de dados. Consulte a página <a href="grouping.html#grouping">Agrupando Dados</a> para obter detalhes.</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Descriptive analysis</strong></p>
+<p><strong>Análise descritiva</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
 <col width="41%">
@@ -549,54 +566,54 @@ Below outlines the key translations in data management and descriptive analysis 
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Get a high-level overview of your dataset using <code>Proc Summary</code> procedure, which provides the variable names and descriptive statistics</td>
-<td>Get a high-level overview of your dataset using <code><a href="https://rdrr.io/r/base/summary.html">summary(dataset)</a></code> or <code>skim(dataset)</code> from the <strong>skimr</strong> package</td>
+<td>Obtenha uma visão geral do seu conjunto de dados utilizando o procedimento “Proc Summary”, que fornece os nomes das variáveis e as estatísticas descritivas.</td>
+<td>Obtenha uma visão geral do seu conjunto de dados utilizando o “summary(conjunto_de_dados)” ou “skimr(conjunto_de_dados)” do pacote <strong>skimr</strong>.</td>
 </tr>
 <tr class="even">
-<td>Tabulate counts of a variable using <code>proc freq data=Dataset; Tables varname; Run;</code>
+<td>Tabular contagens de uma variável utilizando <code>proc freq data=Dataset; Tables varname; Run;</code>
 </td>
-<td>See the page on <a href="descriptive-tables.html#descriptive-tables">Descriptive tables</a>. Options include <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> from <strong>base</strong> R, and <code>tabyl()</code> from <strong>janitor</strong> package, among others. Note you will need to specify the dataset and column name as R holds multiple datasets.</td>
+<td>Ver a página em <a href="tables-descriptive.html#tables-descriptive">Tabelas descritivas</a>. As opções incluem <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> do R <strong>base</strong>, e <code>tabyl()</code> do pacote <strong>janitor</strong> , entre outras. Observe que você precisará especificar o conjunto de dados e o nome da coluna, pois R contém vários conjuntos de dados.</td>
 </tr>
 <tr class="odd">
-<td>Cross-tabulation of two variables in a 2x2 table is done with <code>proc freq data=Dataset; Tables rowvar*colvar; Run;</code>
+<td>A tabulação cruzada (tabela de contingência) de duas variáveis em uma tabela 2x2 é feita com <code>proc freq data=Dataset; Tables rowvar*colvar; Run;</code>
 </td>
-<td>Again, you can use <code><a href="https://rdrr.io/r/base/table.html">table()</a></code>, <code>tabyl()</code> or other options as described in the <a href="descriptive-tables.html#descriptive-tables">Descriptive tables</a> page.</td>
+<td>Novamente, você pode utilizar <code><a href="https://rdrr.io/r/base/table.html">table()</a></code>, <code>tabyl()</code> ou outras opções como descritas na página <a href="tables-descriptive.html#tables-descriptive">Tabelas descritivas</a>.</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Some useful resources:</strong></p>
-<p><a href="https://www.amazon.com/SAS-SPSS-Users-Statistics-Computing/dp/1461406846/ref=sr_1_1?dchild=1&amp;gclid=EAIaIQobChMIoqLOvf6u7wIVAhLnCh1c9w_DEAMYASAAEgJLIfD_BwE&amp;hvadid=241675955927&amp;hvdev=c&amp;hvlocphy=9032185&amp;hvnetw=g&amp;hvqmt=e&amp;hvrand=16854847287059617468&amp;hvtargid=kwd-44746119007&amp;hydadcr=16374_10302157&amp;keywords=r+for+sas+users&amp;qid=1615698213&amp;sr=8-1">R for SAS and SPSS Users (2011)</a></p>
-<p><a href="https://www.amazon.com/SAS-Management-Statistical-Analysis-Graphics-dp-1466584491/dp/1466584491/ref=dp_ob_title_bk">SAS and R, Second Edition (2014)</a></p>
+<p><strong>Alguns recursos úteis:</strong></p>
+<p><a href="https://www.amazon.com/SAS-SPSS-Users-Statistics-Computing/dp/1461406846/ref=sr_1_1?dchild=1&amp;gclid=EAIaIQobChMIoqLOvf6u7wIVAhLnCh1c9w_DEAMYASAAEgJLIfD_BwE&amp;hvadid=241675955927&amp;hvdev=c&amp;hvlocphy=9032185&amp;hvnetw=g&amp;hvqmt=e&amp;hvrand=16854847287059617468&amp;hvtargid=kwd-44746119007&amp;hydadcr=16374_10302157&amp;keywords=r+for+sas+users&amp;qid=1615698213&amp;sr=8-1">R para usuários de SAS e SPSS (2011)</a></p>
+<p><a href="https://www.amazon.com/SAS-Management-Statistical-Analysis-Graphics-dp-1466584491/dp/1466584491/ref=dp_ob_title_bk">SAS e R, Segunda Edição (2014)</a></p>
 </div>
-<div id="data-interoperability" class="section level2" number="4.4">
+<div id="interoperabilidade-de-dados" class="section level2" number="4.4">
 <h2>
-<span class="header-section-number">4.4</span> Data interoperability<a class="anchor" aria-label="anchor" href="#data-interoperability"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.4</span> Interoperabilidade de dados<a class="anchor" aria-label="anchor" href="#interoperabilidade-de-dados"><i class="fas fa-link"></i></a>
 </h2>
 <!-- ======================================================= -->
-<p>See the <a href="import-and-export.html#import-and-export">Import and export</a> page for details on how the R package <strong>rio</strong> can import and export files such as STATA .dta files, SAS .xpt and.sas7bdat files, SPSS .por and.sav files, and many others.</p>
+<p>Veja a página <a href="importing.html#importing">Importar e exportar</a> para detalhes sobre como o pacote <strong>rio</strong> do R pode importar e exportar arquivos como arquivos STATA .dta, arquivos SAS .xpt e.sas7bdat, arquivos SPSS .por e.sav, e muitos outros.</p>
 
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="r-basics.html"><span class="header-section-number">3</span> R Basics</a></div>
-<div class="next"><a href="suggested-packages-1.html"><span class="header-section-number">5</span> Suggested packages</a></div>
+<div class="prev"><a href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></div>
+<div class="next"><a href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#transition-to-r"><span class="header-section-number">4</span> Transition to R</a></li>
+<li><a class="nav-link" href="#transition-to-R"><span class="header-section-number">4</span> Transição para o R</a></li>
 <li>
-<a class="nav-link" href="#from-excel"><span class="header-section-number">4.1</span> From Excel</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#benefits">Benefits</a></li>
-<li><a class="nav-link" href="#tidy-data">Tidy data</a></li>
-<li><a class="nav-link" href="#functions-1">Functions</a></li>
+<a class="nav-link" href="#partindo-do-excel"><span class="header-section-number">4.1</span> Partindo do Excel</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#benef%C3%ADcios">Benefícios</a></li>
+<li><a class="nav-link" href="#dados-bem-arrumados-tidy-data">Dados bem arrumados (tidy data)</a></li>
+<li><a class="nav-link" href="#fun%C3%A7%C3%B5es">Funções</a></li>
 <li><a class="nav-link" href="#scripts-1">Scripts</a></li>
-<li><a class="nav-link" href="#excel-to-r-resources">Excel-to-R resources</a></li>
-<li><a class="nav-link" href="#r-excel-interaction">R-Excel interaction</a></li>
+<li><a class="nav-link" href="#do-excel-para-r-recursos">Do Excel-para-R: recursos</a></li>
+<li><a class="nav-link" href="#intera%C3%A7%C3%A3o-r-excel">Interação R-Excel</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#from-stata"><span class="header-section-number">4.2</span> From Stata</a></li>
-<li><a class="nav-link" href="#from-sas"><span class="header-section-number">4.3</span> From SAS</a></li>
-<li><a class="nav-link" href="#data-interoperability"><span class="header-section-number">4.4</span> Data interoperability</a></li>
+<li><a class="nav-link" href="#partindo-do-stata"><span class="header-section-number">4.2</span> Partindo do Stata</a></li>
+<li><a class="nav-link" href="#partindo-do-sas"><span class="header-section-number">4.3</span> Partindo do SAS</a></li>
+<li><a class="nav-link" href="#interoperabilidade-de-dados"><span class="header-section-number">4.4</span> Interoperabilidade de dados</a></li>
 </ul>
 
       <div class="book-extra">
@@ -613,7 +630,7 @@ Below outlines the key translations in data management and descriptive analysis 
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-07-11.</p>
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -626,13 +643,29 @@ Below outlines the key translations in data management and descriptive analysis 
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
 </script>
 </body>
 </html>

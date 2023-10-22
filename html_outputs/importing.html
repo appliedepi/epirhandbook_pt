@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>7 Importar e exportar | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Nesta página descrevemos formas de localizar, importar e exportar arquivos: Utilização do pacote rio para flexivelmente import() e export() muitos tipos de arquivos Uso do pacote here para...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="7 Importar e exportar | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Nesta página descrevemos formas de localizar, importar e exportar arquivos: Utilização do pacote rio para flexivelmente import() e export() muitos tipos de arquivos Uso do pacote here para...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7 Importar e exportar | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Nesta página descrevemos formas de localizar, importar e exportar arquivos: Utilização do pacote rio para flexivelmente import() e export() muitos tipos de arquivos Uso do pacote here para...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<p>
+
+    Você precisa de ajuda para aprender R? Inscreva-se no curso de introdução ao R da Applied Epi, experimente nossos tutoriais gratuitos sobre o R, publique em nosso fórum de perguntas e respostas ou solicite nosso suporte ao R.
+
+    </p>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="active" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="importing" class="section level1" number="7">
+<h1>
+<span class="header-section-number">7</span> Importar e exportar<a class="anchor" aria-label="anchor" href="#importing"><i class="fas fa-link"></i></a>
+</h1>
+<div class="inline-figure"><img src="images/Import_Export_1500x500.png" width="100%"></div>
+<p>Nesta página descrevemos formas de localizar, importar e exportar arquivos:</p>
+<ul>
+<li>Utilização do pacote <strong>rio</strong> para flexivelmente <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> e <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code> muitos tipos de arquivos<br>
+</li>
+<li>Uso do pacote <strong>here</strong> para localizar arquivos relativos a uma raiz de projeto R - para evitar complicações de caminhos de arquivos que são específicos de um computador<br>
+</li>
+<li>Cenários específicos de importação, como por exemplo:
+<ul>
+<li>Planilhas específicas do Excel<br>
+</li>
+<li>Cabeçalhos confusos e linhas para pular<br>
+</li>
+<li>Planilhas do Google<br>
+</li>
+<li>A partir de dados postados em websites<br>
+</li>
+<li>Com APIs<br>
+</li>
+<li>Importação do arquivo <em>mais recente</em><br>
+</li>
+</ul>
+</li>
+<li>Entrada manual de dados<br>
+</li>
+<li>Tipos de arquivos específicos de R, como RDS e RData<br>
+</li>
+<li>Exportar / salvar arquivos e gráficos</li>
+</ul>
+<!-- ======================================================= --><div id="visão-geral" class="section level2" number="7.1">
+<h2>
+<span class="header-section-number">7.1</span> Visão geral<a class="anchor" aria-label="anchor" href="#vis%C3%A3o-geral"><i class="fas fa-link"></i></a>
+</h2>
+<p>Quando você importa um “conjunto de dados” para o R, você geralmente está criando um novo objeto do tipo <em>data frame</em> em seu ambiente R e definindo-o como um arquivo importado (por exemplo, Excel, CSV, TSV, RDS) que está localizado em suas pastas em um determinado caminho/endereço de arquivo.</p>
+<p>Você pode importar/exportar muitos tipos de arquivos, inclusive aqueles criados por outros programas estatísticos (SAS, STATA, SPSS). Você também pode se conectar a bancos de dados relacionais.</p>
+<p>R tem até seus próprios formatos de dados:</p>
+<ul>
+<li>Um arquivo RDS (.rds) armazena um único objeto R, como um data frame. Estes são úteis para armazenar dados limpos, pois eles mantêm as classes de colunas R. Leia mais em <a href="importing.html#import_rds">esta seção</a>.<br>
+</li>
+<li>Um arquivo RData (.Rdata) pode ser usado para armazenar vários objetos, ou mesmo um espaço de trabalho R completo. Leia mais em <a href="importing.html#import_rdata">esta seção</a>.</li>
+</ul>
+<!-- ======================================================= -->
+</div>
+<div id="o-pacote-rio" class="section level2" number="7.2">
+<h2>
+<span class="header-section-number">7.2</span> O pacote <strong>rio</strong><a class="anchor" aria-label="anchor" href="#o-pacote-rio"><i class="fas fa-link"></i></a>
+</h2>
+<p>O pacote R que recomendamos é: <strong>rio</strong>. O nome “rio” é uma abreviação de “R I/O” (input/output ).</p>
+<p>Suas funções <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> e <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code> podem lidar com muitos tipos diferentes de arquivos (por exemplo, .xlsx, .csv, .rds, .tsv). Quando você fornece um caminho de arquivo para qualquer uma destas funções (incluindo a extensão do arquivo como “.csv”), <strong>rio</strong> lerá a extensão e utilizará a ferramenta correta para importar ou exportar o arquivo.</p>
+<p>A alternativa ao uso do <strong>rio</strong> é usar funções de muitos outros pacotes, cada um dos quais é específico para um tipo de arquivo. Por exemplo, <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code> (R <strong>base</strong> ), <code>read.xlsx()</code> (<strong>openxlsx</strong> pacote), e <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv()</a></code> (<strong>readr</strong> pacakge), etc. Estas alternativas podem ser difíceis de lembrar, enquanto que utilizar <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> e <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code> de <strong>rio</strong>* é fácil.</p>
+<p>As funções do <strong>rio</strong> <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> e <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code> utilizam o pacote e função apropriados para um determinado arquivo, com base em sua extensão. Veja no final desta página uma tabela completa de quais pacotes/funções <strong>rio</strong> utilizam em segundo plano. Ele também pode ser utilizado para importar arquivos STATA, SAS e SPSS, entre dezenas de outros tipos de arquivos.</p>
+<p>A importação/exportação de <em>shapefiles</em> (para mapas) requer outros pacotes, conforme detalhado na página sobre <a href="#gis">GIS básico</a>.</p>
+</div>
+<div id="here" class="section level2" number="7.3">
+<h2>
+<span class="header-section-number">7.3</span> O pacote <strong>here</strong><a class="anchor" aria-label="anchor" href="#here"><i class="fas fa-link"></i></a>
+</h2>
+<p>O pacote <strong>here</strong> e sua função <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> tornam fácil dizer a R onde encontrar e salvar seus arquivos - em essência, ele constrói os caminhos dos arquivos.</p>
+<p>Utilizado em conjunto com um projeto R, <strong>here</strong> permite descrever a localização dos arquivos em seu projeto R em relação ao diretório <em>root do projeto R</em> (a pasta de nível superior). Isto é útil quando o projeto R pode ser compartilhado ou acessado por várias pessoas/computadores. Ele evita complicações devido aos caminhos exclusivos dos arquivos em diferentes computadores (por exemplo, `“C:/Users/Laura/Documents…’’,”iniciando” o caminho do arquivo em um lugar comum a todos os usuários (a raiz do projeto R).</p>
+<p>É assim como <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> funciona dentro de um projeto R:</p>
+<ul>
+<li>Quando o pacote <strong>here</strong> é carregado pela primeira vez dentro do projeto R, ele coloca um pequeno arquivo chamado “.here” na pasta raiz de seu projeto R como um “<em>benchmark</em>” ou “âncora”.<br>
+</li>
+<li>Em seus scripts, para referenciar um arquivo nas subpastas do projeto R, você utiliza a função <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> para construir o caminho do arquivo <em>em relação a essa âncora</em>.</li>
+<li>Para construir o caminho do arquivo, escreva os nomes das pastas além da raiz, entre aspas, separados por vírgulas, finalmente terminando com o nome do arquivo e a extensão do arquivo, como mostrado abaixo<br>
+</li>
+<li>Caminhos de arquivos com a função ’here()` podem ser utilizados tanto para importação quanto para exportação</li>
+</ul>
+<p>Por exemplo, abaixo, a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> está sendo fornecida um caminho de arquivo construído com <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code>.</p>
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"linelists"</span>, <span class="st">"ebola_linelist.xlsx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>O comando <code>here("data", "linelists", "ebola_linelist.xlsx")</code> está na verdade fornecendo o caminho completo do arquivo que é <em>único para o computador do usuário</em>:</p>
+<pre><code>"C:/Users/Laura/Documents/my_R_project/data/linelists/ebola_linelist.xlsx"</code></pre>
+<p>A beleza é que o comando R utilizando <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> pode ser executado com sucesso em qualquer computador que acesse o projeto R.</p>
+<p><span style="color: darkgreen;"><strong><em>DICA:</em></strong> Se você não tiver certeza de onde a raiz “.here” está definida, execute a função <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> com parênteses vazios.</span></p>
+<p>Leia mais sobre o pacote <strong>here</strong> <a href="https://here.r-lib.org/">neste link</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="caminhos-dos-arquivos" class="section level2" number="7.4">
+<h2>
+<span class="header-section-number">7.4</span> Caminhos dos arquivos<a class="anchor" aria-label="anchor" href="#caminhos-dos-arquivos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Ao importar ou exportar dados, você deve fornecer um caminho para o arquivo. Você pode fazer isso de três maneiras:</p>
+<ol style="list-style-type: decimal">
+<li>
+<em>Recomendado:</em> fornecer um caminho de arquivo “relativo” com o pacote <strong>here</strong>
+</li>
+<li>Fornecer o caminho “completo” / “absoluto” do arquivo<br>
+</li>
+<li>Seleção manual do arquivo</li>
+</ol>
+<div id="caminhos-relativo-dos-arquivos" class="section level3 unnumbered">
+<h3>Caminhos ‘relativo’ dos arquivos<a class="anchor" aria-label="anchor" href="#caminhos-relativo-dos-arquivos"><i class="fas fa-link"></i></a>
+</h3>
+<p>No R, os caminhos de arquivo “relativos” consistem no caminho de arquivo <em>relativo à</em> raiz de um projeto R. Eles permitem caminhos de arquivo mais simples que podem funcionar em computadores diferentes (por exemplo, se o projeto R estiver em um drive compartilhado ou for enviado por e-mail). Como descrito <a href="importing.html#here">acima</a>, os caminhos de arquivo relativos são facilitados pelo uso do pacote <strong>here</strong>.</p>
+<p>Um exemplo de um caminho de arquivo relativo construído com <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> está abaixo. Supomos que o trabalho esteja em um projeto R que contém uma subpasta “dados” e dentro dela uma subpasta “linelists”, na qual há o arquivo .xlsx de interesse.</p>
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"dados"</span>, <span class="st">"linelists"</span>, <span class="st">"ebola_linelist.xlsx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="caminhos-absoluto-dos-arquivos" class="section level3 unnumbered">
+<h3>Caminhos ‘absoluto’ dos arquivos<a class="anchor" aria-label="anchor" href="#caminhos-absoluto-dos-arquivos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Caminhos de arquivo absolutos ou “completos” podem ser fornecidos para funções como <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> mas são “frágeis”, pois são exclusivos para o computador específico do usuário e portanto <em>não são recomendados</em>.</p>
+<p>Abaixo está um exemplo de um caminho de arquivo absoluto, onde no computador de Laura há uma pasta “analises”, uma subpasta “dados” e dentro dela uma subpasta “linelists”, na qual há o arquivo .xlsx de interesse.</p>
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"C:/Users/Laura/Documents/analises/dados/linelists/ebola_linelist.xlsx"</span><span class="op">)</span></span></code></pre></div>
+<p>Algumas coisas a serem observadas sobre os caminhos absolutos dos arquivos:</p>
+<ul>
+<li>
+<strong>Evite o uso de caminhos de arquivo absolutos</strong>, pois eles quebrarão se o script for executado em um computador diferente.</li>
+<li>Utilize barras normais (<code>/</code>), como no exemplo acima (nota: este é <em>NÃO</em> o padrão para caminhos de arquivos do Windows)<br>
+</li>
+<li>Os caminhos de arquivos que começam com barras duplas (por exemplo, “//…”) provavelmente <strong>não serão reconhecidos por R</strong> e produzirão um erro. Considere mover seu trabalho para uma unidade “nomeado” ou ” com letras” que comece com uma letra (por exemplo, “J:” ou “C:”). Consulte a página em <a href="directories.html#directories">Interações do diretório</a> para obter mais detalhes sobre este assunto.</li>
+</ul>
+<p>Um cenário onde caminhos de arquivo absolutos podem ser apropriados é quando você deseja importar um arquivo de um drive compartilhado que tenha o mesmo caminho de arquivo completo para todos os usuários.</p>
+<p><span style="color: darkgreen;"><strong><em>DICA:</em></strong> Para converter rapidemente todas as barras invertidas <code>\</code> em barras normais <code>/</code>, destaque o código de interesse, use Ctrl+f (no Windows), selecione a caixa de opção “Em seleção” (<em>In selection</em>), e depois usar a funcionalidade de substituição para convertê-los.</span></p>
+<!-- ======================================================= -->
+</div>
+<div id="selecionando-um-arquivo-manualmente" class="section level3 unnumbered">
+<h3>Selecionando um arquivo manualmente<a class="anchor" aria-label="anchor" href="#selecionando-um-arquivo-manualmente"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode importar dados manualmente por meio de um destes métodos:</p>
+<ol style="list-style-type: decimal">
+<li>Painel Ambiente (<em>Environment</em>) do RStudio, clique em “Importar Dados” (<em>Import Dataset</em>), e selecione o tipo de dado</li>
+<li>Clique em File / Import Dataset / (selecione o tipo de dados)<br>
+</li>
+<li>Para seleção manual por código, utilize o comando do R <em>base</em> <code><a href="https://rdrr.io/r/base/file.choose.html">file.choose()</a></code> (deixando os parênteses vazios) para acionar a aparência de uma janela <strong>pop-up</strong> que permite ao usuário selecionar manualmente o arquivo de seu computador. Por exemplo:</li>
+</ol>
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Seleção manual de um arquivo. Quando este comando for executado, uma janela POP-UP aparecerá. </span></span>
+<span><span class="co"># O caminho do arquivo selecionado será fornecido ao comando import().</span></span>
+<span></span>
+<span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.choose.html">file.choose</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><span style="color: darkgreen;"><strong><em>DICA:</em></strong> A <strong>janela pop-up window</strong> pode aparecer ATRÁS di seu RStudio.</span></p>
+</div>
+</div>
+<div id="importar-dados" class="section level2" number="7.5">
+<h2>
+<span class="header-section-number">7.5</span> Importar dados<a class="anchor" aria-label="anchor" href="#importar-dados"><i class="fas fa-link"></i></a>
+</h2>
+<p>Utilizar <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> para importar um conjunto de dados é bastante simples. Basta fornecer o caminho para o arquivo (incluindo o nome do arquivo e a extensão do arquivo) entre aspas. Se utilizar <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> para construir o caminho do arquivo, siga as instruções acima. Abaixo estão alguns exemplos:</p>
+<p>Importar um arquivo csv que está localizado em seu “diretório de trabalho” ou na pasta raiz do projeto R:</p>
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>Importação da primeira planilha de uma pasta de trabalho do Excel que está localizada nas subpastas “dados” e “linelists” do projeto R (o caminho do arquivo construído utilizando <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code>):</p>
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"dados"</span>, <span class="st">"linelists"</span>, <span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Importação de um “quadro de dados” ( referido nesse livro como <em>data frame</em>)(um arquivo .rds) usando um caminho de arquivo absoluto:</p>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"C:/Users/Laura/Documents/tuberculosis/data/linelists/linelist_cleaned.rds"</span><span class="op">)</span></span></code></pre></div>
+<div id="planilhas-específicas-do-excel" class="section level3 unnumbered">
+<h3>Planilhas específicas do Excel<a class="anchor" aria-label="anchor" href="#planilhas-espec%C3%ADficas-do-excel"><i class="fas fa-link"></i></a>
+</h3>
+<p>Por padrão, se você fornecer uma pasta de trabalho Excel (.xlsx) para a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code>, a primeira planilha da pasta de trabalho será importada. Se você quiser importar uma <strong>aba</strong> (<em>sheet</em>) específica, inclua o nome da planilha ao <code>which =</code> argument. Por exemplo:</p>
+<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"my_excel_file.xlsx"</span>, which <span class="op">=</span> <span class="st">"Sheetname"</span><span class="op">)</span></span></code></pre></div>
+<p>Se utilizar o método <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> para fornecer um caminho relativo para <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code>, você ainda pode indicar uma aba específica adicionando o <code>which =</code> argumento depois dos parênteses de fechamento da função <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code>.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="importing.html#cb138-1" tabindex="-1"></a><span class="co"># Demonstração: importação de uma planilha específica do Excel ao utilizar caminhos relativos com o pacote 'here'.  </span></span>
+<span id="cb138-2"><a href="importing.html#cb138-2" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="importing.html#cb138-3" tabindex="-1"></a>linelist_raw <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"linelist.xlsx"</span>), <span class="at">which =</span> <span class="st">"Sheet1"</span>)<span class="st">`</span><span class="at">  </span></span></code></pre></div>
+<p>Para <em>exportar</em> um <em>data frame</em> do R para uma planilha específica do Excel e ter o resto da pasta de trabalho do Excel inalterado, você terá que importar, editar e exportar com um pacote alternativo criado para este propósito, como <strong>openxlsx</strong>*. Veja mais informações na página em <a href="directories.html#directories">Interações do diretório</a> ou <a href="https://ycphs.github.io/openxlsx/">nesta página do github</a>.</p>
+<p>Se sua pasta de trabalho Excel for .xlsb (pasta de trabalho Excel em formato binário) você talvez não consiga importá-la usando <strong>rio</strong>. Considere a possibilidade de salvá-la como .xlsx, ou usando um pacote como <strong>readxlsb</strong>* que é construído para <a href="https://cran.r-project.org/web/packages/readxlsb/vignettes/read-xlsb-workbook.html">este propósito</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="import_missing" class="section level3 unnumbered">
+<h3>Valores faltantes<a class="anchor" aria-label="anchor" href="#import_missing"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode querer designar que valor(es) em seu conjunto de dados que deve(m) ser considerado(s) como ausente(s)/faltante(s). Como explicado na página em <a href="missing-data.html#missing-data">Dados faltantes</a>, o valor em R para dados ausentes é <code>NA</code>, mas talvez o conjunto de dados que você deseja importar utilize 99, “Ausente”, ou apenas espaço vazio de caracteres “” em vez disso.</p>
+<p>Utilize o <code>na =</code> argumento para <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> e forneça o(s) valor(es) entre aspas (mesmo que sejam números). Você pode especificar múltiplos valores incluindo-os dentro de um vetor, utilizando <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> como mostrado abaixo.</p>
+<p>Aqui, o valor “99” no conjunto de dados importados é considerado ausente e convertido para <code>NA</code> em R.</p>
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"my_linelist.xlsx"</span><span class="op">)</span>, na <span class="op">=</span> <span class="st">"99"</span><span class="op">)</span></span></code></pre></div>
+<p>Qualquer um dos valores “Missing”, “” (célula vazia), ou “” (espaço único) no conjunto de dados importados são convertidos para <code>NA</code> no R.</p>
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"my_linelist.csv"</span><span class="op">)</span>, na <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Missing"</span>, <span class="st">""</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+<div id="pular-linhas" class="section level3 unnumbered">
+<h3>Pular linhas<a class="anchor" aria-label="anchor" href="#pular-linhas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Às vezes, você pode querer evitar a importação de uma linha específica de dados. Você pode fazer isso com o argumento <code>skip =</code> se utilizar <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> de <strong>rio</strong> em um arquivo .xlsx ou .csv. Forneça o número de linhas que você deseja pular.</p>
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_raw.xlsx"</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  <span class="co"># Não importa a linha de cabeçalho</span></span></code></pre></div>
+<p>Infelizmente ’skip = ’aceita apenas um valor inteiro, <em>não</em> um intervalo (por exemplo, “2:10” não funciona). Para pular a importação de linhas específicas que não são consecutivas do topo, considere importar várias vezes e utilizar <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows()</a></code> a partir de <strong>dplyr</strong>*. Veja o exemplo abaixo de pular apenas a linha 2.</p>
+</div>
+<div id="como-lidar-com-uma-segunda-linha-de-cabeçalho" class="section level3 unnumbered">
+<h3>Como lidar com uma segunda linha de cabeçalho<a class="anchor" aria-label="anchor" href="#como-lidar-com-uma-segunda-linha-de-cabe%C3%A7alho"><i class="fas fa-link"></i></a>
+</h3>
+<p>Às vezes, seus dados podem ter uma <em>segunda</em> linha de cabeçalho, por exemplo, se for uma linha de “dicionário de dados”, como mostrado abaixo. Esta situação pode ser problemática porque pode resultar na importação de todas as colunas como a classe “caractere”.</p>
+<p>Abaixo está um exemplo deste tipo de conjunto de dados (sendo a primeira linha o dicionário de dados).</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-810969febb90dc22932c" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-810969febb90dc22932c">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["case identification number assigned by MOH","5fe599","8689b7","11f8ea","b8812a"],["transmission chain generation number","4","4","2","3"],["estimated date of infection, mm/dd/yyyy","2014-05-08",null,null,"2014-05-04"],["date of symptom onset, YYYY-MM-DD","2014-05-13","2014-05-13","2014-05-16","2014-05-18"],["date of initial hospitalization, mm/dd/yyyy","2014-05-15","2014-05-14","2014-05-18","2014-05-20"],["date of outcome status determination",null,"2014-05-18","2014-05-30",null],["either 'Death' or 'Recovered' or 'Unknown'",null,"Recover","Recover",null],["either 'm' or 'f' or 'unknown'","m","f","m","f"],["age number","2","3","56","18"],["age unit, either 'years' or 'months' or 'days'","years","years","years","years"],[null,"2","3","56","18"],[null,"0-4","0-4","50-69","15-19"],[null,"0-4","0-4","55-59","15-19"],["Name of hospital of first admission","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Port Hospital"],["longitude of residence, approx","-13.2157351064963","-13.2152339775486","-13.212910703914","-13.2363711169728"],["latitude of residence, approx","8.46897295100924","8.45171855856465","8.46481700596819","8.4754761613651"],["case_id of infector","f547d6",null,null,"f90f5f"],["context of known transmission event","other",null,null,"other"],[null,"27","25","91","41"],[null,"48","59","238","135"],[null,"22","22","21","23"],["presence of fever on admission, either 'yes' or 'no'","no",null,null,"no"],["presence of chills on admission, either 'yes' or 'no'","no",null,null,"no"],["presence of cough on admission, either 'yes' or 'no'","yes",null,null,"no"],["presence of aches on admission, either 'yes' or 'no'","no",null,null,"no"],["presence of vomiting on admission, either 'yes' or 'no'","yes",null,null,"no"],[null,"36.8","36.9","36.9","36.8"],["time of hospital admission HH:MM",null,"09:36","16:48","11:22"],[null,"117.1875","71.8184429761563","16.0652496292635","22.4965706447188"],[null,"2","1","2","2"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":4,"scrollX":true,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[4,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><div id="remover-uma-segunda-linha-de-cabeçalho" class="section level4 unnumbered">
+<h4>Remover uma segunda linha de cabeçalho<a class="anchor" aria-label="anchor" href="#remover-uma-segunda-linha-de-cabe%C3%A7alho"><i class="fas fa-link"></i></a>
+</h4>
+<p>Para ignorar a segunda linha de cabeçalho, você provavelmente precisará importar os dados duas vezes.</p>
+<ol style="list-style-type: decimal">
+<li>Importar os dados para armazenar os nomes corretos das colunas<br>
+</li>
+<li>Importar os dados novamente, pulando as primeiras <em>duas</em> fileiras (cabeçalho e segunda fileira)<br>
+</li>
+<li>Ligar os nomes corretos no campo de dados reduzido</li>
+</ol>
+<p>O argumento exato usado para ligar os nomes corretos das colunas depende do tipo de arquivo de dados (.csv, .tsv, .xlsx, etc.). Isto porque <strong>rio</strong> está usando uma função diferente para os diferentes tipos de arquivo (ver tabela acima).</p>
+<p><strong>Para arquivos Excel:</strong> (<code>col_names =</code>)</p>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># importe a primeira vez; salve o nome das colunas</span></span>
+<span><span class="va">linelist_raw_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_raw.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># Salva o nome veradeiro das colunas</span></span>
+<span></span>
+<span><span class="co"># Importe uma segunda vez; pule a segunda linha e designe os nomes das colunas para o argumento col_names =</span></span>
+<span><span class="va">linelist_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_raw.xlsx"</span>,</span>
+<span>                       skip <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                       col_names <span class="op">=</span> <span class="va">linelist_raw_names</span></span>
+<span>                       <span class="op">)</span> </span></code></pre></div>
+<p><strong>Para arquivos CSV:</strong> (<code>col.names =</code>)</p>
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># importe a primeira vez; salve o nome das colunas</span></span>
+<span><span class="va">linelist_raw_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_raw.csv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># salve o nome verdadeiro das colunas</span></span>
+<span></span>
+<span><span class="co"># note que o argumento para arquivos csv é 'col.names = '</span></span>
+<span><span class="va">linelist_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_raw.csv"</span>,</span>
+<span>                       skip <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                       col.names <span class="op">=</span> <span class="va">linelist_raw_names</span></span>
+<span>                       <span class="op">)</span> </span></code></pre></div>
+<p><strong>Opção de Backup </strong> - atribuir/sobreescrever cabeçalhos usando a função ‘colnames()’ do base</p>
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># assign/overwrite headers using the base 'colnames()' function</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">linelist_raw</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">linelist_raw_names</span></span></code></pre></div>
+</div>
+<div id="fazendo-um-dicionário-de-dados" class="section level4 unnumbered">
+<h4>Fazendo um dicionário de dados<a class="anchor" aria-label="anchor" href="#fazendo-um-dicion%C3%A1rio-de-dados"><i class="fas fa-link"></i></a>
+</h4>
+<p>Bônus! Se você tiver uma segunda linha que seja um dicionário de dados, você pode facilmente criar um dicionário de dados adequado a partir dele. Esta dica é adaptada a partir deste <a href="https://alison.rbind.io/post/2018-02-23-read-multiple-header-rows/">post</a>.</p>
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="va">linelist_2headers</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>             <span class="co"># começa: linelist com um dicionário como a primeira linha</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                             <span class="co"># mantenha apenas os nomes das colunas e a primeira linha com o dicionário               </span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,       <span class="co"># faça o pivotamento de todas as coluna spara o formato "longo" </span></span>
+<span>               names_to <span class="op">=</span> <span class="st">"Column"</span>,       <span class="co"># nomeie as colunas</span></span>
+<span>               values_to <span class="op">=</span> <span class="st">"Description"</span><span class="op">)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a5d56432c0390fbeadcd" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a5d56432c0390fbeadcd">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["case_id","generation","date_infection","date_onset","date_hospitalisation","date_outcome","outcome","gender","age","age_unit","age_years","age_cat","age_cat5","hospital","lon","lat","infector","source","wt_kg","ht_cm","ct_blood","fever","chills","cough","aches","vomit","temp","time_admission","bmi","days_onset_hosp"],["case identification number assigned by MOH","transmission chain generation number","estimated date of infection, mm/dd/yyyy","date of symptom onset, YYYY-MM-DD","date of initial hospitalization, mm/dd/yyyy","date of outcome status determination","either 'Death' or 'Recovered' or 'Unknown'","either 'm' or 'f' or 'unknown'","age number","age unit, either 'years' or 'months' or 'days'",null,null,null,"Name of hospital of first admission","longitude of residence, approx","latitude of residence, approx","case_id of infector","context of known transmission event",null,null,null,"presence of fever on admission, either 'yes' or 'no'","presence of chills on admission, either 'yes' or 'no'","presence of cough on admission, either 'yes' or 'no'","presence of aches on admission, either 'yes' or 'no'","presence of vomiting on admission, either 'yes' or 'no'",null,"time of hospital admission HH:MM",null,null]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>Column<\/th>\n      <th>Description<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":4,"scrollX":true,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[4,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="combinar-duas-linhas-de-cabeçalho" class="section level4 unnumbered">
+<h4>Combinar duas linhas de cabeçalho<a class="anchor" aria-label="anchor" href="#combinar-duas-linhas-de-cabe%C3%A7alho"><i class="fas fa-link"></i></a>
+</h4>
+<p>Em alguns casos, quando seu conjunto de dados brutos tiver <em>duas</em> linhas de cabeçalho (ou mais especificamente, a segunda linha de dados é um cabeçalho secundário), você pode querer “combiná-las” ou adicionar os valores da segunda linha de cabeçalho à primeira linha de cabeçalho.</p>
+<p>O comando abaixo definirá os nomes das colunas do <em>data frame</em> como a combinação (colando em conjunto) dos primeiros cabeçalhos (verdadeiros) com o valor imediatamente abaixo (na primeira linha).</p>
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">my_data</span><span class="op">)</span>, <span class="va">my_data</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>, sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span></span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="planilhas-do-google" class="section level3 unnumbered">
+<h3>Planilhas do Google<a class="anchor" aria-label="anchor" href="#planilhas-do-google"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode importar dados de uma planilha on-line do Google com o pacote <strong>googlesheet4</strong> e autenticando seu acesso à planilha.</p>
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="st">"googlesheets4"</span><span class="op">)</span></span></code></pre></div>
+<p>Abaixo, uma planilha de demonstração do Google é importada e salva. Este comando pode solicitar a confirmação da autenticação de sua conta Google. Siga as instruções e pop-ups em seu navegador de internet para conceder permissões aos pacotes Tidyverse API para editar, criar e excluir suas planilhas no Google Drive.</p>
+<p>A planilha abaixo é “visualizável para qualquer pessoa com o link” e você pode tentar importá-la.</p>
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Gsheets_demo</span> <span class="op">&lt;-</span> <span class="fu">read_sheet</span><span class="op">(</span><span class="st">"https://docs.google.com/spreadsheets/d/1scgtzkVLLHAe5a6_eFQEwkZcc14yFUx1KgOMZ4AKUfY/edit#gid=0"</span><span class="op">)</span></span></code></pre></div>
+<p>A planilha também pode ser importada usando apenas a identificação da planilha, uma parte mais curta da URL:</p>
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Gsheets_demo</span> <span class="op">&lt;-</span> <span class="fu">read_sheet</span><span class="op">(</span><span class="st">"1scgtzkVLLHAe5a6_eFQEwkZcc14yFUx1KgOMZ4AKUfY"</span><span class="op">)</span></span></code></pre></div>
+<p>Outro pacote, <strong>googledrive</strong> oferece funções úteis para escrever, editar e excluir planilhas do Google. Por exemplo, utilizando as funções <code>gs4_create()</code> e <code>sheet_write()</code> encontradas neste pacote.</p>
+<p>Aqui estão alguns outros tutoriais on-line úteis:<br><a href="https://arbor-analytics.com/post/getting-your-data-into-r-from-google-sheets/">tutorial básico de importação de planilhas do Google</a><br><a href="https://googlesheets4.tidyverse.org/articles/googlesheets4.html">tutorial mais detalhado</a><br><a href="https://googlesheets4.tidyverse.org/articles/articles/drive-and-sheets.html">interação entre as googlesheets4 e tidyverse</a></p>
+</div>
+</div>
+<div id="múltiplos-arquivos--importar-exportar-dividir-combinar" class="section level2" number="7.6">
+<h2>
+<span class="header-section-number">7.6</span> Múltiplos arquivos- importar, exportar, dividir, combinar<a class="anchor" aria-label="anchor" href="#m%C3%BAltiplos-arquivos--importar-exportar-dividir-combinar"><i class="fas fa-link"></i></a>
+</h2>
+<p>Veja a página em <a href="iteration.html#iteration">Iteração, loops e listas</a> para exemplos de como importar e combinar vários arquivos, ou vários arquivos de pastas de trabalho Excel. Essa página também tem exemplos de como dividir um data frame em partes e exportar cada uma separadamente, ou como planilhas nomeadas em uma pasta de trabalho do Excel.</p>
+<!-- ======================================================= -->
+</div>
+<div id="import_github" class="section level2" number="7.7">
+<h2>
+<span class="header-section-number">7.7</span> Importar do GitHub<a class="anchor" aria-label="anchor" href="#import_github"><i class="fas fa-link"></i></a>
+</h2>
+<p>A importação de dados diretamente do Github para R pode ser muito fácil ou pode exigir alguns passos - dependendo do tipo de arquivo. Abaixo estão algumas abordagens:</p>
+<div id="arquivos-csv" class="section level3 unnumbered">
+<h3>Arquivos CSV<a class="anchor" aria-label="anchor" href="#arquivos-csv"><i class="fas fa-link"></i></a>
+</h3>
+<p>Pode ser fácil importar um arquivo .csv diretamente do Github para R com um comando R.</p>
+<ol style="list-style-type: decimal">
+<li>Vá até o repositório Github, localize o arquivo de interesse e clique sobre ele<br>
+</li>
+<li>Clique no botão “Raw” (você verá então os dados “brutos” do csv, como mostrado abaixo)<br>
+</li>
+<li>Copiar a URL (endereço web)<br>
+</li>
+<li>Colocar a URL entre aspas dentro do comando <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> no R</li>
+</ol>
+<div class="inline-figure"><img src="images/download_csv_raw.png" width="100%" style="display: block; margin: auto auto auto 0;"></div>
+</div>
+<div id="arquivo-xlsx" class="section level3 unnumbered">
+<h3>Arquivo XLSX<a class="anchor" aria-label="anchor" href="#arquivo-xlsx"><i class="fas fa-link"></i></a>
+</h3>
+<p>Talvez você não consiga visualizar os dados “Raw” de alguns arquivos (por exemplo, .xlsx, .rds, .nwk, .shp)</p>
+<ol style="list-style-type: decimal">
+<li>Vá até o repositório Github, localize o arquivo de interesse e clique sobre ele<br>
+</li>
+<li>Clique no botão “Download”, como mostrado abaixo<br>
+</li>
+<li>Salve o arquivo em seu computador, e importe-o para o R</li>
+</ol>
+<div class="inline-figure"><img src="images/download_xlsx.png" width="100%" style="display: block; margin: auto auto auto 0;"></div>
+</div>
+<div id="shapefiles" class="section level3 unnumbered">
+<h3>Shapefiles<a class="anchor" aria-label="anchor" href="#shapefiles"><i class="fas fa-link"></i></a>
+</h3>
+<p>Os shapefiles têm muitos sub-componentes, cada um com uma extensão de arquivo diferente. Um arquivo terá a extensão “.shp”, mas outros podem ter “.dbf”, “.prj”, etc. Para baixar um shapefile do Github, você precisará baixar cada um dos arquivos de subcomponentes individualmente, e salvá-los na <em>mesma</em> pasta em seu computador. No Github, clique em cada arquivo individualmente e faça o download deles clicando no botão “Download”.</p>
+<p>Uma vez salvo em seu computador, você pode importar o shapefile como mostrado na página <a href="#gis">GIS básico</a> utilizando <code>st_read()</code> do pacote <strong>sf</strong>. Você só precisa fornecer o caminho do arquivo e o nome do arquivo “.shp” - desde que os outros arquivos relacionados estejam dentro da mesma pasta em seu computador.</p>
+<p>Abaixo, você pode ver como o shapefile “sle_adm3” consiste de muitos arquivos - cada um dos quais deve ser baixado do Github.</p>
+<div class="inline-figure"><img src="images/download_shp.png" width="100%" style="display: block; margin: auto auto auto 0;"></div>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="inserir-dados-munualmente" class="section level2" number="7.8">
+<h2>
+<span class="header-section-number">7.8</span> Inserir dados munualmente<a class="anchor" aria-label="anchor" href="#inserir-dados-munualmente"><i class="fas fa-link"></i></a>
+</h2>
+<div id="inserção-por-linhas" class="section level3 unnumbered">
+<h3>Inserção por linhas<a class="anchor" aria-label="anchor" href="#inser%C3%A7%C3%A3o-por-linhas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Utilize a função <code>tribble</code> do pacote <strong>tibble</strong> do tidyverse (<a href="https://tibble.tidyverse.org/reference/tribble.html">referência online tibble</a>).</p>
+<p>Observe como os cabeçalhos das colunas começam com um <em>til</em> (<code>~</code>). Observe também que cada coluna deve conter apenas uma classe de dados (caractere, numérico, etc.). Você pode utilizar abas, espaçamento e novas linhas para tornar a entrada de dados mais intuitiva e legível. Os espaços não importam entre os valores, mas cada linha é representada por uma nova linha de código. Por exemplo:</p>
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Crie um conjunto de dados manualmente por linha</span></span>
+<span><span class="va">manual_entry_rows</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">colA</span>, <span class="op">~</span><span class="va">colB</span>,</span>
+<span>  <span class="st">"a"</span>,   <span class="fl">1</span>,</span>
+<span>  <span class="st">"b"</span>,   <span class="fl">2</span>,</span>
+<span>  <span class="st">"c"</span>,   <span class="fl">3</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>A agora nós exibimos o novo <em>data frame</em>::</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9ab88249dae86463b121" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-9ab88249dae86463b121">{"x":{"filter":"none","vertical":false,"data":[["1","2","3"],["a","b","c"],[1,2,3]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>colA<\/th>\n      <th>colB<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="inserção-por-colunas" class="section level3 unnumbered">
+<h3>Inserção por colunas<a class="anchor" aria-label="anchor" href="#inser%C3%A7%C3%A3o-por-colunas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Como um data frame consiste em vetores (colunas verticais), a abordagem <strong>base</strong> para a criação manual de data frames no R espera que você defina cada coluna e depois as vincule juntas. Isto pode ser contra-intuitivo em epidemiologia, pois geralmente pensamos em nossos dados em linhas (como acima).</p>
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># definir cada vetor (coluna vertical) separadamente, cada um com seu próprio nome</span></span>
+<span><span class="va">PatientID</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">235</span>, <span class="fl">452</span>, <span class="fl">778</span>, <span class="fl">111</span><span class="op">)</span></span>
+<span><span class="va">Treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Yes"</span>, <span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Yes"</span><span class="op">)</span></span>
+<span><span class="va">Death</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<p><span style="color: orange;"><strong><em>CUIDADO:</em></strong> Todos os vetores devem ter o mesmo comprimento (mesmo número de valores).</span></p>
+<p>The vectors can then be bound together using the function <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>:</p>
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># combine as colunas em um *data frame*, referenciando os nomes dos vetores</span></span>
+<span><span class="va">manual_entry_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="va">PatientID</span>, <span class="va">Treatment</span>, <span class="va">Death</span><span class="op">)</span></span></code></pre></div>
+<p>E agora vamos vizualizar o novo conjunto de dados:</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e512c25a5d92d8a1c431" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e512c25a5d92d8a1c431">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4"],[235,452,778,111],["Yes","No","Yes","Yes"],[1,0,1,0]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>PatientID<\/th>\n      <th>Treatment<\/th>\n      <th>Death<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,3]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="colando-a-partir-da-área-de-transferência" class="section level3 unnumbered">
+<h3>Colando a partir da área de transferência<a class="anchor" aria-label="anchor" href="#colando-a-partir-da-%C3%A1rea-de-transfer%C3%AAncia"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se você copiar dados de outro lugar e os tem na “área de transferência” (<em>clipboard</em>), você pode tentar uma das duas maneiras abaixo:</p>
+<p>Do pacote <strong>clipr</strong>*, você pode utilizar <code>read_clip_tbl()</code> para importar como um data frame, ou apenas <code>read_clip()</code> para importar como um vetor de caracteres. Em ambos os casos, deixe os parênteses vazios.</p>
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">clipr</span><span class="fu">::</span><span class="fu"><a href="http://matthewlincoln.net/clipr/reference/read_clip_tbl.html">read_clip_tbl</a></span><span class="op">(</span><span class="op">)</span>  <span class="co"># importa a área de transferência atual como uma data frame</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">clipr</span><span class="fu">::</span><span class="fu"><a href="http://matthewlincoln.net/clipr/reference/read_clip.html">read_clip</a></span><span class="op">(</span><span class="op">)</span>      <span class="co"># importa como um vetor de caracteres</span></span></code></pre></div>
+<p>Você também pode exportar facilmente para a área de transferência do seu sistema com <strong>clipr</strong>*. Veja a seção abaixo sobre Exportação.</p>
+<p>Alternativamente, você pode utilizar a função <code><a href="https://rdrr.io/r/utils/read.table.html">read.table()</a></code> do R <strong>base</strong> com <code>file = "clipboard")</code> para importar como um <em>data frame</em>:</p>
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_from_clipboard</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span></span>
+<span>  file <span class="op">=</span> <span class="st">"clipboard"</span>,  <span class="co"># specify this as "clipboard"</span></span>
+<span>  sep <span class="op">=</span> <span class="st">"t"</span>,           <span class="co"># separator could be tab, or commas, etc.</span></span>
+<span>  header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>         <span class="co"># if there is a header row</span></span></code></pre></div>
+</div>
+</div>
+<div id="importar-o-arquivo-mais-recente" class="section level2" number="7.9">
+<h2>
+<span class="header-section-number">7.9</span> Importar o arquivo mais recente<a class="anchor" aria-label="anchor" href="#importar-o-arquivo-mais-recente"><i class="fas fa-link"></i></a>
+</h2>
+<p>Muitas vezes você pode receber atualizações diárias de seus conjuntos de dados. Neste caso, você vai querer escrever o código que importa o arquivo mais recente. A seguir, apresentamos duas formas de abordar este assunto:</p>
+<ul>
+<li>Selecionando o arquivo com base na data no nome do arquivo<br>
+</li>
+<li>Seleção do arquivo com base nos metadados do arquivo (última modificação)</li>
+</ul>
+<div id="datas-no-nome-de-um-arquivo" class="section level3 unnumbered">
+<h3>Datas no nome de um arquivo<a class="anchor" aria-label="anchor" href="#datas-no-nome-de-um-arquivo"><i class="fas fa-link"></i></a>
+</h3>
+<p>Esta abordagem depende de três premissas:</p>
+<ol style="list-style-type: decimal">
+<li>Você confia nas datas nos nomes dos arquivos<br>
+</li>
+<li>As datas são numéricas e aparecem em <em>geralmente</em> no mesmo formato (por exemplo, ano, mês e dia)<br>
+</li>
+<li>Não há outros números no nome do arquivo</li>
+</ol>
+<p>Explicaremos cada passo e, no final, mostraremos a combinação deles.</p>
+<p>Primeiro, utilize <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code> do R <strong>base</strong> para extrair apenas os nomes dos arquivos para cada arquivo na pasta de interesse. Consulte a página em <a href="directories.html#directories">Interações de diretório</a> para obter mais detalhes sobre <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code>. Neste exemplo, a pasta de interesse é a pasta “linelists” dentro da pasta “exemplo” dentro de “data” dentro do projeto R.</p>
+<div class="sourceCode" id="cb155"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist_filenames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"example"</span>, <span class="st">"linelists"</span><span class="op">)</span><span class="op">)</span> <span class="co"># pega o nome dos arquivos da pasta</span></span>
+<span><span class="va">linelist_filenames</span>                                              <span class="co"># exibe </span></span></code></pre></div>
+<pre><code>## [1] "20201007linelist.csv"          "case_linelist_2020-10-02.csv" 
+## [3] "case_linelist_2020-10-03.csv"  "case_linelist_2020-10-04.csv" 
+## [5] "case_linelist_2020-10-05.csv"  "case_linelist_2020-10-08.xlsx"
+## [7] "case_linelist20201006.csv"</code></pre>
+<p>Uma vez que você tenha este vetor de nomes, você pode extrair as datas a partir deles aplicando <code><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract()</a></code> de <strong>stringr</strong> utilizando esta expressão regular. Ela extrai quaisquer números no nome do arquivo (incluindo quaisquer outros caracteres no meio, tais como traços ou cortes). Você pode ler mais sobre <strong>stringr</strong>* na página <a href="characters-strings.html#characters-strings">Strings e caracteres</a>.</p>
+<div class="sourceCode" id="cb157"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist_dates_raw</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">linelist_filenames</span>, <span class="st">"[0-9].*[0-9]"</span><span class="op">)</span> <span class="co"># extrai números e quaisquer caracteres no meio</span></span>
+<span><span class="va">linelist_dates_raw</span>  <span class="co"># print</span></span></code></pre></div>
+<pre><code>## [1] "20201007"   "2020-10-02" "2020-10-03" "2020-10-04" "2020-10-05" "2020-10-08"
+## [7] "20201006"</code></pre>
+<p>Assumindo que as datas são escritas geralmente no mesmo formato (por exemplo, Ano e depois Mês e depois Dia) e os anos têm 4 dígitos, você pode utilizar <strong>lubridate</strong>’s funções flexíveis de conversão (<code><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd()</a></code>, <code><a href="https://lubridate.tidyverse.org/reference/ymd.html">dmy()</a></code>, ou <code><a href="https://lubridate.tidyverse.org/reference/ymd.html">mdy()</a></code>) para convertê-las em datas. Para estas funções, os traços, espaços ou cortes não importam, apenas a ordem dos números. Leia mais na página <a href="dates.html#dates">Trabalhando com datas</a>.</p>
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist_dates_clean</span> <span class="op">&lt;-</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="va">linelist_dates_raw</span><span class="op">)</span></span>
+<span><span class="va">linelist_dates_clean</span></span></code></pre></div>
+<pre><code>## [1] "2020-10-07" "2020-10-02" "2020-10-03" "2020-10-04" "2020-10-05" "2020-10-08"
+## [7] "2020-10-06"</code></pre>
+<p>A função do R <strong>base</strong> <code><a href="https://rdrr.io/r/base/which.min.html">which.max()</a></code> pode então ser utilizada para retornar a posição do índice (por exemplo, 1º, 2º, 3º, …) do valor máximo da data. O último arquivo é corretamente identificado como o 6º arquivo - “case_linelist_2020-10-08.xlsx”.</p>
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">index_latest_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">linelist_dates_clean</span><span class="op">)</span></span>
+<span><span class="va">index_latest_file</span></span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<p>Se nós condensarmos todos esses comandos, o cógico compelto deve parecer com o abaixo. Observe que o <code>.</code> na ultima linha é um marcador para o objeto pipe naquele ponta da sequência de pipes. Naquele ponto o valor é implesmente o número 6. Isso é colocado entre cochetes para extrair o sexto elemnto do vetor de nomes do arquivo produzido por <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code>.</p>
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># carrega os pacotes</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span><span class="va">tidyverse</span>,           <span class="co"># manipulação  de dados</span></span>
+<span>  <span class="va">stringr</span>,           <span class="co"># trabalha com strings/caravteres</span></span>
+<span>  <span class="va">lubridate</span>,         <span class="co"># trabalha com datas</span></span>
+<span>  <span class="va">rio</span>,               <span class="co"># importar / exportar</span></span>
+<span>  <span class="va">here</span>,              <span class="co"># caminhos relativos dos arquivos</span></span>
+<span>  <span class="va">fs</span><span class="op">)</span>                <span class="co"># interações entre diretórios</span></span>
+<span></span>
+<span><span class="co"># extrai o nome do arquivo mais recente</span></span>
+<span><span class="va">latest_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"example"</span>, <span class="st">"linelists"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># nomes dos aequivos da subpasta "linelists"         </span></span>
+<span>  <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="st">"[0-9].*[0-9]"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                  <span class="co"># extrai as datas (números)</span></span>
+<span>  <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                                        <span class="co"># converte números pra datas (assumindo o formato ano-mês-dia)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                                  <span class="co"># pega o índice da maior data (arquivo mais recente) </span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"example"</span>, <span class="st">"linelists"</span><span class="op">)</span><span class="op">)</span><span class="op">[[</span><span class="va">.</span><span class="op">]</span><span class="op">]</span>              <span class="co"># retorna o nome do arquivo da linelist mais recente</span></span>
+<span></span>
+<span><span class="va">latest_file</span>  <span class="co"># mostra o nome do arquivo do artigo mais recente</span></span></code></pre></div>
+<pre><code>## [1] "case_linelist_2020-10-08.xlsx"</code></pre>
+<p>Você pode agora usar esse nome para finalizar o caminho relativo do arquivo, com <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code>:</p>
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"dados"</span>, <span class="st">"example"</span>, <span class="st">"linelists"</span>, <span class="va">latest_file</span><span class="op">)</span> </span></code></pre></div>
+<p>E agora você pode importar o arquivo mais recente:</p>
+<div class="sourceCode" id="cb166"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># importar</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"dados"</span>, <span class="st">"example"</span>, <span class="st">"linelists"</span>, <span class="va">latest_file</span><span class="op">)</span><span class="op">)</span> <span class="co"># import </span></span></code></pre></div>
+</div>
+<div id="use-as-informações-do-arquivo" class="section level3 unnumbered">
+<h3>Use as informações do arquivo<a class="anchor" aria-label="anchor" href="#use-as-informa%C3%A7%C3%B5es-do-arquivo"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se seus arquivos não tiverem datas em seus nomes (ou se você não confiar nessas datas), você pode tentar extrair a data da última modificação dos metadados do arquivo. Use funções do pacote <strong>fs</strong> para examinar as informações dos metadados de cada arquivo, que incluem o tempo da última modificação e o caminho do arquivo.</p>
+<p>Abaixo, fornecemos a pasta de interesse para <strong>fs</strong>’s <code>dir_info()</code>. Neste caso, a pasta de interesse está no projeto R na pasta “dados”, na subpasta “exemplo” e em sua subpasta “linelists”. O resultado é um <em>data frame</em> com uma linha por arquivo e colunas para <code>modification_time',</code>path’, etc. Você pode ver um exemplo visual disto na página em <a href="directories.html#directories">interações de diretório</a>.</p>
+<p>Podemos ordenar este <em>data frame</em> de arquivos pela coluna <code>modification_time</code>, e então manter apenas a linha superior/última linha (arquivo) com a função do R <strong>base</strong>* <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>. Então podemos extrair o caminho do arquivo deste último arquivo somente com a função <strong>dplyr</strong>* <code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code> na coluna <code>path</code>. Finalmente, podemos passar este caminho de arquivo para <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code>. O arquivo importado é salvo como <code>latest_file</code>.</p>
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">latest_file</span> <span class="op">&lt;-</span> <span class="fu">dir_info</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"dados"</span>, <span class="st">"examplo"</span>, <span class="st">"linelists"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># coleta dados sobre todos os arquivos no diretório</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">modification_time</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>      <span class="co"># classifica por data da última modificação</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                               <span class="co"># mantém apenas o arquivo modificado por último</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                            <span class="co"># extrai apenas o endereço do arquivo</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="op">)</span>                                  <span class="co"># importa o arquivo</span></span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="import_api" class="section level2" number="7.10">
+<h2>
+<span class="header-section-number">7.10</span> APIs<a class="anchor" aria-label="anchor" href="#import_api"><i class="fas fa-link"></i></a>
+</h2>
+<p>Uma “Interface de Programação Automatizada” (API) pode ser usada para solicitar dados diretamente de um website. As APIs são um conjunto de regras que permitem que uma aplicação de software interaja com outra. O cliente (você) envia uma “solicitação” e recebe uma “resposta” contendo o conteúdo. Os pacotes R <strong>httr</strong> e <strong>jsonlite</strong>* podem facilitar este processo.</p>
+<p>Cada website habilitado para API terá sua própria documentação e especificações para se familiarizar. Alguns sites estão disponíveis publicamente e podem ser acessados por qualquer pessoa. Outros, tais como plataformas com IDs de usuário e credenciais, requerem autenticação para acessar seus dados.</p>
+<p>Não é preciso dizer que é necessário ter uma conexão com a Internet para importar dados via API. Daremos breves exemplos de uso de APIs para importar dados e conectá-lo a outros recursos.</p>
+<p><em>Note: lembre-se que os dados podem ser </em>postados* em um website sem API, o que pode ser mais fácil de ser recuperado. Por exemplo, um arquivo CSV postado pode ser acessível simplesmente fornecendo a URL do site para <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> como descrito na seção sobre <a href="importing.html#import_github">importação de Github</a>.*</p>
+<div id="requisição-http" class="section level3 unnumbered">
+<h3>Requisição HTTP<a class="anchor" aria-label="anchor" href="#requisi%C3%A7%C3%A3o-http"><i class="fas fa-link"></i></a>
+</h3>
+<p>A troca de API é mais comumente feita através de uma solicitação HTTP. HTTP é o Protocolo de Transferência de Hipertexto, e é o formato subjacente de uma solicitação/resposta entre um cliente e um servidor. A entrada e saída exata pode variar dependendo do tipo de API, mas o processo é o mesmo - uma “Solicitação” (geralmente Solicitação HTTP) do usuário, muitas vezes contendo uma consulta, seguida por uma “Resposta”, contendo informações de status sobre a solicitação e possivelmente o conteúdo solicitado.</p>
+<p>Aqui estão alguns componentes de uma solicitação <em>HTTP</em>:</p>
+<ul>
+<li>A URL do endpoint da API<br>
+</li>
+<li>O “Método” (ou “Verbo”)<br>
+</li>
+<li>Cabeçalhos<br>
+</li>
+<li>Corpo</li>
+</ul>
+<p>O “método” de solicitação HTTP é a ação que você deseja realizar. Os dois métodos HTTP mais comuns são <code>GET</code> e <code>POST</code>, mas outros poderiam incluir <code>PUT</code>, <code>DELETE</code>, <code>PATCH</code>, etc. Ao importar dados para R, é mais provável que você utilize <code>GET</code>.</p>
+<p>Após sua solicitação, seu computador receberá uma “resposta” em um formato similar ao que você enviou, incluindo URL, status HTTP (Status 200 é o que você quer!), tipo de arquivo, tamanho e o conteúdo desejado. Você precisará então analisar esta resposta e transformá-la em um data frame funcional dentro de seu ambiente R.</p>
+</div>
+<div id="pacotes" class="section level3 unnumbered">
+<h3>Pacotes<a class="anchor" aria-label="anchor" href="#pacotes"><i class="fas fa-link"></i></a>
+</h3>
+<p>O pacote <strong>httr</strong> funciona bem para lidar com solicitações HTTP em R. Ele requer pouco conhecimento prévio de APIs Web e pode ser usado por pessoas menos familiarizadas com a terminologia de desenvolvimento de software. Além disso, se a resposta HTTP for .json, você pode usar <strong>jsonlite</strong> para analisar a resposta.</p>
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># carrega pacotes</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">httr</span>, <span class="va">jsonlite</span>, <span class="va">tidyverse</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="dados-públicos" class="section level3 unnumbered">
+<h3>Dados públicos<a class="anchor" aria-label="anchor" href="#dados-p%C3%BAblicos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Abaixo é um exemplo de uma solicitação de HTTP, originalmente de um tutorial do <a href="https://www.trafforddatalab.io/open_data_companion/#A_quick_introduction_to_APIs">the Trafford Data Lab</a>. Esse site têm vários outros recursos para aprender esse tema e exercícios sobre API.</p>
+<p>Cenário: nós queremos importar uma lista de restaurantes fast food na cidade de Trafford, Reino Unido. Os dados podem ser acessados pela API da Food Standards Agency, que disponibiliza dados e classificações acerca de hiigiene alimentar no Reino Unido.</p>
+<p>OAqui estão os parâmetros para a nossa solicitação:</p>
+<ul>
+<li>HTTP verb: GET<br>
+</li>
+<li>API endpoint URL: <a href="http://api.ratings.food.gov.uk/Establishments" class="uri">http://api.ratings.food.gov.uk/Establishments</a><br>
+</li>
+<li>Parâmetros selecionados: name, address, longitude, latitude, businessTypeId, ratingKey, localAuthorityId<br>
+</li>
+<li>Cabeçalho: “x-api-version”, 2<br>
+</li>
+<li>Formato(s) dos dados: JSON, XML<br>
+</li>
+<li>Documentação: <a href="http://api.ratings.food.gov.uk/help" class="uri">http://api.ratings.food.gov.uk/help</a>
+</li>
+</ul>
+<p>O código no R seria como seguinte:</p>
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># prepare a solicitação</span></span>
+<span><span class="va">path</span> <span class="op">&lt;-</span> <span class="st">"http://api.ratings.food.gov.uk/Establishments"</span></span>
+<span><span class="va">request</span> <span class="op">&lt;-</span> <span class="fu">GET</span><span class="op">(</span>url <span class="op">=</span> <span class="va">path</span>,</span>
+<span>             query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>               localAuthorityId <span class="op">=</span> <span class="fl">188</span>,</span>
+<span>               BusinessTypeId <span class="op">=</span> <span class="fl">7844</span>,</span>
+<span>               pageNumber <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>               pageSize <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span>,</span>
+<span>             <span class="fu">add_headers</span><span class="op">(</span><span class="st">"x-api-version"</span> <span class="op">=</span> <span class="st">"2"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># cheque para algum erro no servidor ("200" é bom!)</span></span>
+<span><span class="va">request</span><span class="op">$</span><span class="va">status_code</span></span>
+<span></span>
+<span><span class="co"># submita a solicitação, separe a resposta, e converta para um data frame  </span></span>
+<span></span>
+<span><span class="va">response</span> <span class="op">&lt;-</span> <span class="fu">content</span><span class="op">(</span><span class="va">request</span>, as <span class="op">=</span> <span class="st">"text"</span>, encoding <span class="op">=</span> <span class="st">"UTF-8"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">fromJSON</span><span class="op">(</span>flatten <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="st">"establishments"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Agora você pode limpar e utilizar o <em>data frame</em> <code>resposta</code> (<em>response</em>), que contém uma linha por estabelecimento de fast food.</p>
+</div>
+<div id="autenticação-necessária" class="section level3 unnumbered">
+<h3>Autenticação necessária<a class="anchor" aria-label="anchor" href="#autentica%C3%A7%C3%A3o-necess%C3%A1ria"><i class="fas fa-link"></i></a>
+</h3>
+<p>Algumas APIs requerem autenticação - para que você possa provar quem você é, para que possa acessar dados restritos. Para importar estes dados, você pode precisar primeiro usar um método POST para fornecer um nome de usuário, senha, ou código. Isto retornará um token de acesso, que pode ser usado para solicitações posteriores do método GET para recuperar os dados desejados.</p>
+<p>Abaixo está um exemplo de consulta de dados do <em>Go.Data</em>, que é uma ferramenta de investigação de surtos. <em>Go.Data</em> usa uma API para todas as interações entre o front-end da web e os aplicativos smartphone usados para a coleta de dados. O <em>Go.Data</em> é usado em todo o mundo. Como os dados do surto são sensíveis e você só deve ser capaz de acessar os dados para <em>seu</em> surto, a autenticação é necessária.</p>
+<p>Abaixo estão alguns exemplos de código R usando <strong>httr</strong> e <strong>jsonlite</strong> para conexão com a API <em>Go.Data</em> para importar dados sobre o acompanhamento de contato de seu surto.</p>
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># configure as credenciais para a autorização </span></span>
+<span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://godatasampleURL.int/"</span>           <span class="co"># instânica url Go.Data válida</span></span>
+<span><span class="va">username</span> <span class="op">&lt;-</span> <span class="st">"username"</span>                          <span class="co"># nome de usuário do Go.Data válido</span></span>
+<span><span class="va">password</span> <span class="op">&lt;-</span> <span class="st">"password"</span>                          <span class="co"># senha do Go.Data válida</span></span>
+<span><span class="va">outbreak_id</span> <span class="op">&lt;-</span> <span class="st">"xxxxxx-xxxx-xxxx-xxxx-xxxxxxx"</span>  <span class="co"># ID do surto do Go.Data outbreak válida</span></span>
+<span></span>
+<span><span class="co"># obtenha o token de acesso</span></span>
+<span><span class="va">url_request</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">url</span>,<span class="st">"api/oauth/token?access_token=123"</span><span class="op">)</span> <span class="co"># defina a solicitação da url base </span></span>
+<span></span>
+<span><span class="co"># prepare a solicitação</span></span>
+<span><span class="va">response</span> <span class="op">&lt;-</span> <span class="fu">POST</span><span class="op">(</span></span>
+<span>  url <span class="op">=</span> <span class="va">url_request</span>,  </span>
+<span>  body <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    username <span class="op">=</span> <span class="va">username</span>,    <span class="co"># use o nome de usuario e senha salvos acima para autorizar </span></span>
+<span>    password <span class="op">=</span> <span class="va">password</span><span class="op">)</span>,                                       </span>
+<span>    encode <span class="op">=</span> <span class="st">"json"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># execute a rolicitação e separe a resposta </span></span>
+<span><span class="va">content</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">content</span><span class="op">(</span><span class="va">response</span>, as <span class="op">=</span> <span class="st">"text"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">fromJSON</span><span class="op">(</span>flatten <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>          <span class="co"># flatten nested JSON</span></span>
+<span>  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salve o token de acesso da resposta </span></span>
+<span><span class="va">access_token</span> <span class="op">&lt;-</span> <span class="va">content</span><span class="op">$</span><span class="va">access_token</span>    <span class="co">#  salve o token de acesso para permitir as chamadas subsequentes abaixo </span></span>
+<span></span>
+<span><span class="co"># importat os contatos dos surtos </span></span>
+<span><span class="co"># Use o token de access </span></span>
+<span><span class="va">response_contacts</span> <span class="op">&lt;-</span> <span class="fu">GET</span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">url</span>,<span class="st">"api/outbreaks/"</span>,<span class="va">outbreak_id</span>,<span class="st">"/contacts"</span><span class="op">)</span>,          <span class="co"># OBTENHA (GET) a solicitação</span></span>
+<span>  <span class="fu">add_headers</span><span class="op">(</span></span>
+<span>    Authorization <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Bearer"</span>, <span class="va">access_token</span>, sep <span class="op">=</span> <span class="st">" "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">json_contacts</span> <span class="op">&lt;-</span> <span class="fu">content</span><span class="op">(</span><span class="va">response_contacts</span>, as <span class="op">=</span> <span class="st">"text"</span><span class="op">)</span>         <span class="co"># converta para texto JSON</span></span>
+<span></span>
+<span><span class="va">contacts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="fu">fromJSON</span><span class="op">(</span><span class="va">json_contacts</span>, flatten <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>   <span class="co"># "achate" o JSON para um tibble</span></span></code></pre></div>
+<p><span style="color: orange;"><strong><em>CUIDADO:</em></strong> Se você estiver importando grandes quantidades de dados de um API que requeira autenticação, poderá haver um intervalo de tempo. Para evitar isto, recupere o access_token novamente antes de cada solicitação GET API e tente usar filtros ou limites na consulta.</span></p>
+<p><span style="color: darkgreen;"><strong><em>DICA:</em></strong> A função <code>fromJSON()</code> no pacote <strong>jsonlite</strong> não desalinha totalmente na primeira vez em que é executada, então você provavelmente ainda terá itens de lista em seu tibble resultante. Você precisará des-nidificar ainda mais para certas variáveis; dependendo de como seu .json está aninhado. Para ver mais informações sobre isto, veja a documentação do pacote <strong>jsonlite</strong>, como a função <a href="https://rdrr.io/cran/jsonlite/man/flatten.html"><code>flatten()</code></a>. </span></p>
+<p>Para mais detalhes, Veja a documentação em <a href="https://loopback.io/doc/en/lb4/index.html">LoopBack Explorer</a>, a página <a href="contact-tracing.html#contact-tracing">Rastreamento de Contatos</a> ou dicas de API em <a href="https://worldhealthorganization.github.io/godata/api-docs">Go.Data Github repository</a></p>
+<p>Você pode ler mais sobre o pacote <em>httr</em> <a href="https://httr.r-lib.org/articles/quickstart.html">aqui</a></p>
+<p>Esta seção também foi informada por <a href="https://www.dataquest.io/blog/r-api-tutorial/">este tutorial</a> e <a href="https://medium.com/@traffordDataLab/querying-apis-in-r-39029b73d5f1">este tutorial</a>.</p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="exportar" class="section level2" number="7.11">
+<h2>
+<span class="header-section-number">7.11</span> Exportar<a class="anchor" aria-label="anchor" href="#exportar"><i class="fas fa-link"></i></a>
+</h2>
+<div id="com-o-pacote-rio-.não-numerado" class="section level3" number="7.11.1">
+<h3>
+<span class="header-section-number">7.11.1</span> Com o pacote <strong>rio</strong> {.não numerado}<a class="anchor" aria-label="anchor" href="#com-o-pacote-rio-.n%C3%A3o-numerado"><i class="fas fa-link"></i></a>
+</h3>
+<p>Com <strong>rio</strong>*, você pode utilizar a função <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code> de uma forma muito semelhante à <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code>. Primeiro dê o nome do objeto R que você deseja salvar (por exemplo, <code>linelist</code>) e depois, entre aspas, coloque o caminho do arquivo onde você deseja salvar o arquivo, incluindo o nome do arquivo desejado e a extensão do arquivo. Por exemplo, o nome do objeto R:</p>
+<p>Isto salva o data frame <code>linelist</code> como uma pasta de trabalho do Excel para a pasta raiz do diretório de trabalho/R do projeto:</p>
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/export.html">export</a></span><span class="op">(</span><span class="va">linelist</span>, <span class="st">"my_linelist.xlsx"</span><span class="op">)</span> <span class="co"># will save to working directory</span></span></code></pre></div>
+<p>Você poderia salvar o mesmo <em>data frame</em> que um arquivo csv, alterando a extensão. Por exemplo, nós também o salvamos em um caminho de arquivo construído com <code>aqui()</code>:</p>
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/export.html">export</a></span><span class="op">(</span><span class="va">linelist</span>, <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"clean"</span>, <span class="st">"my_linelist.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="para-a-área-de-transferência" class="section level3 unnumbered">
+<h3>Para a área de transferência<a class="anchor" aria-label="anchor" href="#para-a-%C3%A1rea-de-transfer%C3%AAncia"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para exportar um data frame para a “área de transferência” do seu computador (para depois colar em outro software como Excel, Google Spreadsheets, etc.) você pode utilizar <code>write_clip()</code> do pacote <strong>clipr</strong>*.</p>
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># exporte a linelist para a área de transferência do seu sistema</span></span>
+<span><span class="fu">clipr</span><span class="fu">::</span><span class="fu"><a href="http://matthewlincoln.net/clipr/reference/write_clip.html">write_clip</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div id="import_rds" class="section level2" number="7.12">
+<h2>
+<span class="header-section-number">7.12</span> Arquivos RDS<a class="anchor" aria-label="anchor" href="#import_rds"><i class="fas fa-link"></i></a>
+</h2>
+<p>Junto com .csv, .xlsx, etc., você também pode exportar/vendar <em>data frame</em> R como arquivos .rds. Este é um formato de arquivo específico para R, e é muito útil se você souber que irá trabalhar com os dados exportados novamente em R.</p>
+<p>As classes de colunas são armazenadas, de modo que você não terá que limpar novamente quando for importado (com um arquivo Excel ou mesmo um arquivo CSV isto pode ser uma dor de cabeça!). É também um arquivo menor, que é útil para exportação e importação se seu conjunto de dados for grande.</p>
+<p>Por exemplo, se você trabalha em uma equipe de Epidemiologia e precisa enviar arquivos para uma equipe GIS para mapeamento, e eles usam R também, basta enviar-lhes o arquivo .rds! Então todas as classes de colunas são mantidas e têm menos trabalho a fazer.</p>
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/export.html">export</a></span><span class="op">(</span><span class="va">linelist</span>, <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"clean"</span>, <span class="st">"my_linelist.rds"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+<div id="import_rdata" class="section level2" number="7.13">
+<h2>
+<span class="header-section-number">7.13</span> Arquivos e listas Rdata<a class="anchor" aria-label="anchor" href="#import_rdata"><i class="fas fa-link"></i></a>
+</h2>
+<p>Arquivos do tipo <code>.Rdata</code> cpode armazenar múltiplos objetos R - por exemplo, múltiplos <em>data frames</em>, resultados de modelos, listas, etc. Isto pode ser muito útil para consolidar ou compartilhar muitos de seus dados para um determinado projeto.</p>
+<p>No exemplo abaixo, múltiplos objetos R são armazenados dentro do arquivo exportado “my_objects.Rdata”:</p>
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/export.html">export</a></span><span class="op">(</span><span class="va">my_list</span>, <span class="va">my_dataframe</span>, <span class="va">my_vector</span>, <span class="st">"my_objects.Rdata"</span><span class="op">)</span></span></code></pre></div>
+<p>Nota: se você estiver tentando <em>importar</em> uma lista, utilize <code><a href="https://rdrr.io/pkg/rio/man/import_list.html">import_list()</a></code> de <strong>rio</strong> para importá-la com a estrutura e o conteúdo original completo.</p>
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import_list.html">import_list</a></span><span class="op">(</span><span class="st">"my_list.Rdata"</span><span class="op">)</span></span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+<div id="salvando-gráficos" class="section level2" number="7.14">
+<h2>
+<span class="header-section-number">7.14</span> Salvando gráficos<a class="anchor" aria-label="anchor" href="#salvando-gr%C3%A1ficos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Instruções em como salvar gráficos, incluindo os criados pelo pacote <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>, são discutidos com profundidado na página <a href="ggplot-basics.html#ggplot-basics">ggplot basics</a>.</p>
+<p>Em resumo, execute o código <code>ggsave("my_plot_filepath_and_name.png")</code> após exibir o seu gráfico. Você pode prover um objeto de gráfico para o argumento <code>plot =</code>, ou especificar o endereço de salvamento (com extensão de arquivo desejada) para salvar o último gráfico exibido. Você pode tamb[ém controlar o tamanho e qualidade por meio dos argumentos: <code>width =</code>, <code>height =</code>, <code>units =</code> e <code>dpi =</code>.</p>
+<p>Como salvar um gráfico de redes, como uma árvore de transmissão, é discutido na página <a href="transmission-chains.html#transmission-chains">Cadeias de Transmissão</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="recursos-1" class="section level2" number="7.15">
+<h2>
+<span class="header-section-number">7.15</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>O <a href="https://cran.r-project.org/doc/manuals/r-release/R-data.html">Manual de Importação/Exportação de Dados R</a><br><a href="https://r4ds.had.co.nz/data-import.html#data-import">R 4 Capítulo de ciência dos dados sobre importação de dados</a><br><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">documentação ggsave()</a></p>
+<p>Abaixo está uma tabela, extraída do <strong>rio</strong> online <a href="https://cran.r-project.org/web/packages/rio/vignettes/rio.html">vinheta</a>. Para cada tipo de dado ele mostra: a extensão de arquivo esperada, o pacote <strong>rio</strong>* utilizado para importar ou exportar os dados, e se esta funcionalidade está incluída na versão instalada padrão do <strong>rio</strong>.</p>
+<p>Formato | Extensão típica | Pacote de Importação | Pacote de exportação | Instalado por padrão
+—————————_|—————–|————————|———————-|———————
+Dados separados por vírgulas | .csv | data.table <code>fread()</code> | data.table | Sim
+Dados separados por Pipe | .psv | data.table <code>fread()</code> | data.table | Sim
+Dados separados por Tab .tsv | data.table <code>fread()</code> | data.table | Sim
+SAS | .sas7bdat | haven | haven | Sim
+SPSS | .sav | haven | haven | Sim
+Stata | .dta | haven | haven | Sim
+SAS | XPORT | .xpt | haven | haven | Sim
+SPSS Portable | .por | haven | | Sim
+Excel | .xls | readxl | | Sim
+Excel | .xlsx | readxl | openxlsx | Sim
+R syntax | .R | base | base | Sim
+Objetos R salvos | .RData, .rda | base | base | Sim
+Objetos R seriados | .rds | base | base | Sim
+Epiinfo | .rec | foreign | | Sim
+Minitab | .mtp | foreign | | Sim
+Systat | .syd | foreign | | Sim
+“XBASE” | database files | .dbf | foreign | foreign | Sim
+Weka Attribute-Relation File Format | .arff | foreign | foreign | Sim
+Dados no formato de intercâmbio| .dif | utils | | Sim
+Dados Fortran da | no recognized extension | utils | | Sim
+Dados no formato largura fixa | .fwf | utils | utils | Sim
+dados separados por vírgulas gzip | .csv.gz | utils | utils | v
+CSVY (CSV + YAML metadata header) | .csvy | csvy | csvy | Não
+EViews | .wf1 |hexView | | Não
+Formato de intercâmbio Feather R/Python | .feather | feather | feather | Não
+Fast Storage | .fst | fst | fst | Não
+JSON | .json | jsonlite | jsonlite | Não
+Matlab | .mat | rmatio | rmatio | Não
+Planilhas OpenDocument | .ods | readODS | readODS | Não
+Tabelas HTML | .html | xml2 | xml2 | Não
+Documentos Shallow XML | .xml | xml2 | xml2 | Não
+YAML | .yml | yaml | yaml | Não
+Padrão da área de transferência é tsv | | clipr | clipr | Não</p>
+
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="prev"><a href="r-projects.html"><span class="header-section-number">6</span> R projects</a></div>
+<div class="next"><a href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#importing"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li><a class="nav-link" href="#vis%C3%A3o-geral"><span class="header-section-number">7.1</span> Visão geral</a></li>
+<li><a class="nav-link" href="#o-pacote-rio"><span class="header-section-number">7.2</span> O pacote rio</a></li>
+<li><a class="nav-link" href="#here"><span class="header-section-number">7.3</span> O pacote here</a></li>
+<li>
+<a class="nav-link" href="#caminhos-dos-arquivos"><span class="header-section-number">7.4</span> Caminhos dos arquivos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#caminhos-relativo-dos-arquivos">Caminhos ‘relativo’ dos arquivos</a></li>
+<li><a class="nav-link" href="#caminhos-absoluto-dos-arquivos">Caminhos ‘absoluto’ dos arquivos</a></li>
+<li><a class="nav-link" href="#selecionando-um-arquivo-manualmente">Selecionando um arquivo manualmente</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#importar-dados"><span class="header-section-number">7.5</span> Importar dados</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#planilhas-espec%C3%ADficas-do-excel">Planilhas específicas do Excel</a></li>
+<li><a class="nav-link" href="#import_missing">Valores faltantes</a></li>
+<li><a class="nav-link" href="#pular-linhas">Pular linhas</a></li>
+<li><a class="nav-link" href="#como-lidar-com-uma-segunda-linha-de-cabe%C3%A7alho">Como lidar com uma segunda linha de cabeçalho</a></li>
+<li><a class="nav-link" href="#planilhas-do-google">Planilhas do Google</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#m%C3%BAltiplos-arquivos--importar-exportar-dividir-combinar"><span class="header-section-number">7.6</span> Múltiplos arquivos- importar, exportar, dividir, combinar</a></li>
+<li>
+<a class="nav-link" href="#import_github"><span class="header-section-number">7.7</span> Importar do GitHub</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#arquivos-csv">Arquivos CSV</a></li>
+<li><a class="nav-link" href="#arquivo-xlsx">Arquivo XLSX</a></li>
+<li><a class="nav-link" href="#shapefiles">Shapefiles</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#inserir-dados-munualmente"><span class="header-section-number">7.8</span> Inserir dados munualmente</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#inser%C3%A7%C3%A3o-por-linhas">Inserção por linhas</a></li>
+<li><a class="nav-link" href="#inser%C3%A7%C3%A3o-por-colunas">Inserção por colunas</a></li>
+<li><a class="nav-link" href="#colando-a-partir-da-%C3%A1rea-de-transfer%C3%AAncia">Colando a partir da área de transferência</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#importar-o-arquivo-mais-recente"><span class="header-section-number">7.9</span> Importar o arquivo mais recente</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#datas-no-nome-de-um-arquivo">Datas no nome de um arquivo</a></li>
+<li><a class="nav-link" href="#use-as-informa%C3%A7%C3%B5es-do-arquivo">Use as informações do arquivo</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#import_api"><span class="header-section-number">7.10</span> APIs</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#requisi%C3%A7%C3%A3o-http">Requisição HTTP</a></li>
+<li><a class="nav-link" href="#pacotes">Pacotes</a></li>
+<li><a class="nav-link" href="#dados-p%C3%BAblicos">Dados públicos</a></li>
+<li><a class="nav-link" href="#autentica%C3%A7%C3%A3o-necess%C3%A1ria">Autenticação necessária</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#exportar"><span class="header-section-number">7.11</span> Exportar</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#com-o-pacote-rio-.n%C3%A3o-numerado"><span class="header-section-number">7.11.1</span> Com o pacote rio {.não numerado}</a></li>
+<li><a class="nav-link" href="#para-a-%C3%A1rea-de-transfer%C3%AAncia">Para a área de transferência</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#import_rds"><span class="header-section-number">7.12</span> Arquivos RDS</a></li>
+<li><a class="nav-link" href="#import_rdata"><span class="header-section-number">7.13</span> Arquivos e listas Rdata</a></li>
+<li><a class="nav-link" href="#salvando-gr%C3%A1ficos"><span class="header-section-number">7.14</span> Salvando gráficos</a></li>
+<li><a class="nav-link" href="#recursos-1"><span class="header-section-number">7.15</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

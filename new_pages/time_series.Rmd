@@ -583,10 +583,10 @@ model <- glm_nb_model(
     fourier)
 
 ## ajuste seu modelo utilizando os dados de contagem
-fitted_model <- trending::fit(data.frame(model), counts)
+fitted_model <- trending::fit(model, data.frame(counts))
 
 ## calcule os intervalos de confiança e predição
-observed <- predict(data.frame(fitted_model), simulate_pi = FALSE)
+observed <- predict(fitted_model, simulate_pi = FALSE)
 
 estimate_res <- data.frame(observed$result)
 
@@ -792,7 +792,7 @@ model <- glm_nb_model(
 fitted_model <- trending::fit(model, counts)
 
 ## calcule os intervalos de confiança e de predição
-observed <- predict(data.frame(fitted_model), simulate_pi = FALSE)
+observed <- predict(fitted_model, simulate_pi = FALSE)
 
 ```
 
@@ -1578,7 +1578,12 @@ observed <- predict(fitted_model, simulate_pi = FALSE)
 ## mostre as estimativas e mudanças percentuais em uma tabela
 fitted_model %>% 
   ## extraia a regressão original negativa binominal
-  get_model() %>% 
+  get_result() %>% 
+  
+  ## extrair o primeiro elemento da lista, consequência das alterações de pacotes de tendências.
+  simplify() %>% 
+  first() %>% 
+  
   ## obtenha um quadro de dados organizado dos resultados
   tidy(exponentiate = TRUE, 
        conf.int = TRUE) %>% 

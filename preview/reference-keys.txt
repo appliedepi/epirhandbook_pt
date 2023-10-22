@@ -1,6 +1,0 @@
-agradecimentos
-conseguir-ajuda
-issues-problemas-do-github
-exemplo-reprodutível
-postar-em-um-fórum
-recursos

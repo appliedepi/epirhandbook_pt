@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>13 Agrupando dados | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Esta página cobre como agrupar e agregar dados para análise descritiva. Ela faz uso da família de pacotes tidyverse que tem funções comuns e fáceis de usar. O agrupamento de dados é um componente...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="13 Agrupando dados | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Esta página cobre como agrupar e agregar dados para análise descritiva. Ela faz uso da família de pacotes tidyverse que tem funções comuns e fáceis de usar. O agrupamento de dados é um componente...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="13 Agrupando dados | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Esta página cobre como agrupar e agregar dados para análise descritiva. Ela faz uso da família de pacotes tidyverse que tem funções comuns e fáceis de usar. O agrupamento de dados é um componente...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<p>
+
+    Você precisa de ajuda para aprender R? Inscreva-se no curso de introdução ao R da Applied Epi, experimente nossos tutoriais gratuitos sobre o R, publique em nosso fórum de perguntas e respostas ou solicite nosso suporte ao R.
+
+    </p>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="active" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="grouping" class="section level1" number="13">
+<h1>
+<span class="header-section-number">13</span> Agrupando dados<a class="anchor" aria-label="anchor" href="#grouping"><i class="fas fa-link"></i></a>
+</h1>
+<div class="inline-figure"><img src="images/Grouping_1500x500.png" width="100%"></div>
+<p>Esta página cobre como agrupar e agregar dados para análise descritiva. Ela faz uso da família de pacotes <strong>tidyverse</strong> que tem funções comuns e fáceis de usar.</p>
+<p>O agrupamento de dados é um componente central do gerenciamento e análise de dados. Os dados agrupados estatisticamente resumidos por grupo e que podem ser traçados por grupo em um gráfico. As funções do pacote <strong>dplyr</strong> (parte do <strong>tidyverse</strong>) tornam o agrupamento e as operações subseqüentes bastante fáceis.</p>
+<p>Esta página abordará os seguintes tópicos:</p>
+<ul>
+<li>Agrupar dados com a função <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>.<br>
+</li>
+<li>Dados desagrupados</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>dados agrupados com estatísticas<br>
+</li>
+<li>A diferença entre <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code><br>
+</li>
+<li>’arrange()`aplicado a dados agrupados<br>
+</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> aplicado aos dados agrupados<br>
+</li>
+<li>mutate()`aplicado a dados agrupados<br>
+</li>
+<li>select()<code>aplicado aos dados agrupados   O comando do R **base**</code>aggregate()` como alternativa</li>
+</ul>
+<!-- ======================================================= --><div id="preparação-4" class="section level2" number="13.1">
+<h2>
+<span class="header-section-number">13.1</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-4"><i class="fas fa-link"></i></a>
+</h2>
+<div id="carregar-pacotes-2" class="section level3 unnumbered">
+<h3>Carregar pacotes<a class="anchor" aria-label="anchor" href="#carregar-pacotes-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>Este trecho de código mostra o carregamento dos pacotes necessários para as análises. Neste manual, enfatizamos <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code> de <strong>pacman</strong>, que instala o pacote se necessário <em>e</em> o carrega para utilização. Você também pode carregar os pacotes instalados com <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> do R <strong>base</strong>. Veja a página em <a href="basics.html#basics">Introdução ao R</a> para mais informações sobre os pacotes R.</p>
+<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span>  <span class="va">rio</span>,       <span class="co"># para importar os dados</span></span>
+<span>  <span class="va">here</span>,      <span class="co"># localizar pacotes</span></span>
+<span>  <span class="va">tidyverse</span>, <span class="co"># limpar, manipular, e visualizar os dados (inlcui dplyr)</span></span>
+<span>  <span class="va">janitor</span><span class="op">)</span>   <span class="co"># adicionar totais às linhas e colunas </span></span></code></pre></div>
+</div>
+<div id="importar-datos" class="section level3 unnumbered">
+<h3>Importar datos<a class="anchor" aria-label="anchor" href="#importar-datos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Nós importamos os dados de casos de uma epidemia simulada de Ebola. Se você quiser acompanhar, <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds" class="download-button"> clique para baixar o linelist “limpo” </a> (as .rds file). O conjunto de dados é importado utilizando a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> do pacote <strong>rio</strong>. Veja a página em <a href="importing.html#importing">Importar e exportar</a> para várias formas de importação de dados.</p>
+<div class="sourceCode" id="cb624"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></span></code></pre></div>
+<p>As primeiras 50 linhas da <code>linelist</code>:</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-2c37b0009b90838b0542" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-2c37b0009b90838b0542">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Ausente","Ausente","Ausente","Ausente","Port Hospital","Military Hospital","Ausente","Ausente","Other","Port Hospital","Port Hospital","Port Hospital","Ausente","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Ausente","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Ausente","Military Hospital","Other","Ausente","Ausente","Port Hospital","Port Hospital","Port Hospital","Ausente","Central Hospital","Military Hospital","Other","Other","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Ausente"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.461830626007281,8.462729314626459,8.461443675342711,8.46191259217774,8.472923276435059,8.48401630165138,8.458371253408441,8.477617055125091,8.47570184950483,8.477799468789719,8.47145134147474,8.478048406853629,8.48528034195779,8.469575303958671,8.45957352078114,8.474048895115439,8.488029171298839,8.473437335922,8.484082637344621,8.46242233645879,8.470268221265719,8.463984474805329,8.464134789434199,8.456230946296071,8.48334624336805,8.47493999153642,8.47832062438022,8.469393389176499,8.48480589906514,8.47121232619015,8.48438437371817,8.484661585743391,8.477141599844281,8.462381270106089,8.455685978131131,8.4632880274758,8.47940722413856,8.46353857052336,8.461789681588639,8.47508713872833,8.458258081280711,8.4532568143863,8.4732571907655,8.479115866419329,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.81844297615629,16.06524962926347,22.49657064471879,71.41440190438405,41.61712247324614,62.09538908706566,0,16.83765369253662,22.79032897344431,53.41198979591836,24.28026361429067,22.46003435064077,54.32098765432099,41.05784325564545,28.56648199445983,17.03205520132763,25.04129149128882,38.7172182043977,27.3876813705495,31.55555555555556,14.80690759456621,30.88398111998135,26.61934338952972,59.37499999999999,96.61835748792272,19.23947487550928,84.94031221303948,18.41993774061044,27.77226740726046,41.32231404958677,17.20806665861611,24.16716240333135,15.72189710891781,428.9940828402366,27.99302202929125,243.2610124917817,20.23950075898128,30.52744643563797,25.15589569160998,47,39.04,31.06616432017979,77.96836711962574,29.51659612385831,166.4932362122789,100.3086419753086,37.76,20.60378034578518,23.45856237526698],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+</div>
+</div>
+<div id="agrupando-os-dados" class="section level2" number="13.2">
+<h2>
+<span class="header-section-number">13.2</span> Agrupando os dados<a class="anchor" aria-label="anchor" href="#agrupando-os-dados"><i class="fas fa-link"></i></a>
+</h2>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> de <strong>dplyr</strong> agrupa as linhas pelos valores únicos na coluna especificada para ela. Se várias colunas forem especificadas, as linhas são agrupadas pelas combinações únicas de valores através das colunas. Cada valor único (ou combinação de valores) constitui um grupo. Alterações subseqüentes no conjunto de dados ou cálculos podem então ser realizadas dentro do contexto de cada grupo.</p>
+<p>Por exemplo, o comando abaixo toma a “linelist” e agrupa as linhas por valores únicos na coluna “outcome”, salvando a saída como uma nova tabela de dados (<em>dataframe</em>) chamada “ll_by_outcome”. A(s) coluna(s) de agrupamento são colocadas dentro dos parênteses da função <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code></p>
+<div class="sourceCode" id="cb625"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ll_by_outcome</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Note que não há nenhuma mudança perceptível no conjunto de dados</strong> após executar <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>, <em>até</em> outra função do <strong>dplyr</strong> tal como <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, ou <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> ser aplicada no <em>dataframe</em> “grouped”.</p>
+<p>Você pode, no entanto, “ver” os agrupamentos imprimindo o quadro de dados. Ao imprimir um quadro de dados agrupados, você verá que ele foi transformado em um objeto de classe [<code>tibble</code> (<a href="https://tibble.tidyverse.org/" class="uri">https://tibble.tidyverse.org/</a>) que, quando impresso, mostra quais agrupamentos foram aplicados e quantos grupos existem - escritos logo acima da linha do cabeçalho.</p>
+<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># visualizar quais grupos estão ativvos</span></span>
+<span><span class="va">ll_by_outcome</span></span></code></pre></div>
+<pre><code>## # A tibble: 5,888 × 30
+## # Groups:   outcome [3]
+##    case_id generation date_infection date_onset date_hospitalisation date_outcome
+##    &lt;chr&gt;        &lt;dbl&gt; &lt;date&gt;         &lt;date&gt;     &lt;date&gt;               &lt;date&gt;      
+##  1 5fe599           4 2014-05-08     2014-05-13 2014-05-15           NA          
+##  2 8689b7           4 NA             2014-05-13 2014-05-14           2014-05-18  
+##  3 11f8ea           2 NA             2014-05-16 2014-05-18           2014-05-30  
+##  4 b8812a           3 2014-05-04     2014-05-18 2014-05-20           NA          
+##  5 893f25           3 2014-05-18     2014-05-21 2014-05-22           2014-05-29  
+##  6 be99c8           3 2014-05-03     2014-05-22 2014-05-23           2014-05-24  
+##  7 07e3e8           4 2014-05-22     2014-05-27 2014-05-29           2014-06-01  
+##  8 369449           4 2014-05-28     2014-06-02 2014-06-03           2014-06-07  
+##  9 f393b4           4 NA             2014-06-05 2014-06-06           2014-06-18  
+## 10 1389ca           4 NA             2014-06-05 2014-06-07           2014-06-09  
+## # ℹ 5,878 more rows
+## # ℹ 24 more variables: outcome &lt;chr&gt;, gender &lt;chr&gt;, age &lt;dbl&gt;, age_unit &lt;chr&gt;,
+## #   age_years &lt;dbl&gt;, age_cat &lt;fct&gt;, age_cat5 &lt;fct&gt;, hospital &lt;chr&gt;, lon &lt;dbl&gt;,
+## #   lat &lt;dbl&gt;, infector &lt;chr&gt;, source &lt;chr&gt;, wt_kg &lt;dbl&gt;, ht_cm &lt;dbl&gt;,
+## #   ct_blood &lt;dbl&gt;, fever &lt;chr&gt;, chills &lt;chr&gt;, cough &lt;chr&gt;, aches &lt;chr&gt;, vomit &lt;chr&gt;,
+## #   temp &lt;dbl&gt;, time_admission &lt;chr&gt;, bmi &lt;dbl&gt;, days_onset_hosp &lt;dbl&gt;</code></pre>
+<div id="grupos-únicos" class="section level3 unnumbered">
+<h3>Grupos únicos<a class="anchor" aria-label="anchor" href="#grupos-%C3%BAnicos"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Os grupos criados refletem cada combinação única de valores através das colunas de agrupamento.</strong></p>
+<p>Para ver os grupos <em>e o número de linhas em cada grupo</em>, passe os dados agrupados para <code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code>. Para ver apenas os grupos únicos sem conta, você pode passar para <code><a href="https://dplyr.tidyverse.org/reference/group_data.html">group_keys()</a></code>.</p>
+<p>Veja abaixo que existem <strong>três</strong> valores únicos na coluna de agrupamento <code>outcome</code> (desfecho, em português): “Death” (óbito), “Recover” (Recuperado), e <code>NA</code>. Veja que existem <code>nrow(linelist %&gt;% filter(outcome == "Death"))</code> óbitos, <code>nrow(linelist %&gt;% filter(outcome == "Recover"))</code> recuperações, e <code>nrow(linelist %&gt;% filter(is.na(outcome)))</code> sem nenhum resultado registrado.</p>
+<div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">tally</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##   outcome     n
+##   &lt;chr&gt;   &lt;int&gt;
+## 1 Death    2582
+## 2 Recover  1983
+## 3 &lt;NA&gt;     1323</code></pre>
+<p>Você pode agrupar por mais de uma coluna. Abaixo, o <em>dataframe</em> é agrupado por ‘outcome’ e ‘gender’, e depois contada. Observe como cada combinação única de “outcome” e “gender” é registrada como seu próprio grupo - incluindo valores ausentes para cada coluna.</p>
+<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">outcome</span>, <span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">tally</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 9 × 3
+## # Groups:   outcome [3]
+##   outcome gender     n
+##   &lt;chr&gt;   &lt;chr&gt;  &lt;int&gt;
+## 1 Death   f       1227
+## 2 Death   m       1228
+## 3 Death   &lt;NA&gt;     127
+## 4 Recover f        953
+## 5 Recover m        950
+## 6 Recover &lt;NA&gt;      80
+## 7 &lt;NA&gt;    f        627
+## 8 &lt;NA&gt;    m        625
+## 9 &lt;NA&gt;    &lt;NA&gt;      71</code></pre>
+</div>
+<div id="novas-colunas-1" class="section level3 unnumbered">
+<h3>Novas colunas<a class="anchor" aria-label="anchor" href="#novas-colunas-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você também pode criar uma nova coluna de agrupamento <em>dentro</em> da função <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>. Isto equivale a chamar a função<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> antes da instrução <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>. Para uma tabulação rápida, este estilo pode ser útil, mas para maior clareza em seu código, considere criar esta coluna em seu próprio passo <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> e depois encadear (usando o “pipe” %&gt;%) com o <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>.</p>
+<div class="sourceCode" id="cb632"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># agrupar dados baseado em uma coluna biária criada dentro do próprio comando group_by  </span></span>
+<span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span></span>
+<span>    age_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">18</span>, <span class="st">"adult"</span>, <span class="st">"child"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">tally</a></span><span class="op">(</span>sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##   age_class     n
+##   &lt;chr&gt;     &lt;int&gt;
+## 1 child      3618
+## 2 adult      2184
+## 3 &lt;NA&gt;         86</code></pre>
+</div>
+<div id="adicionareliminar-colunas-de-agrupamento" class="section level3 unnumbered">
+<h3>Adicionar/Eliminar colunas de agrupamento<a class="anchor" aria-label="anchor" href="#adicionareliminar-colunas-de-agrupamento"><i class="fas fa-link"></i></a>
+</h3>
+<p>Por padrão, se você executar <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> em dados que já estão agrupados, os grupos antigos serão removidos e o(s) novo(s) grupo(s) será(ão) aplicado(s). Se você quiser adicionar novos grupos aos já existentes, inclua o argumento `.add = TRUE’.</p>
+<div class="sourceCode" id="cb634"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Agrupado por 'outcome' (desfecho)</span></span>
+<span><span class="va">by_outcome</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Adicionar um agrupamento por 'gender' (sexo) </span></span>
+<span><span class="va">by_outcome_gender</span> <span class="op">&lt;-</span> <span class="va">by_outcome</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">gender</span>, .add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Manter todos os grupos</strong></p>
+<p>Se você agrupar em uma coluna do tipo fator, pode haver níveis do fator que não estão presentes atualmente nos dados. Se você agrupar nesta coluna, por padrão esses níveis não presentes são descartados e não incluídos como grupos. Para alterar isso para que todos os níveis apareçam como grupos (mesmo que não estejam presentes nos dados), defina <code>.drop = FALSE' em seu comando</code>group_by()`.</p>
+</div>
+</div>
+<div id="desagrupar" class="section level2" number="13.3">
+<h2>
+<span class="header-section-number">13.3</span> Desagrupar<a class="anchor" aria-label="anchor" href="#desagrupar"><i class="fas fa-link"></i></a>
+</h2>
+<p>Os dados que foram agrupados permanecerão agrupados até que especificamente não sejam agrupados através do <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>. Se você se esquecer de desagradar, isso pode levar a cálculos incorretos! Abaixo está um exemplo de remoção de todos os agrupamentos:</p>
+<div class="sourceCode" id="cb635"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">outcome</span>, <span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">tally</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Você também pode remover o agrupamento apenas para colunas específicas, colocando o nome da coluna dentro de <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>.</p>
+<div class="sourceCode" id="cb636"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">outcome</span>, <span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">tally</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="co"># remove o agrupamento por `gender` (sexo), mantendo o agrupamento por `outcome` (desfecho) </span></span></code></pre></div>
+<p><span style="color: black;"><strong><em>NOTA:</em></strong> O verbo <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> desagrupa os dados automaticamente após a contagem.</span></p>
+</div>
+<div id="group_summarise" class="section level2" number="13.4">
+<h2>
+<span class="header-section-number">13.4</span> Resumir os dados (Summarise)<a class="anchor" aria-label="anchor" href="#group_summarise"><i class="fas fa-link"></i></a>
+</h2>
+<p>Consulte a seção <strong>dplyr</strong> da página <a href="tables-descriptive.html#tables-descriptive">Tabelas descritivas</a> para obter uma descrição detalhada de como produzir tabelas resumidas com <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>. Aqui abordamos brevemente como seu comportamento muda quando aplicado a dados agrupados.</p>
+<p>A função <strong>dplyr</strong> <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> (ou <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>) pega um dataframe e o converte em um <em>novo</em> dataframe resumido, com colunas contendo as estatísticas resumidas que você definiu. Em dataframe não agrupados, as estatísticas resumidas serão calculadas a partir de todas as linhas. A aplicação de <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> aos dados agrupados produz estas estatísticas resumidas <em>para cada grupo</em>.</p>
+<p>A sintaxe de <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> é tal que você fornece o(s) nome(s) da(s) <strong>nova(s)</strong> coluna(s) resumo, um sinal de igual, e então uma função estatística a ser aplicada aos dados, como mostrado abaixo. Por exemplo, <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>, ou <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>. Dentro da função estatística, liste a coluna a ser operada e qualquer argumento relevante (por exemplo, <code>na.rm = TRUE</code>). Você pode utilizar <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> para contar o número de linhas que satisfazem um critério lógico (com duplo igual a `==``).</p>
+<p>Abaixo está um exemplo de <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> aplicado <em>em dados não-agrupados</em>. As estatísticas resultantes são produzidas a partir de todo o conjunto de dados.</p>
+<div class="sourceCode" id="cb637"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># estatísticas resumo na linelist desagrupada </span></span>
+<span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    n_cases  <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    mean_age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">age_years</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,</span>
+<span>    max_age  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">age_years</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,</span>
+<span>    min_age  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">age_years</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,</span>
+<span>    n_males  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"m"</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   n_cases mean_age max_age min_age n_males
+## 1    5888 16.01831      84       0    2803</code></pre>
+<p>Em contraste, abaixo está a mesma declaração <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> aplicada aos dados agrupados. As estatísticas são calculadas para cada grupo de “outcome” (desfecho). Observe como as colunas de agrupamento serão transportadas para o dataframe.</p>
+<div class="sourceCode" id="cb639"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># statísticas resumo na linelist agrupada </span></span>
+<span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    n_cases  <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    mean_age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">age_years</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,</span>
+<span>    max_age  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">age_years</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,</span>
+<span>    min_age  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">age_years</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,</span>
+<span>    n_males    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"m"</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 3 × 6
+##   outcome n_cases mean_age max_age min_age n_males
+##   &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;
+## 1 Death      2582     15.9      76       0    1228
+## 2 Recover    1983     16.1      84       0     950
+## 3 &lt;NA&gt;       1323     16.2      69       0     625</code></pre>
+<p><span style="color: darkgreen;"><strong><em>DICA:</em></strong> A função <code>summarise</code> funciona com a ortografia britânica e americana - <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> chamam a mesma função.</span></p>
+</div>
+<div id="contagens" class="section level2" number="13.5">
+<h2>
+<span class="header-section-number">13.5</span> Contagens<a class="anchor" aria-label="anchor" href="#contagens"><i class="fas fa-link"></i></a>
+</h2>
+<p>As funções <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code> tem funcionalidade semelhante mas são diferentes. Leia mais sobre a distinção entre <code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> <a href="https://dplyr.tidyverse.org/reference/tally.html">here</a></p>
+<div id="tally" class="section level3 unnumbered">
+<h3>
+<code>tally()</code><a class="anchor" aria-label="anchor" href="#tally"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code> é um atalho para <code>summarise(n = n())</code>, e <em>não</em> agrupa os dados. Assim, para ter <code>tallys</code> (contagens) agrupadas, esta função deve ser precedida de um comando <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>. Você pode adicionar <code>sort = TRUE</code> para ver os grupos maiores primeiro.</p>
+<div class="sourceCode" id="cb641"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">tally</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      n
+## 1 5888</code></pre>
+<div class="sourceCode" id="cb643"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">tally</a></span><span class="op">(</span>sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##   outcome     n
+##   &lt;chr&gt;   &lt;int&gt;
+## 1 Death    2582
+## 2 Recover  1983
+## 3 &lt;NA&gt;     1323</code></pre>
+</div>
+<div id="count" class="section level3 unnumbered">
+<h3>
+<code>count()</code><a class="anchor" aria-label="anchor" href="#count"><i class="fas fa-link"></i></a>
+</h3>
+<p>Por outro lado, <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> faz o seguinte:</p>
+<ol style="list-style-type: decimal">
+<li>aplica <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> nas colunas especificadas<br>
+</li>
+<li>aplica <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> e retorna a coluna <code>n</code> com o número de linhas por grupo</li>
+<li>aplica <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>
+</li>
+</ol>
+<div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   outcome    n
+## 1   Death 2582
+## 2 Recover 1983
+## 3    &lt;NA&gt; 1323</code></pre>
+<p>Assim como em <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> você pode adicionar uma nova coluna dentro do comando <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code>:</p>
+<div class="sourceCode" id="cb647"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span>age_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&gt;=</span> <span class="fl">18</span>, <span class="st">"adult"</span>, <span class="st">"child"</span><span class="op">)</span>, sort <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   age_class    n
+## 1     child 3618
+## 2     adult 2184
+## 3      &lt;NA&gt;   86</code></pre>
+<p>O comando<code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> pode ser chamado várias vezes, com a funcionalidade “rolling-up” (rolando para cima). Por exemplo, para resumir o número de hospitais presentes para cada sexo, execute o seguinte. Nota, o nome da coluna final é alterado do padrão “n” para maior clareza (com <code>name =</code>).</p>
+<div class="sourceCode" id="cb649"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># produz contagens para grupos únicos de  "outcome-gender" groups</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">gender</span>, <span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># junta lingas por `gender` (3) e conta a quantidade de hospitais por gênero (6)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">gender</span>, name <span class="op">=</span> <span class="st">"hospitals per gender"</span> <span class="op">)</span> </span></code></pre></div>
+<pre><code>##   gender hospitals per gender
+## 1      f                    6
+## 2      m                    6
+## 3   &lt;NA&gt;                    6</code></pre>
+</div>
+<div id="adicionar-contagens" class="section level3 unnumbered">
+<h3>Adicionar contagens<a class="anchor" aria-label="anchor" href="#adicionar-contagens"><i class="fas fa-link"></i></a>
+</h3>
+<p>Em contraste com <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, você pode utilizar <code><a href="https://dplyr.tidyverse.org/reference/count.html">add_count()</a></code> para <em>adicionar</em> uma nova coluna <code>n</code> com a contagem de linhas por grupo <em>enquanto mantém todas as outras colunas do dataframe</em>.</p>
+<p>Isto significa que o número de contagem de um grupo, na nova coluna <code>n</code>, será impresso em cada linha do grupo. Para fins de demonstração, adicionamos esta coluna e depois reorganizamos as colunas para facilitar a visualização. Veja a seção abaixo em <a href="grouping.html#group_filter_grp_size">filtro no tamanho do grupo</a> para outro exemplo.</p>
+<div class="sourceCode" id="cb651"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                   <span class="co"># converte para "tibble" para melhro vizualização</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">add_count</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>           <span class="co"># adiciona coluna n com as contages por hospital </span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">hospital</span>, <span class="va">n</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># re-organiza para o propósito desta demostração</span></span></code></pre></div>
+<pre><code>## # A tibble: 5,888 × 31
+##    hospital        n case_id generation date_infection date_onset date_hospitalisation
+##    &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;date&gt;         &lt;date&gt;     &lt;date&gt;              
+##  1 Other         885 5fe599           4 2014-05-08     2014-05-13 2014-05-15          
+##  2 Ausente      1469 8689b7           4 NA             2014-05-13 2014-05-14          
+##  3 St. Mark's…   422 11f8ea           2 NA             2014-05-16 2014-05-18          
+##  4 Port Hospi…  1762 b8812a           3 2014-05-04     2014-05-18 2014-05-20          
+##  5 Military H…   896 893f25           3 2014-05-18     2014-05-21 2014-05-22          
+##  6 Port Hospi…  1762 be99c8           3 2014-05-03     2014-05-22 2014-05-23          
+##  7 Ausente      1469 07e3e8           4 2014-05-22     2014-05-27 2014-05-29          
+##  8 Ausente      1469 369449           4 2014-05-28     2014-06-02 2014-06-03          
+##  9 Ausente      1469 f393b4           4 NA             2014-06-05 2014-06-06          
+## 10 Ausente      1469 1389ca           4 NA             2014-06-05 2014-06-07          
+## # ℹ 5,878 more rows
+## # ℹ 24 more variables: date_outcome &lt;date&gt;, outcome &lt;chr&gt;, gender &lt;chr&gt;, age &lt;dbl&gt;,
+## #   age_unit &lt;chr&gt;, age_years &lt;dbl&gt;, age_cat &lt;fct&gt;, age_cat5 &lt;fct&gt;, lon &lt;dbl&gt;,
+## #   lat &lt;dbl&gt;, infector &lt;chr&gt;, source &lt;chr&gt;, wt_kg &lt;dbl&gt;, ht_cm &lt;dbl&gt;,
+## #   ct_blood &lt;dbl&gt;, fever &lt;chr&gt;, chills &lt;chr&gt;, cough &lt;chr&gt;, aches &lt;chr&gt;, vomit &lt;chr&gt;,
+## #   temp &lt;dbl&gt;, time_admission &lt;chr&gt;, bmi &lt;dbl&gt;, days_onset_hosp &lt;dbl&gt;</code></pre>
+</div>
+<div id="adicionar-totais" class="section level3 unnumbered">
+<h3>Adicionar totais<a class="anchor" aria-label="anchor" href="#adicionar-totais"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para adicionar facilmente uma linhas ou colunas com os <em>total</em> ou colunas após utilizar <code><a href="https://dplyr.tidyverse.org/reference/count.html">tally()</a></code> ou <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code>, veja a seção <strong>janitor</strong> da página <a href="tables-descriptive.html#tbl_janitor">Tabelas descritivas</a>. Este pacote oferece funções como <code>adorn_totals()</code> e <code>adorn_percentagens()</code> para adicionar totais e converter para mostrar porcentagens. Abaixo está um breve exemplo:</p>
+<div class="sourceCode" id="cb653"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                                  <span class="co"># caso linelist</span></span>
+<span>  <span class="fu">tabyl</span><span class="op">(</span><span class="va">age_cat</span>, <span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                  <span class="co"># tabela cruzada para duas colinas</span></span>
+<span>  <span class="fu">adorn_totals</span><span class="op">(</span>where <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>             <span class="co"># adiciona uma linha de totais</span></span>
+<span>  <span class="fu">adorn_percentages</span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># converte para proporções com a coluna `denominator`</span></span>
+<span>  <span class="fu">adorn_pct_formatting</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                  <span class="co"># converte proporções para porcentagens</span></span>
+<span>  <span class="fu">adorn_ns</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"front"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>            <span class="co"># mostrar como: "count (percent)"</span></span>
+<span>  <span class="fu">adorn_title</span><span class="op">(</span>                                <span class="co"># ajustar título</span></span>
+<span>    row_name <span class="op">=</span> <span class="st">"Age Category"</span>,</span>
+<span>    col_name <span class="op">=</span> <span class="st">"Gender"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##                       Gender                            
+##  Age Category              f              m          NA_
+##           0-4   640  (22.8%)   416  (14.8%)  39  (14.0%)
+##           5-9   641  (22.8%)   412  (14.7%)  42  (15.1%)
+##         10-14   518  (18.5%)   383  (13.7%)  40  (14.4%)
+##         15-19   359  (12.8%)   364  (13.0%)  20   (7.2%)
+##         20-29   468  (16.7%)   575  (20.5%)  30  (10.8%)
+##         30-49   179   (6.4%)   557  (19.9%)  18   (6.5%)
+##         50-69     2   (0.1%)    91   (3.2%)   2   (0.7%)
+##           70+     0   (0.0%)     5   (0.2%)   1   (0.4%)
+##          &lt;NA&gt;     0   (0.0%)     0   (0.0%)  86  (30.9%)
+##         Total 2,807 (100.0%) 2,803 (100.0%) 278 (100.0%)</code></pre>
+<p>Para adicionar linhas de totais mais complexas que envolvam estatísticas resumidas diferentes de <em>somas</em>, ver <a href="tables-descriptive.html#tbl_dplyr_totals">esta seção da página Tabelas Descritivas</a>.</p>
+</div>
+</div>
+<div id="agrupoando-por-data" class="section level2" number="13.6">
+<h2>
+<span class="header-section-number">13.6</span> Agrupoando por data<a class="anchor" aria-label="anchor" href="#agrupoando-por-data"><i class="fas fa-link"></i></a>
+</h2>
+<p>Ao agrupar os dados por data, você deve ter (ou criar) uma coluna para a unidade de data de interesse - por exemplo “dia”, “epiweek”, “mês”, etc. Você pode fazer esta coluna utilizando <code><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date()</a></code> from <strong>lubridate</strong>, como explicado na seção <a href="dates.html#dates_epi_wks">Semanas Epidemiológicas</a> da página <a href="dates.html#dates">Trabalhando com datas</a>. Uma vez que você tenha esta coluna, você pode utilizar <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> from <strong>dplyr</strong>* para agrupar as linhas por esses valores de data únicos e obter contagens agregadas.</p>
+<p>Uma etapa adicional comum para situações de datas, é “preencher” quaisquer datas na seqüência que não estejam presentes nos dados. Utilize <code><a href="https://tidyr.tidyverse.org/reference/complete.html">complete()</a></code> do <strong>tidyr</strong>* para que a série de datas agregadas seja <em>completa</em> incluindo <em>todas as unidades de data possíveis</em> dentro do intervalo. Sem esta etapa, uma semana sem casos reportados pode não aparecer em seus dados!</p>
+<p>Dentro de <code><a href="https://tidyr.tidyverse.org/reference/complete.html">complete()</a></code> você <em>define</em> sua coluna de datas como uma <em>seqüência</em> de datas <code><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date()</a></code> do mínimo para o máximo - assim, as datas são expandidas. Por padrão, os valores de contagem de casos em qualquer nova linha “expandida” serão <code>NA</code>. Você pode defini-los como 0 utilizando o <code>fill =</code> argumento de <code><a href="https://tidyr.tidyverse.org/reference/complete.html">complete()</a></code>, que espera uma lista nomeada (se sua coluna de contagem for chamada <code>n</code>, forneça <code>fill = lista(n = 0)</code>. Veja `?complete’ para detalhes e a página <a href="dates.html#dates_epi_wks">Trabalhando com datas</a> para um exemplo.</p>
+<div id="os-casos-da-linelist-em-dias" class="section level3 unnumbered">
+<h3>Os casos da Linelist em dias<a class="anchor" aria-label="anchor" href="#os-casos-da-linelist-em-dias"><i class="fas fa-link"></i></a>
+</h3>
+<p>Aqui está um exemplo de agrupamento de casos em dias <em>sem</em> utilizar a função <code><a href="https://tidyr.tidyverse.org/reference/complete.html">complete()</a></code>. Observe que as primeiras linhas saltam as datas sem casos.</p>
+<div class="sourceCode" id="cb655"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">daily_counts</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>        <span class="co"># remove casos que faltam date_onset</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span>              <span class="co"># conta o número de linhas poro data única </span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5fc9232bd023272dcc71" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-5fc9232bd023272dcc71">{"x":{"filter":"none","vertical":false,"data":[["2014-04-07","2014-04-15","2014-04-21","2014-04-25","2014-04-26","2014-04-27","2014-05-01","2014-05-03","2014-05-04","2014-05-05","2014-05-06","2014-05-07","2014-05-08","2014-05-09","2014-05-10","2014-05-11","2014-05-12","2014-05-13","2014-05-14","2014-05-16","2014-05-17","2014-05-18","2014-05-19","2014-05-20","2014-05-21","2014-05-22","2014-05-23","2014-05-24","2014-05-25","2014-05-26","2014-05-27","2014-05-28","2014-05-29","2014-05-30","2014-05-31","2014-06-02","2014-06-03","2014-06-05","2014-06-06","2014-06-07","2014-06-08","2014-06-09","2014-06-10","2014-06-11","2014-06-12","2014-06-13","2014-06-14","2014-06-15","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-20","2014-06-21","2014-06-22","2014-06-23","2014-06-24","2014-06-25","2014-06-26","2014-06-27","2014-06-28","2014-06-29","2014-06-30","2014-07-01","2014-07-02","2014-07-03","2014-07-04","2014-07-05","2014-07-06","2014-07-07","2014-07-08","2014-07-09","2014-07-10","2014-07-11","2014-07-12","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-21","2014-07-22","2014-07-23","2014-07-24","2014-07-25","2014-07-26","2014-07-27","2014-07-28","2014-07-29","2014-07-30","2014-07-31","2014-08-01","2014-08-02","2014-08-03","2014-08-04","2014-08-05","2014-08-06","2014-08-07","2014-08-08","2014-08-09","2014-08-10","2014-08-11","2014-08-12","2014-08-13","2014-08-14","2014-08-15","2014-08-16","2014-08-17","2014-08-18","2014-08-19","2014-08-20","2014-08-21","2014-08-22","2014-08-23","2014-08-24","2014-08-25","2014-08-26","2014-08-27","2014-08-28","2014-08-29","2014-08-30","2014-08-31","2014-09-01","2014-09-02","2014-09-03","2014-09-04","2014-09-05","2014-09-06","2014-09-07","2014-09-08","2014-09-09","2014-09-10","2014-09-11","2014-09-12","2014-09-13","2014-09-14","2014-09-15","2014-09-16","2014-09-17","2014-09-18","2014-09-19","2014-09-20","2014-09-21","2014-09-22","2014-09-23","2014-09-24","2014-09-25","2014-09-26","2014-09-27","2014-09-28","2014-09-29","2014-09-30","2014-10-01","2014-10-02","2014-10-03","2014-10-04","2014-10-05","2014-10-06","2014-10-07","2014-10-08","2014-10-09","2014-10-10","2014-10-11","2014-10-12","2014-10-13","2014-10-14","2014-10-15","2014-10-16","2014-10-17","2014-10-18","2014-10-19","2014-10-20","2014-10-21","2014-10-22","2014-10-23","2014-10-24","2014-10-25","2014-10-26","2014-10-27","2014-10-28","2014-10-29","2014-10-30","2014-10-31","2014-11-01","2014-11-02","2014-11-03","2014-11-04","2014-11-05","2014-11-06","2014-11-07","2014-11-08","2014-11-09","2014-11-10","2014-11-11","2014-11-12","2014-11-13","2014-11-14","2014-11-15","2014-11-16","2014-11-17","2014-11-18","2014-11-19","2014-11-20","2014-11-21","2014-11-22","2014-11-23","2014-11-24","2014-11-25","2014-11-26","2014-11-27","2014-11-28","2014-11-29","2014-11-30","2014-12-01","2014-12-02","2014-12-03","2014-12-04","2014-12-05","2014-12-06","2014-12-07","2014-12-08","2014-12-09","2014-12-10","2014-12-11","2014-12-12","2014-12-13","2014-12-14","2014-12-15","2014-12-16","2014-12-17","2014-12-18","2014-12-19","2014-12-20","2014-12-21","2014-12-22","2014-12-23","2014-12-24","2014-12-25","2014-12-26","2014-12-27","2014-12-28","2014-12-29","2014-12-30","2014-12-31","2015-01-01","2015-01-02","2015-01-03","2015-01-04","2015-01-05","2015-01-06","2015-01-07","2015-01-08","2015-01-09","2015-01-10","2015-01-11","2015-01-12","2015-01-13","2015-01-14","2015-01-15","2015-01-16","2015-01-17","2015-01-18","2015-01-19","2015-01-20","2015-01-21","2015-01-22","2015-01-23","2015-01-24","2015-01-25","2015-01-26","2015-01-27","2015-01-28","2015-01-29","2015-01-30","2015-01-31","2015-02-01","2015-02-02","2015-02-03","2015-02-04","2015-02-05","2015-02-06","2015-02-07","2015-02-08","2015-02-09","2015-02-10","2015-02-11","2015-02-12","2015-02-13","2015-02-14","2015-02-15","2015-02-16","2015-02-17","2015-02-18","2015-02-19","2015-02-20","2015-02-21","2015-02-22","2015-02-23","2015-02-24","2015-02-25","2015-02-26","2015-02-27","2015-02-28","2015-03-01","2015-03-02","2015-03-03","2015-03-04","2015-03-05","2015-03-06","2015-03-07","2015-03-08","2015-03-09","2015-03-10","2015-03-11","2015-03-12","2015-03-13","2015-03-14","2015-03-15","2015-03-16","2015-03-17","2015-03-18","2015-03-19","2015-03-20","2015-03-21","2015-03-22","2015-03-23","2015-03-24","2015-03-25","2015-03-26","2015-03-27","2015-03-28","2015-03-29","2015-03-30","2015-03-31","2015-04-01","2015-04-02","2015-04-03","2015-04-04","2015-04-05","2015-04-06","2015-04-07","2015-04-08","2015-04-09","2015-04-10","2015-04-11","2015-04-12","2015-04-13","2015-04-14","2015-04-15","2015-04-16","2015-04-17","2015-04-18","2015-04-19","2015-04-20","2015-04-21","2015-04-22","2015-04-23","2015-04-24","2015-04-25","2015-04-26","2015-04-27","2015-04-28","2015-04-29","2015-04-30"],[1,1,2,1,1,1,2,1,1,1,3,2,2,2,1,1,2,3,3,2,3,4,2,1,3,1,2,1,3,3,10,1,1,1,2,5,3,4,4,5,1,5,5,3,1,1,2,5,6,4,2,3,7,3,4,2,6,5,3,1,2,2,6,4,3,5,6,5,3,3,7,7,5,4,6,6,10,10,6,6,10,7,11,4,6,11,9,10,7,12,6,15,14,8,9,16,13,18,18,9,9,9,10,13,17,7,17,12,17,31,13,14,14,19,17,26,19,25,21,16,24,23,25,25,22,27,25,28,30,22,33,30,36,33,23,31,27,30,42,40,50,37,38,38,49,52,35,50,37,38,33,33,39,39,45,34,44,29,40,50,41,39,35,28,36,34,37,36,36,34,43,28,38,33,37,29,33,44,43,24,37,30,35,24,37,44,34,40,30,34,26,29,33,31,22,26,26,19,30,24,29,24,21,19,11,22,20,23,32,33,28,15,20,24,18,20,19,22,17,32,21,20,23,17,15,18,20,19,18,21,18,16,20,15,18,15,18,18,15,15,19,18,19,11,15,19,11,13,13,12,11,14,18,17,10,15,16,12,17,19,14,12,18,14,14,15,11,13,21,11,14,11,13,12,14,11,10,16,10,15,13,13,10,11,8,11,11,11,8,9,8,8,10,8,9,11,13,13,16,13,11,16,6,8,10,16,11,11,8,11,16,9,10,8,14,7,10,11,11,7,5,11,6,8,9,13,9,7,9,4,9,7,13,2,7,9,5,5,10,12,10,3,6,4,5,11,3,7,6,7,9,3,7,4,9,6,5,5,9,4,4,4,9,7,8,2,2]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>date_onset<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Abaixo nós adicionamos o comando <code><a href="https://tidyr.tidyverse.org/reference/complete.html">complete()</a></code> para assegurar que todos os dias estão representados.</p>
+<div class="sourceCode" id="cb656"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">daily_counts</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                 <span class="co"># remove casos em que faltam date_onset</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                   <span class="co"># conta o número de linhas poro data única</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span>                               <span class="co"># assegura que todos os dias aparecem </span></span>
+<span>    date_onset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date</a></span><span class="op">(</span>                <span class="co"># re-define a coluna data como uma sequencia diária</span></span>
+<span>      from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">date_onset</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>, </span>
+<span>      to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">date_onset</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,</span>
+<span>      by <span class="op">=</span> <span class="st">"day"</span><span class="op">)</span>,</span>
+<span>    fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>                   <span class="co"># configura as linhas adicionadas para apresentar 0 e na coluna n  (não NAcomo no padrão) </span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-e58086474ad5512b49ba" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e58086474ad5512b49ba">{"x":{"filter":"none","vertical":false,"data":[["2014-04-07","2014-04-15","2014-04-21","2014-04-25","2014-04-26","2014-04-27","2014-05-01","2014-05-03","2014-05-04","2014-05-05","2014-05-06","2014-05-07","2014-05-08","2014-05-09","2014-05-10","2014-05-11","2014-05-12","2014-05-13","2014-05-14","2014-05-16","2014-05-17","2014-05-18","2014-05-19","2014-05-20","2014-05-21","2014-05-22","2014-05-23","2014-05-24","2014-05-25","2014-05-26","2014-05-27","2014-05-28","2014-05-29","2014-05-30","2014-05-31","2014-06-02","2014-06-03","2014-06-05","2014-06-06","2014-06-07","2014-06-08","2014-06-09","2014-06-10","2014-06-11","2014-06-12","2014-06-13","2014-06-14","2014-06-15","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-20","2014-06-21","2014-06-22","2014-06-23","2014-06-24","2014-06-25","2014-06-26","2014-06-27","2014-06-28","2014-06-29","2014-06-30","2014-07-01","2014-07-02","2014-07-03","2014-07-04","2014-07-05","2014-07-06","2014-07-07","2014-07-08","2014-07-09","2014-07-10","2014-07-11","2014-07-12","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-21","2014-07-22","2014-07-23","2014-07-24","2014-07-25","2014-07-26","2014-07-27","2014-07-28","2014-07-29","2014-07-30","2014-07-31","2014-08-01","2014-08-02","2014-08-03","2014-08-04","2014-08-05","2014-08-06","2014-08-07","2014-08-08","2014-08-09","2014-08-10","2014-08-11","2014-08-12","2014-08-13","2014-08-14","2014-08-15","2014-08-16","2014-08-17","2014-08-18","2014-08-19","2014-08-20","2014-08-21","2014-08-22","2014-08-23","2014-08-24","2014-08-25","2014-08-26","2014-08-27","2014-08-28","2014-08-29","2014-08-30","2014-08-31","2014-09-01","2014-09-02","2014-09-03","2014-09-04","2014-09-05","2014-09-06","2014-09-07","2014-09-08","2014-09-09","2014-09-10","2014-09-11","2014-09-12","2014-09-13","2014-09-14","2014-09-15","2014-09-16","2014-09-17","2014-09-18","2014-09-19","2014-09-20","2014-09-21","2014-09-22","2014-09-23","2014-09-24","2014-09-25","2014-09-26","2014-09-27","2014-09-28","2014-09-29","2014-09-30","2014-10-01","2014-10-02","2014-10-03","2014-10-04","2014-10-05","2014-10-06","2014-10-07","2014-10-08","2014-10-09","2014-10-10","2014-10-11","2014-10-12","2014-10-13","2014-10-14","2014-10-15","2014-10-16","2014-10-17","2014-10-18","2014-10-19","2014-10-20","2014-10-21","2014-10-22","2014-10-23","2014-10-24","2014-10-25","2014-10-26","2014-10-27","2014-10-28","2014-10-29","2014-10-30","2014-10-31","2014-11-01","2014-11-02","2014-11-03","2014-11-04","2014-11-05","2014-11-06","2014-11-07","2014-11-08","2014-11-09","2014-11-10","2014-11-11","2014-11-12","2014-11-13","2014-11-14","2014-11-15","2014-11-16","2014-11-17","2014-11-18","2014-11-19","2014-11-20","2014-11-21","2014-11-22","2014-11-23","2014-11-24","2014-11-25","2014-11-26","2014-11-27","2014-11-28","2014-11-29","2014-11-30","2014-12-01","2014-12-02","2014-12-03","2014-12-04","2014-12-05","2014-12-06","2014-12-07","2014-12-08","2014-12-09","2014-12-10","2014-12-11","2014-12-12","2014-12-13","2014-12-14","2014-12-15","2014-12-16","2014-12-17","2014-12-18","2014-12-19","2014-12-20","2014-12-21","2014-12-22","2014-12-23","2014-12-24","2014-12-25","2014-12-26","2014-12-27","2014-12-28","2014-12-29","2014-12-30","2014-12-31","2015-01-01","2015-01-02","2015-01-03","2015-01-04","2015-01-05","2015-01-06","2015-01-07","2015-01-08","2015-01-09","2015-01-10","2015-01-11","2015-01-12","2015-01-13","2015-01-14","2015-01-15","2015-01-16","2015-01-17","2015-01-18","2015-01-19","2015-01-20","2015-01-21","2015-01-22","2015-01-23","2015-01-24","2015-01-25","2015-01-26","2015-01-27","2015-01-28","2015-01-29","2015-01-30","2015-01-31","2015-02-01","2015-02-02","2015-02-03","2015-02-04","2015-02-05","2015-02-06","2015-02-07","2015-02-08","2015-02-09","2015-02-10","2015-02-11","2015-02-12","2015-02-13","2015-02-14","2015-02-15","2015-02-16","2015-02-17","2015-02-18","2015-02-19","2015-02-20","2015-02-21","2015-02-22","2015-02-23","2015-02-24","2015-02-25","2015-02-26","2015-02-27","2015-02-28","2015-03-01","2015-03-02","2015-03-03","2015-03-04","2015-03-05","2015-03-06","2015-03-07","2015-03-08","2015-03-09","2015-03-10","2015-03-11","2015-03-12","2015-03-13","2015-03-14","2015-03-15","2015-03-16","2015-03-17","2015-03-18","2015-03-19","2015-03-20","2015-03-21","2015-03-22","2015-03-23","2015-03-24","2015-03-25","2015-03-26","2015-03-27","2015-03-28","2015-03-29","2015-03-30","2015-03-31","2015-04-01","2015-04-02","2015-04-03","2015-04-04","2015-04-05","2015-04-06","2015-04-07","2015-04-08","2015-04-09","2015-04-10","2015-04-11","2015-04-12","2015-04-13","2015-04-14","2015-04-15","2015-04-16","2015-04-17","2015-04-18","2015-04-19","2015-04-20","2015-04-21","2015-04-22","2015-04-23","2015-04-24","2015-04-25","2015-04-26","2015-04-27","2015-04-28","2015-04-29","2015-04-30"],[1,1,2,1,1,1,2,1,1,1,3,2,2,2,1,1,2,3,3,2,3,4,2,1,3,1,2,1,3,3,10,1,1,1,2,5,3,4,4,5,1,5,5,3,1,1,2,5,6,4,2,3,7,3,4,2,6,5,3,1,2,2,6,4,3,5,6,5,3,3,7,7,5,4,6,6,10,10,6,6,10,7,11,4,6,11,9,10,7,12,6,15,14,8,9,16,13,18,18,9,9,9,10,13,17,7,17,12,17,31,13,14,14,19,17,26,19,25,21,16,24,23,25,25,22,27,25,28,30,22,33,30,36,33,23,31,27,30,42,40,50,37,38,38,49,52,35,50,37,38,33,33,39,39,45,34,44,29,40,50,41,39,35,28,36,34,37,36,36,34,43,28,38,33,37,29,33,44,43,24,37,30,35,24,37,44,34,40,30,34,26,29,33,31,22,26,26,19,30,24,29,24,21,19,11,22,20,23,32,33,28,15,20,24,18,20,19,22,17,32,21,20,23,17,15,18,20,19,18,21,18,16,20,15,18,15,18,18,15,15,19,18,19,11,15,19,11,13,13,12,11,14,18,17,10,15,16,12,17,19,14,12,18,14,14,15,11,13,21,11,14,11,13,12,14,11,10,16,10,15,13,13,10,11,8,11,11,11,8,9,8,8,10,8,9,11,13,13,16,13,11,16,6,8,10,16,11,11,8,11,16,9,10,8,14,7,10,11,11,7,5,11,6,8,9,13,9,7,9,4,9,7,13,2,7,9,5,5,10,12,10,3,6,4,5,11,3,7,6,7,9,3,7,4,9,6,5,5,9,4,4,4,9,7,8,2,2]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>date_onset<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="casos-linelist-em-semanas" class="section level3 unnumbered">
+<h3>Casos Linelist em semanas<a class="anchor" aria-label="anchor" href="#casos-linelist-em-semanas"><i class="fas fa-link"></i></a>
+</h3>
+<p>O mesmo princípio pode ser aplicado durante semanas. Primeiro cria-se uma nova coluna que é a semana do caso utilizando <code><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date()</a></code> com <code>unit = "semana"</code>. Em seguida, utilize <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> como acima para obter contagens semanais de casos. Termine com <code><a href="https://tidyr.tidyverse.org/reference/complete.html">complete()</a></code> para garantir que todas as semanas sejam representadas, mesmo que não contenham casos.</p>
+<div class="sourceCode" id="cb657"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Mostrar dados por contagens semanais</span></span>
+<span><span class="va">weekly_counts</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                 <span class="co"># remove casos em que está faltando date_onset</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>week <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_onset</span>, unit <span class="op">=</span> <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># nova coluna com a data </span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                         <span class="co">#  agrupa dados por semana e conta </span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span>                               <span class="co"># assegura que todos as semanas aparencem </span></span>
+<span>    week <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date</a></span><span class="op">(</span>                      <span class="co"># redefine a coluna data como uma sequência completa</span></span>
+<span>      from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">week</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>, </span>
+<span>      to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">week</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,</span>
+<span>      by <span class="op">=</span> <span class="st">"week"</span><span class="op">)</span>,</span>
+<span>    fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>                   <span class="co"># configura as linhas adicionadas para apresentar 0 e na coluna n  (não NAcomo no padrão) </span></span></code></pre></div>
+<p>Aqui estão as 50 primeiras linhas do dataframe resultante:</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-99dbce697a4b4b310e1a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-99dbce697a4b4b310e1a">{"x":{"filter":"none","vertical":false,"data":[["2014-04-06","2014-04-13","2014-04-20","2014-04-27","2014-05-04","2014-05-11","2014-05-18","2014-05-25","2014-06-01","2014-06-08","2014-06-15","2014-06-22","2014-06-29","2014-07-06","2014-07-13","2014-07-20","2014-07-27","2014-08-03","2014-08-10","2014-08-17","2014-08-24","2014-08-31","2014-09-07","2014-09-14","2014-09-21","2014-09-28","2014-10-05","2014-10-12","2014-10-19","2014-10-26","2014-11-02","2014-11-09","2014-11-16","2014-11-23","2014-11-30","2014-12-07","2014-12-14","2014-12-21","2014-12-28","2015-01-04","2015-01-11","2015-01-18","2015-01-25","2015-02-01","2015-02-08","2015-02-15","2015-02-22","2015-03-01","2015-03-08","2015-03-15","2015-03-22","2015-03-29","2015-04-05","2015-04-12","2015-04-19","2015-04-26"],[1,1,4,4,12,14,14,21,21,18,30,23,31,35,55,58,80,86,114,122,159,187,210,294,278,270,263,252,243,241,223,176,140,170,151,130,123,122,94,101,106,99,87,80,66,80,80,76,68,61,51,58,39,45,37,28]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="casos-da-linelist-em-meses" class="section level3 unnumbered">
+<h3>Casos da Linelist em meses<a class="anchor" aria-label="anchor" href="#casos-da-linelist-em-meses"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para agregar os casos em meses, novamente utilize <code><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date()</a></code> do pacote <strong>lubridate</strong>, mas com o argumento <code>unit = "meses"</code>. Isto arredonda cada data até o dia 1 de seu mês. A saída será classe Data. Observe que no passo <code><a href="https://tidyr.tidyverse.org/reference/complete.html">complete()</a></code> também utilizamos <code>by = "meses"</code>.</p>
+<div class="sourceCode" id="cb658"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Mostrar dados para contagens mensais</span></span>
+<span><span class="va">monthly_counts</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_onset</span>, unit <span class="op">=</span> <span class="st">"months"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># nova colua com o 1 mês do `onset` </span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                          <span class="co"># conta casos por mês</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/complete.html">complete</a></span><span class="op">(</span></span>
+<span>    month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">month</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,     <span class="co"># inclui todos os meses mesmo os sem casos reportados </span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">month</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,</span>
+<span>      by<span class="op">=</span><span class="st">"month"</span><span class="op">)</span>,</span>
+<span>    fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-999a37f9eee86c9ad4d6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-999a37f9eee86c9ad4d6">{"x":{"filter":"none","vertical":false,"data":[["2014-04-01","2014-05-01","2014-06-01","2014-07-01","2014-08-01","2014-09-01","2014-10-01","2014-11-01","2014-12-01","2015-01-01","2015-02-01","2015-03-01","2015-04-01"],[7,64,100,226,528,1070,1112,763,562,431,306,277,186]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>month<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="contagens-diárias-em-semanas" class="section level3 unnumbered">
+<h3>Contagens diárias em semanas<a class="anchor" aria-label="anchor" href="#contagens-di%C3%A1rias-em-semanas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para agregar as contagens diárias em contagens semanais, utilize <code><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date()</a></code> como acima. Entretanto, utilize <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> em vez de <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> porque você precisa <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> contar casos diários em vez de apenas contar o número de filas por semana.</p>
+<div id="contagens-diárias-em-meses" class="section level4 unnumbered">
+<h4>Contagens diárias em meses<a class="anchor" aria-label="anchor" href="#contagens-di%C3%A1rias-em-meses"><i class="fas fa-link"></i></a>
+</h4>
+<p>Para agregar as contagens diárias em contagens de meses, utilize <code><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date()</a></code> com <code>unit = "month"</code> (mês) como acima. Entretanto, utilize <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> em vez de <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> porque você precisa <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> contar casos diários em vez de apenas contar o número de filas por mês.</p>
+</div>
+</div>
+</div>
+<div id="organizando-dados-agrupados" class="section level2" number="13.7">
+<h2>
+<span class="header-section-number">13.7</span> Organizando dados agrupados<a class="anchor" aria-label="anchor" href="#organizando-dados-agrupados"><i class="fas fa-link"></i></a>
+</h2>
+<p>Utilizando o verbo <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>do <strong>dplyr</strong> para ordenar as linhas em um quadro de dados se comporta da mesma forma quando os dados são agrupados, <em>a menos que</em> você defina o argumento <code>.by_group =TRUE</code>. Neste caso, as linhas são ordenadas primeiro pelas colunas de agrupamento e depois por quaisquer outras colunas que você especificar para <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>.</p>
+</div>
+<div id="filtrando-dados-agrupados" class="section level2" number="13.8">
+<h2>
+<span class="header-section-number">13.8</span> Filtrando dados agrupados<a class="anchor" aria-label="anchor" href="#filtrando-dados-agrupados"><i class="fas fa-link"></i></a>
+</h2>
+<div id="filter" class="section level3 unnumbered">
+<h3>
+<code>filter()</code><a class="anchor" aria-label="anchor" href="#filter"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quando aplicadas em conjunto com funções que avaliam o dataframe (como <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>), estas funções serão agora aplicadas aos grupos. Por exemplo, se você quiser filtrar e manter linhas onde os pacientes estão acima da mediana de idade, isto agora será aplicado por grupo - filtrando para manter linhas acima da mediana de idade do <em>grupo</em>.</p>
+</div>
+<div id="linhas-de-corte-por-grupo" class="section level3 unnumbered">
+<h3>Linhas de corte por grupo<a class="anchor" aria-label="anchor" href="#linhas-de-corte-por-grupo"><i class="fas fa-link"></i></a>
+</h3>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code> (literalmente: fatiar) do pacote <strong>dplyr</strong> , que <a href="https://dplyr.tidyverse.org/reference/slice.html">filtra linhas com base em sua posição</a> nos dados, também pode ser aplicada por grupo. Lembre-se de levar em conta a ordenação dos dados dentro de cada grupo para obter a “fatia” desejada.</p>
+<p>Por exemplo, para recuperar apenas as últimas 5 admissões de cada hospital:</p>
+<ol style="list-style-type: decimal">
+<li>Agrupar a lineliste por coluna “hospital”.<br>
+</li>
+<li>Organizar os registros da mais recente à mais antiga <code>date_hospitalisation</code> (data de hospitalização) <em>em cada grupo hospitalar</em>.<br>
+</li>
+<li>Divide para recuperar as 5 primeiras fileiras de cada hospital</li>
+</ol>
+<div class="sourceCode" id="cb659"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">hospital</span>, <span class="va">date_hospitalisation</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                            <span class="co"># para visualizar</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">case_id</span>, <span class="va">hospital</span>, <span class="va">date_hospitalisation</span><span class="op">)</span>  <span class="co"># para visualizar</span></span></code></pre></div>
+<pre><code>## # A tibble: 30 × 3
+## # Groups:   hospital [6]
+##    case_id hospital         date_hospitalisation
+##    &lt;chr&gt;   &lt;chr&gt;            &lt;date&gt;              
+##  1 6c286a  Ausente          2014-04-27          
+##  2 49731d  Ausente          2014-05-02          
+##  3 f1f60f  Ausente          2014-05-09          
+##  4 8689b7  Ausente          2014-05-14          
+##  5 6285c9  Ausente          2014-05-14          
+##  6 20b688  Central Hospital 2014-05-06          
+##  7 d58402  Central Hospital 2014-05-10          
+##  8 b8f2fd  Central Hospital 2014-05-13          
+##  9 acf422  Central Hospital 2014-05-28          
+## 10 275cc7  Central Hospital 2014-05-28          
+## # ℹ 20 more rows</code></pre>
+<p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code> - selecciona n linhas do topo<br><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_tail()</a></code> - selecciona n linhas do final
+<code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code> - seleciona aleatoriamente n linhas
+<code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code> - seleciona n linhas com os valores mais altos da coluna <code>order_by =</code>, use <code>with_ties = TRUE</code> para manter os vínculos
+<code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> - seleciona os menores valores da coluna <code>order_by =</code> column, , use <code>with_ties = TRUE</code> para manter os vínculos</p>
+<p>Veja a página <a href="deduplication.html#deduplication">Eliminando duplicidades</a> para meis exemplos e detalhes de <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code>.</p>
+</div>
+<div id="group_filter_grp_size" class="section level3 unnumbered">
+<h3>Filtrar por tamanho do grupo<a class="anchor" aria-label="anchor" href="#group_filter_grp_size"><i class="fas fa-link"></i></a>
+</h3>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/count.html">add_count()</a></code> adiciona uma coluna <code>n</code> aos dados originais dando o número de linhas no grupo daquela linha.</p>
+<p>Mostrado abaixo, <code><a href="https://dplyr.tidyverse.org/reference/count.html">add_count()</a></code> é aplicado à coluna <code>hospital</code>, assim os valores na nova coluna <code>n</code> refletem o número de linhas no grupo hospitalar. Observe como os valores na coluna <code>n</code> são repetidos. No exemplo abaixo, o nome da coluna <code>n</code> poderia ser alterado utilizando <code>name =</code> dentro de <code><a href="https://dplyr.tidyverse.org/reference/count.html">add_count()</a></code>. Para fins de demonstração, reorganizamos as colunas com <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>.</p>
+<div class="sourceCode" id="cb661"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">add_count</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>          <span class="co"># adiciona "número de linhas adimitidas no mesmo hospital que o dessa linha" </span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">hospital</span>, <span class="va">n</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 5,888 × 31
+##    hospital        n case_id generation date_infection date_onset date_hospitalisation
+##    &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;date&gt;         &lt;date&gt;     &lt;date&gt;              
+##  1 Other         885 5fe599           4 2014-05-08     2014-05-13 2014-05-15          
+##  2 Ausente      1469 8689b7           4 NA             2014-05-13 2014-05-14          
+##  3 St. Mark's…   422 11f8ea           2 NA             2014-05-16 2014-05-18          
+##  4 Port Hospi…  1762 b8812a           3 2014-05-04     2014-05-18 2014-05-20          
+##  5 Military H…   896 893f25           3 2014-05-18     2014-05-21 2014-05-22          
+##  6 Port Hospi…  1762 be99c8           3 2014-05-03     2014-05-22 2014-05-23          
+##  7 Ausente      1469 07e3e8           4 2014-05-22     2014-05-27 2014-05-29          
+##  8 Ausente      1469 369449           4 2014-05-28     2014-06-02 2014-06-03          
+##  9 Ausente      1469 f393b4           4 NA             2014-06-05 2014-06-06          
+## 10 Ausente      1469 1389ca           4 NA             2014-06-05 2014-06-07          
+## # ℹ 5,878 more rows
+## # ℹ 24 more variables: date_outcome &lt;date&gt;, outcome &lt;chr&gt;, gender &lt;chr&gt;, age &lt;dbl&gt;,
+## #   age_unit &lt;chr&gt;, age_years &lt;dbl&gt;, age_cat &lt;fct&gt;, age_cat5 &lt;fct&gt;, lon &lt;dbl&gt;,
+## #   lat &lt;dbl&gt;, infector &lt;chr&gt;, source &lt;chr&gt;, wt_kg &lt;dbl&gt;, ht_cm &lt;dbl&gt;,
+## #   ct_blood &lt;dbl&gt;, fever &lt;chr&gt;, chills &lt;chr&gt;, cough &lt;chr&gt;, aches &lt;chr&gt;, vomit &lt;chr&gt;,
+## #   temp &lt;dbl&gt;, time_admission &lt;chr&gt;, bmi &lt;dbl&gt;, days_onset_hosp &lt;dbl&gt;</code></pre>
+<p>Torna-se então fácil filtrar para linhas de casos que foram hospitalizados em um hospital “pequeno”, digamos, um hospital que admitiu menos de 500 pacientes:</p>
+<div class="sourceCode" id="cb663"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">add_count</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&lt;</span> <span class="fl">500</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div id="criando-novas-variáveis-mutate-em-dados-agrupados" class="section level2" number="13.9">
+<h2>
+<span class="header-section-number">13.9</span> Criando novas variáveis (mutate) em dados agrupados<a class="anchor" aria-label="anchor" href="#criando-novas-vari%C3%A1veis-mutate-em-dados-agrupados"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para manter todas as colunas e linhas (não resumir) e <em>adicionar uma nova coluna contendo estatísticas de grupo</em>, utilizar <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> após <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> em vez de <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>.</p>
+<p>Isto é útil se você quiser estatísticas de grupo no conjunto de dados original * com todas as outras colunas presentes* - por exemplo, para cálculos que comparam uma linha com seu grupo.</p>
+<p>Por exemplo, este código abaixo calcula a diferença entre o atraso de para a admissão de uma observação e o atraso mediano para seu hospital. As etapas são:</p>
+<ol style="list-style-type: decimal">
+<li>Agrupar os dados por hospital<br>
+</li>
+<li>Utilize a coluna <code>days_onset_hosp</code> (atraso à hospitalização) para criar uma nova coluna contendo o atraso médio no hospital para <em>aquela linha</em>.<br>
+</li>
+<li>Calcular a diferença entre as duas colunas</li>
+</ol>
+<p>Nós usamos a função <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> para selecionar apenas certas colunas a serem exibidas, para fins de demonstração.</p>
+<div class="sourceCode" id="cb664"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="co"># agrupando dados por hospital (sem mudanças na linelist ainda)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  </span>
+<span>  <span class="co"># novas colunas</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    <span class="co"># quantidades de dias média para admissão por hospital (arredondado para 1 decimal)</span></span>
+<span>    group_delay_admit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">days_onset_hosp</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    </span>
+<span>    <span class="co"># diferença entre o atraso daquela observação e o atraso medio do hospital (arredondado para 1 decimal)</span></span>
+<span>    diff_to_group     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">days_onset_hosp</span> <span class="op">-</span> <span class="va">group_delay_admit</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  </span>
+<span>  <span class="co"># seleciona alguma linhas apenas - para fim de demostração/visualização  </span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">case_id</span>, <span class="va">hospital</span>, <span class="va">days_onset_hosp</span>, <span class="va">group_delay_admit</span>, <span class="va">diff_to_group</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 5,888 × 5
+## # Groups:   hospital [6]
+##    case_id hospital                    days_onset_hosp group_delay_admit diff_to_group
+##    &lt;chr&gt;   &lt;chr&gt;                                 &lt;dbl&gt;             &lt;dbl&gt;         &lt;dbl&gt;
+##  1 5fe599  Other                                     2               2             0  
+##  2 8689b7  Ausente                                   1               2.1          -1.1
+##  3 11f8ea  St. Mark's Maternity Hospi…               2               2.1          -0.1
+##  4 b8812a  Port Hospital                             2               2.1          -0.1
+##  5 893f25  Military Hospital                         1               2.1          -1.1
+##  6 be99c8  Port Hospital                             1               2.1          -1.1
+##  7 07e3e8  Ausente                                   2               2.1          -0.1
+##  8 369449  Ausente                                   1               2.1          -1.1
+##  9 f393b4  Ausente                                   1               2.1          -1.1
+## 10 1389ca  Ausente                                   2               2.1          -0.1
+## # ℹ 5,878 more rows</code></pre>
+</div>
+<div id="selecionar-em-dados-agrupados" class="section level2" number="13.10">
+<h2>
+<span class="header-section-number">13.10</span> Selecionar em dados agrupados<a class="anchor" aria-label="anchor" href="#selecionar-em-dados-agrupados"><i class="fas fa-link"></i></a>
+</h2>
+<p>O verbo <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> funciona em dados agrupados, mas as colunas de agrupamento são sempre incluídas (mesmo se não mecionadas explicitamente em <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>). Se você não quiser essas colunas, precisa usarprimeiro a função <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> para desagrupá-los.</p>
+<!-- ======================================================= -->
+</div>
+<div id="recursos-6" class="section level2" number="13.11">
+<h2>
+<span class="header-section-number">13.11</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-6"><i class="fas fa-link"></i></a>
+</h2>
+<p>Aqui estão alguns recursos úteis para mais informações.</p>
+<p>Você pode aplicar funções de resumo em dados agrupados; ver a <a href="https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf">“cheat sheet” (cola) de transformação de dados do RStudio.</a></p>
+<p>A página do Data Carpentry <a href="https://datacarpentry.org/R-genomics/04-dplyr.html"><strong>dplyr</strong></a><br>
+As páginas de referência do <strong>tidyverse</strong> em <a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a> and <a href="https://dplyr.tidyverse.org/articles/grouping.html">grouping</a></p>
+<p>Esta página em <a href="https://itsalocke.com/files/DataManipulationinR.pdf">Manipulação de dados</a></p>
+<p><a href="https://stackoverflow.com/questions/23528862/summarize-with-conditions-in-dplyr">Resumindo com condicionamento no dplyr</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></div>
+<div class="next"><a href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#grouping"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li>
+<a class="nav-link" href="#prepara%C3%A7%C3%A3o-4"><span class="header-section-number">13.1</span> Preparação</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#carregar-pacotes-2">Carregar pacotes</a></li>
+<li><a class="nav-link" href="#importar-datos">Importar datos</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#agrupando-os-dados"><span class="header-section-number">13.2</span> Agrupando os dados</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#grupos-%C3%BAnicos">Grupos únicos</a></li>
+<li><a class="nav-link" href="#novas-colunas-1">Novas colunas</a></li>
+<li><a class="nav-link" href="#adicionareliminar-colunas-de-agrupamento">Adicionar/Eliminar colunas de agrupamento</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#desagrupar"><span class="header-section-number">13.3</span> Desagrupar</a></li>
+<li><a class="nav-link" href="#group_summarise"><span class="header-section-number">13.4</span> Resumir os dados (Summarise)</a></li>
+<li>
+<a class="nav-link" href="#contagens"><span class="header-section-number">13.5</span> Contagens</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#tally">tally()</a></li>
+<li><a class="nav-link" href="#count">count()</a></li>
+<li><a class="nav-link" href="#adicionar-contagens">Adicionar contagens</a></li>
+<li><a class="nav-link" href="#adicionar-totais">Adicionar totais</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#agrupoando-por-data"><span class="header-section-number">13.6</span> Agrupoando por data</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#os-casos-da-linelist-em-dias">Os casos da Linelist em dias</a></li>
+<li><a class="nav-link" href="#casos-linelist-em-semanas">Casos Linelist em semanas</a></li>
+<li><a class="nav-link" href="#casos-da-linelist-em-meses">Casos da Linelist em meses</a></li>
+<li><a class="nav-link" href="#contagens-di%C3%A1rias-em-semanas">Contagens diárias em semanas</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#organizando-dados-agrupados"><span class="header-section-number">13.7</span> Organizando dados agrupados</a></li>
+<li>
+<a class="nav-link" href="#filtrando-dados-agrupados"><span class="header-section-number">13.8</span> Filtrando dados agrupados</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#filter">filter()</a></li>
+<li><a class="nav-link" href="#linhas-de-corte-por-grupo">Linhas de corte por grupo</a></li>
+<li><a class="nav-link" href="#group_filter_grp_size">Filtrar por tamanho do grupo</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#criando-novas-vari%C3%A1veis-mutate-em-dados-agrupados"><span class="header-section-number">13.9</span> Criando novas variáveis (mutate) em dados agrupados</a></li>
+<li><a class="nav-link" href="#selecionar-em-dados-agrupados"><span class="header-section-number">13.10</span> Selecionar em dados agrupados</a></li>
+<li><a class="nav-link" href="#recursos-6"><span class="header-section-number">13.11</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
