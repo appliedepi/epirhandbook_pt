@@ -389,7 +389,7 @@ p1 # printa
 Agora podemos girar o nó 37 no objeto `p1` para que as amostras no nó 38 se movam para o topo. Armazenamos a árvore rotacionada em um novo objeto `p2`.
 
 ```{r}
-p2 <- rotate(p1, 37) + 
+p2 <- ggtree::rotate(p1, 37) + 
       ggtitle("Nó 37 rotacionado")
 
 
@@ -400,7 +400,7 @@ Ou podemos usar a função `flip()` para rotacuonar o nó 36 do objeto `p1` e mu
 
 ```{r}
 
-p3 <-  flip(p1, 39, 37) +
+p3 <- ggtree::flip(p1, 39, 37) +
       ggtitle("Nó 36 rotacionado")
 
 

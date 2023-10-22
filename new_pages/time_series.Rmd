@@ -583,13 +583,15 @@ model <- glm_nb_model(
     fourier)
 
 ## ajuste seu modelo utilizando os dados de contagem
-fitted_model <- trending::fit(data.frame(model), counts)
+fitted_model <- trending::fit(model, data.frame(counts))
 
 ## calcule os intervalos de confiança e predição
-observed <- predict(data.frame(fitted_model), simulate_pi = FALSE)
+observed <- predict(fitted_model, simulate_pi = FALSE)
+
+estimate_res <- data.frame(observed$result)
 
 ## faça um gráfico da sua regressão
-ggplot(data = observed, aes(x = epiweek)) + 
+ggplot(data = estimate_res, aes(x = epiweek)) + 
   ## adicione uma linha para a estimativa do modelo
   geom_line(aes(y = estimate),
             col = "Red") + 
@@ -623,24 +625,24 @@ as contagens observadas.
 ```{r, warning=F, message=F}
 
 ## calcule os resíduos
-observed <- observed %>% 
-  mutate(resid = residuals(fitted_model$fitted_model, type = "response"))
+estimate_res <- estimate_res %>% 
+  mutate(resid = fitted_model$result[[1]]$residuals)
 
 ## os resíduos são razoavelmente constantes ao longo do tempo (se não: surtos? mudanças na prática?)
-observed %>%
+estimate_res %>%
   ggplot(aes(x = epiweek, y = resid)) +
   geom_line() +
   geom_point() + 
   labs(x = "epiweek", y = "Residuals")
 
 ## existe autocorrelação nos resíduos (existe um padrão para os erros?)
-observed %>% 
+estimate_res %>% 
   as_tsibble(index = epiweek) %>% 
   ACF(resid, lag_max = 52) %>% 
   autoplot()
 
 ## os resíduos estão distribuídos de forma normal (estão sendo sub ou super estimados?)
-observed %>%
+estimate_res %>%
   ggplot(aes(x = resid)) +
   geom_histogram(binwidth = 100) +
   geom_rug() +
@@ -648,7 +650,7 @@ observed %>%
   
 ## compare as contagens observadas com os resíduos
   ## não deve haver padrão
-observed %>%
+estimate_res %>%
   ggplot(aes(x = estimate, y = resid)) +
   geom_point() +
   labs(x = "Fitted", y = "Residuals")
@@ -657,7 +659,7 @@ observed %>%
 ## H0 é que os resíduos são ruídos brancos (i.e.: aleatórios)
 ## teste de independência
 ## se p-valor for significantivo, então não é aleatório
-Box.test(observed$resid, type = "Ljung-Box")
+Box.test(estimate_res$resid, type = "Ljung-Box")
 
 ```
 
@@ -790,7 +792,7 @@ model <- glm_nb_model(
 fitted_model <- trending::fit(model, counts)
 
 ## calcule os intervalos de confiança e de predição
-observed <- predict(data.frame(fitted_model), simulate_pi = FALSE)
+observed <- predict(fitted_model, simulate_pi = FALSE)
 
 ```
 
@@ -809,19 +811,20 @@ Isto sugere que esta possa ser uma boa variável para prever a quantidade de cas
 
 fitted_model %>% 
   ## extraia a regressão negativa binominal original
-  get_model() %>% 
+  get_fitted_model() #%>% 
   ## obtenha um quadro de dados organizado dos resultados
-  tidy(exponentiate = TRUE, 
-       conf.int = TRUE)
+  # tidy(exponentiate = TRUE, 
+  #      conf.int = TRUE)
 ```
 
 Um inspeção visual rápida do modelo mostra que ele pode fazer um trabalho melhor em
 estimar a quantidade de casos observada.
 
 ```{r plot_nb_reg_bivar, warning=F, message=F}
+estimate_res <- data.frame(observed$result)
 
 ## faça um gráfico da sua regressão
-ggplot(data = observed, aes(x = epiweek)) + 
+ggplot(data = estimate_res, aes(x = epiweek)) + 
   ## adicione uma linha com a estimativa do modelo
   geom_line(aes(y = estimate),
             col = "Red") + 
@@ -848,24 +851,24 @@ então pode ser mais viável continuar com o modelo mais simples, sem a temperat
 ```{r}
 
 ## calcule os resíduos
-observed <- observed %>% 
+estimate_res <- estimate_res %>% 
   mutate(resid = case_int - estimate)
 
 ## os resíduos são razoavelmente constantes ao longo do tempo (caso não: surtos? mudanças na prática?)
-observed %>%
+estimate_res %>%
   ggplot(aes(x = epiweek, y = resid)) +
   geom_line() +
   geom_point() + 
   labs(x = "epiweek", y = "Residuals")
 
 ## existe uma autocorrelação nos resíduos (existe um padrão para o erro?)
-observed %>% 
+estimate_res %>% 
   as_tsibble(index = epiweek) %>% 
   ACF(resid, lag_max = 52) %>% 
   autoplot()
 
 ## os resíduos são normalmente distribuídos (estão sub ou super estimando?)?
-observed %>%
+estimate_res %>%
   ggplot(aes(x = resid)) +
   geom_histogram(binwidth = 100) +
   geom_rug() +
@@ -873,7 +876,7 @@ observed %>%
   
 ## compare as contagens observadas com os seus resíduos
   ## também não deve haver padrão
-observed %>%
+estimate_res %>%
   ggplot(aes(x = estimate, y = resid)) +
   geom_point() +
   labs(x = "Fitted", y = "Residuals")
@@ -882,7 +885,7 @@ observed %>%
 ## H0 é que os resíduos são uma série de ruídos brancos (i.e.: aleatórios)
 ## teste de independência
 ## se o p-valor for signficativo, então os resíduos não são aleatórios
-Box.test(observed$resid, type = "Ljung-Box")
+Box.test(estimate_res$resid, type = "Ljung-Box")
 
 ```
 
@@ -1066,7 +1069,7 @@ forecasts <- fitted_model %>%
   predict(pred_data, simulate_pi = FALSE)
 
 ## combine os bancos de dados de referência e os dados preditos
-observed <- bind_rows(observed, forecasts)
+observed <- bind_rows(observed$result, forecasts$result)
 
 ```
 
@@ -1269,7 +1272,8 @@ forecasts <- purrr::map(unique(case_roll$.id),
   
   # prejeva com os dados que você quer utilizar para prever
   forecasts <- fitted_model %>% 
-    predict(pred_data, simulate_pi = FALSE) %>% 
+    predict(pred_data, simulate_pi = FALSE) 
+  forecasts <- data.frame(forecasts$result[[1]]) %>% 
     ## mantenha apenas a semana e os dados estimados
     select(epiweek, estimate)
     
@@ -1567,13 +1571,19 @@ fitted_model <- trending::fit(model, counts)
 
 ## calcule os intervalos de confiança e de previsão
 observed <- predict(fitted_model, simulate_pi = FALSE)
+```
 
 
-
+```{r table_regression, eval = FALSE, echo = TRUE}
 ## mostre as estimativas e mudanças percentuais em uma tabela
 fitted_model %>% 
   ## extraia a regressão original negativa binominal
-  get_model() %>% 
+  get_result() %>% 
+  
+  ## extrair o primeiro elemento da lista, consequência das alterações de pacotes de tendências.
+  simplify() %>% 
+  first() %>% 
+  
   ## obtenha um quadro de dados organizado dos resultados
   tidy(exponentiate = TRUE, 
        conf.int = TRUE) %>% 
@@ -1602,8 +1612,9 @@ fitted_model %>%
 Como anteriormente, nós podemos visualizar os resultados da regressão.
 
 ```{r plot_interrupted}
+estimate_res <- data.frame(observed$result)
 
-ggplot(observed, aes(x = epiweek)) + 
+ggplot(estimate_res, aes(x = epiweek)) + 
   ## adicione as quantidades de casos observadas como uma linha
   geom_line(aes(y = case_int, colour = "Observed")) + 
   ## adicione uma linha para a estimativa do modelo

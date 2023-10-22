@@ -567,12 +567,12 @@ left_join(ag, propcount, by = "age_group", suffix = c("", "_pop")) %>%
 As pirâmides demográficas (ou de idade-sexo) são uma maneira fácil de visualizar a distribuição em sua população pesquisada. Também vale a pena considerar a criação 
 de [Tabelas Descritivas](#tables-descriptive) de idade e sexo por estratos de pesquisa. Demonstraremos utilizando o pacote **apyramid**,
 pois ele permite proporções ponderadas utilizando nosso objeto de pesquisa criado acima. Outras opções para criar [Pirâmides Demográficas](#age-pyramid) são amplamente cobertas nesse capítulo do manual. Também utilizaremos uma função *wrapper* da
-**sitrep** chamada `plot_age_pyramid()` que economiza algumas linhas de código para produzir um gráfico comproporções.
+**apyramid** chamada `age_pyramid()` que economiza algumas linhas de código para produzir um gráfico comproporções.
 
 Como no teste binomial formal de diferença, visto acima na seção de viés de amostragem, estamos interessados aqui em visualizar se nossa população amostrada é 
 substancialmente diferente da população original e se a ponderação corrige esta diferença. Para isso, usaremos o pacote **patchwork** para mostrar nossas visualizações **ggplot** lado a lado; para detalhes, veja a seção sobre combinação de lotes no capítulo [dicas ggplot](#ggplot-tips) do manual. Visualizaremos nossa população original, nossa população não ponderada de pesquisa e nossa população ponderada de pesquisa. Você
 também pode considerar a visualização por cada estrato de sua pesquisa - em nosso exemplo aqui, isso seria utilizando o argumento
-`stack_by = "health_district"` (veja \`?plot_age_pyramid' para detalhes).
+`stack_by = "health_district"` (veja \`?age_pyramid' para detalhes).
 
 [**NOTA:** Os eixos x e y são invertidos em pirâmides]{style="color: black;"}
 
