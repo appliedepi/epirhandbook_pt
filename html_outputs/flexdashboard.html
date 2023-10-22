@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>40 Painéis (Dashboards) com R Markdown | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Esta página cobrirá o uso básico do pacote flexdashboard. Este pacote permite que você formate facilmente a saída do R Markdown como um painel com painéis e páginas. O conteúdo do painel pode ser...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="40 Painéis (Dashboards) com R Markdown | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Esta página cobrirá o uso básico do pacote flexdashboard. Este pacote permite que você formate facilmente a saída do R Markdown como um painel com painéis e páginas. O conteúdo do painel pode ser...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="40 Painéis (Dashboards) com R Markdown | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Esta página cobrirá o uso básico do pacote flexdashboard. Este pacote permite que você formate facilmente a saída do R Markdown como um painel com painéis e páginas. O conteúdo do painel pode ser...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="active" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="flexdashboard" class="section level1" number="40">
+<h1>
+<span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown<a class="anchor" aria-label="anchor" href="#flexdashboard"><i class="fas fa-link"></i></a>
+</h1>
+<div class="inline-figure"><img src="images/flexdashboard_output.png" width="100%" style="display: block; margin: auto;"></div>
+<p>Esta página cobrirá o uso básico do pacote <strong>flexdashboard</strong>. Este pacote permite que você formate facilmente a saída do R Markdown como um painel com painéis e páginas. O conteúdo do painel pode ser texto, figuras / tabelas estáticas ou gráficos interativos.</p>
+<p>Vantagens do <strong>flexdashboard</strong>:</p>
+<ul>
+<li>Requer um mínimo de codificação R fora do padrão - com muito pouca prática, você pode criar rapidamente um painel<br>
+</li>
+<li>O painel geralmente pode ser enviado por e-mail para colegas como um arquivo HTML independente - nenhum servidor é necessário<br>
+</li>
+<li>Você pode combinar <strong>flexdashboard</strong> com <strong>shiny</strong>, <strong>ggplotly</strong> e outros <em>“widgets html”</em> para adicionar interatividade</li>
+</ul>
+<p>Desvantagens do <strong>flexdashboard</strong>:</p>
+<ul>
+<li>Menos personalização em comparação com o uso de <strong>shiny</strong> sozinho para criar um painel</li>
+</ul>
+<p>Tutoriais muito abrangentes sobre o uso do <strong>flexdashboard</strong> que informaram esta página podem ser encontrados na seção Recursos. Abaixo descrevemos os principais recursos e damos um exemplo de construção de um painel para explorar um surto, usando os dados da <code>lista de linha</code> do caso.</p>
+<div id="preparação-32" class="section level2" number="40.1">
+<h2>
+<span class="header-section-number">40.1</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-32"><i class="fas fa-link"></i></a>
+</h2>
+<div id="carregar-pacotes-13" class="section level3 unnumbered">
+<h3>Carregar pacotes<a class="anchor" aria-label="anchor" href="#carregar-pacotes-13"><i class="fas fa-link"></i></a>
+</h3>
+<p>Neste manual, enfatizamos <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code> de <strong>pacman</strong>, que instala o pacote se necessário <em>e</em> o carrega para uso. Você também pode carregar pacotes instalados com <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> de <strong>base</strong> R. Veja a página em <a href="basics.html#basics">Introdução ao R</a> para mais informações sobre pacotes R.</p>
+<div class="sourceCode" id="cb1668"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span> <span class="fu">::</span> <span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span>  <span class="va">rio</span>, <span class="co"># importação / exportação de dados     </span></span>
+<span>  <span class="va">here</span>, <span class="co"># localize arquivos</span></span>
+<span>  <span class="va">tidyverse</span>, <span class="co"># gerenciamento e visualização de dados</span></span>
+<span>  <span class="va">flexdashboard</span>, <span class="co"># versões de painel de relatórios R Markdown</span></span>
+<span>  <span class="va">shiny</span>, <span class="co"># figuras interativas</span></span>
+<span>  <span class="va">plotly</span> <span class="co"># figuras interativas</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="importar-dados-5" class="section level3 unnumbered">
+<h3>Importar dados<a class="anchor" aria-label="anchor" href="#importar-dados-5"><i class="fas fa-link"></i></a>
+</h3>
+<p>Importamos o conjunto de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds" class="download-button"> clique para baixar o “clean” linelist </a> (as .rds file). Importe dados com a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> do pacote <strong>rio</strong> (ele lida com muitos tipos de arquivo como .xlsx, .csv, .rds - veja a página <a href="importing.html#importing">Importar e exportar</a> para detalhes).</p>
+<div class="sourceCode" id="cb1669"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># importar a linelist</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></span></code></pre></div>
+<p>As primeiras 50 linhas da <em>linelist</em> são exibidas abaixo.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-78a059cdab72e8222e02" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-78a059cdab72e8222e02">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Ausente","Ausente","Ausente","Ausente","Port Hospital","Military Hospital","Ausente","Ausente","Other","Port Hospital","Port Hospital","Port Hospital","Ausente","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Ausente","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Ausente","Military Hospital","Other","Ausente","Ausente","Port Hospital","Port Hospital","Port Hospital","Ausente","Central Hospital","Military Hospital","Other","Other","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Ausente"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.461830626007281,8.462729314626459,8.461443675342711,8.46191259217774,8.472923276435059,8.48401630165138,8.458371253408441,8.477617055125091,8.47570184950483,8.477799468789719,8.47145134147474,8.478048406853629,8.48528034195779,8.469575303958671,8.45957352078114,8.474048895115439,8.488029171298839,8.473437335922,8.484082637344621,8.46242233645879,8.470268221265719,8.463984474805329,8.464134789434199,8.456230946296071,8.48334624336805,8.47493999153642,8.47832062438022,8.469393389176499,8.48480589906514,8.47121232619015,8.48438437371817,8.484661585743391,8.477141599844281,8.462381270106089,8.455685978131131,8.4632880274758,8.47940722413856,8.46353857052336,8.461789681588639,8.47508713872833,8.458258081280711,8.4532568143863,8.4732571907655,8.479115866419329,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.81844297615629,16.06524962926347,22.49657064471879,71.41440190438405,41.61712247324614,62.09538908706566,0,16.83765369253662,22.79032897344431,53.41198979591836,24.28026361429067,22.46003435064077,54.32098765432099,41.05784325564545,28.56648199445983,17.03205520132763,25.04129149128882,38.7172182043977,27.3876813705495,31.55555555555556,14.80690759456621,30.88398111998135,26.61934338952972,59.37499999999999,96.61835748792272,19.23947487550928,84.94031221303948,18.41993774061044,27.77226740726046,41.32231404958677,17.20806665861611,24.16716240333135,15.72189710891781,428.9940828402366,27.99302202929125,243.2610124917817,20.23950075898128,30.52744643563797,25.15589569160998,47,39.04,31.06616432017979,77.96836711962574,29.51659612385831,166.4932362122789,100.3086419753086,37.76,20.60378034578518,23.45856237526698],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="criar-novo-r-markdown" class="section level2" number="40.2">
+<h2>
+<span class="header-section-number">40.2</span> Criar novo R Markdown<a class="anchor" aria-label="anchor" href="#criar-novo-r-markdown"><i class="fas fa-link"></i></a>
+</h2>
+<p>Depois de instalar o pacote, crie um novo arquivo R Markdown clicando em <em>Arquivo&gt; Novo arquivo&gt; R Markdown</em>.</p>
+<div class="inline-figure"><img src="images/flexdashboard_new1.png" width="100%" style="display: block; margin: auto;"></div>
+<p>Na janela que se abre, selecione “Do modelo” (<em>From template</em>) e selecione o modelo “Flex Dashboard”. Em seguida, você será solicitado a nomear o documento. No exemplo desta página, nomearemos nosso R Markdown como “outbreak_dashboard.Rmd”.</p>
+<div class="inline-figure"><img src="images/flexdashboard_new2.png" width="100%" height="75%" style="display: block; margin: auto;"></div>
+</div>
+<div id="o-script" class="section level2" number="40.3">
+<h2>
+<span class="header-section-number">40.3</span> O script<a class="anchor" aria-label="anchor" href="#o-script"><i class="fas fa-link"></i></a>
+</h2>
+<p>O script é um script R Markdown e, portanto, tem os mesmos componentes e organização descritos na página <a href="reportfactory.html#reportfactory">Relatórios com R Markdown</a>. Nós os revisamos brevemente e destacamos as diferenças de outros formatos de saída do R Markdown.</p>
+<div id="yaml" class="section level3 unnumbered">
+<h3>YAML<a class="anchor" aria-label="anchor" href="#yaml"><i class="fas fa-link"></i></a>
+</h3>
+<p>No topo do script está o cabeçalho “YAML”. Isso deve começar com três traços <code>---</code> e deve fechar com três traços <code>---</code>. Os parâmetros YAML vêm em pares <code>chave: valor</code>. <strong>O recuo e a colocação dos dois pontos em YAML são importantes</strong> - os pares <code>chave: valor</code> são separados por dois pontos (e não sinais de igual!).</p>
+<p>O YAML deve começar com metadados para o documento. A ordem desses parâmetros YAML primários (não recuados) não importa. Por exemplo:</p>
+<div class="sourceCode" id="cb1670"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">title</span><span class="op">:</span> <span class="st">"Meu documento"</span></span>
+<span><span class="va">author</span><span class="op">:</span> <span class="st">"Eu"</span></span>
+<span><span class="va">date</span><span class="op">:</span> <span class="st">"` r Sys.Date() `"</span></span></code></pre></div>
+<p>Você pode usar o código R em valores YAML escrevendo-o como código in-line (precedido por <code>r</code> dentro de crases), mas também entre aspas (veja o exemplo acima para <code>date:</code>).</p>
+<p>Um parâmetro YAML necessário é <code>output:</code>, que especifica o tipo de arquivo a ser produzido (por exemplo, <code>html_document</code>,<code>pdf_document</code>, <code>word_document</code> ou<code>powerpoint_presentation</code>). Para <strong>flexdashboard</strong> este valor de parâmetro é um pouco confuso - ele deve ser definido como <code>output: flexdashboard :: flex_dashboard</code>. Observe os dois pontos simples e duplos e o sublinhado. Este parâmetro de saída YAML é frequentemente seguido por <em>dois pontos adicionais</em> e subparâmetros indentados (veja os parâmetros <code>orientação:</code> e <code>vertical_layout:</code> abaixo).</p>
+<div class="sourceCode" id="cb1671"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">title</span><span class="op">:</span> <span class="st">"Meu painel"</span></span>
+<span><span class="va">author</span><span class="op">:</span> <span class="st">"Eu"</span></span>
+<span><span class="va">date</span><span class="op">:</span> <span class="st">"` r Sys.Date() `"</span></span>
+<span><span class="va">output</span><span class="op">:</span></span>
+<span>  <span class="fu">flexdashboard</span><span class="fu">::</span><span class="va"><a href="https://pkgs.rstudio.com/flexdashboard/reference/flex_dashboard.html">flex_dashboard</a></span><span class="op">:</span></span>
+<span>    <span class="va">orientation</span><span class="op">:</span> <span class="va">rows</span></span>
+<span>    <span class="va">vertical_layout</span><span class="op">:</span> <span class="va">scroll</span></span></code></pre></div>
+<p>Conforme mostrado acima, recuos (2 espaços) são usados para subparâmetros. Neste caso, não se esqueça de colocar dois pontos adicionais após o primário, como <code>chave: valor:</code>.</p>
+<p>Se apropriado, os valores lógicos devem ser fornecidos em YAML em letras minúsculas (<code>true</code>,<code>false</code>, <code>null</code>). Se dois pontos fizerem parte do seu valor (por exemplo, no título), coloque o valor entre aspas. Veja os exemplos nas seções abaixo.</p>
+</div>
+<div id="blocos-de-código-1" class="section level3 unnumbered">
+<h3>Blocos de código<a class="anchor" aria-label="anchor" href="#blocos-de-c%C3%B3digo-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Um script R Markdown pode conter vários “pedaços” (<em>chunks</em>) de código - essas são áreas do script onde você pode escrever código R de várias linhas e funcionam como mini scripts R.</p>
+<p>Os trechos de código são criados com três marcas invertidas e chaves com um “r” minúsculo dentro. O pedaço é fechado com três crases. Você pode criar um novo bloco digitando-o você mesmo, usando o atalho de teclado “Ctrl+Alt+i” (ou Cmd+Shift+r no Mac) ou clicando no ícone verde ‘inserir um novo bloco de código’ no topo do seu editor de script. Muitos exemplos são fornecidos a seguir.</p>
+</div>
+<div id="texto-narrativo" class="section level3 unnumbered">
+<h3>Texto narrativo<a class="anchor" aria-label="anchor" href="#texto-narrativo"><i class="fas fa-link"></i></a>
+</h3>
+<p>Fora de um “bloco” de código R, você pode escrever um texto narrativo. Conforme descrito na página em <a href="reportfactory.html#reportfactory">Relatórios com R Markdown</a>, você pode colocar o texto em itálico circundando-o com um asterisco (*) ou em negrito circundando-o com dois asteriscos (**). Lembre-se de que os marcadores e os esquemas de numeração são sensíveis a novas linhas, recuo e acabamento de uma linha com dois espaços.</p>
+<p>Você também pode inserir o código R nas próprias linhas de texto (<em>in-line</em>), conforme descrito na página <a href="reportfactory.html#reportfactory">Relatórios com R Markdown</a>, circundando o código com crases e iniciando o comando com “r”: <code>`1 + 1`</code>(veja o exemplo com data acima).</p>
+</div>
+<div id="títulos" class="section level3 unnumbered">
+<h3>Títulos<a class="anchor" aria-label="anchor" href="#t%C3%ADtulos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Diferentes níveis de título são estabelecidos com diferentes números de símbolos hash ou jogo da velha, conforme descrito na página <a href="reportfactory.html#reportfactory">Relatórios com R Markdown</a>.</p>
+<p>Em <strong>flexdashboard</strong>, um título principal (#) cria uma “página” do painel. Títulos de segundo nível (##) criam uma coluna ou uma linha dependendo do seu parâmetro <code>orientação:</code> (veja os detalhes abaixo). Títulos de terceiro nível (###) criam painéis para plotagens, gráficos, tabelas, texto, etc.</p>
+<div class="sourceCode" id="cb1672"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb1672-1"><a href="flexdashboard.html#cb1672-1" tabindex="-1"></a><span class="fu"># Título de primeiro nível (página)</span></span>
+<span id="cb1672-2"><a href="flexdashboard.html#cb1672-2" tabindex="-1"></a></span>
+<span id="cb1672-3"><a href="flexdashboard.html#cb1672-3" tabindex="-1"></a><span class="fu">## Título de segundo nível (linha ou coluna)  </span></span>
+<span id="cb1672-4"><a href="flexdashboard.html#cb1672-4" tabindex="-1"></a></span>
+<span id="cb1672-5"><a href="flexdashboard.html#cb1672-5" tabindex="-1"></a><span class="fu">### Cabeçalho de terceiro nível (painel para plot, gráfico, etc.)</span></span></code></pre></div>
+</div>
+</div>
+<div id="atributos-da-seção" class="section level2" number="40.4">
+<h2>
+<span class="header-section-number">40.4</span> Atributos da seção<a class="anchor" aria-label="anchor" href="#atributos-da-se%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h2>
+<p>Como em uma marcação R normal, você pode especificar atributos a serem aplicados a partes do seu painel, incluindo opções <code>key = value</code> após um título, entre chaves <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code>. Por exemplo, em um relatório HTML R Markdown típico, você pode organizar subtítulos em guias com <code>## Meu título {.tabset}</code>.</p>
+<p>Observe que esses atributos são escritos após um <em>título</em> em uma parte do texto do script. Elas são diferentes das opções do <strong>knitr</strong> inseridas no topo dos blocos de código R, como <code>out.height =</code>.</p>
+<p>Os atributos de seção específicos para <strong>flexdashboard</strong> incluem:</p>
+<ul>
+<li>
+<code>{data-orientation=}</code> Defina para <code>linhas</code> ou<code>colunas</code>. Se o seu painel tiver várias páginas, adicione este atributo a cada página para indicar a orientação (mais explicado em <a href="#id_%20layout">seção de layout</a>).<br>
+</li>
+<li>
+<code>{data-width =}</code> e <code>{data-height =}</code> definem o tamanho relativo dos gráficos, colunas, linhas dispostas na mesma dimensão (horizontal ou vertical). Tamanhos absolutos são ajustados para melhor preencher o espaço em qualquer dispositivo de exibição graças ao mecanismo <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Using_CSS_flexible_boxes">flexbox</a>.
+<ul>
+<li>A altura dos gráficos também depende de você definir o parâmetro YAML <code>vertical_layout: fill</code> ou <code>vertical_layout: scroll</code>. Se configurado para rolar, a altura da figura refletirá a opção tradicional <code>fig.height =</code> no fragmento do código R.<br>
+</li>
+<li>Consulte a documentação de tamanho completa no <a href="https://rmarkdown.rstudio.com/flexdashboard/using.html#sizing">site do flexdashboard</a><br>
+</li>
+</ul>
+</li>
+<li>
+<code>{.hidden}</code> Use isto para excluir uma página específica da barra de navegação<br>
+</li>
+<li>
+<code>{data-navbar =}</code> Use isso em um título de nível de página para aninhá-lo dentro de um menu suspenso da barra de navegação. Forneça o nome (entre aspas) do menu suspenso. Veja o exemplo abaixo.</li>
+</ul>
+</div>
+<div id="layout" class="section level2" number="40.5">
+<h2>
+<span class="header-section-number">40.5</span> Layout<a class="anchor" aria-label="anchor" href="#layout"><i class="fas fa-link"></i></a>
+</h2>
+<p>Ajuste o <em>layout</em> do seu painel (<em>dashboard</em>) das seguintes maneiras:</p>
+<ul>
+<li>Adicione páginas, colunas / linhas e gráficos com títulos R Markdown (por exemplo, #, ## ou ###)<br>
+</li>
+<li>Ajuste o parâmetro YAML <code>orientation:</code> para <code>rows</code> ou<code>columns</code><br>
+</li>
+<li>Especifique se o layout preenche o navegador ou permite rolagem<br>
+</li>
+<li>Adicionar guias a um título de seção específico</li>
+</ul>
+<div id="imagens-1" class="section level3 numeradas" number="40.5.1">
+<h3>
+<span class="header-section-number">40.5.1</span> Imagens<a class="anchor" aria-label="anchor" href="#imagens-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Os títulos de primeiro nível (#) no R Markdown representarão as “páginas” do painel. Por padrão, as páginas aparecerão em uma barra de navegação na parte superior do painel.</p>
+<div class="inline-figure"><img src="images/flexdashboard_pages_top_script.png" width="100%" height="100%"></div>
+<div class="inline-figure"><img src="images/flexdashboard_pages_top_view.png" width="100%"></div>
+<p>Você pode agrupar páginas em um “menu” na barra de navegação superior adicionando o atributo <code>{data-navmenu =}</code> ao título da página. Tenha cuidado - não inclua espaços ao redor do sinal de igual, caso contrário, não funcionará!</p>
+<div class="inline-figure"><img src="images/flexdashboard_navmenu_script.png" width="100%"></div>
+<p>Aqui está o que o script produz:</p>
+<div class="inline-figure"><img src="images/flexdashboard_navmenu_view.png" width="100%"></div>
+<p>Você também pode converter uma página ou coluna em uma “barra lateral” no lado esquerdo do painel, adicionando o atributo <code>{.sidebar}</code>. Ele pode conter texto (visualizável em qualquer página) ou, se você tiver uma interatividade <strong>shiny</strong> integrada, pode ser útil manter os controles de entrada do usuário, como controles deslizantes ou menus suspensos.</p>
+<div class="inline-figure"><img src="images/flexdashboard_sidebar_script.png" width="100%" height="100%"></div>
+<p>Aqui está o que o script produz:</p>
+<div class="inline-figure"><img src="images/flexdashboard_sidebar_view.png" width="100%"></div>
+</div>
+<div id="orientação" class="section level3 unnumbered">
+<h3>Orientação<a class="anchor" aria-label="anchor" href="#orienta%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>Defina o parâmetro <code>orientation:</code> yaml para indicar como os cabeçalhos do R Markdown de segundo nível (##) devem ser interpretados - como <code>orientation: columns</code> ou <code>orientação: rows</code>.</p>
+<p>Títulos de segundo nível (##) serão interpretados como novas colunas ou linhas com base nesta configuração de <code>orientation</code>.</p>
+<p>Se você definir <code>orientation: columns</code>, os cabeçalhos de segundo nível criarão novas colunas no painel. O painel abaixo possui uma página, contendo duas colunas, com um total de três painéis. Você pode ajustar a largura relativa das colunas com <code>{data-width =}</code> conforme mostrado abaixo.</p>
+<div class="inline-figure"><img src="images/flexdashboard_columns_script.png" width="100%" height="100%"></div>
+<p>Aqui está o que o script produz:</p>
+<div class="inline-figure"><img src="images/flexdashboard_columns_view.png" width="100%"></div>
+<p>Se você definir <code>orientation: rows</code>, os cabeçalhos de segundo nível criarão novas linhas em vez de colunas. Abaixo está o mesmo script acima, mas com <code>orientation: rows</code> para que os títulos de segundo nível produzam linhas em vez de colunas. Você pode ajustar a <em>altura</em> relativa das linhas com <code>{data-height =}</code> conforme mostrado abaixo.</p>
+<div class="inline-figure"><img src="images/flexdashboard_rows_script.png" width="100%" height="100%"></div>
+<p>Aqui está o que o script produz:</p>
+<div class="inline-figure"><img src="images/flexdashboard_rows_view.png" width="100%"></div>
+<p>Se o seu painel tiver várias páginas, você pode designar a orientação de cada página específica adicionando o atributo <code>{data -idance =}</code> ao cabeçalho de cada página (especifique <code>rows</code> ou<code>columns</code> sem aspas).</p>
+</div>
+<div id="tabs" class="section level3 unnumbered">
+<h3>Tabs<a class="anchor" aria-label="anchor" href="#tabs"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode dividir o conteúdo em guias com o atributo <code>{.tabset}</code>, como em outras saídas HTML R Markdown.</p>
+<p>Basta adicionar este atributo após o título desejado. Os subtítulos sob esse título serão exibidos como guias. Por exemplo, no script de exemplo abaixo da coluna 2 à direita (##) é modificado para que a curva epidêmica e os painéis da tabela (###) sejam exibidos em guias.</p>
+<p>Você pode fazer o mesmo com linhas se sua orientação for linhas.</p>
+<div class="inline-figure"><img src="images/flexdashboard_tabs_script.png" width="100%" height="100%"></div>
+<p>Aqui está o que o script produz:</p>
+<div class="inline-figure"><img src="images/flexdashboard_tabs_view.png" width="100%"></div>
+</div>
+</div>
+<div id="adicionando-conteúdo" class="section level2" number="40.6">
+<h2>
+<span class="header-section-number">40.6</span> Adicionando conteúdo<a class="anchor" aria-label="anchor" href="#adicionando-conte%C3%BAdo"><i class="fas fa-link"></i></a>
+</h2>
+<p>Vamos começar a construir um painel (<em>dashboard</em>). Nosso painel simples terá 1 página, 2 colunas e 4 painéis. Vamos construir os painéis peça por peça para demonstração.</p>
+<p>Você pode incluir facilmente saídas R padrão, como texto, ggplots e tabelas (consulte a página <a href="tables-presentation.html#tables-presentation">Tabelas para apresentação</a>). Simplesmente codifique-os dentro de um fragmento de código R, como faria para qualquer outro script R Markdown.</p>
+<p>Observação: você pode baixar o script Rmd finalizado e a saída do painel HTML - consulte a página <a href="data-used.html#data-used">Baixar manual e dados</a>.</p>
+<div id="texto-1" class="section level3 unnumbered">
+<h3>Texto<a class="anchor" aria-label="anchor" href="#texto-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode digitar o texto do Markdown e incluir o código <em>in-line</em> como para qualquer outra saída do R Markdown. Consulte a página <a href="reportfactory.html#reportfactory">Relatórios com R Markdown</a> para obter detalhes.</p>
+<p>Neste painel (<em>dashboard</em>), incluímos um painel de texto de resumo que inclui um texto dinâmico mostrando a última data de hospitalização e o número de casos relatados no surto.</p>
+</div>
+<div id="tabelas-2" class="section level3 unnumbered">
+<h3>Tabelas<a class="anchor" aria-label="anchor" href="#tabelas-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode incluir blocos de código R que imprimem saídas, como tabelas. Mas a saída terá uma aparência melhor e responderá ao tamanho da janela se você usar a função <code>kable()</code> do <strong>knitr</strong> para exibir suas tabelas. As funções <strong>flextable</strong> podem produzir tabelas que são reduzidas / cortadas.</p>
+<p>Por exemplo, abaixo, alimentamos <code>linelist()</code> por meio de um comando <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> para produzir uma tabela de resumo de casos por hospital. Por fim, a tabela é direcionada para <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr :: kable()</a></code> e o resultado tem uma barra de rolagem à direita. Você pode ler mais sobre como personalizar sua tabela com <code>kable()</code> e <strong>kableExtra</strong> [aqui] (<a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html" class="uri">https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html</a>).</p>
+<div class="inline-figure"><img src="images/flexdashboard_tables_script.png" width="100%" height="100%"></div>
+<p>Aqui está o que o script produz:</p>
+<div class="inline-figure"><img src="images/flexdashboard_tables_view.png" width="100%"></div>
+<p>Se você deseja mostrar uma tabela dinâmica que permite ao usuário filtrar, classificar e / ou clicar nas “páginas” do quadro de dados, use o pacote <strong>DT</strong> e sua função <code>datatable()</code>, como no código abaixo.</p>
+<p>O código de exemplo abaixo, a <code>linelist</code> do quadro de dados é impressa. Você pode definir <code>rownames = FALSE</code> para conservar espaço horizontal e<code>filter = "top"</code>para ter filtros no topo de cada coluna. Uma lista de outras especificações pode ser fornecida para <code>options =</code>. Abaixo, definimos <code>pageLength =</code> para que 5 linhas apareçam e <code>scrollX =</code> para que o usuário possa usar uma barra de rolagem na parte inferior para rolar horizontalmente. O argumento <code>class = 'white-space: nowrap'</code> garante que cada linha seja uma linha (não várias linhas). Você pode ler sobre outros argumentos e valores possíveis <a href="https://rstudio.github.io/DT/?_ga=2.2810736.1321860763.1619286819-369061888.1601594705">aqui</a> ou inserindo <code>?Datatable</code></p>
+<div class="sourceCode" id="cb1673"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">DT</span> <span class="fu">::</span> <span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">linelist</span>, </span>
+<span>              rownames <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>              options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, scrollX <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>              class <span class="op">=</span> <span class="st">'white-space: nowrap'</span> <span class="op">)</span></span></code></pre></div>
+</div>
+<div id="gráficos" class="section level3 unnumbered">
+<h3>Gráficos<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode imprimir gráficos em um painel de controle como faria em um script R. Em nosso exemplo, usamos o pacote <strong>incidence2</strong> para criar uma “epicurva” por faixa etária com dois comandos simples (consulte a página <a href="epicurves.html#epicurves">Curvas epidêmicas</a>). No entanto, você pode usar <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> e imprimir um gráfico da mesma maneira.</p>
+<div class="inline-figure"><img src="images/flexdashboard_plots_script.png" width="100%" height="100%"></div>
+<p>Aqui está o que o script produz:</p>
+<div class="inline-figure"><img src="images/flexdashboard_plots_view.png" width="100%"></div>
+</div>
+<div id="gráficos-interativos" class="section level3 unnumbered">
+<h3>Gráficos interativos<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-interativos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você também pode passar um ggplot padrão ou outro objeto de gráfico para <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly()</a></code> do pacote <strong>plotly</strong> (consulte a página <a href="interactive-plots.html#interactive-plots">Gráficos Interativos</a>). Isso tornará seu gráfico interativo, permitirá que o leitor “amplie” e mostre o valor de cada ponto de dados (neste cenário, o número de casos por semana e a faixa etária na curva).</p>
+<div class="sourceCode" id="cb1674"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">age_outbreak</span> <span class="op">&lt;-</span> <span class="fu">incidence</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">date_onset</span>, <span class="st">"week"</span>, groups <span class="op">=</span> <span class="va">age_cat</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">age_outbreak</span>, fill <span class="op">=</span> <span class="va">age_cat</span>, col_pal <span class="op">=</span> <span class="va">muted</span>, title <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">plotly</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Aqui está a aparência disso no painel (gif). Essa funcionalidade interativa ainda funcionará mesmo se você enviar por e-mail o painel como um arquivo estático (não online em um servidor).</p>
+<div class="inline-figure"><img src="images/flexdashboard_ggplotly.gif" width="100%" height="100%"></div>
+</div>
+<div id="ferramentas-widgets-html" class="section level3 unnumbered">
+<h3>Ferramentas (<em>Widgets</em>) HTML<a class="anchor" aria-label="anchor" href="#ferramentas-widgets-html"><i class="fas fa-link"></i></a>
+</h3>
+<p><a href="http://www.htmlwidgets.org/">HTML widgets for R</a> são uma classe especial de pacotes R que permitem maior interatividade utilizando bibliotecas JavaScript. Você pode incorporá-los nas saídas do R Markdown (como um flexdashboard) e nos painéis do Shiny.</p>
+<p>Alguns exemplos comuns desses widgets incluem:</p>
+<ul>
+<li>Plotly (usado nesta página do manual e na página <a href="interactive-plots.html#interactive-plots">Gráficos interativos</a>)</li>
+<li>visNetwork (usado na página <a href="transmission-chains.html#transmission-chains">Cadeias de transmissão</a> deste manual)  </li>
+<li>Leaflet (usado na página <a href="#gis">Noções básicas de GIS</a> deste manual)  </li>
+<li>dygraphs (úteis para mostrar dados de séries temporais de forma interativa)  </li>
+<li>DT (<code>datatable()</code>) (usado para mostrar tabelas dinâmicas com filtro, classificação, etc.)</li>
+</ul>
+<p>Abaixo, demonstramos como adicionar uma cadeia de transmissão epidêmica que usa visNetwork ao painel. O script mostra apenas o novo código adicionado à seção “Coluna 2” do script R Markdown. Você pode encontrar o código na página <a href="transmission-chains.html#transmission-chains">Cadeias de transmissão</a> deste manual.</p>
+<div class="inline-figure"><img src="images/flexdashboard_chain_script.png" width="100%" height="100%"></div>
+<p>Aqui está o que o script produz:</p>
+<div class="inline-figure"><img src="images/flexdashboard_chain.gif" width="100%"></div>
+</div>
+</div>
+<div id="organização-de-código" class="section level2" number="40.7">
+<h2>
+<span class="header-section-number">40.7</span> Organização de código<a class="anchor" aria-label="anchor" href="#organiza%C3%A7%C3%A3o-de-c%C3%B3digo"><i class="fas fa-link"></i></a>
+</h2>
+<p>Você pode optar por ter todo o código dentro do script R Markdown <strong>flexdashboard</strong>. Como alternativa, para ter um script de painel mais limpo e conciso, você pode optar por chamar códigos / figuras que são hospedados ou criados em scripts R externos. Isso é descrito com mais detalhes na página <a href="reportfactory.html#reportfactory">Relatórios com R Markdown</a>.</p>
+</div>
+<div id="shiny-1" class="section level2" number="40.8">
+<h2>
+<span class="header-section-number">40.8</span> Shiny<a class="anchor" aria-label="anchor" href="#shiny-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>A integração do pacote R <strong>shiny</strong> pode tornar seus painéis (<em>dashboards</em>) ainda mais reativos à entrada do usuário. Por exemplo, você pode fazer com que o usuário selecione uma jurisdição ou um intervalo de datas e os painéis reajam à sua escolha (por exemplo, filtrar os dados exibidos). Para incorporar a reatividade <strong>shiny</strong> ao <strong>flexdashboard</strong>, você só precisa fazer algumas alterações no script R Markdown do <strong>flexdashboard</strong>.</p>
+<p>Você pode usar <strong>shiny</strong> para produzir aplicativos / painéis <em>sem</em> flexdashboard também. A página do manual em <a href="shiny-basics.html#shiny-basics">Dashboards with Shiny</a> oferece uma visão geral dessa abordagem, incluindo instruções sobre sintaxe <strong>shiny</strong>, estrutura de arquivo de aplicativo e opções para compartilhamento / publicação (incluindo opções de servidor gratuitas). Essa sintaxe e dicas gerais também se traduzem no contexto do <strong>flexdashboard</strong>.</p>
+<p>Incorporar <strong>shiny</strong> em <strong>flexdashboard</strong> é, no entanto, uma mudança fundamental em seu flexdashboard. Ele não produzirá mais uma saída HTML que você pode enviar por e-mail e qualquer pessoa pode abrir e visualizar. Em vez disso, será um “aplicativo”. O botão “Knit” na parte superior do script será substituído por um ícone “Executar documento”, que abrirá uma instância do painel interativo localmente em seu computador.</p>
+<p>Compartilhar seu painel agora exigirá que você:</p>
+<ul>
+<li>Envie o script Rmd para o visualizador, ele o abre em R no computador e executa o aplicativo ou<br>
+</li>
+<li>O aplicativo / painel é hospedado em um servidor acessível ao visualizador</li>
+</ul>
+<p>Portanto, há benefícios em integrar <strong>shiny</strong>, mas também complicações. Se o compartilhamento fácil por e-mail for uma prioridade e você não precisar de recursos reativos <strong>shiny</strong>, considere a interatividade reduzida oferecida por <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly()</a></code> conforme demonstrado acima.</p>
+<p>Abaixo, damos um exemplo muito simples usando o mesmo “outbreak_dashboard.Rmd” acima. A documentação extensa sobre a integração do Shiny no <strong>flexdashboard</strong> está disponível online <a href="https://rmarkdown.rstudio.com/flexdashboard/shiny.html">aqui</a>.</p>
+<div id="configurações-1" class="section level3 unnumbered">
+<h3>Configurações<a class="anchor" aria-label="anchor" href="#configura%C3%A7%C3%B5es-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Habilite <strong>shiny</strong> em um <strong>flexdashboard</strong> adicionando o parâmetro YAML <code>runtime: shiny</code> no mesmo nível de indentação que<code>output:</code>, como abaixo:</p>
+<div class="sourceCode" id="cb1675"><pre class="sourceCode md"><code class="sourceCode markdown"><span id="cb1675-1"><a href="flexdashboard.html#cb1675-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1675-2"><a href="flexdashboard.html#cb1675-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Painel de controle do Outbreak (demonstração Shiny)"</span></span>
+<span id="cb1675-3"><a href="flexdashboard.html#cb1675-3" tabindex="-1"></a><span class="an">output:</span><span class="co"> </span></span>
+<span id="cb1675-4"><a href="flexdashboard.html#cb1675-4" tabindex="-1"></a><span class="co">  flexdashboard::flex_dashboard:</span></span>
+<span id="cb1675-5"><a href="flexdashboard.html#cb1675-5" tabindex="-1"></a><span class="co">    orientation: columns</span></span>
+<span id="cb1675-6"><a href="flexdashboard.html#cb1675-6" tabindex="-1"></a><span class="co">    vertical_layout: fill</span></span>
+<span id="cb1675-7"><a href="flexdashboard.html#cb1675-7" tabindex="-1"></a><span class="an">runtime:</span><span class="co"> shiny</span></span>
+<span id="cb1675-8"><a href="flexdashboard.html#cb1675-8" tabindex="-1"></a><span class="co">---</span></span></code></pre></div>
+<p>Também é conveniente habilitar uma “barra lateral” para conter os <em>widgets</em> de entrada shiny que coletarão informações do usuário. Como explicado acima, crie uma coluna e indique a opção <code>{.sidebar}</code> para criar uma barra lateral no lado esquerdo. Você pode adicionar texto e pedaços R contendo os comandos <strong>shiny</strong> <code>entrada</code> dentro desta coluna.</p>
+<p>Se seu aplicativo / painel está hospedado em um servidor e pode ter vários usuários simultâneos, nomeie o primeiro fragmento de código R como <code>global</code>. Inclua os comandos para importar / carregar seus dados neste bloco. Esse fragmento com nome especial é tratado de maneira diferente e os dados importados dentro dele são importados apenas uma vez (não continuamente) e estão disponíveis para todos os usuários. Isso melhora a velocidade de inicialização do aplicativo.</p>
+</div>
+<div id="exemplo-trabalhado" class="section level3 unnumbered">
+<h3>Exemplo trabalhado<a class="anchor" aria-label="anchor" href="#exemplo-trabalhado"><i class="fas fa-link"></i></a>
+</h3>
+<p>Aqui, adaptamos o script flexdashboard “outbreak_dashboard.Rmd” para incluir <strong>shiny</strong>. Adicionaremos a capacidade de o usuário selecionar um hospital em um menu suspenso e fazer com que a curva de epidemia reflita apenas os casos desse hospital, com um título de gráfico dinâmico. Fazemos o seguinte:</p>
+<ul>
+<li>Adicione <code>runtime: shiny</code> ao YAML<br>
+</li>
+<li>Renomeie o trecho de configuração como <code>global</code><br>
+</li>
+<li>Crie uma barra lateral contendo:
+<ul>
+<li>Código para criar um vetor de nomes de hospitais exclusivos<br>
+</li>
+<li>Um comando <code>selectInput()</code> (menu suspenso <strong>shiny</strong>) com a escolha de nomes de hospitais. A seleção é salva como <code>hospital_choice</code>, que pode ser referenciada no código posterior como<code>input$hospital_choice</code><br>
+</li>
+</ul>
+</li>
+<li>O código da curva epidêmica (coluna 2) está dentro de <code>renderPlot({})</code>, incluindo:
+<ul>
+<li>Um filtro no conjunto de dados restringindo a coluna <code>hospital</code> ao valor atual de <code>input$hospital_choice</code><br>
+</li>
+<li>Um título de um gráfico dinâmico que incorpora <code>input$hospital_choice</code>
+</li>
+</ul>
+</li>
+</ul>
+<p>Observe que qualquer código que faça referência a um valor <code>input$</code> deve estar dentro de uma função <code>render({})</code> (para ser reativo).</p>
+<p>Aqui está o topo do script, incluindo YAML, parte global e barra lateral:</p>
+<div class="inline-figure"><img src="images/flexdashboard_shiny_script1.png" width="100%" height="100%"></div>
+<p>Aqui está a Coluna 2, com o gráfico de epicurva reativa:</p>
+<div class="inline-figure"><img src="images/flexdashboard_shiny_script2.png" width="100%" height="100%"></div>
+<p>E aqui está o painel:</p>
+<div class="inline-figure"><img src="images/flexdashboard_shiny_view.gif" width="100%" height="100%"></div>
+</div>
+<div id="outros-exemplos" class="section level3 unnumbered">
+<h3>Outros exemplos<a class="anchor" aria-label="anchor" href="#outros-exemplos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para ler um exemplo relacionado à saúde de um Shiny - <strong>flexdashboard</strong> usando a interatividade <strong>shiny</strong> e o widget de mapeamento de <strong>leaflet</strong>, consulte este capítulo do livro online <a href="https://www.paulamoraga.com/book-geospatial/sec-dashboardswithshiny.html">Dados de saúde geoespaciais: Modelagem e Visualização com R-INLA e Shiny</a>.</p>
+</div>
+</div>
+<div id="compartilhamento" class="section level2" number="40.9">
+<h2>
+<span class="header-section-number">40.9</span> Compartilhamento<a class="anchor" aria-label="anchor" href="#compartilhamento"><i class="fas fa-link"></i></a>
+</h2>
+<p>Os painéis que não contêm elementos Shiny produzirão um arquivo HTML (.html), que pode ser enviado por e-mail (se o tamanho permitir). Isso é útil, pois você pode enviar o relatório de “painel” e não precisa configurar um servidor para hospedá-lo como um site.</p>
+<p>Se você tiver incorporado <strong>shiny</strong>, não poderá enviar uma saída por e-mail, mas pode enviar o próprio script para um usuário R ou hospedar o painel em um servidor conforme explicado acima.</p>
+</div>
+<div id="recursos-24" class="section level2" number="40.10">
+<h2>
+<span class="header-section-number">40.10</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-24"><i class="fas fa-link"></i></a>
+</h2>
+<p>Excelentes tutoriais que informaram esta página podem ser encontrados abaixo. Se você revisar isso, provavelmente dentro de uma hora poderá ter seu próprio painel.</p>
+<p><a href="https://bookdown.org/yihui/rmarkdown/dashboards.html" class="uri">https://bookdown.org/yihui/rmarkdown/dashboards.html</a></p>
+<p><a href="https://rmarkdown.rstudio.com/flexdashboard/" class="uri">https://rmarkdown.rstudio.com/flexdashboard/</a></p>
+<p><a href="https://rmarkdown.rstudio.com/flexdashboard/using.html" class="uri">https://rmarkdown.rstudio.com/flexdashboard/using.html</a></p>
+<p><a href="https://rmarkdown.rstudio.com/flexdashboard/examples.html" class="uri">https://rmarkdown.rstudio.com/flexdashboard/examples.html</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></div>
+<div class="next"><a href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#flexdashboard"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li>
+<a class="nav-link" href="#prepara%C3%A7%C3%A3o-32"><span class="header-section-number">40.1</span> Preparação</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#carregar-pacotes-13">Carregar pacotes</a></li>
+<li><a class="nav-link" href="#importar-dados-5">Importar dados</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#criar-novo-r-markdown"><span class="header-section-number">40.2</span> Criar novo R Markdown</a></li>
+<li>
+<a class="nav-link" href="#o-script"><span class="header-section-number">40.3</span> O script</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#yaml">YAML</a></li>
+<li><a class="nav-link" href="#blocos-de-c%C3%B3digo-1">Blocos de código</a></li>
+<li><a class="nav-link" href="#texto-narrativo">Texto narrativo</a></li>
+<li><a class="nav-link" href="#t%C3%ADtulos">Títulos</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#atributos-da-se%C3%A7%C3%A3o"><span class="header-section-number">40.4</span> Atributos da seção</a></li>
+<li>
+<a class="nav-link" href="#layout"><span class="header-section-number">40.5</span> Layout</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#imagens-1"><span class="header-section-number">40.5.1</span> Imagens</a></li>
+<li><a class="nav-link" href="#orienta%C3%A7%C3%A3o">Orientação</a></li>
+<li><a class="nav-link" href="#tabs">Tabs</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#adicionando-conte%C3%BAdo"><span class="header-section-number">40.6</span> Adicionando conteúdo</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#texto-1">Texto</a></li>
+<li><a class="nav-link" href="#tabelas-2">Tabelas</a></li>
+<li><a class="nav-link" href="#gr%C3%A1ficos">Gráficos</a></li>
+<li><a class="nav-link" href="#gr%C3%A1ficos-interativos">Gráficos interativos</a></li>
+<li><a class="nav-link" href="#ferramentas-widgets-html">Ferramentas (Widgets) HTML</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#organiza%C3%A7%C3%A3o-de-c%C3%B3digo"><span class="header-section-number">40.7</span> Organização de código</a></li>
+<li>
+<a class="nav-link" href="#shiny-1"><span class="header-section-number">40.8</span> Shiny</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#configura%C3%A7%C3%B5es-1">Configurações</a></li>
+<li><a class="nav-link" href="#exemplo-trabalhado">Exemplo trabalhado</a></li>
+<li><a class="nav-link" href="#outros-exemplos">Outros exemplos</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#compartilhamento"><span class="header-section-number">40.9</span> Compartilhamento</a></li>
+<li><a class="nav-link" href="#recursos-24"><span class="header-section-number">40.10</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

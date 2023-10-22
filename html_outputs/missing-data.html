@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>20 Campos em branco/faltantes | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Está página irá abordar como: Avaliar a quantidade de campos em branco Filtrar linhas com variáveis em branco Traçar um gráfico da quantidade de campos em branco ao longo do tempo Modificar como...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="20 Campos em branco/faltantes | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Está página irá abordar como: Avaliar a quantidade de campos em branco Filtrar linhas com variáveis em branco Traçar um gráfico da quantidade de campos em branco ao longo do tempo Modificar como...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="20 Campos em branco/faltantes | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Está página irá abordar como: Avaliar a quantidade de campos em branco Filtrar linhas com variáveis em branco Traçar um gráfico da quantidade de campos em branco ao longo do tempo Modificar como...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="active" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="missing-data" class="section level1" number="20">
+<h1>
+<span class="header-section-number">20</span> Campos em branco/faltantes<a class="anchor" aria-label="anchor" href="#missing-data"><i class="fas fa-link"></i></a>
+</h1>
+<p><img src="images/missingness.png" width="50%"><img src="images/missingness_overview.png" width="50%"></p>
+<p>Está página irá abordar como:</p>
+<ol style="list-style-type: decimal">
+<li>Avaliar a quantidade de campos em branco</li>
+<li>Filtrar linhas com variáveis em branco</li>
+<li>Traçar um gráfico da quantidade de campos em branco ao longo do tempo</li>
+<li>Modificar como os valores <code>NA</code> são mostrados nos gráficos</li>
+<li>Realizar a atribuição de valores aos campos em branco: MCAR, MAR, MNAR</li>
+</ol>
+<!-- ======================================================= --><div id="preparando-o-ambiente-r" class="section level2" number="20.1">
+<h2>
+<span class="header-section-number">20.1</span> Preparando o ambiente R<a class="anchor" aria-label="anchor" href="#preparando-o-ambiente-r"><i class="fas fa-link"></i></a>
+</h2>
+<div id="carregue-os-pacotes-3" class="section level3 unnumbered">
+<h3>Carregue os pacotes<a class="anchor" aria-label="anchor" href="#carregue-os-pacotes-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>O código abaixo realiza o carregamento dos pacotes necessários para a análise dos dados. Neste manual, enfatizamos o uso da função <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code>, do <strong>pacman</strong>, que instala os pacotes, caso não estejam instalados, <em>e</em> os carrega no R para utilização. Também é possível carregar pacotes instalados utilizando a função <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>, do R <strong>base</strong>. Para mais informações sobre os pacotes do R, veja a página <a href="basics.html#basics">Introdução ao R</a>.</p>
+<div class="sourceCode" id="cb1011"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span>  <span class="va">rio</span>,           <span class="co"># importar/exportar</span></span>
+<span>  <span class="va">tidyverse</span>,     <span class="co"># gerenciamento e visualização dos dados</span></span>
+<span>  <span class="va">naniar</span>,        <span class="co"># avaliar e visualizar campos em branco</span></span>
+<span>  <span class="va">mice</span>           <span class="co"># atribuir valores aos campos em branco</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="importe-os-dados-3" class="section level3 unnumbered">
+<h3>Importe os dados<a class="anchor" aria-label="anchor" href="#importe-os-dados-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>Nós iremos importar o banco de dados de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar os passos abaixo, <a href="https://github.com/epirhandbook/Epi_R_handbook/raw/master/data/case_linelists/linelist_cleaned.rds" class="download-button">clique aqui para fazer o download do banco de dados ‘limpo’</a> (como arquivo .rds). Importe seus dados utilizando a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> do pacote <strong>rio</strong> (esta função importa muitos tipos de arquivos, como .xlsx, .rds, .csv - veja a página <a href="importing.html#importing">Importar e exportar</a> para detalhes).</p>
+<div class="sourceCode" id="cb1012"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># importe os dados no R</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></span></code></pre></div>
+<p>As primeiras 50 linhas do banco são mostradas abaixo</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4658b60b72c0593515f9" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4658b60b72c0593515f9">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Ausente","Ausente","Ausente","Ausente","Port Hospital","Military Hospital","Ausente","Ausente","Other","Port Hospital","Port Hospital","Port Hospital","Ausente","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Ausente","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Ausente","Military Hospital","Other","Ausente","Ausente","Port Hospital","Port Hospital","Port Hospital","Ausente","Central Hospital","Military Hospital","Other","Other","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Ausente"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.461830626007281,8.462729314626459,8.461443675342711,8.46191259217774,8.472923276435059,8.48401630165138,8.458371253408441,8.477617055125091,8.47570184950483,8.477799468789719,8.47145134147474,8.478048406853629,8.48528034195779,8.469575303958671,8.45957352078114,8.474048895115439,8.488029171298839,8.473437335922,8.484082637344621,8.46242233645879,8.470268221265719,8.463984474805329,8.464134789434199,8.456230946296071,8.48334624336805,8.47493999153642,8.47832062438022,8.469393389176499,8.48480589906514,8.47121232619015,8.48438437371817,8.484661585743391,8.477141599844281,8.462381270106089,8.455685978131131,8.4632880274758,8.47940722413856,8.46353857052336,8.461789681588639,8.47508713872833,8.458258081280711,8.4532568143863,8.4732571907655,8.479115866419329,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.81844297615629,16.06524962926347,22.49657064471879,71.41440190438405,41.61712247324614,62.09538908706566,0,16.83765369253662,22.79032897344431,53.41198979591836,24.28026361429067,22.46003435064077,54.32098765432099,41.05784325564545,28.56648199445983,17.03205520132763,25.04129149128882,38.7172182043977,27.3876813705495,31.55555555555556,14.80690759456621,30.88398111998135,26.61934338952972,59.37499999999999,96.61835748792272,19.23947487550928,84.94031221303948,18.41993774061044,27.77226740726046,41.32231404958677,17.20806665861611,24.16716240333135,15.72189710891781,428.9940828402366,27.99302202929125,243.2610124917817,20.23950075898128,30.52744643563797,25.15589569160998,47,39.04,31.06616432017979,77.96836711962574,29.51659612385831,166.4932362122789,100.3086419753086,37.76,20.60378034578518,23.45856237526698],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="padronize-os-dados-dos-campos-em-branco-durante-a-importação" class="section level3 unnumbered">
+<h3>Padronize os dados dos campos em branco durante a importação<a class="anchor" aria-label="anchor" href="#padronize-os-dados-dos-campos-em-branco-durante-a-importa%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>Ao importar os seus dados, esteja ciente de valores que deveriam ser classificados como campos em branco. Por exemplo, 99, 999, “Missing”, células em branco (““), ou céluas com um espaço em branco (” “). Você pode converter esses tipos de campos em branco (e outros) para <code>NA</code> (formato de campos em branco no R) ainda no código usado para importar os dados.
+Veja a seção sobre como importar os dados na página <a href="importing.html#import_missing">Campos em branco</a> para mais detalhes, uma vez que a sintaxe muda de acordo com o tipo de arquivo.</p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="campos-em-branco-no-r" class="section level2" number="20.2">
+<h2>
+<span class="header-section-number">20.2</span> Campos em branco no R<a class="anchor" aria-label="anchor" href="#campos-em-branco-no-r"><i class="fas fa-link"></i></a>
+</h2>
+<p>Abaixo, nós exploramos as formas como os campos em branco são mostrados e analisados no R, assim como valores e funções adjacentes.</p>
+<div id="na" class="section level3 unnumbered">
+<h3>
+<code>NA</code><a class="anchor" aria-label="anchor" href="#na"><i class="fas fa-link"></i></a>
+</h3>
+<p>No R, campos em branco são representados por um valor especial e reservado - <code>NA</code>. Notar que é escrito <em>sem</em> as aspas. Já “NA”, com aspas, é diferente, sendo apenas um caractere normal no R (além de ser parte da letra de Hey Jude dos Beatles).</p>
+<p>Os campos em branco nos seus dados podem estar representados com outras formas, como “99”, ou “Missing”, ou “Unknown” - ou até como um caractere vazio ““, parecido com um campo em branco, ou um espaço simples” “. Esteja ciente disto, e verifique a possibilidade de <a href="importing.html#import_missing">converte-los para <code>NA</code> durante a importação</a> ou durante a limpeza dos dados, com a função <code><a href="https://dplyr.tidyverse.org/reference/na_if.html">na_if()</a></code>.</p>
+<p>Durante a limpeza dos dados, você também pode realizar o oposto - alterando todos os <code>NA</code> para “Missing”, ou algo similar, utilizando a função <code><a href="https://tidyr.tidyverse.org/reference/replace_na.html">replace_na()</a></code> ou <code><a href="https://forcats.tidyverse.org/reference/fct_explicit_na.html">fct_explicit_na()</a></code>, para valores da classe Factor.</p>
+</div>
+<div id="versões-de-na" class="section level3 unnumbered">
+<h3>Versões de <code>NA</code><a class="anchor" aria-label="anchor" href="#vers%C3%B5es-de-na"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para boa parte dos casos, <code>NA</code> representa os campos em branco e tudo funciona bem. Entretanto, em algumas circunstâncias você pode precisar de <em>variações</em> do <code>NA</code>, específicas para uma classe de objeto (caractere, numérico, etc). Isto será raro, mas esteja ciente dessa possibilidade.
+O cenário típico para isso ocorre ao criar uma nova coluna com a função <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>, do pacote <strong>dplyr</strong>. Como descrito na página sobre <a href="cleaning.html#clean_case_when">Limpeza dos dados e principais funções</a>, esta função verifica cada linha do banco de dados, avalia se cumprem regras lógicas (lado direito do código), e atribuem um novo valor correto (lado esquerdo do código). <em>Importante: todos os valores no lado direito da fórmula precisam ser da mesma classe</em>.</p>
+<div class="sourceCode" id="cb1013"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  </span>
+<span>  <span class="co"># Cria uma nova coluna chamada "age_years", utilizando a coluna "age"</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_years <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">age_unit</span> <span class="op">==</span> <span class="st">"years"</span>  <span class="op">~</span> <span class="va">age</span>,       <span class="co"># se a idade (age) é dada em anos, este valor é mantido</span></span>
+<span>    <span class="va">age_unit</span> <span class="op">==</span> <span class="st">"months"</span> <span class="op">~</span> <span class="va">age</span><span class="op">/</span><span class="fl">12</span>,    <span class="co"># se a idade é dada em meses, o valor é dividido por 12</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age_unit</span><span class="op">)</span>      <span class="op">~</span> <span class="va">age</span>,       <span class="co"># se a unidade da idade não é informada, assume-se que sejam em anos</span></span>
+<span>    <span class="cn">TRUE</span>                 <span class="op">~</span> <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span> <span class="co"># para qualquer outra circunstância, o valor de campo em branco é atribuído</span></span></code></pre></div>
+<p>Se você quiser <code>NA</code> no lado direito, é necessário especificar uma das opções especiais da <code>NA</code>, listadas abaixo. Para valores em caracteres, utilize “Missing” em vez de <code>NA</code>, ou <code>NA_character_</code>. Se todos os valores são numéricos, utilize a opção <code>NA_real_</code>. Se todos os valores são formato de datas ou lógicos, utilize <code>NA</code>.</p>
+<ul>
+<li>
+<code>NA</code> - utilize para datas ou valores lógicos TRUE/FALSE</li>
+<li>
+<code>NA_character_</code> - utilize para caracteres</li>
+<li>
+<code>NA_real_</code> - utilize para valores numéricos</li>
+</ul>
+<p>Novamente, é improvável que você encontre essas variações, <strong>a não ser que</strong> você esteja utilizando a função <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>para criar uma nova coluna. Veja <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/NA.html">a documentação do R sobre NA</a> para mais informações.</p>
+</div>
+<div id="null" class="section level3 unnumbered">
+<h3>
+<code>NULL</code><a class="anchor" aria-label="anchor" href="#null"><i class="fas fa-link"></i></a>
+</h3>
+<p><code>NULL</code> é outro valor reservado (especial) no R. É a representação lógica de uma declaração que não é nem verdadeira (true), tampouco falsa (false). Ele é gerado por expressões ou funções em que os valores são indefinidos. Geralemnte, não atribua NULL como um valor, exceto ao escrever funções ou, talvez, uma [aplicação em <strong>shiny</strong>][Dashboards com Shiny] para gerar <code>NULL</code> em cenários específicos.</p>
+<p>Para avaliar se é um valor NULL, é só utilizar a função <code><a href="https://rdrr.io/r/base/NULL.html">is.null()</a></code>, e conversões podem ser feitas com a função <code><a href="https://rdrr.io/r/base/NULL.html">as.null()</a></code>.</p>
+<p>Veja essa <a href="https://www.r-bloggers.com/2010/04/r-na-vs-null/">postagem</a> detalhando as diferenças entre <code>NULL</code> e <code>NA</code>.</p>
+</div>
+<div id="nan" class="section level3 unnumbered">
+<h3>
+<code>NaN</code><a class="anchor" aria-label="anchor" href="#nan"><i class="fas fa-link"></i></a>
+</h3>
+<p>Valores impossíveis são representados pelo valor especial <code>NaN</code>. Um exemplo disso é quando você força o R a dividir 0 por 0. Você pode verificar se algo é impossível com a função <code><a href="https://rdrr.io/r/base/is.finite.html">is.nan()</a></code>. Você também pode encontrar funções complementares, incluindo <code><a href="https://rdrr.io/r/base/is.finite.html">is.infinite()</a></code> e <code><a href="https://rdrr.io/r/base/is.finite.html">is.finite()</a></code>.</p>
+</div>
+<div id="inf" class="section level3 unnumbered">
+<h3>
+<code>Inf</code><a class="anchor" aria-label="anchor" href="#inf"><i class="fas fa-link"></i></a>
+</h3>
+<p><code>Inf</code> representa um valor infinito, como o obtido ao dividir um número por 0.</p>
+<p>Um exemplo de como isto pode impactar seu trabalho: digamos que você possua um vetor/coluna <code>z</code> que contém estes valores: <code>z &lt;- c(1, 22, NA, Inf, NaN, 5)</code></p>
+<p>Se você utilizar a função <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code> nesta coluna para encontrar o maior valor, é possível utilizar o atributo <code>na.rm = TRUE</code> para remover o <code>NA</code> da análise, mas os valores <code>Inf</code> e <code>NaN</code> continuarão e <code>Inf</code> será o resultado desta análise. Para resolver isto, você pode utilizar colchetes quadrados <code>[ ]</code> e a função <code><a href="https://rdrr.io/r/base/is.finite.html">is.finite()</a></code> para analisar apenas o subconjunto de dados com apenas valores finitos: <code>max(z[is.finite(z)])</code>.</p>
+<div class="sourceCode" id="cb1014"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">22</span>, <span class="cn">NA</span>, <span class="cn">Inf</span>, <span class="cn">NaN</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span>                           <span class="co"># retorna NA</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">z</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>                  <span class="co"># retorna Inf</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">z</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.finite</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>             <span class="co"># retorna 22</span></span></code></pre></div>
+</div>
+<div id="exemplos-1" class="section level3 unnumbered">
+<h3>Exemplos<a class="anchor" aria-label="anchor" href="#exemplos-1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="41%">
+<col width="58%">
+</colgroup>
+<thead><tr class="header">
+<th>Comando R</th>
+<th>Resultado</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>5 / 0</code></td>
+<td><code>Inf</code></td>
+</tr>
+<tr class="even">
+<td><code>0 / 0</code></td>
+<td><code>NaN</code></td>
+</tr>
+<tr class="odd">
+<td><code>5 / NA</code></td>
+<td><code>NA</code></td>
+</tr>
+<tr class="even">
+<td>
+<code>5 / Inf |</code>0<code></code>NA - 5<code>|</code>NA<code></code>Inf / 5<code>|</code>Inf<code></code>class(NA)<code>| "logical"</code>class(NaN)<code>| "numeric"</code>class(Inf)<code>| "numeric"</code>class(NULL)`</td>
+<td>“NULL”</td>
+</tr>
+</tbody>
+</table></div>
+<p>“NAs introduzidos forçadamente” (“NAs introduced by coercion”) é uma mensagem de aviso comum. Isto pode acontecer se você tentar realizar uma conversão ilegal, como inserir um valor do tipo caractere em um vetor numérico.</p>
+<div class="sourceCode" id="cb1015"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"10"</span>, <span class="st">"20"</span>, <span class="st">"thirty"</span>, <span class="st">"40"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>## [1] 10 20 NA 40</code></pre>
+<p><code>NULL</code> é ignorado em um vetor.</p>
+<div class="sourceCode" id="cb1018"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="cn">NA</span>, <span class="fl">10</span>, <span class="cn">NULL</span><span class="op">)</span>  <span class="co"># defina</span></span>
+<span><span class="va">my_vector</span>                         <span class="co"># print</span></span></code></pre></div>
+<pre><code>## [1] 25 NA 10</code></pre>
+<p>Variação de um número resulta em <code>NA</code>.</p>
+<div class="sourceCode" id="cb1020"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="fl">22</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="funções-úteis" class="section level2" number="20.3">
+<h2>
+<span class="header-section-number">20.3</span> Funções úteis<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es-%C3%BAteis"><i class="fas fa-link"></i></a>
+</h2>
+<p>Abaixo são elencadas funções úteis do R <strong>base</strong> para avaliar e trabalhar com campos em branco:</p>
+<div id="is.na-e-is.na" class="section level3 unnumbered">
+<h3>
+<code>is.na()</code> e <code>!is.na()</code><a class="anchor" aria-label="anchor" href="#is.na-e-is.na"><i class="fas fa-link"></i></a>
+</h3>
+<p>Utilize a função <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code> para identificar campos em branco, ou utilize o oposto desta função (com <code>!</code> na frente) para identificar campos preenchidos. Ambas funções retornam um valor lógico (<code>TRUE</code> ou <code>FALSE</code>). Lembre que você pode somar (<code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code>) o vetor resultante para contar a quantidade de <code>TRUE</code>, ex.: <code>sum(is.na(linelist$date_outcome))</code>.</p>
+<div class="sourceCode" id="cb1022"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">56</span>, <span class="cn">NA</span>, <span class="fl">5</span>, <span class="cn">NA</span>, <span class="fl">22</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">my_vector</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
+<div class="sourceCode" id="cb1024"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">my_vector</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1]  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb1026"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">my_vector</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+</div>
+<div id="na.omit" class="section level3 unnumbered">
+<h3>
+<code>na.omit()</code><a class="anchor" aria-label="anchor" href="#na.omit"><i class="fas fa-link"></i></a>
+</h3>
+<p>Esta função, se aplicada em um conjunto de dados, irá remover linhas com <em>qualquer</em> campo em branco. Esta função também é do pacote R <strong>base</strong>.<br>
+Se aplicada em um vetor, os valores <code>NA</code> neste vetor serão removidos. Por exemplo:</p>
+<div class="sourceCode" id="cb1028"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">my_vector</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1]  1  4 56  5 22
+## attr(,"na.action")
+## [1] 4 6
+## attr(,"class")
+## [1] "omit"</code></pre>
+</div>
+<div id="drop_na" class="section level3 unnumbered">
+<h3>
+<code>drop_na()</code><a class="anchor" aria-label="anchor" href="#drop_na"><i class="fas fa-link"></i></a>
+</h3>
+<p>Esta é uma função do pacote <strong>tidyr</strong>, que é útil em um <a href="cleaning.html#cleaning">pipeline de limpeza de dados</a>. Se executada com os parênteses vazios, ela remove linhas com <em>qualquer</em> um dos campos esteja em brancos. Se o nome das colunas são especificados em parênteses, linhas com campos em branco apenas nestas colunas serão excluídas. Você pode também utilizar a sintaxe do “tidyselect” para especificar as colunas.</p>
+<div class="sourceCode" id="cb1030"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">case_id</span>, <span class="va">date_onset</span>, <span class="va">age</span><span class="op">)</span> <span class="co"># exclui linhas com campos em branco em alguma dessas colunas</span></span></code></pre></div>
+</div>
+<div id="na.rm-true" class="section level3 unnumbered">
+<h3>
+<code>na.rm = TRUE</code><a class="anchor" aria-label="anchor" href="#na.rm-true"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quando você executa uma função matemática, como <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> ou <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, se existir quaisquer valores <code>NA</code> presentes, o resultado da análise será <code>NA</code>. Este comportamento padrão é intencional, de forma que você seja alertado no caso de seus dados estarem em branco.</p>
+<p>Você pode evitar isto ao remover os campos em branco dos cálculos. Para fazer isto, inclua o argumento <code>na.rm = TRUE</code> (“na.rm” significa “remova os <code>NA</code>”).</p>
+<div class="sourceCode" id="cb1031"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">56</span>, <span class="cn">NA</span>, <span class="fl">5</span>, <span class="cn">NA</span>, <span class="fl">22</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">my_vector</span><span class="op">)</span>     </span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb1033"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">my_vector</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 17.6</code></pre>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="avalie-os-campos-em-branco-no-conjunto-de-dados" class="section level2" number="20.4">
+<h2>
+<span class="header-section-number">20.4</span> Avalie os campos em branco no conjunto de dados<a class="anchor" aria-label="anchor" href="#avalie-os-campos-em-branco-no-conjunto-de-dados"><i class="fas fa-link"></i></a>
+</h2>
+<p>Você pode utilizar o pacote <strong>naniar</strong> para avaliar e visualizar os campos em brancos no seu conjunto de dados presente no objeto <code>linelist</code>.</p>
+<div class="sourceCode" id="cb1035"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># instale e/ou carregue o pacote</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">naniar</span><span class="op">)</span></span></code></pre></div>
+<div id="quantificando-os-campos-em-branco" class="section level3 unnumbered">
+<h3>Quantificando os campos em branco<a class="anchor" aria-label="anchor" href="#quantificando-os-campos-em-branco"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para encontrar o percentual da quantidade de campos em branco, utilize a função <code>pct_miss()</code>. Utilize <code>n_miss()</code> para obter o número absoluto de campos em branco.</p>
+<div class="sourceCode" id="cb1036"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># percentual de TODOS os campos em branco no banco de dados</span></span>
+<span><span class="fu">pct_miss</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 6.688745</code></pre>
+<p>As duas funções abaixo retornam o percentual de linhas com qualquer campo em branco, ou que estão com todos os campos preenchidos, respectivamente. Lembre que <code>NA</code> significa perdido/em branco, e que <code>""</code> ou <code>" "</code> não serão considerados campos em branco.</p>
+<div class="sourceCode" id="cb1038"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Percentual de linhas com algum campo em branco</span></span>
+<span><span class="fu">pct_miss_case</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span>   <span class="co"># utilize n_complete() para obter quantidades absolutas</span></span></code></pre></div>
+<pre><code>## [1] 69.12364</code></pre>
+<div class="sourceCode" id="cb1040"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Percentual de linhas com todos os campos preenchidos (sem campos em branco)</span></span>
+<span><span class="fu">pct_complete_case</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span> <span class="co"># utilize n_complete() para obter quantidades absolutas</span></span></code></pre></div>
+<pre><code>## [1] 30.87636</code></pre>
+</div>
+<div id="visualizando-as-quantidades-de-campos-em-branco" class="section level3 unnumbered">
+<h3>Visualizando as quantidades de campos em branco<a class="anchor" aria-label="anchor" href="#visualizando-as-quantidades-de-campos-em-branco"><i class="fas fa-link"></i></a>
+</h3>
+<p>A função <code>gg_miss_var()</code> irá gerar o número absoluto (ou %) de campos em branco em cada coluna. Seguem alguns detalhes:</p>
+<ul>
+<li>Você pode adicionar um nome de coluna (sem as aspas) ao atributo <code>facet =</code> para visualizar o gráfico por grupos</li>
+<li>Por padrão, contagens absolutas são mostradas no lugar dos percentuais. Altere isso com o atributo <code>show_pct = TRUE</code><br>
+</li>
+<li>Você pode adicionar etiquetas aos eixos e títulos utilizando <code>+ labs(...)</code>, como no <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>
+</li>
+</ul>
+<div class="sourceCode" id="cb1042"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">gg_miss_var</span><span class="op">(</span><span class="va">linelist</span>, show_pct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-779-1.png" width="672"></div>
+<p>Aqui, os dados são encadeados <code>%&gt;%</code> (do inglês <em>pipe</em>) na função. O atributo <code>facet =</code> também é utilizado para dividir os dados.</p>
+<div class="sourceCode" id="cb1043"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">gg_miss_var</span><span class="op">(</span>show_pct <span class="op">=</span> <span class="cn">TRUE</span>, facet <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-780-1.png" width="672"></div>
+<p>Você pode utilizar a função <code>vis_miss()</code> para visualizar os dados como um mapa de calor, mostrando se algum campo está em branco ou não. Também é possível utilizar o <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> para escolher colunas específicas do banco de dados, e trabalhar apenas com elas.</p>
+<div class="sourceCode" id="cb1044"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Mapa de calor dos campos em branco no banco de dados inteiro</span></span>
+<span><span class="fu">vis_miss</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-781-1.png" width="672"></div>
+</div>
+<div id="explore-e-visualize-as-relações-entre-os-campos-em-branco" class="section level3 unnumbered">
+<h3>Explore e visualize as relações entre os campos em branco<a class="anchor" aria-label="anchor" href="#explore-e-visualize-as-rela%C3%A7%C3%B5es-entre-os-campos-em-branco"><i class="fas fa-link"></i></a>
+</h3>
+<p>Como você visualiza algo que não existe??? Por padrão, o <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> remove pontos sem valores dos gráficos.</p>
+<p>O pacote <strong>naniar</strong> oferece uma solução com a função <code>geom_miss_point()</code>. Ao criar um gráfico de dispersão de duas colunas, uma delas é construída sem os valores em branco, e a outra com estes pontos, onde valores 10% menores do que o menor valor da coluna são atribuídos a estes campos em branco, que são então coloridos de forma distinta dos demais pontos.</p>
+<p>No gráfico de dispersão abaixo, os pontos vermelhos são os que foram adicionados, estando presentes em uma coluna, mas não na outra. Isto permite visualizar a distribuição de campos em branco em relação aos campos preenchidos.</p>
+<div class="sourceCode" id="cb1045"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">linelist</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_years</span>, y <span class="op">=</span> <span class="va">temp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>     </span>
+<span>  <span class="fu">geom_miss_point</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-782-1.png" width="672"></div>
+<p>Para analisar os campos em branco nos dados, <em>estratificados por outra coluna</em>, utilize a função <code>gg_miss_fct()</code>, que gera um mapa de calor com o percentual de campos em brancos no banco de dados <em>utilizando uma coluna da classe factor/categórica (ou por datas)</em>:</p>
+<div class="sourceCode" id="cb1046"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">gg_miss_fct</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">age_cat5</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-783-1.png" width="672"></div>
+<p>Esta função também pode ser utilizada com uma coluna com datas, para visualizar como a quantidade de campos em branco alterou de acordo com o tempo:</p>
+<div class="sourceCode" id="cb1047"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">gg_miss_fct</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">date_onset</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: Removed 29 rows containing missing values (`geom_tile()`).</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-784-1.png" width="672"></div>
+</div>
+<div id="colunas-sombra-shadow" class="section level3 unnumbered">
+<h3>Colunas Sombra “Shadow”<a class="anchor" aria-label="anchor" href="#colunas-sombra-shadow"><i class="fas fa-link"></i></a>
+</h3>
+<p>Outra forma de visualizar os campos em branco em uma coluna, de acordo com os valores de uma segunda coluna, é utilizando o “shadow” que o pacote <strong>naniar</strong> consegue criar. A função <code>bind_shadow()</code> cria uma nova coluna com os valores binários <code>NA</code>/not <code>NA</code> para cada coluna existente, e então conecta todas essas colunas novas ao banco de dados original utilizando o sufixo “_NA” em seus nomes. Isto duplica o número de colunas:</p>
+<div class="sourceCode" id="cb1049"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">shadowed_linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">bind_shadow</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">shadowed_linelist</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] "case_id"                 "generation"              "date_infection"         
+##  [4] "date_onset"              "date_hospitalisation"    "date_outcome"           
+##  [7] "outcome"                 "gender"                  "age"                    
+## [10] "age_unit"                "age_years"               "age_cat"                
+## [13] "age_cat5"                "hospital"                "lon"                    
+## [16] "lat"                     "infector"                "source"                 
+## [19] "wt_kg"                   "ht_cm"                   "ct_blood"               
+## [22] "fever"                   "chills"                  "cough"                  
+## [25] "aches"                   "vomit"                   "temp"                   
+## [28] "time_admission"          "bmi"                     "days_onset_hosp"        
+## [31] "case_id_NA"              "generation_NA"           "date_infection_NA"      
+## [34] "date_onset_NA"           "date_hospitalisation_NA" "date_outcome_NA"        
+## [37] "outcome_NA"              "gender_NA"               "age_NA"                 
+## [40] "age_unit_NA"             "age_years_NA"            "age_cat_NA"             
+## [43] "age_cat5_NA"             "hospital_NA"             "lon_NA"                 
+## [46] "lat_NA"                  "infector_NA"             "source_NA"              
+## [49] "wt_kg_NA"                "ht_cm_NA"                "ct_blood_NA"            
+## [52] "fever_NA"                "chills_NA"               "cough_NA"               
+## [55] "aches_NA"                "vomit_NA"                "temp_NA"                
+## [58] "time_admission_NA"       "bmi_NA"                  "days_onset_hosp_NA"</code></pre>
+<p>Estas colunas “shadow” podem ser utilizadas para traçar um gráfico da proporção de campos em branco, em relação à qualquer outra coluna.</p>
+<p>Por exemplo, o gráfico abaixo mostra a proporção de campos em branco na coluna <code>days_onset_hosp</code> (número de dias entre o início dos sintomas e a hospitalização), de acordo com o campo em <code>date_hospitalisation</code>. Essencialmente, você está criando um gráfico da densidade da coluna no eixo x, mas estratificando os resultados (<code>color =</code>) pela coluna “shadow” de interesse. Esta análise funciona melhor se o eixo x é uma coluna numérica ou com dados cronológicos.</p>
+<div class="sourceCode" id="cb1051"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">shadowed_linelist</span>,          <span class="co"># banco de dados com as colunas "shadow"</span></span>
+<span>  mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_hospitalisation</span>, <span class="co"># colunas numéricas ou cronológicas</span></span>
+<span>                colour <span class="op">=</span> <span class="va">age_years_NA</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># coluna "shadow" de interesse</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span>                          <span class="co"># adição das curvas de densidade</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-786-1.png" width="672"></div>
+<p>Você pode também utilizar as colunas “shadow” para estratificar um resumo estatístico, como mostrado abaixo:</p>
+<div class="sourceCode" id="cb1052"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">bind_shadow</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                <span class="co"># cria as colunas "shadow"</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">date_outcome_NA</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>    <span class="co"># coluna "shadow" escolhida para estratificar</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span></span>
+<span>    .cols <span class="op">=</span> <span class="va">age_years</span>,             <span class="co"># variável de interesse para realizar os cálculos</span></span>
+<span>    .fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"mean"</span> <span class="op">=</span> <span class="va">mean</span>,     <span class="co"># estatísticas calculadas</span></span>
+<span>                <span class="st">"sd"</span> <span class="op">=</span> <span class="va">sd</span>,</span>
+<span>                <span class="st">"var"</span> <span class="op">=</span> <span class="va">var</span>,</span>
+<span>                <span class="st">"min"</span> <span class="op">=</span> <span class="va">min</span>,</span>
+<span>                <span class="st">"max"</span> <span class="op">=</span> <span class="va">max</span><span class="op">)</span>,  </span>
+<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>                 <span class="co"># outros argumentos para o cálculo das estatísticas</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 × 6
+##   date_outcome_NA age_years_mean age_years_sd age_years_var age_years_min
+##   &lt;fct&gt;                    &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
+## 1 !NA                       16.0         12.6          158.             0
+## 2 NA                        16.2         12.9          167.             0
+## # ℹ 1 more variable: age_years_max &lt;dbl&gt;</code></pre>
+<p>Uma forma alternativa para traçar um gráfico da proporção de campos em branco em uma coluna de acordo com o tempo é mostrada abaixo. Esta forma <em>não</em> involve o pacote <strong>naniar</strong>. Este exemplo mostra a porcentagem de observações semanais que estão em branco.</p>
+<ol style="list-style-type: decimal">
+<li>Agregue os dados em uma unidade de tempo útil (dias, semanas, etc.), resumindo a proporção de observações com <code>NA</code>(e/ou qualquer outro valor de interesse)</li>
+<li>Faça um gáfico da proporção de campos em brancos como uma linha, utilizando o <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>
+</li>
+</ol>
+<p>Abaixo, nós trabalhamos com a linelist, adicionamos uma nova coluna contendo a semana, então agrupamos os dados por semana, e calculamos o percentual de registros em branco de acordo com a semana. (nota: se você quisesse obter a % por 7 dias, o cálculo seria sutilmente diferente).</p>
+<div class="sourceCode" id="cb1054"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">outcome_missing</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>week <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_onset</span>, <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   <span class="co"># crie uma coluna com as semanas</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                                             <span class="co"># agrupe as linhas por semana</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>                                                     <span class="co"># faça o resumo por cada semana</span></span>
+<span>    n_obs <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,                                                  <span class="co"># número absoluto de registros</span></span>
+<span>    </span>
+<span>    outcome_missing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op">|</span> <span class="va">outcome</span> <span class="op">==</span> <span class="st">""</span><span class="op">)</span>,        <span class="co"># número de registros com campos em branco</span></span>
+<span>    outcome_p_miss  <span class="op">=</span> <span class="va">outcome_missing</span> <span class="op">/</span> <span class="va">n_obs</span>,                    <span class="co"># proporção de registros em branco</span></span>
+<span>  </span>
+<span>    outcome_dead    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">==</span> <span class="st">"Death"</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,           <span class="co"># número de registros com evolução para óbito</span></span>
+<span>    outcome_p_dead  <span class="op">=</span> <span class="va">outcome_dead</span> <span class="op">/</span> <span class="va">n_obs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                   <span class="co"># proporção de registros com evolução para óbito</span></span>
+<span>  </span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">week</span>, names_to <span class="op">=</span> <span class="st">"statistic"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>         <span class="co"># para utilizar o ggplot, altere todas as colunas, exceto a coluna com as semanas, para o formato longo</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">statistic</span>, <span class="st">"_p_"</span><span class="op">)</span><span class="op">)</span>                  <span class="co"># mantenha apenas os valores proporcionais</span></span></code></pre></div>
+<p>Então nóstraçamos um gráfico das proporções dos campos em branco como uma linha, de acordo com a semana. A página sobre <a href="ggplot-basics.html#ggplot-basics">básico do ggplot</a> pode ser utilizada se você não tiver familiaridade com o pacote <strong>ggplot2</strong> de visuzalização de dados.</p>
+<div class="sourceCode" id="cb1055"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">outcome_missing</span><span class="op">)</span><span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span></span>
+<span>      mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">statistic</span>, color <span class="op">=</span> <span class="va">statistic</span><span class="op">)</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span><span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Weekly outcomes"</span>,</span>
+<span>         x <span class="op">=</span> <span class="st">"Week"</span>,</span>
+<span>         y <span class="op">=</span> <span class="st">"Proportion of weekly records"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_color_discrete</a></span><span class="op">(</span></span>
+<span>       name <span class="op">=</span> <span class="st">""</span>,</span>
+<span>       labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Died"</span>, <span class="st">"Missing outcome"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-789-1.png" width="672"></div>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="utilizando-dados-com-campos-em-branco" class="section level2" number="20.5">
+<h2>
+<span class="header-section-number">20.5</span> Utilizando dados com campos em branco<a class="anchor" aria-label="anchor" href="#utilizando-dados-com-campos-em-branco"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exclua-linhas-com-campos-em-branco" class="section level3 unnumbered">
+<h3>Exclua linhas com campos em branco<a class="anchor" aria-label="anchor" href="#exclua-linhas-com-campos-em-branco"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para rapidamente excluir linhas com valores em branco, utilize a função <code><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na()</a></code>, do pacote <strong>dplyr</strong>.</p>
+<p>O objeto <code>linelist</code> original possui <code>nrow(linelist)</code> linhas. O número ajustado de linhas, após exclusão das que possuíam campos em branco, é mostrado abaixo:</p>
+<div class="sourceCode" id="cb1056"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>     <span class="co"># excluí linhas com QUALQUER campo em branco</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 1818</code></pre>
+<p>Você pode especificar para excluir linhas com campos em branco apenas em colunas específicas:</p>
+<div class="sourceCode" id="cb1058"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># exclua as linhas com campos em branco na coluna date_onset </span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 5632</code></pre>
+<p>Você pode listar as colunas uma após a outra, ou utilizar as <a href="cleaning.html#clean_tidyselect">funções auxiliares do “tidyselect”</a>:</p>
+<div class="sourceCode" id="cb1060"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># exclua linhas com campos em branco em qualquer coluna que contenha "date" no nome</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3029</code></pre>
+<!-- ======================================================= -->
+</div>
+<div id="trabalhando-com-na-no-ggplot" class="section level3 unnumbered">
+<h3>Trabalhando com <code>NA</code> no <code>ggplot()</code><a class="anchor" aria-label="anchor" href="#trabalhando-com-na-no-ggplot"><i class="fas fa-link"></i></a>
+</h3>
+<p>Frequentemente, é sábio mostrar a quantidade de valores excluídos na confeção de um gráfico em sua legenda. Abaixo é um exemplo:</p>
+<p>No <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>, você pode adicionar etiquetas com <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code>, e dentro da função utilizar o atributo <code>caption =</code>. Neste atributo, você pode utilizar a função <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code>, do pacote <strong>stringr</strong>, para unir os valores em uma senteça, de forma que eles são ajustados automaticamente. Um exemplo é mostrado abaixo:</p>
+<ul>
+<li>Observe o uso do <code>\n</code> para adicionar uma nova linha</li>
+<li>Observe que, caso colunas múltiplas contribuam para a exclusão dos valores do gráfico (ex.: age ou sex se estes interferirem no gráfico), então você precisa filtrar por estas colunas assim como calcular o número de registros não mostrados de forma correta.</li>
+</ul>
+<div class="sourceCode" id="cb1062"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>  title <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  y <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  x <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  caption  <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span></span>
+<span>  <span class="st">"n = {nrow(central_data)} do Hospital Central;</span></span>
+<span><span class="st">  {nrow(central_data %&gt;% filter(is.na(date_onset)))} registros sem as datas de início dos sintomas não são mostrados."</span><span class="op">)</span><span class="op">)</span>  </span></code></pre></div>
+<p>As vezes, pode ser mais fácil salvar o texto em um objeto em comandos anteriores a função <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>, e, simplesmente, referenciar o objeto criado dentro da função <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="na-na-classe-factors" class="section level3 unnumbered">
+<h3>
+<code>NA</code> na classe factors<a class="anchor" aria-label="anchor" href="#na-na-classe-factors"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se a sua coluna de interesse for um fator (da classe factors), utilize a função <code><a href="https://forcats.tidyverse.org/reference/fct_explicit_na.html">fct_explicit_na()</a></code>, do pacote <strong>forcats</strong>, para converter os valores do tipo <code>NA</code> para valores do tipo caractere. Veja mais detalhes na página <a href="factors.html#factors">Fatores</a>. Por padrão, o novo valor atribuído é “(Missing)”, mas pode ser ajustado através do argumento <code>na_level =</code>.</p>
+<div class="sourceCode" id="cb1063"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">forcats</span><span class="op">)</span>   <span class="co"># carregue o pacote</span></span>
+<span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>gender <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_explicit_na.html">fct_explicit_na</a></span><span class="op">(</span><span class="va">gender</span>, na_level <span class="op">=</span> <span class="st">"Missing"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "f"       "m"       "Missing"</code></pre>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="imputação-de-dados-nos-campos-em-branco" class="section level2" number="20.6">
+<h2>
+<span class="header-section-number">20.6</span> Imputação de dados nos campos em branco<a class="anchor" aria-label="anchor" href="#imputa%C3%A7%C3%A3o-de-dados-nos-campos-em-branco"><i class="fas fa-link"></i></a>
+</h2>
+<p>As vezes, ao analisar os dados, será importante “preencher as lacunas” e atribuir valores nos campos vazios. Mesmo que você possa analisar os dados após remover todos os campos em branco, isto pode causar diversos problemas. Aqui estão dois exemplos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Ao remover todas as observações com campos em branco, ou variáveis com uma quantidade elevada de dados em branco, você pode reduzir seu poder de amostra ou capacidade para realizar algumas análises. Por exemplo, como descobrimos anteriormente, apenas uma pequena fração das observações no nosso banco de dados no linelist não possui campos em branco em todas as variáveis. Se nós removessemos a maioria dessas linhas, estaríamos perdendo muita informação! Também vimos que boa parte das nossas variáveis possui alguma quantidade de dados em branco – assim, para boa parte da análise, provavelmente não é razoável excluir todas as variáveis que possuem muitos campos vazios.</p></li>
+<li><p>Dependendo do motivo de seus dados estarem em branco, realizar a análise apenas de dados completos pode levar a resultados enviesados ou incorretos. Por exemplo, anteriormente, nós descobrimos que estamos sem dados de alguns pacientes no que tange à presença de sintomas importantes, como febre e tosse. Mas, como uma possibilidade, talvez essa informação não foi registrada para pessoas que, obviamente, não estavam muito doentes. Neste caso, se nós apenas removermos essas observações, estaremos excluindo algumas das pessoas mais saudáveis do nosso banco de dados, o que iria enviesar nossos resultados.</p></li>
+</ol>
+<p>É importante pensar sobre o porque seus dados podem estar em branco, além de avaliar a quantidade de campos em branco. Fazer isto pode ajudá-lo a decidir o quão importante será atribuir valores nos campos em branco, e qual o melhor método de imputação para a sua situação.</p>
+<div id="tipos-de-dados-em-branco" class="section level3 unnumbered">
+<h3>Tipos de dados em branco<a class="anchor" aria-label="anchor" href="#tipos-de-dados-em-branco"><i class="fas fa-link"></i></a>
+</h3>
+<p>Aqui estão três tipos gerais de dados em branco:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Dados faltantes completamente de forma aleatória</strong> (MCAR, do inglês <em>Missing Comnpletely at Random</em>). Isto significa que não existe relação entre os dados em branco e qualquer outra variável dos seus dados. A probabilidade dos dados estarem em branco são as mesmas para todos os casos. Isto é uma situação rara. Mas, se você tiver uma forte razão para acreditar que seus dados são do tipo MCAR, analisar apenas os dados completos sem atribuir valores não irá enviesar seus resultados (apesar de que você pode perder algum poder de amostra). [A fazer: considere discutir testes estatísticos para MCAR]</p></li>
+<li><p><strong>Dados faltantes aleatoriamente</strong> (MAR, do inglês <em>Missing at Random</em>). Este nome é, na verdade, um pouco incorreto, uma vez que dados do tipo MAR não estão perdidos de forma alearória, e sim de forma sistemática e previsível, baseado em outras informações que você tem. Por exemplo, talvez cada observação em branco do seu banco de dados para febre não foi registrada porque assumiram que todos os pacientes com calafrios e dores estavam com febre, e, então, suas temperaturas não foram medidas. Se verdade, nós poderíamos facilmente predizer que cada observação em branco em que o paciente tivesse calafrios e dores, ele também teve febre, e utilizar essa informação para atribuir dados. Na prática, existe um espectro de possibilidades. Talvez, se um paciente sem a temperatura medida tivesse tanto calafrios quanto dores, ele provavelmente também teria febre, mas nem sempre. Isto ainda é previsível, embora não seja perfeitamente previsível. Este é um tipo comum de perda de dados.</p></li>
+<li><p><strong>Dados faltantes de forma não aleatória</strong> (MNAR, do inglês <em>Missing not at Random</em>). As vezes, também chamado de <strong>Não perdidos aleatoriamente</strong> (NMAR). Esta situação considera que a probabilidade de um campo estar em branco NÃO é sistemática ou previsível utilizando as outras informações que temos, mas também não foram perdidos de forma aleatória. Assim, os dados foram perdidos por razões desconhecidas ou por motivos que você não tem informações sobre. Por exemplo, em nosso banco de dados, talvez as informações sobre as idades estejam em branco porque alguns pacientes muito idosos ou não sabiam a idade, ou recusaram informar a idade. Nesta situação, os dados perdidos de idade estão relacionados à idade diretamente (e, assim, não são perdas aleatórias), e não são dados previsíveis através de outras informações que temos. MNAR é complexo e, frequentemente, a melhor forma de trabalhar com isso é tentar coletar mais dados ou informações sobre o porque os dados estão faltando, em vez de atribuir valores.</p></li>
+</ol>
+<p>Concluindo, geralmente, atribuir valores em dados MCAR é simples, enquanto em dados MNAR é desafiador, senão impossível. Muitos dos métodos de imputação de valores assumem dados MAR.</p>
+</div>
+<div id="pacotes-úteis" class="section level3 unnumbered">
+<h3>Pacotes úteis<a class="anchor" aria-label="anchor" href="#pacotes-%C3%BAteis"><i class="fas fa-link"></i></a>
+</h3>
+<p>Alguns pacotes úteis para imputar dados perdidos são Mmisc, missForest (que utiliza o modelo de florestas aleatórias para imputar dados perdidos), e mice (Imputação Multivariada por Equações em Cadeia). Para essa seção, nós iremos utilizar apenas o pacote mice, que implementa uma variedade de técnicas. O mantenedor do pacote mice publicou um livro online com mais detalhes sobre como imputar dados perdidos (<a href="https://stefvanbuuren.name/fimd/" class="uri">https://stefvanbuuren.name/fimd/</a>).</p>
+<p>Segue o código para carregar o pacote mice:</p>
+<div class="sourceCode" id="cb1065"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">mice</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="imputação-por-média" class="section level3 unnumbered">
+<h3>Imputação por média<a class="anchor" aria-label="anchor" href="#imputa%C3%A7%C3%A3o-por-m%C3%A9dia"><i class="fas fa-link"></i></a>
+</h3>
+<p>As vezes, se você está realizando uma análise simples, ou possui uma forte razão para pensar que pode assumir os dados perdidos como MCAR, é possível simplesmente atribuir a média daquela variável nos campos em branco. Talvez possamos assumir que a perda de medições de temperatura em nosso banco de dados foi MCAR ou apenas valores normais. Aqui está o código para criar uma nova variável que substitui os valores faltantes pela temperatura média do nosso banco de dados. Entretanto, em muitas situações, substituir dados com o valor médio pode gerar resultados enviesados, então seja cuidadoso.</p>
+<div class="sourceCode" id="cb1066"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp_replace_na_with_mean <span class="op">=</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/replace_na.html">replace_na</a></span><span class="op">(</span><span class="va">temp</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">temp</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Você pode também realizar um processo similar para substituir dados categóricos por um valor específico. Para o nosso banco de dados, imagine que você soubesse que todas observações com um campo em branco na variável outcome (evolução clínica, que pode ser “Death” ou “Recover”) foram de pessoas que evoluíram para óbito (nota: isto não é verdade para o nosso banco de dados):</p>
+<div class="sourceCode" id="cb1067"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>outcome_replace_na_with_death <span class="op">=</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/replace_na.html">replace_na</a></span><span class="op">(</span><span class="va">outcome</span>, <span class="st">"Death"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="imputação-por-regressão" class="section level3 unnumbered">
+<h3>Imputação por regressão<a class="anchor" aria-label="anchor" href="#imputa%C3%A7%C3%A3o-por-regress%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>Outro método de certa forma mais avançado para imputar valores é utilizar algum tipo de modelo estatístico para prever o que um valor perdido é. Aqui está um exemplo onde os valores preditos são criados para todos os campos sem a temperatura, mas com os campos de age (idade) e fever (febre) preenchidos, utilizando estas variáveis como preditoras em uma regressão linear simples. Na prática, você iria querer utilizar um modelo melhor do que este, que é mais simples.</p>
+<div class="sourceCode" id="cb1068"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">simple_temperature_model_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">fever</span> <span class="op">+</span> <span class="va">age_years</span>, data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#utilizando o nosso simples modelo de temperatura para predizer valores de temperatura apenas para os campos em branco</span></span>
+<span><span class="va">predictions_for_missing_temps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">simple_temperature_model_fit</span>,</span>
+<span>                                        newdata <span class="op">=</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
+<p>Ou, utilizando a mesma abordagem de modelagem com o pacote mice para imputar valores de temperatura nos campos em branco:</p>
+<div class="sourceCode" id="cb1069"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model_dataset</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">temp</span>, <span class="va">fever</span>, <span class="va">age_years</span><span class="op">)</span>  </span>
+<span></span>
+<span><span class="va">temp_imputed</span> <span class="op">&lt;-</span> <span class="fu">mice</span><span class="op">(</span><span class="va">model_dataset</span>,</span>
+<span>                            method <span class="op">=</span> <span class="st">"norm.predict"</span>,</span>
+<span>                            seed <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                            m <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                            print <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: Number of logged events: 1</code></pre>
+<div class="sourceCode" id="cb1071"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">temp_imputed_values</span> <span class="op">&lt;-</span> <span class="va">temp_imputed</span><span class="op">$</span><span class="va">imp</span><span class="op">$</span><span class="va">temp</span></span></code></pre></div>
+<p>Este é o mesmo tipo de abordagem feita por alguns métodos mais avançados, como utilizando o pacote missForest para substituir os campos em branco pelos valores preditos. Neste caso, o modelo de predição utilizado é o de florestas aleatórias (random forest) em vez de uma regressão linear. Você pode utilizar outros tipos de modelos para fazer isso. Entretanto, enquanto esta abordagem funciona bem com dados MCAR, você deve ser cuidadoso se acredita que seus dados perdidos sejam do tipo MAR ou MNAR. A qualidade da imputação irá depender no quão bom o seu modelo de predição é, e, mesmo com um modelo muito bom, a variedade dos dados imputados pode ser subestimada.</p>
+</div>
+<div id="locf-e-bocf" class="section level3 unnumbered">
+<h3>LOCF e BOCF<a class="anchor" aria-label="anchor" href="#locf-e-bocf"><i class="fas fa-link"></i></a>
+</h3>
+<p>Última observação levada adiante (LOCF, do inglês “Last observation carried forward”) e observação de base levada adiante (BOCF, do inglês “baseline observation carried forward”) são métodos de imputação para séries temporais/dados longitudinais. A ideia é utilizar o último valor observado para atribuir nos campos em branco. Quando valores múltiplos são perdidos sucessivamente, o método busca pelo último valor observado.</p>
+<p>A função <code><a href="https://tidyr.tidyverse.org/reference/fill.html">fill()</a></code>, do pacote <strong>tidyr</strong>, pode ser utilizada para realizar imputação por LOCF e BOCF (entretanto, outros pacotes como <strong>HMISC</strong>, <strong>zoo</strong>, e <strong>data.table</strong> também incluem métodos para fazer isto). Para mostrar a sintaxe do <code><a href="https://tidyr.tidyverse.org/reference/fill.html">fill()</a></code>, nós iremos criar um simples banco de dados com série temporal contendo o número de casos de uma doença para cada quadrimestre dos anos 2000 e 2001. Entretanto, os valores para os quadrimestres após Q1 estão faltando, então nós iremos imputá-los. A sintaxe do <code><a href="https://tidyr.tidyverse.org/reference/fill.html">fill()</a></code> também é demonstrada na página sobre <a href="pivoting.html#pivoting">Pivoteamento dos dados</a>.</p>
+<div class="sourceCode" id="cb1072"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#criando um banco de dados simples</span></span>
+<span><span class="va">disease</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">quarter</span>, <span class="op">~</span><span class="va">year</span>, <span class="op">~</span><span class="va">cases</span>,</span>
+<span>  <span class="st">"Q1"</span>,    <span class="fl">2000</span>,    <span class="fl">66013</span>,</span>
+<span>  <span class="st">"Q2"</span>,      <span class="cn">NA</span>,    <span class="fl">69182</span>,</span>
+<span>  <span class="st">"Q3"</span>,      <span class="cn">NA</span>,    <span class="fl">53175</span>,</span>
+<span>  <span class="st">"Q4"</span>,      <span class="cn">NA</span>,    <span class="fl">21001</span>,</span>
+<span>  <span class="st">"Q1"</span>,    <span class="fl">2001</span>,    <span class="fl">46036</span>,</span>
+<span>  <span class="st">"Q2"</span>,      <span class="cn">NA</span>,    <span class="fl">58842</span>,</span>
+<span>  <span class="st">"Q3"</span>,      <span class="cn">NA</span>,    <span class="fl">44568</span>,</span>
+<span>  <span class="st">"Q4"</span>,      <span class="cn">NA</span>,    <span class="fl">50197</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#imputando os valores perdidos dos anos</span></span>
+<span><span class="va">disease</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/fill.html">fill</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 8 × 3
+##   quarter  year cases
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 Q1       2000 66013
+## 2 Q2       2000 69182
+## 3 Q3       2000 53175
+## 4 Q4       2000 21001
+## 5 Q1       2001 46036
+## 6 Q2       2001 58842
+## 7 Q3       2001 44568
+## 8 Q4       2001 50197</code></pre>
+<p>Nota: tenha certeza de que seus dados estão ordenados corretamente antes de utilizar a função <code><a href="https://tidyr.tidyverse.org/reference/fill.html">fill()</a></code>. Por padrão, <code><a href="https://tidyr.tidyverse.org/reference/fill.html">fill()</a></code> irá preencher de cima para baixo, mas você também pode imputar valores em direções diferentes ao mudar o parâmetro <code>.direction</code>. Nós podemos criar um banco de dados similar onde os valores dos anos estão registrados apenas no ano final, e ausentes para quadrimestres anteriores:</p>
+<div class="sourceCode" id="cb1074"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#criando um banco de dados sutilmente diferente</span></span>
+<span><span class="va">disease</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">quarter</span>, <span class="op">~</span><span class="va">year</span>, <span class="op">~</span><span class="va">cases</span>,</span>
+<span>  <span class="st">"Q1"</span>,      <span class="cn">NA</span>,    <span class="fl">66013</span>,</span>
+<span>  <span class="st">"Q2"</span>,      <span class="cn">NA</span>,    <span class="fl">69182</span>,</span>
+<span>  <span class="st">"Q3"</span>,      <span class="cn">NA</span>,    <span class="fl">53175</span>,</span>
+<span>  <span class="st">"Q4"</span>,    <span class="fl">2000</span>,    <span class="fl">21001</span>,</span>
+<span>  <span class="st">"Q1"</span>,      <span class="cn">NA</span>,    <span class="fl">46036</span>,</span>
+<span>  <span class="st">"Q2"</span>,      <span class="cn">NA</span>,    <span class="fl">58842</span>,</span>
+<span>  <span class="st">"Q3"</span>,      <span class="cn">NA</span>,    <span class="fl">44568</span>,</span>
+<span>  <span class="st">"Q4"</span>,    <span class="fl">2001</span>,    <span class="fl">50197</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#impute os anos nos campos em branco na direção para 'cima' ("up"):</span></span>
+<span><span class="va">disease</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/fill.html">fill</a></span><span class="op">(</span><span class="va">year</span>, .direction <span class="op">=</span> <span class="st">"up"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 8 × 3
+##   quarter  year cases
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;
+## 1 Q1       2000 66013
+## 2 Q2       2000 69182
+## 3 Q3       2000 53175
+## 4 Q4       2000 21001
+## 5 Q1       2001 46036
+## 6 Q2       2001 58842
+## 7 Q3       2001 44568
+## 8 Q4       2001 50197</code></pre>
+<p>Neste exemplo, LOCF e BOCF são claramente os métodos corretos para se fazer, mas, em situações mais complicadas, pode ser mais difícil decidir se estes métodos são apropriados. Por exemplo, você pode ter valores em branco dos dados laboratoriais de um paciente do hospital após o primeiro dia. As vezes, isto quer dizer que os resultados laboratoriais não mudaram após o primeiro dia…mas também pode significar que o paciente se recuperou e seus valores seriam muito diferentes em relação ao primeiro dia! Utilize estes métodos com cautela.</p>
+</div>
+<div id="imputação-múltipla" class="section level3 unnumbered">
+<h3>Imputação múltipla<a class="anchor" aria-label="anchor" href="#imputa%C3%A7%C3%A3o-m%C3%BAltipla"><i class="fas fa-link"></i></a>
+</h3>
+<p>O livro online que mencionamos anteriormente, do autor do pacote mice (<a href="https://stefvanbuuren.name/fimd/" class="uri">https://stefvanbuuren.name/fimd/</a>), contém uma explicação detalhada da imputação múltipla e porque você gostaria de utilizá-la. Mas aqui está uma explicação básica do método:</p>
+<p>Quando você faz uma imputação múltipla, múltiplos bancos de dados com valores plausíveis imputados nos campos em branco são criados (dependendo dos seus dados de pesquisa, você pode querer criar mais ou menos desses bancos de dados, mas o pacote mice produz 5 bancos de dados por padrão). A diferença é que, ao invés de um valor único e específico, cada valor imputado é retirado de uma distribuição estimada (então inclui alguma aleatoridade). Como resultado, cada um desses bancos de dados terá valores imputados ligeiramente diferentes (entretanto, os dados que não estavam em branco continuarão os mesmos nos diferentes bancos de dados). Você irá utilizar algum tipo de modelo preditivo para realizar a imputação em cada um dos novos bancos de dados (o pacote mice possui muitas opções para cada método de predição, incluíndo <em>Correspondência Média Preditiva</em>, <em>regressão logística</em>, e <em>florestas aleatórias</em>), mas o pacote mice cuida de muitos dos detalhes da modelagem.</p>
+<p>Então, assim que você tiver criado estes novos bancos de dados com os valores imputados, é possível aplicar quaisquer modelos estatísticos ou análises que estava planejando realizar em cada um dos bancos, e então unir os resultados destes modelos. Isto funciona muito bem para reduzir o enviesamento dos resultados nas situações de MCAR e MAR, e, frequentemente, os resultados são mais acurados.</p>
+<p>Aqui está um exemplo da aplicação da Imputação Múltipla para predizer as temperaturas em nosso banco de dados do linelist, utilizando as variáveis idade (age) e status da febre (fever) (nosso simples model_dataset anterior):</p>
+<div class="sourceCode" id="cb1076"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># imputando valores perdidos para todas as variáveis em nosso model_dataset, criando 10 novos bancos de dados com valores imputados</span></span>
+<span><span class="va">multiple_imputation</span> <span class="op">=</span> <span class="fu">mice</span><span class="op">(</span></span>
+<span>  <span class="va">model_dataset</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  m <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></code></pre></div>
+<pre><code>## Warning: Number of logged events: 1</code></pre>
+<div class="sourceCode" id="cb1078"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">multiple_imputation</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">age_years</span> <span class="op">+</span> <span class="va">fever</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html">pool</a></span><span class="op">(</span><span class="va">model_fit</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##          term     estimate    std.error     statistic        df       p.value
+## 1 (Intercept) 3.703143e+01 0.0270863456 1367.16240465  26.83673  1.583113e-66
+## 2   age_years 3.867829e-05 0.0006090202    0.06350905 171.44363  9.494351e-01
+## 3    feveryes 1.978044e+00 0.0193587115  102.17849544 176.51325 5.666771e-159</code></pre>
+<p>Aqui nós utilizamos o método padrão do mice para imputação, que é a Correspondência Média Preditiva. Nós, então, utilizamos os bancos de dados gerados para, separadamente, estimar resultados com regressões lineares simples, e então uni-los. Existem muitos detalhes que não discutimos e muitas configurações que podem ser ajustadas durante o processo de Imputação Múltipla utilizando o pacote mice. Por exemplo, você nem sempre terá dados numéricos e pode precisar usar outros métodos de imputação (você ainda pode utilizar o pacote mice para muitos outros tipos de dados e métodos). Mas, para uma análise mais robusta quando os campos em branco são uma preocupação significativa, o método de Imputação Múltipla é uma boa solução que, quase sempre, não é muito mais trabalhosa do que realizar uma análise completa dos casos.</p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="recursos-12" class="section level2" number="20.7">
+<h2>
+<span class="header-section-number">20.7</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-12"><i class="fas fa-link"></i></a>
+</h2>
+<p>Manual sobre o <a href="https://cran.r-project.org/web/packages/naniar/vignettes/getting-started-w-naniar.html">pacote naniar</a></p>
+<p>Galeria com <a href="https://cran.r-project.org/web/packages/naniar/vignettes/naniar-visualisation.html">a visualização dos valores perdidos</a></p>
+<p><a href="https://stefvanbuuren.name/fimd/">Livro online</a> sobre imputação múltipla no R, escrito pelo mantenedor do pacote <strong>mice</strong></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></div>
+<div class="next"><a href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#missing-data"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li>
+<a class="nav-link" href="#preparando-o-ambiente-r"><span class="header-section-number">20.1</span> Preparando o ambiente R</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#carregue-os-pacotes-3">Carregue os pacotes</a></li>
+<li><a class="nav-link" href="#importe-os-dados-3">Importe os dados</a></li>
+<li><a class="nav-link" href="#padronize-os-dados-dos-campos-em-branco-durante-a-importa%C3%A7%C3%A3o">Padronize os dados dos campos em branco durante a importação</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#campos-em-branco-no-r"><span class="header-section-number">20.2</span> Campos em branco no R</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#na">NA</a></li>
+<li><a class="nav-link" href="#vers%C3%B5es-de-na">Versões de NA</a></li>
+<li><a class="nav-link" href="#null">NULL</a></li>
+<li><a class="nav-link" href="#nan">NaN</a></li>
+<li><a class="nav-link" href="#inf">Inf</a></li>
+<li><a class="nav-link" href="#exemplos-1">Exemplos</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#fun%C3%A7%C3%B5es-%C3%BAteis"><span class="header-section-number">20.3</span> Funções úteis</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#is.na-e-is.na">is.na() e !is.na()</a></li>
+<li><a class="nav-link" href="#na.omit">na.omit()</a></li>
+<li><a class="nav-link" href="#drop_na">drop_na()</a></li>
+<li><a class="nav-link" href="#na.rm-true">na.rm = TRUE</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#avalie-os-campos-em-branco-no-conjunto-de-dados"><span class="header-section-number">20.4</span> Avalie os campos em branco no conjunto de dados</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#quantificando-os-campos-em-branco">Quantificando os campos em branco</a></li>
+<li><a class="nav-link" href="#visualizando-as-quantidades-de-campos-em-branco">Visualizando as quantidades de campos em branco</a></li>
+<li><a class="nav-link" href="#explore-e-visualize-as-rela%C3%A7%C3%B5es-entre-os-campos-em-branco">Explore e visualize as relações entre os campos em branco</a></li>
+<li><a class="nav-link" href="#colunas-sombra-shadow">Colunas Sombra “Shadow”</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#utilizando-dados-com-campos-em-branco"><span class="header-section-number">20.5</span> Utilizando dados com campos em branco</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exclua-linhas-com-campos-em-branco">Exclua linhas com campos em branco</a></li>
+<li><a class="nav-link" href="#trabalhando-com-na-no-ggplot">Trabalhando com NA no ggplot()</a></li>
+<li><a class="nav-link" href="#na-na-classe-factors">NA na classe factors</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#imputa%C3%A7%C3%A3o-de-dados-nos-campos-em-branco"><span class="header-section-number">20.6</span> Imputação de dados nos campos em branco</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#tipos-de-dados-em-branco">Tipos de dados em branco</a></li>
+<li><a class="nav-link" href="#pacotes-%C3%BAteis">Pacotes úteis</a></li>
+<li><a class="nav-link" href="#imputa%C3%A7%C3%A3o-por-m%C3%A9dia">Imputação por média</a></li>
+<li><a class="nav-link" href="#imputa%C3%A7%C3%A3o-por-regress%C3%A3o">Imputação por regressão</a></li>
+<li><a class="nav-link" href="#locf-e-bocf">LOCF e BOCF</a></li>
+<li><a class="nav-link" href="#imputa%C3%A7%C3%A3o-m%C3%BAltipla">Imputação múltipla</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#recursos-12"><span class="header-section-number">20.7</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

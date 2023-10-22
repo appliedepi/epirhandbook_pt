@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>10 Caracteres e strings | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Essa página mostra o uso do pacote stringr para avaliar e lidar com cadeias de caracteres (“strings”). Combinar, ordenar, dividir, organizar - str_c(), str_glue(), str_order(), str_split() Limpar...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="10 Caracteres e strings | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Essa página mostra o uso do pacote stringr para avaliar e lidar com cadeias de caracteres (“strings”). Combinar, ordenar, dividir, organizar - str_c(), str_glue(), str_order(), str_split() Limpar...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="10 Caracteres e strings | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Essa página mostra o uso do pacote stringr para avaliar e lidar com cadeias de caracteres (“strings”). Combinar, ordenar, dividir, organizar - str_c(), str_glue(), str_order(), str_split() Limpar...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="active" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="characters-strings" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Caracteres e strings<a class="anchor" aria-label="anchor" href="#characters-strings"><i class="fas fa-link"></i></a>
+</h1>
+<div class="inline-figure"><img src="images/Characters_Strings_1500x500.png" width="100%"></div>
+<p>Essa página mostra o uso do pacote <strong>stringr</strong> para avaliar e lidar com cadeias de caracteres (“strings”).</p>
+<ol style="list-style-type: decimal">
+<li><p>Combinar, ordenar, dividir, organizar - <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_order.html">str_order()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split()</a></code><br></p></li>
+<li>
+<p>Limpar e padronizar</p>
+<ul>
+<li>Ajuste o comprimento - <code><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_trunc.html">str_trunc()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_wrap.html">str_wrap()</a></code><br>
+</li>
+<li>Alterar maiúsculas e minúsculas - <code><a href="https://stringr.tidyverse.org/reference/case.html">str_to_upper()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/case.html">str_to_title()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/case.html">str_to_lower()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/case.html">str_to_sentence()</a></code><br>
+</li>
+</ul>
+</li>
+<li><p>Avaliar e extrair por posição - <code><a href="https://stringr.tidyverse.org/reference/str_length.html">str_length()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/word.html">word()</a></code><br></p></li>
+<li>
+<p>Padrões</p>
+<ul>
+<li>Detectar e localizar - <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_match.html">str_match()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract()</a></code><br>
+</li>
+<li>Modificar e substituir - <code><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all()</a></code><br>
+</li>
+</ul>
+</li>
+<li><p>Expressões regulares (“regex”)</p></li>
+</ol>
+<p>Para facilitar a exibição, a maioria dos exemplos são mostrados agindo em um vetor curto do tipo caractere, no entanto, eles podem ser facilmente adaptados a uma coluna dentro de um quadro de dados (<em>data frame</em>).</p>
+<p>Esse <a href="https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html">manual das funções do stringr</a> forneceu grande parte da inspiração para esta página.</p>
+<!-- ======================================================= -->
+<div id="preparação-1" class="section level2" number="10.1">
+<h2>
+<span class="header-section-number">10.1</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="carregue-os-pacotes" class="section level3 unnumbered">
+<h3>Carregue os pacotes<a class="anchor" aria-label="anchor" href="#carregue-os-pacotes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Instale ou carregue o <strong>stringr</strong> e outros pacotes <strong>tidyverse</strong>.</p>
+<div class="sourceCode" id="cb389"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># instalar/carregar pacotes</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span>  <span class="va">stringr</span>,    <span class="co"># muitas funções para lidar com strings</span></span>
+<span>  <span class="va">tidyverse</span>,  <span class="co"># para manipulação opicional de dados</span></span>
+<span>  <span class="va">tools</span><span class="op">)</span>      <span class="co"># alternativa para converter para maiúsculas</span></span></code></pre></div>
+</div>
+<div id="importar-os-dados" class="section level3 unnumbered">
+<h3>Importar os dados<a class="anchor" aria-label="anchor" href="#importar-os-dados"><i class="fas fa-link"></i></a>
+</h3>
+<p>Nesta página, faremos referência ocasional à <code>linelist</code>, uma lista de casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, clique para realizar o download “<a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds">clean linelist</a>” (como arquivo .rds). Importe dados com a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> do pacote <strong>rio</strong> (ele lida com muitos tipos de arquivo como .xlsx, .csv, .rds - veja a página <a href="importing.html#importing">Importar e exportar</a> para detalhes).</p>
+<div class="sourceCode" id="cb390"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Exemplo de importação </span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></span></code></pre></div>
+<p>As primeiras 50 linhas da lista estão exibidas abaixo.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-4f75aca18c93dd242ce6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4f75aca18c93dd242ce6">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Ausente","Ausente","Ausente","Ausente","Port Hospital","Military Hospital","Ausente","Ausente","Other","Port Hospital","Port Hospital","Port Hospital","Ausente","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Ausente","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Ausente","Military Hospital","Other","Ausente","Ausente","Port Hospital","Port Hospital","Port Hospital","Ausente","Central Hospital","Military Hospital","Other","Other","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Ausente"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.461830626007281,8.462729314626459,8.461443675342711,8.46191259217774,8.472923276435059,8.48401630165138,8.458371253408441,8.477617055125091,8.47570184950483,8.477799468789719,8.47145134147474,8.478048406853629,8.48528034195779,8.469575303958671,8.45957352078114,8.474048895115439,8.488029171298839,8.473437335922,8.484082637344621,8.46242233645879,8.470268221265719,8.463984474805329,8.464134789434199,8.456230946296071,8.48334624336805,8.47493999153642,8.47832062438022,8.469393389176499,8.48480589906514,8.47121232619015,8.48438437371817,8.484661585743391,8.477141599844281,8.462381270106089,8.455685978131131,8.4632880274758,8.47940722413856,8.46353857052336,8.461789681588639,8.47508713872833,8.458258081280711,8.4532568143863,8.4732571907655,8.479115866419329,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.81844297615629,16.06524962926347,22.49657064471879,71.41440190438405,41.61712247324614,62.09538908706566,0,16.83765369253662,22.79032897344431,53.41198979591836,24.28026361429067,22.46003435064077,54.32098765432099,41.05784325564545,28.56648199445983,17.03205520132763,25.04129149128882,38.7172182043977,27.3876813705495,31.55555555555556,14.80690759456621,30.88398111998135,26.61934338952972,59.37499999999999,96.61835748792272,19.23947487550928,84.94031221303948,18.41993774061044,27.77226740726046,41.32231404958677,17.20806665861611,24.16716240333135,15.72189710891781,428.9940828402366,27.99302202929125,243.2610124917817,20.23950075898128,30.52744643563797,25.15589569160998,47,39.04,31.06616432017979,77.96836711962574,29.51659612385831,166.4932362122789,100.3086419753086,37.76,20.60378034578518,23.45856237526698],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+</div>
+</div>
+<div id="unir-dividir-e-organizar" class="section level2" number="10.2">
+<h2>
+<span class="header-section-number">10.2</span> Unir, dividir e organizar<a class="anchor" aria-label="anchor" href="#unir-dividir-e-organizar"><i class="fas fa-link"></i></a>
+</h2>
+<p>Essa seção aborda:</p>
+<ul>
+<li>O uso das funções <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code>, e <code><a href="https://tidyr.tidyverse.org/reference/unite.html">unite()</a></code> para combinar strings (caracteres ou descrições)<br>
+</li>
+<li>O uso da função <code><a href="https://stringr.tidyverse.org/reference/str_order.html">str_order()</a></code> para organizar strings<br>
+</li>
+<li>O uso das funções <code><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split()</a></code> e <code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code> para dividir strings</li>
+</ul>
+<!-- ======================================================= --><div id="combinar-strings" class="section level3 unnumbered">
+<h3>Combinar strings<a class="anchor" aria-label="anchor" href="#combinar-strings"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para combinar ou concatenar múltiplos strings em um único string, sugerimos usar <code>str_c</code> do <strong>stringr</strong>. Se você tiver distintos valores de caracteres para combinar, basta fornecê-los como argumentos exclusivos, separados por vírgulas.</p>
+<div class="sourceCode" id="cb391"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"String1"</span>, <span class="st">"String2"</span>, <span class="st">"String3"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "String1String2String3"</code></pre>
+<p>O argumento <code>sep =</code> insere um valor de caractere entre cada um dos argumentos fornecidos (por exemplo, inserir uma vírgula, espaço ou nova linha <code>"\n"</code>)</p>
+<div class="sourceCode" id="cb393"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"String1"</span>, <span class="st">"String2"</span>, <span class="st">"String3"</span>, sep <span class="op">=</span> <span class="st">", "</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "String1, String2, String3"</code></pre>
+<p>O argumento <code>collapse =</code> é relevante se você estiver inserindo múltiplos <em>vetores</em> como argumentos para a função <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code>. Ele é usado para separar os elementos do que seria um vetor de <em>saída</em>, de forma que o vetor de saída tenha apenas um longo elemento de caractere.</p>
+<p>O exemplo abaixo mostra a combinação de dois vetores em um (nomes e sobrenomes). Outro exemplo semelhante pode ser sobre jurisdições e suas contagens de casos. Neste exemplo:</p>
+<ul>
+<li>O valor <code>sep =</code> aparece entre cada nome e sobrenome<br>
+</li>
+<li>O valor <code>collapse =</code> aparece entre cada pessoa</li>
+</ul>
+<div class="sourceCode" id="cb395"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">first_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"abdul"</span>, <span class="st">"fahruk"</span>, <span class="st">"janice"</span><span class="op">)</span> </span>
+<span><span class="va">last_names</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hussein"</span>, <span class="st">"akinleye"</span>, <span class="st">"okeke"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># sep é exibido entre as respectivas strings de entrada, enquanto collapse é exibido entre os elementos produzidos</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="va">first_names</span>, <span class="va">last_names</span>, sep <span class="op">=</span> <span class="st">" "</span>, collapse <span class="op">=</span> <span class="st">";  "</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "abdul hussein;  fahruk akinleye;  janice okeke"</code></pre>
+<p>Nota: Dependendo do contexto de exibição desejado, ao imprimir/exibir uma string combinada com novas linhas, você pode precisar inserir a frase inteira em <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> para que as novas linhas sejam impressas/exibidas corretamente:</p>
+<div class="sourceCode" id="cb397"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Para que as novas linhas sejam impressas corretamente, a frase pode precisar estar inserida na função cat()</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="va">first_names</span>, <span class="va">last_names</span>, sep <span class="op">=</span> <span class="st">" "</span>, collapse <span class="op">=</span> <span class="st">";\n"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## abdul hussein;
+## fahruk akinleye;
+## janice okeke</code></pre>
+<!-- ======================================================= -->
+</div>
+<div id="strings-dinâmicas" class="section level3 unnumbered">
+<h3>Strings dinâmicas<a class="anchor" aria-label="anchor" href="#strings-din%C3%A2micas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code> para inserir um código R dinâmico em um string. Esta é uma função muito útil para criar legendas dinâmicas de gráficos, conforme demonstrado abaixo.</p>
+<ul>
+<li>Todo o conteúdo fica entre aspas duplas <code>str_glue("")</code><br>
+</li>
+<li>Qualquer código dinâmico ou referências aos valores predefinidos são colocados entre chaves <code><a href="https://rdrr.io/r/base/Paren.html">{}</a></code> com aspas duplas. Pode haver muitas chaves no mesmo comando <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code>.<br>
+</li>
+<li>Para exibir aspas como caracter ’’, use aspas <em>simples</em> entre aspas duplas (por exemplo, ao fornecer o formato de data - veja o exemplo abaixo)<br>
+</li>
+<li>Dica: você pode usar <code>\n</code> para forçar uma nova linha<br>
+</li>
+<li>Dica: você usa <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> para ajustar a exibição da data e usa <code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date()</a></code> para exibir a data atual</li>
+</ul>
+<p>Um simples exemplo da gráfico com legenda dinâmica:</p>
+<div class="sourceCode" id="cb399"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"Os dados incluem {nrow(linelist)} casos e são atuais para {format(Sys.Date(), '%d %b %Y')}."</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Os dados incluem 5888 casos e são atuais para 22 Oct 2023.</code></pre>
+<p>Um formato alternativo é usar espaços reservados dentro dos colchetes e definir o código em argumentos separados no final da função <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code>, conforme abaixo. Isso pode melhorar a legibilidade do código se o texto for longo.</p>
+<div class="sourceCode" id="cb401"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"Lista  em {current_date}.\n dos último casos hospitalizados no {last_hospital}.\n{n_missing_onset} casos sem data de início e não mostrados"</span>,</span>
+<span>         current_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'%d %b %Y'</span><span class="op">)</span>,</span>
+<span>         last_hospital <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">date_hospitalisation</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span>, <span class="st">'%d %b %Y'</span><span class="op">)</span>,</span>
+<span>         n_missing_onset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>         <span class="op">)</span></span></code></pre></div>
+<pre><code>## Lista  em 22 Oct 2023.
+##  dos último casos hospitalizados no 30 Apr 2015.
+## 256 casos sem data de início e não mostrados</code></pre>
+<p><strong>Extraindo de uma tabela de dados</strong></p>
+<p>Às vezes, é útil extrair dados de um data frame e colá-los juntos na sequência. Abaixo está um exemplo de data frame. Vamos usá-lo para fazer uma declaração resumida sobre as jurisdições e as contagens de casos novos e totais.</p>
+<div class="sourceCode" id="cb403"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># fazer um data frame de casos</span></span>
+<span><span class="va">caso_tabela</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  zone        <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Zone 1"</span>, <span class="st">"Zone 2"</span>, <span class="st">"Zone 3"</span>, <span class="st">"Zone 4"</span>, <span class="st">"Zone 5"</span><span class="op">)</span>,</span>
+<span>  novos_casos   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">7</span>, <span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span>,</span>
+<span>  total_casos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">4</span>, <span class="fl">25</span>, <span class="fl">10</span>, <span class="fl">103</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-dd3f018c2af18115187a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-dd3f018c2af18115187a">{"x":{"filter":"none","vertical":false,"data":[["Zone 1","Zone 2","Zone 3","Zone 4","Zone 5"],[3,0,7,0,15],[40,4,25,10,103]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>zone<\/th>\n      <th>novos_casos<\/th>\n      <th>total_casos<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Use <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue_data()</a></code>, que é feito especialmente para obter dados de linhas do data frame:</p>
+<div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">caso_tabela</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue_data</a></span><span class="op">(</span><span class="st">"{zone}: {novos_casos} ({total_casos} total casos)"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Zone 1: 3 (40 total casos)
+## Zone 2: 0 (4 total casos)
+## Zone 3: 7 (25 total casos)
+## Zone 4: 0 (10 total casos)
+## Zone 5: 15 (103 total casos)</code></pre>
+<p><strong>Combine strings em linhas</strong></p>
+<p>Se você estiver tentando “acumular” valores em uma coluna de um data frame, por exemplo, combinar valores de várias linhas em apenas uma linha, colando-os juntos com um separador, consulte a seção da página <a href="deduplication.html#deduplication">Eliminação de duplicidades</a> em <a href="deduplication.html#str_rollup">“acumulando” valores</a>.</p>
+<p><strong>Data frame para uma linha</strong></p>
+<p>Você pode fazer a frase aparecer em uma linha usando <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code> (especificando o data frame e os nomes das colunas) e fornecendo os argumentos <code>sep =</code> e <code>collapse =</code>.</p>
+<div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="va">caso_tabela</span><span class="op">$</span><span class="va">zone</span>, <span class="va">caso_tabela</span><span class="op">$</span><span class="va">novos_casos</span>, sep <span class="op">=</span> <span class="st">" = "</span>, collapse <span class="op">=</span> <span class="st">";  "</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Zone 1 = 3;  Zone 2 = 0;  Zone 3 = 7;  Zone 4 = 0;  Zone 5 = 15"</code></pre>
+<p>Você poderia adicionar o texto “Novos Casos:” ao início da instrução envolvendo a função com <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code> (se “Novos Casos:” estivesse dentro do <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code> original, ele apareceria várias vezes).</p>
+<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"Novos Casos: "</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="va">caso_tabela</span><span class="op">$</span><span class="va">zone</span>, <span class="va">caso_tabela</span><span class="op">$</span><span class="va">novos_casos</span>, sep <span class="op">=</span> <span class="st">" = "</span>, collapse <span class="op">=</span> <span class="st">";  "</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Novos Casos: Zone 1 = 3;  Zone 2 = 0;  Zone 3 = 7;  Zone 4 = 0;  Zone 5 = 15"</code></pre>
+</div>
+<div id="str_unite" class="section level3 unnumbered">
+<h3>Unir colunas<a class="anchor" aria-label="anchor" href="#str_unite"><i class="fas fa-link"></i></a>
+</h3>
+<p>Dentro de uma tabela de dados, reunir valores de caracteres de várias colunas pode ser obtido com <code><a href="https://tidyr.tidyverse.org/reference/unite.html">unite()</a></code> do pacote <strong>tidyr</strong>. Isso é o oposto de <code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code>.</p>
+<p>Forneça o nome da nova coluna unida. Em seguida, forneça os nomes das colunas que deseja unir.</p>
+<ul>
+<li>Por padrão, o separador usado na coluna unida é o underline <code>_</code>, mas isso pode ser alterado com o argumento <code>sep =</code>.<br>
+</li>
+<li>
+<code>remove =</code> rremove as colunas de entrada da tabela de dados (TRUE por padrão)<br>
+</li>
+<li>
+<code>na.rm =</code> remove os valores ausentes durante a união (FALSE por padrão)</li>
+</ul>
+<p>Abaixo, definimos uma mini-tabela de dados para demonstrar:</p>
+<div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  case_ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>,</span>
+<span>  symptoms  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"jaundice, fever, chills"</span>,     <span class="co"># paciente 1</span></span>
+<span>                <span class="st">"chills, aches, pains"</span>,        <span class="co"># paciente 2 </span></span>
+<span>                <span class="st">"fever"</span>,                       <span class="co"># paciente 3</span></span>
+<span>                <span class="st">"vomiting, diarrhoea"</span>,         <span class="co"># paciente 4</span></span>
+<span>                <span class="st">"bleeding from gums, fever"</span>,   <span class="co"># paciente 5</span></span>
+<span>                <span class="st">"rapid pulse, headache"</span><span class="op">)</span>,      <span class="co"># paciente 6</span></span>
+<span>  outcome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Recover"</span>, <span class="st">"Death"</span>, <span class="st">"Death"</span>, <span class="st">"Recover"</span>, <span class="st">"Recover"</span>, <span class="st">"Recover"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">symptoms</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sym_1"</span>, <span class="st">"sym_2"</span>, <span class="st">"sym_3"</span><span class="op">)</span>, extra <span class="op">=</span> <span class="st">"merge"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: Expected 3 pieces. Missing pieces filled with `NA` in 2 rows [3, 4].</code></pre>
+<p>Aqui está o exemplo da tabela de dados:</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-39444a22ed491332b6a1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-39444a22ed491332b6a1">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],["jaundice","chills","fever","vomiting","bleeding","rapid"],["fever","aches",null,"diarrhoea","from","pulse"],["chills","pains",null,null,"gums, fever","headache"],["Recover","Death","Death","Recover","Recover","Recover"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_ID<\/th>\n      <th>sym_1<\/th>\n      <th>sym_2<\/th>\n      <th>sym_3<\/th>\n      <th>outcome<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Abaixo, unimos as três colunas de sintomas:</p>
+<div class="sourceCode" id="cb413"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_split</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unite.html">unite</a></span><span class="op">(</span></span>
+<span>    col <span class="op">=</span> <span class="st">"all_symptoms"</span>,         <span class="co"># nome da nova coluna unida</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sym_1"</span>, <span class="st">"sym_2"</span>, <span class="st">"sym_3"</span><span class="op">)</span>, <span class="co"># colunas para unir</span></span>
+<span>    sep <span class="op">=</span> <span class="st">", "</span>,                   <span class="co"># separador para usar na coluna unida</span></span>
+<span>    remove <span class="op">=</span> <span class="cn">TRUE</span>,                <span class="co"># se TRUE (verdadeiro), remove colunas de entrada da tabela de dados</span></span>
+<span>    na.rm <span class="op">=</span> <span class="cn">TRUE</span>                  <span class="co"># se TRUE, os valores ausentes são removidos antes da união</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<pre><code>##   case_ID                all_symptoms outcome
+## 1       1     jaundice, fever, chills Recover
+## 2       2        chills, aches, pains   Death
+## 3       3                       fever   Death
+## 4       4         vomiting, diarrhoea Recover
+## 5       5 bleeding, from, gums, fever Recover
+## 6       6      rapid, pulse, headache Recover</code></pre>
+<!-- ======================================================= -->
+</div>
+<div id="dividir" class="section level3 unnumbered">
+<h3>Dividir<a class="anchor" aria-label="anchor" href="#dividir"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para dividir um objeto de texto (string) com base em um padrão, use <code><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split()</a></code>. Ele avalia o(s) string(s) e retorna uma <code>list</code> de vetores de caracteres que consistem nos valores recém-divididos.</p>
+<p>O exemplo simples abaixo avalia uma string e a divide em três. Por padrão, ele retorna um objeto da <code>list</code> de classes com um elemento (um vetor de caracteres) para cada string fornecida inicialmente. Se <code>simplify = TRUE</code>, ele retorna uma matriz de caracteres.</p>
+<p>Neste exemplo, uma string é fornecida e a função retorna uma lista com um elemento - um vetor de caracteres com três valores.</p>
+<div class="sourceCode" id="cb415"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span>string <span class="op">=</span> <span class="st">"jaundice, fever, chills"</span>,</span>
+<span>          pattern <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [[1]]
+## [1] "jaundice" " fever"   " chills"</code></pre>
+<p>Se o resultado de saída for salvo, você poderá acessar o enésimo valor de divisão com a sintaxe de colchetes. Para acessar um valor específico, você pode usar uma sintaxe como esta: <code>the_returned_object[[1]][2]</code>, que acessaria o segundo valor da primeira string avaliada (“febre”). Consulte a página <a href="basics.html#basics">Introdução ao R</a> para obter mais detalhes sobre como acessar os elementos.</p>
+<div class="sourceCode" id="cb417"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pt1_symptoms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="st">"jaundice, fever, chills"</span>, <span class="st">","</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pt1_symptoms</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>  <span class="co"># extrai o segundo valor do primeiro (e único) elemento da lista</span></span></code></pre></div>
+<pre><code>## [1] " fever"</code></pre>
+<p>Se múltiplos strings forem fornecidas por <code><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split()</a></code>, haverá mais de um elemento na lista retornada.</p>
+<div class="sourceCode" id="cb419"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">symptoms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"jaundice, fever, chills"</span>,     <span class="co"># paciente 1</span></span>
+<span>              <span class="st">"chills, aches, pains"</span>,        <span class="co"># paciente 2 </span></span>
+<span>              <span class="st">"fever"</span>,                       <span class="co"># paciente 3</span></span>
+<span>              <span class="st">"vomiting, diarrhoea"</span>,         <span class="co"># paciente 4</span></span>
+<span>              <span class="st">"bleeding from gums, fever"</span>,   <span class="co"># paciente 5</span></span>
+<span>              <span class="st">"rapid pulse, headache"</span><span class="op">)</span>       <span class="co"># paciente 6</span></span>
+<span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">symptoms</span>, <span class="st">","</span><span class="op">)</span>                     <span class="co"># dividir os sintomas de cada paciente</span></span></code></pre></div>
+<pre><code>## [[1]]
+## [1] "jaundice" " fever"   " chills" 
+## 
+## [[2]]
+## [1] "chills" " aches" " pains"
+## 
+## [[3]]
+## [1] "fever"
+## 
+## [[4]]
+## [1] "vomiting"   " diarrhoea"
+## 
+## [[5]]
+## [1] "bleeding from gums" " fever"            
+## 
+## [[6]]
+## [1] "rapid pulse" " headache"</code></pre>
+<p>Para retornar uma “matriz de caracteres”, que pode ser útil ao criar colunas de tabela de dados, defina o argumento <code>simplify = TRUE</code> como mostrado abaixo:</p>
+<div class="sourceCode" id="cb421"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">symptoms</span>, <span class="st">","</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      [,1]                 [,2]         [,3]     
+## [1,] "jaundice"           " fever"     " chills"
+## [2,] "chills"             " aches"     " pains" 
+## [3,] "fever"              ""           ""       
+## [4,] "vomiting"           " diarrhoea" ""       
+## [5,] "bleeding from gums" " fever"     ""       
+## [6,] "rapid pulse"        " headache"  ""</code></pre>
+<p>Você também pode ajustar o número de divisões a serem criadas com o argumento <code>n =</code>. Por exemplo, isso restringe o número de divisões a 2. Quaisquer outras vírgulas permanecem dentro dos segundos valores.</p>
+<div class="sourceCode" id="cb423"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">symptoms</span>, <span class="st">","</span>, simplify <span class="op">=</span> <span class="cn">TRUE</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      [,1]                 [,2]            
+## [1,] "jaundice"           " fever, chills"
+## [2,] "chills"             " aches, pains" 
+## [3,] "fever"              ""              
+## [4,] "vomiting"           " diarrhoea"    
+## [5,] "bleeding from gums" " fever"        
+## [6,] "rapid pulse"        " headache"</code></pre>
+<p><em>Oservação - as mesmas saídas podem ser obtidas com <code><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split_fixed()</a></code>, em que você não fornece o argumento <code>simplify</code>, mas deve designar o número de colunas (<code>n</code>).</em></p>
+<div class="sourceCode" id="cb425"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split_fixed</a></span><span class="op">(</span><span class="va">symptoms</span>, <span class="st">","</span>, n <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="dividir-colunas" class="section level3 unnumbered">
+<h3>Dividir colunas<a class="anchor" aria-label="anchor" href="#dividir-colunas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se você está tentando dividir a coluna da tabela de dados, é melhor usar a função <code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code> do <strong>dplyr</strong>. É usado para dividir uma coluna de caracteres em outras colunas.</p>
+<p>Digamos que temos uma simples tabela de dados <code>df</code> (definida e unida na <a href="characters-strings.html#str_unite">seção Unir</a>) contendo uma coluna <code>case_ID</code>, uma coluna de caractere com muitos sintomas e uma coluna de resultado. Nosso objetivo é separar a coluna de <code>symptoms</code> em várias colunas - cada uma contendo um sintoma.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ffbc142b91c2319f9c73" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ffbc142b91c2319f9c73">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6],["jaundice, fever, chills","chills, aches, pains","fever","vomiting, diarrhoea","bleeding from gums, fever","rapid pulse, headache"],["Recover","Death","Death","Recover","Recover","Recover"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_ID<\/th>\n      <th>symptoms<\/th>\n      <th>outcome<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Assumindo que os dados sejam divididos por meio do <code><a href="https://tidyr.tidyverse.org/reference/separate.html">separate()</a></code>, primeiro forneça a coluna a ser separada. Em seguida, forneça <code>into =</code> como um vetor <code><a href="https://rdrr.io/r/base/c.html">c( )</a></code> contendo os <em>novos</em> nomes das colunas, conforme mostrado abaixo.</p>
+<ul>
+<li><p><code>sep =</code> o separador, pode ser um caractere ou um número (interpretado como a posição do caractere para dividir)</p></li>
+<li><p><code>remove =</code> FALSE por padrão, remove a coluna de entrada</p></li>
+<li><p><code>convert =</code> FALSE por padrão, fará com que a string “NA” se torne <code>NA</code></p></li>
+<li><p><code>extra =</code> isso controla o que acontece se houver mais valores criados pela separação do que novas colunas nomeadas.</p></li>
+<li><p><code>extra = "warn"</code> significa que você verá um aviso, mas os valores em excesso serão descartados (<strong>o padrão</strong>)</p></li>
+<li><p><code>extra = "drop"</code> significa que os valores em excesso serão descartados sem aviso</p></li>
+<li><p>**<code>extra = "merge"</code> somente será dividido para o número de novas colunas listadas em <code>into</code> - *esta configuração preservará todos os seus dados**</p></li>
+</ul>
+<p>Um exemplo com <code>extra = "merge"</code> está abaixo - nenhum dado é perdido. Duas novas colunas são definidas, mas quaisquer terceiros sintomas são combinados na segunda coluna nova:</p>
+<div class="sourceCode" id="cb426"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># terceiros sintomas combinados na segunda nova coluna</span></span>
+<span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">symptoms</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sym_1"</span>, <span class="st">"sym_2"</span><span class="op">)</span>, sep<span class="op">=</span><span class="st">","</span>, extra <span class="op">=</span> <span class="st">"merge"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 1 rows [3].</code></pre>
+<pre><code>##   case_ID              sym_1          sym_2 outcome
+## 1       1           jaundice  fever, chills Recover
+## 2       2             chills   aches, pains   Death
+## 3       3              fever           &lt;NA&gt;   Death
+## 4       4           vomiting      diarrhoea Recover
+## 5       5 bleeding from gums          fever Recover
+## 6       6        rapid pulse       headache Recover</code></pre>
+<p>Quando o padrão <code>extra = "drop"</code> é usado abaixo, um aviso é dado, mas os terceiros sintomas são perdidos:</p>
+<div class="sourceCode" id="cb429"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># terceiros sintomas são perdidos</span></span>
+<span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate.html">separate</a></span><span class="op">(</span><span class="va">symptoms</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sym_1"</span>, <span class="st">"sym_2"</span><span class="op">)</span>, sep<span class="op">=</span><span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 2 rows [1, 2].</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 1 rows [3].</code></pre>
+<pre><code>##   case_ID              sym_1      sym_2 outcome
+## 1       1           jaundice      fever Recover
+## 2       2             chills      aches   Death
+## 3       3              fever       &lt;NA&gt;   Death
+## 4       4           vomiting  diarrhoea Recover
+## 5       5 bleeding from gums      fever Recover
+## 6       6        rapid pulse   headache Recover</code></pre>
+<p><span style="color: orange;"><strong>CUIDADO:</strong> Se você não fornecer valores suficientes <code>into</code> para as novas colunas, seus dados podem ser truncados.</span></p>
+<!-- ======================================================= -->
+</div>
+<div id="organizar-em-ordem-alfabética" class="section level3 unnumbered">
+<h3>Organizar em ordem alfabética<a class="anchor" aria-label="anchor" href="#organizar-em-ordem-alfab%C3%A9tica"><i class="fas fa-link"></i></a>
+</h3>
+<p>Várias strings podem ser classificadas em ordem alfabética. <code><a href="https://stringr.tidyverse.org/reference/str_order.html">str_order()</a></code> retorna a ordem, enquanto <code><a href="https://stringr.tidyverse.org/reference/str_order.html">str_sort()</a></code> retorna as strings nessa ordem.</p>
+<div class="sourceCode" id="cb433"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># strings</span></span>
+<span><span class="va">health_zones</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Alba"</span>, <span class="st">"Takota"</span>, <span class="st">"Delta"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># retornar a ordem alfabética</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_order.html">str_order</a></span><span class="op">(</span><span class="va">health_zones</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 1 3 2</code></pre>
+<div class="sourceCode" id="cb435"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># retornar as strings em ordem alfabética</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_order.html">str_sort</a></span><span class="op">(</span><span class="va">health_zones</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Alba"   "Delta"  "Takota"</code></pre>
+<p>Para usar um alfabeto diferente, adicione o argumento <code>locale =</code>. Veja a lista completa de localidades digitando <code><a href="https://rdrr.io/pkg/stringi/man/stri_locale_list.html">stringi::stri_locale_list()</a></code> no R console.</p>
+<!-- ======================================================= -->
+</div>
+<div id="funções-do-r-base" class="section level3 unnumbered">
+<h3>Funções do R base<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es-do-r-base"><i class="fas fa-link"></i></a>
+</h3>
+<p>É comum ver as funções do R <strong>base</strong> <code><a href="https://rdrr.io/r/base/paste.html">paste()</a></code> e <code><a href="https://rdrr.io/r/base/paste.html">paste0()</a></code>, que concatenam vetores após converter todas as partes em caracteres. Eles agem de forma semelhante a <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code> , mas a sintaxe é indiscutivelmente mais complicada - entre parênteses cada parte é separada por uma vírgula. As partes são textos de caracteres (entre aspas) ou objetos de código predefinidos (sem aspas). Por exemplo:</p>
+<div class="sourceCode" id="cb437"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n_beds</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="va">n_masks</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Hospital regional precisa "</span>, <span class="va">n_beds</span>, <span class="st">" camas e "</span>, <span class="va">n_masks</span>, <span class="st">" máscaras."</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Hospital regional precisa 10 camas e 20 máscaras."</code></pre>
+<p>Os argumentos <code>sep =</code> e <code>collapse =</code> podem ser especificados. <code><a href="https://rdrr.io/r/base/paste.html">paste()</a></code> é simplesmente <code><a href="https://rdrr.io/r/base/paste.html">paste0()</a></code> com um <code>sep = " "</code> padrão (um espaço).</p>
+</div>
+</div>
+<div id="limpe-e-padronize" class="section level2" number="10.3">
+<h2>
+<span class="header-section-number">10.3</span> Limpe e padronize<a class="anchor" aria-label="anchor" href="#limpe-e-padronize"><i class="fas fa-link"></i></a>
+</h2>
+<!-- ======================================================= -->
+<div id="mudar-maiúsculas-e-minúsculas" class="section level3 unnumbered">
+<h3>Mudar maiúsculas e minúsculas<a class="anchor" aria-label="anchor" href="#mudar-mai%C3%BAsculas-e-min%C3%BAsculas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Frequentemente, é necessário alterar a capitalização / maiúsculas de um valor de string, por exemplo, nomes de jursidições. Use <code><a href="https://stringr.tidyverse.org/reference/case.html">str_to_upper()</a></code>, <code><a href="https://stringr.tidyverse.org/reference/case.html">str_to_lower()</a></code>, e <code><a href="https://stringr.tidyverse.org/reference/case.html">str_to_title()</a></code>, de <strong>stringr</strong>, como mostrado abaixo:</p>
+<div class="sourceCode" id="cb439"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_upper</a></span><span class="op">(</span><span class="st">"California"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "CALIFORNIA"</code></pre>
+<div class="sourceCode" id="cb441"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_lower</a></span><span class="op">(</span><span class="st">"California"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "california"</code></pre>
+<p>Usando R <strong>base</strong>, o acima também pode ser obtido com <code><a href="https://rdrr.io/r/base/chartr.html">toupper()</a></code>, <code><a href="https://rdrr.io/r/base/chartr.html">tolower()</a></code>.</p>
+<p><strong>Capitalização de título</strong></p>
+<p>Transformar o string para que cada palavra inicie com maiúscula pode ser conseguido com <code><a href="https://stringr.tidyverse.org/reference/case.html">str_to_title()</a></code>:</p>
+<div class="sourceCode" id="cb443"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_title</a></span><span class="op">(</span><span class="st">"go to the US state of california "</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Go To The Us State Of California "</code></pre>
+<p>Use <code>toTitleCase()</code> do pacote <strong>tools</strong> para obter uma capitalização mais sutil (palavras como “para”, “o” e “de” não são capitalizadas).</p>
+<div class="sourceCode" id="cb445"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">tools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/tools/toTitleCase.html">toTitleCase</a></span><span class="op">(</span><span class="st">"Este é o estado da califórnia dos EUA"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Este é o Estado Da Califórnia Dos EUA"</code></pre>
+<p>Você também pode usar <code><a href="https://stringr.tidyverse.org/reference/case.html">str_to_sentence()</a></code>, que coloca em maiúscula apenas a primeira letra do string.</p>
+<div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_sentence</a></span><span class="op">(</span><span class="st">"o paciente precisa ser transportado"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "O paciente precisa ser transportado"</code></pre>
+</div>
+<div id="str_pad" class="section level3 unnumbered">
+<h3>Comprimento do código<a class="anchor" aria-label="anchor" href="#str_pad"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad()</a></code> para adicionar caracteres a uma string, com um comprimento mínimo. Por padrão, espaços são adicionados, mas você também pode preencher com outros caracteres usando o argumento <code>pad =</code>.</p>
+<div class="sourceCode" id="cb449"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Códigos ICD de comprimento diferente</span></span>
+<span><span class="va">ICD_codes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"R10.13"</span>,</span>
+<span>               <span class="st">"R10.819"</span>,</span>
+<span>               <span class="st">"R17"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Códigos ICD preenchidos com 7 caracteres no lado direito</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad</a></span><span class="op">(</span><span class="va">ICD_codes</span>, <span class="fl">7</span>, <span class="st">"right"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "R10.13 " "R10.819" "R17    "</code></pre>
+<div class="sourceCode" id="cb451"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Pad com pontos em vez de espaços</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad</a></span><span class="op">(</span><span class="va">ICD_codes</span>, <span class="fl">7</span>, <span class="st">"right"</span>, pad <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "R10.13." "R10.819" "R17...."</code></pre>
+<p>Por exemplo, para preencher números com zeros à esquerda (como para horas ou minutos), você pode preencher o número com o comprimento mínimo de 2 com <code>pad = "0"</code>.</p>
+<div class="sourceCode" id="cb453"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Adicione zeros à esquerda de dois dígitos (por exemplo, para tempos minutos / horas)</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad</a></span><span class="op">(</span><span class="st">"4"</span>, <span class="fl">2</span>, pad <span class="op">=</span> <span class="st">"0"</span><span class="op">)</span> </span></code></pre></div>
+<pre><code>## [1] "04"</code></pre>
+<div class="sourceCode" id="cb455"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># exemplo usando uma coluna numérica chamada "horas"</span></span>
+<span><span class="co"># hours &lt;- str_pad(hours, 2, pad = "0")</span></span></code></pre></div>
+</div>
+<div id="truncar" class="section level3 unnumbered">
+<h3>Truncar<a class="anchor" aria-label="anchor" href="#truncar"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://stringr.tidyverse.org/reference/str_trunc.html">str_trunc()</a></code> define um comprimento máximo para cada string. Se uma string exceder esse comprimento, ela será truncada (encurtada) e uma reticência (…) será incluída para indicar que a string era anteriormente mais longa. Observe que as reticências <em>são</em> counted contadas no comprimento. Os caracteres de reticências podem ser alterados com o argumento <code>ellipsis =</code>. O argumento opcional <code>side =</code> especifica onde as reticências aparecerão dentro da string truncada (“esquerda”, “direita” ou “centro”).</p>
+<div class="sourceCode" id="cb456"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">original</span> <span class="op">&lt;-</span> <span class="st">"Symptom onset on 4/3/2020 with vomiting"</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trunc.html">str_trunc</a></span><span class="op">(</span><span class="va">original</span>, <span class="fl">10</span>, <span class="st">"center"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Symp...ing"</code></pre>
+</div>
+<div id="padronizar-comprimento" class="section level3 unnumbered">
+<h3>Padronizar comprimento<a class="anchor" aria-label="anchor" href="#padronizar-comprimento"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://stringr.tidyverse.org/reference/str_trunc.html">str_trunc()</a></code> para definir um comprimento máximo, e então use <code><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad()</a></code> para expandir as strings muito curtas para aquele comprimento truncado. No exemplo abaixo, 6 é definido como o comprimento máximo (um valor é truncado) e, em seguida, um valor muito curto é preenchido para atingir o comprimento de 6.</p>
+<div class="sourceCode" id="cb458"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Códigos ICD de comprimento diferente</span></span>
+<span><span class="va">ICD_codes</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"R10.13"</span>,</span>
+<span>                 <span class="st">"R10.819"</span>,</span>
+<span>                 <span class="st">"R17"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># truncar com comprimento máximo de 6</span></span>
+<span><span class="va">ICD_codes_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trunc.html">str_trunc</a></span><span class="op">(</span><span class="va">ICD_codes</span>, <span class="fl">6</span><span class="op">)</span></span>
+<span><span class="va">ICD_codes_2</span></span></code></pre></div>
+<pre><code>## [1] "R10.13" "R10..." "R17"</code></pre>
+<div class="sourceCode" id="cb460"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># expandir para comprimento mínimo de 6</span></span>
+<span><span class="va">ICD_codes_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_pad.html">str_pad</a></span><span class="op">(</span><span class="va">ICD_codes_2</span>, <span class="fl">6</span>, <span class="st">"right"</span><span class="op">)</span></span>
+<span><span class="va">ICD_codes_3</span></span></code></pre></div>
+<pre><code>## [1] "R10.13" "R10..." "R17   "</code></pre>
+</div>
+<div id="remova-os-espaços-em-branco-à-esquerda-à-direita" class="section level3 unnumbered">
+<h3>Remova os espaços em branco à esquerda / à direita<a class="anchor" aria-label="anchor" href="#remova-os-espa%C3%A7os-em-branco-%C3%A0-esquerda-%C3%A0-direita"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_trim()</a></code> para remover espaços, <code>\n</code> para novas linhas ou tabulações (<code>\t</code>) nos lados de uma entrada de string. Adicione <code>"right"</code> <code>"left"</code>, ou <code>"both"</code> ao comando para especificar qual lado cortar (por exemplo, <code>str_trim(x, "right")</code>.</p>
+<div class="sourceCode" id="cb462"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Números ID com espaços em excesso à direita</span></span>
+<span><span class="va">IDs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"provA_1852  "</span>, <span class="co"># dois espaços excedentes</span></span>
+<span>         <span class="st">"provA_2345"</span>,   <span class="co"># zero espaço excedente</span></span>
+<span>         <span class="st">"provA_9460 "</span><span class="op">)</span>  <span class="co"># um espaço excedente</span></span>
+<span></span>
+<span><span class="co"># IDs cortados para remover espaços em excesso apenas no lado direito</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_trim</a></span><span class="op">(</span><span class="va">IDs</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "provA_1852" "provA_2345" "provA_9460"</code></pre>
+</div>
+<div id="remova-os-espaços-em-branco-repetidos-dentro-do-texto" class="section level3 unnumbered">
+<h3>Remova os espaços em branco repetidos dentro do texto<a class="anchor" aria-label="anchor" href="#remova-os-espa%C3%A7os-em-branco-repetidos-dentro-do-texto"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_squish()</a></code> para remover espaços repetidos que aparecem dentro de uma string. Por exemplo, para converter espaços duplos em espaços simples. Ele também remove espaços, novas linhas ou tabulações do lado de fora da string como <code><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_trim()</a></code>.</p>
+<div class="sourceCode" id="cb464"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># o original contém espaços em excesso dentro da string</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_trim.html">str_squish</a></span><span class="op">(</span><span class="st">"  Pt requires   IV saline\n"</span><span class="op">)</span> </span></code></pre></div>
+<pre><code>## [1] "Pt requires IV saline"</code></pre>
+<p>Digite <code><a href="https://stringr.tidyverse.org/reference/str_trim.html">?str_trim</a></code>, <code><a href="https://stringr.tidyverse.org/reference/str_pad.html">?str_pad</a></code> em seu console R para ver mais detalhes.</p>
+</div>
+<div id="quebrar-em-parágrafos" class="section level3 unnumbered">
+<h3>Quebrar em parágrafos<a class="anchor" aria-label="anchor" href="#quebrar-em-par%C3%A1grafos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://stringr.tidyverse.org/reference/str_wrap.html">str_wrap()</a></code> para quebrar um texto longo e não estruturado em um parágrafo estruturado com comprimento de linha fixo. Fornece o comprimento de caractere ideal para cada linha e aplica um algoritmo para inserir novas linhas (<code>\n</code>) dentro do parágrafo, conforme mostrado no exemplo abaixo.</p>
+<div class="sourceCode" id="cb466"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pt_course</span> <span class="op">&lt;-</span> <span class="st">"início dos sintomas 04/01/2020 vômito febre calafrios. Pt viu um curandeiro tradicional na aldeia natal em 04/02/2020. Em 04/05/2020 os sintomas de pt se agravaram e foi internado na clínica de Lumta. A amostra foi coletada e o pt foi transportado para o hospital regional em 04/06/2020. Pt morreu no hospital regional em 04/07/2020."</span></span>
+<span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html">str_wrap</a></span><span class="op">(</span><span class="va">pt_course</span>, <span class="fl">40</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "início dos sintomas 04/01/2020 vômito\nfebre calafrios. Pt viu um curandeiro\ntradicional na aldeia natal em\n04/02/2020. Em 04/05/2020 os sintomas\nde pt se agravaram e foi internado na\nclínica de Lumta. A amostra foi coletada\ne o pt foi transportado para o hospital\nregional em 04/06/2020. Pt morreu no\nhospital regional em 04/07/2020."</code></pre>
+<p>A função <strong>base</strong> <code><a href="https://rdrr.io/r/base/cat.html">cat()</a></code> pode ser envolvida no comando acima para mostrar o resultado, exibindo as novas linhas adicionadas.</p>
+<div class="sourceCode" id="cb468"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html">str_wrap</a></span><span class="op">(</span><span class="va">pt_course</span>, <span class="fl">40</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## início dos sintomas 04/01/2020 vômito
+## febre calafrios. Pt viu um curandeiro
+## tradicional na aldeia natal em
+## 04/02/2020. Em 04/05/2020 os sintomas
+## de pt se agravaram e foi internado na
+## clínica de Lumta. A amostra foi coletada
+## e o pt foi transportado para o hospital
+## regional em 04/06/2020. Pt morreu no
+## hospital regional em 04/07/2020.</code></pre>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="manipular-por-posição" class="section level2" number="10.4">
+<h2>
+<span class="header-section-number">10.4</span> Manipular por posição<a class="anchor" aria-label="anchor" href="#manipular-por-posi%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h2>
+<div id="extrair-pela-posição-dos-caracteres" class="section level3 unnumbered">
+<h3>Extrair pela posição dos caracteres<a class="anchor" aria-label="anchor" href="#extrair-pela-posi%C3%A7%C3%A3o-dos-caracteres"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub()</a></code> para retornar apenas uma parte de uma string. A função tem três argumentos principais:</p>
+<ol style="list-style-type: decimal">
+<li>o(s) vetor(es) de caracteres</li>
+<li>posição inicial</li>
+<li>posição final</li>
+</ol>
+<p>Algumas notas sobre os números de posição:</p>
+<ul>
+<li>Se um número de posição for positivo, a posição é contada a partir da extremidade esquerda da string.</li>
+<li>Se um número de posição for negativo, ele é contado a partir da extremidade direita da string.</li>
+<li>Os números das posições são inclusivos.</li>
+<li>As posições que se estendem além da string serão truncadas (removidas).</li>
+</ul>
+<p>Abaixo estão alguns exemplos aplicados à string “pneumonia”:</p>
+<div class="sourceCode" id="cb470"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># começar e terminar em terceiro da esquerda (3ª letra da esquerda)</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="st">"pneumonia"</span>, <span class="fl">3</span>, <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "e"</code></pre>
+<div class="sourceCode" id="cb472"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 0 não está presente</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="st">"pneumonia"</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] ""</code></pre>
+<div class="sourceCode" id="cb474"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 6º da esquerda, para o 1º da direita</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="st">"pneumonia"</span>, <span class="fl">6</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "onia"</code></pre>
+<div class="sourceCode" id="cb476"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 5º da direita, para o 2º da direita</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="st">"pneumonia"</span>, <span class="op">-</span><span class="fl">5</span>, <span class="op">-</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "moni"</code></pre>
+<div class="sourceCode" id="cb478"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 4º da esquerda para uma posição fora da string</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="st">"pneumonia"</span>, <span class="fl">4</span>, <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "umonia"</code></pre>
+</div>
+<div id="extrair-por-posição-de-palavra" class="section level3 unnumbered">
+<h3>Extrair por posição de palavra<a class="anchor" aria-label="anchor" href="#extrair-por-posi%C3%A7%C3%A3o-de-palavra"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para extrair a enésima ‘palavra’, use <code><a href="https://stringr.tidyverse.org/reference/word.html">word()</a></code>, também do pacote <strong>stringr</strong>. Forneça as strings (descriçoes), a posição da primeira palavra a extrair e a posição da última palavra a extrair.</p>
+<p>Por padrão, o separador entre ‘palavras’ é considerado um espaço, a menos que indicado de outra forma com <code>sep =</code> (por exemplo, <code>sep = "_"</code> quando as palavras são separadas por underlines).</p>
+<div class="sourceCode" id="cb480"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># strings para avaliar</span></span>
+<span><span class="va">chief_complaints</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Acabei de sair do hospital há 2 dias, mas ainda mal consigo respirar."</span>,</span>
+<span>                      <span class="st">"Meu estômago dói"</span>,</span>
+<span>                      <span class="st">"Dor de ouvido severa"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># extraia a 1ª a 3ª palavras de cada string (descrição)</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/word.html">word</a></span><span class="op">(</span><span class="va">chief_complaints</span>, start <span class="op">=</span> <span class="fl">1</span>, end <span class="op">=</span> <span class="fl">3</span>, sep <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Acabei de sair"   "Meu estômago dói" "Dor de ouvido"</code></pre>
+</div>
+<div id="substituir-pela-posição-do-caractere" class="section level3 unnumbered">
+<h3>Substituir pela posição do caractere<a class="anchor" aria-label="anchor" href="#substituir-pela-posi%C3%A7%C3%A3o-do-caractere"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub()</a></code> emparelhado com o operador de atribuição (<code>&lt;-</code>) pode ser usado para modificar uma parte de uma string:</p>
+<div class="sourceCode" id="cb482"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">word</span> <span class="op">&lt;-</span> <span class="st">"pneumonia"</span></span>
+<span></span>
+<span><span class="co"># converter o terceiro e o quarto caracteres em X </span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">word</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"XX"</span></span>
+<span></span>
+<span><span class="co"># exibe</span></span>
+<span><span class="va">word</span></span></code></pre></div>
+<pre><code>## [1] "pnXXmonia"</code></pre>
+<p>Um exemplo aplicado a várias strings (por exemplo, uma coluna). Observe a expansão do comprimento de “HIV”.</p>
+<div class="sourceCode" id="cb484"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">words</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"pneumonia"</span>, <span class="st">"tubercolose"</span>, <span class="st">"HIV"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># converter o terceiro e o quarto caracteres em X </span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">words</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"XX"</span></span>
+<span></span>
+<span><span class="va">words</span></span></code></pre></div>
+<pre><code>## [1] "pnXXmonia"   "tuXXrcolose" "HIXX"</code></pre>
+</div>
+<div id="avalie-o-comprimento" class="section level3 unnumbered">
+<h3>Avalie o comprimento<a class="anchor" aria-label="anchor" href="#avalie-o-comprimento"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb486"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_length.html">str_length</a></span><span class="op">(</span><span class="st">"abc"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<p>Alternativamente, use <code><a href="https://rdrr.io/r/base/nchar.html">nchar()</a></code> do R <strong>base</strong></p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="padrões" class="section level2" number="10.5">
+<h2>
+<span class="header-section-number">10.5</span> Padrões<a class="anchor" aria-label="anchor" href="#padr%C3%B5es"><i class="fas fa-link"></i></a>
+</h2>
+<p>Muitas funções <strong>stringr</strong> trabalham para detectar, localizar, extrair, combinar, substituir e dividir com base em um <em>padrão</em> especificado.</p>
+<!-- ======================================================= -->
+<div id="detectar-um-padrão" class="section level3 unnumbered">
+<h3>Detectar um padrão<a class="anchor" aria-label="anchor" href="#detectar-um-padr%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> como abaixo para detectar a presença / ausência de um padrão dentro de uma string. Primeiro forneça a string ou vetor a ser pesquisado (<code>string =</code>) e, em seguida, o padrão a ser procurado (<code>pattern =</code>). Observe que, por padrão, a pesquisa <em>diferencia maiúsculas de minúsculas</em>!</p>
+<div class="sourceCode" id="cb488"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="st">"professor de escola primária"</span>, pattern <span class="op">=</span> <span class="st">"prof"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>O argumento <code>negate =</code> pode ser incluído e definido como <code>TRUE</code> se você quiser saber se o padrão NÃO está presente.</p>
+<div class="sourceCode" id="cb490"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="st">"professor de escola primária"</span>, pattern <span class="op">=</span> <span class="st">"prof"</span>, negate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Para ignorar maiúsculas e minúsculas, envolva o padrão em <code><a href="https://stringr.tidyverse.org/reference/modifiers.html">regex()</a></code>, e <em>em</em> <code><a href="https://stringr.tidyverse.org/reference/modifiers.html">regex()</a></code> adicione o argumento <code>ignore_case = TRUE</code> (ou <code>T</code> como abreviação).</p>
+<div class="sourceCode" id="cb492"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="st">"Professor"</span>, pattern <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/modifiers.html">regex</a></span><span class="op">(</span><span class="st">"prof"</span>, ignore_case <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Quando <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> é aplicado a um vetor de caracteres ou uma coluna da tabela de dados, ele retornará TRUE ou FALSE para cada um dos valores.</p>
+<div class="sourceCode" id="cb494"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># um vetor / coluna de ocupações</span></span>
+<span><span class="va">occupations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"trabalhador do campo"</span>,</span>
+<span>                 <span class="st">"professor universitário"</span>,</span>
+<span>                 <span class="st">"educador de escola primária"</span>,</span>
+<span>                 <span class="st">"tutor"</span>,</span>
+<span>                 <span class="st">"enfermeira em hospital regional"</span>,</span>
+<span>                 <span class="st">"eletricita da Fábrica em Amberdeen"</span>,</span>
+<span>                 <span class="st">"médico"</span>,</span>
+<span>                 <span class="st">"cardiologista"</span>,</span>
+<span>                 <span class="st">"trabalhador de escritório"</span>,</span>
+<span>                 <span class="st">"trabalhador de serviço de alimentação"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Detecta a presença do padrão "prof" em cada string - a saída é um vetor TRUE / FALSE</span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">occupations</span>, <span class="st">"prof"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<p>Se você precisar contar os <code>TRUE</code>s, simplesmente some os resultados por meio da função <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code>. Essa função conta o número de <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb496"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">occupations</span>, <span class="st">"prof"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>Para pesquisar incluindo vários termos, inclua-os separados por barras OR (<code>|</code>) dentro do argumento <code>pattern =</code>, conforme mostrado abaixo:</p>
+<div class="sourceCode" id="cb498"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">occupations</span>, pattern <span class="op">=</span> <span class="st">"prof|educador|tutor"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<p>Se precisar construir uma longa lista de termos de pesquisa, você pode combiná-los usando <code><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c()</a></code> e <code>sep = |</code>, em seguida defina que este é um objeto de caractere e referencie o vetor posteriormente de forma mais sucinta. O exemplo abaixo inclui possíveis termos de pesquisa de ocupação para provedores médicos de linha de frente.</p>
+<div class="sourceCode" id="cb500"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># termos de busca</span></span>
+<span><span class="va">occupation_med_frontline</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"medical"</span>, <span class="st">"medicine"</span>, <span class="st">"hcw"</span>, <span class="st">"healthcare"</span>, <span class="st">"home care"</span>, <span class="st">"home health"</span>,</span>
+<span>                                <span class="st">"surgeon"</span>, <span class="st">"doctor"</span>, <span class="st">"doc"</span>, <span class="st">"physician"</span>, <span class="st">"surgery"</span>, <span class="st">"peds"</span>, <span class="st">"pediatrician"</span>,</span>
+<span>                               <span class="st">"intensivist"</span>, <span class="st">"cardiologist"</span>, <span class="st">"coroner"</span>, <span class="st">"nurse"</span>, <span class="st">"nursing"</span>, <span class="st">"rn"</span>, <span class="st">"lpn"</span>,</span>
+<span>                               <span class="st">"cna"</span>, <span class="st">"pa"</span>, <span class="st">"physician assistant"</span>, <span class="st">"mental health"</span>,</span>
+<span>                               <span class="st">"emergency department technician"</span>, <span class="st">"resp therapist"</span>, <span class="st">"respiratory"</span>,</span>
+<span>                                <span class="st">"phlebotomist"</span>, <span class="st">"pharmacy"</span>, <span class="st">"pharmacist"</span>, <span class="st">"hospital"</span>, <span class="st">"snf"</span>, <span class="st">"rehabilitation"</span>,</span>
+<span>                               <span class="st">"rehab"</span>, <span class="st">"activity"</span>, <span class="st">"elderly"</span>, <span class="st">"subacute"</span>, <span class="st">"sub acute"</span>,</span>
+<span>                                <span class="st">"clinic"</span>, <span class="st">"post acute"</span>, <span class="st">"therapist"</span>, <span class="st">"extended care"</span>,</span>
+<span>                                <span class="st">"dental"</span>, <span class="st">"dential"</span>, <span class="st">"dentist"</span>, sep <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">occupation_med_frontline</span></span></code></pre></div>
+<pre><code>## [1] "medical|medicine|hcw|healthcare|home care|home health|surgeon|doctor|doc|physician|surgery|peds|pediatrician|intensivist|cardiologist|coroner|nurse|nursing|rn|lpn|cna|pa|physician assistant|mental health|emergency department technician|resp therapist|respiratory|phlebotomist|pharmacy|pharmacist|hospital|snf|rehabilitation|rehab|activity|elderly|subacute|sub acute|clinic|post acute|therapist|extended care|dental|dential|dentist"</code></pre>
+<p>Este comando retorna o número de ocupações que contêm qualquer um dos termos de pesquisa para provedores médicos de linha de frente (<code>occupation_med_frontline</code>):</p>
+<div class="sourceCode" id="cb502"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">occupations</span>, pattern <span class="op">=</span> <span class="va">occupation_med_frontline</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p><strong>Funções de pesquisa de string do R base</strong></p>
+<p>A função <strong>base</strong> <code><a href="https://rdrr.io/r/base/grep.html">grepl()</a></code> funciona de forma similar à função <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code>, no sentido de que procura por correspondências com um padrão e retorna um vetor lógico. A sintaxe básica é <code>grepl(pattern, strings_to_search, ignore.case = FALSE, ...)</code>. Uma vantagem é que o argumento <code>ignore.case</code> é mais fácil de escrever (não há necessidade de envolver a função <code><a href="https://stringr.tidyverse.org/reference/modifiers.html">regex()</a></code>).</p>
+<p>Da mesma forma, as funções de <strong>base</strong> <code><a href="https://rdrr.io/r/base/grep.html">sub()</a></code> e <code><a href="https://rdrr.io/r/base/grep.html">gsub()</a></code> agem de forma semelhante a <code><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace()</a></code>. Sua sintaxe básica é: <code>gsub(pattern, replacement, strings_to_search, ignore.case = FALSE)</code>. <code><a href="https://rdrr.io/r/base/grep.html">sub()</a></code> substituirá a primeira instância do padrão, enquanto <code><a href="https://rdrr.io/r/base/grep.html">gsub()</a></code> substituirá todas as instâncias do padrão.</p>
+<div id="converta-vírgulas-em-pontos" class="section level4 unnumbered">
+<h4>Converta vírgulas em pontos<a class="anchor" aria-label="anchor" href="#converta-v%C3%ADrgulas-em-pontos"><i class="fas fa-link"></i></a>
+</h4>
+<p>Aqui está um exemplo de uso de <code><a href="https://rdrr.io/r/base/grep.html">gsub()</a></code> para converter vírgulas em pontos em um vetor de números. Isso pode ser útil se seus dados vierem de outras partes do mundo que não os Estados Unidos ou a Grã-Bretanha.</p>
+<p>O <code><a href="https://rdrr.io/r/base/grep.html">gsub()</a></code> interno que atua primeiro em <code>lengths</code> convertendo quaisquer pontos em nenhum espaço ““. O caractere de ponto final”.” deve ser “escapado” com duas barras para realmente significar um ponto, porque “.” em regex significa “qualquer caractere”. Em seguida, o resultado (apenas com vírgulas) é passado para o <code><a href="https://rdrr.io/r/base/grep.html">gsub()</a></code> , no qual as vírgulas são substituídas por pontos.</p>
+<div class="sourceCode" id="cb504"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lengths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2.454,56"</span>, <span class="st">"1,2"</span>, <span class="st">"6.096,5"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">","</span>,                <span class="co"># encontra vírgulas   </span></span>
+<span>                replacement <span class="op">=</span> <span class="st">"."</span>,            <span class="co"># substitui por pontos</span></span>
+<span>                x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"\\."</span>, <span class="st">""</span>, <span class="va">lengths</span><span class="op">)</span>  <span class="co"># vetor com outros pontos removidos (deve-se "escapar" os pontos)</span></span>
+<span>                <span class="op">)</span></span>
+<span>           <span class="op">)</span>                                  <span class="co"># converter resultado em numérico</span></span></code></pre></div>
+</div>
+</div>
+<div id="substituir-tudo" class="section level3 unnumbered">
+<h3>Substituir tudo<a class="anchor" aria-label="anchor" href="#substituir-tudo"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use <code><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all()</a></code> omo uma ferramenta de “localizar e substituir”. Primeiro, forneça as strings a serem avaliadas para <code>string =</code>, depois o padrão a ser substituído por <code>pattern =</code> e, a seguir, o valor de substituição para <code>replacement =</code>. O exemplo abaixo substitui todas as ocorrências de “morto” por “falecido”. Observe que isso É sensível a maiúsculas e minúsculas.</p>
+<div class="sourceCode" id="cb505"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">outcome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Karl: morto"</span>,</span>
+<span>            <span class="st">"Samantha: morto"</span>,</span>
+<span>            <span class="st">"Marco: não morto"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span>string <span class="op">=</span> <span class="va">outcome</span>, pattern <span class="op">=</span> <span class="st">"morto"</span>, replacement <span class="op">=</span> <span class="st">"óbito"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Karl: óbito"      "Samantha: óbito"  "Marco: não óbito"</code></pre>
+<p>Notas:</p>
+<ul>
+<li>Para substituir um padrão por <code>NA</code>, use <code><a href="https://stringr.tidyverse.org/reference/str_replace_na.html">str_replace_na()</a></code>.<br>
+</li>
+<li>A função <code><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace()</a></code> substitui apenas a primeira instância do padrão em cada string avaliada.</li>
+</ul>
+<!-- ======================================================= -->
+</div>
+<div id="detectar-dentro-da-lógica" class="section level3 unnumbered">
+<h3>Detectar dentro da lógica<a class="anchor" aria-label="anchor" href="#detectar-dentro-da-l%C3%B3gica"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Dentro de <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code></strong></p>
+<p><code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> é frequentemente usado em <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> (de <strong>dplyr</strong>). Digamos que <code>occupations</code> é uma coluna na lista. A função <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> abaixo cria uma nova coluna chamada <code>is_educator</code> usando lógica condicional via <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>. Veja a página sobre limpeza de dados para aprender mais sobre <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>.</p>
+<div class="sourceCode" id="cb507"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>is_educator <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="co"># pesquisa de termo dentro da ocupação, sem distinção entre maiúsculas e minúsculas</span></span>
+<span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">occupations</span>,</span>
+<span>               <span class="fu"><a href="https://stringr.tidyverse.org/reference/modifiers.html">regex</a></span><span class="op">(</span><span class="st">"educador|prof|tutor|universidade"</span>,</span>
+<span>                     ignore_case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>              <span class="op">~</span> <span class="st">"Educador"</span>,</span>
+<span>    <span class="co"># todos os outros</span></span>
+<span>    <span class="cn">TRUE</span>                                               <span class="op">~</span> <span class="st">"Não é educador"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Como um lembrete, pode ser importante adicionar critérios de exclusão à lógica condicional (<code>negate = F</code>):</p>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="characters-strings.html#cb508-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb508-2"><a href="characters-strings.html#cb508-2" tabindex="-1"></a>  <span class="co"># valor na nova coluna is_educator é baseado na lógica condicional</span></span>
+<span id="cb508-3"><a href="characters-strings.html#cb508-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">is_educator =</span> <span class="fu">case_when</span>(</span>
+<span id="cb508-4"><a href="characters-strings.html#cb508-4" tabindex="-1"></a>    </span>
+<span id="cb508-5"><a href="characters-strings.html#cb508-5" tabindex="-1"></a>    <span class="co"># a coluna de ocupação deve atender a 2 critérios para ser atribuído "Educador":</span></span>
+<span id="cb508-6"><a href="characters-strings.html#cb508-6" tabindex="-1"></a>    <span class="co"># deve ter um termo de pesquisa E NÃO qualquer termo de exclusão</span></span>
+<span id="cb508-7"><a href="characters-strings.html#cb508-7" tabindex="-1"></a>    </span>
+<span id="cb508-8"><a href="characters-strings.html#cb508-8" tabindex="-1"></a>    <span class="co"># Deve conter um termo de pesquisa</span></span>
+<span id="cb508-9"><a href="characters-strings.html#cb508-9" tabindex="-1"></a>    <span class="fu">str_detect</span>(occupations,</span>
+<span id="cb508-10"><a href="characters-strings.html#cb508-10" tabindex="-1"></a>               <span class="fu">regex</span>(<span class="st">"educador|prof|tutor|universidade"</span>, <span class="at">ignore_case =</span> T)) <span class="sc">&amp;</span>              </span>
+<span id="cb508-11"><a href="characters-strings.html#cb508-11" tabindex="-1"></a>    </span>
+<span id="cb508-12"><a href="characters-strings.html#cb508-12" tabindex="-1"></a>    <span class="co"># E NÃO deve ter um termo de exclusão</span></span>
+<span id="cb508-13"><a href="characters-strings.html#cb508-13" tabindex="-1"></a>    <span class="fu">str_detect</span>(occupations,</span>
+<span id="cb508-14"><a href="characters-strings.html#cb508-14" tabindex="-1"></a>               <span class="fu">regex</span>(<span class="st">"admin"</span>, <span class="at">ignore_case =</span> T),</span>
+<span id="cb508-15"><a href="characters-strings.html#cb508-15" tabindex="-1"></a>               <span class="at">negate =</span> <span class="cn">TRUE</span>                        <span class="sc">~</span> <span class="st">"Educador"</span></span>
+<span id="cb508-16"><a href="characters-strings.html#cb508-16" tabindex="-1"></a>    </span>
+<span id="cb508-17"><a href="characters-strings.html#cb508-17" tabindex="-1"></a>    <span class="co"># Todas as linhas que não atendem aos critérios acima</span></span>
+<span id="cb508-18"><a href="characters-strings.html#cb508-18" tabindex="-1"></a>    <span class="cn">TRUE</span>                                            <span class="sc">~</span> <span class="st">"Não é educador"</span>))</span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+<div id="localize-a-posição-do-padrão" class="section level3 unnumbered">
+<h3>Localize a posição do padrão<a class="anchor" aria-label="anchor" href="#localize-a-posi%C3%A7%C3%A3o-do-padr%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para localizar a <em>primeira</em> posição de um padrão, use <code><a href="https://stringr.tidyverse.org/reference/str_locate.html">str_locate()</a></code>. Ele produz uma posição inicial e final.</p>
+<div class="sourceCode" id="cb509"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_locate.html">str_locate</a></span><span class="op">(</span><span class="st">"I wish"</span>, <span class="st">"sh"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##      start end
+## [1,]     5   6</code></pre>
+<p>Como outras funções <code>str</code>, há uma versão “_all” (<code><a href="https://stringr.tidyverse.org/reference/str_locate.html">str_locate_all()</a></code>) que retornará as posições de <em>todas</em> as instâncias do padrão dentro de cada string. Isso resulta em uma <code>list</code>.</p>
+<div class="sourceCode" id="cb511"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">phrases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"I wish"</span>, <span class="st">"I hope"</span>, <span class="st">"he hopes"</span>, <span class="st">"He hopes"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_locate.html">str_locate</a></span><span class="op">(</span><span class="va">phrases</span>, <span class="st">"h"</span> <span class="op">)</span>     <span class="co"># posição da *primeira* instância do padrão</span></span></code></pre></div>
+<pre><code>##      start end
+## [1,]     6   6
+## [2,]     3   3
+## [3,]     1   1
+## [4,]     4   4</code></pre>
+<div class="sourceCode" id="cb513"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_locate.html">str_locate_all</a></span><span class="op">(</span><span class="va">phrases</span>, <span class="st">"h"</span> <span class="op">)</span> <span class="co"># posição de *cada* instância do padrão</span></span></code></pre></div>
+<pre><code>## [[1]]
+##      start end
+## [1,]     6   6
+## 
+## [[2]]
+##      start end
+## [1,]     3   3
+## 
+## [[3]]
+##      start end
+## [1,]     1   1
+## [2,]     4   4
+## 
+## [[4]]
+##      start end
+## [1,]     4   4</code></pre>
+<!-- ======================================================= -->
+</div>
+<div id="extraia-uma-combinação" class="section level3 unnumbered">
+<h3>Extraia uma combinação<a class="anchor" aria-label="anchor" href="#extraia-uma-combina%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p><code><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract_all()</a></code> retorna os próprios padrões de correspondência, o que é mais útil quando você oferece vários padrões por meio de condições “OU”. Por exemplo, procurando no vetor string de ocupações (consulte a aba anterior) “educador”, “prof” ou “tutor”.</p>
+<p><code><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract_all()</a></code> retorna uma <code>list</code> que contém todas as correspondências para cada string avaliada. Veja abaixo como a ocupação 3 tem duas correspondências de padrão dentro dela.</p>
+<div class="sourceCode" id="cb515"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract_all</a></span><span class="op">(</span><span class="va">occupations</span>, <span class="st">"educador|prof|tutor"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [[1]]
+## character(0)
+## 
+## [[2]]
+## [1] "prof"
+## 
+## [[3]]
+## [1] "educador"
+## 
+## [[4]]
+## [1] "tutor"
+## 
+## [[5]]
+## character(0)
+## 
+## [[6]]
+## character(0)
+## 
+## [[7]]
+## character(0)
+## 
+## [[8]]
+## character(0)
+## 
+## [[9]]
+## character(0)
+## 
+## [[10]]
+## character(0)</code></pre>
+<p><code><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract()</a></code> extrai apenas <em>a primeira combinação</em> (match) em cada string avaliada, produzindo um vetor de caracteres com um elemento para cada string avaliada. Retorna <code>NA</code> onde não há uma combinação. Os <code>NA</code>s pode ser removido envolvendo o vetor retornado com <code><a href="https://rdrr.io/r/stats/na.fail.html">na.exclude()</a></code>. Observe como o segundo dos acertos da ocupação 3 não é mostrado.</p>
+<div class="sourceCode" id="cb517"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract</a></span><span class="op">(</span><span class="va">occupations</span>, <span class="st">"educador|prof|tutor"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] NA         "prof"     "educador" "tutor"    NA         NA         NA        
+##  [8] NA         NA         NA</code></pre>
+<!-- ======================================================= -->
+</div>
+<div id="subconjunto-e-contagem" class="section level3 unnumbered">
+<h3>Subconjunto e contagem<a class="anchor" aria-label="anchor" href="#subconjunto-e-contagem"><i class="fas fa-link"></i></a>
+</h3>
+<p>As funções alinhadas incluem <code><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset()</a></code> e <code><a href="https://stringr.tidyverse.org/reference/str_count.html">str_count()</a></code>.</p>
+<p><code><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset()</a></code> retorna os valores reais que continham o padrão:</p>
+<div class="sourceCode" id="cb519"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_subset.html">str_subset</a></span><span class="op">(</span><span class="va">occupations</span>, <span class="st">"educador|prof|tutor"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "professor universitário"     "educador de escola primária"
+## [3] "tutor"</code></pre>
+<p><code><a href="https://stringr.tidyverse.org/reference/str_count.html">str_count()</a></code> retorna um vetor de números: o <strong>número de vezes</strong> que um termo de pesquisa aparece em cada valor avaliado.</p>
+<div class="sourceCode" id="cb521"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_count.html">str_count</a></span><span class="op">(</span><span class="va">occupations</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/modifiers.html">regex</a></span><span class="op">(</span><span class="st">"educador|prof|tutor"</span>, ignore_case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] 0 1 1 1 0 0 0 0 0 0</code></pre>
+<!-- ======================================================= -->
+</div>
+<div id="grupos-regex" class="section level3 unnumbered">
+<h3>Grupos Regex<a class="anchor" aria-label="anchor" href="#grupos-regex"><i class="fas fa-link"></i></a>
+</h3>
+<p>UNDER CONSTRUCTION</p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="caracteres-especiais" class="section level2" number="10.6">
+<h2>
+<span class="header-section-number">10.6</span> Caracteres especiais<a class="anchor" aria-label="anchor" href="#caracteres-especiais"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Barra invertida <code>\</code> como escape</strong></p>
+<p>A barra invertida <code>\</code> é usada para “escapar” do significado do próximo caractere. Desta forma, uma barra invertida pode ser usada para exibir uma aspa dentro de outras aspas (<code>\"</code>) - a aspa do meio não “quebrará” as aspas circundantes.</p>
+<p>Observação - portanto, se você deseja <em>exibir</em> uma barra invertida, deve-se escapar de seu significado com outra barra invertida. Portanto, você deve escrever duas barras invertidas <code>\\</code> para mostrar uma.</p>
+<p><strong>Caracteres especiais</strong></p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="60%">
+<col width="39%">
+</colgroup>
+<thead><tr class="header">
+<th>Caracteres especiais</th>
+<th>Representa</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>"\\"</code></td>
+<td>barra invertida</td>
+</tr>
+<tr class="even">
+<td><code>"\n"</code></td>
+<td>uma nova linha</td>
+</tr>
+<tr class="odd">
+<td><code>"\""</code></td>
+<td>aspas duplas <em>entre</em> aspas duplas</td>
+</tr>
+<tr class="even">
+<td><code>'\''</code></td>
+<td>aspas simples <em>entre</em> aspas simples</td>
+</tr>
+<tr class="odd">
+<td>
+<code>"\</code>“<code>| grave accent</code>”<code>| carriage return</code>“<code>| tab</code>”<code>| vertical tab</code>“`</td>
+<td>backspace (exclui caractere anterior ao selecionado)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Execute <code><a href="https://rdrr.io/r/base/Quotes.html">?"'"</a></code> no console R para exibir uma lista completa desses caracteres especiais (ela aparecerá no painel Ajuda do RStudio).</p>
+<!-- ======================================================= -->
+</div>
+<div id="regular-expressões-regex" class="section level2" number="10.7">
+<h2>
+<span class="header-section-number">10.7</span> Regular expressões (regex)<a class="anchor" aria-label="anchor" href="#regular-express%C3%B5es-regex"><i class="fas fa-link"></i></a>
+</h2>
+<!-- ======================================================= -->
+</div>
+<div id="regex-e-caracteres-especiais" class="section level2" number="10.8">
+<h2>
+<span class="header-section-number">10.8</span> Regex e caracteres especiais<a class="anchor" aria-label="anchor" href="#regex-e-caracteres-especiais"><i class="fas fa-link"></i></a>
+</h2>
+<p>Expressões regulares, ou “regex”, é uma linguagem concisa para descrever padrões em strings. Se você não estiver familiarizado com ela, uma expressão regular pode parecer uma linguagem alienígena. Aqui tentamos desmistificar um pouco essa linguagem.</p>
+<p><em>Grande parte desta seção foi adaptada <a href="https://towardsdatascience.com/a-gentle-introduction-to-regular-expressions-with-r-df5e897ca432">desse tutorial</a> e <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf">desta página de referência</a></em>. Nós adaptamos seletivamente aqui sabendo que este manual pode ser visto por pessoas sem acesso à Internet para ver os outros tutoriais.</p>
+<p>Uma expressão regular é frequentemente aplicada para extrair padrões específicos de texto “não estruturado” - por exemplo, notas médicas, queixas principais, histórico do paciente ou outras colunas de texto livre em uma tabela de dados.</p>
+<p>Existem quatro ferramentas básicas que podem ser usadas para criar uma expressão regular básica:</p>
+<ol style="list-style-type: decimal">
+<li>Conjuntos de caracteres</li>
+<li>Meta caracteres</li>
+<li>Quantificadores</li>
+<li>Grupos</li>
+</ol>
+<p><strong>Conjunto de caracteres</strong></p>
+<p>Os conjuntos de caracteres são uma forma de expressar as opções de listagem para uma correspondência de caracteres, entre colchetes. Portanto, qualquer correspondência será acionada se qualquer um dos caracteres entre colchetes for encontrado na string. Por exemplo, para procurar vogais, pode-se usar este conjunto de caracteres: “<span class="math display">\[aeiou\]</span>”. Alguns outros conjuntos de caracteres comuns são:</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Conjunto de caracteres</th>
+<th>Correspondências para</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>"[A-Z]"</code></td>
+<td>qualquer letra maiúscula isolada</td>
+</tr>
+<tr class="even">
+<td><code>"[a-z]"</code></td>
+<td>qualquer letra minúscula isolada</td>
+</tr>
+<tr class="odd">
+<td><code>"[0-9]"</code></td>
+<td>qualquer dígito</td>
+</tr>
+<tr class="even">
+<td><code>[:alnum:]</code></td>
+<td>qualquer caractere alfanumérico</td>
+</tr>
+<tr class="odd">
+<td><code>[:digit:]</code></td>
+<td>qualquer dígito numérico</td>
+</tr>
+<tr class="even">
+<td><code>[:alpha:]</code></td>
+<td>qualquer letra (maiúscula ou minúscula)</td>
+</tr>
+<tr class="odd">
+<td><code>[:upper:]</code></td>
+<td>qualquer letra maiúscula</td>
+</tr>
+<tr class="even">
+<td><code>[:lower:]</code></td>
+<td>qualquer letra minúscula</td>
+</tr>
+</tbody>
+</table></div>
+<p>Os conjuntos de caracteres podem ser combinados dentro de um colchete (sem espaços!), como <code>"[A-Za-z]"</code> (qualquer letra maiúscula ou minúscula), ou outro exemplo <code>"[t-z0-5]"</code> (t minúsculo até z OU número de 0 a 5).</p>
+<p><strong>Metacaracteres</strong></p>
+<p>Metacaracteres são abreviações para conjuntos de caracteres. Alguns dos mais importantes estão listados abaixo:</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="21%">
+<col width="78%">
+</colgroup>
+<thead><tr class="header">
+<th>Meta character</th>
+<th>Representa</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>"\\s"</code></td>
+<td>um espaço simples</td>
+</tr>
+<tr class="even">
+<td><code>"\\w"</code></td>
+<td>qualquer caractere alfanumérico único (A-Z, a-z ou 0-9)</td>
+</tr>
+<tr class="odd">
+<td><code>"\\d"</code></td>
+<td>qualquer dígito numérico único (0-9)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Quantificadores</strong></p>
+<p>Normalmente, você não deseja pesquisar uma correspondência em apenas um caractere. Os quantificadores permitem que você designe o comprimento das letras/números para permitir a correspondência.</p>
+<p>Quantificadores são números escritos entre chaves <code><a href="https://rdrr.io/r/base/Paren.html">{ }</a></code> <em>após</em> o caractere que estão quantificando, por exemplo,</p>
+<ul>
+<li>
+<code>"A{2}"</code> retornará instâncias de <strong>duas</strong> letras A maiúsculas.<br>
+</li>
+<li>
+<code>"A{2,4}"</code> retornará instâncias <strong>entre duas e quatro</strong> letras A maiúsculas (<em>não coloque espaços!</em>).<br>
+</li>
+<li>
+<code>"A{2,}"</code> retornará as correspondências de <strong>duas ou mais</strong> letras A maiúsculas.<br>
+</li>
+<li>
+<code>"A+"</code> retornará instâncias de <strong>uma ou mais</strong> letras A maiúsculas (grupo estendido até que um caractere diferente seja encontrado).<br>
+</li>
+<li>Preceda com um <code>*</code> asterisco para retornar <strong>zero ou mais</strong> correspondências (útil se você não tiver certeza de que o padrão está presente)</li>
+</ul>
+<p>Usando o símbolo mais <code>+</code> como quantificador, a correspondência ocorrerá até que um caractere diferente seja encontrado. Por exemplo, esta expressão retornará <em>todas</em> as palavras (caracteres alfabéticos: <code>"[A-Za-z]+"</code></p>
+<div class="sourceCode" id="cb523"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># teste string para quantificadores</span></span>
+<span><span class="va">test</span> <span class="op">&lt;-</span> <span class="st">"A-AA-AAA-AAAA"</span></span></code></pre></div>
+<p>Quando um quantificador de {2} é usado, apenas pares de A’s consecutivos são retornados. Dois pares são identificados dentro <code>AAAA</code>.</p>
+<div class="sourceCode" id="cb524"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract_all</a></span><span class="op">(</span><span class="va">test</span>, <span class="st">"A{2}"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [[1]]
+## [1] "AA" "AA" "AA" "AA"</code></pre>
+<p>Quando um quantificador de {2,4} é usado, grupos de A’s consecutivos com comprimento de dois a quatro são retornados.</p>
+<div class="sourceCode" id="cb526"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract_all</a></span><span class="op">(</span><span class="va">test</span>, <span class="st">"A{2,4}"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [[1]]
+## [1] "AA"   "AAA"  "AAAA"</code></pre>
+<p>Com o quantificador <code>+</code>, grupos de <strong>um ou mais</strong> são retornados:</p>
+<div class="sourceCode" id="cb528"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract_all</a></span><span class="op">(</span><span class="va">test</span>, <span class="st">"A+"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [[1]]
+## [1] "A"    "AA"   "AAA"  "AAAA"</code></pre>
+<p><strong>Posição relativa</strong></p>
+<p>Esses requisitos expressam o que precede ou segue um padrão. Por exemplo, para extrair frases, “dois números seguidos de um ponto” (<code>""</code>). (?&lt;=\.)\s(?=<span class="math display">\[A-Z\]</span>)</p>
+<div class="sourceCode" id="cb530"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract_all</a></span><span class="op">(</span><span class="va">test</span>, <span class="st">""</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [[1]]
+##  [1] "A" "-" "A" "A" "-" "A" "A" "A" "-" "A" "A" "A" "A"</code></pre>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Declaração de posição</th>
+<th>Corresponde a</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>"(?&lt;=b)a"</code></td>
+<td>“a” que <strong>é precedido</strong> por um “b”</td>
+</tr>
+<tr class="even">
+<td><code>"(?&lt;!b)a"</code></td>
+<td>“a” que <strong>NÃO é precedido</strong> por um “b”</td>
+</tr>
+<tr class="odd">
+<td><code>"a(?=b)"</code></td>
+<td>“a” que <strong>é seguido</strong> por um “b”</td>
+</tr>
+<tr class="even">
+<td><code>"a(?!b)"</code></td>
+<td>“a” que <strong>NÃO é seguido</strong> por um “b”</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Grupos</strong></p>
+<p>Capturar grupos em sua expressão regular é uma maneira de ter um resultado mais organizado na extração.</p>
+<p><strong>Exemplos de Regex</strong></p>
+<p>Abaixo está um texto livre para os exemplos. Tentaremos extrair informações úteis dele usando um termo de pesquisa de expressão regular.</p>
+<div class="sourceCode" id="cb532"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">pt_note</span> <span class="op">&lt;-</span> <span class="st">"O paciente chegou ao pronto-socorro do Broward Hospital às 18h do dia 12/06/2005. O paciente apresentou dor abdominal irradiada no quadrante LR. A pele do paciente estava pálida, fria e úmida. A temperatura do paciente era de 99,8 graus Fahrenheit. A pulsação do paciente era de 100 bpm e intermitente. A frequência respiratória era de 29 por minuto."</span></span></code></pre></div>
+<p>Esta expressão corresponde a todas as palavras (qualquer caractere até atingir um objeto não caractere, como um espaço):</p>
+<div class="sourceCode" id="cb533"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract_all</a></span><span class="op">(</span><span class="va">pt_note</span>, <span class="st">"[A-Za-z]+"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [[1]]
+##  [1] "O"            "paciente"     "chegou"       "ao"           "pronto"      
+##  [6] "socorro"      "do"           "Broward"      "Hospital"     "s"           
+## [11] "h"            "do"           "dia"          "O"            "paciente"    
+## [16] "apresentou"   "dor"          "abdominal"    "irradiada"    "no"          
+## [21] "quadrante"    "LR"           "A"            "pele"         "do"          
+## [26] "paciente"     "estava"       "p"            "lida"         "fria"        
+## [31] "e"            "mida"         "A"            "temperatura"  "do"          
+## [36] "paciente"     "era"          "de"           "graus"        "Fahrenheit"  
+## [41] "A"            "pulsa"        "o"            "do"           "paciente"    
+## [46] "era"          "de"           "bpm"          "e"            "intermitente"
+## [51] "A"            "frequ"        "ncia"         "respirat"     "ria"         
+## [56] "era"          "de"           "por"          "minuto"</code></pre>
+<p>A expressão <code>"[0-9]{1,2}"</code> corresponde a números consecutivos com 1 ou 2 dígitos de comprimento. Também pode ser escrito <code>"\\d{1,2}"</code>, ou <code>"[:digit:]{1,2}"</code>.</p>
+<div class="sourceCode" id="cb535"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_extract.html">str_extract_all</a></span><span class="op">(</span><span class="va">pt_note</span>, <span class="st">"[0-9]{1,2}"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [[1]]
+##  [1] "18" "12" "06" "20" "05" "99" "8"  "10" "0"  "29"</code></pre>
+<!-- Esta expressão extrairá todas as frases (assumindo que a primeira letra está maiúscula e a frase termina com um ponto). O padrão é lido em inglês como: "A capital letter followed by some lowercase letters, a space, some letters, a space" -->
+<!-- ```{r} -->
+<!-- str_extract_all(pt_note, "[A-Z][a-z]+\\s\\w+\\s\\d{1,2}\\s\\w+\\s*\\w*") -->
+<!-- ``` -->
+<p>Você pode ver uma lista útil de expressões regex e dicas na página 2 <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf">deste cheatsheet</a></p>
+<p>Também veja o <a href="https://towardsdatascience.com/a-gentle-introduction-to-regular-expressions-with-r-df5e897ca432">tutorial</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="recursos-3" class="section level2" number="10.9">
+<h2>
+<span class="header-section-number">10.9</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-3"><i class="fas fa-link"></i></a>
+</h2>
+<p>Uma planilha de referencia para as funções de <strong>stringr</strong> pode ser encontrada <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf">aqui</a></p>
+<p>Uma vinheta sobre <strong>stringr</strong> pode ser encontrada <a href="https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html">aqui</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></div>
+<div class="next"><a href="factors.html"><span class="header-section-number">11</span> Fatores</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#characters-strings"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li>
+<a class="nav-link" href="#prepara%C3%A7%C3%A3o-1"><span class="header-section-number">10.1</span> Preparação</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#carregue-os-pacotes">Carregue os pacotes</a></li>
+<li><a class="nav-link" href="#importar-os-dados">Importar os dados</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#unir-dividir-e-organizar"><span class="header-section-number">10.2</span> Unir, dividir e organizar</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#combinar-strings">Combinar strings</a></li>
+<li><a class="nav-link" href="#strings-din%C3%A2micas">Strings dinâmicas</a></li>
+<li><a class="nav-link" href="#str_unite">Unir colunas</a></li>
+<li><a class="nav-link" href="#dividir">Dividir</a></li>
+<li><a class="nav-link" href="#dividir-colunas">Dividir colunas</a></li>
+<li><a class="nav-link" href="#organizar-em-ordem-alfab%C3%A9tica">Organizar em ordem alfabética</a></li>
+<li><a class="nav-link" href="#fun%C3%A7%C3%B5es-do-r-base">Funções do R base</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#limpe-e-padronize"><span class="header-section-number">10.3</span> Limpe e padronize</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#mudar-mai%C3%BAsculas-e-min%C3%BAsculas">Mudar maiúsculas e minúsculas</a></li>
+<li><a class="nav-link" href="#str_pad">Comprimento do código</a></li>
+<li><a class="nav-link" href="#truncar">Truncar</a></li>
+<li><a class="nav-link" href="#padronizar-comprimento">Padronizar comprimento</a></li>
+<li><a class="nav-link" href="#remova-os-espa%C3%A7os-em-branco-%C3%A0-esquerda-%C3%A0-direita">Remova os espaços em branco à esquerda / à direita</a></li>
+<li><a class="nav-link" href="#remova-os-espa%C3%A7os-em-branco-repetidos-dentro-do-texto">Remova os espaços em branco repetidos dentro do texto</a></li>
+<li><a class="nav-link" href="#quebrar-em-par%C3%A1grafos">Quebrar em parágrafos</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#manipular-por-posi%C3%A7%C3%A3o"><span class="header-section-number">10.4</span> Manipular por posição</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#extrair-pela-posi%C3%A7%C3%A3o-dos-caracteres">Extrair pela posição dos caracteres</a></li>
+<li><a class="nav-link" href="#extrair-por-posi%C3%A7%C3%A3o-de-palavra">Extrair por posição de palavra</a></li>
+<li><a class="nav-link" href="#substituir-pela-posi%C3%A7%C3%A3o-do-caractere">Substituir pela posição do caractere</a></li>
+<li><a class="nav-link" href="#avalie-o-comprimento">Avalie o comprimento</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#padr%C3%B5es"><span class="header-section-number">10.5</span> Padrões</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#detectar-um-padr%C3%A3o">Detectar um padrão</a></li>
+<li><a class="nav-link" href="#substituir-tudo">Substituir tudo</a></li>
+<li><a class="nav-link" href="#detectar-dentro-da-l%C3%B3gica">Detectar dentro da lógica</a></li>
+<li><a class="nav-link" href="#localize-a-posi%C3%A7%C3%A3o-do-padr%C3%A3o">Localize a posição do padrão</a></li>
+<li><a class="nav-link" href="#extraia-uma-combina%C3%A7%C3%A3o">Extraia uma combinação</a></li>
+<li><a class="nav-link" href="#subconjunto-e-contagem">Subconjunto e contagem</a></li>
+<li><a class="nav-link" href="#grupos-regex">Grupos Regex</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#caracteres-especiais"><span class="header-section-number">10.6</span> Caracteres especiais</a></li>
+<li><a class="nav-link" href="#regular-express%C3%B5es-regex"><span class="header-section-number">10.7</span> Regular expressões (regex)</a></li>
+<li><a class="nav-link" href="#regex-e-caracteres-especiais"><span class="header-section-number">10.8</span> Regex e caracteres especiais</a></li>
+<li><a class="nav-link" href="#recursos-3"><span class="header-section-number">10.9</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

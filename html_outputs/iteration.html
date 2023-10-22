@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>16 Iterações, loops e listas | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Os epidemiologistas muitas vezes se deparam com análises repetidas em subgrupos, como países, distritos ou faixas etárias. Estas são apenas algumas das muitas situações envolvendo iteração....">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="16 Iterações, loops e listas | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Os epidemiologistas muitas vezes se deparam com análises repetidas em subgrupos, como países, distritos ou faixas etárias. Estas são apenas algumas das muitas situações envolvendo iteração....">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="16 Iterações, loops e listas | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Os epidemiologistas muitas vezes se deparam com análises repetidas em subgrupos, como países, distritos ou faixas etárias. Estas são apenas algumas das muitas situações envolvendo iteração....">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="active" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="iteration" class="section level1" number="16">
+<h1>
+<span class="header-section-number">16</span> Iterações, loops e listas<a class="anchor" aria-label="anchor" href="#iteration"><i class="fas fa-link"></i></a>
+</h1>
+<p>Os epidemiologistas muitas vezes se deparam com análises repetidas em subgrupos, como países, distritos ou faixas etárias. Estas são apenas algumas das muitas situações envolvendo <em>iteração</em>. Codificar suas operações iterativamente usando as abordagens abaixo ajudará você a executar essas tarefas repetitivas mais rapidamente, reduzir a chance de erro e reduzir o comprimento do código.</p>
+<p>Esta página apresentará duas abordagens para operações iterativas - usando os <em>loops for</em> e usando o pacote <strong>purrr</strong>.</p>
+<ol style="list-style-type: decimal">
+<li>
+<em>loops for</em> iteram código a partir de uma série de entradas, mas são menos comuns em R do que em outras linguagens de programação. No entanto, nós os apresentamos aqui como uma ferramenta de aprendizagem e referência</li>
+<li>O pacote <strong>purrr</strong> é a abordagem <strong>tidyverse</strong> para operações iterativas - ele funciona “mapeando” uma função em muitas entradas (valores, colunas, conjuntos de dados etc.)</li>
+</ol>
+<p>Ao longo do caminho, mostraremos exemplos como:</p>
+<ul>
+<li>Importando e exportando vários arquivos</li>
+<li>Criando curvas epidemiológicas para várias jurisdições</li>
+<li>Executando testes T para várias colunas em um data frame</li>
+</ul>
+<p>Na <a href="iteration.html#iter_purrr">seção</a> <strong>purrr</strong> também forneceremos vários exemplos de criação e manipulação de <code>listas</code>.</p>
+<div id="preparação-7" class="section level2" number="16.1">
+<h2>
+<span class="header-section-number">16.1</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-7"><i class="fas fa-link"></i></a>
+</h2>
+<div id="carregando-pacotes" class="section level3 unnumbered">
+<h3>Carregando pacotes<a class="anchor" aria-label="anchor" href="#carregando-pacotes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Este trecho de código mostra o carregamento de pacotes necessários para as análises. Neste livro nós enfatizamos o <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code> do <strong>pacman</strong>, que instala o pacote, se necessário, <em>e</em> o carrega para uso. Você também pode carregar pacotes instalados com o <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> do R <strong>base</strong>. Veja a página sobre o [R - o básico] para mais informações sobre pacotes R.</p>
+<div class="sourceCode" id="cb759"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span>     <span class="va">rio</span>,         <span class="co"># importa/exporta</span></span>
+<span>     <span class="va">here</span>,        <span class="co"># localizador de arquivos</span></span>
+<span>     <span class="va">purrr</span>,       <span class="co"># iteração</span></span>
+<span>     <span class="va">grates</span>,      <span class="co"># scales in ggplot</span></span>
+<span>     <span class="va">tidyverse</span>    <span class="co"># gerenciamento e visualização de dados</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="importando-dados" class="section level3 unnumbered">
+<h3>Importando dados<a class="anchor" aria-label="anchor" href="#importando-dados"><i class="fas fa-link"></i></a>
+</h3>
+<p>Importamos o conjunto de dados de casos de uma epidemia simulada de Ebola. Se você quiser acompanhar <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds" class="download-button">clique aqui para fazer download da linelist “limpa”</a> (como um arquivo .rds). Importamos os dados com a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> do pacote <strong>rio</strong> (ela lida com muitos tipos de arquivos como .xlsx, .csv, .rds - veja a página <a href="importing.html#importing">Importar e exportar</a> para detalhes).</p>
+<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># importando a linelist</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></span></code></pre></div>
+<p>As primeiras 50 linhas da linelist são exibidas abaixo.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-cf9a9df27a40697321b1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-cf9a9df27a40697321b1">{"x":{"filter":"none","vertical":false,"data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Ausente","Ausente","Ausente","Ausente","Port Hospital","Military Hospital","Ausente","Ausente","Other","Port Hospital","Port Hospital","Port Hospital","Ausente","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Ausente","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Ausente","Military Hospital","Other","Ausente","Ausente","Port Hospital","Port Hospital","Port Hospital","Ausente","Central Hospital","Military Hospital","Other","Other","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Ausente"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.461830626007281,8.462729314626459,8.461443675342711,8.46191259217774,8.472923276435059,8.48401630165138,8.458371253408441,8.477617055125091,8.47570184950483,8.477799468789719,8.47145134147474,8.478048406853629,8.48528034195779,8.469575303958671,8.45957352078114,8.474048895115439,8.488029171298839,8.473437335922,8.484082637344621,8.46242233645879,8.470268221265719,8.463984474805329,8.464134789434199,8.456230946296071,8.48334624336805,8.47493999153642,8.47832062438022,8.469393389176499,8.48480589906514,8.47121232619015,8.48438437371817,8.484661585743391,8.477141599844281,8.462381270106089,8.455685978131131,8.4632880274758,8.47940722413856,8.46353857052336,8.461789681588639,8.47508713872833,8.458258081280711,8.4532568143863,8.4732571907655,8.479115866419329,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.81844297615629,16.06524962926347,22.49657064471879,71.41440190438405,41.61712247324614,62.09538908706566,0,16.83765369253662,22.79032897344431,53.41198979591836,24.28026361429067,22.46003435064077,54.32098765432099,41.05784325564545,28.56648199445983,17.03205520132763,25.04129149128882,38.7172182043977,27.3876813705495,31.55555555555556,14.80690759456621,30.88398111998135,26.61934338952972,59.37499999999999,96.61835748792272,19.23947487550928,84.94031221303948,18.41993774061044,27.77226740726046,41.32231404958677,17.20806665861611,24.16716240333135,15.72189710891781,428.9940828402366,27.99302202929125,243.2610124917817,20.23950075898128,30.52744643563797,25.15589569160998,47,39.04,31.06616432017979,77.96836711962574,29.51659612385831,166.4932362122789,100.3086419753086,37.76,20.60378034578518,23.45856237526698],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+</div>
+</div>
+<div id="loops-for" class="section level2" number="16.2">
+<h2>
+<span class="header-section-number">16.2</span> <em>loops for</em><a class="anchor" aria-label="anchor" href="#loops-for"><i class="fas fa-link"></i></a>
+</h2>
+<div id="iter_loops" class="section level3 unnumbered">
+<h3>
+<em>loops for</em> no R<a class="anchor" aria-label="anchor" href="#iter_loops"><i class="fas fa-link"></i></a>
+</h3>
+<p><em>loops for</em> não são enfatizados em R, mas são comuns em outras linguagens de programação. Para iniciantes, eles podem ser úteis para aprender e praticar porque são mais fáceis de “explorar”, “depurar” e entender exatamente o que está acontecendo para cada iteração, especialmente quando você ainda não está confortável em escrever suas próprias funções .</p>
+<p>Você pode passar rapidamente do <em>loop for</em> para iterar com funções mapeadas com o <strong>purrr</strong> (consulte a <a href="iteration.html#iter_purrr">seção abaixo</a>)</p>
+</div>
+<div id="principais-componentes" class="section level3 unnumbered">
+<h3>Principais componentes<a class="anchor" aria-label="anchor" href="#principais-componentes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Um <em>loop for</em> tem três partes principais:</p>
+<ol style="list-style-type: decimal">
+<li>A <strong>sequência</strong> de itens para percorrer</li>
+<li>As <strong>operações</strong> a serem conduzidas por item na sequência</li>
+<li>O <strong>contêiner</strong> para armazenar os resultados (opcional)</li>
+</ol>
+<p>A sintaxe básica é: <code>for (item em sequência) {fazer operações usando item}</code>. Observe os parênteses e os colchetes. Os resultados podem ser impressos no console ou armazenados em um objeto R (o container).</p>
+<p>Um exemplo simples de <em>loop for</em> está abaixo.</p>
+<div class="sourceCode" id="cb761"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">num</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>  <span class="co"># a SEQUÊNCIA é definida (números 1 a 5) e o loop é aberto com "{"</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">num</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span>             <span class="co"># As OPERAÇÕES (adicione dois a cada número de sequência e imprima)</span></span>
+<span><span class="op">}</span>                            <span class="co"># O loop é fechado com "}"                           </span></span></code></pre></div>
+<pre><code>## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 7</code></pre>
+</div>
+<div id="sequência" class="section level3 unnumbered">
+<h3>Sequência<a class="anchor" aria-label="anchor" href="#sequ%C3%AAncia"><i class="fas fa-link"></i></a>
+</h3>
+<p>Esta é a parte “for” de um <em>loop for</em> - as operações serão executadas “para” cada item na sequência. A sequência pode ser uma série de valores (por exemplo, nomes de jurisdições, doenças, nomes de colunas, elementos de lista, etc.), ou pode ser uma série de números consecutivos (por exemplo, 1,2,3,4,5). Cada abordagem tem suas próprias utilidades, descritas abaixo.</p>
+<p>A estrutura básica de uma instrução de sequência é <code>item em vetor</code>.</p>
+<ul>
+<li>Você pode escrever qualquer caractere ou palavra no lugar de “item” (por exemplo, “i”, “num”, “hosp”, “distrito”, etc.). O valor desse “item” muda a cada iteração do loop, passando por cada valor no vetor.</li>
+<li>O <em>vetor</em> pode ser de valores do tipo caracteres, nomes de colunas ou talvez uma sequência de números - esses são os valores que mudarão a cada iteração. Você pode usá-los nas operações do <em>loop for</em> usando o termo “item”.</li>
+</ul>
+<p><strong>Exemplo: sequência de valores de caracteres</strong></p>
+<p>Neste exemplo, um loop é executado para cada valor em um vetor de caracteres predefinido de nomes de hospitais.</p>
+<div class="sourceCode" id="cb763"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># criando um vetor com os nomes dos hospitais</span></span>
+<span><span class="va">hospital_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span></span>
+<span><span class="va">hospital_names</span> <span class="co"># printe (mostre o nome do hospital)</span></span></code></pre></div>
+<pre><code>## [1] "Other"                                "Ausente"                             
+## [3] "St. Mark's Maternity Hospital (SMMH)" "Port Hospital"                       
+## [5] "Military Hospital"                    "Central Hospital"</code></pre>
+<p>Escolhemos o termo <code>hosp</code> para representar valores do vetor <code>hospital_names</code>. Para a primeira iteração do loop, o valor de <code>hosp</code> será <code>hospital_names[[1]]</code>. Para o segundo loop será <code>hospital_names[[2]]</code>. E assim por diante…</p>
+<div class="sourceCode" id="cb765"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># um 'loop for' com sequência de caracteres</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">hosp</span> <span class="kw">in</span> <span class="va">hospital_names</span><span class="op">)</span><span class="op">{</span>       <span class="co"># sequência</span></span>
+<span>  </span>
+<span>       <span class="co"># OPERAÇÕES AQUI</span></span>
+<span>  <span class="op">}</span></span></code></pre></div>
+<p><strong>Exemplo: sequência de nomes de colunas</strong></p>
+<p>Esta é uma variação da sequência de caracteres acima, na qual os nomes de um objeto R existente são extraídos e se tornam o vetor. Por exemplo, os nomes das colunas de um data frame. Convenientemente, no código de operações do <em>loop for</em>, os nomes das colunas podem ser usados para <em>indexar</em> (subconjunto) seu data frame original.</p>
+<p>Abaixo, a sequência é o <code><a href="https://rdrr.io/r/base/names.html">names()</a></code> (nomes das colunas) do data frame <code>linelist</code>. Nosso nome de “item” é <code>col</code>, que representará o nome de cada coluna à medida que os loops prosseguem.</p>
+<p>Para fins de exemplo, incluímos o código de operações dentro do <em>loop for</em>, que é executado para cada valor na sequência. Neste código, os valores de sequência (nomes das colunas) são usados para <em>indexar</em> (subconjunto) <code>linelist</code>, um de cada vez. Conforme ensinado na página <a href="basics.html#basics">Introdução ao R</a>, colchetes duplos <code>[[ ]]</code> são usados para subconjunto. A coluna resultante é passada para <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code>, então para <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> para produzir o número de valores na coluna que estão faltando. O resultado é impresso no console - um número para cada coluna.</p>
+<div class="sourceCode" id="cb766"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">col</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>        <span class="co"># o loop é executado para cada coluna na linelist; nome da coluna representado por "col" </span></span>
+<span>  </span>
+<span>  <span class="co"># Exemplo de código de operações - printe o número de valores ausentes na coluna</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>  <span class="co"># linelist é indexado pelo valor atual de "col"</span></span>
+<span>     </span>
+<span><span class="op">}</span></span></code></pre></div>
+<pre><code>## [1] 0
+## [1] 0
+## [1] 2087
+## [1] 256
+## [1] 0
+## [1] 936
+## [1] 1323
+## [1] 278
+## [1] 86
+## [1] 0
+## [1] 86
+## [1] 86
+## [1] 86
+## [1] 0
+## [1] 0
+## [1] 0
+## [1] 2088
+## [1] 2088
+## [1] 0
+## [1] 0
+## [1] 0
+## [1] 249
+## [1] 249
+## [1] 249
+## [1] 249
+## [1] 249
+## [1] 149
+## [1] 765
+## [1] 0
+## [1] 256</code></pre>
+<p><strong>Sequência de números</strong></p>
+<p>Nesta abordagem, a sequência é uma série de números consecutivos. Assim, o valor do “item” não é um valor de caractere (por exemplo, “Hospital Central” ou “data_onset”), mas é um número. Isso é útil para fazer loop pelos data frames, pois você pode usar o número do “item” dentro do <em>loop for</em> para indexar o data frame pelo <em>número da linha</em>.</p>
+<p>Por exemplo, digamos que você queira percorrer cada linha em seu data frame e extrair determinadas informações. Seus “itens” seriam números de linha numéricos. Frequentemente, “itens” neste caso são escritos como <code>i</code>.</p>
+<p>O processo <em>loop for</em> pode ser explicado em palavras como “para cada item em uma sequência de números de 1 ao número total de linhas no meu data frame, faça X”. Para a primeira iteração do loop, o valor de “item” <code>i</code> seria 1. Para a segunda iteração, <code>i</code> seria 2, etc.</p>
+<p>Aqui está a aparência da sequência no código: <code>for (i in 1:nrow(linelist)) {OPERATIONS CODE}</code> onde <code>i</code> representa o “item” e <code>1:nrow(linelist)</code> produz uma sequência de números de 1 até o número de linhas em <code>linelist</code>.</p>
+<div class="sourceCode" id="cb768"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>  <span class="co"># use em um data frame</span></span>
+<span>  <span class="co"># OPERAÇÕES AQUI</span></span>
+<span><span class="op">}</span>  </span></code></pre></div>
+<p>Se você deseja que a sequência seja de números, mas está começando de um vetor (não de um data frame), use o atalho <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code> para retornar uma sequência de números para cada elemento do vetor. Por exemplo, <code>for (i in seq_along(hospital_names) {OPERATIONS CODE}</code>.</p>
+<p>O código abaixo na verdade retorna números, que se tornariam o valor de <code>i</code> em seu respectivo loop.</p>
+<div class="sourceCode" id="cb769"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">hospital_names</span><span class="op">)</span>  <span class="co"># use em um vetor de nomes</span></span></code></pre></div>
+<pre><code>## [1] 1 2 3 4 5 6</code></pre>
+<p>Uma vantagem de usar números na sequência é que é fácil também usar o número <code>i</code> para indexar um <em>contêiner</em> que armazena as saídas do loop. Há um exemplo disso na seção Operações abaixo.</p>
+</div>
+<div id="operações" class="section level3 unnumbered">
+<h3>Operações<a class="anchor" aria-label="anchor" href="#opera%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+</h3>
+<p>Este é o código dentro das chaves <code><a href="https://rdrr.io/r/base/Paren.html">{ }</a></code> do <em>loop for</em>. Você deseja que esse código seja executado para cada “item” na <em>sequência</em>. Portanto, tome cuidado para que cada parte do seu código que muda pelo “item” seja codificada corretamente de forma que realmente mude! Por exemplo, lembre-se de usar <code>[[ ]]</code> para indexação.</p>
+<p>No exemplo abaixo, iteramos em cada linha na <code>linelist</code>. Os valores <code>gender</code> e <code>age</code> de cada linha são colados e armazenados no vetor de caracteres do contêiner <code>cases_demographics</code>. Observe como também usamos a indexação <code>[[i]]</code> para salvar a saída do loop na posição correta no vetor “contêiner”.</p>
+<div class="sourceCode" id="cb771"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># criando contêiner para armazenar resultados - um vetor de caractere</span></span>
+<span><span class="va">cases_demographics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"character"</span>, length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># o loop for</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="co"># OPERAÇÕES</span></span>
+<span>  <span class="co"># extraindo valores da linelist para a linha i, usando colchetes para indexação</span></span>
+<span>  <span class="va">row_gender</span>  <span class="op">&lt;-</span> <span class="va">linelist</span><span class="op">$</span><span class="va">gender</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
+<span>  <span class="va">row_age</span>     <span class="op">&lt;-</span> <span class="va">linelist</span><span class="op">$</span><span class="va">age_years</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>    <span class="co"># não se esqueça de indexar!</span></span>
+<span>     </span>
+<span>  <span class="co"># combinando gender-age e armazenar no vetor de contêiner no local indexado</span></span>
+<span>  <span class="va">cases_demographics</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="va">row_gender</span>, <span class="va">row_age</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="op">}</span>  <span class="co"># finalizando o loop for</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># exibindo as primeiras 10 linhas do contêiner</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cases_demographics</span>, <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] "m,2"  "f,3"  "m,56" "f,18" "m,3"  "f,16" "f,16" "f,0"  "m,61" "f,27"</code></pre>
+</div>
+<div id="contêiner" class="section level3 unnumbered">
+<h3>Contêiner<a class="anchor" aria-label="anchor" href="#cont%C3%AAiner"><i class="fas fa-link"></i></a>
+</h3>
+<p>Às vezes, os resultados do seu <em>loop for</em> serão impressos no console ou no painel RStudio Plots. Outras vezes, você desejará armazenar as saídas em um “contêiner” para uso posterior. Esse contêiner pode ser um vetor, um data frame ou até mesmo uma lista.</p>
+<p>É mais eficiente criar o contêiner para os resultados <em>antes</em> mesmo de iniciar o <em>loop</em>. Na prática, isso significa criar um vetor, data frame ou lista vazio. Estes podem ser criados com as funções <code><a href="https://rdrr.io/r/base/vector.html">vector()</a></code> para vetores ou listas, ou com <code><a href="https://rdrr.io/r/base/matrix.html">matrix()</a></code> e <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> para um data frame.</p>
+<p><strong>Vetor vazio</strong></p>
+<p>Use <code><a href="https://rdrr.io/r/base/vector.html">vector()</a></code> e especifique o <code>mode =</code> com base na classe esperada dos objetos que você irá inserir - seja “double” (para armazenar números), “character” ou “logical”. Você também deve definir o <code>length =</code> com antecedência. Este deve ser o comprimento da sua sequência <em>loop for</em>.</p>
+<p>Digamos que você queira armazenar o atraso médio até a admissão de cada hospital. Você usaria “double” e definiria o comprimento como o número de saídas esperadas (o número de hospitais exclusivos no conjunto de dados).</p>
+<div class="sourceCode" id="cb773"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">delays</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span></span>
+<span>  mode <span class="op">=</span> <span class="st">"double"</span>,                            <span class="co"># esperamos armazenar números</span></span>
+<span>  length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># o número de hospitais únicos no conjunto de dados</span></span></code></pre></div>
+<p><strong>Data frame vazio</strong></p>
+<p>Você pode criar um data frame vazio especificando o número de linhas e colunas assim:</p>
+<div class="sourceCode" id="cb774"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">delays</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Lista vazia</strong></p>
+<p>Você pode querer armazenar alguns gráficos criados por um <em>loop for</em> em uma lista. Uma lista é como um vetor, mas contém outros objetos R dentro dela que podem ser de diferentes classes. Os itens em uma lista podem ser um único número, um data frame, um vetor e até outra lista.</p>
+<p>Você realmente inicializa uma lista vazia usando o mesmo comando <code><a href="https://rdrr.io/r/base/vector.html">vector()</a></code> acima, mas com <code>mode = "list"</code>. Especifique o comprimento como desejar.</p>
+<div class="sourceCode" id="cb775"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span>mode <span class="op">=</span> <span class="st">"list"</span>, length <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="imprimindo" class="section level3 unnumbered">
+<h3>Imprimindo<a class="anchor" aria-label="anchor" href="#imprimindo"><i class="fas fa-link"></i></a>
+</h3>
+<p>Observe que para “printar” (mostrar) de dentro de um <em>loop for</em> você provavelmente precisará envolver explicitamente a função <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>.</p>
+<p>Neste exemplo abaixo, a sequência é um vetor de caracteres explícito, que é usado para acessar o subconjunto da linelist por hospital. Os resultados não são armazenados em um contêiner, mas são impressos no console com a função <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>.</p>
+<div class="sourceCode" id="cb776"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">hosp</span> <span class="kw">in</span> <span class="va">hospital_names</span><span class="op">)</span><span class="op">{</span> </span>
+<span>     <span class="va">hospital_cases</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hospital</span> <span class="op">==</span> <span class="va">hosp</span><span class="op">)</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">hospital_cases</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<pre><code>## [1] 885
+## [1] 1469
+## [1] 422
+## [1] 1762
+## [1] 896
+## [1] 454</code></pre>
+</div>
+<div id="testando-o-seu-loop" class="section level3 unnumbered">
+<h3>Testando o seu loop<a class="anchor" aria-label="anchor" href="#testando-o-seu-loop"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para testar seu loop, você pode executar um comando para fazer uma atribuição temporária do “item”, como <code>i &lt;- 10</code> ou <code>hosp &lt;- "Central Hospital"</code>. Faça isso <em>fora do loop</em> e execute apenas seu código de operações (o código entre colchetes) para ver se os resultados esperados são produzidos.</p>
+</div>
+<div id="gráficos-em-loop" class="section level3 unnumbered">
+<h3>Gráficos em loop<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-em-loop"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para juntar todos os três componentes (contêiner, sequência e operações), vamos tentar traçar uma epicurva para cada hospital (consulte a página em <a href="epicurves.html#epicurves">Curvas epidêmicas</a>).</p>
+<p>Podemos fazer uma bela epicurva de <em>todos</em> os casos por gênero usando o pacote <strong>incidence2</strong> conforme abaixo:</p>
+<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># criando o objeto do tipo 'incidence'</span></span>
+<span><span class="va">outbreak</span> <span class="op">&lt;-</span> <span class="fu">incidence2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/incidence2/man/incidence.html">incidence</a></span><span class="op">(</span>   </span>
+<span>     x <span class="op">=</span> <span class="va">linelist</span>,                   <span class="co"># data frame - linelist completo</span></span>
+<span>     date_index <span class="op">=</span> <span class="st">"date_onset"</span>,        <span class="co"># coluna de data</span></span>
+<span>     interval <span class="op">=</span> <span class="st">"week"</span>,              <span class="co"># contagens agregadas semanalmente</span></span>
+<span>     groups <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span>                <span class="co"># valores de grupo por gênero</span></span>
+<span>     <span class="co">#na_as_group = TRUE)             # o sexo ausente é um grupo próprio</span></span>
+<span></span>
+<span><span class="co"># plotando a epicurva</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">outbreak</span>, <span class="co"># nom de l'objet d'incidence</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_index</span>, <span class="co">#aesthetiques et axes</span></span>
+<span>            y <span class="op">=</span> <span class="va">count</span>, </span>
+<span>            fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span>, <span class="co"># Fill colour of bars by gender</span></span>
+<span>       color <span class="op">=</span> <span class="st">"black"</span>      <span class="co"># Contour colour of bars</span></span>
+<span>       <span class="op">)</span> <span class="op">+</span>  </span>
+<span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span> <span class="op">+</span></span>
+<span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Outbreak of all cases"</span>, <span class="co">#titre</span></span>
+<span>          x <span class="op">=</span> <span class="st">"Counts"</span>, </span>
+<span>          y <span class="op">=</span> <span class="st">"Date"</span>, </span>
+<span>          fill <span class="op">=</span> <span class="st">"Gender"</span>, </span>
+<span>          color <span class="op">=</span> <span class="st">"Gender"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-600-1.png" width="672"></div>
+<p>Para produzir um gráfico separado para os casos de cada hospital, podemos colocar esse código da epicurva dentro de um <em>loop for</em>.</p>
+<p>Primeiro, salvamos um vetor com os nomes exclusivos do hospital, <code>hospital_names</code>. O <em>loop for</em> será executado uma vez para cada um destes nomes: <code>for (hosp in hospital_names)</code>. A cada iteração do <em>loop for</em>, o nome do hospital atual do vetor será representado como <code>hosp</code> para uso dentro do loop.</p>
+<p>Dentro das operações de loop, você pode escrever o código R normalmente, mas use o “item” (<code>hosp</code> neste caso) sabendo que seu valor será alterado. Dentro deste loop:</p>
+<ul>
+<li>Um <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> é aplicado a <code>linelist</code>, de modo que a coluna <code>hospital</code> deve ser igual ao valor atual de <code>hosp</code>
+</li>
+<li>O objeto do tipo <em>incidence</em> é criado na linelist filtrada</li>
+<li>O gráfico para o hospital atual é criado, com um título de ajuste automático que usa <code>hosp</code>
+</li>
+<li>O gráfico do hospital atual é salvo temporariamente e depois impresso</li>
+<li>O loop então avança para repetir com o próximo hospital em <code>hospital_names</code>
+</li>
+</ul>
+<div class="sourceCode" id="cb779"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># criando o vetor dos nomes dos hospitais</span></span>
+<span><span class="va">hospital_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># para cada nome ("hosp") em hospital_names, crie e imprima a epicurva</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">hosp</span> <span class="kw">in</span> <span class="va">hospital_names</span><span class="op">)</span> <span class="op">{</span></span>
+<span>     </span>
+<span>     <span class="co"># criando objeto de incidência específico para o hospital atual</span></span>
+<span>     <span class="va">outbreak_hosp</span> <span class="op">&lt;-</span> <span class="fu">incidence2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/incidence2/man/incidence.html">incidence</a></span><span class="op">(</span></span>
+<span>          x <span class="op">=</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hospital</span> <span class="op">==</span> <span class="va">hosp</span><span class="op">)</span>,   <span class="co"># linelist é filtrada para o hospital atual</span></span>
+<span>          date_index <span class="op">=</span> <span class="st">"date_onset"</span>,</span>
+<span>          interval <span class="op">=</span> <span class="st">"week"</span>, </span>
+<span>          groups <span class="op">=</span> <span class="st">"gender"</span><span class="co">#,</span></span>
+<span>          <span class="co">#na_as_group = TRUE</span></span>
+<span>     <span class="op">)</span></span>
+<span>     </span>
+<span>     <span class="co"># Criando e salvando o gráfico. O título se ajusta automaticamente ao hospital atual</span></span>
+<span>      <span class="va">plot_hosp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">outbreak_hosp</span>, <span class="co"># incidence object name</span></span>
+<span>                         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_index</span>, <span class="co">#axes</span></span>
+<span>                             y <span class="op">=</span> <span class="va">count</span>, </span>
+<span>                             fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span>, <span class="co"># fill colour by gender</span></span>
+<span>                         color <span class="op">=</span> <span class="st">"black"</span>      <span class="co"># colour of bar contour</span></span>
+<span>                         <span class="op">)</span> <span class="op">+</span>  </span>
+<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span> <span class="op">+</span></span>
+<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"Epidemic of cases admitted to {hosp}"</span><span class="op">)</span>, <span class="co">#title</span></span>
+<span>               x <span class="op">=</span> <span class="st">"Counts"</span>, </span>
+<span>               y <span class="op">=</span> <span class="st">"Date"</span>, </span>
+<span>               fill <span class="op">=</span> <span class="st">"Gender"</span>, </span>
+<span>               color <span class="op">=</span> <span class="st">"Gender"</span><span class="op">)</span></span>
+<span>     </span>
+<span>     <span class="co"># With older versions of R, remove the # before na_as_group and use this plot command instead.</span></span>
+<span>    <span class="co"># plot_hosp &lt;- plot(</span></span>
+<span><span class="co">#       outbreak_hosp,</span></span>
+<span><span class="co">#       fill = "gender",</span></span>
+<span><span class="co">#       color = "black",</span></span>
+<span><span class="co">#       title = stringr::str_glue("Epidemic of cases admitted to {hosp}")</span></span>
+<span><span class="co">#     )</span></span>
+<span>     </span>
+<span>     <span class="co"># exibindo o gráfico para o hospital atual</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">plot_hosp</span><span class="op">)</span></span>
+<span>     </span>
+<span><span class="op">}</span> <span class="co"># encerrando o loop for quando ele tiver sido executado para todos os hospitais em hospital_names</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-601-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-601-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-601-3.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-601-4.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-601-5.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-601-6.png" width="50%"></p>
+</div>
+<div id="acompanhando-o-progresso-de-um-loop" class="section level3 unnumbered">
+<h3>Acompanhando o progresso de um loop<a class="anchor" aria-label="anchor" href="#acompanhando-o-progresso-de-um-loop"><i class="fas fa-link"></i></a>
+</h3>
+<p>Um loop com muitas iterações pode ser executado por muitos minutos ou até horas. Assim, pode ser útil imprimir o progresso no console R. A instrução <code>if</code> (que significa “se” em inglês) abaixo pode ser colocada <em>dentro</em> das operações de loop para exibir a cada 100 números. Basta ajustá-lo para que <code>i</code> seja o “item” em seu loop.</p>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="iteration.html#cb780-1" tabindex="-1"></a><span class="co"># loop com código para exibir o progresso a cada 100 iterações</span></span>
+<span id="cb780-2"><a href="iteration.html#cb780-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(linelist))){</span>
+<span id="cb780-3"><a href="iteration.html#cb780-3" tabindex="-1"></a></span>
+<span id="cb780-4"><a href="iteration.html#cb780-4" tabindex="-1"></a>  <span class="co"># print progress</span></span>
+<span id="cb780-5"><a href="iteration.html#cb780-5" tabindex="-1"></a>  <span class="cf">if</span>(i <span class="sc">%%</span> <span class="dv">100</span><span class="sc">==</span><span class="dv">0</span>){    <span class="co"># O operador %% calcula o resto da operação</span></span>
+<span id="cb780-6"><a href="iteration.html#cb780-6" tabindex="-1"></a>    <span class="fu">print</span>(i)</span>
+<span id="cb780-7"><a href="iteration.html#cb780-7" tabindex="-1"></a></span>
+<span id="cb780-8"><a href="iteration.html#cb780-8" tabindex="-1"></a>}</span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="iter_purrr" class="section level2" number="16.3">
+<h2>
+<span class="header-section-number">16.3</span> <strong>purrr</strong> e listas<a class="anchor" aria-label="anchor" href="#iter_purrr"><i class="fas fa-link"></i></a>
+</h2>
+<p>Outra abordagem para operações iterativas é o pacote <strong>purrr</strong> - essa é a abordagem <strong>tidyverse</strong> para iteração.</p>
+<p>Se você tiver que executar a mesma tarefa várias vezes, provavelmente vale a pena criar uma solução generalizada que possa ser usada com várias entradas. Por exemplo, produzindo gráficos para várias jurisdições ou importando e combinando muitos arquivos.</p>
+<p>Há também algumas outras vantagens para usar o <strong>purrr</strong> - você pode usá-lo com pipes <code>%&gt;%</code>, ele lida com erros melhor do que o normal <em>loop for</em>, e a sintaxe é bastante limpa e simples! Se você estiver usando um <em>loop for</em>, provavelmente poderá fazê-lo de forma mais clara e sucinta com <strong>purrr</strong>!</p>
+<p>Tenha em mente que o <strong>purrr</strong> é uma <em>ferramenta de programação funcional</em>. Ou seja, as operações que devem ser aplicadas iterativamente são agrupadas em <em>funções</em>. Consulte a página <a href="writing-functions.html#writing-functions">Escrevendo funções</a> para aprender a escrever suas próprias funções.</p>
+<p>O <strong>purrr</strong> também é quase inteiramente baseado em <em>listas</em> e <em>vetores</em> - então pense nisso como aplicar uma função a cada elemento dessa lista/vetor!</p>
+<div id="carregando-pacotes-1" class="section level3 unnumbered">
+<h3>Carregando pacotes<a class="anchor" aria-label="anchor" href="#carregando-pacotes-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>O <strong>purrr</strong> faz parte do <strong>tidyverse</strong>, portanto, não há necessidade de instalar/carregar um pacote separado.</p>
+<div class="sourceCode" id="cb781"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span>     <span class="va">rio</span>,            <span class="co"># importa/exporta</span></span>
+<span>     <span class="va">here</span>,           <span class="co"># caminhos de arquivos relativos</span></span>
+<span>     <span class="va">tidyverse</span>,      <span class="co"># gerenciamento de dados e visualização</span></span>
+<span>     <span class="va">writexl</span>,        <span class="co"># escreve arquivos Excel com várias abas</span></span>
+<span>     <span class="va">readxl</span>          <span class="co"># importa arquivos Excel com várias abas</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="map" class="section level3 unnumbered">
+<h3>
+<code>map()</code><a class="anchor" aria-label="anchor" href="#map"><i class="fas fa-link"></i></a>
+</h3>
+<p>A função principal do <strong>purrr</strong> é a <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, que “mapeia” (aplica) uma função para cada elemento de entrada de uma lista/vetor que você fornece.</p>
+<p>A sintaxe básica é <code>map(.x = SEQUENCE, .f = FUNCTION, OTHER ARGUMENTS)</code>. Com um pouco mais de detalhes:</p>
+<ul>
+<li>
+<code>.x =</code> são as <em>entradas</em> nas quais a função <code>.f</code> será aplicada iterativamente - ex. um vetor de nomes de jurisdição, colunas em um data frame ou uma lista de data frames</li>
+<li>
+<code>.f =</code> é a <em>função</em> a ser aplicada a cada elemento da entrada <code>.x</code> - pode ser uma função como <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> que já existe, ou uma função personalizada que você define. A função geralmente é escrita após um til <code>~</code> (detalhes abaixo).</li>
+</ul>
+<p>Mais algumas notas sobre a sintaxe:</p>
+<ul>
+<li>Se a função não precisar de mais argumentos especificados, ela pode ser escrita sem parênteses e sem til (por exemplo, <code>.f = mean</code>). Para fornecer argumentos que terão o mesmo valor para cada iteração, forneça-os dentro da <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> mas fora do argumento <code>.f =</code>, como <code>na.rm = T</code> em <code>map(.x = my_list, .f = média, na.rm=T)</code>.</li>
+<li>Você pode usar <code>.x</code> (ou simplesmente <code>.</code>) <em>dentro</em> da função <code>.f =</code> como um espaço reservado para o valor <code>.x</code> dessa iteração</li>
+<li>Use a sintaxe til (<code>~</code>) para ter maior controle sobre a função - escreva a função normalmente com parênteses, como: <code>map(.x = my_list, .f = ~mean(., na.rm = T) )</code>. Use esta sintaxe especialmente se o valor de um argumento mudar a cada iteração, ou se for o próprio valor <code>.x</code> (veja os exemplos abaixo)</li>
+</ul>
+<p><strong>O resultado da função <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> é uma <em>lista</em></strong> - uma lista é uma classe de objeto como um vetor, mas cujos elementos podem ser de classes diferentes. Assim, uma lista produzida pela <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> pode conter muitos data frames, ou muitos vetores, muitos valores únicos, ou mesmo muitas listas! Existem versões alternativas da <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> explicadas abaixo que produzem outros tipos de saídas (por exemplo, <code><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_dfr()</a></code> para produzir um data frame, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_chr()</a></code> para produzir vetores de caracteres e <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code> para produzir vetores).</p>
+<div id="iter_combined" class="section level4 unnumbered">
+<h4>Exemplo - importar e combinar planilhas do Excel<a class="anchor" aria-label="anchor" href="#iter_combined"><i class="fas fa-link"></i></a>
+</h4>
+<p><strong>Vamos demonstrar com uma tarefa comum de um epidemiologista:</strong> - <em>Você deseja importar um arquivo do Excel com dados do caso, mas os dados são divididos em diferentes abas com nomes. Como você importa e combina com eficiência as planilhas em um data frame?</em></p>
+<p>Digamos que recebemos arquivo Excel abaixo. Cada folha contém casos de um determinado hospital.</p>
+<div class="inline-figure"><img src="images/hospital_linelists_excel_sheets.png" width="615" style="display: block; margin: auto;"></div>
+<p>Aqui está uma abordagem que usa a função <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>:</p>
+<ol style="list-style-type: decimal">
+<li>
+<code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> para que seja executada para aba do Excel</li>
+<li>Combine em um os data frames importados usando <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows()</a></code>
+</li>
+<li>Ao longo do caminho, preserve o nome da aba original para cada linha, armazenando essas informações em uma nova coluna no data frame final</li>
+</ol>
+<p>Primeiro, precisamos extrair os nomes das abas e salvá-los. Fornecemos o caminho do arquivo Excel para a função <code>excel_sheets()</code> do pacote <strong>readxl</strong>, que extrai os nomes das abas Nós os armazenamos em um vetor de caracteres chamado <code>sheet_names</code>.</p>
+<div class="sourceCode" id="cb782"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sheet_names</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"hospital_linelists.xlsx"</span><span class="op">)</span></span></code></pre></div>
+<p>Aqui estão os nomes:</p>
+<div class="sourceCode" id="cb783"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sheet_names</span></span></code></pre></div>
+<pre><code>## [1] "Central Hospital"              "Military Hospital"            
+## [3] "Missing"                       "Other"                        
+## [5] "Port Hospital"                 "St. Mark's Maternity Hospital"</code></pre>
+<p>Agora que temos esse vetor de nomes, <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> pode fornecê-los um a um para a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code>. Neste exemplo, os <code>sheet_names</code> são <code>.x</code> e <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> é a função <code>.f</code>.</p>
+<p>Lembre-se da página <a href="importing.html#importing">Importar e exportar</a> que quando usado em arquivos do Excel, <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> pode aceitar o argumento <code>which =</code> (qual) especificando a aba a ser importada. Dentro da função <code>.f</code> <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code>, fornecemos <code>which = .x</code>, cujo valor mudará a cada iteração através do vetor <code>sheet_names</code> - primeiro “Central Hospital” (“Hospital Central”), depois “Military Hospital” (“Hospital Militar”) etc.</p>
+<p>Nota - porque usamos <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, os dados em cada planilha do Excel serão salvos como um data frame separado dentro de uma lista. Queremos que cada um desses elementos de lista (data frame) tenha um <em>nome</em>, então antes de passarmos <code>sheet_names</code> para <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, passamos por <code><a href="https://rlang.r-lib.org/reference/set_names.html">set_names()</a></code> de <strong>purrr</strong>, o que garante que cada elemento da lista recebe o nome apropriado.</p>
+<p>Salvamos a lista de saída como o objeto <code>combined</code>.</p>
+<div class="sourceCode" id="cb785"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="va">sheet_names</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html">set_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.f <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"hospital_linelists.xlsx"</span>, which <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Quando inspecionamos o resultado, vemos que os dados de cada aba do Excel são salvos na lista com um nome. Isso é bom, mas ainda não terminamos.</p>
+<div class="inline-figure"><img src="images/sheets_as_list.png" width="544" style="display: block; margin: auto;"></div>
+<p>Por fim, usamos a função <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows()</a></code> (do <strong>dplyr</strong>) que aceita a lista de data frames com estrutura semelhante e os combina em um único data frame. Para criar uma nova coluna a partir do elemento <em>names</em> da lista, usamos o argumento <code>.id =</code> e fornecemos o nome desejado para a nova coluna.</p>
+<p>Abaixo está toda a sequência de comandos:</p>
+<div class="sourceCode" id="cb786"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sheet_names</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"hospital_linelists.xlsx"</span><span class="op">)</span>  <span class="co"># extraindo o nome das abas</span></span>
+<span> </span>
+<span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="va">sheet_names</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                                     <span class="co"># começando com os nomes das abas</span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html">set_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                                        <span class="co"># definindo seus nomes</span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.f <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"hospital_linelists.xlsx"</span>, which <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># iterando, importando, salvando na lista</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"origin_sheet"</span><span class="op">)</span> <span class="co"># combinar lista de data frames, preservando a origem em uma nova coluna</span></span></code></pre></div>
+<p>E agora temos um data frame com uma coluna contendo a aba de origem!</p>
+<div class="inline-figure"><img src="images/sheets_as_df.png" width="543" style="display: block; margin: auto;"></div>
+<p>Existem variações da <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> que você deve conhecer. Por exemplo, <code><a href="https://purrr.tidyverse.org/reference/map_dfr.html">map_dfr()</a></code> retorna um data frame, não uma lista. Assim, poderíamos tê-lo usado para a tarefa acima e não ter que vincular linhas. Mas aí não teríamos conseguido capturar de qual aba (hospital) veio cada caso.</p>
+<p>Outras variações incluem <code><a href="https://purrr.tidyverse.org/reference/map.html">map_chr()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code>. Estas são funções muito úteis por duas razões. Em primeiro lugar, elas convertem automaticamente a saída de uma função iterativa em um vetor (não uma lista). Em segundo lugar, elas podem controlar explicitamente a classe em que os dados voltam - você garante que seus dados voltem como um vetor de caracteres com <code><a href="https://purrr.tidyverse.org/reference/map.html">map_chr()</a></code>, ou vetor numérico com <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code>. Vamos voltar a eles mais tarde na seção!</p>
+<p>As funções <code><a href="https://purrr.tidyverse.org/reference/map_if.html">map_at()</a></code> e <code><a href="https://purrr.tidyverse.org/reference/map_if.html">map_if()</a></code> também são muito úteis para iteração - elas permitem que você especifique em quais elementos de uma lista você deve iterar! Estes funcionam simplesmente aplicando um vetor de índices/nomes (no caso de <code><a href="https://purrr.tidyverse.org/reference/map_if.html">map_at()</a></code>) ou um teste lógico (no caso de <code><a href="https://purrr.tidyverse.org/reference/map_if.html">map_if()</a></code>).</p>
+<p>Vamos usar um exemplo em que não queríamos ler a primeira aba de dados do hospital. Usamos <code><a href="https://purrr.tidyverse.org/reference/map_if.html">map_at()</a></code> em vez de <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, e especificamos o argumento <code>.at =</code> para <code>c(-1)</code> que significa <em>não</em> usar o primeiro elemento de <code>.x</code>. Alternativamente, você pode fornecer um vetor de números positivos, ou nomes, para <code>.at =</code> para especificar quais elementos usar.</p>
+<div class="sourceCode" id="cb787"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sheet_names</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"hospital_linelists.xlsx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">combined</span> <span class="op">&lt;-</span> <span class="va">sheet_names</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>     <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html">set_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>     <span class="co"># excluindo a primeira aba</span></span>
+<span>     <span class="fu"><a href="https://purrr.tidyverse.org/reference/map_if.html">map_at</a></span><span class="op">(</span>.f <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span> <span class="st">"hospital_linelists.xlsx"</span>, which <span class="op">=</span> <span class="va">.x</span><span class="op">)</span>,</span>
+<span>            .at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Observe que o nome da primeira aba ainda aparecerá como um elemento da lista de saída - mas é apenas um nome de caractere único (não um data frame). Você precisaria remover esse elemento antes de vincular as linhas. Abordaremos como remover e modificar elementos de uma lista em uma seção posterior.</p>
+</div>
+</div>
+<div id="divida-o-conjunto-de-dados-e-exporte" class="section level3 unnumbered">
+<h3>Divida o conjunto de dados e exporte<a class="anchor" aria-label="anchor" href="#divida-o-conjunto-de-dados-e-exporte"><i class="fas fa-link"></i></a>
+</h3>
+<p>Abaixo, damos um exemplo de como dividir um conjunto de dados em partes e, em seguida, usar a iteração <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> para exportar cada parte como uma aba separada do Excel ou como um arquivo CSV separado.</p>
+<div id="conjunto-de-dados-dividido" class="section level4 unnumbered">
+<h4>Conjunto de dados dividido<a class="anchor" aria-label="anchor" href="#conjunto-de-dados-dividido"><i class="fas fa-link"></i></a>
+</h4>
+<p>Digamos que temos o caso completo <code>linelist</code> como um data frame e agora queremos criar uma linelist separada para cada hospital e exportar cada um como um arquivo CSV separado. Abaixo, fazemos os seguintes passos:</p>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/group_split.html">group_split()</a></code> (do <strong>dplyr</strong>) para dividir o data frame <code>linelist</code> por valores únicos na coluna <code>hospital</code>. A saída é uma lista contendo um data frame por subconjunto de hospital.</p>
+<div class="sourceCode" id="cb788"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist_split</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html">group_split</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span></span></code></pre></div>
+<p>Podemos executar <code>View(linelist_split)</code> e ver que esta lista contém 6 data frames (“tibbles”), cada um representando os casos de um hospital.</p>
+<div class="inline-figure"><img src="images/purrr_linelist_split.png" width="574" style="display: block; margin: auto;"></div>
+<p>No entanto, observe que os data frames na lista não possuem nomes por padrão! Queremos que cada um tenha um nome e, em seguida, use esse nome ao salvar o arquivo CSV.</p>
+<p>Uma abordagem para extrair os nomes é usar <code><a href="https://dplyr.tidyverse.org/reference/pull.html">pull()</a></code> (do <strong>dplyr</strong>) para extrair a coluna <code>hospital</code> de cada data frame na lista. Então, por segurança, convertemos os valores em caracteres e usamos <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code> para obter o nome desse data frame específico. Todas essas etapas são aplicadas a cada data frame via <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>.</p>
+<div class="sourceCode" id="cb789"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">linelist_split</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">linelist_split</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   <span class="co"># Atribuindo os nomes de data frames listados</span></span>
+<span>     <span class="co"># Extraia os nomes fazendo o seguinte para cada data frame:</span></span>
+<span>     <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.f <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">.x</span>, <span class="va">hospital</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>        <span class="co"># Puxe a coluna do hospital</span></span>
+<span>     <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.f <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>          <span class="co"># Converta em caractere, apenas por garantia</span></span>
+<span>     <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.f <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>                    <span class="co"># Pegue o nome exclusivo do hospital</span></span></code></pre></div>
+<p>Agora podemos ver que cada um dos elementos da lista tem um nome. Esses nomes podem ser acessados via <code>names(linelist_split)</code>.</p>
+<div class="inline-figure"><img src="images/purrr_linelist_split_named.png" width="575" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb790"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">linelist_split</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "Ausente"                              "Central Hospital"                    
+## [3] "Military Hospital"                    "Other"                               
+## [5] "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)"</code></pre>
+<div id="mais-de-uma-coluna-group_split" class="section level5 unnumbered">
+<h5>Mais de uma coluna <code>group_split()</code><a class="anchor" aria-label="anchor" href="#mais-de-uma-coluna-group_split"><i class="fas fa-link"></i></a>
+</h5>
+<p>Se você quiser dividir a linelist por <em>mais de uma coluna de agrupamento</em>, como para produzir uma lista de linelist pela interseção de hospital E sexo, precisará de uma abordagem diferente para nomear os elementos da lista. Isso envolve coletar as “chaves de grupo” exclusivas usando <code><a href="https://dplyr.tidyverse.org/reference/group_data.html">group_keys()</a></code> do <strong>dplyr</strong> - elas são retornadas como um data frame. Então você pode combinar as chaves de grupo em valores com <code><a href="https://tidyr.tidyverse.org/reference/unite.html">unite()</a></code> como mostrado abaixo, e atribuir esses nomes de conglomerados a <code>linelist_split</code>.</p>
+<div class="sourceCode" id="cb792"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># dividindo a linelist por combinações exclusivas de hospital-gênero</span></span>
+<span><span class="va">linelist_split</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html">group_split</a></span><span class="op">(</span><span class="va">hospital</span>, <span class="va">gender</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># extraindo group_keys() como um data frame</span></span>
+<span><span class="va">groupings</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital</span>, <span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>       </span>
+<span>     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_data.html">group_keys</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">groupings</span>      <span class="co"># mostrando agrupamentos únicos</span></span></code></pre></div>
+<pre><code>## # A tibble: 18 × 2
+##    hospital                             gender
+##    &lt;chr&gt;                                &lt;chr&gt; 
+##  1 Ausente                              f     
+##  2 Ausente                              m     
+##  3 Ausente                              &lt;NA&gt;  
+##  4 Central Hospital                     f     
+##  5 Central Hospital                     m     
+##  6 Central Hospital                     &lt;NA&gt;  
+##  7 Military Hospital                    f     
+##  8 Military Hospital                    m     
+##  9 Military Hospital                    &lt;NA&gt;  
+## 10 Other                                f     
+## 11 Other                                m     
+## 12 Other                                &lt;NA&gt;  
+## 13 Port Hospital                        f     
+## 14 Port Hospital                        m     
+## 15 Port Hospital                        &lt;NA&gt;  
+## 16 St. Mark's Maternity Hospital (SMMH) f     
+## 17 St. Mark's Maternity Hospital (SMMH) m     
+## 18 St. Mark's Maternity Hospital (SMMH) &lt;NA&gt;</code></pre>
+<p>Agora combinamos os agrupamentos, separados por traços, e os atribuímos como os nomes dos elementos da lista em <code>linelist_split</code>. Isso leva algumas linhas extras, pois substituimos <code>NA</code> por “Ausente”, usamos <code><a href="https://tidyr.tidyverse.org/reference/unite.html">unite()</a></code> do <strong>dplyr</strong> para combinar os valores das colunas (separados por traços) e, em seguida, convertemos em um vetor sem nome para que ele pode ser usado como nomes de <code>linelist_split</code>.</p>
+<div class="sourceCode" id="cb794"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Combinando em um valor de um nome</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">linelist_split</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">groupings</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="va">replace_na</span>, <span class="st">"Ausente"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># substituindo NA por "Ausente" em todas as colunas</span></span>
+<span>     <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unite.html">unite</a></span><span class="op">(</span><span class="st">"combined"</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                         <span class="co"># unindo todos os valores da coluna em um</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html">setNames</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>     <span class="fu"><a href="https://purrr.tidyverse.org/reference/as_vector.html">as_vector</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div id="exportando-como-abas-do-excel" class="section level4 unnumbered">
+<h4>Exportando como abas do Excel<a class="anchor" aria-label="anchor" href="#exportando-como-abas-do-excel"><i class="fas fa-link"></i></a>
+</h4>
+<p>Para exportar as linelists do hospital como <em>um arquivo do Excel com uma linelist por aba</em>, podemos apenas fornecer a lista nomeada <code>linelist_split</code> para a função <code>write_xlsx()</code> do pacote <strong>writexl</strong>. Isso tem a capacidade de salvar um arquivo Excel com várias abas. Os nomes dos elementos da lista são aplicados automaticamente como os nomes das abas</p>
+<div class="sourceCode" id="cb795"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist_split</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>     <span class="fu">writexl</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/writexl/reference/write_xlsx.html">write_xlsx</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"hospital_linelists.xlsx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Agora você pode abrir o arquivo Excel e ver que cada hospital tem sua própria aba</p>
+<div class="inline-figure"><img src="images/purrr_export_sheets.png" width="652" style="display: block; margin: auto;"></div>
+</div>
+<div id="exportando-como-arquivos-csv" class="section level4 unnumbered">
+<h4>Exportando como arquivos CSV<a class="anchor" aria-label="anchor" href="#exportando-como-arquivos-csv"><i class="fas fa-link"></i></a>
+</h4>
+<p>É um comando um pouco mais complexo, mas você também pode exportar cada linelist específica do hospital como um arquivo CSV separado, com um nome de arquivo específico para o hospital.</p>
+<p>Novamente usamos <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>: pegamos o vetor de nomes de elementos da lista (mostrado acima) e usamos <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> para iterar por eles, aplicando <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code> (do pacote <strong>rio</strong>, veja página <a href="importing.html#importing">Importar e exportar</a>) no data frame na lista <code>linelist_split</code> que tem esse nome. Também usamos o nome para criar um nome de arquivo exclusivo. Aqui está como funciona:</p>
+<ul>
+<li><p>Começamos com o vetor de nomes de caracteres, passado para <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> como <code>.x</code></p></li>
+<li><p>A função <code>.f</code> é <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code> , que requer um data frame e um caminho de arquivo para gravar</p></li>
+<li><p>A entrada <code>.x</code> (o nome do hospital) é usada <em>dentro</em> de <code>.f</code> para extrair/indexar aquele elemento específico da lista <code>linelist_split</code>. Isso resulta em apenas um data frame por vez sendo fornecido para <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code>.</p></li>
+<li><p>Por exemplo, quando <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> itera para “Military Hospital” (“Hospital Militar”), então <code>linelist_split[[.x]]</code> é na verdade <code>linelist_split[["Military Hospital"]]</code>, retornando assim o segundo elemento de <code>linelist_split</code> - que são todos os casos do Hospital Militar.</p></li>
+<li>
+<p>O caminho do arquivo fornecido para <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code> é dinâmico através do uso de <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code> (consulte a página <a href="characters-strings.html#characters-strings">Caracteres e strings</a>):</p>
+<ul>
+<li>
+<code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> é usado para obter a base do caminho do arquivo e especificar a pasta “data” (observe as aspas simples para não interromper as aspas duplas <code><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue()</a></code>)</li>
+</ul>
+</li>
+<li><p>Em seguida, uma barra <code>/</code>, e novamente o <code>.x</code> que imprime o nome do hospital atual para tornar o arquivo identificável</p></li>
+<li><p>Finalmente a extensão “.csv” que <code><a href="https://rdrr.io/pkg/rio/man/export.html">export()</a></code> usa para criar um arquivo CSV</p></li>
+</ul>
+<div class="sourceCode" id="cb796"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">linelist_split</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>     <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.f <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/export.html">export</a></span><span class="op">(</span><span class="va">linelist_split</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span>, file <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{here('data')}/{.x}.csv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Agora você pode ver que cada arquivo é salvo na pasta “data” do R Project “Epi_R_handbook”!</p>
+<div class="inline-figure"><img src="images/purrr_export_csv.png" width="632" style="display: block; margin: auto;"></div>
+</div>
+</div>
+<div id="customizar-funções" class="section level3 unnumbered">
+<h3>Customizar funções<a class="anchor" aria-label="anchor" href="#customizar-fun%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode querer criar sua própria função para fornecer ao <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>.</p>
+<p>Digamos que queremos criar curvas epidêmicas para os casos de cada hospital. Para fazer isso usando <strong>purrr</strong>, nossa função <code>.f</code> pode ser <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> e extensões com <code>+</code> como de costume. Como a saída de <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> é sempre uma lista, os gráficos são armazenados em uma lista. Por serem gráficos, eles podem ser extraídos e plotados com a função <code>ggarrange()</code> do pacote <strong>ggpubr</strong> (<a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html">documentação</a> ).</p>
+<div class="sourceCode" id="cb797"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># carregando pacote para plotar elementos da lista</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">ggpubr</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># mapeando o vetor de 6 "nomes" de hospitais (criados anteriormente)</span></span>
+<span><span class="co"># usando a função ggplot especificada</span></span>
+<span><span class="co"># a saída é uma lista com 6 ggplots</span></span>
+<span></span>
+<span><span class="va">hospital_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">my_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span></span>
+<span>  .x <span class="op">=</span> <span class="va">hospital_names</span>,</span>
+<span>  .f <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hospital</span> <span class="op">==</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="va">.x</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># exibindo os ggplots (eles são armazenados em uma lista)</span></span>
+<span><span class="fu">ggarrange</span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">my_plots</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-627-1.png" width="672"></div>
+<p>Se este código <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> parecer muito confuso, você pode obter o mesmo resultado salvando seu comando <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> específico como uma função personalizada definida pelo usuário, por exemplo, podemos chamá-lo de <code>make_epicurve())</code>. Esta função é então usada dentro do <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>. <code>.x</code> será substituído iterativamente pelo nome do hospital e usado como <code>hosp_name</code> na função <code>make_epicurve()</code>. Consulte a página sobre <a href="writing-functions.html#writing-functions">Escrevendo funções</a>.</p>
+<div class="sourceCode" id="cb798"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Criando a função</span></span>
+<span><span class="va">make_epicurve</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">hosp_name</span><span class="op">)</span><span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hospital</span> <span class="op">==</span> <span class="va">hosp_name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="va">hosp_name</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb799"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># mapeando</span></span>
+<span><span class="va">my_plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">hospital_names</span>, <span class="op">~</span><span class="fu">make_epicurve</span><span class="op">(</span>hosp_name <span class="op">=</span> <span class="va">.x</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># exibindo os ggplots (eles são armazenados em uma lista)</span></span>
+<span><span class="fu">ggarrange</span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">my_plots</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="mapeando-uma-função-ao-longo-de-colunas" class="section level3 unnumbered">
+<h3>Mapeando uma função ao longo de colunas<a class="anchor" aria-label="anchor" href="#mapeando-uma-fun%C3%A7%C3%A3o-ao-longo-de-colunas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Outro caso de uso comum é mapear uma função ao longo de muitas colunas. Abaixo, mapeamos (<code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>) a função <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> em colunas numéricas no data frame <code>linelist</code>, comparando os valores numéricos por gênero.</p>
+<p>Lembre-se da página em <a href="stat-tests.html#stat-tests">Testes estatísticos simples</a> que <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> pode receber entradas em um formato de fórmula, como <code>t.test(coluna numérica ~ coluna binária)</code>. Neste exemplo, fazemos o seguinte:</p>
+<ul>
+<li><p>As colunas numéricas de interesse são selecionadas de <code>linelist</code> - elas se tornam as entradas <code>.x</code> para <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code></p></li>
+<li><p>A função <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> é fornecida como a função <code>.f</code>, que é aplicada a cada coluna numérica</p></li>
+<li>
+<p>Dentro dos parênteses de <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>:</p>
+<ul>
+<li>o primeiro <code>~</code> precede o <code>.f</code> que <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> irá iterar sobre <code>.x</code>
+</li>
+<li>o <code>.x</code> representa a coluna atual sendo fornecida para a função <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>
+</li>
+<li>o segundo <code>~</code> faz parte da equação do teste t descrita acima</li>
+<li>a função <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code> espera uma coluna binária no lado direito da equação. Nós fornecemos o vetor <code>linelist$gender</code> independentemente e estaticamente (observe que ele não está incluído em <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>).</li>
+</ul>
+</li>
+</ul>
+<p><code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> retorna uma lista, então a saída é uma lista de resultados do teste t - um elemento de lista para cada coluna numérica analisada.</p>
+<div class="sourceCode" id="cb800"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Resultados são salvos como uma lista</span></span>
+<span><span class="va">t.test_results</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">wt_kg</span>, <span class="va">ht_cm</span>, <span class="va">ct_blood</span>, <span class="va">temp</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># mantendo apenas algumas colunas numéricas para mapear</span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>.f <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">.x</span> <span class="op">~</span> <span class="va">linelist</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span><span class="op">)</span>        <span class="co"># função t.test com equação NUMERIC ~ CATEGORICAL</span></span></code></pre></div>
+<p>Aqui está a aparência da lista <code>t.test_results</code> quando aberta (Visualizada) no RStudio. Destacamos partes que são importantes para os exemplos nesta página.</p>
+<ul>
+<li>Você pode ver no topo que a lista inteira é chamada de <code>t.test_results</code> e tem cinco elementos. Esses cinco elementos são nomeados <code>age</code>, <code>wt_km</code>, <code>ht_cm</code>, <code>ct_blood</code>, <code>temp</code> após cada variável que foi usada em um teste t com <code>gender</code> da <code>linelist</code>.</li>
+<li>Cada um desses cinco elementos são listas, com elementos dentro deles, como <code>p.value</code> e <code>conf.int</code>. Alguns desses elementos como <code>p.value</code> são números únicos, enquanto alguns como <code>estimate</code> consistem em dois ou mais elementos (<code>média no grupo f</code> e <code>média no grupo m</code>).</li>
+</ul>
+<div class="inline-figure"><img src="images/purrr_ttest.png" width="286" height="150%"></div>
+<p>Nota: Lembre-se que se você deseja aplicar uma função a apenas certas colunas em um data frame, você também pode simplesmente usar <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code>, conforme explicado na página <a href="cleaning.html#cleaning">Limpeza de dados e principais funções</a>. Abaixo está um exemplo de aplicação de <code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code> apenas para as colunas “age”. Observe o posicionamento dos parênteses e vírgulas.</p>
+<div class="sourceCode" id="cb801"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># convertendo colunas com nome da coluna contendo "idade" para classe Character</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span>.cols <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span>, .fns <span class="op">=</span> <span class="va">as.character</span><span class="op">)</span><span class="op">)</span>  </span></code></pre></div>
+</div>
+<div id="extraindo-de-listas" class="section level3 unnumbered">
+<h3>Extraindo de listas<a class="anchor" aria-label="anchor" href="#extraindo-de-listas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Como <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> produz uma saída da classe List (lista), vamos gastar algum tempo discutindo como extrair dados de listas usando funções acompanhantes do <strong>purrr</strong>. Para demonstrar isso, usaremos a lista <code>t.test_results</code> da seção anterior. Esta é uma lista de 5 listas - cada uma das 5 listas contém os resultados de um teste t entre uma coluna do data frame <code>linelist</code> e sua coluna binária <code>gender</code>. Veja a imagem na seção acima para uma visualização da estrutura da lista.</p>
+<div id="nomes-dos-elementos" class="section level4 unnumbered">
+<h4>Nomes dos elementos<a class="anchor" aria-label="anchor" href="#nomes-dos-elementos"><i class="fas fa-link"></i></a>
+</h4>
+<p>Para extrair os nomes dos próprios elementos, simplesmente use <code><a href="https://rdrr.io/r/base/names.html">names()</a></code> do R <strong>base</strong>. Neste caso, usamos <code><a href="https://rdrr.io/r/base/names.html">names()</a></code> em <code>t.test_results</code> para retornar os nomes de cada sub-lista , que são os nomes das 5 variáveis que tiveram testes t realizados.</p>
+<div class="sourceCode" id="cb802"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">t.test_results</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] "age"      "wt_kg"    "ht_cm"    "ct_blood" "temp"</code></pre>
+</div>
+<div id="elementos-por-nome-ou-posição" class="section level4 unnumbered">
+<h4>Elementos por nome ou posição<a class="anchor" aria-label="anchor" href="#elementos-por-nome-ou-posi%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h4>
+<p>Para extrair elementos da lista por nome ou por posição, você pode usar colchetes <code>[[ ]]</code> conforme descrito na página <a href="basics.html#basics">Introdução ao R</a>. Abaixo usamos colchetes duplos para indexar a lista <code>t.tests_results</code> e exibir o primeiro elemento que é o resultado do teste t em <code>age</code> (idade).</p>
+<div class="sourceCode" id="cb804"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t.test_results</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="co"># primeiro elemento por posição</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  .x by linelist$gender
+## t = -21.3, df = 4902.9, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means between group f and group m is not equal to 0
+## 95 percent confidence interval:
+##  -7.544409 -6.272675
+## sample estimates:
+## mean in group f mean in group m 
+##        12.66085        19.56939</code></pre>
+<div class="sourceCode" id="cb806"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t.test_results</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="st">"p.value"</span><span class="op">]</span> <span class="co"># retorna o elemento nomeado "p.value" do primeiro elemento</span></span></code></pre></div>
+<pre><code>## $p.value
+## [1] 2.350374e-96</code></pre>
+<p>No entanto, abaixo vamos demonstrar o uso das funções simples e flexíveis do <strong>purrr</strong> <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> e <code><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck()</a></code> para alcançar os mesmos resultados.</p>
+</div>
+<div id="pluck" class="section level4 unnumbered">
+<h4>
+<code>pluck()</code><a class="anchor" aria-label="anchor" href="#pluck"><i class="fas fa-link"></i></a>
+</h4>
+<p><code><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck()</a></code> extrai elementos por nome ou por posição. Por exemplo - para extrair os resultados do teste t para idade, você pode usar <code><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck()</a></code> assim:</p>
+<div class="sourceCode" id="cb808"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t.test_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span>        <span class="co"># alternativamente, use pluck(1)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  .x by linelist$gender
+## t = -21.3, df = 4902.9, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means between group f and group m is not equal to 0
+## 95 percent confidence interval:
+##  -7.544409 -6.272675
+## sample estimates:
+## mean in group f mean in group m 
+##        12.66085        19.56939</code></pre>
+<p>Indexe níveis mais profundos especificando os níveis adicionais com vírgulas. O código abaixo extrai o elemento chamado “p.value” (o p-valor)da lista <code>age</code> de dentro da lista <code>t.test_results</code>. Você também pode usar números em vez de nomes de caracteres.</p>
+<div class="sourceCode" id="cb810"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t.test_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"p.value"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 2.350374e-96</code></pre>
+<p>Você pode extrair esses elementos internos de <em>todos</em> os elementos de primeiro nível usando <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> para executar a função <code><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck()</a></code> em cada elemento de primeiro nível. Por exemplo, o código abaixo extrai os elementos “p.value” de todas as listas dentro de <code>t.test_results</code>. A lista de resultados do teste t é o <code>.x</code> iterado, <code><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck()</a></code> é a função <code>.f</code> sendo iterada e o valor “p-value” é fornecido para a função.</p>
+<div class="sourceCode" id="cb812"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t.test_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">pluck</span>, <span class="st">"p.value"</span><span class="op">)</span>   <span class="co"># retorna cada p-valor</span></span></code></pre></div>
+<pre><code>## $age
+## [1] 2.350374e-96
+## 
+## $wt_kg
+## [1] 2.664367e-182
+## 
+## $ht_cm
+## [1] 3.515713e-144
+## 
+## $ct_blood
+## [1] 0.4473498
+## 
+## $temp
+## [1] 0.5735923</code></pre>
+<p>Como outra alternativa, <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> oferece uma abreviação onde você pode escrever o nome do elemento entre aspas, e ele irá “arrancá-lo”. Se você usar <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> a saída será uma lista, enquanto que se você usar <code><a href="https://purrr.tidyverse.org/reference/map.html">map_chr()</a></code> será um vetor de caractere nomeado e se você usar <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code> será um vetor numérico nomeado.</p>
+<div class="sourceCode" id="cb814"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t.test_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="st">"p.value"</span><span class="op">)</span>   <span class="co"># retorna o p-valor como um vetor numérico com nome</span></span></code></pre></div>
+<pre><code>##           age         wt_kg         ht_cm      ct_blood          temp 
+##  2.350374e-96 2.664367e-182 3.515713e-144  4.473498e-01  5.735923e-01</code></pre>
+<p>Você pode ler mais sobre <code><a href="https://purrr.tidyverse.org/reference/pluck.html">pluck()</a></code> em sua <a href="https://purrr.tidyverse.org/reference/pluck.html">documentação</a> <strong>purrr</strong>. Ele tem uma função irmã <code><a href="https://purrr.tidyverse.org/reference/chuck.html">chuck()</a></code> que retornará um erro em vez de NULL se um elemento não existir.</p>
+</div>
+</div>
+<div id="convertendo-uma-lista-em-um-data-frame" class="section level3 unnumbered">
+<h3>Convertendo uma lista em um data frame<a class="anchor" aria-label="anchor" href="#convertendo-uma-lista-em-um-data-frame"><i class="fas fa-link"></i></a>
+</h3>
+<p>Este é um tópico complexo - consulte a seção Recursos para tutoriais mais completos. No entanto, demonstraremos a conversão da lista de resultados do teste t em um data frame. Criaremos um data frame com colunas para a variável, seu p-valor e as médias dos dois grupos (masculino e feminino).</p>
+<p>Aqui estão algumas das novas abordagens e funções que serão usadas:</p>
+<ul>
+<li>
+<p>A função <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code> será usada para criar um tibble (como um data frame)</p>
+<ul>
+<li>Envolvemos a função <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code> com chaves <code><a href="https://rdrr.io/r/base/Paren.html">{ }</a></code> para evitar que todo o <code>t.test_results</code> seja armazenado como a primeira coluna do tibble</li>
+</ul>
+</li>
+<li>
+<p>Dentro de <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code>, cada coluna é criada explicitamente, semelhante à sintaxe de <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>:</p>
+<ul>
+<li>O <code>.</code> representa <code>t.test_results</code>
+</li>
+<li>Para criar uma coluna com os nomes das variáveis do teste t (os nomes de cada elemento da lista) usamos <code><a href="https://rdrr.io/r/base/names.html">names()</a></code> conforme descrito acima</li>
+<li>Para criar uma coluna com os p-valores, usamos <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code> conforme descrito acima para extrair os elementos <code>p.value</code> e convertê-los em um vetor numérico</li>
+</ul>
+</li>
+</ul>
+<div class="sourceCode" id="cb816"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t.test_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>    variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
+<span>    p         <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"p.value"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span></code></pre></div>
+<pre><code>## # A tibble: 5 × 2
+##   variables         p
+##   &lt;chr&gt;         &lt;dbl&gt;
+## 1 age       2.35e- 96
+## 2 wt_kg     2.66e-182
+## 3 ht_cm     3.52e-144
+## 4 ct_blood  4.47e-  1
+## 5 temp      5.74e-  1</code></pre>
+<p>Mas agora vamos adicionar colunas contendo as médias para cada grupo (masculino e feminino).</p>
+<p>Precisaríamos extrair o elemento <code>estimate</code>, mas na verdade ele contém <em>dois</em> elementos dentro dele (<code>média no grupo f</code> e <code>média no grupo m</code>). Portanto, não pode ser simplificado em um vetor com <code><a href="https://purrr.tidyverse.org/reference/map.html">map_chr()</a></code> ou <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code>. Em vez disso, usamos <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, que usado dentro de <code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code> criará <em>uma coluna da lista de classes dentro do tibble</em>! Sim, isso é possível!</p>
+<div class="sourceCode" id="cb818"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t.test_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="op">{</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>    variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
+<span>    p <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"p.value"</span><span class="op">)</span>,</span>
+<span>    means <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"estimate"</span><span class="op">)</span><span class="op">)</span><span class="op">}</span></span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+##   variables         p means       
+##   &lt;chr&gt;         &lt;dbl&gt; &lt;named list&gt;
+## 1 age       2.35e- 96 &lt;dbl [2]&gt;   
+## 2 wt_kg     2.66e-182 &lt;dbl [2]&gt;   
+## 3 ht_cm     3.52e-144 &lt;dbl [2]&gt;   
+## 4 ct_blood  4.47e-  1 &lt;dbl [2]&gt;   
+## 5 temp      5.74e-  1 &lt;dbl [2]&gt;</code></pre>
+<p>Depois de ter essa coluna de lista, há várias funções <strong>tidyr</strong> (parte do <strong>tidyverse</strong>) que ajudam a “retangular” ou “desaninhar” essas colunas de “lista aninhada”. Leia mais sobre eles <a href="">aqui</a>, ou executando <code><a href="https://tidyr.tidyverse.org/articles/rectangle.html">vignette("rectangle")</a></code>. Em resumo:</p>
+<ul>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/unnest_wider.html">unnest_wider()</a></code> - dá a cada elemento de uma coluna de lista sua própria coluna</li>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/unnest_longer.html">unnest_longer()</a></code> - dá a cada elemento de uma coluna de lista sua própria linha</li>
+<li>
+<code><a href="https://tidyr.tidyverse.org/reference/hoist.html">hoist()</a></code> - funciona como <code><a href="https://tidyr.tidyverse.org/reference/unnest_wider.html">unnest_wider()</a></code> mas você especifica quais elementos serão desaninhados</li>
+</ul>
+<p>Abaixo, passamos o tibble para <code><a href="https://tidyr.tidyverse.org/reference/unnest_wider.html">unnest_wider()</a></code> especificando a coluna <code>means</code> do tibble (que é uma lista aninhada). O resultado é que <code>means</code> é substituído por duas novas colunas, cada uma refletindo os dois elementos que estavam anteriormente em cada célula <code>means</code>.</p>
+<div class="sourceCode" id="cb820"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t.test_results</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="op">{</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>    variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
+<span>    p <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"p.value"</span><span class="op">)</span>,</span>
+<span>    means <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">.</span>, <span class="st">"estimate"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span><span class="op">}</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest_wider.html">unnest_wider</a></span><span class="op">(</span><span class="va">means</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 5 × 4
+##   variables         p `mean in group f` `mean in group m`
+##   &lt;chr&gt;         &lt;dbl&gt;             &lt;dbl&gt;             &lt;dbl&gt;
+## 1 age       2.35e- 96              12.7              19.6
+## 2 wt_kg     2.66e-182              45.8              59.6
+## 3 ht_cm     3.52e-144             109.              142. 
+## 4 ct_blood  4.47e-  1              21.2              21.2
+## 5 temp      5.74e-  1              38.6              38.6</code></pre>
+</div>
+<div id="descartar-manter-e-compactar-listas" class="section level3 unnumbered">
+<h3>Descartar, manter e compactar listas<a class="anchor" aria-label="anchor" href="#descartar-manter-e-compactar-listas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Como trabalhar com <strong>purrr</strong> geralmente envolve listas, exploraremos brevemente algumas funções do <strong>purrr</strong> para modificar listas. Consulte a seção Recursos para tutoriais mais completos sobre as funções <strong>purrr</strong>.</p>
+<ul>
+<li>
+<code><a href="https://purrr.tidyverse.org/reference/list_assign.html">list_modify()</a></code> tem muitos usos, um dos quais pode ser remover um elemento da lista</li>
+<li>
+<code><a href="https://purrr.tidyverse.org/reference/keep.html">keep()</a></code> retém os elementos especificados para <code>.p =</code>, ou onde uma função fornecida para <code>.p =</code> é avaliada como TRUE</li>
+<li>
+<code><a href="https://purrr.tidyverse.org/reference/keep.html">discard()</a></code> remove os elementos especificados para <code>.p</code>, ou onde uma função fornecida para <code>.p =</code> é avaliada como TRUE</li>
+<li>
+<code><a href="https://purrr.tidyverse.org/reference/keep.html">compact()</a></code> remove todos os elementos vazios</li>
+</ul>
+<p>Aqui estão alguns exemplos usando a lista <code>combined</code> criada na seção acima em <a href="iteration.html#iter_combined">usando map() para importar e combinar vários arquivos</a> (contém 6 data frames de linelist):</p>
+<p>Elementos podem ser removidos por nome com <code><a href="https://purrr.tidyverse.org/reference/list_assign.html">list_modify()</a></code> e definindo o nome igual a <code>NULL</code>.</p>
+<div class="sourceCode" id="cb822"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">combined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/list_assign.html">list_modify</a></span><span class="op">(</span><span class="st">"Central Hospital"</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>   <span class="co"># remove elemento da lista por nome</span></span></code></pre></div>
+<p>Você também pode remover elementos por critérios, fornecendo uma equação de “predicado” para <code>.p =</code> (uma equação que avalia como TRUE ou FALSE). Coloque um til <code>~</code> antes da função e use <code>.x</code> para representar o elemento da lista. Usando <code><a href="https://purrr.tidyverse.org/reference/keep.html">keep()</a></code> os elementos da lista que forem avaliados como TRUE serão mantidos. Inversamente, se estiver usando <code><a href="https://purrr.tidyverse.org/reference/keep.html">discard()</a></code>, os elementos da lista que forem avaliados como TRUE serão removidos.</p>
+<div class="sourceCode" id="cb823"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># mantenha apenas elementos de lista com mais de 500 linhas</span></span>
+<span><span class="va">combined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span>.p <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">500</span><span class="op">)</span>  </span></code></pre></div>
+<p>No exemplo abaixo, os elementos da lista são descartados se suas classes não forem data frames.</p>
+<div class="sourceCode" id="cb824"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># descartando elementos que não são data frame</span></span>
+<span><span class="va">combined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">discard</a></span><span class="op">(</span>.p <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">!=</span> <span class="st">"data.frame"</span><span class="op">)</span></span></code></pre></div>
+<p>Sua função de predição também pode referenciar elementos/colunas dentro de cada item da lista. Por exemplo, abaixo, os elementos da lista onde a média da coluna <code>ct_blood</code> é superior a 25 são descartados.</p>
+<div class="sourceCode" id="cb825"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># mantenha apenas elementos onde a média da coluna ct_blood é maior que 25</span></span>
+<span><span class="va">combined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">discard</a></span><span class="op">(</span>.p <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">.x</span><span class="op">$</span><span class="va">ct_blood</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">25</span><span class="op">)</span>  </span></code></pre></div>
+<p>Este comando remove todos os elementos vazios da lista:</p>
+<div class="sourceCode" id="cb826"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># remove todos os elementos vazios da lista</span></span>
+<span><span class="va">combined</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">compact</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="pmap" class="section level3 unnumbered">
+<h3>
+<code>pmap()</code><a class="anchor" aria-label="anchor" href="#pmap"><i class="fas fa-link"></i></a>
+</h3>
+<p>ESTA SEÇÃO ESTÁ EM CONSTRUÇÃO</p>
+</div>
+</div>
+<div id="funções-apply" class="section level2" number="16.4">
+<h2>
+<span class="header-section-number">16.4</span> funções Apply<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es-apply"><i class="fas fa-link"></i></a>
+</h2>
+<p>A família de funções “apply” é uma alternativa do R <strong>base</strong> ao <strong>purrr</strong> para operações iterativas. Você pode ler mais sobre eles <a href="https://www.datacamp.com/community/tutorials/r-tutorial-apply-family">aqui</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="recursos-9" class="section level2" number="16.5">
+<h2>
+<span class="header-section-number">16.5</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-9"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="https://datacarpentry.org/semester-biology/materials/for-loops-R/">para loops com Data Carpentry</a></p>
+<p>A <a href="https://r4ds.had.co.nz/iteration.html#iteration">página R for Data Science sobre iteração</a></p>
+<p><a href="https://martinctc.github.io/blog/vignette-write-and-read-multiple-excel-files-with-purrr/">Vinheta sobre gravação/leitura de arquivos Excel</a></p>
+<p>Um <a href="https://jennybc.github.io/purrr-tutorial/index.html">tutorial</a> purrr por jennybc</p>
+<p>Outro purrr <a href="http://www.rebeccabarter.com/blog/2019-08-19_purrr/">tutorial</a> por Rebecca Barter</p>
+<p>Um <a href="http://zevross.com/blog/2019/06/11/the-power-of-three-purrr-poseful-iteration-in-r-with-map-pmap-and-imap/">tutorial</a> purrr para map, pmap e imap</p>
+<p><a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/purrr-cheatsheet-thumbs.png">purrr cheatsheet</a></p>
+<p><a href="https://www.hvitfeldt.me/blog/purrr-tips-and-tricks/">dicas e truques do purrr</a></p>
+<p><a href="https://hookedondata.org/going-off-the-map/#keep-and-discard">manter e descartar</a></p>
+
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="prev"><a href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></div>
+<div class="next"><a href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#iteration"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li>
+<a class="nav-link" href="#prepara%C3%A7%C3%A3o-7"><span class="header-section-number">16.1</span> Preparação</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#carregando-pacotes">Carregando pacotes</a></li>
+<li><a class="nav-link" href="#importando-dados">Importando dados</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#loops-for"><span class="header-section-number">16.2</span> loops for</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#iter_loops">loops for no R</a></li>
+<li><a class="nav-link" href="#principais-componentes">Principais componentes</a></li>
+<li><a class="nav-link" href="#sequ%C3%AAncia">Sequência</a></li>
+<li><a class="nav-link" href="#opera%C3%A7%C3%B5es">Operações</a></li>
+<li><a class="nav-link" href="#cont%C3%AAiner">Contêiner</a></li>
+<li><a class="nav-link" href="#imprimindo">Imprimindo</a></li>
+<li><a class="nav-link" href="#testando-o-seu-loop">Testando o seu loop</a></li>
+<li><a class="nav-link" href="#gr%C3%A1ficos-em-loop">Gráficos em loop</a></li>
+<li><a class="nav-link" href="#acompanhando-o-progresso-de-um-loop">Acompanhando o progresso de um loop</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#iter_purrr"><span class="header-section-number">16.3</span> purrr e listas</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#carregando-pacotes-1">Carregando pacotes</a></li>
+<li><a class="nav-link" href="#map">map()</a></li>
+<li><a class="nav-link" href="#divida-o-conjunto-de-dados-e-exporte">Divida o conjunto de dados e exporte</a></li>
+<li><a class="nav-link" href="#customizar-fun%C3%A7%C3%B5es">Customizar funções</a></li>
+<li><a class="nav-link" href="#mapeando-uma-fun%C3%A7%C3%A3o-ao-longo-de-colunas">Mapeando uma função ao longo de colunas</a></li>
+<li><a class="nav-link" href="#extraindo-de-listas">Extraindo de listas</a></li>
+<li><a class="nav-link" href="#convertendo-uma-lista-em-um-data-frame">Convertendo uma lista em um data frame</a></li>
+<li><a class="nav-link" href="#descartar-manter-e-compactar-listas">Descartar, manter e compactar listas</a></li>
+<li><a class="nav-link" href="#pmap">pmap()</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#fun%C3%A7%C3%B5es-apply"><span class="header-section-number">16.4</span> funções Apply</a></li>
+<li><a class="nav-link" href="#recursos-9"><span class="header-section-number">16.5</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

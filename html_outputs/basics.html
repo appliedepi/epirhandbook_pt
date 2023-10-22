@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>3 Introdução ao R | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Bem-vindo! Esta página analisa o essencial de R. Ela não pretende ser um tutorial abrangente, mas fornece o básico e pode ser útil para refrescar a sua memória. A secção Recurso para a...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="3 Introdução ao R | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Bem-vindo! Esta página analisa o essencial de R. Ela não pretende ser um tutorial abrangente, mas fornece o básico e pode ser útil para refrescar a sua memória. A secção Recurso para a...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3 Introdução ao R | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Bem-vindo! Esta página analisa o essencial de R. Ela não pretende ser um tutorial abrangente, mas fornece o básico e pode ser útil para refrescar a sua memória. A secção Recurso para a...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="active" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="basics" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Introdução ao R<a class="anchor" aria-label="anchor" href="#basics"><i class="fas fa-link"></i></a>
+</h1>
+<div class="inline-figure"><img src="images/basics_header_close.png" width="100%" style="display: block; margin: auto;"></div>
+<p>Bem-vindo!</p>
+<p>Esta página analisa o essencial de R. Ela não pretende ser um tutorial abrangente, mas fornece o básico e pode ser útil para refrescar a sua memória. A secção <a href="basics.html#learning">Recurso para a aprendizagem</a> tem links para a tutoriais mais abrangentes.</p>
+<p>Partes desta página foram adaptadas com a permissão do <a href="https://r4epis.netlify.app/">projecto R4Epis</a>.</p>
+<p>Ver a página em <a href="transition-to-R.html#transition-to-R">Transição para R</a> para dicas sobre como mudar para R de STATA, SAS, ou Excel.</p>
+<!-- ======================================================= -->
+<div id="porque-usar-o-r" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> Porque usar o R?<a class="anchor" aria-label="anchor" href="#porque-usar-o-r"><i class="fas fa-link"></i></a>
+</h2>
+<p>Segundo a definição do site <a href="https://www.r-project.org/about.html"><em>R project</em></a>, R é uma linguagem de programação e também um ambiente para computação estatística e gráfica. É altamente versátil, extensível, e orientado para a comunidade.</p>
+<p><strong>Custo</strong></p>
+<p>R é de utilização livre! Há uma política forte na comunidade para que o material seja gratuito e de código aberto.</p>
+<p><strong>Reprodutibilidade</strong></p>
+<p>A prática de conduzir a análise e a gestão dos dados por meio de uma linguagem de programação (em comparação com o Excel ou outra dessas ferramentas que requerem cliques manuais) melhora a <strong>reprodutibilidade</strong>, torna a <strong>detecção de erros</strong> mais fácil e alivia sua carga de trabalho.</p>
+<p><strong>Comunidade</strong></p>
+<p>A comunidade de usuários de R é enorme e colaborativa. Novos pacotes e ferramentas para resolver problemas da vida real são desenvolvidos diariamente e recebe críticas e contribuições da comunidade de utilizadores. Como um exemplo, <a href="https://rladies.org/">R-Ladies</a> é uma organização mundial cuja missão é promover a diversidade de gênero na comunidade R, e é uma das maiores organizações de utilizadores de R. É provável que tenha uma divisão perto de você!</p>
+</div>
+<div id="termos-chave" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> Termos chave<a class="anchor" aria-label="anchor" href="#termos-chave"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>RStudio</strong> - RStudio é uma Interface Gráfica de Utilizador (GUI) para uma utilização mais fácil da linguagem <strong>R</strong>. Leia mais <a href="basics.html#rstudio">na secção RStudio</a>.</p>
+<p><strong>Objetos</strong> - Tudo o que se armazena em R - conjuntos de dados, variáveis, uma lista de nomes de cidades, um número total da população, mesmo saídas como gráficos - são <em>objetos</em> aos quais é <em>atribuído um nome</em> e <em>podem ser referenciados</em> em comandos posteriores. Ler mais <a href="basics.html#objects">na secção Objectos</a>.</p>
+<p><strong>Funções</strong> - Uma função é uma operação de código que aceita entradas e devolve uma saída transformada. Leia mais <a href="basics.html#functions">na secção Funções</a>.</p>
+<p><strong>Pacotes</strong> - Um pacote R é um pacote partilhável de funções. Leia mais <a href="basics.html#packages">na secção Pacotes</a></p>
+<p><strong>Scripts/Códigos</strong> - Um script é um arquivo que contém as linhas de comando que escreveu. Leia mais <a href="basics.html#scripts">na secção Scripts</a></p>
+</div>
+<div id="learning" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> Recursos para a aprendizagem<a class="anchor" aria-label="anchor" href="#learning"><i class="fas fa-link"></i></a>
+</h2>
+<div id="recursos-dentro-do-rstudio" class="section level3 unnumbered">
+<h3>Recursos dentro do RStudio<a class="anchor" aria-label="anchor" href="#recursos-dentro-do-rstudio"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Documentação de ajuda</strong></p>
+<p>Pesquisar na aba “Ajuda” do RStudio pela documentação sobre pacotes do R e funções específicas. Isto está dentro do painel que também contém “Arquivos”, “Gráficos” e “Pacotes” (tipicamente no painel inferior direito). Como atalho, também se pode digitar o nome de um pacote ou função no console do R após um ponto de interrogação para abrir a página de Ajuda relevante. Não inclui parênteses.</p>
+<p>Por exemplo: <code><a href="https://dplyr.tidyverse.org/reference/filter.html">?filter</a></code> ou <code>?diagrammeR</code>.</p>
+<p><strong>Tutoriais interativos</strong></p>
+<p>Há várias maneiras de aprender R interactivamente <em>dentro</em> do RStudio.</p>
+<p>O próprio RStudio oferece um painel Tutorial que é alimentado pelo pacote do R <a href="https://blog.rstudio.com/2020/02/25/rstudio-1-3-integrated-tutorials/"><strong>learnr</strong></a>. Basta instalar este pacote e abrir um tutorial através da nova aba “Tutorial” no painel superior direito do RStudio, que também contém os separadores Environment (Ambiente) e History (Histórico).</p>
+<p>O pacote do R <a href="https://swirlstats.com/"><strong>swirl</strong></a> oferece cursos interativos no Console do R. Instale e carregue este pacote, depois execute o comando <code>swirl()</code> (parênteses vazios) no Console do R. Você verá avisos aparecerem no Console. Responda digitando no Console. Ele irá guiá-lo através de um curso à sua escolha.</p>
+</div>
+<div id="página-de-dicas" class="section level3 unnumbered">
+<h3>Página de dicas<a class="anchor" aria-label="anchor" href="#p%C3%A1gina-de-dicas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Há várias “cheatsheets” (“colinhas”) em pdf disponíveis no <a href="https://rstudio.com/resources/cheatsheets/">website do RStudio</a>, por exemplo:</p>
+<ul>
+<li>Fatores com o pacote <strong>forcats</strong>
+</li>
+<li>Datas e horas com o pacote <strong>lubridate</strong>
+</li>
+<li>Caracteres com o pacote <strong>stringr</strong>
+</li>
+<li>Operações iterativas com o pacote <strong>purrr</strong>
+</li>
+<li>Importação de dados</li>
+<li>Folha de dica para transformação de dadas com o pacote <strong>dplyr</strong>
+</li>
+<li>R Markdown (para criar documentos como PDF, Word, Powerpoint…)</li>
+<li>Shiny (para construir aplicativos de web interativos)</li>
+<li>Visualização de dados com o pacote <strong>ggplot2</strong>
+</li>
+<li>Cartografia (GIS)</li>
+<li>Pacote <strong>leaflet</strong> (mapas interativos)</li>
+<li>Python com R (pacote <strong>reticulate</strong>)</li>
+</ul>
+<p>Este é um recurso online do R especificamente para <a href="https://jules32.github.io/r-for-excel-users/">usuários do Excel</a></p>
+</div>
+<div id="twitter" class="section level3 unnumbered">
+<h3>Twitter<a class="anchor" aria-label="anchor" href="#twitter"><i class="fas fa-link"></i></a>
+</h3>
+<p>R tem uma vibrante comunidade no twitter onde você pode aprender dicas, atalhos e notícias, siga estas contas:</p>
+<ul>
+<li>Siga nos! <a href="https://twitter.com/epirhandbook">@epiRhandbook</a>
+</li>
+<li>R Function A Day (Uma função por dia) <a href="https://twitter.com/rfunctionaday">@rfuntionaday</a> é um recurso <em>incrível</em>
+</li>
+<li>R for Data Science (R para Ciência de Dados) <a href="https://twitter.com/rstats4ds?lang=en">@rstats4ds</a>
+</li>
+<li>RStudio <a href="https://twitter.com/rstudio?lang=en">@RStudio</a>
+</li>
+<li>Dicas do RStudio<a href="https://twitter.com/rstudiotips">@rstudiotips</a>
+</li>
+<li>R-Bloggers <a href="https://twitter.com/Rbloggers">@Rbloggers</a>
+</li>
+<li>R-ladies <a href="https://twitter.com/RLadiesGlobal">@RLadiesGlobal</a>
+</li>
+<li>Hadley Wickham <a href="https://twitter.com/hadleywickham?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@hadleywickham</a>
+</li>
+</ul>
+<p>Também:</p>
+<p><strong>#epitwitter</strong> e <strong>#rstats</strong></p>
+</div>
+<div id="recursos-online-gratuitos" class="section level3 unnumbered">
+<h3>Recursos online gratuitos<a class="anchor" aria-label="anchor" href="#recursos-online-gratuitos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Um texto definitivo é o livro <a href="https://r4ds.had.co.nz/">R for Data Science</a> de Garrett Grolemund e Hadley Wickham</p>
+<p>O site do projeto <a href="https://r4epis.netlify.app/">R4Epis</a> tem como objetivo “desenvolver ferramentas padronizadas de limpeza, análise e relatório de dados para cobrir tipos comuns de surtos e pesquisas populacionais que seriam conduzidas em um ambiente de resposta a emergências de MSF”. Você pode encontrar materiais de treinamento básicos do R, modelos para relatórios do RMarkdown sobre surtos e pesquisas e tutoriais para ajudá-lo a configurá-los.</p>
+</div>
+<div id="idiomas-além-do-inglês" class="section level3 unnumbered">
+<h3>Idiomas além do inglês<a class="anchor" aria-label="anchor" href="#idiomas-al%C3%A9m-do-ingl%C3%AAs"><i class="fas fa-link"></i></a>
+</h3>
+<p><a href="https://www.rstudio.com/collections/espanol/">Materiais do RStudio em Espanhol</a></p>
+<p><a href="https://juba.github.io/tidyverse/index.html">Introdução ao R e ao tidyverse (Francês)</a></p>
+<p><a href="https://livro.curso-r.com/index.html">Ciência de Dados em R (Português)</a></p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="instalação" class="section level2" number="3.4">
+<h2>
+<span class="header-section-number">3.4</span> Instalação<a class="anchor" aria-label="anchor" href="#instala%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h2>
+<div id="r-e-r-studio" class="section level3 unnumbered">
+<h3>R e R Studio<a class="anchor" aria-label="anchor" href="#r-e-r-studio"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Como instalar o R</strong></p>
+<p>Visite o site <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a> e faça o <em>download</em> da versão mais recente do R que seja adequada para o seu computador.</p>
+<p><strong>Como instalar o RStudio</strong></p>
+<p>Visite esse website <a href="https://rstudio.com/products/rstudio/download/" class="uri">https://rstudio.com/products/rstudio/download/</a> e faça o <em>download</em> da versão gratuita mais recente para Desktop do RStudio que seja adequada para seu computador.</p>
+<p><strong>Permissões</strong></p>
+<p>Note que você deve instalar R e RStudio em um drive onde você tenha permissões de leitura e escrita. Caso contrário, sua capacidade de instalar pacotes R (um problema de ocorrência freqüente) será impactada. Se você encontrar problemas, tente abrir o RStudio clicando com o botão direito do mouse no ícone e selecionando “Executar como administrador”. Outras dicas podem ser encontradas na página <a href="network-drives.html#network-drives">R em unidades de rede</a>.</p>
+<p><strong>Como atualizar o R e o RStudio</strong></p>
+<p>Sua versão de R é exibida (“printada”) no o Console R na inicialização. Você também pode executar o <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></code>.</p>
+<p>Para atualizar o R, vá para o site mencionado acima e reinstale o R. Alternativamente, você pode utilizar o pacote <strong>installr</strong> (no Windows) executando <code>installr::updateR()</code>. Isto abrirá caixas de diálogo para ajudá-lo a baixar a última versão R e atualizar seus pacotes para a nova versão R. Mais detalhes podem ser encontrados na <strong>installr</strong> <a href="https://www.r-project.org/nosvn/pandoc/installr.html">documentação</a>.</p>
+<p>Esteja ciente de que a antiga versão R ainda existirá em seu computador. Você pode executar temporariamente uma versão antiga (antiga “instalação”) do R clicando em “Tools” (Ferramentas) -&gt; “Global Options” (Opções Globais) no RStudio e escolhendo uma versão R. Isto pode ser útil se você quiser usar um pacote que não tenha sido atualizado para funcionar na versão mais nova do R.</p>
+<p>Para atualizar o RStudio, você pode ir ao site acima e fazer o download novamente do RStudio. Outra opção é clicar em “Help” (Ajuda) -&gt; “Check for Updates” (Verificar Atualizações) dentro do RStudio, mas isto pode não mostrar as últimas atualizações.</p>
+<p>Para ver quais versões do R, RStudio, ou pacotes foram usados quando este Manual foi feito, veja a página em <a href="editorial-style.html#editorial-style">Notas editoriais e técnicas</a>.</p>
+</div>
+<div id="outros-softwares-você-pode-precisar-instalar" class="section level3 unnumbered">
+<h3>Outros softwares você <em>pode</em> precisar instalar<a class="anchor" aria-label="anchor" href="#outros-softwares-voc%C3%AA-pode-precisar-instalar"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>TinyTeX (<em>para compilaar documentos de RMarkdown em PDF</em>)</li>
+<li>Pandoc (<em>para compilar documentos de RMarkdown</em>)</li>
+<li>RTools (<em>para construir pacotes em R</em>)</li>
+<li>phantomjs (<em>para salvar imagens ou redes animadas, como redes de transmissão</em>)</li>
+</ul>
+<div id="tinytex" class="section level4 unnumbered">
+<h4>TinyTex<a class="anchor" aria-label="anchor" href="#tinytex"><i class="fas fa-link"></i></a>
+</h4>
+<p>TinyTex é uma distribuição do LaTeX customizada, útil quando for tentar produzir PDFs no R.
+Veja <a href="https://yihui.org/tinytex/" class="uri">https://yihui.org/tinytex/</a> para mais informações.</p>
+<p>Para instalar o TinyTex no R:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'tinytex'</span><span class="op">)</span></span>
+<span><span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html">install_tinytex</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># para desisntalar o TinyTeX, corra tinytex::uninstall_tinytex()</span></span></code></pre></div>
+</div>
+<div id="pandoc" class="section level4 unnumbered">
+<h4>Pandoc<a class="anchor" aria-label="anchor" href="#pandoc"><i class="fas fa-link"></i></a>
+</h4>
+<p>Sua versão de R é impressa no o Console R na inicialização. Você também pode executar o Pandoc é um conversor de documentos, um software separado do R. <strong>Ele vem junto com o RStudio , provavelmente não precisará ser baixado.</strong> Ele ajuda no processo de conversão de documentos Rmarkdown para formatos como .pdf e adição de funcionalidades complexas.</p>
+</div>
+<div id="rtools" class="section level4 unnumbered">
+<h4>RTools<a class="anchor" aria-label="anchor" href="#rtools"><i class="fas fa-link"></i></a>
+</h4>
+<p>RTools é uma coleção de softwares para construção de pacotes para R.</p>
+<p>Instale desse website: <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a></p>
+</div>
+<div id="phantomjs" class="section level4 unnumbered">
+<h4>phantomjs<a class="anchor" aria-label="anchor" href="#phantomjs"><i class="fas fa-link"></i></a>
+</h4>
+<p>Esta ferramenta é freqüentemente usada para tirar “fotografias da tela” de páginas da web. Por exemplo, quando você cria uma cadeia de transmissão com o pacote <strong>epicontacts</strong>, um arquivo HTML é produzido e ele é interativo e dinâmico. Se você quiser uma imagem estática, pode ser útil usar o pacote <a href="https://wch.github.io/webshot/articles/intro.html"><strong>webshot</strong></a> para automatizar este processo. Isto exigirá o programa externo “phantomjs”. Você pode instalar o phantomjs através do pacote <strong>webshot</strong> com o comando <code><a href="http://wch.github.io/webshot/reference/install_phantomjs.html">webshot::install_phantomjs()</a></code>.</p>
+<!-- ======================================================= -->
+</div>
+</div>
+</div>
+<div id="rstudio" class="section level2" number="3.5">
+<h2>
+<span class="header-section-number">3.5</span> RStudio<a class="anchor" aria-label="anchor" href="#rstudio"><i class="fas fa-link"></i></a>
+</h2>
+<div id="se-orientando-no-rstudio" class="section level3 unnumbered">
+<h3>Se orientando no RStudio<a class="anchor" aria-label="anchor" href="#se-orientando-no-rstudio"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Primeiramente, abra o RStudio.</strong> Como os ícones deles podem ser muito parecidos, certifique-se de que você está abrindo mesmo o <em>RStudio</em> e não R.</p>
+<p>Para que o RStudio funcione, você também deve ter R instalado no computador (veja acima as instruções de instalação).</p>
+<p><strong>RStudio</strong> é uma interface (GUI) para facilitar o uso de <strong>R</strong>. Você pode pensar em R como sendo o motor de um veículo, fazendo o trabalho crucial, e RStudio como a carroceria do veículo (com assentos, acessórios, etc.) que ajuda você realmente a usar o motor para seguir em frente! Você pode ver a ficha completa da interface de usuário do RStudio (PDF) <a href="https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf">aqui</a></p>
+<p>Por padrão, o RStudio exibe quatro painéis retangulares.</p>
+<div class="inline-figure"><img src="images/RStudio_overview.PNG" width="100%" style="display: block; margin: auto;"></div>
+<p><span style="color: black;"><strong><em>DICA:</em></strong> Se o seu RStudio mostrar apenas um painel esquerdo, é porque não há nenhum script aberto ainda</span></p>
+<p><strong>O Painel Fonte (Source)</strong>
+Este painel, por padrão localizado na parte superior esquerda, é um espaço onde é possível editar, executar e salvar seus <a href="basics.html#scripts">scripts</a>. Os scripts contêm os comandos que você deseja executar. Este painel também pode exibir conjuntos de dados (quadros de dados) para visualização.</p>
+<p>Para usuários da Stata, este painel é similar às janelas de seu Do-file e Data Editor.</p>
+<p><strong>O Painel do Console R</strong></p>
+<p>O Console R, ou simplesmente Console, é por padrão o painel esquerdo ou inferior esquerdo do RStudio. Ele é a casa do “motor” de R. É aqui que os comandos são realmente executados e as saídas não gráficas e as mensagens de erro/aviso aparecem. Você pode digitar e executar comandos diretamente no Console, mas perceba que estes comandos não são salvos como são ao executar comandos de um script.</p>
+<p>Se você está familiarizado com Stata, o Console R é como a Janela de Comando e também a Janela de Resultados.</p>
+<p><strong>O Painel Ambiente (Environment)</strong></p>
+<p>Este painel, por padrão na parte superior direita, é mais freqüentemente usado para ver resumos breves de <a href="#objetos">objetos</a> no Ambiente R na sessão atual. Estes objetos podem incluir conjuntos de dados importados, modificados ou criados, parâmetros que você definiu (por exemplo, uma semana epidemiológica específica para a análise), ou vetores ou listas que você definiu durante a análise (por exemplo, nomes de regiões). Você pode clicar na seta ao lado de um nome de data frame para ver suas variáveis.</p>
+<p>No Stata, isto é mais parecido com a janela Gerenciador de Variáveis.</p>
+<p>Este painel também contém a aba <em>History</em> onde você pode ver comandos que você pode ver anteriormente. Tem também uma aba “Tutorial” onde você pode completar tutoriais R interativos se você tiver o pacote <strong>learnr</strong> instalado. Tem também um painel “Conections” para conexões externas, e pode ter um painel “Git” se você optar por fazer interface com o Github.</p>
+<p><strong>Paineis: Gráficos (Plots), Visualizador (Viewer), Pacotes (Packages), Ajuda (Help)</strong></p>
+<p>O painel inferior-direito inclui várias abas importantes. Gráficos típicos, incluindo mapas, serão exibidos no painel Plo. Saídas interativas ou HTML serão exibidas no painel do Visualizador (Viewer). O painel de Ajuda (Help) pode exibir documentação e arquivos de ajuda. O painel Arquivos (Files) é um navegador que pode ser usado para abrir ou excluir arquivos. O painel Pacotes (Packages) permite ver, instalar, atualizar, excluir, carregar/descarregar pacotes R, e ver qual versão do pacote você tem. Para saber mais sobre pacotes, veja a <a href="basics.html#packages">seção pacotes</a> abaixo.</p>
+<p>Este painel contém os equivalentes Stata das janelas Plots Manager e Project Manager.</p>
+</div>
+<div id="configurações-do-rstudio" class="section level3 unnumbered">
+<h3>Configurações do RStudio<a class="anchor" aria-label="anchor" href="#configura%C3%A7%C3%B5es-do-rstudio"><i class="fas fa-link"></i></a>
+</h3>
+<p>Altere as configurações e a aparência do RStudio no menu suspenso <em>Ferramentas</em> (Tools), selecionando <em>Opções Globais</em> (Global Options). Lá você pode alterar as configurações padrão, incluindo a cor da aparência/fundo.</p>
+<p><img src="images/RStudio_tools_options_1.png" width="50%"><img src="images/RStudio_tools_options.png" width="50%"></p>
+<p><strong>Restart (Reiniciar)</strong></p>
+<p>Se seu R travar, você pode reiniciar o R indo ao menu Sessão (Session) e clicando em “Reiniciar R” (Restart R). Isto evita o incômodo de fechar e abrir o RStudio. Tudo em seu ambiente R será removido quando você fizer isso.</p>
+</div>
+<div id="atalhos-no-teclado" class="section level3 unnumbered">
+<h3>Atalhos no teclado<a class="anchor" aria-label="anchor" href="#atalhos-no-teclado"><i class="fas fa-link"></i></a>
+</h3>
+<p>Alguns atalhos de teclado muito úteis estão abaixo. Veja todos os atalhos de teclado para Windows, Mac e Linux na segunda página deste RStudio <a href="https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf">cheatsheet da interface do usuário</a>.</p>
+<div class="inline-table"><table style="width:99%;" class="table table-sm">
+<colgroup>
+<col width="20%">
+<col width="14%">
+<col width="64%">
+</colgroup>
+<thead><tr class="header">
+<th>Windows/Linux</th>
+<th>Mac</th>
+<th>Ação</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Esc</td>
+<td>Esc</td>
+<td>Interrompe comando atual <br>
+(útil se você acidentalmente executou um comando incompleto e não pode escapar de ver o “+” no console R)</td>
+</tr>
+<tr class="even">
+<td>Ctrl+s</td>
+<td>Cmd+s</td>
+<td>Salva (script)</td>
+</tr>
+<tr class="odd">
+<td>Tab</td>
+<td>Tab</td>
+<td>Auto-completa</td>
+</tr>
+<tr class="even">
+<td>Ctrl + Enter</td>
+<td>Cmd + Enter</td>
+<td>Roda a(s) linha(s) atual(is)/seleção de código</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Shift + C</td>
+<td>Cmd + Shift + c</td>
+<td>comenta/descomenta as linhas selecionadas</td>
+</tr>
+<tr class="even">
+<td>Alt + -</td>
+<td>Option + -</td>
+<td>Insere <code>&lt;-</code>
+</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Shift + m</td>
+<td>Cmd + Shift + m</td>
+<td>Insere <code>%&gt;%</code>
+</td>
+</tr>
+<tr class="even">
+<td>Ctrl + l</td>
+<td>Cmd + l</td>
+<td>Limpa o console</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Alt + b</td>
+<td>Cmd + Option + b</td>
+<td>Roda do início até a linha atual</td>
+</tr>
+<tr class="even">
+<td>Ctrl + Alt + t</td>
+<td>Cmd + Option + t</td>
+<td>Roda a seção de código atual (R Markdown)</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Alt + i</td>
+<td>Cmd + Shift + r</td>
+<td>Insere chunk de código (no R Markdown)</td>
+</tr>
+<tr class="even">
+<td>Ctrl + Alt + c</td>
+<td>Cmd + Option + c</td>
+<td>Roda o chunk atual (R Markdown)</td>
+</tr>
+<tr class="odd">
+<td>up/down arrows in R console</td>
+<td>Same</td>
+<td>Alterna entre os comandos executados recentemente</td>
+</tr>
+<tr class="even">
+<td>Shift + up/down arrows in script</td>
+<td>Same</td>
+<td>Seleciona múltiplas linhas de código</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + f</td>
+<td>Cmd + f</td>
+<td>Procura e substitui no script atual</td>
+</tr>
+<tr class="even">
+<td>Ctrl + Shift + f</td>
+<td>Cmd + Shift + f</td>
+<td>Encontra em arquivos (pesquisa/substitui em vários script)</td>
+</tr>
+<tr class="odd">
+<td>Alt + l</td>
+<td>Cmd + Option + l</td>
+<td>Oculta código atual</td>
+</tr>
+<tr class="even">
+<td>Shift + Alt + l</td>
+<td>Cmd + Shift + Option+l</td>
+<td>Exibe código sele</td>
+</tr>
+</tbody>
+</table></div>
+<p><span style="color: darkgreen;"><strong><em>DICA:</em></strong> Use sua tecla Tab ao digitar para ativar a funcionalidade de auto-completar do RStudio. Isto pode evitar erros ortográficos. Pressione Tab enquanto digita para produzir um menu suspenso de funções e objetos prováveis, com base no que você digitou até agora.</span></p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="functions" class="section level2" number="3.6">
+<h2>
+<span class="header-section-number">3.6</span> Funções<a class="anchor" aria-label="anchor" href="#functions"><i class="fas fa-link"></i></a>
+</h2>
+<p>As funções estão no cerne do uso de R. As funções são a forma como você executa tarefas e operações. Muitas funções vêm instaladas com R, muitas mais estão disponíveis para download em <em>packages</em> (explicado na seção <a href="basics.html#packages">pacotes</a>), e você pode até mesmo escrever suas próprias funções personalizadas!</p>
+<p>Esta seção básica sobre funções explica:</p>
+<ul>
+<li>O que é uma função e como funcionam</li>
+<li>O que são os <em>argumentos/parâmetros</em> de uma função</li>
+<li>Como conseguir ajuda para compreender uma função</li>
+</ul>
+<p><em>Uma nota rápida sobre a sintaxe:</em> Neste manual, as funções são escritas em texto de código com parênteses abertos, como este: <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>. Como explicado na seção <a href="basics.html#packages">pacotes</a>, as funções são baixadas dentro de <em>pacotes</em>. Neste manual, os nomes dos pacotes são escritos em <strong>negrito</strong>, como <strong>dplyr</strong>. Às vezes, no código de exemplo, você pode ver o nome da função ligado explicitamente ao nome de seu pacote com um par de dois-pontos (<code>::</code>) como este: <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>. O propósito desta ligação é explicado na seção de pacotes.</p>
+<!-- ======================================================= -->
+<div id="funções-simples" class="section level3 unnumbered">
+<h3>Funções simples<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es-simples"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Uma função é como uma máquina que recebe entradas, faz alguma ação com essas entradas e produz uma saída.</strong> O que é a saída depende da função.</p>
+<p><strong>Funções normalmente operam sobre algum objeto colocado dentro dos parênteses da função</strong>. Por exemplo, a função <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> calcula a raiz quadrada de um número:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">49</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<p>O objeto fornecido a uma função também pode ser uma coluna em um conjunto de dados (veja a seção <a href="#objetos">Objetos</a> para detalhes sobre todos os tipos de objetos). Como R pode armazenar vários conjuntos de dados, será necessário especificar tanto o conjunto de dados quanto a coluna. Uma maneira de fazer isso é utilizar a notação <code>$</code> para ligar o nome do conjunto de dados e o nome da coluna (<code>dataset$coluna</code>). No exemplo abaixo, a função <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> é aplicada à coluna numérica <code>age</code> (idade) no conjunto de dados <code>linelist</code>, e a saída é um resumo dos valores numéricos e valores ausentes da coluna.</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Imprimir estatísticas resumidas da coluna 'age' (idade) no conjunto de dados 'linelist'.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.00    6.00   13.00   16.07   23.00   84.00      86</code></pre>
+<p><span style="color: black;"><strong><em>NOTA:</em></strong> Nos bastidores, uma função representa um código adicional complexo que foi condensado para o usuário em um comando fácil.</span></p>
+<!-- ======================================================= -->
+</div>
+<div id="funções-com-argumentos-múltiplos" class="section level3 unnumbered">
+<h3>Funções com argumentos múltiplos<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es-com-argumentos-m%C3%BAltiplos"><i class="fas fa-link"></i></a>
+</h3>
+<p>As funções frequentemente pedem várias entradas, chamadas <strong><em>argumentos</em></strong>, ou <strong>parâmetros</strong>, localizadas dentro dos parênteses da função, geralmente separadas por vírgulas.</p>
+<ul>
+<li>Alguns argumentos são necessários para que a função funcione corretamente, outros são opcionais</li>
+<li>Argumentos opcionais têm configurações padrão</li>
+<li>Os argumentos podem ter caráter, numérico, lógico (TRUE/FALSE)(<em>verdadeiro/falso</em>), e outros inputs</li>
+</ul>
+<p>Aqui está uma função ficcional divertida, chamada <code>oven_bake()</code> ( do inglês: assar no forno), como um exemplo de uma função típica. Ela pega um objeto de entrada (por exemplo, um conjunto de dados, ou neste exemplo “dough” - massa) e realiza operações sobre ele como especificado por argumentos adicionais (<code>minutes =</code> e <code>temperature =</code>). A saída pode ser impressa para o console, ou salva como um objeto utilizando o operador de atribuição <code>&lt;-</code>.</p>
+<div class="inline-figure"><img src="images/Function_Bread_Example.png" width="75%" style="display: block; margin: auto;"></div>
+<p><strong>Em um exemplo mais realístico</strong>, o comando <code>age_pyramid()</code> abaixo produz uma pirâmide etária baseado em faixas-etárias e uma coluna divisória binária, como <code>gender</code> (gênero). A função recebe três argumentos dentro dos parênteses, separados por vírgulas. Os valores fornecidos aos argumentos estabelecem <code>linelist</code> como o quadro de dados a utilizar, <code>age_cat5</code> como a coluna a contar, e <code>gender</code> como a coluna binária a utilizar para dividir a pirâmide por cor.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Crie uma pirâmide etária</span></span>
+<span><span class="fu">age_pyramid</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, split_by <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="75%" height="75%"></div>
+<p>O comando acima pode ser escrito de forma equivalente ao abaixo, em um estilo mais longo com uma nova linha para cada argumento. Este estilo pode ser mais fácil de ler, e mais fácil de escrever “comentários” com <code>#</code> para explicar cada parte (comentar extensivamente é uma boa prática!). Para executar este comando mais longo, você pode destacar todo o comando e clicar em “Run”, ou simplesmente colocar o cursor na primeira linha e, em seguida, pressionar simultaneamente as teclas Ctrl e Enter.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Crie uma pirâmide etária</span></span>
+<span><span class="fu">age_pyramid</span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">linelist</span>,        <span class="co"># Use a linelist de casos</span></span>
+<span>  age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, <span class="co"># disponibilize a coluna de faixa-etária</span></span>
+<span>  split_by <span class="op">=</span> <span class="st">"gender"</span>     <span class="co">#usee a coluna de gênero para criar dois lados da pirâmide </span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="75%" height="75%"></div>
+<p>A primeira metade de uma atribuição de argumentos (por exemplo, <code>dados =</code>) não precisa ser especificada se os argumentos forem escritos em uma ordem específica (especificada na documentação da função). O código abaixo produz exatamente a mesma pirâmide que o acima, porque a função espera a ordem dos argumentos: quadro de dados, variável <code>age_group</code>, variável <code>split_by</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Esse comando retorna o mesmo gráfico gerado acima</span></span>
+<span><span class="fu">age_pyramid</span><span class="op">(</span><span class="va">linelist</span>, <span class="st">"age_cat5"</span>, <span class="st">"gender"</span><span class="op">)</span></span></code></pre></div>
+<p><strong>Um comando mais complexo de <code>age_pyramid()</code> poderia incluir os argumentos <em>opcionais</em> para:</strong></p>
+<ul>
+<li>Mostrar proporções em vez de contagens (definir <code>proportional = TRUE</code> quando o padrão é <code>FALSE</code>)</li>
+<li>Especifique as duas cores a serem utilizadas (<code>pal =</code> é a abreviação de “paleta” e é fornecido com um vetor de dois nomes de cores. Veja a página <a href="#objetos">objetos</a> para saber como a função <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> faz um vetor)</li>
+</ul>
+<p><span style="color: black;"><strong><em>NOTA:</em></strong> Para argumentos que você especificar com ambas as partes do argumento (por exemplo, <code>proportional = TRUE</code>), sua ordem entre todos os argumentos não importa.</span></p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">age_pyramid</span><span class="op">(</span></span>
+<span>  <span class="va">linelist</span>,                    <span class="co"># use a linelist de casos</span></span>
+<span>  <span class="st">"age_cat5"</span>,                  <span class="co"># coluna de faixa-etária</span></span>
+<span>  <span class="st">"gender"</span>,                    <span class="co"># divida por gênero</span></span>
+<span>  proportional <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># porcentagem em vez de contagens</span></span>
+<span>  pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span>  <span class="co"># cores</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="75%" height="75%"></div>
+<!-- ======================================================= -->
+</div>
+<div id="escrevendo-funções" class="section level3 unnumbered">
+<h3>Escrevendo funções<a class="anchor" aria-label="anchor" href="#escrevendo-fun%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+</h3>
+<p>R é uma linguagem que é orientada em torno de funções, portanto você deve se sentir capacitado para escrever suas próprias funções. A criação de funções traz várias vantagens:</p>
+<ul>
+<li>Para facilitar a programação modular - a separação do código em peças independentes e gerenciáveis</li>
+<li>Substituir o processo repetitivo de copia e cola, que pode ser propenso a erros.</li>
+<li>Dar nomes memoráveis aos pedaços de código</li>
+</ul>
+<p>Como escrever uma função é abordado em profundidade na página <a href="writing-functions.html#writing-functions">Escrevendo funções</a>.</p>
+<!-- A function is given a name and defined with the assignment operator `<-` to a special **base** R function called `function()`. Within the parentheses, the arguments that the function will accept are defined. This is followed by curly brackets `{ }`, within which the actual code of the function is written.     -->
+<!-- The arguments should be provided in the syntax `argument = default`, separated by commas.   -->
+<!-- Here is an example where we create a function `staff_calc()` to serve as a staffing calculator for COVID-19 case investigation and contact tracing calls.   -->
+<!-- The arguments (inputs) and their default values will be:   -->
+<!-- * `daily_cases = NULL` The number of new COVID-19 cases per day   -->
+<!-- * `contacts_each = 5` The number contacts enumerated for each case   -->
+<!-- * `time_case = 0.5`  Number of hours to complete a case investigaton by phone   -->
+<!-- * `time_contact = 0.25`  Number of hours to complete a contact follow-up by phone   -->
+<!-- * `time_day = 8` The number of hours one staff works per day   -->
+<!-- Below, the function is created. The code ends with the special function `return()`, which is what the function produces.    -->
+<!-- ```{r message=FALSE, warning=FALSE, out.width = "75%", out.height="75%"} -->
+<!-- staff_calc <- function(daily_cases = NULL, contacts_each = 5, -->
+<!--                        time_case = 0.5, time_contact = 0.25, time_day = 8){ -->
+<!--   # Define total daily hours for calling cases -->
+<!--   case_hours <- daily_cases * time_case  -->
+<!--   # Define total daily hours for calling contacts -->
+<!--   contact_hours <- daily_cases * contacts_each * time_contact -->
+<!--   # Calculate number of staff required -->
+<!--   staff_required <- (case_hours + contact_hours)/time_day -->
+<!--   return(staff_required) -->
+<!-- } -->
+<!-- ``` -->
+<!-- Once this code is run, the function will be defined and will appear in the R Environment. We can run the function. Below all the default values are used and the `daily_cases = ` is set to 150.   -->
+<!-- There are many other nuances to understand when writing functions, as discussed in the page [Writing functions].   -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="packages" class="section level2" number="3.7">
+<h2>
+<span class="header-section-number">3.7</span> Pacotes<a class="anchor" aria-label="anchor" href="#packages"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Pacotes contém funções.</strong></p>
+<p>Um pacote R é um pacote compartilhável de código e documentação que contém funções pré-definidas. Os usuários da comunidade R desenvolvem pacotes o tempo todo, atendendo a problemas específicos, e é provável que alguém possa ajudar com seu trabalho inclusive! Você com certeza irá instalar e usar centenas de pacotes em seu uso de R.</p>
+<p>Na instalação, o R contém pacotes de <strong>“base”</strong> e funções que executam tarefas elementares e comuns. Mas muitos usuários do R criam funções especializadas, que são verificadas pela comunidade R e que você pode baixar como um <strong>package</strong> (pacote) para seu próprio uso. Neste manual, os nomes dos pacotes estão escritos em <strong>negrito</strong>. Um dos aspectos mais desafiadores do R é que muitas vezes há muitas funções ou pacotes a serem escolhidos para complementar uma determinada tarefa.</p>
+<div id="instalar-e-carregar" class="section level3 unnumbered">
+<h3>Instalar e carregar<a class="anchor" aria-label="anchor" href="#instalar-e-carregar"><i class="fas fa-link"></i></a>
+</h3>
+<p><em>As funções</em> estão contidas nos <strong>pacotes</strong> que podem ser baixados (“instalados”) para seu computador a partir da Internet. Uma vez que um pacote é baixado, ele é armazenado em sua “biblioteca” (do inglês, <em>library</em>). Você pode então acessar as funções que ele contém durante sua sessão R atual “carregando” este pacote.</p>
+<p><em>Pense em R como sua biblioteca pessoal</em>: Quando você baixa um pacote, sua biblioteca ganha um novo livro de funções, mas cada vez que você quiser usar uma função naquele livro, você deve pegar emprestado (“carregar”) aquele livro de sua biblioteca.</p>
+<p>Em resumo: para usar as funções disponíveis em um pacote R, duas etapas devem ser implementadas:</p>
+<ol style="list-style-type: decimal">
+<li><p>O pacote precisa ser <strong>instalado</strong> (uma vez), <em>e</em></p></li>
+<li><p>O pacote precisa ser <strong>carregado</strong> (a cada sessão de R que abrir)</p></li>
+</ol>
+<div id="sua-biblioteca" class="section level4 unnumbered">
+<h4>Sua biblioteca<a class="anchor" aria-label="anchor" href="#sua-biblioteca"><i class="fas fa-link"></i></a>
+</h4>
+<p>Sua “biblioteca” é na verdade uma pasta em seu computador, contendo uma subpasta para cada pacote que foi instalado. Descubra onde R está instalado em seu computador, e procure uma pasta chamada “win-library”. Por exemplo: <code>R\win-library\4.0</code> (a 4.0 é a versão R - você terá uma biblioteca diferente para cada versão R que você baixou).</p>
+<p>Você pode exibir (“printar”) o caminho do arquivo para sua biblioteca digitando <code><a href="https://rdrr.io/r/base/libPaths.html">.libPaths()</a></code> (parênteses vazios). Isto se torna especialmente importante se você trabalhar com <a href="network-drives.html#network-drives">R em unidades de rede</a>.</p>
+</div>
+<div id="instalar-do-cran" class="section level4 unnumbered">
+<h4>Instalar do CRAN<a class="anchor" aria-label="anchor" href="#instalar-do-cran"><i class="fas fa-link"></i></a>
+</h4>
+<p>Na maioria das vezes, os usuários R baixam pacotes da CRAN. CRAN (Comprehensive R Archive Network) é um repositório público on-line de pacotes R que foram publicados por membros da comunidade R.</p>
+<p>Você está preocupado com vírus e segurança ao fazer o download de um pacote da CRAN? Leia <a href="https://support.rstudio.com/hc/en-us/articles/360042593974-R-and-R-Package-Security">este artigo</a> sobre o assunto.</p>
+</div>
+<div id="como-instalar-e-carregar" class="section level4 unnumbered">
+<h4>Como instalar e carregar<a class="anchor" aria-label="anchor" href="#como-instalar-e-carregar"><i class="fas fa-link"></i></a>
+</h4>
+<p>Neste manual, sugerimos o uso do pacote <strong>pacman</strong> (abreviação para “package manager” que significa “gerenciador de pacotes” em inglês). Ele oferece uma função conveniente <code>p_load()</code> que instalará um pacote se necessário <em>e</em> o carregará para utilização na sessão R atual.</p>
+<p>A sintaxe é bastante simples. Basta listar os nomes dos pacotes dentro dos parênteses <code>p_load()</code>, separados por vírgulas. Este comando instalará os pacotes <strong>rio</strong>, <strong>tidyverse</strong>, e <strong>here</strong> se ainda não estiverem instalados, e os carregará para utilização. Isto torna a abordagem <code>p_load()</code> conveniente e concisa se compartilhar scripts com outros. Observe que os nomes dos pacotes são sensíveis a maiúsculas e minúsculas.</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Instala (se necessário) e os carrega para o uso</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">rio</span>, <span class="va">tidyverse</span>, <span class="va">here</span><span class="op">)</span></span></code></pre></div>
+<p>Note que utilizamos a sintaxe <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">pacman::p_load()</a></code> que escreve explicitamente o nome do pacote (<strong>pacman</strong>) antes do nome da função (<code>p_load()</code>), conectado por duas colunas <code>::</code>. Esta sintaxe é útil porque também carrega o pacote <strong>pacman</strong> (assumindo que já esteja instalado).</p>
+<p>Existem funções alternativas do R <strong>base</strong> que você verá com freqüência. A função do R <strong>base</strong> para instalar um pacote é <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>. O nome do pacote a ser instalado deve ser fornecido entre parênteses <em>em aspas</em>. Se você quiser instalar vários pacotes em um comando, eles devem ser listados dentro de um vetor de caracteres <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>.</p>
+<p>Nota: este comando <em>instala</em> um pacote, mas <em>não</em> o carrega para utilização na sessão atual.</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># essa função disponível no R base instala um único pacote </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># install multiple packages with base R</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"rio"</span>, <span class="st">"here"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>A instalação também pode ser feita clicando e apontando para o painel “Pacotes” do RStudio e clicando em “Instalar” e procurando pelo nome do pacote desejado.</p>
+<p>A função do R <strong>base</strong> para <strong>carregar</strong> um pacote para utilização (após ter sido instalado) é <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>. Ela pode carregar apenas um pacote de cada vez (outro motivo para utilizar <code>p_load()</code>). Você pode fornecer o nome do pacote com ou sem aspas.</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># com o R base, você pode carregar os pacotes dessa forma </span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/gesistsa/rio">rio</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span></code></pre></div>
+<p>Para verificar se um pacote está instalado e/ou carregado, você pode visualizar o painel de Pacotes no RStudio. Se o pacote estiver instalado, ele é mostrado lá com o número da versão. Se sua caixa for marcada, ela é carregada para a sessão atual.</p>
+<p><strong>Instalar a partir do Github</strong>.</p>
+<p>Às vezes, você precisa instalar um pacote que ainda não está disponível na CRAN. Ou talvez o pacote esteja disponível na CRAN, mas você quer a versão <em>em desenvolvimento</em> com novos recursos ainda não oferecidos na versão publicada mais estável da CRAN. Estes são frequentemente hospedados no site <a href="https://github.com/">github.com</a> em um “repositório” de código gratuito e voltado para o público. Leia mais sobre Github na página do manual <a href="collaboration.html#collaboration">Controle de versão e colaboração com Git e Github</a>.</p>
+<p>Para baixar os pacotes R do Github, você pode utilizar a função <code>p_load_gh()</code> do <strong>pacman</strong>, que instalará o pacote se necessário, e o carregará para utilização em sua sessão R atual. As alternativas para instalar incluem a utilização dos pacotes <strong>remotes</strong> ou <strong>devtools</strong>. Leia mais sobre todas as funções <strong>pacman</strong> na <a href="https://cran.r-project.org/web/packages/pacman/pacman.pdf">documentação do pacote</a>.</p>
+<p>Para instalar a partir do Github, você precisa fornecer mais informações. Você tem que fornecer:</p>
+<ol style="list-style-type: decimal">
+<li><p>A identificação do proprietário do repositório Github</p></li>
+<li><p>O nome do repositório que contém o pacote</p></li>
+<li><p><em>(opcional) O nome do “ramo” (o “branch” da versão de desenvolvimento específico) que você deseja baixar</em></p></li>
+</ol>
+<p>Nos exemplos abaixo, a primeira palavra entre aspas representa a ID do Github do proprietário do repositório, após a barra é o nome do repositório (o nome do pacote).</p>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># instala/carrega o pacote epicontacts do seu repositório Github </span></span>
+<span><span class="fu">p_load_gh</span><span class="op">(</span><span class="st">"reconhub/epicontacts"</span><span class="op">)</span></span></code></pre></div>
+<p>Se você quiser instalar de um “branch” (versão) diferente da principal, adicione o nome do “branch” após um “@”, após o nome do repositório.</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># instale o "branch"(ramo) "timeline" do pacte epicontacts do Github</span></span>
+<span><span class="fu">p_load_gh</span><span class="op">(</span><span class="st">"reconhub/epicontacts@timeline"</span><span class="op">)</span></span></code></pre></div>
+<p>Se não houver diferença entre a versão do Github e a versão em seu computador, nenhuma ação será tomada. Você pode “forçar” uma reinstalação utilizando <code>p_load_current_gh()</code> com o argumento <code>update = TRUE</code>. Leia mais sobre <strong>pacman</strong> nesta <a href="http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html">vinheta online</a></p>
+<p><strong>Instale a partir de ZIP ou TAR</strong></p>
+<p>Você poderia instalar um pacote de um endereço URL:</p>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">packageurl</span> <span class="op">&lt;-</span> <span class="st">"https://cran.r-project.org/src/contrib/Archive/dsr/dsr_0.2.2.tar.gz"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="va">packageurl</span>, repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
+<p>Ou, faça o download dele para seu computador em um arquivo comprimido (“zipado”):</p>
+<p>Opção 1: usando<code>install_local()</code> do pacote <strong>remotes</strong></p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html">install_local</a></span><span class="op">(</span><span class="st">"~/Downloads/dplyr-master.zip"</span><span class="op">)</span></span></code></pre></div>
+<p>Opção 2: usando <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> do R <strong>base</strong>, fornecendo o caminho do arquivo comprimido e configurando os parâmetros <code>type = "source</code> e <code>repos = NULL</code>.</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"~/Downloads/dplyr-master.zip"</span>, repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div id="sintaxe-do-código" class="section level3 unnumbered">
+<h3>Sintaxe do código<a class="anchor" aria-label="anchor" href="#sintaxe-do-c%C3%B3digo"><i class="fas fa-link"></i></a>
+</h3>
+<p>For clarity in this handbook, functions are sometimes preceded by the name of their package using the <code>::</code> symbol in the following way: <code>package_name::function_name()</code></p>
+<p>Once a package is loaded for a session, this explicit style is not necessary. One can just use <code>function_name()</code>. However writing the package name is useful when a function name is common and may exist in multiple packages (e.g. <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>). Writing the package name will also load the package if it is not already loaded.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Este comando usa o pacote "rio" e sua função   "import()" para importar uma base de dados.</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist.xlsx"</span>, which <span class="op">=</span> <span class="st">"Sheet1"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="auxílio-para-as-funções" class="section level3 unnumbered">
+<h3>Auxílio para as funções<a class="anchor" aria-label="anchor" href="#aux%C3%ADlio-para-as-fun%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para maior clareza neste manual, as funções são algumas vezes precedidas pelo nome de seu pacote utilizando o símbolo <code>::</code> da seguinte forma: <code>nome_do_pacote::nome_da_função()</code></p>
+<p>Uma vez carregado um pacote para uma sessão, este estilo explícito não é mais necessário. Pode-se simplesmente utilizar <code>nome_da_função()</code>. Entretanto, escrever o nome do pacote é útil quando um nome de função é muito comum e pode existir em vários pacotes (por exemplo, <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>). Escrever o nome do pacote também irá carregar o pacote se ele ainda não estiver carregado.</p>
+</div>
+<div id="atualizando-pacotes" class="section level3 unnumbered">
+<h3>Atualizando pacotes<a class="anchor" aria-label="anchor" href="#atualizando-pacotes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode atualizar os pacotes, reinstalando-os. Você também pode clicar no botão verde “Atualizar” em seu painel de Pacotes RStudio para ver quais pacotes têm novas versões para instalar. Esteja ciente de que seu código antigo pode precisar ser atualizado se houver uma grande revisão de como uma função funciona!</p>
+</div>
+<div id="apagar-pacotes" class="section level3 unnumbered">
+<h3>Apagar pacotes<a class="anchor" aria-label="anchor" href="#apagar-pacotes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Utilize <code>p_delete()</code> de <strong>pacman</strong>, ou <code><a href="https://rdrr.io/r/utils/remove.packages.html">remove.packages()</a></code> do R <strong>base</strong>. Alternativamente, procure a pasta que contém sua biblioteca e exclua manualmente a pasta.</p>
+</div>
+<div id="dependências" class="section level3 unnumbered">
+<h3>Dependências<a class="anchor" aria-label="anchor" href="#depend%C3%AAncias"><i class="fas fa-link"></i></a>
+</h3>
+<p>Os pacotes muitas vezes dependem de outros pacotes para funcionar. Estes são chamados de dependências. Se uma dependência falhar na instalação, então o pacote dependendo dela também pode falhar na instalação.</p>
+<p>Veja as dependências de um pacote com <code>p_depends()</code>, e veja quais pacotes dependem dele com <code>p_depends_reverse()</code>.</p>
+</div>
+<div id="funções-mascaradas" class="section level3 unnumbered">
+<h3>Funções mascaradas<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es-mascaradas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Não é raro que dois ou mais pacotes contenham o mesmo nome de função. Por exemplo, o pacote <strong>dplyr</strong> tem uma função <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, mas o pacote <strong>stats</strong> também. A função padrão <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> depende da ordem em que estes pacotes são carregados primeiro na sessão R - a última será o padrão para o comando <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>.</p>
+<p>Você pode verificar a ordem em seu painel Environment (Ambiente) do R Studio - clique no menu suspenso para Global Environment (“Ambiente Global”) e veja a ordem dos pacotes. Funções de pacotes <em>mais abaixo</em> nessa lista suspensa mascararão funções com o mesmo nome em pacotes que aparecem mais altos na lista suspensa. Ao carregar um pacote pela primeira vez, R avisará no console se estiver ocorrendo mascaramento, mas isto pode ser fácil de perder.</p>
+<div class="inline-figure"><img src="images/masking_functions.png" width="50%" style="display: block; margin: auto;"></div>
+<ol style="list-style-type: decimal">
+<li>Especifique o nome do pacote no comando. Por exemplo, utilize <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>
+</li>
+<li>Reorganize a ordem na qual os pacotes são carregados (por exemplo, dentro de <code>p_load()</code>), e <em>inicie uma nova sessão R</em>.</li>
+</ol>
+</div>
+<div id="desprender-descarregar" class="section level3 unnumbered">
+<h3>Desprender / descarregar<a class="anchor" aria-label="anchor" href="#desprender-descarregar"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para separar (descarregar) um pacote, use este comando, com o nome correto do pacote e apenas um “dois pontos”. Note que isto pode não resolver o mascaramento.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/detach.html">detach</a></span><span class="op">(</span><span class="va">package</span><span class="op">:</span><span class="va">PACKAGE_NAME_HERE</span>, unload<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="instalar-uma-versão-mais-antiga" class="section level3 unnumbered">
+<h3>Instalar uma versão mais antiga<a class="anchor" aria-label="anchor" href="#instalar-uma-vers%C3%A3o-mais-antiga"><i class="fas fa-link"></i></a>
+</h3>
+<p>Veja este <a href="https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages">guia</a> para instalar uma versão mais antiga de um pacote em particular.</p>
+</div>
+<div id="pacotes-sugeridos" class="section level3 unnumbered">
+<h3>Pacotes sugeridos<a class="anchor" aria-label="anchor" href="#pacotes-sugeridos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Veja a página em <a href="packages-suggested.html#packages-suggested">Pacotes sugeridos</a> para uma listagem de pacotes que recomendamos para o dia-a-dia em epidemiologia.</p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="scripts" class="section level2" number="3.8">
+<h2>
+<span class="header-section-number">3.8</span> Scripts<a class="anchor" aria-label="anchor" href="#scripts"><i class="fas fa-link"></i></a>
+</h2>
+<p>Os scripts (que significa “roteiro” em inglês) são uma parte fundamental da programação. Eles são documentos que contêm seus comandos (por exemplo, funções para criar e modificar conjuntos de dados, visualizações de impressão, etc.). Você pode salvar um script e executá-lo novamente mais tarde. Há muitas vantagens em armazenar e executar seus comandos a partir de um script (versus digitar comandos um a um na “linha de comando” do console R):</p>
+<ul>
+<li>Portabilidade - você pode compartilhar seu trabalho com outros enviando-lhes seus scripts<br>
+</li>
+<li>Reprodutibilidade - para que você e outros saibam exatamente o que você fez</li>
+<li>Controle de versão - para que você possa acompanhar as mudanças feitas por você ou colegas<br>
+</li>
+<li>Comentando/anotando - para explicar a seus colegas o que você tem feito</li>
+</ul>
+<div id="comentando" class="section level3 unnumbered">
+<h3>Comentando<a class="anchor" aria-label="anchor" href="#comentando"><i class="fas fa-link"></i></a>
+</h3>
+<p>Em um script você também pode anotar (“fazer comentários”) ao longo do seu código R. Comentar é útil para explicar a si mesmo e aos outros leitores o que você está fazendo. Você pode adicionar um comentário digitando o símbolo “hashtag” (#) e escrevendo seu comentário depois dele. O texto comentado aparecerá em uma cor diferente da do código R.</p>
+<p>Qualquer código escrito após o # não será executado. Portanto, colocar um # antes do código também é uma maneira útil de bloquear temporariamente uma linha de código (“comentar fora”) se você não quiser apagá-lo). Você pode fazer isso em várias linhas ao mesmo tempo, selecionando-as e pressionando Ctrl+Shift+c (Cmd+Shift+c no Mac).</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Um comentário pode ser uma linha por si só</span></span>
+<span><span class="co"># importar dados</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_raw.xlsx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   <span class="co"># também pode ser após o código</span></span>
+<span><span class="co"># filter(age &gt; 50)                          # também pode ser usado para desativar uma linha de código</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<ul>
+<li>Comente sobre <em>o que</em> você está fazendo e sobre <strong>por que</strong> você está fazendo.</li>
+<li>Divida seu código em seções lógicas…</li>
+<li>Acompanhe seu código com uma descrição passo a passo em texto do que você está fazendo (por exemplo, passos numerados)</li>
+</ul>
+</div>
+<div id="estilo" class="section level3 unnumbered">
+<h3>Estilo<a class="anchor" aria-label="anchor" href="#estilo"><i class="fas fa-link"></i></a>
+</h3>
+<p>É importante estar consciente de seu estilo de codificação - especialmente se estiver trabalhando em equipe. Defendemos o uso do <strong>tidyverse</strong> <a href="https://style.tidyverse.org/">guia de estilo</a>. Há também pacotes como <strong>styler</strong> e <strong>lintr</strong> que o ajudam a se adequar a este estilo.</p>
+<p>Alguns pontos muito básicos para tornar seu código legível para outros:</p>
+<p>* Ao nomear objetos, utilize apenas letras minúsculas, números e sublinhados <code>_</code>, por exemplo <code>my_data</code>.
+* Utilize espaços frequentes, inclusive ao redor dos operadores, por exemplo <code>n = 1</code> e <code>age_new &lt;- age_old + 3</code></p>
+</div>
+<div id="exemplo-de-script" class="section level3 unnumbered">
+<h3>Exemplo de Script<a class="anchor" aria-label="anchor" href="#exemplo-de-script"><i class="fas fa-link"></i></a>
+</h3>
+<p>Abaixo está um exemplo de um pequeno script R. Lembre-se, quanto melhor você explicar sucintamente seu código nos comentários, mais seus colegas vão gostar de você!</p>
+<div class="inline-figure"><img src="images/example_script.png" width="100%" style="display: block; margin: auto;"></div>
+<!-- ======================================================= -->
+</div>
+<div id="r-markdown" class="section level3 unnumbered">
+<h3>R markdown<a class="anchor" aria-label="anchor" href="#r-markdown"><i class="fas fa-link"></i></a>
+</h3>
+<p>Um script R markdown é um tipo de script R no qual o script em si <em>resulta</em> um documento de saída (PDF, Word, HTML, Powerpoint, etc.). Estas são ferramentas incrivelmente úteis e versáteis, freqüentemente usadas para criar relatórios dinâmicos e automatizados. Mesmo este website e manual são produzidos com um script R markdown!</p>
+<p>Vale a pena notar que usuários iniciantes de R também podem usar R Markdown - não se intimidem! Para saber mais, consulte a página do manual nos documentos <a href="reportfactory.html#reportfactory">Relatórios com R Markdown</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="notebooks-r" class="section level3 unnumbered">
+<h3>Notebooks R<a class="anchor" aria-label="anchor" href="#notebooks-r"><i class="fas fa-link"></i></a>
+</h3>
+<p>Não há diferença entre escrever em um Rmarkdown versus um caderno R. Entretanto, a execução do documento difere ligeiramente. Consulte este <a href="http://uc-r.github.io/r_notebook">site</a> para obter mais detalhes.</p>
+<!-- ======================================================= -->
+</div>
+<div id="shiny" class="section level3" number="3.8.1">
+<h3>
+<span class="header-section-number">3.8.1</span> Shiny<a class="anchor" aria-label="anchor" href="#shiny"><i class="fas fa-link"></i></a>
+</h3>
+<p>Os aplicativos/websites shiny estão contidas em um script, que deve ser chamado de <code>app.R</code>. Este arquivo tem três componentes:</p>
+<ol style="list-style-type: decimal">
+<li>Uma interface de usuário (ui)<br>
+</li>
+<li>Uma função de servidor<br>
+</li>
+<li>Uma chamada para a função <code>shinyApp</code>.</li>
+</ol>
+<p>Veja a página do manual em <a href="shiny-basics.html#shiny-basics">Dashboards com Shiny</a>, ou este tutorial online: <a href="https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/">Tutorial com shiny</a></p>
+<p><em>Nos tempos mais antigos, o arquivo acima era dividido em dois arquivos (<code>ui.R</code> e <code>server.R</code>)</em></p>
+</div>
+<div id="código-dobrável" class="section level3 unnumbered">
+<h3>Código dobrável<a class="anchor" aria-label="anchor" href="#c%C3%B3digo-dobr%C3%A1vel"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode colapsar/dobrar (do inglês <em>folding</em>) porções de código para facilitar a leitura de seu roteiro.</p>
+<p>Para isso, crie um cabeçalho de texto com #, escreva seu cabeçalho, e siga-o com pelo menos 4 traços (-), hashes (#) ou igual a (=). Quando você tiver feito isto, uma pequena seta aparecerá na “sarjeta” à esquerda (pelo número da linha). Você pode clicar nesta seta e o código abaixo até o próximo cabeçalho cair e um ícone de seta dupla aparecerá em seu lugar.</p>
+<p>Para expandir o código, clique novamente na seta na sarjeta, ou no ícone de duas fileiras. Há também atalhos de teclado como explicado na seção <a href="basics.html#rstudio">RStudio</a> desta página.</p>
+<p>Ao criar cabeçalhos com #, você também ativará o Índice na parte inferior de seu script (veja abaixo) que você pode usar para navegar em seu script. Você pode criar subtítulos adicionando mais # símbolos, por exemplo, # para primário, # # para secundário e ### para terciário.</p>
+<p>Abaixo estão duas versões de um script de exemplo. À esquerda está o original com os cabeçalhos comentados. À direita, quatro traços foram escritos após cada cabeçalho, tornando-os colapsáveis. Dois deles foram colapsados, e você pode ver que a Tabela de Conteúdos na parte inferior agora mostra cada seção.</p>
+<p><img src="images/code_folding1.png" width="50%"><img src="images/code_folding2.png" width="50%"></p>
+<p>Outras áreas de código que são automaticamente elegíveis para fazer esse “dobramento” incluem as regiões entre chaves <code><a href="https://rdrr.io/r/base/Paren.html">{ }</a></code> tais como definições de funções ou blocos condicionais ( declarações “if else”). Pode ler mais sobre dobramento de código no RStudio <a href="https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections">site</a>.</p>
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="diretório-de-trabalho" class="section level2" number="3.9">
+<h2>
+<span class="header-section-number">3.9</span> Diretório de trabalho<a class="anchor" aria-label="anchor" href="#diret%C3%B3rio-de-trabalho"><i class="fas fa-link"></i></a>
+</h2>
+<p>O diretório de trabalho é o local da pasta raiz usada por R para seu trabalho - onde R procura e salva arquivos por padrão. Por padrão, ele salvará novos arquivos e saídas para este local, e procurará por arquivos para importar (por exemplo, conjuntos de dados) também aqui.</p>
+<p>O diretório de trabalho aparece em texto cinza na parte superior do painel do RStudio Console. Você também pode imprimir o diretório de trabalho atual executando <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> (deixe os parênteses vazios).</p>
+<div class="inline-figure"><img src="images/working_directory_1.png" width="100%" style="display: block; margin: auto;"></div>
+<div id="abordagem-recomendada" class="section level3 unnumbered">
+<h3>Abordagem recomendada<a class="anchor" aria-label="anchor" href="#abordagem-recomendada"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Veja a página sobre <a href="r-projects.html#r-projects">projetos R</a> para obter detalhes sobre nossa abordagem recomendada para gerenciar seu diretório de trabalho.</strong>
+Uma maneira comum, eficiente e sem problemas para gerenciar seu diretório de trabalho e caminhos de arquivos é combinar estes 3 elementos em um fluxo de trabalho orientado segundo <a href="r-projects">projeto R</a></p>
+<ol style="list-style-type: decimal">
+<li>Um projeto R para armazenar todos os seus arquivos (ver página em <a href="r-projects.html#r-projects">projetos R</a>)<br>
+</li>
+<li>O pacote <strong>here</strong> para localização de arquivos (ver página em <a href="importing.html#importing">Importação e exportação</a>)<br>
+</li>
+<li>O pacote <strong>rio</strong> para arquivos de importação/exportação (ver página em <a href="importing.html#importing">Importação e exportação</a>)</li>
+</ol>
+<!-- ======================================================= -->
+</div>
+<div id="definido-por-comando" class="section level3 unnumbered">
+<h3>Definido por comando<a class="anchor" aria-label="anchor" href="#definido-por-comando"><i class="fas fa-link"></i></a>
+</h3>
+<p>Até recentemente, muitas pessoas aprendendo R eram ensinadas a começar seus roteiros com um comando <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>. Em vez disso, considere a utilização de um fluxo de trabalho orientados segundo <a href="r-projects.html#r-projects">projeto R</a> e leia as <a href="https://www.tidyverse.org/blog/2017/12/workflow-vs-script/">razões para não utilizar <code>setwd()</code></a>. Em resumo, seu trabalho torna-se específico para seu computador, os caminhos de arquivos utilizados para importar e exportar arquivos tornam-se ” frágeis”, e isso dificulta seriamente a colaboração e a utilização de seu código em qualquer outro computador. Existem alternativas fáceis!</p>
+<p>Como observado acima, embora não recomendamos esta abordagem na maioria das circunstâncias, você pode utilizar o comando <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> com o caminho do arquivo da pasta desejada escrito entre aspas, como no exemplo abaixo:</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="st">"C:/Documents/R Files/My analysis"</span><span class="op">)</span></span></code></pre></div>
+<p><span style="color: red;"><strong><em>PERIGO:</em></strong> Definir um diretório de trabalho com <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> <em>pode</em> ser “frágil” se o caminho do arquivo for específico para um computador. Em vez disso, use caminhos de arquivo relativos a um diretório raiz do R Project (com o pacote <strong>here</strong>).</span></p>
+<!-- ======================================================= -->
+</div>
+<div id="definindo-manualmente" class="section level3 unnumbered">
+<h3>Definindo manualmente<a class="anchor" aria-label="anchor" href="#definindo-manualmente"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para definir o diretório de trabalho manualmente (que seria o equivalente de apontar e clicar de <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>), clique no menu suspenso Sessão (<em>Session</em>) e vá para “Definir diretório de trabalho” (<em>Set Workig Directory</em>) e depois “Escolher diretório” (<em>Choose Directory</em>). Isso definirá o diretório de trabalho para essa sessão específica do R. Nota: se estiver usando esta abordagem, você terá que fazer isso manualmente toda vez que abrir o RStudio.</p>
+<!-- ======================================================= -->
+</div>
+<div id="dentro-de-um-projeto-r" class="section level3 unnumbered">
+<h3>Dentro de um projeto R<a class="anchor" aria-label="anchor" href="#dentro-de-um-projeto-r"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se estiver usando um projeto R, o diretório de trabalho será padronizado para a pasta raiz do projeto R que contém o arquivo “.rproj”. Isso se aplicará se você abrir o RStudio clicando em abrir o Projeto R (o arquivo com extensão “.rproj”).</p>
+<!-- ======================================================= -->
+</div>
+<div id="diretório-de-trabalho-em-r-markdown" class="section level3 unnumbered">
+<h3>Diretório de trabalho em R markdown<a class="anchor" aria-label="anchor" href="#diret%C3%B3rio-de-trabalho-em-r-markdown"><i class="fas fa-link"></i></a>
+</h3>
+<p>Em um script R markdown, o diretório de trabalho padrão é a pasta na qual o arquivo Rmarkdown (<code>.Rmd</code>) é salvo. Se estiver usando um projeto R e um pacote <strong>here</strong>, isso não se aplica e o diretório de trabalho será <code><a href="https://here.r-lib.org//reference/here.html">here()</a></code> conforme explicado na página <a href="r-projects.html#r-projects">projetos R</a>.</p>
+<p>Se você quiser alterar o diretório de trabalho de um R markdown autônomo (não em um projeto R), se você usar <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code>, isso se aplicará apenas a esse trecho de código específico. Para fazer a alteração para todos os trechos de código em um markdown R, edite o trecho de configuração para adicionar o parâmetro <code>root.dir =</code>, como abaixo:</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>root.dir <span class="op">=</span> <span class="st">'desired/directorypath'</span><span class="op">)</span></span></code></pre></div>
+<p>É muito mais fácil usar apenas o markdown do R dentro de um projeto R e usar o pacote <strong>here</strong>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="fornecendo-o-caminho-dos-arquivos" class="section level3 unnumbered">
+<h3>Fornecendo o caminho dos arquivos<a class="anchor" aria-label="anchor" href="#fornecendo-o-caminho-dos-arquivos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Talvez a fonte mais comum de frustração para um iniciante em R (pelo menos em uma máquina Windows) seja digitar um caminho de arquivo para importar ou exportar dados. Há uma explicação completa de como melhor inserir caminhos de arquivo na página <a href="importing.html#importing">Importar e exportar</a>, mas aqui estão alguns pontos-chave:</p>
+<p><strong>Caminhos quebrados</strong></p>
+<p>Abaixo está um exemplo de um caminho de arquivo “absoluto” ou “endereço completo”. Eles provavelmente quebrarão se forem usados por outro computador. Uma exceção é se você estiver usando uma unidade compartilhada/de rede.</p>
+<pre><code>C:/Users/Name/Document/Analytic Software/R/Projects/Analysis2019/data/March2019.csv  </code></pre>
+<p><strong>Direção da barra</strong></p>
+<p><em>Se digitar um caminho de arquivo, observe a direção das barras.</em> Use <em>barras normais</em> (<code>/</code>) para separar os componentes (“data/provincial.csv”). Para usuários do Windows, a maneira padrão de exibição dos caminhos de arquivo é com <em>barras invertidas</em> (ou contra-barra) (\) - portanto, você precisará alterar a direção de cada barra. Se você usar o pacote <strong>here</strong> conforme descrito na página <a href="r-projects.html#r-projects">projetos R</a>, a direção da barra não será um problema.</p>
+<p><strong>Caminhos relativos</strong></p>
+<p>Geralmente, recomendamos fornecer caminhos de arquivo “relativos” - ou seja, o caminho <em>relativo</em> à raiz do seu projeto R. Você pode fazer isso usando o pacote <strong>here</strong> conforme explicado na página <a href="r-projects.html#r-projects">projetos R</a>. Um caminho de arquivo relativo pode ser assim:</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Import csv linelist from the data/linelist/clean/ sub-folders of an R project</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"clean"</span>, <span class="st">"linelists"</span>, <span class="st">"marin_country.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Mesmo usando caminhos de arquivo relativos em um projeto R, você ainda pode usar caminhos absolutos para importar/exportar dados fora do seu projeto R.</p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="objects" class="section level2" number="3.10">
+<h2>
+<span class="header-section-number">3.10</span> Objetos<a class="anchor" aria-label="anchor" href="#objects"><i class="fas fa-link"></i></a>
+</h2>
+<p>Tudo em R é um objeto, e R é uma linguagem “orientada a objetos”. Estas seções explicarão:</p>
+<ul>
+<li>Como criar objetos (<code>&lt;-</code>)</li>
+<li>Tipos de objetos (por exemplo, quadros de dados, vetores..)<br>
+</li>
+<li>Como acessar subpartes de objetos (por exemplo, variáveis em um conjunto de dados)<br>
+</li>
+<li>Classes de objetos (por exemplo, numérico, lógico, inteiro, duplo, caractere, fator)</li>
+</ul>
+<!-- ======================================================= --><div id="tudo-é-um-objeto" class="section level3 unnumbered">
+<h3>Tudo é um objeto<a class="anchor" aria-label="anchor" href="#tudo-%C3%A9-um-objeto"><i class="fas fa-link"></i></a>
+</h3>
+<p><em>Esta seção é adaptada do <a href="https://r4epis.netlify.app/training/r_basics/objects/">projeto R4Epis</a>.</em><br>
+Tudo o que você armazena no R - conjuntos de dados, variáveis, uma lista de nomes de vilarejos, um número total da população, até saídas como gráficos - são <strong>objetos</strong> que recebem um <strong>nome</strong> e <strong>podem ser referenciados</strong> em comandos posteriores.</p>
+<p>Um objeto existe quando você atribui um valor a ele (consulte a seção de atribuição abaixo). Quando lhe é atribuído um valor, o objeto aparece no Ambiente (<em>Environment</em>) (veja o painel superior direito do RStudio). Ele pode então ser operado, manipulado, alterado e redefinido.</p>
+<!-- ======================================================= -->
+</div>
+<div id="definindo-objetos--" class="section level3 unnumbered">
+<h3>Definindo objetos (<code>&lt;-</code>)<a class="anchor" aria-label="anchor" href="#definindo-objetos--"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Crie objetos <em>atribuindo-lhes um valor</em> com o operador &lt;-.</strong><br>
+Você pode pensar no operador de atribuição <code>&lt;-</code> como as palavras “é definido como”. Os comandos de atribuição geralmente seguem uma ordem padrão:</p>
+<p><strong>nome_do_objeto</strong> &lt;- <strong>valor</strong> (ou processo/cálculo que produz um valor)</p>
+<p>Por exemplo, você pode querer registrar a semana do relatório epidemiológico atual como um objeto para referência no código posterior. Neste exemplo, o objeto <code>semana_atual</code> é criado quando é atribuído o valor <code>"2018-W10"</code> (as aspas fazem disso um valor de caractere). O objeto <code>semana_atual</code> aparecerá no painel RStudio Environment (canto superior direito) e poderá ser referenciado em comandos posteriores.</p>
+<p>Veja os comandos R e sua saída nas caixas abaixo.</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">semana_atual</span> <span class="op">&lt;-</span> <span class="st">"2018-W10"</span>   <span class="co"># esse comando cria o objeto semana_atual ao atribuir a ele um valor </span></span>
+<span><span class="va">semana_atual</span>                <span class="co"># esse comento exibe ("printa") o valor atual do objeto semana_atual no Console </span></span></code></pre></div>
+<pre><code>## [1] "2018-W10"</code></pre>
+<p><span style="color: black;"><strong><em>NOTA:</em></strong> Observe que o <code>[1]</code> na saída do console R está simplesmente indicando que você está visualizando o primeiro item da saída</span></p>
+<p><span style="color: orange;"><strong><em>CUIDADO:</em></strong> <strong>O valor de um objeto pode ser sobrescrito</strong> a qualquer momento executando um comando de atribuição para redefinir seu valor. Assim, a <strong>ordem dos comandos executados é muito importante</strong>..</span></p>
+<p>O comando a seguir irá redefinir o valor de <code>semana_atual</code>:</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">semana_atual</span> <span class="op">&lt;-</span> <span class="st">"2018-W51"</span>   <span class="co"># atribui um NOVO valor para o objeto semana_atual </span></span>
+<span><span class="va">semana_atual</span>                <span class="co"># Exibe ("printa") o valor atual do objeto semana_atual no console </span></span></code></pre></div>
+<pre><code>## [1] "2018-W51"</code></pre>
+<p><strong>Sinal de igual <code>=</code></strong></p>
+<p>Você também verá sinais de igual no código R:</p>
+<ul>
+<li>Um sinal de igual duplo <code>==</code> entre dois objetos ou valores faz uma <em>pergunta</em> lógica: “isso é igual a isso?”.<br>
+</li>
+<li>Você também verá sinais de igual dentro de funções usadas para especificar valores de argumentos de função (leia sobre isso nas seções abaixo), por exemplo <code>max(age, na.rm = TRUE)</code>.<br>
+</li>
+<li>Você <em>pode</em> usar um único sinal de igual <code>=</code> no lugar de <code>&lt;-</code> para criar e definir objetos, mas isso é desencorajado. Você pode ler sobre por que isso é desencorajado <a href="https://renkun.me/2014/01/28/difference-between-assignment-operators-in-r/">aqui</a>.</li>
+</ul>
+<p><strong>Bases de dados</strong></p>
+<p>Os conjuntos de dados também são objetos (geralmente “dataframes”) e devem receber nomes quando são importados. No código abaixo, o objeto <code>linelist</code> é criado e atribuído o valor de um arquivo CSV importado com o pacote <strong>rio</strong> e sua função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code>.</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># o objeto linelist é criado e a ele é atribuído o valor do arquivo CSV importado</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"my_linelist.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>Você pode ler mais sobre como importar e exportar conjuntos de dados na seção <a href="importing.html#importing">Importar e exportar</a>(#importing.</p>
+<p><span style="color: orange;"><strong><em>CUIDADO:</em></strong> Uma nota rápida sobre a nomeação de objetos:</span></p>
+<ul>
+<li>Os nomes dos objetos não devem conter espaços, mas você deve usar sublinhado (_) ou um ponto (.) em vez de um espaço.<br>
+</li>
+<li>Os nomes dos objetos diferenciam maiúsculas de minúsculas (o que significa que Dataset_A é diferente de dataset_A).</li>
+<li>Os nomes dos objetos devem começar com uma letra (não pode começar com um número como 1, 2 ou 3).</li>
+</ul>
+<p><strong>Saídas (Outputs)</strong></p>
+<p>Saídas como tabelas e gráficos fornecem um exemplo de como as saídas podem ser salvas como objetos ou apenas exibidas (“printadas” no console) sem serem salvas. Uma tabulação cruzada de gênero e resultado usando a função do R <strong>base</strong> <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> pode ser exibida diretamente no console R (<em>sem</em> ser salva).</p>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># exibe apenas no console R</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##    
+##     Death Recover
+##   f  1227     953
+##   m  1228     950</code></pre>
+<p>Mas a mesma tabela pode ser salva como um objeto nomeado. Então, opcionalmente, pode ser printado.</p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># salvar</span></span>
+<span><span class="va">gen_out_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># printar</span></span>
+<span><span class="va">gen_out_table</span></span></code></pre></div>
+<pre><code>##    
+##     Death Recover
+##   f  1227     953
+##   m  1228     950</code></pre>
+<p><strong>Colunas</strong></p>
+<p>As colunas em um conjunto de dados também são objetos e podem ser definidas, sobrescritas e criadas conforme descrito abaixo na seção Colunas.</p>
+<p>Você pode usar o operador de atribuição do R <strong>base</strong> para criar uma nova coluna. Abaixo, a nova coluna <code>bmi</code> (IMC - Índice de Massa Corporal, do inglês <em>Body Mass Index</em>) é criada, e para cada linha o novo valor é resultado de uma operação matemática sobre o valor da linha nas colunas <code>wt_kg</code> e <code>ht_cm</code>.</p>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># criar uma nova colna bmi (que é o valor de IMC) usando a sintaxe do R base</span></span>
+<span><span class="va">linelist</span><span class="op">$</span><span class="va">bmi</span> <span class="op">&lt;-</span> <span class="va">linelist</span><span class="op">$</span><span class="va">wt_kg</span> <span class="op">/</span> <span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">ht_cm</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span></code></pre></div>
+<p>No entanto, neste manual, enfatizamos uma abordagem diferente para definir colunas, que usa a função <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> do pacote <strong>dplyr</strong> e <em>piping</em> com o operador pipe (<code>%&gt;%</code>). A sintaxe é mais fácil de ler e há outras vantagens explicadas na página em <a href="cleaning.html#cleaning">Limpeza de dados e principais funções</a>. Você pode ler mais sobre <em>tubulação</em> na seção Tubulação abaixo.</p>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># criar uma nova colna bmi (que é o valor de IMC) usando a sintaxe do dplyr</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>bmi <span class="op">=</span> <span class="va">wt_kg</span> <span class="op">/</span> <span class="op">(</span><span class="va">ht_cm</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+<div id="estrutura-de-um-objeto" class="section level3 unnumbered">
+<h3>Estrutura de um objeto<a class="anchor" aria-label="anchor" href="#estrutura-de-um-objeto"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Os objetos podem ser um único dado (por exemplo, <code>meu_numero &lt;- 24</code>) ou podem consistir em dados estruturados.</strong></p>
+<p>O gráfico abaixo é emprestado de <a href="http://venus.ifca.unican.es/Rintro/dataStruct.html">este tutorial R online</a>. Ele mostra algumas estruturas de dados comuns e seus nomes. Não estão incluídos nesta imagem os dados espaciais, que são discutidos na página <a href="#gis">Noções básicas de GIS</a>.</p>
+<div class="inline-figure"><img src="images/R_data_structures.png" width="75%" height="50%" style="display: block; margin: auto;"></div>
+<p>Em epidemiologia (e particularmente epidemiologia de campo), você encontrará <em>mais comumente</em> dataframes e vetores:</p>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<colgroup>
+<col width="9%">
+<col width="49%">
+<col width="40%">
+</colgroup>
+<thead><tr class="header">
+<th>Estrutura comum</th>
+<th>Explicação</th>
+<th>Exemplo</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Vetores</td>
+<td>Um conteiner para uma sequência de objetos singulares, de uma mesma classe (es: numérico, caractere).</td>
+<td>
+<strong>“Variáveis” (colunas) em data frames são vetores</strong> (ex: a coluna <code>age_years</code>).</td>
+</tr>
+<tr class="even">
+<td>Data Frames</td>
+<td colspan="2">Vetores (ex: colunas) que estão unidas e têm todas o mesmo número de linhas. | <code>linelist</code> é data frame.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Observe que para criar um vetor que “independente” (não faz parte de um data frame) a função <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> é usada para combinar os diferentes elementos. Por exemplo, se estiver criando um vetor de cores para uma paleta de cores de um gráfico: <code>vector_de_cores &lt;- c("blue", "red2", "orange", "grey")</code></p>
+<!-- ======================================================= -->
+</div>
+<div id="classe-de-objetos" class="section level3 unnumbered">
+<h3>Classe de objetos<a class="anchor" aria-label="anchor" href="#classe-de-objetos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Todos os objetos armazenados em R possuem uma <em>classe</em> que informa ao R como lidar com o objeto. Existem muitas classes possíveis, mas as mais comuns incluem:</p>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<colgroup>
+<col width="4%">
+<col width="60%">
+<col width="35%">
+</colgroup>
+<thead><tr class="header">
+<th>Classe</th>
+<th>Explicação</th>
+<th>Exemplos</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Character</td>
+<td>Caracteres, esses são textos/palavras/frases <strong>“dentro de aspas”</strong>. Nenhuma operação matemática pode ser realizada com esses objetos.</td>
+<td>“Objetos do tipo caractere ficam entre aspas”</td>
+</tr>
+<tr class="even">
+<td>Integer</td>
+<td>Números <strong>inteiros</strong> (sem decimais)</td>
+<td>-5, 14, or 2000</td>
+</tr>
+<tr class="odd">
+<td>Numeric</td>
+<td>Números que <strong>podem incluir decimais</strong>. Se estiverem dentro de aspas, serão considerados como caractere</td>
+<td>23.1 or 14</td>
+</tr>
+<tr class="even">
+<td>Factor</td>
+<td>Fatores, são vatores que tem uma <strong>ordem específica</strong> ou hierarquia de valores</td>
+<td>Uma variável de status econômico com valores ordenados</td>
+</tr>
+<tr class="odd">
+<td>Date</td>
+<td>
+<strong>Uma vez que o R é informado que um certo grupo de dados corresponde a Data</strong>, esses valores só podem ser apresentados e manipulados de algumas maneiras especiais.
+Veja a página sobre <a href="dates.html#dates">Trabalhando com datas</a> para mais informações</td>
+<td>2018-04-12 ou 15/3/1954 ou Qua 4 Jan 1980</td>
+</tr>
+<tr class="even">
+<td>Logical</td>
+<td>Valores lógicos que precisam um dos dois valores especiais TRUE (verdadeiro) ou FALSE (note que eles <strong>não</strong> não “TRUE” e “FALSE” entre aspas)</td>
+<td>
+<code>TRUE</code> ou <code>FALSE</code>
+</td>
+</tr>
+<tr class="odd">
+<td>data.frame</td>
+<td colspan="2">Uma data frame é como o R armazena uma <strong>base de dados típica</strong>. Consiste de vetores (colunas) de dados unidos, que tenha o mesmo número de observações (linhas). | O exemplo AJS nomeado <code>linelist_raw</code> contém 68 variáveis com 300 observações (linhas) cada. |</td>
+</tr>
+<tr class="even">
+<td>tibble</td>
+<td>tibble é uma variação do data frame, a principal diferença operacional é que eles printam melhor no console (exibem as primeiras 10 linhas e apenas as colunas que cabem na tela)</td>
+<td>Qualquer data frame, lista ou matriz pode ser convertido em um tibble com <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code>
+</td>
+</tr>
+<tr class="odd">
+<td>list</td>
+<td>Uma lista é como um vetor, mas contém outros objetos que podem ser de outras classes diferentes</td>
+<td>Uma lista pode conter um único número, um dataframe, um vetor e até outra lista dentro dele!</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Você pode testar a classe de um objeto fornecendo seu nome para a função <code><a href="https://rdrr.io/r/base/class.html">class()</a></code></strong>. Nota: você pode fazer referência a uma coluna específica dentro de um conjunto de dados utilizando a notação <code>$</code> para separar o nome do conjunto de dados e o nome da coluna.</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span>         <span class="co"># a classe deve ser uma data frame ou tibble</span></span></code></pre></div>
+<pre><code>## [1] "data.frame"</code></pre>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span>     <span class="co"># classe deve ser numérica </span></span></code></pre></div>
+<pre><code>## [1] "numeric"</code></pre>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span>  <span class="co"># classe deve ser caractere </span></span></code></pre></div>
+<pre><code>## [1] "character"</code></pre>
+<p>Às vezes, uma coluna será convertida automaticamente para uma classe diferente pelo R. Cuidado com isso! Por exemplo, se você tiver um vetor ou coluna de números, mas um valor de caractere for inserido… a coluna inteira mudará para caractere de classe.</p>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">num_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span> <span class="co"># define um vetor só de números</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">num_vector</span><span class="op">)</span>          <span class="co"># este vetor é da classe numérico</span></span></code></pre></div>
+<pre><code>## [1] "numeric"</code></pre>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">num_vector</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"three"</span>   <span class="co"># converte o terceiro elemento para um caractere</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">num_vector</span><span class="op">)</span>          <span class="co"># o vetor agora é classe caractere</span></span></code></pre></div>
+<pre><code>## [1] "character"</code></pre>
+<p>Um exemplo comum disso é quando se manipula um data frame para exibir uma tabela - se você fizer uma linha total e tentar colar/colar porcentagens na mesma célula dos números (por exemplo, <code>23 (40%)</code>), toda a coluna numérica acima será convertida em caractere e não poderá mais ser utilizada para cálculos matemáticos.** Algumas vezes, será necessário converter objetos ou colunas em outra classe.**</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="16%">
+<col width="83%">
+</colgroup>
+<thead><tr class="header">
+<th>Função</th>
+<th>Ação</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/character.html">as.character()</a></code></td>
+<td>Converte para a classe caractere</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a></code></td>
+<td>Converte para a classe numérica</td>
+</tr>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/integer.html">as.integer()</a></code></td>
+<td>Converte para a classe inteiro</td>
+</tr>
+<tr class="even">
+<td><code><a href="https://rdrr.io/r/base/as.Date.html">as.Date()</a></code></td>
+<td>Converte para a classe Data - Nota: Veja a seção sobre <a href="dates.html#dates">datas</a> para detalhes</td>
+</tr>
+<tr class="odd">
+<td><code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code></td>
+<td>Converte para a classe fator - Nota: Redefinir a ordem dos níveis requer argumentos extras</td>
+</tr>
+</tbody>
+</table></div>
+<p>Da mesma forma, existem as funções do R <strong>base</strong> para verificar se um objeto é de uma classe específica, como <code><a href="https://rdrr.io/r/base/numeric.html">is.numeric()</a></code>, <code><a href="https://rdrr.io/r/base/character.html">is.character()</a></code>, <code><a href="https://rdrr.io/r/base/double.html">is.double()</a></code>, <code><a href="https://rdrr.io/r/base/factor.html">is.factor()</a></code>, <code><a href="https://rdrr.io/r/base/integer.html">is.integer()</a></code></p>
+<p>Aqui está <a href="https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures/">mais material on-line sobre classes e estruturas de dados em R</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="colunasvariáveis" class="section level3 unnumbered">
+<h3>Colunas/Variáveis (<code>$</code>)<a class="anchor" aria-label="anchor" href="#colunasvari%C3%A1veis"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Uma coluna em um data frame é tecnicamente um “vetor” (ver tabela acima)</strong> - uma série de valores que devem ser todos da mesma classe (tanto caracter, numérico, lógico, etc.).</p>
+<p>Um vetor pode existir independentemente de um data frame, por exemplo, um vetor de nomes de colunas que você deseja incluir como variáveis explicativas em um modelo. Para criar um vetor independente, utilize a função <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> como abaixo:</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># define o vetor independente de entradas dp tipo caractere </span></span>
+<span><span class="va">explanatory_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gender"</span>, <span class="st">"fever"</span>, <span class="st">"chills"</span>, <span class="st">"cough"</span>, <span class="st">"aches"</span>, <span class="st">"vomit"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># printa os valores desse vetor nomeado  </span></span>
+<span><span class="va">explanatory_vars</span></span></code></pre></div>
+<pre><code>## [1] "gender" "fever"  "chills" "cough"  "aches"  "vomit"</code></pre>
+<p><strong>As colunas em uma data frame também são vetores e podem ser chamadas, referenciadas, extraídas ou criadas utilizando o símbolo <code>$</code>.</strong> O símbolo <code>$</code> liga o nome da coluna ao nome de sua moldura de dados. Neste manual, tentamos utilizar a palavra “coluna” em vez de “variável”.</p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Obter o comprimento do vetor age</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span> <span class="co"># (age é uma coluna no data frame linelist)</span></span></code></pre></div>
+<p>Ao digitar o nome do data frame seguido de <code>$</code> você verá também um menu suspenso de todas as colunas data frame. Você pode percorrê-las usando sua tecla de seta, selecionar uma com sua tecla Enter e evitar erros ortográficos!</p>
+<div class="inline-figure"><img src="images/Calling_Names.gif" width="100%" style="display: block; margin: auto;"></div>
+<p><span style="color: darkgreen;"><strong><em>DICA AVANÇADA:</em></strong> Alguns objetos mais complexos (por exemplo, uma lista, ou um objeto ‘epicontacts’) podem ter múltiplos níveis que podem ser acessados através de múltiplos sinais de dólar. Por exemplo <code>epicontacts$linelist$date_onset</code></span></p>
+<!-- ======================================================= -->
+</div>
+<div id="accessarindexar-com-colchetes" class="section level3 unnumbered">
+<h3>Accessar/indexar com colchetes (<code>[ ]</code>)<a class="anchor" aria-label="anchor" href="#accessarindexar-com-colchetes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Talvez seja necessário visualizar partes de objetos, também chamadas de “indexação”, o que muitas vezes é feito utilizando os colchetes <code>[ ]</code>. Utilizar <code>$</code> em um data frame para acessar uma coluna é também um tipo de indexação.</p>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"f"</span><span class="op">)</span>  <span class="co"># define o vetor</span></span>
+<span><span class="va">my_vector</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>                                  <span class="co"># printa o quinto elemento</span></span></code></pre></div>
+<pre><code>## [1] "e"</code></pre>
+<p>Os colchetes também funcionam para retornar partes específicas de uma saída retornada, tais como a saída de uma função summary():</p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Todo o resumo</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##    0.00    6.00   13.00   16.07   23.00   84.00      86</code></pre>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Apenas o segundo elemento,sem nome, usando colchetes simples</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span></code></pre></div>
+<pre><code>## 1st Qu. 
+##       6</code></pre>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Apenas o segundo elemento,sem nome, usando colchetes duplos</span></span>
+<span></span>
+<span><span class="co"># Extrais um elemento pelo nome, sem mostrar o nome aparecer no console</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span><span class="op">[[</span><span class="st">"Median"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<pre><code>## [1] 13</code></pre>
+<p>Os colchetes também trabalham em data frames para visualizar linhas e colunas específicas. Você pode fazer isso utilizando a sintaxe <code>dataframe[linhas, colunas]</code>:</p>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Visualizar uma linha específica (2) de uma base de dados, com todas as colunas (não esqueça a vírgula!) </span></span>
+<span><span class="va">linelist</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Vert todas as linhas, mas só uma coluna</span></span>
+<span><span class="va">linelist</span><span class="op">[</span>, <span class="st">"date_onset"</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Ver valores da linha 2, e as colunas 5 a 10</span></span>
+<span><span class="va">linelist</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">5</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> </span>
+<span></span>
+<span><span class="co"># VVer valores da linha 2, e as colunas 5 a 10 e a 18</span></span>
+<span><span class="va">linelist</span><span class="op">[</span><span class="fl">2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">18</span><span class="op">)</span><span class="op">]</span> </span>
+<span></span>
+<span><span class="co"># Ver valores da linha 2 a 20 , e colunas específicas</span></span>
+<span><span class="va">linelist</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">20</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date_onset"</span>, <span class="st">"outcome"</span>, <span class="st">"age"</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co">#Ver linhas e colunas baseado em critérios</span></span>
+<span><span class="co"># *** Noque que o dataframe precira ainda ser nomeado no critério!  </span></span>
+<span><span class="va">linelist</span><span class="op">[</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span> <span class="op">&gt;</span> <span class="fl">25</span> , <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date_onset"</span>, <span class="st">"outcome"</span>, <span class="st">"age"</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Use View() para ver as saídas no Painel Visualizador do RStudio Viewer (mais fácil de ler)</span></span>
+<span><span class="co"># *** Note o  "V" maúsculo na função View() </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">20</span>, <span class="st">"date_onset"</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salve como um novo objeto</span></span>
+<span><span class="va">new_table</span> <span class="op">&lt;-</span> <span class="va">linelist</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">20</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date_onset"</span><span class="op">)</span><span class="op">]</span> </span></code></pre></div>
+<p>Observe que você também pode alcançar a indexação de linha/coluna acima em dataframes e tibbles utilizando <strong>dplyr</strong> sintaxe (funções <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> para linhas, e <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> para colunas). Leia mais sobre estas funções centrais na página <a href="cleaning.html#cleaning">Dados de limpeza e principais funções</a>.</p>
+<p>Para filtrar com base no “número da linha”, você pode utilizar a função <strong>dplyr</strong> <code><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number()</a></code> com parênteses abertos como parte de uma instrução de filtragem lógica. Muitas vezes você utilizará o operador <code>%in%</code> e uma faixa de números como parte dessa declaração lógica, como mostrado abaixo. Para ver as <em>primeiras</em> N fileiras , você também pode utilizar a função especial <strong>dplyr</strong> <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>.</p>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Visualizar as primeiras 100 linhas</span></span>
+<span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Show row 5 only</span></span>
+<span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number</a></span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="fl">5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View rows 2 through 20, and three specific columns (note no quotes necessary on column names)</span></span>
+<span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fl">2</span><span class="op">:</span><span class="fl">20</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">date_onset</span>, <span class="va">outcome</span>, <span class="va">age</span><span class="op">)</span></span></code></pre></div>
+<p>Ao indexar um objeto de classe <strong>lista</strong>, parênteses simples sempre retornam coma classe lista, mesmo que apenas um único objeto seja retornado. Entretanto, colchetes duplos podem ser usados para acessar um único elemento e retornar uma classe diferente da lista.<br>
+Os parênteses também podem ser escritos um após o outro, como demonstrado abaixo.</p>
+<p>Esta <a href="https://r4ds.had.co.nz/vectors.html#lists-of-condiments">explicação visual da indexação de listas, com pimenteiros</a> é bem-humorada e útil.</p>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># define uma lista demo</span></span>
+<span><span class="va">my_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>  <span class="co"># Primeiro elemento na lista é um vetor do tipo caractere </span></span>
+<span>  hospitals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Central"</span>, <span class="st">"Empire"</span>, <span class="st">"Santa Anna"</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  <span class="co"># segundo elemento na lista é um dataframe com endereços  </span></span>
+<span>  addresses   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>    street <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"145 Medical Way"</span>, <span class="st">"1048 Brown Ave"</span>, <span class="st">"999 El Camino"</span><span class="op">)</span>,</span>
+<span>    city   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Andover"</span>, <span class="st">"Hamilton"</span>, <span class="st">"El Paso"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p>Veja como fica a lista quando exibida no console. Veja como há dois elementos nomeados:</p>
+<ul>
+<li>
+<code>hospitals</code>,, um vetor de caracteres.</li>
+<li>
+<code>addresses</code>, um quadro de dados de endereços</li>
+</ul>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_list</span></span></code></pre></div>
+<pre><code>## $hospitals
+## [1] "Central"    "Empire"     "Santa Anna"
+## 
+## $addresses
+##            street     city
+## 1 145 Medical Way  Andover
+## 2  1048 Brown Ave Hamilton
+## 3   999 El Camino  El Paso</code></pre>
+<p>Agora nos extraímos usando vários métodos:</p>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_list</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="co"># esse retorna o elemanto da classe "lista" - o nome do elemento ainda é exibido </span></span></code></pre></div>
+<pre><code>## $hospitals
+## [1] "Central"    "Empire"     "Santa Anna"</code></pre>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="co"># este retorna apenas o vetor de caracter (sem nome) </span></span></code></pre></div>
+<pre><code>## [1] "Central"    "Empire"     "Santa Anna"</code></pre>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_list</span><span class="op">[[</span><span class="st">"hospitals"</span><span class="op">]</span><span class="op">]</span> <span class="co"># você também pode indexar pelo nome do elemento da lista  </span></span></code></pre></div>
+<pre><code>## [1] "Central"    "Empire"     "Santa Anna"</code></pre>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="co"># Isto retorna o terceiro elemento do vetor de caracteres "hospitals" </span></span></code></pre></div>
+<pre><code>## [1] "Santa Anna"</code></pre>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="co"># Isto retorna a primeira coluna  ("street") da data frame de endereços</span></span></code></pre></div>
+<pre><code>##            street
+## 1 145 Medical Way
+## 2  1048 Brown Ave
+## 3   999 El Camino</code></pre>
+<!-- ======================================================= -->
+</div>
+<div id="remover-objetos" class="section level3 unnumbered">
+<h3>Remover objetos<a class="anchor" aria-label="anchor" href="#remover-objetos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Você pode remover objetos individuais de seu ambiente R colocando o nome na função <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> (sem aspas):</p>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">object_name</span><span class="op">)</span></span></code></pre></div>
+<p>Você pode reomver todos os objetos (limpar o ambiente de trabalho) ao executar:</p>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="piping-encadeamento" class="section level2" number="3.11">
+<h2>
+<span class="header-section-number">3.11</span> Piping (Encadeamento, <code>%&gt;%</code>)<a class="anchor" aria-label="anchor" href="#piping-encadeamento"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Duas abordagens gerais para trabalhar com objetos são:</strong></p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Pipes/tidyverse</strong> - pipes send an object from function to function - emphasis is on the <em>action</em>, not the object<br>
+</li>
+<li>
+<strong>Definir objetos intermediários</strong> - um objeto é redefinido repetidamente - a ênfase está no objeto.</li>
+</ol>
+<!-- ======================================================= --><div id="pipes" class="section level3 unnumbered">
+<h3>
+<strong>Pipes</strong><a class="anchor" aria-label="anchor" href="#pipes"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Explicado de forma simples, o operador do pipe (<code>%&gt;%</code>) passa uma saída intermediária de uma função para a próxima.</strong><br>
+Você pode pensar nisso como dizendo “então”. Muitas funções podem ser ligadas com <code>%&gt;%</code>.</p>
+<ul>
+<li>
+<strong>Piping enfatiza uma seqüência de ações, não o objeto sobre o qual as ações estão sendo realizadas</strong><br>
+</li>
+<li>Pipes são melhores quando uma seqüência de ações deve ser executada em um único objeto.<br>
+</li>
+<li>Os pipes vêm do pacote <strong>magrittr</strong>, que é automaticamente incluído nos pacotes <strong>dplyr</strong> e <strong>tidyverse</strong>
+</li>
+<li>Os pipes podem tornar o código mais limpo e fácil de ler, mais intuitivo</li>
+</ul>
+<p>Leia mais sobre esta abordagem no tidyverse <a href="https://style.tidyverse.org/pipes.html">guia de estilo</a></p>
+<p>Aqui está um exemplo falso para comparação, usando funções fictícias para “assar um bolo”. Primeiro, o método do pipe:</p>
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Um exemplo falso de como assar um bolo usando a sintaxe do pipe </span></span>
+<span></span>
+<span><span class="va">cake</span> <span class="op">&lt;-</span> <span class="va">flour</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>       <span class="co">#para definir o bolo, comece com farinha, e então ...</span></span>
+<span>  <span class="fu">add</span><span class="op">(</span><span class="va">eggs</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   <span class="co"># adicione ovos</span></span>
+<span>  <span class="fu">add</span><span class="op">(</span><span class="va">oil</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>    <span class="co"># adicione óleo</span></span>
+<span>  <span class="fu">add</span><span class="op">(</span><span class="va">water</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># adicione água</span></span>
+<span>  <span class="fu">mix_together</span><span class="op">(</span>         <span class="co"># misture</span></span>
+<span>    utensil <span class="op">=</span> <span class="va">spoon</span>,</span>
+<span>    minutes <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>    </span>
+<span>  <span class="fu">bake</span><span class="op">(</span>degrees <span class="op">=</span> <span class="fl">350</span>,   <span class="co"># asse</span></span>
+<span>       system <span class="op">=</span> <span class="st">"fahrenheit"</span>,</span>
+<span>       minutes <span class="op">=</span> <span class="fl">35</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  </span>
+<span>  <span class="fu">let_cool</span><span class="op">(</span><span class="op">)</span>            <span class="co"># deixe esfriar</span></span></code></pre></div>
+<p>Aqui está outro <a href="https://cfss.uchicago.edu/notes/pipes/#:~:text=Pipes%20are%20an%20extremamente%20useful,code%20and%20combine%20multiple%20operations">link</a> descrevendo a utilidade dos pipes.</p>
+<p>O pipe não é uma função do R <strong>base</strong>. Para utilizar o pipe, o pacote <strong>magrittr</strong> deve ser instalado e carregado (isto é normalmente feito carregando os pacotes <strong>tidyverse</strong> ou <strong>dplyr</strong> que o inclui). Você pode <a href="https://magrittr.tidyverse.org/">ler mais sobre pipe na documentação magrittr</a>.</p>
+<p>Observe que, assim como outros comandos R, os pipes podem ser utilizados apenas para exibir o resultado, ou para salvar/reservar um objeto, dependendo se o operador de atribuição <code>&lt;-</code> está envolvido. Veja os dois abaixo:</p>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Criar ou sobrescrever um objeto, definindo como contagens agregadas por faixa-etária  (não "printado")</span></span>
+<span><span class="va">linelist_summary</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">age_cat</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Printa a tabela de contagens no console, mas nao a salva  </span></span>
+<span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">age_cat</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##   age_cat    n
+## 1     0-4 1095
+## 2     5-9 1095
+## 3   10-14  941
+## 4   15-19  743
+## 5   20-29 1073
+## 6   30-49  754
+## 7   50-69   95
+## 8     70+    6
+## 9    &lt;NA&gt;   86</code></pre>
+<p><strong><code>%&lt;&gt;%</code></strong><br>
+Este é um “tubo de atribuição” do pacote <strong>magrittr</strong>, que <em>encadeia um objeto para frente e também re-define o objeto</em>. Deve ser o primeiro operador pipe da cadeia. É um “atalho”. Os dois comandos abaixo são equivalentes:</p>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&gt;</span> <span class="fl">50</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">linelist</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">age</span> <span class="op">&gt;</span> <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+<div id="definir-objetos-intermediários" class="section level3 unnumbered">
+<h3>Definir objetos intermediários<a class="anchor" aria-label="anchor" href="#definir-objetos-intermedi%C3%A1rios"><i class="fas fa-link"></i></a>
+</h3>
+<p>Esta abordagem para mudar objetos/dataframes pode ser melhor se:</p>
+<ul>
+<li>Você precisa manipular vários objetos…</li>
+<li>Há etapas intermediárias que são significativas e merecem nomes de objetos separados</li>
+</ul>
+<p><strong>Riscos:</strong></p>
+<ul>
+<li>Criar novos objetos para cada etapa significa criar muitos objetos. Se você usar o errado, talvez não se dê conta disso!</li>
+<li>Nomear todos os objetos pode ser confuso…</li>
+<li>Os erros podem não ser facilmente detectáveis</li>
+</ul>
+<p>Ou nomear cada objeto intermediário, ou sobrescrever o original, ou combinar todas as funções em conjunto. Todos vêm com seus próprios riscos.</p>
+<p>Abaixo está o mesmo exemplo falso de “bolo” como acima, mas usando este estilo:</p>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># um exemplo falso de como assar um bolo usado este método (definindo objetos intermediários) </span></span>
+<span><span class="va">batter_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">flour</span>, <span class="va">eggs</span><span class="op">)</span></span>
+<span><span class="va">batter_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">batter_1</span>, <span class="va">oil</span><span class="op">)</span></span>
+<span><span class="va">batter_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">batter_2</span>, <span class="va">water</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">batter_4</span> <span class="op">&lt;-</span> <span class="fu">mix_together</span><span class="op">(</span>object <span class="op">=</span> <span class="va">batter_3</span>, utensil <span class="op">=</span> <span class="va">spoon</span>, minutes <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cake</span> <span class="op">&lt;-</span> <span class="fu">bake</span><span class="op">(</span><span class="va">batter_4</span>, degrees <span class="op">=</span> <span class="fl">350</span>, system <span class="op">=</span> <span class="st">"fahrenheit"</span>, minutes <span class="op">=</span> <span class="fl">35</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">cake</span> <span class="op">&lt;-</span> <span class="fu">let_cool</span><span class="op">(</span><span class="va">cake</span><span class="op">)</span></span></code></pre></div>
+<p>Combine todas as funções em uma só - isso dificulta a leitura):</p>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># um exemplo de combinação/aninhamento de múltiplas funções  juntas - difícil de ler</span></span>
+<span><span class="va">cake</span> <span class="op">&lt;-</span> <span class="fu">let_cool</span><span class="op">(</span><span class="fu">bake</span><span class="op">(</span><span class="fu">mix_together</span><span class="op">(</span><span class="va">batter_3</span>, utensil <span class="op">=</span> <span class="va">spoon</span>, minutes <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, degrees <span class="op">=</span> <span class="fl">350</span>, system <span class="op">=</span> <span class="st">"fahrenheit"</span>, minutes <span class="op">=</span> <span class="fl">35</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="operadores" class="section level2" number="3.12">
+<h2>
+<span class="header-section-number">3.12</span> Principais operadores e funções<a class="anchor" aria-label="anchor" href="#operadores"><i class="fas fa-link"></i></a>
+</h2>
+<p>Esta seção detalha os operadores em R, como por exemplo:</p>
+<ul>
+<li>Operadores de definição<br>
+</li>
+<li>Operadores relacionais (menos do que, igual a…)</li>
+<li>Operadores lógicos (e, ou…)<br>
+</li>
+<li>Lidando com valores faltantes…</li>
+<li>Operadores matemáticos e funções (+/-, &gt;, sum(), median(), …)<br>
+</li>
+<li>O operador <code>%in%</code>
+</li>
+</ul>
+<!-- ======================================================= --><div id="operador-de-atribuição" class="section level3 unnumbered">
+<h3>Operador de atribuição<a class="anchor" aria-label="anchor" href="#operador-de-atribui%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong><code>&lt;-</code></strong></p>
+<p>O operador de atribuição básica em R é <code>&lt;-</code>. De tal forma que <code>nome_objeto &lt;- valor</code>.<br>
+Este operador de atribuição também pode ser escrito como <code>=</code>. Aconselhamos o uso de <code>&lt;-</code> para uso geral em R.<br>
+Aconselhamos também o uso de <code>&lt;-</code> para uso geral em R. Aconselhamos também o uso de espaços em torno de tais operadores, para facilitar a leitura.</p>
+<p><strong><code>&lt;&lt;-</code></strong></p>
+<p>Se você estiver <a href="writing-functions.html#writing-functions">Escrevendo funções</a>, ou utilizando R de forma interativa com scripts de origem, então você pode precisar utilizar este operador de atribuição <code>&lt;&lt;-</code> (do R <strong>base</strong>). Este operador é utilizado para definir um objeto em um ambiente R ‘pai’ superior. Veja isto <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html">referência on-line</a>.</p>
+<p><strong><code>%&lt;&gt;%</code></strong></p>
+<p>Este é um “pipe de atribuição” do pacote <strong>magrittr</strong>, que canaliza um objeto para frente e <em>também re-define o objeto</em>. Deve ser o primeiro operador pipe da cadeia. É a abreviação, como mostrado abaixo em dois exemplos equivalentes:</p>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_months <span class="op">=</span> <span class="va">age_years</span> <span class="op">*</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
+<p>O código acima é equivalente ao abaixo:</p>
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_months <span class="op">=</span> <span class="va">age_years</span> <span class="op">*</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
+<p><strong><code>%&lt;+%</code></strong></p>
+<p>Isso é usado para adicionar dados a árvores filogenéticas com o pacote <strong>ggtree</strong>. Veja a página em <a href="phylogenetic-trees.html#phylogenetic-trees">Árvores Filogenéticas</a> ou este <a href="https://yulab-smu.top/treedata-book/">livro de recursos online</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="operadores-relacionais-e-lógicos" class="section level3 unnumbered">
+<h3>Operadores relacionais e lógicos<a class="anchor" aria-label="anchor" href="#operadores-relacionais-e-l%C3%B3gicos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Os operadores relacionais comparam valores e são freqüentemente utilizados na definição de novas variáveis e subconjuntos de conjuntos de dados. Aqui estão os operadores relacionais comuns em R:</p>
+<div class="inline-table"><table style="width:99%;" class="table table-sm">
+<colgroup>
+<col width="16%">
+<col width="7%">
+<col width="8%">
+<col width="67%">
+</colgroup>
+<thead><tr class="header">
+<th>Significado</th>
+<th>Operador</th>
+<th>Examplo</th>
+<th>Resultado do exemplo</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Igual a</td>
+<td><code>==</code></td>
+<td><code>"A" == "a"</code></td>
+<td>
+<code>FALSE</code> (porque o R é sensível a letras maiúscula/minúsculas) <br><em>Note que == (iguais duplos) é diferente de = (símbolo de igual normal), que age como o operador de atribuição <code>&lt;-</code></em>
+</td>
+</tr>
+<tr class="even">
+<td>Não igual (diferente)</td>
+<td><code>!=</code></td>
+<td><code>2 != 0</code></td>
+<td><code>TRUE</code></td>
+</tr>
+<tr class="odd">
+<td>Maior que</td>
+<td><code>&gt;</code></td>
+<td><code>4 &gt; 2</code></td>
+<td><code>TRUE</code></td>
+</tr>
+<tr class="even">
+<td>Menor que</td>
+<td><code>&lt;</code></td>
+<td><code>4 &lt; 2</code></td>
+<td><code>FALSE</code></td>
+</tr>
+<tr class="odd">
+<td>Maior ou igual a</td>
+<td><code>&gt;=</code></td>
+<td><code>6 &gt;= 4</code></td>
+<td><code>TRUE</code></td>
+</tr>
+<tr class="even">
+<td>Menor ou igual a</td>
+<td><code>&lt;=</code></td>
+<td><code>6 &lt;= 4</code></td>
+<td><code>FALSE</code></td>
+</tr>
+<tr class="odd">
+<td>Valor está faltante</td>
+<td><code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code></td>
+<td><code>is.na(7)</code></td>
+<td>
+<code>FALSE</code> (veja página em <a href="missing-data.html#missing-data">Dados faltantes</a>)</td>
+</tr>
+<tr class="even">
+<td>Valor não faltante</td>
+<td><code>!is.na()</code></td>
+<td><code>!is.na(7)</code></td>
+<td><code>TRUE</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Operadores lógicos, como AND e OR, geralmente são usados para conectar operadores relacionais e criar critérios mais complicados. Instruções complexas podem exigir parênteses ( ) para agrupamento e ordem de aplicação.</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="16%">
+<col width="83%">
+</colgroup>
+<thead><tr class="header">
+<th>Significado</th>
+<th>Operador</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>AND</td>
+<td><code>&amp;</code></td>
+</tr>
+<tr class="even">
+<td>OR</td>
+<td>
+<code>|</code> (barra vertical)</td>
+</tr>
+<tr class="odd">
+<td>Parentheses</td>
+<td>
+<code>( )</code> Usado para agrupar critérios e clarificar a ordem das operações</td>
+</tr>
+</tbody>
+</table></div>
+<p>Por exemplo, abaixo, temos uma linelist com duas variáveis que queremos utilizar para criar nossa definição de caso, <code>hep_e_rdt</code>, um resultado de teste e <code>other_cases_in_hh</code>, que nos dirá se há outros casos na casa. O comando abaixo utiliza a função <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> para criar a nova variável <code>case_def</code> de tal forma que:</p>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>case_def <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rdt_result</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">other_case_in_home</span><span class="op">)</span>            <span class="op">~</span> <span class="cn">NA_character_</span>,</span>
+<span>    <span class="va">rdt_result</span> <span class="op">==</span> <span class="st">"Positive"</span>                                 <span class="op">~</span> <span class="st">"Confirmed"</span>,</span>
+<span>    <span class="va">rdt_result</span> <span class="op">!=</span> <span class="st">"Positive"</span> <span class="op">&amp;</span> <span class="va">other_cases_in_home</span> <span class="op">==</span> <span class="st">"Yes"</span>  <span class="op">~</span> <span class="st">"Probable"</span>,</span>
+<span>    <span class="cn">TRUE</span>                                                     <span class="op">~</span> <span class="st">"Suspected"</span></span>
+<span>  <span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="68%">
+<col width="31%">
+</colgroup>
+<thead><tr class="header">
+<th>Critérios no exemplo acima</th>
+<th>Valor da nova variável “case_def”</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Se o valor das variáveis <code>rdt_result</code> e <code>other_cases_in_home</code> estiverem faltando</td>
+<td>
+<code>NA</code> (faltante)</td>
+</tr>
+<tr class="even">
+<td>Se o valor em <code>rdt_result</code> for “Positive”</td>
+<td><code>Confirmed</code></td>
+</tr>
+<tr class="odd">
+<td>If the value in <code>rdt_result</code> is NOT “Positive” AND the value in <code>other_cases_in_home</code> is “Yes”</td>
+<td><code>Probable</code></td>
+</tr>
+<tr class="even">
+<td>If one of the above criteria are not met</td>
+<td><code>Suspected</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Note that R is case-sensitive, so “Positive” is different than “positive”…</em></p>
+<!-- ======================================================= -->
+</div>
+<div id="valores-faltantes" class="section level3 unnumbered">
+<h3>Valores faltantes<a class="anchor" aria-label="anchor" href="#valores-faltantes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Em R, os valores ausentes são representados pelo valor especial <code>NA</code> (um valor “reservado”) (letras maiúsculas N e A - não entre aspas). Se você importar dados que registram dados ausentes de outra maneira (por exemplo, 99, “Missing” ou .), convém recodificar esses valores para <code>NA</code>. Como fazer isso é abordado na página <a href="importing.html#importing">Importação e exportação</a>.</p>
+<p><strong>Para testar se um valor é <code>NA</code>, use a função especial <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code></strong>, que retorna <code>TRUE</code> ou <code>FALSE</code>.</p>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">rdt_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Positive"</span>, <span class="st">"Suspected"</span>, <span class="st">"Positive"</span>, <span class="cn">NA</span><span class="op">)</span>   <span class="co"># dois casos positivos, um suspeito e um desconhecido </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rdt_result</span><span class="op">)</span>  <span class="co"># Testa se o valor de  rdt_result é NA</span></span></code></pre></div>
+<pre><code>## [1] FALSE FALSE FALSE  TRUE</code></pre>
+<p>Leia mais sobre valores ausentes, infinitos, <code>NULL</code> e impossíveis na página em <a href="missing-data.html#missing-data">Campos em branco/faltantes</a>. Saiba como converter valores ausentes ao importar dados na página em <a href="importing.html#importing">Importação e exportação</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="matemática-e-estatística" class="section level3 unnumbered">
+<h3>Matemática e estatística<a class="anchor" aria-label="anchor" href="#matem%C3%A1tica-e-estat%C3%ADstica"><i class="fas fa-link"></i></a>
+</h3>
+<p>Todos os operadores e funções nesta página estão disponíveis automaticamente usando o pacote R <strong>base</strong>.</p>
+<div id="operadores-mmatemáticos" class="section level4 unnumbered">
+<h4>Operadores mmatemáticos<a class="anchor" aria-label="anchor" href="#operadores-mmatem%C3%A1ticos"><i class="fas fa-link"></i></a>
+</h4>
+<p>Estes são frequentemente usados para realizar adição, divisão, para criar novas colunas, etc. Abaixo estão os operadores matemáticos comuns em R. Colocar ou não os espaços ao redor dos operadores não é importante.</p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Propósito</th>
+<th>Exemplo no R</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>adição</td>
+<td><code>2 + 3</code></td>
+</tr>
+<tr class="even">
+<td>subtração</td>
+<td><code>2 - 3</code></td>
+</tr>
+<tr class="odd">
+<td>multiplicação</td>
+<td><code>2 \* 3</code></td>
+</tr>
+<tr class="even">
+<td>divisão</td>
+<td><code>30 / 5</code></td>
+</tr>
+<tr class="odd">
+<td>potência</td>
+<td><code>2\^3</code></td>
+</tr>
+<tr class="even">
+<td>ordem das operações</td>
+<td><code>( )</code></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div id="funções-matemáticas" class="section level4 unnumbered">
+<h4>Funções matemáticas<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es-matem%C3%A1ticas"><i class="fas fa-link"></i></a>
+</h4>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="41%">
+<col width="58%">
+</colgroup>
+<thead><tr class="header">
+<th>Propósito</th>
+<th>Função</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>arredondamento</td>
+<td><code>round(x, digits = n)</code></td>
+</tr>
+<tr class="even">
+<td>arredondamento</td>
+<td><code>janitor::round_half_up(x, digits = n)</code></td>
+</tr>
+<tr class="odd">
+<td>teto (arredondar para cima)</td>
+<td><code>ceiling(x)</code></td>
+</tr>
+<tr class="even">
+<td>chão (arredondar para baixo)</td>
+<td><code>floor(x)</code></td>
+</tr>
+<tr class="odd">
+<td>valor obsoluto (módulo)</td>
+<td><code>abs(x)</code></td>
+</tr>
+<tr class="even">
+<td>raiz quadrada</td>
+<td><code>sqrt(x)</code></td>
+</tr>
+<tr class="odd">
+<td>exponencial</td>
+<td><code>exponent(x)</code></td>
+</tr>
+<tr class="even">
+<td>logaritmo natural/neperiano</td>
+<td><code>log(x)</code></td>
+</tr>
+<tr class="odd">
+<td>logaritmo na base 10</td>
+<td><code>log10(x)</code></td>
+</tr>
+<tr class="even">
+<td>logaritmo na base 2</td>
+<td><code>log2(x)</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Nota: para <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> o <code>digits =</code> especifica o número de casas decimais colocadas. Use <code><a href="https://rdrr.io/r/base/Round.html">signif()</a></code> para arredondar para um número de algarismos significativos.</p>
+</div>
+<div id="notação-científica" class="section level4 unnumbered">
+<h4>Notação científica<a class="anchor" aria-label="anchor" href="#nota%C3%A7%C3%A3o-cient%C3%ADfica"><i class="fas fa-link"></i></a>
+</h4>
+<p>A probabilidade de notação científica ser usada depende do valor da opção <code>scipen</code>.</p>
+<p>Da documentação de <code><a href="https://rdrr.io/r/base/options.html">?options</a></code>: scipen é uma penalidade a ser aplicada ao decidir imprimir valores numéricos em notação fixa ou exponencial. Os valores positivos tendem para a notação fixa e os negativos para a notação científica: a notação fixa será preferida, a menos que seja mais do que os dígitos ‘scipen’ mais largos.</p>
+<p>Se estiver definido para um número baixo (por exemplo, 0), ele estará sempre “ligado”. Para “desativar” a notação científica em sua sessão R, defina-a como um número muito alto, por exemplo:</p>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># desligar a notação científica</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen<span class="op">=</span><span class="fl">999</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="arredondando" class="section level4 unnumbered">
+<h4>Arredondando<a class="anchor" aria-label="anchor" href="#arredondando"><i class="fas fa-link"></i></a>
+</h4>
+<p><span style="color: red;"><strong><em>PERIGO:</em></strong> A função <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> usa “arredondamento do banqueiro” que arredonda de .5 somente se o número superior for par. Use <code>round_half_up()</code> do <strong>janitor</strong> para arredondar consistentemente metades para o número inteiro mais próximo. Veja <a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes">esta explicação</a></span></p>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># use a função de arredondamento adequanda para o seu trabalho </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 2 4</code></pre>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/round_half_up.html">round_half_up</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3 4</code></pre>
+</div>
+<div id="funções-estatísticas" class="section level4 unnumbered">
+<h4>Funções estatísticas<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es-estat%C3%ADsticas"><i class="fas fa-link"></i></a>
+</h4>
+<p><span style="color: orange;"><strong><em>CUIDADO:</em></strong> As funções abaixo incluirão, por padrão, valores ausentes nos cálculos. Valores ausentes resultarão em uma saída de <code>NA</code>, a menos que o argumento <code>na.rm = TRUE</code> seja especificado. Isso pode ser escrito de forma abreviada como <code>na.rm = T</code>.</span></p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr class="header">
+<th>Objetivo</th>
+<th>Função</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>média aritmética</td>
+<td><code>mean(x, na.rm=T)</code></td>
+</tr>
+<tr class="even">
+<td>mediana</td>
+<td><code>median(x, na.rm=T)</code></td>
+</tr>
+<tr class="odd">
+<td>desvio padrão</td>
+<td><code>sd(x, na.rm=T)</code></td>
+</tr>
+<tr class="even">
+<td>quantis*</td>
+<td><code>quantile(x, probs)</code></td>
+</tr>
+<tr class="odd">
+<td>soma</td>
+<td><code>sum(x, na.rm=T)</code></td>
+</tr>
+<tr class="even">
+<td>valor mínimo</td>
+<td><code>min(x, na.rm=T)</code></td>
+</tr>
+<tr class="odd">
+<td>valor máximo</td>
+<td><code>max(x, na.rm=T)</code></td>
+</tr>
+<tr class="even">
+<td>range de valores numéricos</td>
+<td><code>range(x, na.rm=T)</code></td>
+</tr>
+<tr class="odd">
+<td>resumo**</td>
+<td><code>summary(x)</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Notas:</p>
+<ul>
+<li>* <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code>: <code>x</code> é o vetor numérico a ser examinado e <code>probs =</code> é um vetor numérico com probabilidades entre 0 e 1,0, por exemplo, <code>c(0.5 , 0.8 , 0,.85)</code>
+</li>
+<li>** <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>: fornece um resumo em um vetor numérico incluindo média, mediana e percentis comuns</li>
+</ul>
+<p><span style="color: red;"><strong><em>PERIGO:</em></strong> Ao fornecer um vetor de números para uma das funções acima, certifique-se de concatenar os números dentro de <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> .</span></p>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Se fornecer números brutos para uma função, concatene-os antes com c()</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span>, <span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span>    <span class="co"># !!! INCORRETO !!!  </span></span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span>, <span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="co"># CORRETO</span></span></code></pre></div>
+<pre><code>## [1] 5.666667</code></pre>
+</div>
+<div id="outras-funções-úteis" class="section level4 unnumbered">
+<h4>Outras funções úteis<a class="anchor" aria-label="anchor" href="#outras-fun%C3%A7%C3%B5es-%C3%BAteis"><i class="fas fa-link"></i></a>
+</h4>
+<div class="inline-table"><table style="width:99%;" class="table table-sm">
+<colgroup>
+<col width="31%">
+<col width="19%">
+<col width="48%">
+</colgroup>
+<thead><tr class="header">
+<th>Objetivo</th>
+<th>Função</th>
+<th>Examplo</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>criar uma sequência de números</td>
+<td>seq(from, to, by)</td>
+<td><code>seq(1, 10, 2)</code></td>
+</tr>
+<tr class="even">
+<td>repetir x, n vezes</td>
+<td>rep(x, ntimes)</td>
+<td>
+<code>rep(1:3, 2)</code> or <code>rep(c("a", "b", "c"), 3)</code>
+</td>
+</tr>
+<tr class="odd">
+<td>subdividir um vetor numérico</td>
+<td>cut(x, n)</td>
+<td><code>cut(linelist$age, 5)</code></td>
+</tr>
+<tr class="even">
+<td>pegar uma amostra aleatória</td>
+<td>sample(x, size)</td>
+<td><code>sample(linelist$id, size = 5, replace = TRUE)</code></td>
+</tr>
+</tbody>
+</table></div>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="in" class="section level3 unnumbered">
+<h3>
+<code>%in%</code><a class="anchor" aria-label="anchor" href="#in"><i class="fas fa-link"></i></a>
+</h3>
+<p>Um operador muito útil para combinar valores e avaliar rapidamente se um valor está dentro de um vetor ou dataframe.</p>
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">meu_vetor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="st">"a"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">meu_vetor</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="st">"h"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">meu_vetor</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Para perguntar se um valor <strong>não</strong> está em (<code>%in%</code>) é um vetor, coloque um ponto de exclamação (!) <strong>na frente</strong> da instrução lógica:</p>
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># para negar, coloque a exclamação na frente </span></span>
+<span><span class="op">!</span><span class="st">"a"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">meu_vetor</span></span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">!</span><span class="st">"h"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">meu_vetor</span></span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p><code>%in%</code> é muito útil ao usar a função <strong>dplyr</strong> <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>. Você pode definir um vetor anteriormente e depois referenciá-lo. Por exemplo:</p>
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">affirmative</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"Yes"</span>, <span class="st">"YES"</span>, <span class="st">"yes"</span>, <span class="st">"y"</span>, <span class="st">"Y"</span>, <span class="st">"oui"</span>, <span class="st">"Oui"</span>, <span class="st">"Si"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>child_hospitaled <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    <span class="va">hospitalized</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">affirmative</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&lt;</span> <span class="fl">18</span> <span class="op">~</span> <span class="st">"Hospitalized Child"</span>,</span>
+<span>    <span class="cn">TRUE</span>                                      <span class="op">~</span> <span class="st">"Not"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Note: If you want to detect a partial string, perhaps using <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> from <strong>stringr</strong>, it will not accept a character vector like <code>c("1", "Yes", "yes", "y")</code>. Instead, it must be given a <em>regular expression</em> - one condensed string with OR bars, such as “1|Yes|yes|y”. For example, <code>str_detect(hospitalized, "1|Yes|yes|y")</code>. See the page on <a href="characters-strings.html#characters-strings">Caracteres e strings</a> for more information.</p>
+<p>You can convert a character vector to a named regular expression with this command:</p>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">affirmative</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"Yes"</span>, <span class="st">"YES"</span>, <span class="st">"yes"</span>, <span class="st">"y"</span>, <span class="st">"Y"</span>, <span class="st">"oui"</span>, <span class="st">"Oui"</span>, <span class="st">"Si"</span><span class="op">)</span></span>
+<span><span class="va">affirmative</span></span></code></pre></div>
+<pre><code>## [1] "1"   "Yes" "YES" "yes" "y"   "Y"   "oui" "Oui" "Si"</code></pre>
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># condensar</span></span>
+<span><span class="va">affirmative_str_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">affirmative</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>  <span class="co"># opção com R base</span></span>
+<span><span class="va">affirmative_str_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="va">affirmative</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>   <span class="co"># opção co pacote stringr</span></span>
+<span></span>
+<span><span class="va">affirmative_str_search</span></span></code></pre></div>
+<pre><code>## [1] "1|Yes|YES|yes|y|Y|oui|Oui|Si"</code></pre>
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="erros-avisos" class="section level2" number="3.13">
+<h2>
+<span class="header-section-number">3.13</span> Erros &amp; avisos<a class="anchor" aria-label="anchor" href="#erros-avisos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Esta seção explica:</p>
+<ul>
+<li>A diferença entre erros e avisos<br>
+</li>
+<li>Dicas gerais de sintaxe para escrever código R<br>
+</li>
+<li>Ajudas para o código.</li>
+</ul>
+<p>Erros e avisos comuns e dicas de solução de problemas podem ser encontrados na página em <a href="errors.html#errors">Erros e ajuda</a>.</p>
+<!-- ======================================================= -->
+<div id="erros-versus-avisos" class="section level3 unnumbered">
+<h3>Erros versus Avisos<a class="anchor" aria-label="anchor" href="#erros-versus-avisos"><i class="fas fa-link"></i></a>
+</h3>
+<p>Quando um comando é executado, o Console R pode mostrar mensagens de aviso ou erro em texto vermelho.</p>
+<ul>
+<li><p>Um <strong>aviso</strong> significa que o R concluiu seu comando, mas teve que executar etapas adicionais ou produziu uma saída incomum da qual você deve estar ciente.</p></li>
+<li><p>Um <strong>erro</strong> significa que o R não conseguiu completar seu comando.</p></li>
+</ul>
+<p>Procurar pistas:</p>
+<ul>
+<li><p>A mensagem de erro/aviso geralmente inclui um número de linha para o problema.</p></li>
+<li><p>Se um objeto “é desconhecido” ou “não encontrado”, talvez você o tenha escrito incorretamente, esquecido de chamar um pacote com library() ou esquecido de executar novamente seu script após fazer alterações.</p></li>
+</ul>
+<p>Se tudo mais falhar, copie a mensagem de erro no Google junto com alguns termos-chave: é provável que alguém já tenha trabalhado com isso!</p>
+<!-- ======================================================= -->
+</div>
+<div id="dicas-gerais-de-sintaxe" class="section level3 unnumbered">
+<h3>Dicas gerais de sintaxe<a class="anchor" aria-label="anchor" href="#dicas-gerais-de-sintaxe"><i class="fas fa-link"></i></a>
+</h3>
+<p>Algumas coisas para lembrar ao escrever comandos em R, para evitar erros e avisos:</p>
+<ul>
+<li>Sempre feche os parênteses - dica: conte o número de abertura “(” e fechamento de parênteses “)” para cada pedaço de código</li>
+<li>Evite espaços em nomes de colunas e objetos. Use sublinhado ( _ ) ou pontos ( . )</li>
+<li>Acompanhe e lembre-se de separar os argumentos de uma função com vírgulas</li>
+<li>R diferencia maiúsculas de minúsculas, o que significa que <code>Variable_A</code> é <em>diferente</em> de <code>variable_A</code>
+</li>
+</ul>
+<!-- ======================================================= -->
+</div>
+<div id="ajudas-de-código" class="section level3 unnumbered">
+<h3>Ajudas de código<a class="anchor" aria-label="anchor" href="#ajudas-de-c%C3%B3digo"><i class="fas fa-link"></i></a>
+</h3>
+<p>Qualquer script (RMarkdown ou outro) dará pistas quando você cometer um erro. Por exemplo, se você esqueceu de escrever uma vírgula onde for necessário, ou de fechar um parêntese, o RStudio irá levantar uma bandeira nessa linha, no lado direito do script, para avisá-lo.</p>
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+</div>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></div>
+<div class="next"><a href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#basics"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="nav-link" href="#porque-usar-o-r"><span class="header-section-number">3.1</span> Porque usar o R?</a></li>
+<li><a class="nav-link" href="#termos-chave"><span class="header-section-number">3.2</span> Termos chave</a></li>
+<li>
+<a class="nav-link" href="#learning"><span class="header-section-number">3.3</span> Recursos para a aprendizagem</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#recursos-dentro-do-rstudio">Recursos dentro do RStudio</a></li>
+<li><a class="nav-link" href="#p%C3%A1gina-de-dicas">Página de dicas</a></li>
+<li><a class="nav-link" href="#twitter">Twitter</a></li>
+<li><a class="nav-link" href="#recursos-online-gratuitos">Recursos online gratuitos</a></li>
+<li><a class="nav-link" href="#idiomas-al%C3%A9m-do-ingl%C3%AAs">Idiomas além do inglês</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#instala%C3%A7%C3%A3o"><span class="header-section-number">3.4</span> Instalação</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#r-e-r-studio">R e R Studio</a></li>
+<li><a class="nav-link" href="#outros-softwares-voc%C3%AA-pode-precisar-instalar">Outros softwares você pode precisar instalar</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#rstudio"><span class="header-section-number">3.5</span> RStudio</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#se-orientando-no-rstudio">Se orientando no RStudio</a></li>
+<li><a class="nav-link" href="#configura%C3%A7%C3%B5es-do-rstudio">Configurações do RStudio</a></li>
+<li><a class="nav-link" href="#atalhos-no-teclado">Atalhos no teclado</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#functions"><span class="header-section-number">3.6</span> Funções</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#fun%C3%A7%C3%B5es-simples">Funções simples</a></li>
+<li><a class="nav-link" href="#fun%C3%A7%C3%B5es-com-argumentos-m%C3%BAltiplos">Funções com argumentos múltiplos</a></li>
+<li><a class="nav-link" href="#escrevendo-fun%C3%A7%C3%B5es">Escrevendo funções</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#packages"><span class="header-section-number">3.7</span> Pacotes</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#instalar-e-carregar">Instalar e carregar</a></li>
+<li><a class="nav-link" href="#sintaxe-do-c%C3%B3digo">Sintaxe do código</a></li>
+<li><a class="nav-link" href="#aux%C3%ADlio-para-as-fun%C3%A7%C3%B5es">Auxílio para as funções</a></li>
+<li><a class="nav-link" href="#atualizando-pacotes">Atualizando pacotes</a></li>
+<li><a class="nav-link" href="#apagar-pacotes">Apagar pacotes</a></li>
+<li><a class="nav-link" href="#depend%C3%AAncias">Dependências</a></li>
+<li><a class="nav-link" href="#fun%C3%A7%C3%B5es-mascaradas">Funções mascaradas</a></li>
+<li><a class="nav-link" href="#desprender-descarregar">Desprender / descarregar</a></li>
+<li><a class="nav-link" href="#instalar-uma-vers%C3%A3o-mais-antiga">Instalar uma versão mais antiga</a></li>
+<li><a class="nav-link" href="#pacotes-sugeridos">Pacotes sugeridos</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#scripts"><span class="header-section-number">3.8</span> Scripts</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#comentando">Comentando</a></li>
+<li><a class="nav-link" href="#estilo">Estilo</a></li>
+<li><a class="nav-link" href="#exemplo-de-script">Exemplo de Script</a></li>
+<li><a class="nav-link" href="#r-markdown">R markdown</a></li>
+<li><a class="nav-link" href="#notebooks-r">Notebooks R</a></li>
+<li><a class="nav-link" href="#shiny"><span class="header-section-number">3.8.1</span> Shiny</a></li>
+<li><a class="nav-link" href="#c%C3%B3digo-dobr%C3%A1vel">Código dobrável</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#diret%C3%B3rio-de-trabalho"><span class="header-section-number">3.9</span> Diretório de trabalho</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#abordagem-recomendada">Abordagem recomendada</a></li>
+<li><a class="nav-link" href="#definido-por-comando">Definido por comando</a></li>
+<li><a class="nav-link" href="#definindo-manualmente">Definindo manualmente</a></li>
+<li><a class="nav-link" href="#dentro-de-um-projeto-r">Dentro de um projeto R</a></li>
+<li><a class="nav-link" href="#diret%C3%B3rio-de-trabalho-em-r-markdown">Diretório de trabalho em R markdown</a></li>
+<li><a class="nav-link" href="#fornecendo-o-caminho-dos-arquivos">Fornecendo o caminho dos arquivos</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#objects"><span class="header-section-number">3.10</span> Objetos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#tudo-%C3%A9-um-objeto">Tudo é um objeto</a></li>
+<li><a class="nav-link" href="#definindo-objetos--">Definindo objetos (&lt;-)</a></li>
+<li><a class="nav-link" href="#estrutura-de-um-objeto">Estrutura de um objeto</a></li>
+<li><a class="nav-link" href="#classe-de-objetos">Classe de objetos</a></li>
+<li><a class="nav-link" href="#colunasvari%C3%A1veis">Colunas/Variáveis ($)</a></li>
+<li><a class="nav-link" href="#accessarindexar-com-colchetes">Accessar/indexar com colchetes ([ ])</a></li>
+<li><a class="nav-link" href="#remover-objetos">Remover objetos</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#piping-encadeamento"><span class="header-section-number">3.11</span> Piping (Encadeamento, %&gt;%)</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#pipes">Pipes</a></li>
+<li><a class="nav-link" href="#definir-objetos-intermedi%C3%A1rios">Definir objetos intermediários</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#operadores"><span class="header-section-number">3.12</span> Principais operadores e funções</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#operador-de-atribui%C3%A7%C3%A3o">Operador de atribuição</a></li>
+<li><a class="nav-link" href="#operadores-relacionais-e-l%C3%B3gicos">Operadores relacionais e lógicos</a></li>
+<li><a class="nav-link" href="#valores-faltantes">Valores faltantes</a></li>
+<li><a class="nav-link" href="#matem%C3%A1tica-e-estat%C3%ADstica">Matemática e estatística</a></li>
+<li><a class="nav-link" href="#in">%in%</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#erros-avisos"><span class="header-section-number">3.13</span> Erros &amp; avisos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#erros-versus-avisos">Erros versus Avisos</a></li>
+<li><a class="nav-link" href="#dicas-gerais-de-sintaxe">Dicas gerais de sintaxe</a></li>
+<li><a class="nav-link" href="#ajudas-de-c%C3%B3digo">Ajudas de código</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>15 Eliminação de duplicidades | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Esta página abrange as seguintes técnicas de eliminação de duplicidades (ou deduplicação): Identificar e remover duplicidades “Fatiar/subdividir” linhas para manter apenas algumas linhas (por...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="15 Eliminação de duplicidades | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Esta página abrange as seguintes técnicas de eliminação de duplicidades (ou deduplicação): Identificar e remover duplicidades “Fatiar/subdividir” linhas para manter apenas algumas linhas (por...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="15 Eliminação de duplicidades | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Esta página abrange as seguintes técnicas de eliminação de duplicidades (ou deduplicação): Identificar e remover duplicidades “Fatiar/subdividir” linhas para manter apenas algumas linhas (por...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="active" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="deduplication" class="section level1" number="15">
+<h1>
+<span class="header-section-number">15</span> Eliminação de duplicidades<a class="anchor" aria-label="anchor" href="#deduplication"><i class="fas fa-link"></i></a>
+</h1>
+<div class="inline-figure"><img src="images/deduplication.png" width="50%"></div>
+<p>Esta página abrange as seguintes técnicas de eliminação de duplicidades (ou deduplicação):</p>
+<ol style="list-style-type: decimal">
+<li>Identificar e remover duplicidades<br>
+</li>
+<li>“Fatiar/subdividir” linhas para manter apenas algumas linhas (por exemplo, mín. ou máx.) de cada grupo de linhas<br>
+</li>
+<li>“Acumular” ou combinar de valores de várias linhas em uma linha</li>
+</ol>
+<!-- ======================================================= --><div id="preparação-6" class="section level2" number="15.1">
+<h2>
+<span class="header-section-number">15.1</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-6"><i class="fas fa-link"></i></a>
+</h2>
+<div id="carregar-pacotes-3" class="section level3 unnumbered">
+<h3>Carregar pacotes<a class="anchor" aria-label="anchor" href="#carregar-pacotes-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>Este pedaço de código mostra o carregamento de pacotes necessários para as análises. Neste manual, enfatizamos <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code> de <strong>pacman</strong>, que instala o pacote se necessário <em>e</em> o carrega para uso. Você também pode carregar pacotes instalados com <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> do R <strong>base</strong>. Veja a página em <a href="basics.html#basics">Introdução ao R</a> para mais informações sobre pacotes R.</p>
+<div class="sourceCode" id="cb726"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span> <span class="fu">::</span> <span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span>  <span class="va">tidyverse</span>, <span class="co"># deduplicação, agrupamento e funções de fatiamento</span></span>
+<span>  <span class="va">janitor</span>, <span class="co"># função para revisar duplicidades</span></span>
+<span>  <span class="va">stringr</span><span class="op">)</span> <span class="co"># para pesquisas de strings, pode ser usado em valores "rolling-up"</span></span></code></pre></div>
+</div>
+<div id="importar-dados-1" class="section level3 unnumbered">
+<h3>Importar dados<a class="anchor" aria-label="anchor" href="#importar-dados-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para demonstração, usaremos um conjunto de dados de exemplo criado com o código R abaixo.</p>
+<p>Os dados são registros de encontros telefônicos COVID-19, incluindo encontros com contatos e casos. As colunas incluem <code>recordID</code> (gerado por computador), <code>personID</code>, <code>name</code>, <code>date</code> do encontro, <code>time</code> do encontro, o <code>propósito</code> do encontro (para entrevistar como um caso ou como um contato ), e <code>symptoms_ever</code> (se a pessoa nesse encontro relatou <em>sempre</em> ter sintomas).</p>
+<p>Aqui está o código para criar o conjunto de dados <code>obs</code>:</p>
+<div class="sourceCode" id="cb727"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>  recordID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">8</span>,<span class="fl">9</span>,<span class="fl">10</span>,<span class="fl">11</span>,<span class="fl">12</span>,<span class="fl">13</span>,<span class="fl">14</span>,<span class="fl">15</span>,<span class="fl">16</span>,<span class="fl">17</span>,<span class="fl">18</span><span class="op">)</span>,</span>
+<span>  personID  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">6</span>,<span class="fl">7</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">5</span>,<span class="fl">7</span>,<span class="fl">8</span><span class="op">)</span>,</span>
+<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"adam"</span>, <span class="st">"adam"</span>, <span class="st">"amrish"</span>, <span class="st">"amrish"</span>, <span class="st">"mariah"</span>, <span class="st">"amrish"</span>, <span class="st">"nikhil"</span>, <span class="st">"brian"</span>, <span class="st">"smita"</span>, <span class="st">"raquel"</span>, <span class="st">"amrish"</span>,</span>
+<span>                <span class="st">"adam"</span>, <span class="st">"mariah"</span>, <span class="st">"mariah"</span>, <span class="st">"nikhil"</span>, <span class="st">"brian"</span>, <span class="st">"brian"</span>, <span class="st">"raquel"</span>, <span class="st">"natalie"</span><span class="op">)</span>,</span>
+<span>  date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"01/01/2020"</span>, <span class="st">"01/01/2020"</span>, <span class="st">"01/02/2020"</span>, <span class="st">"01/02/2020"</span>, <span class="st">"01/05/2020"</span>, <span class="st">"01/05/2020 "</span>, <span class="st">"01/05/2020"</span>, <span class="st">"01/05/2020"</span>, <span class="st">"01/05/2020"</span>, <span class="st">"01/05/2020"</span>, <span class="st">"01/02/2020"</span>,</span>
+<span>                <span class="st">"5/1/2020"</span>, <span class="st">"6/1/2020"</span>, <span class="st">"6/1/2020"</span>, <span class="st">"6/1/2020"</span>, <span class="st">"6/1/2020"</span>, <span class="st">"7/1/2020"</span>, <span class="st">"7/1/2020"</span>, <span class="st">"7/1/2020"</span><span class="op">)</span>,</span>
+<span>  time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"09:00"</span>, <span class="st">"09:00"</span>, <span class="st">"14:20"</span>, <span class="st">"14:20"</span>, <span class="st">"12:00"</span>, <span class="st">"16:10"</span>, <span class="st">"13:01"</span>, <span class="st">"15:20 "</span>, <span class="st">"14:20"</span>, <span class="st">"12:30"</span>, <span class="st">"10:24"</span>,</span>
+<span>                <span class="st">"09:40"</span>, <span class="st">"07:25"</span>, <span class="st">"08:32"</span>, <span class="st">"15:36"</span>, <span class="st">"15:31"</span>, <span class="st">"07:59"</span>, <span class="st">"11:13"</span>, <span class="st">"17:12"</span><span class="op">)</span>,</span>
+<span>  encounter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">2</span>,</span>
+<span>                <span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>  purpose   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"contact"</span>, <span class="st">"contact"</span>, <span class="st">"contact"</span>, <span class="st">"contact"</span>, <span class="st">"case"</span>, <span class="st">"case"</span>, <span class="st">"contact"</span>, <span class="st">"contact"</span>, <span class="st">"contact"</span>, <span class="st">"contact"</span>, <span class="st">"contact"</span>,</span>
+<span>                <span class="st">"case"</span>, <span class="st">"contact"</span>, <span class="st">"contact"</span>, <span class="st">"contact"</span>, <span class="st">"contact"</span>, <span class="st">"case"</span>, <span class="st">"contact"</span>, <span class="st">"case"</span><span class="op">)</span>,</span>
+<span>  symptoms_ever <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">"No"</span>, <span class="st">"No"</span>, <span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="cn">NA</span>, <span class="st">"Yes"</span>,</span>
+<span>                    <span class="st">"No"</span>, <span class="st">"No"</span>, <span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span>,<span class="st">"No"</span>, <span class="st">"No"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">date</span>, format <span class="op">=</span> <span class="st">"%d/%m/%Y"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div id="dedup_data" class="section level4 unnumbered">
+<h4>Aqui está o data frame<a class="anchor" aria-label="anchor" href="#dedup_data"><i class="fas fa-link"></i></a>
+</h4>
+<p>Use as caixas de filtro na parte superior para revisar os encontros de cada pessoa.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7b5bf5b1dffc330d86a6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7b5bf5b1dffc330d86a6">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399075200000\" data-max=\"1401235200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399939200000\" data-max=\"1401926400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400025600000\" data-max=\"1402099200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400371200000\" data-max=\"1403049600000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"61\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"61\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-13.2572163655863\" data-max=\"-13.212910703914\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.4754761613651\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"91\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"11\" data-max=\"238\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"21\" data-max=\"23\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"35.9\" data-max=\"37.6\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"117.1875\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca"],[4,4,2,3,3,3,4,4,4,4],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09"],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death"],["m","f","m","f","m","f","f","f","m","f"],[2,3,56,18,3,16,16,0,61,27],["years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29"],["Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Ausente","Ausente","Ausente","Ausente"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.461830626007281,8.462729314626459,8.461443675342711,8.46191259217774,8.472923276435059],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null],["other",null,null,"other","other","other","other","other",null,null],[27,25,91,41,36,56,47,0,86,69],[48,59,238,135,71,116,87,11,226,174],[22,22,21,23,23,21,21,22,22,22],["no",null,null,"no","no","no",null,"no","no","no"],["no",null,null,"no","no","no",null,"no","no","no"],["yes",null,null,"no","yes","yes",null,"yes","yes","yes"],["no",null,null,"no","no","no",null,"no","no","no"],["yes",null,null,"no","yes","yes",null,"yes","yes","no"],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55"],[117.1875,71.81844297615629,16.06524962926347,22.49657064471879,71.41440190438405,41.61712247324614,62.09538908706566,0,16.83765369253662,22.79032897344431],[2,1,2,2,1,1,2,1,1,2]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Algumas coisas a serem observadas ao revisar os dados:</p>
+<ul>
+<li>Os dois primeiros registros são duplicados 100% completos, incluindo <code>recordID</code> duplicado (deve ser uma falha do computador!)<br>
+</li>
+<li>As duas segundas linhas são duplicidades, em todas as colunas <em>exceto para <code>recordID</code></em><br>
+</li>
+<li>Várias pessoas tiveram vários encontros por telefone, em várias datas e horários, e como contatos e/ou casos<br>
+</li>
+<li>Em cada encontro, a pessoa foi perguntada se ela <strong>alguma vez</strong> teve sintomas, e algumas dessas informações estão faltando.</li>
+</ul>
+<p>E aqui está um resumo rápido das pessoas e os propósitos de seus encontros, usando <code>tabyl()</code> do <strong>janitor</strong>:</p>
+<div class="sourceCode" id="cb728"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">tabyl</span><span class="op">(</span><span class="va">name</span>, <span class="va">purpose</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##     name case contact
+##     adam    1       2
+##   amrish    1       3
+##    brian    1       2
+##   mariah    1       2
+##  natalie    1       0
+##   nikhil    0       2
+##   raquel    0       2
+##    smita    0       1</code></pre>
+<!-- ======================================================= -->
+</div>
+</div>
+</div>
+<div id="remoção-de-duplicidades" class="section level2" number="15.2">
+<h2>
+<span class="header-section-number">15.2</span> Remoção de duplicidades<a class="anchor" aria-label="anchor" href="#remo%C3%A7%C3%A3o-de-duplicidades"><i class="fas fa-link"></i></a>
+</h2>
+<p>Esta seção descreve como revisar e remover duplicidades em um data frame. Também mostra como lidar com elementos duplicados em um vetor.</p>
+<!-- ======================================================= -->
+<div id="examinar-duplicidades" class="section level3 unnumbered">
+<h3>Examinar duplicidades<a class="anchor" aria-label="anchor" href="#examinar-duplicidades"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para revisar rapidamente as linhas que têm duplicidades, você pode usar <code>get_dupes()</code> do pacote <strong>janitor</strong>. <em>Por padrão</em>, todas as colunas são consideradas quando as duplicidades são avaliadas - as linhas retornadas pela função são 100% duplicadas considerando os valores em <em>todas</em> as colunas.</p>
+<p>No data frame <code>obs</code>, as duas primeiras linhas são <em>100% duplicadas</em> - elas têm o mesmo valor em todas as colunas (incluindo a coluna <code>recordID</code>, que <em>supõe</em> ser única - deve ser alguma falha do computador ). O data frame retornado inclui automaticamente uma nova coluna <code>dupe_count</code> no lado direito, mostrando o número de linhas com essa combinação de valores duplicados.</p>
+<div class="sourceCode" id="cb730"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 100% duplicados em todas as colunas</span></span>
+<span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/get_dupes.html">get_dupes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-91c06ac4857e53ae129b" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-91c06ac4857e53ae129b">{"x":{"filter":"none","vertical":false,"data":[[1,1],[1,1],["adam","adam"],["2020-01-01","2020-01-01"],["09:00","09:00"],[1,1],["contact","contact"],[null,null],[2,2]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>recordID<\/th>\n      <th>personID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n      <th>dupe_count<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,1,5,8]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>Veja os <a href="deduplication.html#dedup_data">dados originais</a></p>
+<p>No entanto, se optarmos por ignorar <code>recordID</code>, as linhas da 3ª e 4ª linhas também serão duplicadas umas das outras. Ou seja, eles têm os mesmos valores em todas as colunas <em>exceto</em> para <code>recordID</code>. Você pode especificar colunas específicas a serem ignoradas na função usando um símbolo de menos <code>-</code>.</p>
+<div class="sourceCode" id="cb731"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Duplica quando a coluna recordID não é considerada</span></span>
+<span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/get_dupes.html">get_dupes</a></span><span class="op">(</span><span class="op">-</span><span class="va">recordID</span><span class="op">)</span> <span class="co"># se várias colunas, envolva-as em c()</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1a0ca4f0fb07ad2d0845" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1a0ca4f0fb07ad2d0845">{"x":{"filter":"none","vertical":false,"data":[[1,1,2,2],["adam","adam","amrish","amrish"],["2020-01-01","2020-01-01","2020-02-01","2020-02-01"],["09:00","09:00","14:20","14:20"],[1,1,1,1],["contact","contact","contact","contact"],[null,null,"No","No"],[2,2,2,2],[1,1,2,3]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>personID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n      <th>dupe_count<\/th>\n      <th>recordID<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,4,7,8]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>Você também pode especificar positivamente as colunas a serem consideradas. Abaixo, apenas as linhas que possuem os mesmos valores nas colunas <code>name</code> e <code>purpose</code> são retornadas. Observe como “amrish” agora tem <code>dupe_count</code> igual a 3 para refletir seus três encontros de “contato”.</p>
+<p><strong>Role para a esquerda para mais linhas</strong></p>
+<div class="sourceCode" id="cb732"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># duplicatas com base nas colunas de nome e propósito SOMENTE</span></span>
+<span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/get_dupes.html">get_dupes</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">purpose</span><span class="op">)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d70d3df040da6f71086b" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d70d3df040da6f71086b">{"x":{"filter":"none","vertical":false,"data":[["amrish","amrish","amrish","adam","adam","brian","brian","mariah","mariah","nikhil","nikhil","raquel","raquel"],["contact","contact","contact","contact","contact","contact","contact","contact","contact","contact","contact","contact","contact"],[3,3,3,2,2,2,2,2,2,2,2,2,2],[2,3,10,1,1,7,15,12,13,6,14,9,17],[2,2,2,1,1,5,5,3,3,4,4,7,7],["2020-02-01","2020-02-01","2020-02-01","2020-01-01","2020-01-01","2020-05-01","2020-01-06","2020-01-06","2020-01-06","2020-05-01","2020-01-06","2020-05-01","2020-01-07"],["14:20","14:20","10:24","09:00","09:00","15:20 ","15:31","07:25","08:32","13:01","15:36","12:30","11:13"],[1,1,2,1,1,1,2,2,3,1,2,1,2],["No","No","Yes",null,null,"No","Yes","No","No","Yes","Yes",null,"No"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>name<\/th>\n      <th>purpose<\/th>\n      <th>dupe_count<\/th>\n      <th>recordID<\/th>\n      <th>personID<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>symptoms_ever<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":7,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3,4,7]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[7,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Veja os <a href="deduplication.html#dedup_data">dados originais</a>.</p>
+<p>Veja <code>?get_dupes</code> para mais detalhes, ou veja esta <a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values%20-para-combina%C3%A7%C3%B5es-espec%C3%ADficas-de-vari%C3%A1veis-com-get_dupes">referência online</a></p>
+<!-- ======================================================= -->
+</div>
+<div id="manter-apenas-linhas-únicas" class="section level3 unnumbered">
+<h3>Manter apenas linhas únicas<a class="anchor" aria-label="anchor" href="#manter-apenas-linhas-%C3%BAnicas"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para manter apenas linhas exclusivas de um data frame, use <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> de <strong>dplyr</strong> (conforme demonstrado na página <a href="cleaning.html#cleaning">Limpeza de dados e funções principais</a>). As duplicidades são removidas de forma que apenas a primeira dessas linhas seja mantida. Por padrão, “primeiro” significa o maior <code>número da linha</code> (ordem das linhas de cima para baixo). Apenas linhas exclusivas permanecem.</p>
+<p>No exemplo abaixo, executamos <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> de forma que a coluna <code>recordID</code> seja excluída da consideração - portanto, <strong>duas linhas duplicadas são removidas</strong>. A primeira linha (para “adam”) foi 100% duplicada e foi removida. Além disso, a linha 3 (para “amrish”) era uma duplicata em todas as colunas <em>exceto</em> <code>recordID</code> (que não está sendo considerada) e, portanto, também foi removida. O conjunto de dados <code>obs</code> n agora é <code>nrow(obs)-2</code>, não <code>nrow(obs)</code> linhas).</p>
+<p><em>Role para a esquerda para ver todo o data frame</em></p>
+<div class="sourceCode" id="cb733"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># adicionado a uma cadeia de pipes (por exemplo, limpeza de dados)</span></span>
+<span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="op">-</span><span class="va">recordID</span><span class="op">)</span>, <span class="co"># reduz o data frame para apenas linhas únicas (mantém a primeira de todas as duplicidades)</span></span>
+<span>           .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># se fora de pipes, inclua os dados como primeiro argumento </span></span>
+<span><span class="co"># distinct(obs)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-69e9c783ec163c50cd41" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-69e9c783ec163c50cd41">{"x":{"filter":"none","vertical":false,"data":[[1,2,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,2,3,2,4,5,6,7,2,1,3,3,4,5,5,7,8],["adam","amrish","mariah","amrish","nikhil","brian","smita","raquel","amrish","adam","mariah","mariah","nikhil","brian","brian","raquel","natalie"],["2020-01-01","2020-02-01","2020-05-01","2020-05-01","2020-05-01","2020-05-01","2020-05-01","2020-05-01","2020-02-01","2020-01-05","2020-01-06","2020-01-06","2020-01-06","2020-01-06","2020-01-07","2020-01-07","2020-01-07"],["09:00","14:20","12:00","16:10","13:01","15:20 ","14:20","12:30","10:24","09:40","07:25","08:32","15:36","15:31","07:59","11:13","17:12"],[1,1,1,3,1,1,1,1,2,2,2,3,2,2,3,2,1],["contact","contact","case","case","contact","contact","contact","contact","contact","case","contact","contact","contact","contact","case","contact","case"],[null,"No","No","Yes","Yes","No","Yes",null,"Yes","No","No","No","Yes","Yes","No","No","No"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>recordID<\/th>\n      <th>personID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,1,5]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><span style="color: orange;"><strong><em>CUIDADO:</em></strong> Se estiver usando <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> em dados agrupados, a função será aplicada a cada grupo.</span></p>
+<p><strong>Remover duplicidades com base em colunas específicas</strong></p>
+<p>Você também pode especificar colunas para serem a base para eliminação de duplicação. Dessa forma, a eliminação de duplicidades se aplica apenas a linhas duplicadas nas colunas especificadas. A menos que você defina <code>.keep_all = TRUE</code>, todas as colunas não mencionadas serão descartadas.</p>
+<p>No exemplo abaixo, a eliminação de duplicidades se aplica apenas a linhas com valores idênticos para as colunas <code>name</code> e <code>purpose</code>. Assim, “brian” tem apenas 2 linhas em vez de 3 - seu <em>primeiro</em> encontro de “contato” e seu único encontro de “caso”. Para ajustar para que o <em>último</em> encontro de brian de cada propósito seja mantido, veja a aba Fatiar dentro de grupos.</p>
+<p><em>Role para a esquerda para ver todo o data frame</em></p>
+<div class="sourceCode" id="cb734"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># adicionado a uma cadeia de pipes (por exemplo, limpeza de dados)</span></span>
+<span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">purpose</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># mantém as linhas únicas por nome e propósito, mantém todas as colunas</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span>       <span class="co"># organize para facilitar a visualização</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a195571768c7ec868ff2" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a195571768c7ec868ff2">{"x":{"filter":"none","vertical":false,"data":[[1,11,2,5,7,16,4,12,18,6,9,8],[1,1,2,2,5,5,3,3,8,4,7,6],["adam","adam","amrish","amrish","brian","brian","mariah","mariah","natalie","nikhil","raquel","smita"],["2020-01-01","2020-01-05","2020-02-01","2020-05-01","2020-05-01","2020-01-07","2020-05-01","2020-01-06","2020-01-07","2020-05-01","2020-05-01","2020-05-01"],["09:00","09:40","14:20","16:10","15:20 ","07:59","12:00","07:25","17:12","13:01","12:30","14:20"],[1,2,1,3,1,3,1,2,1,1,1,1],["contact","case","contact","case","contact","case","case","contact","case","contact","contact","contact"],[null,"No","No","Yes","No","No","No","No","No","Yes",null,"Yes"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>recordID<\/th>\n      <th>personID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,1,5]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Veja os <a href="deduplication.html#dedup_data">dados originais</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="remover-duplicidades-em-um-vetor" class="section level3 unnumbered">
+<h3>Remover duplicidades em um vetor<a class="anchor" aria-label="anchor" href="#remover-duplicidades-em-um-vetor"><i class="fas fa-link"></i></a>
+</h3>
+<p>A função <code><a href="https://rdrr.io/r/base/duplicated.html">duplicated()</a></code> do R <strong>base</strong> avaliará um vetor (coluna) e retornará um vetor lógico de mesmo comprimento (VERDADEIRO/FALSO). Na primeira vez que um valor aparecer, ele retornará FALSE (não uma duplicata) e, nas próximas vezes em que esse valor aparecer, ele retornará TRUE. Observe como <code>NA</code> é tratado da mesma forma que qualquer outro valor.</p>
+<div class="sourceCode" id="cb735"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE</code></pre>
+<p>Para retornar apenas os elementos duplicados, você pode usar colchetes para subconjunto do vetor original:</p>
+<div class="sourceCode" id="cb737"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code>## [1]  1 NA  4  4  1  2</code></pre>
+<p>Para retornar apenas os elementos exclusivos, use a função <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code> do R <strong>base</strong>. Para remover <code>NA</code>s da saída, aninhe <code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> dentro de <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code>.</p>
+<div class="sourceCode" id="cb739"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="co"># alternativamente, use x[!duplicated(x)]</span></span></code></pre></div>
+<pre><code>## [1]  1  2 NA  4  5</code></pre>
+<div class="sourceCode" id="cb741"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="co"># remove NAs </span></span></code></pre></div>
+<pre><code>## [1] 1 2 4 5</code></pre>
+<!-- ======================================================= -->
+</div>
+<div id="usando-o-r-base-1" class="section level3 unnumbered">
+<h3>Usando o R <strong>base</strong><a class="anchor" aria-label="anchor" href="#usando-o-r-base-1"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Para retornar linhas duplicadas</strong></p>
+<p>No R <strong>base</strong>, você também pode ver quais linhas são 100% duplicadas em um data frame <code>df</code> com o comando <code>duplicated(df)</code> (retorna um vetor lógico das linhas).</p>
+<p>Assim, você também pode usar o subconjunto base <code>[ ]</code> no data frame para ver as linhas <em>duplicadas</em> com <code>df[duplicated(df),]</code> (não esqueça a vírgula, significando que você quer ver todas colunas!).</p>
+<p><strong>Para retornar linhas exclusivas</strong></p>
+<p>Veja as notas acima. Para ver as linhas <em>únicas</em>, você adiciona o negador lógico <code>!</code> na frente da função <code><a href="https://rdrr.io/r/base/duplicated.html">duplicated()</a></code>:<br><code>df[!duplicado(df),]</code></p>
+<p><strong>Para retornar linhas que são duplicidades em determinadas colunas</strong></p>
+<p>Subsete o <code>df</code> que está <em>dentro dos parênteses <code><a href="https://rdrr.io/r/base/duplicated.html">duplicated()</a></code></em>, então esta função irá operar apenas em certas colunas do <code>df</code>.</p>
+<p>Para especificar as colunas, forneça os números ou nomes das colunas após uma vírgula (lembre-se, tudo isso está <em>dentro</em> da função <code><a href="https://rdrr.io/r/base/duplicated.html">duplicated()</a></code>).</p>
+<p>Certifique-se de manter a vírgula <code>,</code> <em>fora</em> após a função <code><a href="https://rdrr.io/r/base/duplicated.html">duplicated()</a></code> também!</p>
+<p>Por exemplo, para avaliar apenas as colunas de 2 a 5 para duplicatas: <code>df[!duplicated(df[, 2:5]),]</code><br>
+Para avaliar apenas as colunas <code>name</code> e <code>purpose</code> para duplicatas: <code>df[!duplicated(df[, c("name", "purpose)]),]</code></p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="fatiarsubdividir" class="section level2" number="15.3">
+<h2>
+<span class="header-section-number">15.3</span> Fatiar/Subdividir<a class="anchor" aria-label="anchor" href="#fatiarsubdividir"><i class="fas fa-link"></i></a>
+</h2>
+<p>Subdividir um data frame, ou “fatiá-lo” (literalmente do inglês <em>slice</em>), significa aplicar um filtro nas linhas por número/posição de linha. Isso se torna particularmente útil se você tiver várias linhas por grupo funcional (por exemplo, por “pessoa”) e quiser manter apenas uma ou algumas delas.</p>
+<p>A função básica <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code> aceita números e retorna linhas nessas posições. Se os números fornecidos forem positivos, somente eles serão retornados. Se negativo, essas linhas <em>não</em> são retornadas. Os números devem ser todos positivos ou todos negativos.</p>
+<div class="sourceCode" id="cb743"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span> <span class="co"># retorna a 4ª linha</span></span></code></pre></div>
+<pre><code>##   recordID personID   name       date  time encounter purpose symptoms_ever
+## 1        3        2 amrish 2020-02-01 14:20         1 contact            No</code></pre>
+<div class="sourceCode" id="cb745"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span> <span class="co"># retorna as linhas 2 e 4</span></span></code></pre></div>
+<pre><code>##   recordID personID   name       date  time encounter purpose symptoms_ever
+## 1        1        1   adam 2020-01-01 09:00         1 contact          &lt;NA&gt;
+## 2        3        2 amrish 2020-02-01 14:20         1 contact            No</code></pre>
+<div class="sourceCode" id="cb747"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#obs %&gt;% slice(c(2:4)) # retorna as linhas 2 a 4</span></span></code></pre></div>
+<p>Veja os <a href="deduplication.html#dedup_data">dados originais</a>.</p>
+<p>Existem várias variações: Estes devem ser fornecidos com uma coluna e um número de linhas para retornar (para <code>n =</code>).</p>
+<ul>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> mantêm apenas a(s) linha(s) com o(s) valor(es) mínimo(s) ou máximo(s) da coluna especificada. Isso também funciona para retornar o “min” e o “max” dos fatores ordenados.<br>
+</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_tail()</a></code> - mantém apenas a <em>primeira</em> ou <em>última</em> linha(s).<br>
+</li>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code> - mantém apenas uma amostra aleatória das linhas.</li>
+</ul>
+<div class="sourceCode" id="cb748"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">encounter</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="co"># retorna linhas com o maior número de encontro</span></span></code></pre></div>
+<pre><code>##   recordID personID   name       date  time encounter purpose symptoms_ever
+## 1        5        2 amrish 2020-05-01 16:10         3    case           Yes
+## 2       13        3 mariah 2020-01-06 08:32         3 contact            No
+## 3       16        5  brian 2020-01-07 07:59         3    case            No</code></pre>
+<p>Use argumentos <code>n =</code> ou <code>prop =</code> para especificar o número ou a proporção de linhas a serem mantidas. Se não estiver usando a função em uma cadeia de pipes, forneça primeiro o argumento de dados (por exemplo, <code>slice(data, n = 2)</code>). Veja <code><a href="https://dplyr.tidyverse.org/reference/slice.html">?slice</a></code> para mais informações.</p>
+<p>Outros argumentos:</p>
+<p><code>.order_by =</code> usado em <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> esta é uma coluna para ordenar antes de fatiar.<br><code>with_ties =</code> TRUE por padrão, significando que os empates são mantidos.<br><code>.preserve =</code> FALSE por padrão. Se TRUE, a estrutura de agrupamento é recalculada após o fatiamento.<br><code>weight_by =</code> Opcional, coluna numérica para ponderar (número maior com maior probabilidade de ser amostrado). Também <code>replace =</code> para se a amostragem é feita com/sem substituição.</p>
+<p><span style="color: darkgreen;"><strong><em>DICA:</em></strong> Ao usar <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code>, certifique-se de especificar/escrever o <code>n =</code> (por exemplo, <code>n = 2</code> , não apenas <code>2</code>). Caso contrário, você pode receber um erro <code>Erro:</code>…<code>não está vazio.</code> </span></p>
+<p><span style="color: black;"><strong><em>NOTE:</em></strong> Você pode encontrar a função <a href="https://dplyr.tidyverse.org/reference/top_n.html"><code>top_n()</code></a>, que tem foi substituído pelas funções <code>slice</code>.</span></p>
+<!-- ======================================================= -->
+<div id="subdividão-com-grupos" class="section level3 unnumbered">
+<h3>Subdividão com grupos<a class="anchor" aria-label="anchor" href="#subdivid%C3%A3o-com-grupos"><i class="fas fa-link"></i></a>
+</h3>
+<p>As funções <code>slice_*()</code> podem ser muito úteis se aplicadas a um data frame agrupado porque a operação de fatia é executada em cada grupo separadamente. Use a <strong>função</strong> <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> em conjunto com <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a></code> para agrupar os dados para obter uma fatia de cada grupo.</p>
+<p>Isso é útil para a eliminação de duplicação se você tiver várias linhas por pessoa, mas quiser manter apenas uma delas. Você primeiro usa <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> com colunas-chave que são as mesmas por pessoa e, em seguida, usa uma função de fatia em uma coluna que será diferente entre as linhas agrupadas.</p>
+<p>No exemplo abaixo, para manter apenas o <em>último</em> encontro <em>por pessoa</em>, agrupamos as linhas por <code>name</code> e então usamos <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> com <code>n = 1</code> na coluna <code>date</code>. Estar ciente! Para aplicar uma função como <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> em datas, a coluna de data deve ser da classe Date.</p>
+<p>Por padrão, “empates” (por exemplo, mesma data neste cenário) são mantidos e ainda obteríamos várias linhas para algumas pessoas (por exemplo, adam). Para evitar isso, configuramos <code>with_ties = FALSE</code>. Retornamos apenas uma fila por pessoa.</p>
+<p><span style="color: orange;"><strong><em>CAUTION:</em></strong> Se estiver usando <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>, especifique <code>.by_group = TRUE</code> para organizar os dados em cada grupo.</span></p>
+<p><span style="color: red;"><strong><em>DANGER:</em></strong> Se <code>with_ties = FALSE</code>, a primeira linha de um empate é mantida. Isso pode ser enganoso. Veja como para Mariah, ela tem dois encontros em sua última data (6 de janeiro) e o primeiro (mais antigo) foi mantido. Provavelmente, queremos manter seu encontro posterior naquele dia. Veja como “quebrar” esses empates no próximo exemplo. </span></p>
+<div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># agrupa as linhas por 'name'</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">date</span>, <span class="co"># mantém linha por grupo com valor máximo de data </span></span>
+<span>            n <span class="op">=</span> <span class="fl">1</span>, <span class="co"># mantém apenas a linha mais alta</span></span>
+<span>            with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># se houver empate (de data), pegue a primeira linha</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5def73fa033ba59c4f20" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-5def73fa033ba59c4f20">{"x":{"filter":"none","vertical":false,"data":[[11,5,7,4,18,6,9,8],[1,2,5,3,8,4,7,6],["adam","amrish","brian","mariah","natalie","nikhil","raquel","smita"],["2020-01-05","2020-05-01","2020-05-01","2020-05-01","2020-01-07","2020-05-01","2020-05-01","2020-05-01"],["09:40","16:10","15:20 ","12:00","17:12","13:01","12:30","14:20"],[2,3,1,1,1,1,1,1],["case","case","contact","case","case","contact","contact","contact"],["No","Yes","No","No","No","Yes",null,"Yes"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>recordID<\/th>\n      <th>personID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,1,5]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Acima, por exemplo, podemos ver que apenas a linha de Amrish em 5 de janeiro foi mantida, e apenas a linha de Brian em 7 de janeiro foi mantida. Veja os <a href="deduplication.html#dedup_data">dados originais</a>.</p>
+<p><strong>“Desempates”</strong></p>
+<p>Várias instruções de fatia podem ser executadas para “desempate”. Neste caso, se uma pessoa tiver vários encontros em sua última <em>data</em>, o encontro com a última <em>hora</em> é mantido (<code><a href="https://lubridate.tidyverse.org/reference/hms.html">lubridate::hm()</a></code> é usado para converter os tempos dos caracteres em uma classe de tempo classificável).<br>
+Observe como agora, a única linha mantida para “Mariah” em 6 de janeiro é o encontro 3 das 08:32, não o encontro 2 às 07:25.</p>
+<div class="sourceCode" id="cb751"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Exemplo de várias instruções de fatia para "desempate"</span></span>
+<span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  </span>
+<span>  <span class="co"># PRIMEIRO - fatia por data mais recente</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">date</span>, n <span class="op">=</span> <span class="fl">1</span>, with_ties <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  </span>
+<span>  <span class="co"># SEGUNDO - se houver empate, selecione a linha com o horário mais recente; empates proibidos</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/hms.html">hm</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">1</span>, with_ties <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a6ab3f3b4308a55e9720" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a6ab3f3b4308a55e9720">{"x":{"filter":"none","vertical":false,"data":[[11,5,7,4,18,6,9,8],[1,2,5,3,8,4,7,6],["adam","amrish","brian","mariah","natalie","nikhil","raquel","smita"],["2020-01-05","2020-05-01","2020-05-01","2020-05-01","2020-01-07","2020-05-01","2020-05-01","2020-05-01"],["09:40","16:10","15:20 ","12:00","17:12","13:01","12:30","14:20"],[2,3,1,1,1,1,1,1],["case","case","contact","case","case","contact","contact","contact"],["No","Yes","No","No","No","Yes",null,"Yes"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>recordID<\/th>\n      <th>personID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,1,5]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><em>No exemplo acima, também seria possível dividir por número de <code>encounter</code>, mas mostramos a fatia em <code>data</code> e <code>hora</code> para fins de exemplo.</em></p>
+<p><span style="color: darkgreen;"><strong><em>DICA:</em></strong> Para usar <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> ou <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code> em uma coluna “character”, altere-a para uma classe de fator <em>ordenada</em>!</span> extensão&gt;</p>
+<p>Veja os <a href="deduplication.html#dedup_data">dados originais</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="mantenha-tudo-mas-marque-os" class="section level3 unnumbered">
+<h3>Mantenha tudo mas marque-os<a class="anchor" aria-label="anchor" href="#mantenha-tudo-mas-marque-os"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se você quiser manter todos os registros, mas marcar apenas alguns para análise, considere uma abordagem de duas etapas utilizando um recordID/número de encontro exclusivo:</p>
+<ol style="list-style-type: decimal">
+<li>Reduza/faça o recorte do data frame original apenas nas linhas para análise. Salve/retenha este data frame reduzido.<br>
+</li>
+<li>No data frame original, marque as linhas conforme apropriado com <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>, com base no fato de seu identificador exclusivo de registro (recordID neste exemplo) estar presente no data frame reduzido.</li>
+</ol>
+<div class="sourceCode" id="cb752"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 1. Defina o data frame de linhas para manter para análise</span></span>
+<span><span class="va">obs_keep</span> <span class="op">&lt;-</span> <span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">encounter</span>, n <span class="op">=</span> <span class="fl">1</span>, with_ties <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># mantém apenas o último encontro por pessoa</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># 2. Marcar data frame original</span></span>
+<span><span class="va">obs_marked</span> <span class="op">&lt;-</span> <span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span></span>
+<span>  <span class="co"># cria uma nova coluna dup_record</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dup_record <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>    </span>
+<span>    <span class="co"># se o registro estiver no data frame obs_keep</span></span>
+<span>    <span class="va">recordID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">obs_keep</span><span class="op">$</span><span class="va">recordID</span> <span class="op">~</span> <span class="st">"Para análise"</span>, </span>
+<span>    </span>
+<span>    <span class="co"># tudo o mais marcado como "Ignorar" para fins de análise</span></span>
+<span>    <span class="cn">TRUE</span> <span class="op">~</span> <span class="st">"Ignorar"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># imprimir</span></span>
+<span><span class="va">obs_marked</span></span></code></pre></div>
+<pre><code>##    recordID personID    name       date   time encounter purpose symptoms_ever
+## 1         1        1    adam 2020-01-01  09:00         1 contact          &lt;NA&gt;
+## 2         1        1    adam 2020-01-01  09:00         1 contact          &lt;NA&gt;
+## 3         2        2  amrish 2020-02-01  14:20         1 contact            No
+## 4         3        2  amrish 2020-02-01  14:20         1 contact            No
+## 5         4        3  mariah 2020-05-01  12:00         1    case            No
+## 6         5        2  amrish 2020-05-01  16:10         3    case           Yes
+## 7         6        4  nikhil 2020-05-01  13:01         1 contact           Yes
+## 8         7        5   brian 2020-05-01 15:20          1 contact            No
+## 9         8        6   smita 2020-05-01  14:20         1 contact           Yes
+## 10        9        7  raquel 2020-05-01  12:30         1 contact          &lt;NA&gt;
+## 11       10        2  amrish 2020-02-01  10:24         2 contact           Yes
+## 12       11        1    adam 2020-01-05  09:40         2    case            No
+## 13       12        3  mariah 2020-01-06  07:25         2 contact            No
+## 14       13        3  mariah 2020-01-06  08:32         3 contact            No
+## 15       14        4  nikhil 2020-01-06  15:36         2 contact           Yes
+## 16       15        5   brian 2020-01-06  15:31         2 contact           Yes
+## 17       16        5   brian 2020-01-07  07:59         3    case            No
+## 18       17        7  raquel 2020-01-07  11:13         2 contact            No
+## 19       18        8 natalie 2020-01-07  17:12         1    case            No
+##      dup_record
+## 1       Ignorar
+## 2       Ignorar
+## 3       Ignorar
+## 4       Ignorar
+## 5       Ignorar
+## 6  Para análise
+## 7       Ignorar
+## 8       Ignorar
+## 9  Para análise
+## 10      Ignorar
+## 11      Ignorar
+## 12 Para análise
+## 13      Ignorar
+## 14 Para análise
+## 15 Para análise
+## 16      Ignorar
+## 17 Para análise
+## 18 Para análise
+## 19 Para análise</code></pre>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-367e9b44e62271f71489" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-367e9b44e62271f71489">{"x":{"filter":"none","vertical":false,"data":[[1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,1,2,2,3,2,4,5,6,7,2,1,3,3,4,5,5,7,8],["adam","adam","amrish","amrish","mariah","amrish","nikhil","brian","smita","raquel","amrish","adam","mariah","mariah","nikhil","brian","brian","raquel","natalie"],["2020-01-01","2020-01-01","2020-02-01","2020-02-01","2020-05-01","2020-05-01","2020-05-01","2020-05-01","2020-05-01","2020-05-01","2020-02-01","2020-01-05","2020-01-06","2020-01-06","2020-01-06","2020-01-06","2020-01-07","2020-01-07","2020-01-07"],["09:00","09:00","14:20","14:20","12:00","16:10","13:01","15:20 ","14:20","12:30","10:24","09:40","07:25","08:32","15:36","15:31","07:59","11:13","17:12"],[1,1,1,1,1,3,1,1,1,1,2,2,2,3,2,2,3,2,1],["contact","contact","contact","contact","case","case","contact","contact","contact","contact","contact","case","contact","contact","contact","contact","case","contact","case"],[null,null,"No","No","No","Yes","Yes","No","Yes",null,"Yes","No","No","No","Yes","Yes","No","No","No"],["Ignorar","Ignorar","Ignorar","Ignorar","Ignorar","Para análise","Ignorar","Ignorar","Para análise","Ignorar","Ignorar","Para análise","Ignorar","Para análise","Para análise","Ignorar","Para análise","Para análise","Para análise"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>recordID<\/th>\n      <th>personID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n      <th>dup_record<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,1,5]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Veja os <a href="deduplication.html#dedup_data">dados originais</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="calcular-a-completitude-da-linha" class="section level3 unnumbered">
+<h3>Calcular a completitude da linha<a class="anchor" aria-label="anchor" href="#calcular-a-completitude-da-linha"><i class="fas fa-link"></i></a>
+</h3>
+<p>Crie uma coluna que contenha uma métrica para a completitude da linha (não falta). Isso pode ser útil ao decidir quais linhas priorizar em relação a outras ao remover duplicidade/fatiar.</p>
+<p>Neste exemplo, as colunas “chave” sobre as quais você deseja medir a integridade são salvas em um vetor de nomes de coluna.</p>
+<p>Então a nova coluna <code>key_completeness</code> é criada com <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>. O novo valor em cada linha é definido como uma fração calculada: o número de valores não omissos nessa linha entre as colunas-chave, dividido pelo número de colunas-chave.</p>
+<p>Isso envolve a função <code><a href="https://rdrr.io/r/base/colSums.html">rowSums()</a></code> do R <strong>base</strong>. Também é usado <code>.</code>, que dentro do encadeamento do código (pipe - %&gt;%) se refere ao data frame naquele ponto do pipe (neste caso, está sendo subconjunto com colchetes <code>[]</code>).</p>
+<p>*Role para a direita para ver mais linhas**</p>
+<div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># cria uma coluna "completude da variável chave"</span></span>
+<span><span class="co"># esta é uma *proporção* das colunas designadas como "key_cols" que não possuem valores omissos</span></span>
+<span></span>
+<span><span class="va">key_cols</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"personID"</span>, <span class="st">"name"</span>, <span class="st">"symptoms_ever"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>key_completeness <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">.</span><span class="op">[</span>,<span class="va">key_cols</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">key_cols</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7058a2e02db5b9f4129d" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-7058a2e02db5b9f4129d">{"x":{"filter":"none","vertical":false,"data":[[1,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],[1,1,2,2,3,2,4,5,6,7,2,1,3,3,4,5,5,7,8],["adam","adam","amrish","amrish","mariah","amrish","nikhil","brian","smita","raquel","amrish","adam","mariah","mariah","nikhil","brian","brian","raquel","natalie"],["2020-01-01","2020-01-01","2020-02-01","2020-02-01","2020-05-01","2020-05-01","2020-05-01","2020-05-01","2020-05-01","2020-05-01","2020-02-01","2020-01-05","2020-01-06","2020-01-06","2020-01-06","2020-01-06","2020-01-07","2020-01-07","2020-01-07"],["09:00","09:00","14:20","14:20","12:00","16:10","13:01","15:20 ","14:20","12:30","10:24","09:40","07:25","08:32","15:36","15:31","07:59","11:13","17:12"],[1,1,1,1,1,3,1,1,1,1,2,2,2,3,2,2,3,2,1],["contact","contact","contact","contact","case","case","contact","contact","contact","contact","contact","case","contact","contact","contact","contact","case","contact","case"],[null,null,"No","No","No","Yes","Yes","No","Yes",null,"Yes","No","No","No","Yes","Yes","No","No","No"],[0.6666666666666666,0.6666666666666666,1,1,1,1,1,1,1,0.6666666666666666,1,1,1,1,1,1,1,1,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>recordID<\/th>\n      <th>personID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n      <th>key_completeness<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[0,1,5,8]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Veja os <a href="deduplication.html#dedup_data">dados originais</a>.</p>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="str_rollup" class="section level2" number="15.4">
+<h2>
+<span class="header-section-number">15.4</span> Valores acumulados<a class="anchor" aria-label="anchor" href="#str_rollup"><i class="fas fa-link"></i></a>
+</h2>
+<p>Esta seção descreve:</p>
+<ol style="list-style-type: decimal">
+<li>Como “agregar” valores de várias linhas em apenas uma linha, com algumas variações<br>
+</li>
+<li>Depois de ter os valores “acumulados”, como substituir/priorizar os valores em cada célula</li>
+</ol>
+<p>Esta guia usa o conjunto de dados de exemplo da guia Preparação.</p>
+<!-- ======================================================= -->
+<div id="valores-acumulados-em-uma-linha" class="section level3 unnumbered">
+<h3>Valores acumulados em uma linha<a class="anchor" aria-label="anchor" href="#valores-acumulados-em-uma-linha"><i class="fas fa-link"></i></a>
+</h3>
+<p>O exemplo de código abaixo usa <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> e <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> para agrupar linhas por pessoa e depois colar todos os valores exclusivos nas linhas agrupadas. Assim, você obtém uma linha de resumo por pessoa. Algumas notas:</p>
+<ul>
+<li>Um sufixo é anexado a todas as novas colunas (“_roll” neste exemplo)<br>
+</li>
+<li>Se você quiser mostrar apenas valores exclusivos por célula, envolva o <code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> com <code><a href="https://rdrr.io/r/base/unique.html">unique()</a></code><br>
+</li>
+<li>
+<code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code> remove valores <code>NA</code>, mas se isso não for desejado, pode ser removido <code>paste0(.x)</code>…</li>
+</ul>
+<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="deduplication.html#cb755-1" tabindex="-1"></a><span class="co"># Valores "roll-up" em uma linha por grupo (por "personID") </span></span>
+<span id="cb755-2"><a href="deduplication.html#cb755-2" tabindex="-1"></a>cases_rolled <span class="ot">&lt;-</span> obs <span class="sc">%&gt;%</span> </span>
+<span id="cb755-3"><a href="deduplication.html#cb755-3" tabindex="-1"></a>  </span>
+<span id="cb755-4"><a href="deduplication.html#cb755-4" tabindex="-1"></a>  <span class="co">#cria grupos por nome</span></span>
+<span id="cb755-5"><a href="deduplication.html#cb755-5" tabindex="-1"></a>  <span class="fu">group_by</span>(personID) <span class="sc">%&gt;%</span> </span>
+<span id="cb755-6"><a href="deduplication.html#cb755-6" tabindex="-1"></a>  </span>
+<span id="cb755-7"><a href="deduplication.html#cb755-7" tabindex="-1"></a>  <span class="co"># ordena as linhas dentro de cada grupo (por exemplo, por data)</span></span>
+<span id="cb755-8"><a href="deduplication.html#cb755-8" tabindex="-1"></a>  <span class="fu">arrange</span>(date, <span class="at">.by_group =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb755-9"><a href="deduplication.html#cb755-9" tabindex="-1"></a>  </span>
+<span id="cb755-10"><a href="deduplication.html#cb755-10" tabindex="-1"></a>  <span class="co"># Para cada coluna, cole todos os valores dentro das linhas agrupadas, separados por ";"</span></span>
+<span id="cb755-11"><a href="deduplication.html#cb755-11" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb755-12"><a href="deduplication.html#cb755-12" tabindex="-1"></a>    <span class="fu">across</span>(<span class="fu">everything</span>(), <span class="co"># aplica-se a todas as colunas</span></span>
+<span id="cb755-13"><a href="deduplication.html#cb755-13" tabindex="-1"></a>           <span class="sc">~</span><span class="fu">paste0</span>(<span class="fu">na.omit</span>(.x), <span class="at">collapse =</span> <span class="st">"; "</span>)))<span class="er">)</span> <span class="co"># função é definida que combina valores não-NA</span></span></code></pre></div>
+<p>O resultado é uma linha por grupo (<code>ID</code>), com entradas organizadas por data e coladas juntas. <em>Role para a esquerda para ver mais linhas</em></p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-a1f61a6ae3afa66c8cd3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-a1f61a6ae3afa66c8cd3">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8],["1; 1; 11","2; 3; 10; 5","12; 13; 4","14; 6","15; 16; 7","8","17; 9","18"],["adam; adam; adam","amrish; amrish; amrish; amrish","mariah; mariah; mariah","nikhil; nikhil","brian; brian; brian","smita","raquel; raquel","natalie"],["2020-01-01; 2020-01-01; 2020-01-05","2020-02-01; 2020-02-01; 2020-02-01; 2020-05-01","2020-01-06; 2020-01-06; 2020-05-01","2020-01-06; 2020-05-01","2020-01-06; 2020-01-07; 2020-05-01","2020-05-01","2020-01-07; 2020-05-01","2020-01-07"],["09:00; 09:00; 09:40","14:20; 14:20; 10:24; 16:10","07:25; 08:32; 12:00","15:36; 13:01","15:31; 07:59; 15:20 ","14:20","11:13; 12:30","17:12"],["1; 1; 2","1; 1; 2; 3","2; 3; 1","2; 1","2; 3; 1","1","2; 1","1"],["contact; contact; case","contact; contact; contact; case","contact; contact; case","contact; contact","contact; case; contact","contact","contact; contact","case"],["No","No; No; Yes; Yes","No; No; No","Yes; Yes","Yes; No; No","Yes","No","No"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>personID<\/th>\n      <th>recordID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Veja os <a href="deduplication.html#dedup_data">dados originais</a>.</p>
+<p><strong>Esta variação mostra apenas valores únicos:</strong></p>
+<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Variação - mostra apenas valores únicos </span></span>
+<span><span class="va">cases_rolled</span> <span class="op">&lt;-</span> <span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">personID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">date</span>, .by_group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="co"># aplica-se a todas as colunas</span></span>
+<span>           <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"; "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># função é definida que combina valores únicos não-NA</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-955966483fa628252c26" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-955966483fa628252c26">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8],["1; 11","2; 3; 10; 5","12; 13; 4","14; 6","15; 16; 7","8","17; 9","18"],["adam","amrish","mariah","nikhil","brian","smita","raquel","natalie"],["2020-01-01; 2020-01-05","2020-02-01; 2020-05-01","2020-01-06; 2020-05-01","2020-01-06; 2020-05-01","2020-01-06; 2020-01-07; 2020-05-01","2020-05-01","2020-01-07; 2020-05-01","2020-01-07"],["09:00; 09:40","14:20; 10:24; 16:10","07:25; 08:32; 12:00","15:36; 13:01","15:31; 07:59; 15:20 ","14:20","11:13; 12:30","17:12"],["1; 2","1; 2; 3","2; 3; 1","2; 1","2; 3; 1","1","2; 1","1"],["contact; case","contact; case","contact; case","contact","contact; case","contact","contact","case"],["No","No; Yes","No","Yes","Yes; No","Yes","No","No"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>personID<\/th>\n      <th>recordID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Esta variação anexa um sufixo a cada coluna.</strong><br>
+Neste caso “_roll” para significar que foi agregado:</p>
+<div class="sourceCode" id="cb757"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Variação - sufixo adicionado aos nomes das colunas </span></span>
+<span><span class="va">cases_rolled</span> <span class="op">&lt;-</span> <span class="va">obs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">personID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">date</span>, .by_group <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,                </span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>roll <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"; "</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># _roll é anexado aos nomes das colunas</span></span></code></pre></div>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0bb7e27b0280027429a6" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0bb7e27b0280027429a6">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8],["1; 1; 11","2; 3; 10; 5","12; 13; 4","14; 6","15; 16; 7","8","17; 9","18"],["adam; adam; adam","amrish; amrish; amrish; amrish","mariah; mariah; mariah","nikhil; nikhil","brian; brian; brian","smita","raquel; raquel","natalie"],["2020-01-01; 2020-01-01; 2020-01-05","2020-02-01; 2020-02-01; 2020-02-01; 2020-05-01","2020-01-06; 2020-01-06; 2020-05-01","2020-01-06; 2020-05-01","2020-01-06; 2020-01-07; 2020-05-01","2020-05-01","2020-01-07; 2020-05-01","2020-01-07"],["09:00; 09:00; 09:40","14:20; 14:20; 10:24; 16:10","07:25; 08:32; 12:00","15:36; 13:01","15:31; 07:59; 15:20 ","14:20","11:13; 12:30","17:12"],["1; 1; 2","1; 1; 2; 3","2; 3; 1","2; 1","2; 3; 1","1","2; 1","1"],["contact; contact; case","contact; contact; contact; case","contact; contact; case","contact; contact","contact; case; contact","contact","contact; contact","case"],["No","No; No; Yes; Yes","No; No; No","Yes; Yes","Yes; No; No","Yes","No","No"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>personID<\/th>\n      <th>recordID_roll<\/th>\n      <th>name_roll<\/th>\n      <th>date_roll<\/th>\n      <th>time_roll<\/th>\n      <th>encounter_roll<\/th>\n      <th>purpose_roll<\/th>\n      <th>symptoms_ever_roll<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+</div>
+<div id="substituir-valoreshierarquia" class="section level3 unnumbered">
+<h3>Substituir valores/hierarquia<a class="anchor" aria-label="anchor" href="#substituir-valoreshierarquia"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se você quiser avaliar todos os valores rolados e manter apenas um valor específico (por exemplo, valor “melhor” ou “máximo”), você pode usar <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> nas colunas desejadas, para implementar <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> , que usa <code><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect()</a></code> do pacote <strong>stringr</strong> para procurar sequencialmente padrões de string e sobrescrever o conteúdo da célula.</p>
+<div class="sourceCode" id="cb758"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># CASOS LIMPOS</span></span>
+<span><span class="co">#############</span></span>
+<span><span class="va">cases_clean</span> <span class="op">&lt;-</span> <span class="va">cases_rolled</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span><span class="co"># limpar vars Yes-No-Unknown: substitui o texto pelo valor "mais alto" presente na string</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"symptoms_ever"</span><span class="op">)</span><span class="op">)</span>, <span class="co"># opera em colunas especificadas (S/N/U)</span></span>
+<span>       <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mod <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span> <span class="co"># adiciona o sufixo "_mod" a new cols; implementa case_when()</span></span>
+<span>               </span>
+<span>       <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"Sim"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Sim"</span>, <span class="co"># se "Sim" for detectado, o valor da célula será convertido em sim</span></span>
+<span>       <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"No"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"No"</span>, <span class="co"># então, se "No" for detectado, o valor da célula será convertido em não</span></span>
+<span>       <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"Desconhecido"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Desconhecido"</span>, <span class="co"># então, se "Desconhecido" for detectado, o valor da célula será convertido em Desconhecido</span></span>
+<span>               <span class="cn">TRUE</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, <span class="co"># então, se mais alguma coisa se mantiver como está</span></span>
+<span>      .keep <span class="op">=</span> <span class="st">"unused"</span><span class="op">)</span> <span class="co"># colunas antigas removidas, deixando apenas colunas _mod</span></span></code></pre></div>
+<p>Agora você pode ver na coluna <code>symptoms_ever</code> que se a pessoa ALGUMA VEZ disse “Sim” aos sintomas, então apenas “Sim” é exibido.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-8c2826c7caa9b2ac34b3" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-8c2826c7caa9b2ac34b3">{"x":{"filter":"none","vertical":false,"data":[[1,2,3,4,5,6,7,8],["1; 11","2; 3; 10; 5","12; 13; 4","14; 6","15; 16; 7","8","17; 9","18"],["adam","amrish","mariah","nikhil","brian","smita","raquel","natalie"],["2020-01-01; 2020-01-05","2020-02-01; 2020-05-01","2020-01-06; 2020-05-01","2020-01-06; 2020-05-01","2020-01-06; 2020-01-07; 2020-05-01","2020-05-01","2020-01-07; 2020-05-01","2020-01-07"],["09:00; 09:40","14:20; 10:24; 16:10","07:25; 08:32; 12:00","15:36; 13:01","15:31; 07:59; 15:20 ","14:20","11:13; 12:30","17:12"],["1; 2","1; 2; 3","2; 3; 1","2; 1","2; 3; 1","1","2; 1","1"],["contact; case","contact; case","contact; case","contact","contact; case","contact","contact","case"],["No","No","No","Yes","No","Yes","No","No"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>personID<\/th>\n      <th>recordID<\/th>\n      <th>name<\/th>\n      <th>date<\/th>\n      <th>time<\/th>\n      <th>encounter<\/th>\n      <th>purpose<\/th>\n      <th>symptoms_ever_mod<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>Veja os <a href="deduplication.html#dedup_data">dados originais</a>.</p>
+</div>
+</div>
+<div id="remoção-de-duplicidades-probabilística-1" class="section level2" number="15.5">
+<h2>
+<span class="header-section-number">15.5</span> Remoção de duplicidades probabilística<a class="anchor" aria-label="anchor" href="#remo%C3%A7%C3%A3o-de-duplicidades-probabil%C3%ADstica-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>Às vezes, você pode querer identificar duplicidades “prováveis” com base na semelhança (por exemplo, string “distance”) em várias colunas, como nome, idade, sexo, data de nascimento etc. Você pode aplicar um algoritmo de correspondência probabilística para identificar duplicidades prováveis.</p>
+<p>Consulte a página em <a href="joining-matching.html#joining-matching">Juntar dados</a> para obter uma explicação sobre este método. A seção sobre Correspondência Probabilística contém um exemplo de aplicação desses algoritmos para comparar um data frame com o <em>próprio</em>, realizando assim a desduplicação probabilística.</p>
+<!-- ======================================================= -->
+</div>
+<div id="recursos-8" class="section level2" number="15.6">
+<h2>
+<span class="header-section-number">15.6</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-8"><i class="fas fa-link"></i></a>
+</h2>
+<p>Muitas das informações nesta página são adaptadas destes recursos e vinhetas online:</p>
+<p><a href="https://www.datanovia.com/en/lessons/identify-and-remove-duplicate-data-in-r/">datanovia</a></p>
+<p><a href="https://dplyr.tidyverse.org/reference/slice.html">dplyr tidyverse reference</a></p>
+<p><a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-%20com-get_dupes">vinheta de janitor de cran</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></div>
+<div class="next"><a href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#deduplication"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li>
+<a class="nav-link" href="#prepara%C3%A7%C3%A3o-6"><span class="header-section-number">15.1</span> Preparação</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#carregar-pacotes-3">Carregar pacotes</a></li>
+<li><a class="nav-link" href="#importar-dados-1">Importar dados</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#remo%C3%A7%C3%A3o-de-duplicidades"><span class="header-section-number">15.2</span> Remoção de duplicidades</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#examinar-duplicidades">Examinar duplicidades</a></li>
+<li><a class="nav-link" href="#manter-apenas-linhas-%C3%BAnicas">Manter apenas linhas únicas</a></li>
+<li><a class="nav-link" href="#remover-duplicidades-em-um-vetor">Remover duplicidades em um vetor</a></li>
+<li><a class="nav-link" href="#usando-o-r-base-1">Usando o R base</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#fatiarsubdividir"><span class="header-section-number">15.3</span> Fatiar/Subdividir</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#subdivid%C3%A3o-com-grupos">Subdividão com grupos</a></li>
+<li><a class="nav-link" href="#mantenha-tudo-mas-marque-os">Mantenha tudo mas marque-os</a></li>
+<li><a class="nav-link" href="#calcular-a-completitude-da-linha">Calcular a completitude da linha</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#str_rollup"><span class="header-section-number">15.4</span> Valores acumulados</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#valores-acumulados-em-uma-linha">Valores acumulados em uma linha</a></li>
+<li><a class="nav-link" href="#substituir-valoreshierarquia">Substituir valores/hierarquia</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#remo%C3%A7%C3%A3o-de-duplicidades-probabil%C3%ADstica-1"><span class="header-section-number">15.5</span> Remoção de duplicidades probabilística</a></li>
+<li><a class="nav-link" href="#recursos-8"><span class="header-section-number">15.6</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

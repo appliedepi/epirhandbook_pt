@@ -1,0 +1,2670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>18 Testes estatísticos simples | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="Esta página demonstra como realizar testes estatísticos simples com os pacotes R base, rstatix, e gtsummary. Teste t Teste de Shapiro-Wilk Teste de Wilcoxon Teste de Kruskal-Wallis Teste...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="18 Testes estatísticos simples | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="Esta página demonstra como realizar testes estatísticos simples com os pacotes R base, rstatix, e gtsummary. Teste t Teste de Shapiro-Wilk Teste de Wilcoxon Teste de Kruskal-Wallis Teste...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="18 Testes estatísticos simples | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Esta página demonstra como realizar testes estatísticos simples com os pacotes R base, rstatix, e gtsummary. Teste t Teste de Shapiro-Wilk Teste de Wilcoxon Teste de Kruskal-Wallis Teste...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="active" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="stat-tests" class="section level1" number="18">
+<h1>
+<span class="header-section-number">18</span> Testes estatísticos simples<a class="anchor" aria-label="anchor" href="#stat-tests"><i class="fas fa-link"></i></a>
+</h1>
+<p>Esta página demonstra como realizar testes estatísticos simples com os pacotes R <strong>base</strong>, <strong>rstatix</strong>, e <strong>gtsummary</strong>.</p>
+<ul>
+<li>Teste t<br>
+</li>
+<li>Teste de Shapiro-Wilk<br>
+</li>
+<li>Teste de Wilcoxon<br>
+</li>
+<li>Teste de Kruskal-Wallis<br>
+</li>
+<li>Teste qui-quadrado de Pearson<br>
+</li>
+<li>Correlações entre variáveis numéricas</li>
+</ul>
+<p>…muitos outros testes podem ser realizados, mas mostramos apenas os mais comuns e fornecemos links para outras fontes.</p>
+<p>Cada um dos pacotes acima possui certas vantagens e desvantagens:</p>
+<ul>
+<li>Utilize as funções do pacote R <strong>base</strong> para exportar resultados estatísticos para o console do R</li>
+<li>Utilize as funções do pacote <strong>rstatix</strong> para gerar os resultados em um quadro de dados, ou caso queira que os testes sejam realizados por grupos</li>
+<li>Utilize o pacote <strong>gtsummary</strong> para exportar facilmente tabelas prontas para publicação.</li>
+</ul>
+<!-- ======================================================= --><div id="preparação-9" class="section level2" number="18.1">
+<h2>
+<span class="header-section-number">18.1</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-9"><i class="fas fa-link"></i></a>
+</h2>
+<div id="carregue-os-pacotes-1" class="section level3 unnumbered">
+<h3>Carregue os pacotes<a class="anchor" aria-label="anchor" href="#carregue-os-pacotes-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Este pequeno código carrega os pacotes necessários para as análises. Neste manual, nós estimulamos o uso da função <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code>, do <strong>pacman</strong>, que instala os pacotes, caso necessários, <em>e</em> os carrega para utilização. Também é possível carregar pacotes já instalados com a função <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> do pacote R <strong>base</strong>. Veja a página sobre <a href="basics.html#basics">Introdução ao R</a> para mais informações sobre pacotes do R.</p>
+<div class="sourceCode" id="cb922"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span></span>
+<span>  <span class="va">rio</span>,          <span class="co"># Importa arquivos</span></span>
+<span>  <span class="va">here</span>,         <span class="co"># Localiza arquivos</span></span>
+<span>  <span class="va">skimr</span>,        <span class="co"># visualize os dados</span></span>
+<span>  <span class="va">tidyverse</span>,    <span class="co"># gerenciamento dos dados + gráficos no ggplot2, </span></span>
+<span>  <span class="va">gtsummary</span>,    <span class="co"># resumo estatístico e testes</span></span>
+<span>  <span class="va">rstatix</span>,      <span class="co"># estatísticas</span></span>
+<span>  <span class="va">corrr</span>,        <span class="co"># análise de correlação entre variáveis numéricas</span></span>
+<span>  <span class="va">janitor</span>,      <span class="co"># adicione totais e porcentagens às tabelas</span></span>
+<span>  <span class="va">flextable</span>     <span class="co"># converte tabelas para o formato HTML</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+</div>
+<div id="importando-os-dados" class="section level3 unnumbered">
+<h3>Importando os dados<a class="anchor" aria-label="anchor" href="#importando-os-dados"><i class="fas fa-link"></i></a>
+</h3>
+<p>Nós iremos importar o banco de dados dos casos de uma simulação de epidemia de Ebola. Se você quiser acompanhar, <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds" class="download-button">clique para baixar o banco “limpo”</a> (como arquivo .rds). Importe os dados com a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code>, do pacote <strong>rio</strong> (ela aceita muitos formatos de arquivos, como .xlsx, .rds, .csv - veja a página <a href="importing.html#importing">Importar e exportar</a> para detalhes).</p>
+<div class="sourceCode" id="cb923"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># importa o 'linelist'</span></span>
+<span><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></span></code></pre></div>
+<p>As primeiras 50 linhas dos dados são mostradas abaixo.</p>
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5c6c1d6847c5fd9e9ad4" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-5c6c1d6847c5fd9e9ad4">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Ausente","Ausente","Ausente","Ausente","Port Hospital","Military Hospital","Ausente","Ausente","Other","Port Hospital","Port Hospital","Port Hospital","Ausente","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Ausente","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Ausente","Military Hospital","Other","Ausente","Ausente","Port Hospital","Port Hospital","Port Hospital","Ausente","Central Hospital","Military Hospital","Other","Other","Other","Ausente","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Ausente"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.461830626007281,8.462729314626459,8.461443675342711,8.46191259217774,8.472923276435059,8.48401630165138,8.458371253408441,8.477617055125091,8.47570184950483,8.477799468789719,8.47145134147474,8.478048406853629,8.48528034195779,8.469575303958671,8.45957352078114,8.474048895115439,8.488029171298839,8.473437335922,8.484082637344621,8.46242233645879,8.470268221265719,8.463984474805329,8.464134789434199,8.456230946296071,8.48334624336805,8.47493999153642,8.47832062438022,8.469393389176499,8.48480589906514,8.47121232619015,8.48438437371817,8.484661585743391,8.477141599844281,8.462381270106089,8.455685978131131,8.4632880274758,8.47940722413856,8.46353857052336,8.461789681588639,8.47508713872833,8.458258081280711,8.4532568143863,8.4732571907655,8.479115866419329,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.81844297615629,16.06524962926347,22.49657064471879,71.41440190438405,41.61712247324614,62.09538908706566,0,16.83765369253662,22.79032897344431,53.41198979591836,24.28026361429067,22.46003435064077,54.32098765432099,41.05784325564545,28.56648199445983,17.03205520132763,25.04129149128882,38.7172182043977,27.3876813705495,31.55555555555556,14.80690759456621,30.88398111998135,26.61934338952972,59.37499999999999,96.61835748792272,19.23947487550928,84.94031221303948,18.41993774061044,27.77226740726046,41.32231404958677,17.20806665861611,24.16716240333135,15.72189710891781,428.9940828402366,27.99302202929125,243.2610124917817,20.23950075898128,30.52744643563797,25.15589569160998,47,39.04,31.06616432017979,77.96836711962574,29.51659612385831,166.4932362122789,100.3086419753086,37.76,20.60378034578518,23.45856237526698],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="pacote-r-base-1" class="section level2" number="18.2">
+<h2>
+<span class="header-section-number">18.2</span> Pacote R <strong>base</strong><a class="anchor" aria-label="anchor" href="#pacote-r-base-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>Você pode utilizar as funções do pacote R <strong>base</strong> para realizar testes estatísticos. Os comandos são relativamente simples, e os resultados são exportados para o terminal do R para visualização. Entretanto, normalmente os resultados são gerados no formato de listas, o que dificulta a manipulação, caso queira utilizá-los posteriormente.</p>
+<div id="testes-t" class="section level3 unnumbered">
+<h3>Testes T<a class="anchor" aria-label="anchor" href="#testes-t"><i class="fas fa-link"></i></a>
+</h3>
+<p>O <a href="https://en.wikipedia.org/wiki/Student%27s_t-test">teste t</a>, também chamando de “Teste t de Student”, é tipicamente utilizado para determinar se existem diferenças significativas entre as médias de variáveis numéricas de dois grupos distintos. Aqui, nós iremos mostrar duas sintaxes para realizar esse teste, de acordo com a presença ou não das colunas no mesmo quadro de dados.</p>
+<p><strong>Sintaxe 1:</strong> Esta é a sintaxe utilizada quando as colunas numéricas e categóricas estão no mesmo quadro de dados (<em>data frame</em>). Especifique a coluna numérica no lado esquerdo da equação, e a coluna categórica no lado direito. Coloque o nome do banco de dados no argumento <code>data =</code>. Opcionalmente, ajuste os argumentos <code>paired = TRUE</code>, <code>conf.level =</code> para (0.95 default), e <code>alternative =</code> para (“two.sided”, “less”, ou “greater”). Digite <code><a href="https://rdrr.io/r/stats/t.test.html">?t.test</a></code> para mais detalhes.</p>
+<div class="sourceCode" id="cb924"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## compare a média das idades de acordo com o sexo com um teste t</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="va">gender</span>, data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  age_years by gender
+## t = -21.344, df = 4902.3, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means between group f and group m is not equal to 0
+## 95 percent confidence interval:
+##  -7.571920 -6.297975
+## sample estimates:
+## mean in group f mean in group m 
+##        12.60207        19.53701</code></pre>
+<p><strong>Sintaxe 2:</strong> Você pode comparar dois vetores numéricos separados com essa sintaxe. Por exemplo, se as duas colunas estão em bancos de dados distintos.</p>
+<div class="sourceCode" id="cb926"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">df1</span><span class="op">$</span><span class="va">age_years</span>, <span class="va">df2</span><span class="op">$</span><span class="va">age_years</span><span class="op">)</span></span></code></pre></div>
+<p>Também é possível utilizar o teste t para determinar se a média de uma amostra é significativamente diferente de algum valor específico. Aqui, nós aplicamos o teste t entre uma amostra e uma média conhecida/suposta de uma população (<code>mu =</code>):</p>
+<div class="sourceCode" id="cb927"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_years</span>, mu <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="teste-de-shapiro-wilk" class="section level3 unnumbered">
+<h3>Teste de Shapiro-Wilk<a class="anchor" aria-label="anchor" href="#teste-de-shapiro-wilk"><i class="fas fa-link"></i></a>
+</h3>
+<p>O <a href="https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test">teste de Shapiro-Wilk</a> pode ser utilizado para determinar se uma amostra foi obtida de uma população com distribuição normal (um pré-requisito de muitos outros testes e análises, como o teste t). Entretanto, isto só pode ser utilizado em uma amostra de 3 a 5000 observações. Para amostras maiores, um <a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">gráfico de Quantil-Quantil</a> é recomendado.</p>
+<div class="sourceCode" id="cb928"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_years</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="teste-de-wilcoxon" class="section level3 unnumbered">
+<h3>Teste de Wilcoxon<a class="anchor" aria-label="anchor" href="#teste-de-wilcoxon"><i class="fas fa-link"></i></a>
+</h3>
+<p>O teste de Wilcoxon, também chamado de <a href="https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test">teste U de Mann–Whitney</a>, é frequentemente utilizado para determinar se duas amostras numéricas possuem a mesma distribuição, mesmo quando suas populações não possuem distribuição normal ou possuem variância independente (desiguais).</p>
+<div class="sourceCode" id="cb929"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## compare a distribuição da idade de acordo com o grupo 'outcome' utilizando o teste wilcox</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/wilcox.test.html">wilcox.test</a></span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="va">outcome</span>, data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  age_years by outcome
+## W = 2501868, p-value = 0.8308
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+<div id="teste-de-kruskal-wallis" class="section level3 unnumbered">
+<h3>Teste de Kruskal-Wallis<a class="anchor" aria-label="anchor" href="#teste-de-kruskal-wallis"><i class="fas fa-link"></i></a>
+</h3>
+<p>O <a href="https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_one-way_analysis_of_variance">tesde de Kruskal-Wallis</a> é uma extensão do teste de Wilcoxon que pode ser utilizado para verificar diferenças na distribuição de mais de duas amostras. Quando apenas duas amostras são utilizadas, os resultados são idênticos ao teste de Wilcoxon.</p>
+<div class="sourceCode" id="cb931"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## compare a distribuição da idade de acordo com o grupo 'outcome' utilizando o teste de kruskal-wallis</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/kruskal.test.html">kruskal.test</a></span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="va">outcome</span>, <span class="va">linelist</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  age_years by outcome
+## Kruskal-Wallis chi-squared = 0.045675, df = 1, p-value = 0.8308</code></pre>
+</div>
+<div id="teste-de-qui-quadrado" class="section level3 unnumbered">
+<h3>Teste de qui-quadrado<a class="anchor" aria-label="anchor" href="#teste-de-qui-quadrado"><i class="fas fa-link"></i></a>
+</h3>
+<p><a href="https://en.wikipedia.org/wiki/Chi-squared_test">O teste do qui-quadrado de Pearson</a> é utilizado para verificar se existem diferenças significativas entre grupos categóricos.</p>
+<div class="sourceCode" id="cb933"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## compare as proporções em cada grupo utilizando o teste do qui-quadrado</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Pearson's Chi-squared test with Yates' continuity correction
+## 
+## data:  linelist$gender and linelist$outcome
+## X-squared = 0.0011841, df = 1, p-value = 0.9725</code></pre>
+</div>
+</div>
+<div id="pacote-rstatix" class="section level2" number="18.3">
+<h2>
+<span class="header-section-number">18.3</span> Pacote <strong>rstatix</strong><a class="anchor" aria-label="anchor" href="#pacote-rstatix"><i class="fas fa-link"></i></a>
+</h2>
+<p>O pacote <strong>rstatix</strong> realiza testes estatísticos e gera os resultados de forma que possam ser manipulados (“pipe-friendly”). Os resultados são gerados automaticamente em um quadro de dados (<em>data frame</em>), sendo possível realizar operações posteriores com eles. Também é fácil agrupar os dados utilizados nas funções, podendo as estatísticas serem executadas por cada grupo.</p>
+<div id="estatísticas-resumo" class="section level3 unnumbered">
+<h3>Estatísticas resumo<a class="anchor" aria-label="anchor" href="#estat%C3%ADsticas-resumo"><i class="fas fa-link"></i></a>
+</h3>
+<p>A função <code>get_summary_stats()</code> é uma maneira rápida de gerar resultados estatísticos. Simplesmente aplique seu banco de dados nessa função, e escolha as colunas para analisar. Se nenhuma coluna for especificada, as estatísticas são calculadas com todas as colunas.</p>
+<p>Por padrão, um resumo estatístico completo é gerado: n, max, min, mediana, 25%ile, 75%ile, IQR, desvio absoluto mediano (mad), média, desvio padrão, erro padrão, e o intervalo de confiança da média.</p>
+<div class="sourceCode" id="cb935"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/get_summary_stats.html">get_summary_stats</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">temp</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 2 × 13
+##   variable     n   min   max median    q1    q3   iqr    mad  mean     sd    se
+##   &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 age       5802   0    84     13     6    23      17 11.9    16.1 12.6   0.166
+## 2 temp      5739  35.2  40.8   38.8  38.2  39.2     1  0.741  38.6  0.977 0.013
+## # ℹ 1 more variable: ci &lt;dbl&gt;</code></pre>
+<p>Você pode especificar um sub-grupo do resumo estatístico a ser gerado, ao fornecer um dos seguintes valores ao argumento <code>type =</code>: “full”, “common”, “robust”, “five_number”, “mean_sd”, “mean_se”, “mean_ci”, “median_iqr”, “median_mad”, “quantile”, “mean”, “median”, “min”, “max”.</p>
+<p>Esta função também pode ser utilizada com dados agrupados, de forma que uma linha é gerada por cada variável agrupável:</p>
+<div class="sourceCode" id="cb937"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">rstatix</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/rstatix/reference/get_summary_stats.html">get_summary_stats</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">temp</span>, type <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 12 × 11
+##    hospital       variable     n   min   max median   iqr  mean     sd    se    ci
+##    &lt;chr&gt;          &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Ausente        age       1441   0    76     13    17    16.0 12.9   0.339 0.665
+##  2 Ausente        temp      1431  35.8  40.6   38.9   1    38.6  0.97  0.026 0.05 
+##  3 Central Hospi… age        445   0    58     12    15    15.7 12.5   0.591 1.16 
+##  4 Central Hospi… temp       450  35.2  40.4   38.8   1    38.5  0.964 0.045 0.089
+##  5 Military Hosp… age        884   0    72     14    18    16.1 12.4   0.417 0.818
+##  6 Military Hosp… temp       873  35.3  40.5   38.8   1    38.6  0.952 0.032 0.063
+##  7 Other          age        873   0    69     13    17    16.0 12.5   0.422 0.828
+##  8 Other          temp       862  35.7  40.8   38.8   1.1  38.5  1.01  0.034 0.067
+##  9 Port Hospital  age       1739   0    68     14    18    16.3 12.7   0.305 0.598
+## 10 Port Hospital  temp      1713  35.5  40.6   38.8   1.1  38.6  0.981 0.024 0.046
+## 11 St. Mark's Ma… age        420   0    84     12    15    15.7 12.4   0.606 1.19 
+## 12 St. Mark's Ma… temp       410  35.9  40.6   38.8   1.1  38.5  0.983 0.049 0.095</code></pre>
+<p>O pacote <strong>rstatix</strong> também pode ser utilizado para realizar testes estatísticos:</p>
+</div>
+<div id="teste-t" class="section level3 unnumbered">
+<h3>Teste t<a class="anchor" aria-label="anchor" href="#teste-t"><i class="fas fa-link"></i></a>
+</h3>
+<p>Utilize a sintaxe para especificar as colunas numérica e categórica:</p>
+<div class="sourceCode" id="cb939"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">t_test</span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="va">gender</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 1 × 10
+##   .y.     group1 group2    n1    n2 statistic    df        p    p.adj p.adj.signif
+## * &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;       
+## 1 age_ye… f      m       2807  2803     -21.3 4902. 9.89e-97 9.89e-97 ****</code></pre>
+<p>Ou utilize <code>~ 1</code> e especifique <code>mu =</code> para realizar o teste t de uma amostra. Isto também pode ser realizado por grupos.</p>
+<div class="sourceCode" id="cb941"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">t_test</span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="fl">1</span>, mu <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 1 × 7
+##   .y.       group1 group2         n statistic    df     p
+## * &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 age_years 1      null model  5802     -84.2  5801     0</code></pre>
+<p>Se necessário, os testes estatísticos podem ser realizados por grupos, como mostrado abaixo:</p>
+<div class="sourceCode" id="cb943"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">t_test</span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="fl">1</span>, mu <span class="op">=</span> <span class="fl">18</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 3 × 8
+##   gender .y.       group1 group2         n statistic    df         p
+## * &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+## 1 f      age_years 1      null model  2807    -29.8   2806 7.52e-170
+## 2 m      age_years 1      null model  2803      5.70  2802 1.34e-  8
+## 3 &lt;NA&gt;   age_years 1      null model   192     -3.80   191 1.96e-  4</code></pre>
+</div>
+<div id="tesde-de-shapiro-wilk" class="section level3 unnumbered">
+<h3>Tesde de Shapiro-Wilk<a class="anchor" aria-label="anchor" href="#tesde-de-shapiro-wilk"><i class="fas fa-link"></i></a>
+</h3>
+<p>Como dito acima, o tamanho da amostra precisa estar entre 3 e 5000.</p>
+<div class="sourceCode" id="cb945"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">500</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>            <span class="co"># primeiras 500 linhas dos dados em linelist, para exemplificação apenas</span></span>
+<span>  <span class="fu">shapiro_test</span><span class="op">(</span><span class="va">age_years</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 1 × 3
+##   variable  statistic        p
+##   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+## 1 age_years     0.917 6.67e-16</code></pre>
+</div>
+<div id="tesde-de-wilcoxon" class="section level3 unnumbered">
+<h3>Tesde de Wilcoxon<a class="anchor" aria-label="anchor" href="#tesde-de-wilcoxon"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb947"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">wilcox_test</span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="va">gender</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 1 × 9
+##   .y.       group1 group2    n1    n2 statistic        p    p.adj p.adj.signif
+## * &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;       
+## 1 age_years f      m       2807  2803   2829274 3.47e-74 3.47e-74 ****</code></pre>
+</div>
+<div id="teste-de-kruskal-wallis-1" class="section level3 unnumbered">
+<h3>Teste de Kruskal-Wallis<a class="anchor" aria-label="anchor" href="#teste-de-kruskal-wallis-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Também conhecido como teste U de Mann-Whitney.</p>
+<div class="sourceCode" id="cb949"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">kruskal_test</span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="va">outcome</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 1 × 6
+##   .y.           n statistic    df     p method        
+## * &lt;chr&gt;     &lt;int&gt;     &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;         
+## 1 age_years  5888    0.0457     1 0.831 Kruskal-Wallis</code></pre>
+</div>
+<div id="teste-do-qui-quadrado" class="section level3 unnumbered">
+<h3>Teste do Qui-quadrado<a class="anchor" aria-label="anchor" href="#teste-do-qui-quadrado"><i class="fas fa-link"></i></a>
+</h3>
+<p>A função do teste do Qui-quadrado pode utilizar uma tabela, então primeiro criamos uma tabulação cruzada. Existem diversas formas de realizar isto (veja página de <a href="tables-descriptive.html#tables-descriptive">Tabelas descritivas</a>), mas aqui utilizamos a função <code>tabyl()</code>, do pacote <strong>janitor</strong>, e então removemos a coluna mais a esquerda (com os nomes) antes de utilizá-la na função <code>chisq_test()</code>.</p>
+<div class="sourceCode" id="cb951"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">tabyl</span><span class="op">(</span><span class="va">gender</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">chisq_test</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## # A tibble: 1 × 6
+##       n statistic     p    df method          p.signif
+## * &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;   
+## 1  5888      3.53 0.473     4 Chi-square test ns</code></pre>
+<p>Muitas outras funções e testes estatísticos podem ser realizados com as funções do <strong>rstatix</strong>. Veja a documentação do <strong>rstatix</strong> <a href="https://github.com/kassambara/rstatix">online aqui</a> ou digite <code>?rstatix</code>.</p>
+</div>
+</div>
+<div id="stats_gt" class="section level2" number="18.4">
+<h2>
+<span class="header-section-number">18.4</span> Pacote <code>gtsummary</code><a class="anchor" aria-label="anchor" href="#stats_gt"><i class="fas fa-link"></i></a>
+</h2>
+<p>Use o <strong>gtsummary</strong> se você quiser adicionar os resultados de um teste estatístico em uma tabela criada com esse pacote (como descrito na seção do <strong>gtsummary</strong> na página de <a href="tables-descriptive.html#tbl_gt">Tabelas descritivas</a>).</p>
+<p>Para realizar testes estatísticos de comparação com a função <code>tbl_summary</code>, basta adicionar a função <code>add_p</code> na tabela e especificar qual teste utilizar. É possível obter os p-valores corrigidos para testes múltiplos ao utilizar a função <code>add_q</code>. Utilize o comando <code>?tbl_summary</code> para mais detalhes.</p>
+<div id="teste-qui-quadrado" class="section level3 unnumbered">
+<h3>Teste Qui-quadrado<a class="anchor" aria-label="anchor" href="#teste-qui-quadrado"><i class="fas fa-link"></i></a>
+</h3>
+<p>Compare as proporções de uma variável categórica em dois grupos. O teste estatístico padrão para a função <code>add_p()</code> para uma variável categórica é o teste Qui-quadrado de independência com correção de continuidade. Entretanto, caso alguma contagem seja abaixo de 5, o teste exato de Fisher é utilizado em seu lugar.</p>
+<div class="sourceCode" id="cb953"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">theme_gtsummary_language</span><span class="op">(</span><span class="st">"pt"</span><span class="op">)</span> <span class="co"># acrescentando tradução para o portugues</span></span></code></pre></div>
+<pre><code>## Setting theme `language: pt`</code></pre>
+<div class="sourceCode" id="cb955"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">gender</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># selecione as variáveis de interesse</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>outcome<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">==</span><span class="st">"Death"</span>, <span class="st">"Óbito"</span>,</span>
+<span>                        <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">==</span><span class="st">"Recover"</span>, <span class="st">"Recuperado"</span>,<span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co">#só traduzindo </span></span>
+<span>  <span class="fu">tbl_summary</span><span class="op">(</span>by <span class="op">=</span> <span class="va">outcome</span>, <span class="co"># produza uma tabela resumo e especifique a variável de agrupamento</span></span>
+<span>              label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> <span class="va">gender</span> <span class="op">~</span><span class="st">"gênero"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># traduzindo o rótulo</span></span>
+<span>  <span class="fu">add_p</span><span class="op">(</span><span class="op">)</span>                        <span class="co"># especifique qual teste estatístico realizar %&gt;% </span></span></code></pre></div>
+<pre><code>## 1323 observations missing `outcome` have been removed. To include these observations, use `forcats::fct_na_value_to_level()` on `outcome` column before passing to `tbl_summary()`.</code></pre>
+<div id="fjndcaxcxv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#fjndcaxcxv table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#fjndcaxcxv thead, #fjndcaxcxv tbody, #fjndcaxcxv tfoot, #fjndcaxcxv tr, #fjndcaxcxv td, #fjndcaxcxv th {
+  border-style: none;
+}
+
+#fjndcaxcxv p {
+  margin: 0;
+  padding: 0;
+}
+
+#fjndcaxcxv .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#fjndcaxcxv .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#fjndcaxcxv .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#fjndcaxcxv .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#fjndcaxcxv .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#fjndcaxcxv .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#fjndcaxcxv .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#fjndcaxcxv .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#fjndcaxcxv .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#fjndcaxcxv .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#fjndcaxcxv .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#fjndcaxcxv .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#fjndcaxcxv .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#fjndcaxcxv .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#fjndcaxcxv .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fjndcaxcxv .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#fjndcaxcxv .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#fjndcaxcxv .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#fjndcaxcxv .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fjndcaxcxv .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#fjndcaxcxv .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fjndcaxcxv .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#fjndcaxcxv .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fjndcaxcxv .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#fjndcaxcxv .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#fjndcaxcxv .gt_left {
+  text-align: left;
+}
+
+#fjndcaxcxv .gt_center {
+  text-align: center;
+}
+
+#fjndcaxcxv .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#fjndcaxcxv .gt_font_normal {
+  font-weight: normal;
+}
+
+#fjndcaxcxv .gt_font_bold {
+  font-weight: bold;
+}
+
+#fjndcaxcxv .gt_font_italic {
+  font-style: italic;
+}
+
+#fjndcaxcxv .gt_super {
+  font-size: 65%;
+}
+
+#fjndcaxcxv .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#fjndcaxcxv .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#fjndcaxcxv .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#fjndcaxcxv .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#fjndcaxcxv .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#fjndcaxcxv .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#fjndcaxcxv .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;Características&lt;/strong&gt;"><strong>Características</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Recuperado&lt;/strong&gt;, N = 1,983&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Recuperado</strong>, N = 1,983<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Óbito&lt;/strong&gt;, N = 2,582&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Óbito</strong>, N = 2,582<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Valor p&lt;/strong&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Valor p</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="label" class="gt_row gt_left">gênero</td>
+<td headers="stat_1" class="gt_row gt_center"></td>
+<td headers="stat_2" class="gt_row gt_center"></td>
+<td headers="p.value" class="gt_row gt_center">&gt;0.9</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    f</td>
+<td headers="stat_1" class="gt_row gt_center">953 (50%)</td>
+<td headers="stat_2" class="gt_row gt_center">1,227 (50%)</td>
+<td headers="p.value" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    m</td>
+<td headers="stat_1" class="gt_row gt_center">950 (50%)</td>
+<td headers="stat_2" class="gt_row gt_center">1,228 (50%)</td>
+<td headers="p.value" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    Desconhecido</td>
+<td headers="stat_1" class="gt_row gt_center">80</td>
+<td headers="stat_2" class="gt_row gt_center">127</td>
+<td headers="p.value" class="gt_row gt_center"></td>
+</tr>
+</tbody>
+<tfoot class="gt_footnotes">
+<tr>
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> n (%)</td>
+    </tr>
+<tr>
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span> Teste qui-quadrado de independência</td>
+    </tr>
+</tfoot>
+</table></div>
+</div>
+</div>
+<div id="testes-t-1" class="section level3 unnumbered">
+<h3>Testes t<a class="anchor" aria-label="anchor" href="#testes-t-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Compare a diferença média de uma variável contínua em dois grupos.
+Por exemplo, compare a média das idades de acordo com a evolução clínica do paciente.</p>
+<div class="sourceCode" id="cb957"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age_years</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>             <span class="co"># selecione as variáveis de interesse</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>outcome<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">==</span><span class="st">"Death"</span>, <span class="st">"Óbito"</span>,</span>
+<span>                        <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">==</span><span class="st">"Recover"</span>, <span class="st">"Recuperado"</span>,<span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co">#só traduzindo </span></span>
+<span>  <span class="fu">tbl_summary</span><span class="op">(</span>                               <span class="co"># produza uma tabela resumo</span></span>
+<span>    statistic <span class="op">=</span> <span class="va">age_years</span> <span class="op">~</span> <span class="st">"{mean} ({sd})"</span>, <span class="co"># especifique quais estatísticas mostrar</span></span>
+<span>    by <span class="op">=</span> <span class="va">outcome</span>, <span class="co"># especifique a variável de agrupamento</span></span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="st">"idade"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   <span class="co"># traduzindo                     </span></span>
+<span>  <span class="fu">add_p</span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="st">"t.test"</span><span class="op">)</span>                <span class="co"># especifique quais testes realizar</span></span></code></pre></div>
+<pre><code>## 1323 observations missing `outcome` have been removed. To include these observations, use `forcats::fct_na_value_to_level()` on `outcome` column before passing to `tbl_summary()`.</code></pre>
+<div id="mtnwsvbgrw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mtnwsvbgrw table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mtnwsvbgrw thead, #mtnwsvbgrw tbody, #mtnwsvbgrw tfoot, #mtnwsvbgrw tr, #mtnwsvbgrw td, #mtnwsvbgrw th {
+  border-style: none;
+}
+
+#mtnwsvbgrw p {
+  margin: 0;
+  padding: 0;
+}
+
+#mtnwsvbgrw .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#mtnwsvbgrw .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mtnwsvbgrw .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mtnwsvbgrw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mtnwsvbgrw .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mtnwsvbgrw .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mtnwsvbgrw .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mtnwsvbgrw .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mtnwsvbgrw .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#mtnwsvbgrw .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#mtnwsvbgrw .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mtnwsvbgrw .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mtnwsvbgrw .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mtnwsvbgrw .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mtnwsvbgrw .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mtnwsvbgrw .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mtnwsvbgrw .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mtnwsvbgrw .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#mtnwsvbgrw .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mtnwsvbgrw .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mtnwsvbgrw .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mtnwsvbgrw .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mtnwsvbgrw .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mtnwsvbgrw .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mtnwsvbgrw .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mtnwsvbgrw .gt_left {
+  text-align: left;
+}
+
+#mtnwsvbgrw .gt_center {
+  text-align: center;
+}
+
+#mtnwsvbgrw .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mtnwsvbgrw .gt_font_normal {
+  font-weight: normal;
+}
+
+#mtnwsvbgrw .gt_font_bold {
+  font-weight: bold;
+}
+
+#mtnwsvbgrw .gt_font_italic {
+  font-style: italic;
+}
+
+#mtnwsvbgrw .gt_super {
+  font-size: 65%;
+}
+
+#mtnwsvbgrw .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#mtnwsvbgrw .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mtnwsvbgrw .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#mtnwsvbgrw .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#mtnwsvbgrw .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#mtnwsvbgrw .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#mtnwsvbgrw .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;Características&lt;/strong&gt;"><strong>Características</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Recuperado&lt;/strong&gt;, N = 1,983&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Recuperado</strong>, N = 1,983<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Óbito&lt;/strong&gt;, N = 2,582&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Óbito</strong>, N = 2,582<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Valor p&lt;/strong&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Valor p</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="label" class="gt_row gt_left">idade</td>
+<td headers="stat_1" class="gt_row gt_center">16 (13)</td>
+<td headers="stat_2" class="gt_row gt_center">16 (12)</td>
+<td headers="p.value" class="gt_row gt_center">0.6</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    Desconhecido</td>
+<td headers="stat_1" class="gt_row gt_center">28</td>
+<td headers="stat_2" class="gt_row gt_center">32</td>
+<td headers="p.value" class="gt_row gt_center"></td>
+</tr>
+</tbody>
+<tfoot class="gt_footnotes">
+<tr>
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Média (Desvio Padrão)</td>
+    </tr>
+<tr>
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span> Teste t com correção de Welch</td>
+    </tr>
+</tfoot>
+</table></div>
+</div>
+</div>
+<div id="teste-de-wilcoxon-1" class="section level3 unnumbered">
+<h3>Teste de Wilcoxon<a class="anchor" aria-label="anchor" href="#teste-de-wilcoxon-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>Compare a distribuição de uma variável contínua em dois grupos. O padrão é utilizar o teste de Wilcoxon e a mediana (IQR) quando comparar dois grupos. Entretanto, para dados sem distribuição normal ou ao comparar grupos múltiplos, o teste de Kruskal-Wallis é o mais apropriado.</p>
+<div class="sourceCode" id="cb959"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age_years</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                       <span class="co"># selecione as variáveis de interesse</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>outcome<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">==</span><span class="st">"Death"</span>, <span class="st">"Óbito"</span>,</span>
+<span>                        <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">==</span><span class="st">"Recover"</span>, <span class="st">"Recuperado"</span>,<span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># traduzindo</span></span>
+<span>  <span class="fu">tbl_summary</span><span class="op">(</span>                                         <span class="co"># produz uma tabela resumo</span></span>
+<span>    statistic <span class="op">=</span> <span class="va">age_years</span> <span class="op">~</span> <span class="st">"{median} ({p25}, {p75})"</span>, <span class="co"># especifique quais estatísticas mostrar (estes valores são padrão e podem ser removidos)</span></span>
+<span>    by <span class="op">=</span> <span class="va">outcome</span>, <span class="co"># especifique a variável de agrupamento</span></span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> <span class="va">age_years</span> <span class="op">~</span> <span class="st">"idade"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>    <span class="co"># traduxindo                              </span></span>
+<span>  <span class="fu">add_p</span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="st">"wilcox.test"</span><span class="op">)</span>                     <span class="co"># especifique qual teste realizar (existem testes padrão, então é possível deixar os parênteses em branco)</span></span></code></pre></div>
+<pre><code>## 1323 observations missing `outcome` have been removed. To include these observations, use `forcats::fct_na_value_to_level()` on `outcome` column before passing to `tbl_summary()`.</code></pre>
+<div id="avtqknqyud" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#avtqknqyud table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#avtqknqyud thead, #avtqknqyud tbody, #avtqknqyud tfoot, #avtqknqyud tr, #avtqknqyud td, #avtqknqyud th {
+  border-style: none;
+}
+
+#avtqknqyud p {
+  margin: 0;
+  padding: 0;
+}
+
+#avtqknqyud .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#avtqknqyud .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#avtqknqyud .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#avtqknqyud .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#avtqknqyud .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#avtqknqyud .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#avtqknqyud .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#avtqknqyud .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#avtqknqyud .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#avtqknqyud .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#avtqknqyud .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#avtqknqyud .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#avtqknqyud .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#avtqknqyud .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#avtqknqyud .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avtqknqyud .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#avtqknqyud .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#avtqknqyud .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#avtqknqyud .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avtqknqyud .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#avtqknqyud .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avtqknqyud .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#avtqknqyud .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avtqknqyud .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#avtqknqyud .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avtqknqyud .gt_left {
+  text-align: left;
+}
+
+#avtqknqyud .gt_center {
+  text-align: center;
+}
+
+#avtqknqyud .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#avtqknqyud .gt_font_normal {
+  font-weight: normal;
+}
+
+#avtqknqyud .gt_font_bold {
+  font-weight: bold;
+}
+
+#avtqknqyud .gt_font_italic {
+  font-style: italic;
+}
+
+#avtqknqyud .gt_super {
+  font-size: 65%;
+}
+
+#avtqknqyud .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#avtqknqyud .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#avtqknqyud .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#avtqknqyud .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#avtqknqyud .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#avtqknqyud .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#avtqknqyud .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;Características&lt;/strong&gt;"><strong>Características</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Recuperado&lt;/strong&gt;, N = 1,983&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Recuperado</strong>, N = 1,983<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Óbito&lt;/strong&gt;, N = 2,582&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Óbito</strong>, N = 2,582<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Valor p&lt;/strong&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Valor p</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="label" class="gt_row gt_left">idade</td>
+<td headers="stat_1" class="gt_row gt_center">13 (6, 23)</td>
+<td headers="stat_2" class="gt_row gt_center">13 (6, 23)</td>
+<td headers="p.value" class="gt_row gt_center">0.8</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    Desconhecido</td>
+<td headers="stat_1" class="gt_row gt_center">28</td>
+<td headers="stat_2" class="gt_row gt_center">32</td>
+<td headers="p.value" class="gt_row gt_center"></td>
+</tr>
+</tbody>
+<tfoot class="gt_footnotes">
+<tr>
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Mediana (AIQ)</td>
+    </tr>
+<tr>
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span> Teste de soma de postos de Wilcoxon</td>
+    </tr>
+</tfoot>
+</table></div>
+</div>
+</div>
+<div id="teste-de-kruskal-wallis-2" class="section level3 unnumbered">
+<h3>Teste de Kruskal-wallis<a class="anchor" aria-label="anchor" href="#teste-de-kruskal-wallis-2"><i class="fas fa-link"></i></a>
+</h3>
+<p>Compare a distribuição de uma variável contínua em dois ou mais grupos, independentemente dos dados terem distribuição normal ou não.</p>
+<div class="sourceCode" id="cb961"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age_years</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>                       <span class="co"># selecione as variáveis de interesse</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>outcome<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">==</span><span class="st">"Death"</span>, <span class="st">"Óbito"</span>,</span>
+<span>                        <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">==</span><span class="st">"Recover"</span>, <span class="st">"Recuperado"</span>,<span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># traduzindo</span></span>
+<span>  <span class="fu">tbl_summary</span><span class="op">(</span>                                         <span class="co"># produza tabelas resumo</span></span>
+<span>    statistic <span class="op">=</span> <span class="va">age_years</span> <span class="op">~</span> <span class="st">"{median} ({p25}, {p75})"</span>, <span class="co"># especifique quais estatísticas mostrar (existem valores padrão, então pode-se deixar os parênteses em branco)</span></span>
+<span>    by <span class="op">=</span> <span class="va">outcome</span>, <span class="co"># especifique a variável de agrupamento</span></span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="st">"idade"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>     <span class="co"># traduzindo                             </span></span>
+<span>  <span class="fu">add_p</span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="st">"kruskal.test"</span><span class="op">)</span>                    <span class="co"># especifique qual teste realizar</span></span></code></pre></div>
+<pre><code>## 1323 observations missing `outcome` have been removed. To include these observations, use `forcats::fct_na_value_to_level()` on `outcome` column before passing to `tbl_summary()`.</code></pre>
+<div id="vzxfycwuyq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vzxfycwuyq table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#vzxfycwuyq thead, #vzxfycwuyq tbody, #vzxfycwuyq tfoot, #vzxfycwuyq tr, #vzxfycwuyq td, #vzxfycwuyq th {
+  border-style: none;
+}
+
+#vzxfycwuyq p {
+  margin: 0;
+  padding: 0;
+}
+
+#vzxfycwuyq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#vzxfycwuyq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#vzxfycwuyq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#vzxfycwuyq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#vzxfycwuyq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#vzxfycwuyq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#vzxfycwuyq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#vzxfycwuyq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#vzxfycwuyq .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#vzxfycwuyq .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#vzxfycwuyq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#vzxfycwuyq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#vzxfycwuyq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#vzxfycwuyq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#vzxfycwuyq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vzxfycwuyq .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#vzxfycwuyq .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#vzxfycwuyq .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#vzxfycwuyq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vzxfycwuyq .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#vzxfycwuyq .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vzxfycwuyq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#vzxfycwuyq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vzxfycwuyq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#vzxfycwuyq .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#vzxfycwuyq .gt_left {
+  text-align: left;
+}
+
+#vzxfycwuyq .gt_center {
+  text-align: center;
+}
+
+#vzxfycwuyq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#vzxfycwuyq .gt_font_normal {
+  font-weight: normal;
+}
+
+#vzxfycwuyq .gt_font_bold {
+  font-weight: bold;
+}
+
+#vzxfycwuyq .gt_font_italic {
+  font-style: italic;
+}
+
+#vzxfycwuyq .gt_super {
+  font-size: 65%;
+}
+
+#vzxfycwuyq .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#vzxfycwuyq .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#vzxfycwuyq .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#vzxfycwuyq .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#vzxfycwuyq .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#vzxfycwuyq .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#vzxfycwuyq .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;Características&lt;/strong&gt;"><strong>Características</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Recuperado&lt;/strong&gt;, N = 1,983&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Recuperado</strong>, N = 1,983<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Óbito&lt;/strong&gt;, N = 2,582&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Óbito</strong>, N = 2,582<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id='&lt;strong&gt;Valor p&lt;/strong&gt;&lt;span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/span&gt;'>
+<strong>Valor p</strong><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="label" class="gt_row gt_left">idade</td>
+<td headers="stat_1" class="gt_row gt_center">13 (6, 23)</td>
+<td headers="stat_2" class="gt_row gt_center">13 (6, 23)</td>
+<td headers="p.value" class="gt_row gt_center">0.8</td>
+</tr>
+<tr>
+<td headers="label" class="gt_row gt_left">    Desconhecido</td>
+<td headers="stat_1" class="gt_row gt_center">28</td>
+<td headers="stat_2" class="gt_row gt_center">32</td>
+<td headers="p.value" class="gt_row gt_center"></td>
+</tr>
+</tbody>
+<tfoot class="gt_footnotes">
+<tr>
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> Mediana (AIQ)</td>
+    </tr>
+<tr>
+<td class="gt_footnote" colspan="4">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span> Teste de Kruskal-Wallis</td>
+    </tr>
+</tfoot>
+</table></div>
+</div>
+<!-- ## `dplyr` package {} -->
+<!-- Performing statistical tests in `dplyr` alone is very dense, again because it  -->
+<!-- does not fit within the tidy-data framework. It requires using `purrr` to create -->
+<!-- a list of dataframes for each of the subgroups you want to compare. See the page on [Iteration, loops, and lists] to learn about **purrr**.   -->
+<!-- An easier alternative may be the `rstatix` package.  -->
+<!-- ### T-tests {.unnumbered}  -->
+<!-- ```{r ttest_dplyr} -->
+<!-- linelist %>%  -->
+<!--   ## only keep variables of interest -->
+<!--   select(age, outcome) %>%  -->
+<!--   ## drop those missing outcome  -->
+<!--   filter(!is.na(outcome)) %>%  -->
+<!--   ## specify the grouping variable -->
+<!--   group_by(outcome) %>%  -->
+<!--   ## create a subset of data for each group (as a list) -->
+<!--   nest() %>%  -->
+<!--   ## spread in to wide format -->
+<!--   pivot_wider(names_from = outcome, values_from = data) %>%  -->
+<!--   mutate( -->
+<!--     ## calculate the mean age for the death group -->
+<!--     Death_mean = map(Death, ~mean(.x$age, na.rm = TRUE)), -->
+<!--     ## calculate the sd among dead  -->
+<!--     Death_sd = map(Death, ~sd(.x$age, na.rm = TRUE)), -->
+<!--     ## calculate the mean age for the recover group -->
+<!--     Recover_mean = map(Recover, ~mean(.x$age, na.rm = TRUE)),  -->
+<!--     ## calculate the sd among recovered  -->
+<!--     Recover_sd = map(Recover, ~sd(.x$age, na.rm = TRUE)), -->
+<!--     ## using both grouped data sets compare mean age with a t-test -->
+<!--     ## keep only the p.value -->
+<!--     t_test = map2(Death, Recover, ~t.test(.x$age, .y$age)$p.value) -->
+<!--   ) %>%  -->
+<!--   ## drop datasets  -->
+<!--   select(-Death, -Recover) %>%  -->
+<!--   ## return a dataset with the medians and p.value (drop missing) -->
+<!--   unnest(cols = everything()) -->
+<!-- ``` -->
+<!-- ### Wilcoxon rank sum test {.unnumbered} -->
+<!-- ```{r wilcox_dplyr} -->
+<!-- linelist %>%  -->
+<!--   ## only keep variables of interest -->
+<!--   select(age, outcome) %>%  -->
+<!--   ## drop those missing outcome  -->
+<!--   filter(!is.na(outcome)) %>%  -->
+<!--   ## specify the grouping variable -->
+<!--   group_by(outcome) %>%  -->
+<!--   ## create a subset of data for each group (as a list) -->
+<!--   nest() %>%  -->
+<!--   ## spread in to wide format -->
+<!--   pivot_wider(names_from = outcome, values_from = data) %>%  -->
+<!--   mutate( -->
+<!--     ## calculate the median age for the death group -->
+<!--     Death_median = map(Death, ~median(.x$age, na.rm = TRUE)), -->
+<!--     ## calculate the sd among dead  -->
+<!--     Death_iqr = map(Death, ~str_c( -->
+<!--       quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE),  -->
+<!--       collapse = ", " -->
+<!--       )), -->
+<!--     ## calculate the median age for the recover group -->
+<!--     Recover_median = map(Recover, ~median(.x$age, na.rm = TRUE)),  -->
+<!--     ## calculate the sd among recovered  -->
+<!--     Recover_iqr = map(Recover, ~str_c( -->
+<!--       quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE),  -->
+<!--       collapse = ", " -->
+<!--       )), -->
+<!--     ## using both grouped data sets compare age distribution with a wilcox test -->
+<!--     ## keep only the p.value -->
+<!--     wilcox = map2(Death, Recover, ~wilcox.test(.x$age, .y$age)$p.value) -->
+<!--   ) %>%  -->
+<!--   ## drop datasets  -->
+<!--   select(-Death, -Recover) %>%  -->
+<!--   ## return a dataset with the medians and p.value (drop missing) -->
+<!--   unnest(cols = everything()) -->
+<!-- ``` -->
+<!-- ### Kruskal-wallis test {.unnumbered} -->
+<!-- ```{r kruskal_dplyr} -->
+<!-- linelist %>%  -->
+<!--   ## only keep variables of interest -->
+<!--   select(age, outcome) %>%  -->
+<!--   ## drop those missing outcome  -->
+<!--   filter(!is.na(outcome)) %>%  -->
+<!--   ## specify the grouping variable -->
+<!--   group_by(outcome) %>%  -->
+<!--   ## create a subset of data for each group (as a list) -->
+<!--   nest() %>%  -->
+<!--   ## spread in to wide format -->
+<!--   pivot_wider(names_from = outcome, values_from = data) %>%  -->
+<!--   mutate( -->
+<!--     ## calculate the median age for the death group -->
+<!--     Death_median = map(Death, ~median(.x$age, na.rm = TRUE)), -->
+<!--     ## calculate the sd among dead  -->
+<!--     Death_iqr = map(Death, ~str_c( -->
+<!--       quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE),  -->
+<!--       collapse = ", " -->
+<!--       )), -->
+<!--     ## calculate the median age for the recover group -->
+<!--     Recover_median = map(Recover, ~median(.x$age, na.rm = TRUE)),  -->
+<!--     ## calculate the sd among recovered  -->
+<!--     Recover_iqr = map(Recover, ~str_c( -->
+<!--       quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE),  -->
+<!--       collapse = ", " -->
+<!--       )), -->
+<!--     ## using the original data set compare age distribution with a kruskal test -->
+<!--     ## keep only the p.value -->
+<!--     kruskal = kruskal.test(linelist$age, linelist$outcome)$p.value -->
+<!--   ) %>%  -->
+<!--   ## drop datasets  -->
+<!--   select(-Death, -Recover) %>%  -->
+<!--   ## return a dataset with the medians and p.value (drop missing) -->
+<!--   unnest(cols = everything()) -->
+<!-- ``` -->
+<!-- ### Chi-squared test {.unnumbered}  -->
+<!-- ```{r} -->
+<!-- linelist %>%  -->
+<!--   ## do everything by gender  -->
+<!--   group_by(outcome) %>%  -->
+<!--   ## count the variable of interest -->
+<!--   count(gender) %>%  -->
+<!--   ## calculate proportion  -->
+<!--   ## note that the denominator here is the sum of each gender -->
+<!--   mutate(percentage = n / sum(n) * 100) %>%  -->
+<!--   pivot_wider(names_from = outcome, values_from = c(n, percentage)) %>%  -->
+<!--   filter(!is.na(gender)) %>%  -->
+<!--   mutate(pval = chisq.test(linelist$gender, linelist$outcome)$p.value) -->
+<!-- ``` -->
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="correlações" class="section level2" number="18.5">
+<h2>
+<span class="header-section-number">18.5</span> Correlações<a class="anchor" aria-label="anchor" href="#correla%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+</h2>
+<p>Correlações entre variáveis numéricas podem ser investigadas utilizando os pacotes <strong>tidyverse</strong> <strong>corrr</strong>. Assim, é possível realizar os testes de correlação de Pearson, tau (<span class="math inline">\(\tau\)</span>) de Kendall ou rho (<span class="math inline">\(\rho\)</span>) de Spearman. O pacote cria uma tabela e tem uma função para gerar um gráfico os valores automaticamente.</p>
+<div class="sourceCode" id="cb963"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">correlation_tab</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">generation</span>, <span class="va">age</span>, <span class="va">ct_blood</span>, <span class="va">days_onset_hosp</span>, <span class="va">wt_kg</span>, <span class="va">ht_cm</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>   <span class="co"># selecione as variáveis numéricas de interesse</span></span>
+<span>  <span class="fu">correlate</span><span class="op">(</span><span class="op">)</span>      <span class="co"># cria uma tabela de correlação (utilizando o teste padrão pearson)</span></span>
+<span></span>
+<span><span class="va">correlation_tab</span>    <span class="co"># exporte a tabela para o terminal </span></span></code></pre></div>
+<pre><code>## # A tibble: 6 × 7
+##   term            generation       age ct_blood days_onset_hosp    wt_kg    ht_cm
+##   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 generation        NA       -0.0222    0.179         -0.288    -0.0302  -0.00942
+## 2 age               -0.0222  NA         0.00849       -0.000635  0.833    0.877  
+## 3 ct_blood           0.179    0.00849  NA             -0.600    -0.00636  0.0181 
+## 4 days_onset_hosp   -0.288   -0.000635 -0.600         NA         0.0153  -0.00953
+## 5 wt_kg             -0.0302   0.833    -0.00636        0.0153   NA        0.884  
+## 6 ht_cm             -0.00942  0.877     0.0181        -0.00953   0.884   NA</code></pre>
+<div class="sourceCode" id="cb965"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## remove entradas duplicadas (a tabela acima é espelhada) </span></span>
+<span><span class="va">correlation_tab</span> <span class="op">&lt;-</span> <span class="va">correlation_tab</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">shave</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## visualize a a tabela de correlação</span></span>
+<span><span class="va">correlation_tab</span></span></code></pre></div>
+<pre><code>## # A tibble: 6 × 7
+##   term            generation       age ct_blood days_onset_hosp  wt_kg ht_cm
+##   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1 generation        NA       NA        NA              NA       NA        NA
+## 2 age               -0.0222  NA        NA              NA       NA        NA
+## 3 ct_blood           0.179    0.00849  NA              NA       NA        NA
+## 4 days_onset_hosp   -0.288   -0.000635 -0.600          NA       NA        NA
+## 5 wt_kg             -0.0302   0.833    -0.00636         0.0153  NA        NA
+## 6 ht_cm             -0.00942  0.877     0.0181         -0.00953  0.884    NA</code></pre>
+<div class="sourceCode" id="cb967"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## plote as correlações</span></span>
+<span><span class="fu">rplot</span><span class="op">(</span><span class="va">correlation_tab</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-730-1.png" width="672"></div>
+<!-- ======================================================= -->
+</div>
+<div id="recursos-10" class="section level2" number="18.6">
+<h2>
+<span class="header-section-number">18.6</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-10"><i class="fas fa-link"></i></a>
+</h2>
+<p>Muitas informações dessa página foram adaptadas dos recursos e tutoriais online abaixo:</p>
+<p><a href="http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html">gtsummary</a>
+<a href="https://dplyr.tidyverse.org/articles/grouping.html">dplyr</a>
+<a href="https://corrr.tidymodels.org/articles/using-corrr.html">corrr</a>
+<a href="http://www.sthda.com/english/wiki/correlation-test-between-two-variables-in-r">sthda correlation</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></div>
+<div class="next"><a href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#stat-tests"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li>
+<a class="nav-link" href="#prepara%C3%A7%C3%A3o-9"><span class="header-section-number">18.1</span> Preparação</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#carregue-os-pacotes-1">Carregue os pacotes</a></li>
+<li><a class="nav-link" href="#importando-os-dados">Importando os dados</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#pacote-r-base-1"><span class="header-section-number">18.2</span> Pacote R base</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#testes-t">Testes T</a></li>
+<li><a class="nav-link" href="#teste-de-shapiro-wilk">Teste de Shapiro-Wilk</a></li>
+<li><a class="nav-link" href="#teste-de-wilcoxon">Teste de Wilcoxon</a></li>
+<li><a class="nav-link" href="#teste-de-kruskal-wallis">Teste de Kruskal-Wallis</a></li>
+<li><a class="nav-link" href="#teste-de-qui-quadrado">Teste de qui-quadrado</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#pacote-rstatix"><span class="header-section-number">18.3</span> Pacote rstatix</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#estat%C3%ADsticas-resumo">Estatísticas resumo</a></li>
+<li><a class="nav-link" href="#teste-t">Teste t</a></li>
+<li><a class="nav-link" href="#tesde-de-shapiro-wilk">Tesde de Shapiro-Wilk</a></li>
+<li><a class="nav-link" href="#tesde-de-wilcoxon">Tesde de Wilcoxon</a></li>
+<li><a class="nav-link" href="#teste-de-kruskal-wallis-1">Teste de Kruskal-Wallis</a></li>
+<li><a class="nav-link" href="#teste-do-qui-quadrado">Teste do Qui-quadrado</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#stats_gt"><span class="header-section-number">18.4</span> Pacote gtsummary</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#teste-qui-quadrado">Teste Qui-quadrado</a></li>
+<li><a class="nav-link" href="#testes-t-1">Testes t</a></li>
+<li><a class="nav-link" href="#teste-de-wilcoxon-1">Teste de Wilcoxon</a></li>
+<li><a class="nav-link" href="#teste-de-kruskal-wallis-2">Teste de Kruskal-wallis</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#correla%C3%A7%C3%B5es"><span class="header-section-number">18.5</span> Correlações</a></li>
+<li><a class="nav-link" href="#recursos-10"><span class="header-section-number">18.6</span> Recursos</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

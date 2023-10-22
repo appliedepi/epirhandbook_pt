@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>R para epidemiologia aplicada e saúde pública | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="The Epi R Handbook is a R reference manual for applied epidemiology and public health.">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="R para epidemiologia aplicada e saúde pública | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="The Epi R Handbook is a R reference manual for applied epidemiology and public health.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R para epidemiologia aplicada e saúde pública | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="The Epi R Handbook is a R reference manual for applied epidemiology and public health.">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="active" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="section" class="section level1 unnumbered">
+<h1 class="unnumbered"><a class="anchor" aria-label="anchor" href="#section"><i class="fas fa-link"></i></a></h1>
+<div class="inline-figure"><img src="images/Epi%20R%20Handbook%20Banner%20Portuguese%201500%20x%20500.png" width="100%" style="display: block; margin: auto;"></div>
+<meta name="description" content="The Epi R Handbook is an R reference manual for applied epidemiology and public health.">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- <span style="color: red;">**THIS IS A DRAFT.  REVIEWERS GIVE FEEDBACK AT THIS [LINK](https://forms.gle/4RNdRRLGx67xW9yq9)**.</span> --><!-- <span style="color: darkgreen;">**DO YOU LIKE THIS HANDBOOK? SHOULD SOMETHING BE CHANGED? PLEASE TELL US!**</span> --><!-- <form target="_blank" action="https://forms.gle/A5SnRVws7tPD15Js9"> --><!--     <input type="submit" value="FEEDBACK" /> --><!-- </form> --><!-- ======================================================= --><!-- ## An R reference manual for applied epidemiology and public health {.unnumbered} --><!-- <span style="color: brown;">**The Epi R Handbook is an R reference manual for applied epidemiology and public health.**</span> --><!-- ## About this handbook   --><div id="r-para-epidemiologia-aplicada-e-saúde-pública" class="section level2 unnumbered">
+<h2>R para epidemiologia aplicada e saúde pública<a class="anchor" aria-label="anchor" href="#r-para-epidemiologia-aplicada-e-sa%C3%BAde-p%C3%BAblica"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Uso</strong>: Esse manual já foi utilizado mais de <strong>1 milhão de vezes por 450,000 pessoas</strong> ao redor do mundo.</p>
+<p><strong>Objetivo:</strong> Servir como um guia de referência rápido para escrever código em R (online e <a href="data-used.html#data-used"><strong>offline</strong></a>) com exemplos centrados em exercícios que abordam problemas epidemiológicos comuns.</p>
+<p><strong>Você está começando a aprender R agora?</strong> Conheça nossos <a href="https://www.appliedepi.org/tutorial/"><strong>tutoriais interativos gratuitos</strong></a> ou o <a href="https://www.appliedepi.org/live/"><strong>curso introdutório</strong></a> síncrono e virtual utilizado pelo CDC dos EUA, pela OMS, e mais de 75 outras agências de saúde e programas de treinamento em Epidemiologia de Campo.</p>
+<p><strong>Idiomas:</strong> <a href="https://www.epirhandbook.com/en">Inglês (English)</a>, <a href="https://epirhandbook.com/fr">Francês (Français)</a>, <a href="https://epirhandbook.com/es/">Espanhol (Español)</a>, <a href="https://epirhandbook.com/vn/">Vietnamita (Tiếng Việt)</a>, <a href="https://epirhandbook.com/jp/">Japonês (日本)</a>, <a href="https://epirhandbook.com/tr/">Turco (Türkçe)</a></p>
+<p>Esta é uma versão traduzida para Português. Se você quer colaborar em melhorá-la, corrigindo algum erro, ou traduzir para outro idoma, por favor, nos contate!</p>
+<p><br><span style="color: black;"><strong>Escrito por epidemiologistas, para epidemiologistas</strong></span></p>
+<div style="display: flex;">
+<div>
+<div class="inline-figure"><img src="images/Applied_Epi_logo.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div class="col">
+<p>  <!-- an empty Div (with a white space), serving as
+a column separator --></p>
+</div>
+<div>
+<p><a href="http://www.appliedepi.org"><strong>Applied Epi</strong></a> é uma organização sem fins lucrativos e um movimento de base composto por profissionais epidemiologistas que atuam na linha de frente de todo o mundo. Escrevemos em nosso tempo livre para oferecer este recurso à comunidade. Seu incentivo e feedback são muito bem-vindos:</p>
+<ul>
+<li>Visite nosso <a href="http://www.appliedepi.org"><strong>website</strong></a> e <a href="https://forms.gle/9awNd8syypTSYUsn7"><strong>junte-se a nossa lista de contatos</strong></a><br>
+</li>
+<li>
+<a href="mailto:contact@appliedepi.org" class="email"><strong>contact@appliedepi.org</strong></a>, tweet <a href="https://twitter.com/appliedepi"><strong>@appliedepi</strong></a>, ou <a href="www.linkedin.com/company/appliedepi"><strong>LinkedIn</strong></a><br>
+</li>
+<li>Envie problemas para o nosso <a href="https://github.com/appliedepi/epiRhandbook_eng"><strong>repositório Github</strong></a>
+</li>
+</ul>
+<p><strong>Oferecemos treinamento em R ao vivo</strong> ministrado por instrutores com décadas de experiência em epidemiologia aplicada - envie-nos um e-mail para discutir.</p>
+</div>
+</div>
+<form target="_blank" action="https://www.paypal.com/donate" method="post">
+<p><input type="hidden" name="hosted_button_id" value="YTEZELC8VBXV6"><input type="image" src="https://github.com/appliedepi/epiRhandbook_eng/raw/master/images/donate_button_long.png" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button"><img src="https://www.paypal.com/en_US/i/scr/pixel.gif" border="0"></p>
+</form>
+<!-- ======================================================= -->
+</div>
+<div id="como-usar-este-manual" class="section level2 unnumbered">
+<h2>Como usar este manual<a class="anchor" aria-label="anchor" href="#como-usar-este-manual"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>Navegue pelas páginas do Índice, ou use a caixa de busca</li>
+<li>Clique nos ícones “copiar” para copiar o código<br>
+</li>
+<li>Você pode seguir - junto com <a href="data-used.html#data-used">os dados do exemplo</a>.<br>
+</li>
+<li>Consulte a seção “Recursos” de cada página para obter mais material</li>
+</ul>
+<p><strong>Versão off-line</strong></p>
+<p>Veja as instruções na página <a href="data-used.html#data-used">Fazer o Download do manual e dos dados</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="agradecimentos" class="section level2 unnumbered">
+<h2>Agradecimentos<a class="anchor" aria-label="anchor" href="#agradecimentos"><i class="fas fa-link"></i></a>
+</h2>
+<p>Este manual é produzido por uma colaboração de epidemiologistas de todo o mundo, aproveitando a experiência de organizações que incluem agências de saúde locais, estaduais, provinciais e nacionais, a Organização Mundial da Saúde (OMS), Médicos Sem Fronteiras / Médicos sem Fronteiras (MSF), sistemas hospitalares e instituições acadêmicas.</p>
+<p>Este manual <strong>não</strong> é um produto aprovado de qualquer organização específica. Embora nos esforcemos para ser precisos, não damos nenhuma garantia do conteúdo deste livro.</p>
+<div id="colaboradores" class="section level3 unnumbered">
+<h3>Colaboradores<a class="anchor" aria-label="anchor" href="#colaboradores"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>Editor:</strong> <a href="https://www.linkedin.com/in/neale-batra/">Neale Batra</a></p>
+<p><strong>Autores</strong>: <a href="https://www.linkedin.com/in/neale-batra/">Neale Batra</a>, <a href="https://github.com/aspina7">Alex Spina</a>, <a href="https://www.linkedin.com/in/paula-bianca-blomquist-53188186/">Paula Blomquist</a>, <a href="https://github.com/finlaycampbell">Finlay Campbell</a>, <a href="https://github.com/henryls1">Henry Laurenson-Schafer</a>, <a href="www.Twitter.com/isaacatflorence">Isaac Florence</a>, <a href="https://www.linkedin.com/in/nataliefischer211/">Natalie Fischer</a>, <a href="https://twitter.com/aminata_fadl">Aminata Ndiaye</a>, <a href="https://www.linkedin.com/in/liza-coyer-86022040/">Liza Coyer</a>, <a href="https://twitter.com/jonny_polonsky">Jonathan Polonsky</a>, <a href="https://ch.linkedin.com/in/yurie-izawa-a1590319">Yurie Izawa</a>, <a href="https://twitter.com/cbailey_58?lang=en">Chris Bailey</a>, <a href="https://www.linkedin.com/in/daniel-molling-4005716a/">Daniel Molling</a>, <a href="https://twitter.com/ishaberry2">Isha Berry</a>, <a href="https://twitter.com/buajitti">Emma Buajitti</a>, <a href="https://mathildemousset.wordpress.com/research/">Mathilde Mousset</a>, <a href="https://www.linkedin.com/in/saramhollis/">Sara Hollis</a>, Wen Lin</p>
+<p><strong>Revisores</strong>: Pat Keating, Annick Lenglet, Margot Charette, Danielly Xavier, Esther Kukielka, Michelle Sloan, Aybüke Koyuncu, Rachel Burke, Kate Kelsey, <a href="https://www.linkedin.com/in/berhe-etsay-5752b1154/">Berhe Etsay</a>, John Rossow, Mackenzie Zendt, James Wright, Laura Haskins, <a href="ffinger.github.io">Flavio Finger</a>, Tim Taylor, <a href="https://www.linkedin.com/in/jaehyoungtlee/">Jae Hyoung Tim Lee</a>, <a href="https://www.linkedin.com/in/brianna-bradley-bb8658155">Brianna Bradley</a>, <a href="https://www.linkedin.com/in/wenanoria">Wayne Enanoria</a>, Manual Albela Miranda, <a href="https://www.linkedin.com/in/molly-mantus-174550150/">Molly Mantus</a>, Pattama Ulrich, Joseph Timothy, Adam Vaughan, Olivia Varsaneux, Lionel Monteiro, Joao Muianga</p>
+<p><strong>Ilustradores</strong>: Calder Fong</p>
+<p><strong>Tradutores da versão em língua portuguesa (Brasil)</strong>: <a href="https://www.linkedin.com/in/carolina-musso-29b627128/">Carolina Musso</a>, <a href="https://www.linkedin.com/mwlite/in/cesaraspgalvao">César Augusto Galvão</a> , <a href="https://www.linkedin.com/in/halian/">Halian Vilela</a>, <a href="https://www.linkedin.com/in/la%C3%ADs-relvas-35429a5b/">Laís Relvas</a>, <a href="https://br.linkedin.com/in/felipe-daniel-cardoso-b7015ba1">Felipe Cardoso</a>, <a href="https://www.linkedin.com/in/rafaela-tadei-1aaa9b142/">Rafaela Tadei</a>, <a href="https://www.linkedin.com/in/pauliana-galv%C3%A3o-2462ab48/">Pauliana Galvão</a>, <a href="https://www.linkedin.com/in/nathalia-zini-b12a58196/">Nathalia Zini</a>, <a href="https://www.linkedin.com/in/paulamacaira/">Paula Maçaira</a>, <a href="https://www.linkedin.com/in/jo%C3%A3o-pedro-angelici-4b2701193/">João Pedro Angelici</a>, <a href="https://www.linkedin.com/in/ademar-dantas-junior/">Ademar Barbosa Dantas Junior</a>, <a href="https://www.linkedin.com/in/eucilene-santana-92856234/">Eucilene Santana</a>, <a href="https://www.linkedin.com/in/hudson-fontenele-04b148180/">Hudson Gabriel Virtuoso Fontenele</a>, <a href="https://www.linkedin.com/in/lucca-nielsen-53b2a9181/">Lucca Nielsen</a></p>
+<p>Os tradutores agradecem <a href="https://proepi.org.br">ProEpi</a> pelo apoio para tradução e contato com a Applied Epi.</p>
+<!-- **Editor-in-Chief:** Neale Batra  -->
+<!-- **Project core team:** Neale Batra, Alex Spina, Amrish Baidjoe, Pat Keating, Henry Laurenson-Schafer, Finlay Campbell   -->
+<!-- **Authors**: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, [Isaac Florence](www.Twitter.com/isaacatflorence), Natalie Fischer, Aminata Ndiaye, Liza Coyer, Jonathan Polonsky, Yurie Izawa, Chris Bailey, Daniel Molling, Isha Berry, Emma Buajitti, Mathilde Mousset, Sara Hollis, Wen Lin   -->
+<!-- **Reviewers**: Pat Keating, Mathilde Mousset, Annick Lenglet, Margot Charette, Isha Berry, Paula Blomquist, Natalie Fischer, Daniely Xavier, Esther Kukielka, Michelle Sloan, Aybüke Koyuncu, Rachel Burke, Daniel Molling, Kate Kelsey, Berhe Etsay, John Rossow, Mackenzie Zendt, James Wright, Wayne Enanoria, Laura Haskins, Flavio Finger, Tim Taylor, Jae Hyoung Tim Lee, Brianna Bradley, Manual Albela Miranda, Molly Mantus, Priscilla Spencer, Pattama Ulrich, Joseph Timothy, Adam Vaughan, Olivia Varsaneux, Lionel Monteiro, Joao Muianga   -->
+</div>
+<div id="financiamento-e-apoio" class="section level3 unnumbered">
+<h3>Financiamento e apoio<a class="anchor" aria-label="anchor" href="#financiamento-e-apoio"><i class="fas fa-link"></i></a>
+</h3>
+<p>O manual recebeu financiamento de apoio através de uma subvenção de emergência COVID-19 da <a href="https://www.tephinet.org/">TEPHINET</a>, a rede global de Programas de Treinamento em Epidemiologia de Campo (FETPs).</p>
+<p>O apoio administrativo foi fornecido pela EPIET Alumni Network (<a href="https://epietalumni.net/">EAN</a>), com agradecimentos especiais à Annika Wendland. O EPIET é o Programa Europeu de Treinamento em Epidemiologia de Intervenção.</p>
+<p>Agradecimentos especiais aos Médicos Sem Fronteiras (MSF) Centro Operacional Amsterdã (OCA) por seu apoio durante o desenvolvimento deste manual.</p>
+<p><em>Esta publicação foi apoiada pelo Acordo Cooperativo número NU2GGH001873, financiado pelos Centros de Controle e Prevenção de Doenças através do TEPHINET, um programa da Força Tarefa para a Saúde Global. Seu conteúdo é de responsabilidade exclusiva dos autores e não representa necessariamente a visão oficial dos Centros de Controle e Prevenção de Doenças, do Departamento de Saúde e Serviços Humanos, The Task Force for Global Health, Inc. ou TEPHINET.</em></p>
+</div>
+<div id="inspiração" class="section level3 unnumbered">
+<h3>Inspiração<a class="anchor" aria-label="anchor" href="#inspira%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>A infinidade de tutoriais e vinhetas que forneceram conhecimento para o desenvolvimento do conteúdo do manual são creditados dentro de suas respectivas páginas.</p>
+<p>De modo mais geral, as seguintes fontes forneceram inspiração para este manual:</p>
+<p><a href="https://r4epis.netlify.app/">The “R4Epis” project</a> (colaboração entre MSF e RECON)<br><a href="https://www.repidemicsconsortium.org/">R Epidemics Consortium (RECON)</a><br><a href="https://r4ds.had.co.nz/">R for Data Science book (R4DS)</a><br><a href="https://bookdown.org/yihui/bookdown/">bookdown: Authoring Books and Technical Documents with R Markdown</a><br><a href="https://www.netlify.com">Netlify</a> hosts this website</p>
+<!-- ### Image credits {-}   -->
+<!-- Images in logo from US CDC Public Health Image Library) include [2013 Yemen looking for mosquito breeding sites](https://phil.cdc.gov/Details.aspx?pid=19623), [Ebola virus](https://phil.cdc.gov/Details.aspx?pid=23186), and [Survey in Rajasthan](https://phil.cdc.gov/Details.aspx?pid=19838).   -->
+</div>
+</div>
+<div id="termos-de-uso-e-contribuição" class="section level2 unnumbered">
+<h2>Termos de Uso e Contribuição<a class="anchor" aria-label="anchor" href="#termos-de-uso-e-contribui%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h2>
+<div id="licença" class="section level3 unnumbered">
+<h3>Licença<a class="anchor" aria-label="anchor" href="#licen%C3%A7a"><i class="fas fa-link"></i></a>
+</h3>
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"></a><br>Esta obra está licenciada sob uma <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licença Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International</a>.</p>
+<p>Cursos acadêmicos e programas de treinamento de epidemiologistas são bem-vindos para usar este manual com seus alunos. Se você tiver dúvidas sobre o uso pretendido, envie um e-mail para <a href="mailto:contact@appliedepi.org" class="email"><strong>contact@appliedepi.org</strong></a>.</p>
+</div>
+<div id="citação" class="section level3 unnumbered">
+<h3>Citação<a class="anchor" aria-label="anchor" href="#cita%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>Batra, Neale, et ai. O Manual do Epidemiologista R. 2021. <a rel="license" href="https://zenodo.org/badge/231610102.svg"><img src="https://zenodo.org/badge/231610102.svg" alt="DOI" style="border-width:0"></a><br></p>
+</div>
+<div id="contribuição" class="section level3 unnumbered">
+<h3>Contribuição<a class="anchor" aria-label="anchor" href="#contribui%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<p>Se você quiser fazer uma contribuição de conteúdo, entre em contato conosco primeiro por meio de questões do Github ou por e-mail. Estamos implementando um cronograma de atualizações e criando um guia do contribuidor.</p>
+<p>Observe que o projeto epiRhandbook é lançado com um <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Código de Conduta do Contribuidor</a>. Ao contribuir para este projeto, você concorda em respeitar seus termos.</p>
+
+</div>
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="empty"></div>
+<div class="next"><a href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#section"></a></li>
+<li><a class="nav-link" href="#r-para-epidemiologia-aplicada-e-sa%C3%BAde-p%C3%BAblica">R para epidemiologia aplicada e saúde pública</a></li>
+<li><a class="nav-link" href="#como-usar-este-manual">Como usar este manual</a></li>
+<li>
+<a class="nav-link" href="#agradecimentos">Agradecimentos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#colaboradores">Colaboradores</a></li>
+<li><a class="nav-link" href="#financiamento-e-apoio">Financiamento e apoio</a></li>
+<li><a class="nav-link" href="#inspira%C3%A7%C3%A3o">Inspiração</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#termos-de-uso-e-contribui%C3%A7%C3%A3o">Termos de Uso e Contribuição</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#licen%C3%A7a">Licença</a></li>
+<li><a class="nav-link" href="#cita%C3%A7%C3%A3o">Citação</a></li>
+<li><a class="nav-link" href="#contribui%C3%A7%C3%A3o">Contribuição</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

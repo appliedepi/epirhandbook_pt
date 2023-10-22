@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>2 Baixe o livro e os dados | Manual de R para Epidemiologistas</title>
+<meta name="author" content="the handbook team">
+<meta name="description" content="2.1 Baixe o livro offline Você pode baixar a versão offline deste livro como um arquivo HTML para que você possa ver o arquivo em seu navegador, mesmo se você não tiver mais acesso à Internet. Se...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="2 Baixe o livro e os dados | Manual de R para Epidemiologistas">
+<meta property="og:type" content="book">
+<meta property="og:description" content="2.1 Baixe o livro offline Você pode baixar a versão offline deste livro como um arquivo HTML para que você possa ver o arquivo em seu navegador, mesmo se você não tiver mais acesso à Internet. Se...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2 Baixe o livro e os dados | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="2.1 Baixe o livro offline Você pode baixar a versão offline deste livro como um arquivo HTML para que você possa ver o arquivo em seu navegador, mesmo se você não tiver mais acesso à Internet. Se...">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.29/datatables.js"></script><link href="libs/dt-core-1.13.4/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.13.4/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.13.4/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+<script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-2.11.1/plotly-basic-2.11.1.min.js"></script><script src="libs/plotly-cartesian-2.11.1/plotly-cartesian-2.11.1.min.js"></script><script src="libs/proj4js-2.3.15/proj4.js"></script><link href="libs/highcharts-9.3.1/css/motion.css" rel="stylesheet">
+<script src="libs/highcharts-9.3.1/highcharts.js"></script><script src="libs/highcharts-9.3.1/highcharts-3d.js"></script><script src="libs/highcharts-9.3.1/highcharts-more.js"></script><script src="libs/highcharts-9.3.1/modules/stock.js"></script><script src="libs/highcharts-9.3.1/modules/map.js"></script><script src="libs/highcharts-9.3.1/modules/data.js"></script><script src="libs/highcharts-9.3.1/modules/exporting.js"></script><script src="libs/highcharts-9.3.1/modules/offline-exporting.js"></script><script src="libs/highcharts-9.3.1/modules/drilldown.js"></script><script src="libs/highcharts-9.3.1/modules/item-series.js"></script><script src="libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script><script src="libs/highcharts-9.3.1/modules/annotations.js"></script><script src="libs/highcharts-9.3.1/modules/export-data.js"></script><script src="libs/highcharts-9.3.1/modules/funnel.js"></script><script src="libs/highcharts-9.3.1/modules/heatmap.js"></script><script src="libs/highcharts-9.3.1/modules/treemap.js"></script><script src="libs/highcharts-9.3.1/modules/sankey.js"></script><script src="libs/highcharts-9.3.1/modules/dependency-wheel.js"></script><script src="libs/highcharts-9.3.1/modules/organization.js"></script><script src="libs/highcharts-9.3.1/modules/solid-gauge.js"></script><script src="libs/highcharts-9.3.1/modules/streamgraph.js"></script><script src="libs/highcharts-9.3.1/modules/sunburst.js"></script><script src="libs/highcharts-9.3.1/modules/vector.js"></script><script src="libs/highcharts-9.3.1/modules/wordcloud.js"></script><script src="libs/highcharts-9.3.1/modules/xrange.js"></script><script src="libs/highcharts-9.3.1/modules/tilemap.js"></script><script src="libs/highcharts-9.3.1/modules/venn.js"></script><script src="libs/highcharts-9.3.1/modules/gantt.js"></script><script src="libs/highcharts-9.3.1/modules/timeline.js"></script><script src="libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script><script src="libs/highcharts-9.3.1/modules/bullet.js"></script><script src="libs/highcharts-9.3.1/modules/coloraxis.js"></script><script src="libs/highcharts-9.3.1/modules/dumbbell.js"></script><script src="libs/highcharts-9.3.1/modules/lollipop.js"></script><script src="libs/highcharts-9.3.1/modules/series-label.js"></script><script src="libs/highcharts-9.3.1/plugins/motion.js"></script><script src="libs/highcharts-9.3.1/custom/reset.js"></script><script src="libs/highcharts-9.3.1/modules/boost.js"></script><script src="libs/highchart-binding-0.9.4/highchart.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-QXDW878QLX"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-QXDW878QLX');
+    </script>
+</head>
+<body>
+<div class="alert alert-info alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+      <strong>Você precisa de ajuda para aprender R?</strong> Inscreva-se no curso de <a href="https://www.appliedepi.org/live/" class="alert-link">introdução ao R</a> da Applied Epi, experimente nossos <a href="https://www.appliedepi.org/tutorial/" class="alert-link">tutoriais gratuitos sobre o R</a>, publique em nosso <a href="https://community.appliedepi.org/" class="alert-link">fórum de perguntas e respostas</a>, ou solicite nosso <a href="mailto:contact@appliedepi.org" class="alert-link">suporte ao R</a>.
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style_bs4.css">
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Manual de R para Epidemiologistas</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Sobre este livro</li>
+<li><a class="" href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></li>
+<li><a class="active" href="data-used.html"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li class="book-part">Básico</li>
+<li><a class="" href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></li>
+<li><a class="" href="transition-to-R.html"><span class="header-section-number">4</span> Transição para o R</a></li>
+<li><a class="" href="packages-suggested.html"><span class="header-section-number">5</span> Pacotes sugeridos</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="importing.html"><span class="header-section-number">7</span> Importar e exportar</a></li>
+<li class="book-part">Gerenciamento dos Dados</li>
+<li><a class="" href="cleaning.html"><span class="header-section-number">8</span> Limpeza de dados e principais funções</a></li>
+<li><a class="" href="dates.html"><span class="header-section-number">9</span> Trabalhando com datas</a></li>
+<li><a class="" href="characters-strings.html"><span class="header-section-number">10</span> Caracteres e strings</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">11</span> Fatores</a></li>
+<li><a class="" href="pivoting.html"><span class="header-section-number">12</span> Pivoteando dados</a></li>
+<li><a class="" href="grouping.html"><span class="header-section-number">13</span> Agrupando dados</a></li>
+<li><a class="" href="joining-matching.html"><span class="header-section-number">14</span> Juntando dados (Joins)</a></li>
+<li><a class="" href="deduplication.html"><span class="header-section-number">15</span> Eliminação de duplicidades</a></li>
+<li><a class="" href="iteration.html"><span class="header-section-number">16</span> Iterações, loops e listas</a></li>
+<li class="book-part">Análise dos dados</li>
+<li><a class="" href="tables-descriptive.html"><span class="header-section-number">17</span> Tabelas descritivas</a></li>
+<li><a class="" href="stat-tests.html"><span class="header-section-number">18</span> Testes estatísticos simples</a></li>
+<li><a class="" href="regression.html"><span class="header-section-number">19</span> Regressão simples e múltipla</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
+<li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li class="book-part">Visualização de Dados</li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li class="book-part">Relatórios e dashboards</li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li class="book-part">Miscelânea</li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="data-used" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Baixe o livro e os dados<a class="anchor" aria-label="anchor" href="#data-used"><i class="fas fa-link"></i></a>
+</h1>
+<!-- Nota para si: Se você deseja criar um link de download para o Github, clique com o botão direito do mouse no botão "View Raw" no Github, copie o endereço e use-o no HTML abaixo. -->
+<div id="baixe-o-livro-offline" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Baixe o livro offline<a class="anchor" aria-label="anchor" href="#baixe-o-livro-offline"><i class="fas fa-link"></i></a>
+</h2>
+<p>Você pode baixar a versão offline deste livro como um arquivo HTML para que você possa ver o arquivo em seu navegador, mesmo se você não tiver mais acesso à Internet. Se você está considerando o uso offline do livro do Epi R, aqui estão algumas coisas a serem consideradas:</p>
+<ul>
+<li>Quando você abre o arquivo, pode levar um ou dois minutos para as imagens e o índice serem carregados<br>
+</li>
+<li>O livro off-line tem um layout ligeiramente diferente - uma página muito longa com Índice à esquerda. Para pesquisar termos específicos, use Ctrl+f (Cmd+f)<br>
+</li>
+<li>Consulte a página <a href="packages-suggested.html#packages-suggested">Pacotes sugeridos</a> para ajudá-lo a instalar os pacotes R apropriados antes que você perca a conectividade com a Internet<br>
+</li>
+<li>Instale nosso pacote R <strong>epirhandbook</strong> que contém todos os dados de exemplo (processo de instalação descrito abaixo)</li>
+</ul>
+<p><strong>Existem duas maneiras de baixar o livro:</strong></p>
+<div id="use-o-link-de-download" class="section level3 unnumbered">
+<h3>Use o link de download<a class="anchor" aria-label="anchor" href="#use-o-link-de-download"><i class="fas fa-link"></i></a>
+</h3>
+<p>Para acesso rápido, <strong>clique com o botão direito</strong> <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/offline_long/Epi_R_Handbook_offline.html">neste link</a> <strong>e selecione “Salvar link como”</strong>.</p>
+<p>Se estiver em um Mac, use Cmd+clique. Se estiver em um celular, pressione e segure o link e selecione “Salvar link”. O livro será baixado para o seu dispositivo. Se uma tela com código HTML bruto for exibida, certifique-se de seguir as instruções acima ou tente a Opção 2.</p>
+</div>
+<div id="use-nosso-pacote-r" class="section level3 unnumbered">
+<h3>Use nosso pacote R<a class="anchor" aria-label="anchor" href="#use-nosso-pacote-r"><i class="fas fa-link"></i></a>
+</h3>
+<p>Oferecemos um pacote R denominado <strong>epirhandbook</strong>. Inclui uma função <code>download_book ()</code> que baixa o arquivo do livro de nosso repositório Github para o seu computador.</p>
+<p>Este pacote também contém uma função <code>get_data()</code> que baixa todos os dados de exemplo para o seu computador.</p>
+<p>Execute o seguinte código para instalar nosso pacote R <strong>epirhandbook</strong> do <a href="https://github.com/appliedepi/epirhandbook">repositório Github <em>applyepi</em></a>. Este pacote não está no CRAN, então use a função especial <code>p_install_gh()</code> para instalá-lo do Github.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># instale a última versão do pacote do livro do Epi R</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_install_gh.html">p_install_gh</a></span><span class="op">(</span><span class="st">"appliedepi/epirhandbook"</span><span class="op">)</span></span></code></pre></div>
+<p>Agora, carregue o pacote para uso em sua sessão R atual:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># carregue o pacote para uso</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">epirhandbook</span><span class="op">)</span></span></code></pre></div>
+<p>Em seguida, execute a função do pacote <code>download_book()</code> (com parênteses vazios) para baixar o livro para o seu computador. Supondo que você esteja no RStudio, uma janela aparecerá permitindo que você selecione um local para salvar.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># baixe o livro offline para o seu computador</span></span>
+<span><span class="fu">download_book</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+</div>
+<div id="baixe-os-dados-para-acompanhar" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Baixe os dados para acompanhar<a class="anchor" aria-label="anchor" href="#baixe-os-dados-para-acompanhar"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para acompanhar as páginas do livro, você pode baixar os dados e resultados de exemplo.</p>
+<div id="use-nosso-pacote-r-1" class="section level3 unnumbered">
+<h3>Use nosso pacote R<a class="anchor" aria-label="anchor" href="#use-nosso-pacote-r-1"><i class="fas fa-link"></i></a>
+</h3>
+<p>A abordagem mais fácil para baixar todos os dados é instalar nosso pacote R <strong>epirhandbook</strong>. Ele contém uma função <code>get_data()</code> que salva todos os dados de exemplo em uma pasta de sua escolha em seu computador.</p>
+<p>Para instalar nosso pacote R <strong>epirhandbook</strong>, execute o seguinte código. Este pacote não está no CRAN, então use a função <code>p_install_gh()</code> para instalá-lo. A entrada faz referência à nossa organização Github (“<em>appliedepi</em>”) e o pacote <strong>epirhandbook</strong>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># instale a última versão do pacote do livro do Epi R</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_install_gh.html">p_install_gh</a></span><span class="op">(</span><span class="st">"appliedepi/epirhandbook"</span><span class="op">)</span></span></code></pre></div>
+<p>Agora, carregue o pacote para uso em sua sessão R atual:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># carregue o pacote para uso</span></span>
+<span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">epirhandbook</span><span class="op">)</span></span></code></pre></div>
+<p>A seguir, use a função do pacote <code>get_data()</code> para baixar os dados de exemplo para o seu computador. Execute <code>get_data("all")</code> para obter <em>todos</em> os dados de exemplo ou forneça um nome de arquivo específico e extensão entre aspas para recuperar apenas um arquivo.</p>
+<p>Os dados já foram baixados com o pacote e simplesmente precisam ser transferidos para uma pasta em seu computador. Uma janela pop-up aparecerá, permitindo que você selecione um local para salvar a pasta. Sugerimos que você crie uma nova pasta de “dados”, pois há cerca de 30 arquivos (incluindo dados de exemplo e saídas de exemplo).</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># baixe todos os dados de exemplo em uma pasta em seu computador</span></span>
+<span><span class="fu">get_data</span><span class="op">(</span><span class="st">"all"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># baixe apenas os dados de exemplo da lista de linha em uma pasta em seu computador</span></span>
+<span><span class="fu">get_data</span><span class="op">(</span>file <span class="op">=</span> <span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># baixe um arquivo específico em uma pasta em seu computador</span></span>
+<span><span class="fu">get_data</span><span class="op">(</span><span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></span></code></pre></div>
+<p>Depois de usar <code>get_data()</code> para salvar um arquivo em seu computador, você ainda precisará importá-lo para R. Consulte a página <a href="importing.html#importing">Importar e exportar</a> para obter detalhes.</p>
+<p>Se desejar, você pode revisar todos os dados usados neste livro na <strong><a href="https://github.com/appliedepi/epirhandbook_eng/tree/master/data">pasta “data”</a></strong> de nosso repositório Github.</p>
+</div>
+<div id="baixe-um-por-um" class="section level3 unnumbered">
+<h3>Baixe um por um<a class="anchor" aria-label="anchor" href="#baixe-um-por-um"><i class="fas fa-link"></i></a>
+</h3>
+<p>Esta opção envolve o download dos dados arquivo por arquivo de nosso repositório Github por meio de um link ou de um comando R específico para o arquivo. Alguns tipos de arquivo permitem um botão de download, enquanto outros podem ser baixados por meio de um comando R.</p>
+<div id="linelist-de-casos" class="section level4 unnumbered">
+<h4>“Linelist” de casos<a class="anchor" aria-label="anchor" href="#linelist-de-casos"><i class="fas fa-link"></i></a>
+</h4>
+<p>Este é um surto fictício de Ebola, expandido pela equipe do livro a partir do conjunto de dados de prática <code>ebola_sim</code> no pacote <strong>outbreaks</strong>.</p>
+<ul>
+<li>
+<a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_raw.xlsx" class="download-button"> Clique para baixar a <em>linelist</em> “bruta” (.xlsx)  </a>. A linelist do caso “bruta” é uma planilha do Excel com dados confusos. Use-o para acompanhar a página <a href="cleaning.html#cleaning">Limpeza de dados e funções principais</a>.</li>
+</ul>
+<p>Se você quiser acompanhar, <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds" class="download-button"> clique para baixar o linelist “limpo” (clean) </a> (as .rds file). Use este arquivo para todas as outras páginas deste livro que usam a lista de linha. Um arquivo .rds é um tipo de arquivo específico de R que preserva classes de coluna. Isso garante que você terá apenas uma limpeza mínima para fazer após importar os dados para R.</p>
+<p><em>Outros arquivos relacionados:</em></p>
+<p>Se você quiser acompanhar, <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/linelist_cleaned.rds" class="download-button"> clique para baixar o linelist “limpo” (clean) </a> (as .rds file).</p>
+<ul>
+<li>Parte da página de limpeza usa um “dicionário de limpeza” (arquivo .csv). Você pode carregá-lo diretamente no R executando os seguintes comandos:</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">rio</span><span class="op">)</span> <span class="co"># instalar / carregar o pacote rio</span></span>
+<span></span>
+<span><span class="co"># importe o arquivo diretamente do Github</span></span>
+<span><span class="va">cleaning_dict</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"https://github.com/appliedepi/epirhandbook_eng/raw/master/data/case_linelists/cleaning_dict.csv"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="data_malaria" class="section level4 unnumbered">
+<h4>Dados de contagem de malária<a class="anchor" aria-label="anchor" href="#data_malaria"><i class="fas fa-link"></i></a>
+</h4>
+<p>Esses dados são contagens fictícias de casos de malária por faixa etária, serviço e dia. Um arquivo .rds é um tipo de arquivo específico de R que preserva classes de coluna. Isso garante que você terá apenas uma limpeza mínima para fazer após importar os dados para R.</p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/malaria_facility_count_data.rds" class="download-button">
+Clique para fazer o download
+<span> os dados de contagem de malária (arquivo .rds) </span>
+</a></p>
+</div>
+<div id="dados-em-escala-likert" class="section level4 unnumbered">
+<h4>Dados em escala Likert<a class="anchor" aria-label="anchor" href="#dados-em-escala-likert"><i class="fas fa-link"></i></a>
+</h4>
+<p>Estes são dados fictícios de uma pesquisa no estilo Likert, usados na página <a href="age-pyramid.html#age-pyramid">Pirâmides demográficas e escalas Likert</a>. Você pode carregar esses dados diretamente no R executando os seguintes comandos:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">rio</span><span class="op">)</span> <span class="co"># instalar / carregar o pacote rio</span></span>
+<span></span>
+<span><span class="co"># importe o arquivo diretamente do Github</span></span>
+<span><span class="va">likert_data</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/appliedepi/epirhandbook_eng/master/data/likert_data.csv"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="painéis-com-flexdashboard" class="section level4 unnumbered">
+<h4>Painéis com flexdashboard<a class="anchor" aria-label="anchor" href="#pain%C3%A9is-com-flexdashboard"><i class="fas fa-link"></i></a>
+</h4>
+<p>Abaixo estão os links para o arquivo associado à página em <a href="flexdashboard.html#flexdashboard">Painéis (Dashboards) com R Markdown</a>:</p>
+<ul>
+<li>Para baixar o R Markdown para o painel de surto, clique com o botão direito neste <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/flexdashboard/outbreak_dashboard.Rmd">link</a> (Cmd + clique para Mac) e selecione “Salvar link como”.<br>
+</li>
+<li>Para baixar o painel HTML, clique com o botão direito neste <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/flexdashboard/outbreak_dashboard_test.html">link</a> (Cmd + clique para Mac) e selecione “Salvar link como”.</li>
+</ul>
+</div>
+<div id="rastreamento-de-contato" class="section level4 unnumbered">
+<h4>Rastreamento de contato<a class="anchor" aria-label="anchor" href="#rastreamento-de-contato"><i class="fas fa-link"></i></a>
+</h4>
+<p>A página <a href="contact-tracing.html#contact-tracing">Rastreamento de contato</a> demonstra a análise dos dados de rastreamento de contato, usando dados de exemplo de [Go.Data] (<a href="https://github.com/WorldHealthOrganization/godata/tree/master/analytics/r-reporting" class="uri">https://github.com/WorldHealthOrganization/godata/tree/master/analytics/r-reporting</a>). Os dados usados na página podem ser baixados como arquivos .rds clicando nos seguintes links:</p>
+<p><a href="https://github.com/WorldHealthOrganization/godata/blob/master/analytics/r-reporting/data/cases_clean.rds?raw=true" class="download-button">
+Clique para fazer o download
+<span> os dados de investigação do caso (arquivo .rds) </span>
+</a></p>
+<p><a href="https://github.com/WorldHealthOrganization/godata/blob/master/analytics/r-reporting/data/contacts_clean.rds?raw=true" class="download-button">
+Clique para fazer o download
+<span> os dados de registro do contato (arquivo .rds) </span>
+</a></p>
+<p><a href="https://github.com/WorldHealthOrganization/godata/blob/master/analytics/r-reporting/data/followups_clean.rds?raw=true" class="download-button">
+Clique para fazer o download
+<span> os dados de acompanhamento do contato (arquivo .rds) </span>
+</a></p>
+<p><span style="color: black;"> <strong><em>NOTA:</em></strong> Dados de rastreamento de contato estruturado de outro software (por exemplo, KoBo, DHIS2 Tracker, CommCare) podem parecer diferentes. Se desejar contribuir com dados de amostra ou conteúdo alternativo para esta página, <a href="#id_%20contact_us">entre em contato</a>. </span></p>
+<p><span style="color: darkgreen;"> <strong><em>DICA:</em></strong> Se você estiver implantando Go.Data e quiser se conectar à API da sua instância, consulte a página Importar e exportar <a href="#id_%20import_api">(seção API)</a> e a <a href="https://community-godata.who.int/">Go.Data Community of Practice</a>. </span></p>
+</div>
+</div>
+<div id="sobre-o-gis" class="section level3 unnumbered">
+<h3>Sobre o GIS<a class="anchor" aria-label="anchor" href="#sobre-o-gis"><i class="fas fa-link"></i></a>
+</h3>
+<p>Os shapefiles têm muitos arquivos de subcomponentes, cada um com uma extensão de arquivo diferente. Um arquivo terá a extensão “.shp”, mas outros podem ter “.dbf”, “.prj”, etc.</p>
+<p>A página <a href="#gis">GIS básico</a> fornece links para o site <em>Humanitarian Data Exchange</em> onde você pode baixar os shapefiles diretamente como arquivos compactados.</p>
+<p>Por exemplo, os dados dos pontos das unidades de saúde podem ser baixados <a href="https://data.humdata.org/dataset/hotosm_sierra_leone_health_facilities">aqui</a>. Download “hotosm_sierra_leone_health_facilities_points_shp.zip”. Depois de salvar em seu computador, “descompacte” a pasta. Você verá vários arquivos com extensões diferentes (por exemplo, “.shp”, “.prj”, “.shx”) - todos eles devem ser salvos na mesma pasta em seu computador. Então, para importar para o R, forneça o caminho do arquivo e o nome do arquivo “.shp” para <code>st_read()</code> do pacote <strong>sf</strong> (conforme descrito na página <a href="#gis">Introdução ao GIS</a>).</p>
+<p>Se você seguir a Opção 1 para baixar todos os dados de exemplo (por meio de nosso pacote R <strong>epirhandbook</strong>), todos os shapefiles serão incluídos.</p>
+<p>Alternativamente, você pode baixar os shapefiles da pasta “data” do R Handbook Github (veja a subpasta “gis”). No entanto, esteja ciente de que você precisará baixar <em>cada</em> subarquivo individualmente para o seu computador. No Github, clique em cada arquivo individualmente e baixe-os clicando no botão “Baixar”. Abaixo, você pode ver como o arquivo de forma “sle_adm3” consiste em muitos arquivos - cada um dos quais precisaria ser baixado do Github.</p>
+<div class="inline-figure"><img src="images/download_shp.png" width="918" height="50%" style="display: block; margin: auto;"></div>
+<div id="árvores-filogenéticas" class="section level4 numeradas" number="2.2.0.1">
+<h4>
+<span class="header-section-number">2.2.0.1</span> Árvores filogenéticas<a class="anchor" aria-label="anchor" href="#%C3%A1rvores-filogen%C3%A9ticas"><i class="fas fa-link"></i></a>
+</h4>
+<p>Veja a página sobre <a href="phylogenetic-trees.html#phylogenetic-trees">Árvores filogenéticas</a>. Arquivo Newick da árvore filogenética construída a partir do sequenciamento do genoma completo de 299 amostras de Shigella sonnei e dados de amostra correspondentes (convertidos em um arquivo de texto). As amostras belgas e os dados resultantes são gentilmente fornecidos pelo NRC belga para Salmonella e Shigella no âmbito de um projeto conduzido por um bolsista ECDC EUPHEM, e também serão publicados em um manuscrito. Os dados internacionais estão disponíveis abertamente em bases de dados públicas (NCBI) e foram publicados previamente.</p>
+<ul>
+<li>Para baixar o arquivo da árvore filogenética “Shigella_tree.txt”, clique com o botão direito neste <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/phylo/Shigella_tree.txt">link</a> (Cmd + clique para Mac) e selecione “Salvar link como”.<br>
+</li>
+<li>Para baixar o “sample_data_Shigella_tree.csv” com informações adicionais sobre cada amostra, clique com o botão direito neste <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/phylo/sample_data_Shigella_tree.csv">link</a> (Cmd + clique para Mac) e selecione “Salvar link como”.<br>
+</li>
+<li>Para ver a nova árvore de subconjunto criada, clique com o botão direito neste <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/phylo/Shigella_subtree_2.txt">link</a> (Cmd + clique para Mac) e selecione “Salvar link como”. O arquivo .txt será baixado para o seu computador.</li>
+</ul>
+<p>Você pode então importar os arquivos .txt com <code>read.tree()</code> do pacote <strong>ape</strong>, conforme explicado na página.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html">read.tree</a></span><span class="op">(</span><span class="st">"Shigella_tree.txt"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div id="padronização" class="section level4 unnumbered">
+<h4>Padronização<a class="anchor" aria-label="anchor" href="#padroniza%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h4>
+<p>Consulte a página sobre <a href="standardization.html#standardization">Taxas padronizadas</a>. Você pode carregar os dados diretamente de nosso repositório Github na Internet em sua sessão R com os seguintes comandos:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="data-used.html#cb15-1" tabindex="-1"></a><span class="co"># instalar / carregar o pacote rio</span></span>
+<span id="cb15-2"><a href="data-used.html#cb15-2" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(rio) </span>
+<span id="cb15-3"><a href="data-used.html#cb15-3" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="data-used.html#cb15-4" tabindex="-1"></a><span class="er">)</span></span>
+<span id="cb15-5"><a href="data-used.html#cb15-5" tabindex="-1"></a><span class="co"># País A</span></span>
+<span id="cb15-6"><a href="data-used.html#cb15-6" tabindex="-1"></a><span class="er">)</span></span>
+<span id="cb15-7"><a href="data-used.html#cb15-7" tabindex="-1"></a><span class="co"># importar dados demográficos para o país A diretamente do Github</span></span>
+<span id="cb15-8"><a href="data-used.html#cb15-8" tabindex="-1"></a>A_demo <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"https://github.com/appliedepi/epirhandbook_eng/raw/master/data/standardization/country_demographics.csv"</span>)</span>
+<span id="cb15-9"><a href="data-used.html#cb15-9" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="data-used.html#cb15-10" tabindex="-1"></a><span class="co"># importação de mortes para o país A diretamente do Github</span></span>
+<span id="cb15-11"><a href="data-used.html#cb15-11" tabindex="-1"></a>A_deaths <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"https://github.com/appliedepi/epirhandbook_eng/raw/master/data/standardization/deaths_countryA.csv"</span>)</span>
+<span id="cb15-12"><a href="data-used.html#cb15-12" tabindex="-1"></a></span>
+<span id="cb15-13"><a href="data-used.html#cb15-13" tabindex="-1"></a><span class="er">)</span></span>
+<span id="cb15-14"><a href="data-used.html#cb15-14" tabindex="-1"></a><span class="co"># País B</span></span>
+<span id="cb15-15"><a href="data-used.html#cb15-15" tabindex="-1"></a><span class="er">)</span></span>
+<span id="cb15-16"><a href="data-used.html#cb15-16" tabindex="-1"></a><span class="co"># importar dados demográficos para o país B diretamente do Github</span></span>
+<span id="cb15-17"><a href="data-used.html#cb15-17" tabindex="-1"></a>B_demo <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"https://github.com/appliedepi/epirhandbook_eng/raw/master/data/standardization/country_demographics_2.csv"</span>)</span>
+<span id="cb15-18"><a href="data-used.html#cb15-18" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="data-used.html#cb15-19" tabindex="-1"></a><span class="co"># importação de mortes para o país B diretamente do Github</span></span>
+<span id="cb15-20"><a href="data-used.html#cb15-20" tabindex="-1"></a>B_deaths <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"https://github.com/appliedepi/epirhandbook_eng/raw/master/data/standardization/deaths_countryB.csv"</span>)</span>
+<span id="cb15-21"><a href="data-used.html#cb15-21" tabindex="-1"></a></span>
+<span id="cb15-22"><a href="data-used.html#cb15-22" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="data-used.html#cb15-23" tabindex="-1"></a><span class="er">)</span></span>
+<span id="cb15-24"><a href="data-used.html#cb15-24" tabindex="-1"></a><span class="co"># População Referência </span></span>
+<span id="cb15-25"><a href="data-used.html#cb15-25" tabindex="-1"></a><span class="er">)</span></span>
+<span id="cb15-26"><a href="data-used.html#cb15-26" tabindex="-1"></a><span class="co"># importar dados demográficos para o país B diretamente do Github</span></span>
+<span id="cb15-27"><a href="data-used.html#cb15-27" tabindex="-1"></a>standard_pop_data <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"https://github.com/appliedepi/epirhandbook_eng/raw/master/data/standardization/world_standard_population_by_sex.csv"</span>)</span></code></pre></div>
+</div>
+<div id="data_outbreak" class="section level4 unnumbered">
+<h4>Séries temporais e detecção de surto<a class="anchor" aria-label="anchor" href="#data_outbreak"><i class="fas fa-link"></i></a>
+</h4>
+<p>Consulte a página em <a href="#time-series">Séries temporais e detecção de surto</a>. Usamos casos de Campylobacter relatados na Alemanha 2002-2011, conforme disponível no pacote <strong>surveillance</strong> R. (<em>nb.</em> este conjunto de dados foi adaptado do original, em que 3 meses de dados foram excluídos do final de 2011 para fins de demonstração).</p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/campylobacter_germany.xlsx" class="download-button">
+Clique para fazer o download
+<span> Campylobacter na Alemanha (.xlsx) </span>
+</a></p>
+<p>Também usamos dados climáticos da Alemanha 2002-2011 (temperatura em graus Celsius e queda de chuva em milímetros). Eles foram baixados do conjunto de dados de reanálise do satélite Copernicus da UE usando o pacote <strong>ecmwfr</strong>. Você precisará baixar tudo isso e importá-los com <code><a href="https://r-spatial.github.io/stars/reference/read_stars.html">stars::read_stars()</a></code> conforme explicado na página da série temporal.</p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2002.nc" class="download-button">
+Clique para fazer o download
+<span> Alemanha meteorologia 2002 (arquivo .nc) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2003.nc" class="download-button">
+Clique para fazer o download
+<span> Alemanha meteorologia 2003 (arquivo .nc) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2004.nc" class="download-button">
+Clique para fazer o download
+<span> Alemanha meteorologia 2004 (arquivo .nc) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2005.nc" class="download-button">
+Clique para fazer o download
+<span> Clima Alemanha 2005 (arquivo .nc) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2006.nc" class="download-button">
+Clique para fazer o download
+<span> Clima Alemanha 2006 (arquivo .nc) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2007.nc" class="download-button">
+Clique para fazer o download
+<span> Clima Alemanha 2007 (arquivo .nc) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2008.nc" class="download-button">
+Clique para fazer o download
+<span> Clima Alemanha 2008 (arquivo .nc) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2009.nc" class="download-button">
+Clique para fazer o download
+<span> Clima Alemanha 2009 (arquivo .nc) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2010.nc" class="download-button">
+Clique para fazer o download
+<span> Clima Alemanha 2010 (arquivo .nc) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/time_series/weather/germany_weather2011.nc" class="download-button">
+Clique para fazer o download
+<span> Clima Alemanha 2011 (arquivo .nc) </span>
+</a></p>
+</div>
+<div id="data_survey" class="section level4 unnumbered">
+<h4>Análise da pesquisa<a class="anchor" aria-label="anchor" href="#data_survey"><i class="fas fa-link"></i></a>
+</h4>
+<p>Para a página <a href="https://epirhandbook.com/survey-analysis.html">análise da pesquisa</a>, usamos dados fictícios de pesquisa de mortalidade baseados em modelos de pesquisa OCA do MSF. Esses dados fictícios foram gerados como parte do <a href="https://r4epis.netlify.app/">projeto “R4Epis”</a>.</p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/surveys/survey_data.xlsx" class="download-button">
+Clique para fazer o download
+<span> Dados de pesquisa fictícios (.xlsx) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/surveys/survey_dict.xlsx" class="download-button">
+Clique para fazer o download
+<span> Dicionário fictício de dados de pesquisa (.xlsx) </span>
+</a></p>
+<p><a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/surveys/population.xlsx" class="download-button">
+Clique para fazer o download
+<span> Dados fictícios da população de pesquisas (.xlsx) </span>
+</a></p>
+</div>
+<div id="data_shiny" class="section level4 unnumbered">
+<h4>Shiny<a class="anchor" aria-label="anchor" href="#data_shiny"><i class="fas fa-link"></i></a>
+</h4>
+<p>A página em <a href="shiny-basics.html#shiny-basics">Painéis com Shiny</a> demonstra a construção de um aplicativo simples para exibir dados da malária.</p>
+<p>Para baixar os arquivos R que produzem o aplicativo Shiny:</p>
+<p>Você pode <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/malaria_app/app.R" class="download-button">
+clique aqui para baixar o arquivo app.R <span> que contém a IU e o código do servidor para o aplicativo Shiny. </span> </a></p>
+<p>Você pode <a href="https://github.com/appliedepi/epirhandbook_eng/blob/master/data/malaria_app/data/facility_count_data.rds" class="download-button">
+clique aqui para baixar o arquivo facility_count_data.rds <span> </span></a> que contém dados de malária para o aplicativo Shiny. Observe que pode ser necessário armazená-lo em uma pasta “data” para que os caminhos de arquivo here() funcionem corretamente.</p>
+<p>Você pode <a href="https://github.com/appliedepi/epirhandbook_eng/blob/master/data/malaria_app/global.R" class="download-button">
+clique aqui para baixar o arquivo global.R <span> </span></a> que deve ser executado antes da abertura do aplicativo, conforme explicado na página.</p>
+<p>Você pode <a href="https://github.com/appliedepi/epirhandbook_eng/raw/master/data/malaria_app/funcs/plot_epicurve.R" class="download-button">
+clique aqui para baixar o arquivo plot_epicurve.R <span> </span></a> que é fornecido pela global.R. Observe que pode ser necessário armazená-lo em uma pasta “funcs” para que os caminhos de arquivo here() funcionem corretamente.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="prev"><a href="editorial-style.html"><span class="header-section-number">1</span> Notas editoriais e técnicas</a></div>
+<div class="next"><a href="basics.html"><span class="header-section-number">3</span> Introdução ao R</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-used"><span class="header-section-number">2</span> Baixe o livro e os dados</a></li>
+<li>
+<a class="nav-link" href="#baixe-o-livro-offline"><span class="header-section-number">2.1</span> Baixe o livro offline</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#use-o-link-de-download">Use o link de download</a></li>
+<li><a class="nav-link" href="#use-nosso-pacote-r">Use nosso pacote R</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#baixe-os-dados-para-acompanhar"><span class="header-section-number">2.2</span> Baixe os dados para acompanhar</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#use-nosso-pacote-r-1">Use nosso pacote R</a></li>
+<li><a class="nav-link" href="#baixe-um-por-um">Baixe um por um</a></li>
+<li><a class="nav-link" href="#sobre-o-gis">Sobre o GIS</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
