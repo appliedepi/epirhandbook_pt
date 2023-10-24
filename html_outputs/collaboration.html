@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>44 Controle de versão e colaboração com Git e Github | Manual de R para Epidemiologistas</title>
+<title>46 Controle de versão e colaboração com Git e Github | Manual de R para Epidemiologistas</title>
 <meta name="author" content="the handbook team">
-<meta name="description" content="Este capítulo apresenta uma visão geral do uso do Git para programar em colaboração com outras pessoas. Tutoriais mais completos podem ser encontrados abaixo na seção Recursos.  44.1 O que é o...">
+<meta name="description" content="Este capítulo apresenta uma visão geral do uso do Git para programar em colaboração com outras pessoas. Tutoriais mais completos podem ser encontrados abaixo na seção Recursos.  46.1 O que é o...">
 <meta name="generator" content="bookdown 0.35 with bs4_book()">
-<meta property="og:title" content="44 Controle de versão e colaboração com Git e Github | Manual de R para Epidemiologistas">
+<meta property="og:title" content="46 Controle de versão e colaboração com Git e Github | Manual de R para Epidemiologistas">
 <meta property="og:type" content="book">
-<meta property="og:description" content="Este capítulo apresenta uma visão geral do uso do Git para programar em colaboração com outras pessoas. Tutoriais mais completos podem ser encontrados abaixo na seção Recursos.  44.1 O que é o...">
+<meta property="og:description" content="Este capítulo apresenta uma visão geral do uso do Git para programar em colaboração com outras pessoas. Tutoriais mais completos podem ser encontrados abaixo na seção Recursos.  46.1 O que é o...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="44 Controle de versão e colaboração com Git e Github | Manual de R para Epidemiologistas">
-<meta name="twitter:description" content="Este capítulo apresenta uma visão geral do uso do Git para programar em colaboração com outras pessoas. Tutoriais mais completos podem ser encontrados abaixo na seção Recursos.  44.1 O que é o...">
+<meta name="twitter:title" content="46 Controle de versão e colaboração com Git e Github | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="Este capítulo apresenta uma visão geral do uso do Git para programar em colaboração com outras pessoas. Tutoriais mais completos podem ser encontrados abaixo na seção Recursos.  46.1 O que é o...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -25,7 +25,10 @@
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
-<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.2.0/leaflet.js"></script><script src="libs/leaflet-providers-1.13.0/leaflet-providers_1.13.0.js"></script><script src="libs/leaflet-providers-plugin-2.2.0/leaflet-providers-plugin.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
 <script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
 <script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -93,35 +96,37 @@
 <li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
 <li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
 <li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
-<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
-<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
-<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
-<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li><a class="" href="time-series.html"><span class="header-section-number">23</span> Séries temporais e detecção de surtos</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">24</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">25</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">26</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">27</span> Análise de sobrevivência</a></li>
+<li><a class="" href="gis.html"><span class="header-section-number">28</span> Introdução ao GIS</a></li>
 <li class="book-part">Visualização de Dados</li>
-<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
-<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
-<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
-<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
-<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
-<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
-<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
-<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
-<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
-<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
-<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">29</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">30</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">31</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">32</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">33</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">34</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">35</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">36</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">37</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">38</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">39</span> Gráficos interativos</a></li>
 <li class="book-part">Relatórios e dashboards</li>
-<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
-<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
-<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
-<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">40</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">41</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">42</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">43</span> Painéis com Shiny</a></li>
 <li class="book-part">Miscelânea</li>
-<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
-<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
-<li><a class="active" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
-<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
-<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
-<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
-<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">44</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">45</span> Interações de diretório</a></li>
+<li><a class="active" href="collaboration.html"><span class="header-section-number">46</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">47</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">48</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">49</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">50</span> Data Table</a></li>
 </ul>
 
         <div class="book-extra">
@@ -129,14 +134,14 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="collaboration" class="section level1" number="44">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="collaboration" class="section level1" number="46">
 <h1>
-<span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github<a class="anchor" aria-label="anchor" href="#collaboration"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46</span> Controle de versão e colaboração com Git e Github<a class="anchor" aria-label="anchor" href="#collaboration"><i class="fas fa-link"></i></a>
 </h1>
 <p>Este capítulo apresenta uma visão geral do uso do Git para programar em colaboração com outras pessoas. Tutoriais mais completos podem ser encontrados abaixo na seção Recursos.</p>
-<div id="o-que-é-o-git" class="section level2" number="44.1">
+<div id="o-que-é-o-git" class="section level2" number="46.1">
 <h2>
-<span class="header-section-number">44.1</span> O que é o Git?<a class="anchor" aria-label="anchor" href="#o-que-%C3%A9-o-git"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.1</span> O que é o Git?<a class="anchor" aria-label="anchor" href="#o-que-%C3%A9-o-git"><i class="fas fa-link"></i></a>
 </h2>
 <p>Git é um software de <strong>controle de versões</strong> que permite rastrear alterações em uma pasta. Pode ser usado como a opção de “controle de alterações” no Word, LibreOffice ou Google docs, mas para todos os tipos de arquivos. É uma das opções mais poderosas e mais usadas para controle de versões.</p>
 <p><strong>Por que eu nunca ouvi falar disso?</strong> Enquanto pessoas com formação em programação aprendem rotineiramente a usar softwares de controle de versões (Git, Mercurial, Subversion ou outros), poucos de nós das disciplinas quantitativas aprendem essas habilidades. Consequentemente, a maioria dos epidemiologistas nunca ouviu falar dele durante seus estudos, e tem que aprender repentinamente.</p>
@@ -148,9 +153,9 @@
 </ul>
 <p>Portanto, você pode usar o cliente ou a interface <strong>Github Desktop</strong>, que usa <strong>Git</strong> em segundo plano para gerenciar seus arquivos, tanto localmente em seu computador quanto remotamente em um servidor <strong>Github</strong>.</p>
 </div>
-<div id="por-que-usar-o-combo-git-e-github" class="section level2" number="44.2">
+<div id="por-que-usar-o-combo-git-e-github" class="section level2" number="46.2">
 <h2>
-<span class="header-section-number">44.2</span> Por que usar o combo Git e Github?<a class="anchor" aria-label="anchor" href="#por-que-usar-o-combo-git-e-github"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.2</span> Por que usar o combo Git e Github?<a class="anchor" aria-label="anchor" href="#por-que-usar-o-combo-git-e-github"><i class="fas fa-link"></i></a>
 </h2>
 <p>Usar o <strong>Git</strong> facilita:</p>
 <ol style="list-style-type: decimal">
@@ -184,9 +189,9 @@
 <p><strong>Um bom momento para adquirir confiança no uso do Git</strong>, na verdade, é quando você não está trabalhando em um projeto que precise dele, quando trabalhar em colaboração não é uma necessidade.</p>
 </div>
 </div>
-<div id="configuração" class="section level2" number="44.3">
+<div id="configuração" class="section level2" number="46.3">
 <h2>
-<span class="header-section-number">44.3</span> Configuração<a class="anchor" aria-label="anchor" href="#configura%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.3</span> Configuração<a class="anchor" aria-label="anchor" href="#configura%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
 </h2>
 <div id="instale-o-git" class="section level3 unnumbered">
 <h3>Instale o Git<a class="anchor" aria-label="anchor" href="#instale-o-git"><i class="fas fa-link"></i></a>
@@ -210,9 +215,9 @@
 <p>Se você usa o Github Desktop, pode inserir suas credenciais do Gitub após a instalação seguindo estas <a href="https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/authenticating-to-github">etapas</a>. Se você não fizer isso agora, as credenciais serão solicitadas mais tarde, quando você tentar clonar um projeto do Github.</p>
 </div>
 </div>
-<div id="vocabulário-conceitos-e-funções-básicas" class="section level2" number="44.4">
+<div id="vocabulário-conceitos-e-funções-básicas" class="section level2" number="46.4">
 <h2>
-<span class="header-section-number">44.4</span> Vocabulário, conceitos e funções básicas<a class="anchor" aria-label="anchor" href="#vocabul%C3%A1rio-conceitos-e-fun%C3%A7%C3%B5es-b%C3%A1sicas"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.4</span> Vocabulário, conceitos e funções básicas<a class="anchor" aria-label="anchor" href="#vocabul%C3%A1rio-conceitos-e-fun%C3%A7%C3%B5es-b%C3%A1sicas"><i class="fas fa-link"></i></a>
 </h2>
 <p>Assim como ao aprender R, há um pouco de vocabulário que você precisará lembrar para entender o Git. Aqui estão os <a href="https://www.freecodecamp.org/news/an-introduction-to-git-for-absolute-beginners-86fa1d32ff71/">princípios básicos para você começar</a> e um <a href="learngitbranching.js.org">tutorial interativo</a>. Nas próximas seções, mostraremos como usar interfaces, mas é bom ter o vocabulário do Git e os conceitos em mente, para construir seu modelo mental. Você precisará deles ao usar interfaces de qualquer maneira.</p>
 <div id="repositório" class="section level3 unnumbered">
@@ -253,9 +258,9 @@
 </ul>
 </div>
 </div>
-<div id="começar-crie-um-novo-repositório" class="section level2" number="44.5">
+<div id="começar-crie-um-novo-repositório" class="section level2" number="46.5">
 <h2>
-<span class="header-section-number">44.5</span> Começar: crie um novo repositório<a class="anchor" aria-label="anchor" href="#come%C3%A7ar-crie-um-novo-reposit%C3%B3rio"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.5</span> Começar: crie um novo repositório<a class="anchor" aria-label="anchor" href="#come%C3%A7ar-crie-um-novo-reposit%C3%B3rio"><i class="fas fa-link"></i></a>
 </h2>
 <p>Existem muitas maneiras de criar novos repositórios. Você pode fazer isso no console, no Github, em uma interface.</p>
 <p>Duas abordagens gerais são:</p>
@@ -357,9 +362,9 @@
 </div>
 </div>
 </div>
-<div id="fluxo-de-trabalho-git-github" class="section level2" number="44.6">
+<div id="fluxo-de-trabalho-git-github" class="section level2" number="46.6">
 <h2>
-<span class="header-section-number">44.6</span> Fluxo de trabalho Git + Github<a class="anchor" aria-label="anchor" href="#fluxo-de-trabalho-git-github"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.6</span> Fluxo de trabalho Git + Github<a class="anchor" aria-label="anchor" href="#fluxo-de-trabalho-git-github"><i class="fas fa-link"></i></a>
 </h2>
 <div id="visão-geral-do-processo" class="section level3 unnumbered">
 <h3>Visão geral do processo<a class="anchor" aria-label="anchor" href="#vis%C3%A3o-geral-do-processo"><i class="fas fa-link"></i></a>
@@ -382,9 +387,9 @@
 <p>Fonte da <a href="https://build5nines.com/introduction-to-git-version-control-workflow/">imagem</a></p>
 </div>
 </div>
-<div id="crie-um-novo-branch" class="section level2" number="44.7">
+<div id="crie-um-novo-branch" class="section level2" number="46.7">
 <h2>
-<span class="header-section-number">44.7</span> Crie um novo branch<a class="anchor" aria-label="anchor" href="#crie-um-novo-branch"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.7</span> Crie um novo branch<a class="anchor" aria-label="anchor" href="#crie-um-novo-branch"><i class="fas fa-link"></i></a>
 </h2>
 <p>Quando você seleciona um branch para trabalhar, <strong>Git redefine seu diretório de trabalho do jeito que estava da última vez que você esteve neste branch</strong>.</p>
 <div id="no-painel-git-no-rstudio" class="section level3 unnumbered">
@@ -409,15 +414,15 @@
 <h3>No console<a class="anchor" aria-label="anchor" href="#no-console"><i class="fas fa-link"></i></a>
 </h3>
 <p>O que realmente está acontecendo nos bastidores é que você cria um novo branch com <code>git branch</code>, então vai para o branch com<code>git checkout</code> (_isto é, diga ao Git que seus próximos commits ocorrerão lá). Do seu repositório git:</p>
-<div class="sourceCode" id="cb1783"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1783-1"><a href="collaboration.html#cb1783-1" tabindex="-1"></a><span class="fu">git</span> branch my-new-branch  <span class="co"># Cria o novo branch</span></span>
-<span id="cb1783-2"><a href="collaboration.html#cb1783-2" tabindex="-1"></a><span class="fu">git</span> checkout my-new-branch <span class="co"># Vai para o branch</span></span>
-<span id="cb1783-3"><a href="collaboration.html#cb1783-3" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> my-new-branch <span class="co"># Os dois ao mesmo tempo (atalho)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1909"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1909-1"><a href="collaboration.html#cb1909-1" tabindex="-1"></a><span class="fu">git</span> branch my-new-branch  <span class="co"># Cria o novo branch</span></span>
+<span id="cb1909-2"><a href="collaboration.html#cb1909-2" tabindex="-1"></a><span class="fu">git</span> checkout my-new-branch <span class="co"># Vai para o branch</span></span>
+<span id="cb1909-3"><a href="collaboration.html#cb1909-3" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> my-new-branch <span class="co"># Os dois ao mesmo tempo (atalho)</span></span></code></pre></div>
 <p>Para obter mais informações sobre como usar o console, consulte a seção sobre comandos Git no final.</p>
 </div>
 </div>
-<div id="confirmar-alterações" class="section level2" number="44.8">
+<div id="confirmar-alterações" class="section level2" number="46.8">
 <h2>
-<span class="header-section-number">44.8</span> Confirmar alterações<a class="anchor" aria-label="anchor" href="#confirmar-altera%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.8</span> Confirmar alterações<a class="anchor" aria-label="anchor" href="#confirmar-altera%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
 </h2>
 <p>Agora você pode editar o código, adicionar novos arquivos, atualizar conjuntos de dados, etc.</p>
 <p>Cada uma de suas alterações será rastreada, <em>uma vez que o respectivo arquivo for salvo</em>. Os arquivos alterados irão aparecer na aba Git do RStudio, no Github , ou usando o comando <code>git status</code> no terminal (veja abaixo).</p>
@@ -452,13 +457,13 @@
 <h3>No console<a class="anchor" aria-label="anchor" href="#no-console-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>São usadas as funções <code>git add</code> para selecionar / preparar arquivos e<code>git commit</code> para realmente fazer o commit.</p>
-<div class="sourceCode" id="cb1784"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1784-1"><a href="collaboration.html#cb1784-1" tabindex="-1"></a><span class="fu">git</span> status <span class="co">#veja as mudanças </span></span>
-<span id="cb1784-2"><a href="collaboration.html#cb1784-2" tabindex="-1"></a></span>
-<span id="cb1784-3"><a href="collaboration.html#cb1784-3" tabindex="-1"></a><span class="fu">git</span> add new_pages/collaboration.Rmd  <span class="co"># selecione arquivos para o commit (= "stage" mudanças)</span></span>
-<span id="cb1784-4"><a href="collaboration.html#cb1784-4" tabindex="-1"></a></span>
-<span id="cb1784-5"><a href="collaboration.html#cb1784-5" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Describe commit from Github Desktop"</span> <span class="co"># confirme mudanças com uma mensagem</span></span>
-<span id="cb1784-6"><a href="collaboration.html#cb1784-6" tabindex="-1"></a></span>
-<span id="cb1784-7"><a href="collaboration.html#cb1784-7" tabindex="-1"></a><span class="fu">git</span> log  <span class="co"># veja informações sobre commits anteriores</span></span></code></pre></div>
+<div class="sourceCode" id="cb1910"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1910-1"><a href="collaboration.html#cb1910-1" tabindex="-1"></a><span class="fu">git</span> status <span class="co">#veja as mudanças </span></span>
+<span id="cb1910-2"><a href="collaboration.html#cb1910-2" tabindex="-1"></a></span>
+<span id="cb1910-3"><a href="collaboration.html#cb1910-3" tabindex="-1"></a><span class="fu">git</span> add new_pages/collaboration.Rmd  <span class="co"># selecione arquivos para o commit (= "stage" mudanças)</span></span>
+<span id="cb1910-4"><a href="collaboration.html#cb1910-4" tabindex="-1"></a></span>
+<span id="cb1910-5"><a href="collaboration.html#cb1910-5" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Describe commit from Github Desktop"</span> <span class="co"># confirme mudanças com uma mensagem</span></span>
+<span id="cb1910-6"><a href="collaboration.html#cb1910-6" tabindex="-1"></a></span>
+<span id="cb1910-7"><a href="collaboration.html#cb1910-7" tabindex="-1"></a><span class="fu">git</span> log  <span class="co"># veja informações sobre commits anteriores</span></span></code></pre></div>
 </div>
 <div id="corrigir-um-commit-anterior" class="section level3 unnumbered">
 <h3>Corrigir um commit anterior<a class="anchor" aria-label="anchor" href="#corrigir-um-commit-anterior"><i class="fas fa-link"></i></a>
@@ -467,17 +472,17 @@
 <p>No Rstudio há uma caixa “Corrigir commit anterior” na mesma linha do botão COMMIT.</p>
 <p>Por alguma razão, esta funcionalidade não foi implementada da mesma forma no Github Desktop, mas há uma maneira de contornar (estranha, mas fácil!). Se você tiver confirmado suas alterações <strong>mas não enviado</strong> ainda, um botão “UNDO” aparecerá logo abaixo do botão COMMIT. Clique nele e ele irá reverter seu commit (mas mantenha seus arquivos preparados e sua mensagem de commit). Salve suas mudanças, adicione novos arquivos ao commit se necessário e faça o commit novamente.</p>
 <p>No console:</p>
-<div class="sourceCode" id="cb1785"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1785-1"><a href="collaboration.html#cb1785-1" tabindex="-1"></a><span class="fu">git</span> add [SEUS ARQUIVOS] <span class="co"># Prepare suas novas mudanças</span></span>
-<span id="cb1785-2"><a href="collaboration.html#cb1785-2" tabindex="-1"></a></span>
-<span id="cb1785-3"><a href="collaboration.html#cb1785-3" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span>  <span class="co"># Corrija o commit anteriororrigir o commit anterior</span></span>
-<span id="cb1785-4"><a href="collaboration.html#cb1785-4" tabindex="-1"></a></span>
-<span id="cb1785-5"><a href="collaboration.html#cb1785-5" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span> <span class="at">-m</span> <span class="st">"An updated commit message"</span>  <span class="co"># Corrija o commit anterior E atualize a mensagem de commit</span></span></code></pre></div>
+<div class="sourceCode" id="cb1911"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1911-1"><a href="collaboration.html#cb1911-1" tabindex="-1"></a><span class="fu">git</span> add [SEUS ARQUIVOS] <span class="co"># Prepare suas novas mudanças</span></span>
+<span id="cb1911-2"><a href="collaboration.html#cb1911-2" tabindex="-1"></a></span>
+<span id="cb1911-3"><a href="collaboration.html#cb1911-3" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span>  <span class="co"># Corrija o commit anteriororrigir o commit anterior</span></span>
+<span id="cb1911-4"><a href="collaboration.html#cb1911-4" tabindex="-1"></a></span>
+<span id="cb1911-5"><a href="collaboration.html#cb1911-5" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">--amend</span> <span class="at">-m</span> <span class="st">"An updated commit message"</span>  <span class="co"># Corrija o commit anterior E atualize a mensagem de commit</span></span></code></pre></div>
 <p><em>Observação: pense antes de modificar commits que já são públicos e compartilhados com seus colaboradores</em>.</p>
 </div>
 </div>
-<div id="pull-baixarextrair-e-push-enviarsubir-alterações-para-o-github" class="section level2" number="44.9">
+<div id="pull-baixarextrair-e-push-enviarsubir-alterações-para-o-github" class="section level2" number="46.9">
 <h2>
-<span class="header-section-number">44.9</span> Pull (baixar/extrair) e Push (enviar/subir) alterações para o Github<a class="anchor" aria-label="anchor" href="#pull-baixarextrair-e-push-enviarsubir-altera%C3%A7%C3%B5es-para-o-github"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.9</span> Pull (baixar/extrair) e Push (enviar/subir) alterações para o Github<a class="anchor" aria-label="anchor" href="#pull-baixarextrair-e-push-enviarsubir-altera%C3%A7%C3%B5es-para-o-github"><i class="fas fa-link"></i></a>
 </h2>
 <p>“Primeiro PULL, depois PUSH”</p>
 <p>É uma boa prática <em>fetch</em> (buscar) e <em>pull</em> (baixar) antes de começar a trabalhar no seu projeto, para atualizar a versão do branch em seu computador local com quaisquer alterações que tenham sido feitas na versão remota / Github.</p>
@@ -514,9 +519,9 @@
 <h4>Console<a class="anchor" aria-label="anchor" href="#console"><i class="fas fa-link"></i></a>
 </h4>
 <p>Como esperado, os comandos são <em>fetch</em>, <em>pull</em> e <em>push </em>.</p>
-<div class="sourceCode" id="cb1786"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1786-1"><a href="collaboration.html#cb1786-1" tabindex="-1"></a><span class="fu">git</span> fetch  <span class="co"># Existem novos commits no diretório remoto?</span></span>
-<span id="cb1786-2"><a href="collaboration.html#cb1786-2" tabindex="-1"></a><span class="fu">git</span> pull   <span class="co"># Traga commits remotos para seu branch local</span></span>
-<span id="cb1786-3"><a href="collaboration.html#cb1786-3" tabindex="-1"></a><span class="fu">git</span> push   <span class="co"># Envie commits locais deste branch para o branch remoto</span></span></code></pre></div>
+<div class="sourceCode" id="cb1912"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1912-1"><a href="collaboration.html#cb1912-1" tabindex="-1"></a><span class="fu">git</span> fetch  <span class="co"># Existem novos commits no diretório remoto?</span></span>
+<span id="cb1912-2"><a href="collaboration.html#cb1912-2" tabindex="-1"></a><span class="fu">git</span> pull   <span class="co"># Traga commits remotos para seu branch local</span></span>
+<span id="cb1912-3"><a href="collaboration.html#cb1912-3" tabindex="-1"></a><span class="fu">git</span> push   <span class="co"># Envie commits locais deste branch para o branch remoto</span></span></code></pre></div>
 </div>
 <div id="quero-fazer-um-pull-mas-tenho-trabalho-local" class="section level3 unnumbered">
 <h3>Quero fazer um pull, mas tenho trabalho local<a class="anchor" aria-label="anchor" href="#quero-fazer-um-pull-mas-tenho-trabalho-local"><i class="fas fa-link"></i></a>
@@ -533,9 +538,9 @@
 <div class="inline-figure"><img src="images/github_desktop_stash.png" width="922" style="display: block; margin: auto;"></div>
 </div>
 </div>
-<div id="mesclar-no-branch-principal" class="section level2" number="44.10">
+<div id="mesclar-no-branch-principal" class="section level2" number="46.10">
 <h2>
-<span class="header-section-number">44.10</span> Mesclar no branch principal<a class="anchor" aria-label="anchor" href="#mesclar-no-branch-principal"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.10</span> Mesclar no branch principal<a class="anchor" aria-label="anchor" href="#mesclar-no-branch-principal"><i class="fas fa-link"></i></a>
 </h2>
 <p>Se você concluiu as alterações, pode iniciar o processo de mesclagem dessas alterações no branch principal. Dependendo da situação, isso pode ser rápido ou contemplar etapas acordadas de revisão e aprovação envolvendo colegas da sua equipe.</p>
 <div id="localmente-no-github-desktop" class="section level3 unnumbered">
@@ -548,8 +553,8 @@
 <h3>No console<a class="anchor" aria-label="anchor" href="#no-console-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>Primeiro, volte para o branch que receberá as alterações. Geralmente é o <em>master</em>, mas pode ser outro branch. Em seguida, mescle seu branch de trabalho no master.</p>
-<div class="sourceCode" id="cb1787"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1787-1"><a href="collaboration.html#cb1787-1" tabindex="-1"></a><span class="fu">git</span> checkout master  <span class="co"># Volte para o master (ou para o branch que você deseja mover)</span></span>
-<span id="cb1787-2"><a href="collaboration.html#cb1787-2" tabindex="-1"></a><span class="fu">git</span> merge this_fancy_new_branch</span></code></pre></div>
+<div class="sourceCode" id="cb1913"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1913-1"><a href="collaboration.html#cb1913-1" tabindex="-1"></a><span class="fu">git</span> checkout master  <span class="co"># Volte para o master (ou para o branch que você deseja mover)</span></span>
+<span id="cb1913-2"><a href="collaboration.html#cb1913-2" tabindex="-1"></a><span class="fu">git</span> merge this_fancy_new_branch</span></code></pre></div>
 <p><a href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging">Esta página</a> mostra um exemplo mais avançado de branching e explica um pouco como funciona nos bastidores.</p>
 </div>
 <div id="no-github-submeter-uma-requisição-de-pull" class="section level3 unnumbered">
@@ -595,9 +600,9 @@
 <h3>Delete seu branch<a class="anchor" aria-label="anchor" href="#delete-seu-branch"><i class="fas fa-link"></i></a>
 </h3>
 <p>Depois que um branch foi mesclado com o master e não for mais necessário, você pode excluí-lo.</p>
-<div id="github-rstudio" class="section level4" number="44.10.0.1">
+<div id="github-rstudio" class="section level4" number="46.10.0.1">
 <h4>
-<span class="header-section-number">44.10.0.1</span> Github + Rstudio<a class="anchor" aria-label="anchor" href="#github-rstudio"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.10.0.1</span> Github + Rstudio<a class="anchor" aria-label="anchor" href="#github-rstudio"><i class="fas fa-link"></i></a>
 </h4>
 <p>Vá até o repositório no Github e clique no botão para ver todos os branches (próximo ao menu suspenso para selecionar branches). Agora encontre seu branch e clique no ícone de lixeira próximo a ele. Leia mais detalhes sobre como excluir um branch <a href="https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/creating-and-deleting-branches-within-your-repository#deleting-a-branch">aqui</a>.</p>
 <p>Certifique-se de excluir também o branch local no seu computador. Isso não acontecerá automaticamente.</p>
@@ -607,9 +612,9 @@
 <li>Atualize sua guia Git e o branch terá desaparecido</li>
 </ul>
 </div>
-<div id="no-github-desktop-5" class="section level4" number="44.10.0.2">
+<div id="no-github-desktop-5" class="section level4" number="46.10.0.2">
 <h4>
-<span class="header-section-number">44.10.0.2</span> No Github Desktop<a class="anchor" aria-label="anchor" href="#no-github-desktop-5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.10.0.2</span> No Github Desktop<a class="anchor" aria-label="anchor" href="#no-github-desktop-5"><i class="fas fa-link"></i></a>
 </h4>
 <p>Basta verificar o branch que deseja excluir e ir até o menu <em>Branch&gt;Delete</em>.</p>
 </div>
@@ -627,27 +632,27 @@
 <p>Imagine que alguém faça uma modificação substancial no repositório oficial, que você deseja incluir em sua versão clonada. É possível sincronizar sua bifurcação (fork) com o repositório oficial. Envolve o uso do terminal, mas não é tão complicado. Você precisa se lembrar principalmente que: - <em>upstream</em> = repositório oficial, aquele que você não pode modificar - <em>origin</em> = sua versão do repositório em seu perfil Github</p>
 <p>Você pode ler <a href="https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork">este tutorial</a> ou seguir o caminho abaixo:</p>
 <p>Primeiro, digite seu terminal Git (dentro de seu reposositório):</p>
-<div class="sourceCode" id="cb1788"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1788-1"><a href="collaboration.html#cb1788-1" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code></pre></div>
+<div class="sourceCode" id="cb1914"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1914-1"><a href="collaboration.html#cb1914-1" tabindex="-1"></a><span class="fu">git</span> remote <span class="at">-v</span></span></code></pre></div>
 <p>Se você ainda não configurou o repositório upstream, deverá ver duas linhas, começando por <em>origin</em>. Eles mostram o repositório remoto para o qual <code>fetch</code> e<code>push</code> estão direcionados. Lembre-se, por convenção, <em>origin</em> é sua própria versão do repositório no Github. Por exemplo:</p>
 <div class="inline-figure"><img src="images/github_fork_2.png" width="100%" height="200%" style="display: block; margin: auto;"></div>
 <p>Agora, adicione um novo repositório remoto:</p>
-<div class="sourceCode" id="cb1789"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1789-1"><a href="collaboration.html#cb1789-1" tabindex="-1"></a><span class="fu">git</span> remote add upstream https://github.com/appliedepi/epirhandbook_eng.git</span></code></pre></div>
+<div class="sourceCode" id="cb1915"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1915-1"><a href="collaboration.html#cb1915-1" tabindex="-1"></a><span class="fu">git</span> remote add upstream https://github.com/appliedepi/epirhandbook_eng.git</span></code></pre></div>
 <p>Aqui, o site é o endereço que o Github gera quando você clona um repositório (consulte a seção sobre clonagem). Agora você terá quatro ponteiros remotos:</p>
 <div class="inline-figure"><img src="images/github_fork_3.png" width="100%" height="200%" style="display: block; margin: auto;"></div>
 <p>Agora que a configuração está feita, sempre que você quiser obter as alterações do repositório original (<em>upstream</em>), você só precisa ir (<em>checkout</em>) ao branch que deseja atualizar e digitar:</p>
-<div class="sourceCode" id="cb1790"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1790-1"><a href="collaboration.html#cb1790-1" tabindex="-1"></a><span class="fu">git</span> fetch upstream <span class="co"># Para obter os novos commits do repositório remoto</span></span>
-<span id="cb1790-2"><a href="collaboration.html#cb1790-2" tabindex="-1"></a><span class="fu">git</span> checkout the_branch_you_want_to_update</span>
-<span id="cb1790-3"><a href="collaboration.html#cb1790-3" tabindex="-1"></a><span class="fu">git</span> merge upstream/the_branch_you_want_to_update  <span class="co"># Para mesclar o branch upstream em seu branch</span></span>
-<span id="cb1790-4"><a href="collaboration.html#cb1790-4" tabindex="-1"></a><span class="fu">git</span> push <span class="co"># Para atualizar sua própria versão do repositório remoto</span></span></code></pre></div>
+<div class="sourceCode" id="cb1916"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1916-1"><a href="collaboration.html#cb1916-1" tabindex="-1"></a><span class="fu">git</span> fetch upstream <span class="co"># Para obter os novos commits do repositório remoto</span></span>
+<span id="cb1916-2"><a href="collaboration.html#cb1916-2" tabindex="-1"></a><span class="fu">git</span> checkout the_branch_you_want_to_update</span>
+<span id="cb1916-3"><a href="collaboration.html#cb1916-3" tabindex="-1"></a><span class="fu">git</span> merge upstream/the_branch_you_want_to_update  <span class="co"># Para mesclar o branch upstream em seu branch</span></span>
+<span id="cb1916-4"><a href="collaboration.html#cb1916-4" tabindex="-1"></a><span class="fu">git</span> push <span class="co"># Para atualizar sua própria versão do repositório remoto</span></span></code></pre></div>
 <p>Se houver conflitos, você terá que resolvê-los, conforme explicado na seção Resolvendo conflitos.</p>
 <p><strong>Resumo</strong>: bifurcar é clonar, mas no servidor Github. O restante das ações são ações típicas do fluxo de trabalho de colaboração (clonar, enviar, puxar, confirmar, mesclar, enviar solicitações pull …).</p>
 <p><em>Observação: a bifurcação é um conceito, não um comando Git, e também existe em outros sites de hospedagem, como <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow">Bitbucket</a>.</em></p>
 <div class="inline-figure"><img src="images/github_fork_4.png" width="100%" height="200%" style="display: block; margin: auto;"></div>
 </div>
 </div>
-<div id="o-que-aprendemos" class="section level2" number="44.11">
+<div id="o-que-aprendemos" class="section level2" number="46.11">
 <h2>
-<span class="header-section-number">44.11</span> O que aprendemos<a class="anchor" aria-label="anchor" href="#o-que-aprendemos"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.11</span> O que aprendemos<a class="anchor" aria-label="anchor" href="#o-que-aprendemos"><i class="fas fa-link"></i></a>
 </h2>
 <p>Você aprendeu como:</p>
 <ul>
@@ -661,9 +666,9 @@
 <p>Observe que embora o painel Git no Rstudio e no Github Desktop sejam bons para iniciantes ou para uso diário no trabalho, eles não oferecem interface para algumas das funções intermediárias e avançadas do Git. Algumas interfaces mais completas permitem fazer mais com cliques (geralmente ao custo de um layout mais complexo).</p>
 <p>Lembre-se que você pode usar qualquer ferramenta para rastrear seu repositório, então pode instalar uma outra interface para experimentá-la algumas vezes, ou para realizar alguma tarefa complexa não tão comum no seu trabalho, e continuar usando uma interface simplificada para o resto do tempo (por exemplo, usando Github Desktop na maioria das vezes e mudando para SourceTree ou Gitbash para algumas tarefas específicas).</p>
 </div>
-<div id="git" class="section level2" number="44.12">
+<div id="git" class="section level2" number="46.12">
 <h2>
-<span class="header-section-number">44.12</span> Comandos Git<a class="anchor" aria-label="anchor" href="#git"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.12</span> Comandos Git<a class="anchor" aria-label="anchor" href="#git"><i class="fas fa-link"></i></a>
 </h2>
 <div id="aprendizados-recomendados" class="section level3 unnumbered">
 <h3>Aprendizados recomendados<a class="anchor" aria-label="anchor" href="#aprendizados-recomendados"><i class="fas fa-link"></i></a>
@@ -751,9 +756,9 @@
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="recursos-27" class="section level2" number="44.13">
+<div id="recursos-29" class="section level2" number="46.13">
 <h2>
-<span class="header-section-number">44.13</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-27"><i class="fas fa-link"></i></a>
+<span class="header-section-number">46.13</span> Recursos<a class="anchor" aria-label="anchor" href="#recursos-29"><i class="fas fa-link"></i></a>
 </h2>
 <p>Grande parte desta página foi baseada <a href="https://happygitwithr.com/">no site “Happy Git with R”</a> de Jenny Bryan. Há uma seção muito útil neste site que ajuda a solucionar erros comuns relacionados ao Git e ao R.</p>
 <p><a href="https://docs.github.com/en/github">Documentação do Github.com e guia de inicialização</a>.</p>
@@ -770,25 +775,25 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></div>
-<div class="next"><a href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></div>
+<div class="prev"><a href="directories.html"><span class="header-section-number">45</span> Interações de diretório</a></div>
+<div class="next"><a href="errors.html"><span class="header-section-number">47</span> Erros comuns</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#collaboration"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
-<li><a class="nav-link" href="#o-que-%C3%A9-o-git"><span class="header-section-number">44.1</span> O que é o Git?</a></li>
+<li><a class="nav-link" href="#collaboration"><span class="header-section-number">46</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="nav-link" href="#o-que-%C3%A9-o-git"><span class="header-section-number">46.1</span> O que é o Git?</a></li>
 <li>
-<a class="nav-link" href="#por-que-usar-o-combo-git-e-github"><span class="header-section-number">44.2</span> Por que usar o combo Git e Github?</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#isso-parece-complicado-n%C3%A3o-sou-um-programador">Isso parece complicado, não sou um programador</a></li></ul>
+<a class="nav-link" href="#por-que-usar-o-combo-git-e-github"><span class="header-section-number">46.2</span> Por que usar o combo Git e Github?</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#isso-parece-complicado-n%C3%A3o-sou-um-programador">Isso parece complicado, não sou um programador</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#configura%C3%A7%C3%A3o"><span class="header-section-number">44.3</span> Configuração</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#configura%C3%A7%C3%A3o"><span class="header-section-number">46.3</span> Configuração</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#instale-o-git">Instale o Git</a></li>
 <li><a class="nav-link" href="#instale-uma-interface-opcional-mas-recomendado">Instale uma interface (opcional, mas recomendado)</a></li>
 <li><a class="nav-link" href="#conta-github">Conta Github</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#vocabul%C3%A1rio-conceitos-e-fun%C3%A7%C3%B5es-b%C3%A1sicas"><span class="header-section-number">44.4</span> Vocabulário, conceitos e funções básicas</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#vocabul%C3%A1rio-conceitos-e-fun%C3%A7%C3%B5es-b%C3%A1sicas"><span class="header-section-number">46.4</span> Vocabulário, conceitos e funções básicas</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#reposit%C3%B3rio">Repositório</a></li>
 <li><a class="nav-link" href="#commits">Commits ()</a></li>
 <li><a class="nav-link" href="#branches-ramos">Branches (Ramos)</a></li>
@@ -796,7 +801,7 @@
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#come%C3%A7ar-crie-um-novo-reposit%C3%B3rio"><span class="header-section-number">44.5</span> Começar: crie um novo repositório</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#come%C3%A7ar-crie-um-novo-reposit%C3%B3rio"><span class="header-section-number">46.5</span> Começar: crie um novo repositório</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#arquivos-iniciais">Arquivos iniciais</a></li>
 <li><a class="nav-link" href="#criar-um-novo-reposit%C3%B3rio-no-githubb">Criar um novo repositório no Githubb</a></li>
 <li><a class="nav-link" href="#clonar-de-um-reposit%C3%B3rio-github">Clonar de um repositório Github</a></li>
@@ -805,17 +810,17 @@
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#fluxo-de-trabalho-git-github"><span class="header-section-number">44.6</span> Fluxo de trabalho Git + Github</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#vis%C3%A3o-geral-do-processo">Visão geral do processo</a></li></ul>
+<a class="nav-link" href="#fluxo-de-trabalho-git-github"><span class="header-section-number">46.6</span> Fluxo de trabalho Git + Github</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#vis%C3%A3o-geral-do-processo">Visão geral do processo</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#crie-um-novo-branch"><span class="header-section-number">44.7</span> Crie um novo branch</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#crie-um-novo-branch"><span class="header-section-number">46.7</span> Crie um novo branch</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#no-painel-git-no-rstudio">No painel Git no Rstudio</a></li>
 <li><a class="nav-link" href="#no-github-desktop-2">No Github Desktop</a></li>
 <li><a class="nav-link" href="#no-console">No console</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#confirmar-altera%C3%A7%C3%B5es"><span class="header-section-number">44.8</span> Confirmar alterações</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#confirmar-altera%C3%A7%C3%B5es"><span class="header-section-number">46.8</span> Confirmar alterações</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#no-rstudio-2">No Rstudio</a></li>
 <li><a class="nav-link" href="#no-github-desktop-3">No Github Desktop</a></li>
 <li><a class="nav-link" href="#no-console-1">No console</a></li>
@@ -823,10 +828,10 @@
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#pull-baixarextrair-e-push-enviarsubir-altera%C3%A7%C3%B5es-para-o-github"><span class="header-section-number">44.9</span> Pull (baixar/extrair) e Push (enviar/subir) alterações para o Github</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#quero-fazer-um-pull-mas-tenho-trabalho-local">Quero fazer um pull, mas tenho trabalho local</a></li></ul>
+<a class="nav-link" href="#pull-baixarextrair-e-push-enviarsubir-altera%C3%A7%C3%B5es-para-o-github"><span class="header-section-number">46.9</span> Pull (baixar/extrair) e Push (enviar/subir) alterações para o Github</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#quero-fazer-um-pull-mas-tenho-trabalho-local">Quero fazer um pull, mas tenho trabalho local</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#mesclar-no-branch-principal"><span class="header-section-number">44.10</span> Mesclar no branch principal</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#mesclar-no-branch-principal"><span class="header-section-number">46.10</span> Mesclar no branch principal</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#localmente-no-github-desktop">Localmente no Github Desktop</a></li>
 <li><a class="nav-link" href="#no-console-2">No console</a></li>
 <li><a class="nav-link" href="#no-github-submeter-uma-requisi%C3%A7%C3%A3o-de-pull">No Github: submeter uma requisição de pull</a></li>
@@ -835,15 +840,15 @@
 <li><a class="nav-link" href="#forking">Forking</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#o-que-aprendemos"><span class="header-section-number">44.11</span> O que aprendemos</a></li>
+<li><a class="nav-link" href="#o-que-aprendemos"><span class="header-section-number">46.11</span> O que aprendemos</a></li>
 <li>
-<a class="nav-link" href="#git"><span class="header-section-number">44.12</span> Comandos Git</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#git"><span class="header-section-number">46.12</span> Comandos Git</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#aprendizados-recomendados">Aprendizados recomendados</a></li>
 <li><a class="nav-link" href="#onde-inserir-comandos">Onde inserir comandos</a></li>
 <li><a class="nav-link" href="#amostra-de-comandos">Amostra de comandos</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#recursos-27"><span class="header-section-number">44.13</span> Recursos</a></li>
+<li><a class="nav-link" href="#recursos-29"><span class="header-section-number">46.13</span> Recursos</a></li>
 </ul>
 
       <div class="book-extra">
@@ -860,7 +865,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

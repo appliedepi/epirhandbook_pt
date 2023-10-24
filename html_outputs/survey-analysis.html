@@ -4,16 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>25 Analises de pesquisa de questionários (survey) | Manual de R para Epidemiologistas</title>
+<title>26 Analises de pesquisa de questionários (survey) | Manual de R para Epidemiologistas</title>
 <meta name="author" content="the handbook team">
-<meta name="description" content="25.1 Visão Geral Esta página demonstra o uso de vários pacotes para análise de pesquisas de questionários (do tipo survey). A maioria dos pacotes de pesquisa R depende do pacote survey para fazer...">
+<meta name="description" content="26.1 Visão Geral Esta página demonstra o uso de vários pacotes para análise de pesquisas de questionários (do tipo survey). A maioria dos pacotes de pesquisa R depende do pacote survey para fazer...">
 <meta name="generator" content="bookdown 0.35 with bs4_book()">
-<meta property="og:title" content="25 Analises de pesquisa de questionários (survey) | Manual de R para Epidemiologistas">
+<meta property="og:title" content="26 Analises de pesquisa de questionários (survey) | Manual de R para Epidemiologistas">
 <meta property="og:type" content="book">
-<meta property="og:description" content="25.1 Visão Geral Esta página demonstra o uso de vários pacotes para análise de pesquisas de questionários (do tipo survey). A maioria dos pacotes de pesquisa R depende do pacote survey para fazer...">
+<meta property="og:description" content="26.1 Visão Geral Esta página demonstra o uso de vários pacotes para análise de pesquisas de questionários (do tipo survey). A maioria dos pacotes de pesquisa R depende do pacote survey para fazer...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="25 Analises de pesquisa de questionários (survey) | Manual de R para Epidemiologistas">
-<meta name="twitter:description" content="25.1 Visão Geral Esta página demonstra o uso de vários pacotes para análise de pesquisas de questionários (do tipo survey). A maioria dos pacotes de pesquisa R depende do pacote survey para fazer...">
+<meta name="twitter:title" content="26 Analises de pesquisa de questionários (survey) | Manual de R para Epidemiologistas">
+<meta name="twitter:description" content="26.1 Visão Geral Esta página demonstra o uso de vários pacotes para análise de pesquisas de questionários (do tipo survey). A maioria dos pacotes de pesquisa R depende do pacote survey para fazer...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
@@ -25,7 +25,10 @@
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
-<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.2.0/leaflet.js"></script><script src="libs/leaflet-providers-1.13.0/leaflet-providers_1.13.0.js"></script><script src="libs/leaflet-providers-plugin-2.2.0/leaflet-providers-plugin.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
 <script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
 <script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -93,35 +96,37 @@
 <li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
 <li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
 <li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
-<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
-<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
-<li><a class="active" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
-<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li><a class="" href="time-series.html"><span class="header-section-number">23</span> Séries temporais e detecção de surtos</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">24</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">25</span> Rastreamento de contatos</a></li>
+<li><a class="active" href="survey-analysis.html"><span class="header-section-number">26</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">27</span> Análise de sobrevivência</a></li>
+<li><a class="" href="gis.html"><span class="header-section-number">28</span> Introdução ao GIS</a></li>
 <li class="book-part">Visualização de Dados</li>
-<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
-<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
-<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
-<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
-<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
-<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
-<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
-<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
-<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
-<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
-<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">29</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">30</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">31</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">32</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">33</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">34</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">35</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">36</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">37</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">38</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">39</span> Gráficos interativos</a></li>
 <li class="book-part">Relatórios e dashboards</li>
-<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
-<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
-<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
-<li><a class="" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">40</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">41</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">42</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="" href="shiny-basics.html"><span class="header-section-number">43</span> Painéis com Shiny</a></li>
 <li class="book-part">Miscelânea</li>
-<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
-<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
-<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
-<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
-<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
-<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
-<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">44</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">45</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">46</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">47</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">48</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">49</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">50</span> Data Table</a></li>
 </ul>
 
         <div class="book-extra">
@@ -129,14 +134,14 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="survey-analysis" class="section level1" number="25">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="survey-analysis" class="section level1" number="26">
 <h1>
-<span class="header-section-number">25</span> Analises de pesquisa de questionários (<em>survey</em>)<a class="anchor" aria-label="anchor" href="#survey-analysis"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26</span> Analises de pesquisa de questionários (<em>survey</em>)<a class="anchor" aria-label="anchor" href="#survey-analysis"><i class="fas fa-link"></i></a>
 </h1>
 <!-- ======================================================= -->
-<div id="visão-geral-2" class="section level2" number="25.1">
+<div id="visão-geral-2" class="section level2" number="26.1">
 <h2>
-<span class="header-section-number">25.1</span> Visão Geral<a class="anchor" aria-label="anchor" href="#vis%C3%A3o-geral-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.1</span> Visão Geral<a class="anchor" aria-label="anchor" href="#vis%C3%A3o-geral-2"><i class="fas fa-link"></i></a>
 </h2>
 <p>Esta página demonstra o uso de vários pacotes para análise de pesquisas de questionários (do tipo <em>survey</em>).</p>
 <p>A maioria dos pacotes de pesquisa R depende do <a href="https://cran.r-project.org/web/packages/survey/index.html">pacote <strong>survey</strong></a> para fazer análises ponderadas.
@@ -149,7 +154,7 @@ para criar pesos de amostragem (<em>n.b</em> este pacote ainda não está atualm
 veja a página do github <a href="https://github.com/R4EPI/sitrep">“R4Epis”</a>. Alguns dos códigos <strong>survey</strong> baseados em pacotes são baseados nas primeiras versões do
 <a href="https://github.com/EPIET/RapidAssessmentSurveys">EPIET case studies</a>.</p>
 <p>No momento, esta página não aborda os cálculos de tamanho de amostra ou amostragem. Para uma calculadora de tamanho de amostra simples de usar, consulte
-<a href="https://www.openepi.com/Menu/OE_Menu.htm">OpenEpi</a>. A página <a href="#gis">Introdução do GIS</a> (<a href="https://epirhandbook.com/gis-basics.html" class="uri">https://epirhandbook.com/gis-basics.html</a>) do manual terá eventualmente uma seção sobre
+<a href="https://www.openepi.com/Menu/OE_Menu.htm">OpenEpi</a>. A página <a href="gis.html#gis">Introdução do GIS</a> (<a href="https://epirhandbook.com/gis-basics.html" class="uri">https://epirhandbook.com/gis-basics.html</a>) do manual terá eventualmente uma seção sobre
 amostragem espacial aleatória, e esta página terá eventualmente uma seção sobre estruturas de amostragem, bem como cálculos de tamanho de amostra.</p>
 <ol style="list-style-type: decimal">
 <li>Dados da pesquisa</li>
@@ -162,9 +167,9 @@ amostragem espacial aleatória, e esta página terá eventualmente uma seção s
 </ol>
 <!-- ======================================================= -->
 </div>
-<div id="preparação-15" class="section level2" number="25.2">
+<div id="preparação-16" class="section level2" number="26.2">
 <h2>
-<span class="header-section-number">25.2</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-15"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.2</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-16"><i class="fas fa-link"></i></a>
 </h2>
 <div id="pacotes-1" class="section level3 unnumbered">
 <h3>Pacotes<a class="anchor" aria-label="anchor" href="#pacotes-1"><i class="fas fa-link"></i></a>
@@ -174,7 +179,7 @@ se necessário <em>e</em> o carrega para utilização. Você também pode carreg
 sobre os pacotes R.
 Aqui também demonstramos utilizando a função <code><a href="https://rdrr.io/pkg/pacman/man/p_load_gh.html">p_load_gh()</a></code> de <strong>pacman</strong> para instalar e carregar pacote do github que ainda não foi publicado no
 CRAN.</p>
-<div class="sourceCode" id="cb1181"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1244"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## carregar pacotes do CRAN</span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">rio</span>,          <span class="co"># Importar arquivo</span></span>
 <span>               <span class="va">here</span>,         <span class="co"># Local do arquivo</span></span>
@@ -212,26 +217,26 @@ em uma recodificação.</span></p>
 <p><span style="color: orange;"><strong>CUIDADO:</strong> O conjunto de dados do exemplo não é o mesmo que uma exportação (como em Kobo você exporta diferentes níveis de questionários individualmente) -
 veja o seção de dados da pesquisa abaixo para fundir as diferentes níveis</span></p>
 <p>O conjunto de dados é importado utilizando a função <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> do pacote <strong>rio</strong>. Veja a página <a href="importing.html#importing">Importar e exportação</a> para outrasmaneiras de importar dados.</p>
-<div class="sourceCode" id="cb1182"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1245"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># importar os dados da pesquisa</span></span>
 <span><span class="va">survey_data</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"survey_data.xlsx"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># importar o dicionário para o R</span></span>
 <span><span class="va">survey_dict</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"survey_dict.xlsx"</span><span class="op">)</span> </span></code></pre></div>
 <p>As primeiras 10 linhas da pesquisa são exibidas abaixo.</p>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0e7ad4099c8a199e7fc3" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-0e7ad4099c8a199e7fc3">{"x":{"filter":"none","vertical":false,"data":[[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["2018-04-15T00:00:00Z","2018-03-04T00:00:00Z","2018-04-16T00:00:00Z","2018-01-23T00:00:00Z","2018-01-09T00:00:00Z","2018-03-07T00:00:00Z","2018-02-18T00:00:00Z","2018-04-12T00:00:00Z","2018-04-17T00:00:00Z","2018-01-05T00:00:00Z"],[null,null,null,null,null,null,null,null,null,null],["village_1","village_1","village_10","village_5","village_3","village_8","other","village_7","village_4","village_2"],[null,null,null,null,null,null,null,null,null,null],[1,1,10,5,3,8,11,7,4,2],[9,1,15,6,18,14,17,16,13,14],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["yes","no","no","yes","no","yes","no","yes","yes","yes"],[null,"no_benefit","neg_experience",null,"other",null,"no_benefit",null,null,null],[null,null,null,null,null,null,null,null,null,null],[6,null,null,8,null,5,null,6,5,5],["female",null,null,"female",null,"male",null,"male","male","female"],[26,null,null,3,null,22,null,33,96,18],[null,null,null,36,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["no",null,null,"no",null,"yes",null,"yes","yes","yes"],["yes",null,null,null,null,"yes",null,"no","no","no"],["secondary",null,null,null,null,"secondary",null,null,null,null],["no",null,null,"no",null,"yes",null,"no","yes","yes"],[null,null,null,null,null,"yes",null,null,"no","no"],["yes",null,null,null,null,null,null,null,null,"yes"],["no",null,null,"no",null,"yes",null,"yes","no","yes"],["yes",null,null,"no",null,"no",null,"no","yes","yes"],["no",null,null,null,null,null,null,null,"no","no"],[null,null,null,null,null,null,null,null,null,null],["yes",null,null,"no",null,"no",null,"yes","no","no"],["no",null,null,null,null,null,null,"no",null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["no","no","no","no","no","no","no","no","yes","no"],[null,null,null,null,null,null,null,null,"no",null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,"dont_know",null],[null,null,null,null,null,null,null,null,null,null],["yes",null,null,"yes",null,"no",null,"yes","no","no"],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["sexual",null,null,"sexual",null,null,null,"shot",null,null],["0",null,null,"0",null,null,null,"0",null,null],["1",null,null,"1",null,null,null,"0",null,null],["0",null,null,"0",null,null,null,"1",null,null],["0",null,null,"0",null,null,null,"0",null,null],["0",null,null,"0",null,null,null,"0",null,null],["0",null,null,"0",null,null,null,"0",null,null],[9,1,183,83,58,146,205,130,72,33],[1,1,1,1,1,1,1,1,1,1],["9_1","1_1","183_1","83_1","58_1","146_1","205_1","130_1","72_1","33_1"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>start<\/th>\n      <th>end<\/th>\n      <th>today<\/th>\n      <th>deviceid<\/th>\n      <th>date<\/th>\n      <th>team_number<\/th>\n      <th>village_name<\/th>\n      <th>village_other<\/th>\n      <th>cluster_number<\/th>\n      <th>household_number<\/th>\n      <th>households_building<\/th>\n      <th>random_hh<\/th>\n      <th>random_hh_note<\/th>\n      <th>consent<\/th>\n      <th>no_consent_reason<\/th>\n      <th>no_consent_other<\/th>\n      <th>member_number<\/th>\n      <th>sex<\/th>\n      <th>age_years<\/th>\n      <th>age_months_calc<\/th>\n      <th>age_months<\/th>\n      <th>bednet<\/th>\n      <th>read_write<\/th>\n      <th>education_level<\/th>\n      <th>measles_vaccination<\/th>\n      <th>vaccination_card<\/th>\n      <th>pregnant<\/th>\n      <th>malaria_treatment<\/th>\n      <th>arrived<\/th>\n      <th>remember_arrival<\/th>\n      <th>arrived_date<\/th>\n      <th>left<\/th>\n      <th>remember_departure<\/th>\n      <th>left_date<\/th>\n      <th>born<\/th>\n      <th>remember_dob<\/th>\n      <th>birthday_date<\/th>\n      <th>died<\/th>\n      <th>remember_death<\/th>\n      <th>death_date<\/th>\n      <th>cause<\/th>\n      <th>cause_other<\/th>\n      <th>violent_episode<\/th>\n      <th>violent_episodes_number<\/th>\n      <th>violence_nature_other<\/th>\n      <th>violence_nature<\/th>\n      <th>violence_nature/beaten<\/th>\n      <th>violence_nature/sexual<\/th>\n      <th>violence_nature/shot<\/th>\n      <th>violence_nature/detained_kidnapped<\/th>\n      <th>violence_nature/other<\/th>\n      <th>violence_nature/no_response<\/th>\n      <th>index<\/th>\n      <th>index_y<\/th>\n      <th>uid<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[8,9,16,18,19,20,52,53]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Também queremos importar os dados sobre a população de amostragem para que possamos produzir pesos adequados. Estes dados podem estar em diferentes formatos,
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-809027d2ee6d044ca7f1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-809027d2ee6d044ca7f1">{"x":{"filter":"none","vertical":false,"data":[[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["2018-04-15T00:00:00Z","2018-03-04T00:00:00Z","2018-04-16T00:00:00Z","2018-01-23T00:00:00Z","2018-01-09T00:00:00Z","2018-03-07T00:00:00Z","2018-02-18T00:00:00Z","2018-04-12T00:00:00Z","2018-04-17T00:00:00Z","2018-01-05T00:00:00Z"],[null,null,null,null,null,null,null,null,null,null],["village_1","village_1","village_10","village_5","village_3","village_8","other","village_7","village_4","village_2"],[null,null,null,null,null,null,null,null,null,null],[1,1,10,5,3,8,11,7,4,2],[9,1,15,6,18,14,17,16,13,14],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["yes","no","no","yes","no","yes","no","yes","yes","yes"],[null,"no_benefit","neg_experience",null,"other",null,"no_benefit",null,null,null],[null,null,null,null,null,null,null,null,null,null],[6,null,null,8,null,5,null,6,5,5],["female",null,null,"female",null,"male",null,"male","male","female"],[26,null,null,3,null,22,null,33,96,18],[null,null,null,36,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["no",null,null,"no",null,"yes",null,"yes","yes","yes"],["yes",null,null,null,null,"yes",null,"no","no","no"],["secondary",null,null,null,null,"secondary",null,null,null,null],["no",null,null,"no",null,"yes",null,"no","yes","yes"],[null,null,null,null,null,"yes",null,null,"no","no"],["yes",null,null,null,null,null,null,null,null,"yes"],["no",null,null,"no",null,"yes",null,"yes","no","yes"],["yes",null,null,"no",null,"no",null,"no","yes","yes"],["no",null,null,null,null,null,null,null,"no","no"],[null,null,null,null,null,null,null,null,null,null],["yes",null,null,"no",null,"no",null,"yes","no","no"],["no",null,null,null,null,null,null,"no",null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["no","no","no","no","no","no","no","no","yes","no"],[null,null,null,null,null,null,null,null,"no",null],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,"dont_know",null],[null,null,null,null,null,null,null,null,null,null],["yes",null,null,"yes",null,"no",null,"yes","no","no"],[null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,null,null,null],["sexual",null,null,"sexual",null,null,null,"shot",null,null],["0",null,null,"0",null,null,null,"0",null,null],["1",null,null,"1",null,null,null,"0",null,null],["0",null,null,"0",null,null,null,"1",null,null],["0",null,null,"0",null,null,null,"0",null,null],["0",null,null,"0",null,null,null,"0",null,null],["0",null,null,"0",null,null,null,"0",null,null],[9,1,183,83,58,146,205,130,72,33],[1,1,1,1,1,1,1,1,1,1],["9_1","1_1","183_1","83_1","58_1","146_1","205_1","130_1","72_1","33_1"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>start<\/th>\n      <th>end<\/th>\n      <th>today<\/th>\n      <th>deviceid<\/th>\n      <th>date<\/th>\n      <th>team_number<\/th>\n      <th>village_name<\/th>\n      <th>village_other<\/th>\n      <th>cluster_number<\/th>\n      <th>household_number<\/th>\n      <th>households_building<\/th>\n      <th>random_hh<\/th>\n      <th>random_hh_note<\/th>\n      <th>consent<\/th>\n      <th>no_consent_reason<\/th>\n      <th>no_consent_other<\/th>\n      <th>member_number<\/th>\n      <th>sex<\/th>\n      <th>age_years<\/th>\n      <th>age_months_calc<\/th>\n      <th>age_months<\/th>\n      <th>bednet<\/th>\n      <th>read_write<\/th>\n      <th>education_level<\/th>\n      <th>measles_vaccination<\/th>\n      <th>vaccination_card<\/th>\n      <th>pregnant<\/th>\n      <th>malaria_treatment<\/th>\n      <th>arrived<\/th>\n      <th>remember_arrival<\/th>\n      <th>arrived_date<\/th>\n      <th>left<\/th>\n      <th>remember_departure<\/th>\n      <th>left_date<\/th>\n      <th>born<\/th>\n      <th>remember_dob<\/th>\n      <th>birthday_date<\/th>\n      <th>died<\/th>\n      <th>remember_death<\/th>\n      <th>death_date<\/th>\n      <th>cause<\/th>\n      <th>cause_other<\/th>\n      <th>violent_episode<\/th>\n      <th>violent_episodes_number<\/th>\n      <th>violence_nature_other<\/th>\n      <th>violence_nature<\/th>\n      <th>violence_nature/beaten<\/th>\n      <th>violence_nature/sexual<\/th>\n      <th>violence_nature/shot<\/th>\n      <th>violence_nature/detained_kidnapped<\/th>\n      <th>violence_nature/other<\/th>\n      <th>violence_nature/no_response<\/th>\n      <th>index<\/th>\n      <th>index_y<\/th>\n      <th>uid<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[8,9,16,18,19,20,52,53]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Também queremos importar os dados sobre a população de amostragem para que possamos produzir pesos adequados. Estes dados podem estar em diferentes formatos,
 no entanto, sugerimos que seja como visto abaixo (podendo ser apenas digitado numa planilha).</p>
-<div class="sourceCode" id="cb1183"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1246"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># importar os dados da população</span></span>
 <span><span class="va">population</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"population.xlsx"</span><span class="op">)</span></span></code></pre></div>
 <p>As primeiras 10 linhas da pesquisa são exibidas abaixo.</p>
-<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-93dc46a3719e4020bca8" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-93dc46a3719e4020bca8">{"x":{"filter":"none","vertical":false,"data":[["0-2","3-14","15-29","30-44","45+","0-2","3-14","15-29","30-44","45+"],["male","male","male","male","male","female","female","female","female","female"],[0.034,0.1811,0.138,0.0808,0.06610000000000001,0.034,0.1811,0.138,0.0808,0.06610000000000001],[340,1811,1380,808,661,340,1811,1380,808,661],["district_a","district_a","district_a","district_a","district_a","district_a","district_a","district_a","district_a","district_a"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>age_group<\/th>\n      <th>sex<\/th>\n      <th>proportions<\/th>\n      <th>population<\/th>\n      <th>health_district<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Para pesquisas de <em>cluster</em> (grupos, agregados) você pode querer adicionar pesos de pesquisa no nível do cluster. Você poderia ler estes
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-9187a5e1e4165e068212" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-9187a5e1e4165e068212">{"x":{"filter":"none","vertical":false,"data":[["0-2","3-14","15-29","30-44","45+","0-2","3-14","15-29","30-44","45+"],["male","male","male","male","male","female","female","female","female","female"],[0.034,0.1811,0.138,0.0808,0.06610000000000001,0.034,0.1811,0.138,0.0808,0.06610000000000001],[340,1811,1380,808,661,340,1811,1380,808,661],["district_a","district_a","district_a","district_a","district_a","district_a","district_a","district_a","district_a","district_a"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>age_group<\/th>\n      <th>sex<\/th>\n      <th>proportions<\/th>\n      <th>population<\/th>\n      <th>health_district<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[2,3]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":[],"jsHooks":[]}</script><p>Para pesquisas de <em>cluster</em> (grupos, agregados) você pode querer adicionar pesos de pesquisa no nível do cluster. Você poderia ler estes
 dados como acima. Alternativamente, se houver apenas algumas contagens, estas poderiam ser inseridas como abaixo em um <em>tibble</em> (data frame com alguns ajustes
 para deixá-lo mais amigável). Em qualquer caso você precisará ter uma coluna com um identificador de cluster, que corresponde aos dados de sua pesquisa, e outra
 coluna com o número de agregados familiares em cada grupo.</p>
-<div class="sourceCode" id="cb1184"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1247"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## definir o número de agregados familiares em cada cluster</span></span>
 <span><span class="va">cluster_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>cluster <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"village_1"</span>, <span class="st">"village_2"</span>, <span class="st">"village_3"</span>, <span class="st">"village_4"</span>, </span>
 <span>                                     <span class="st">"village_5"</span>, <span class="st">"village_6"</span>, <span class="st">"village_7"</span>, <span class="st">"village_8"</span>,</span>
@@ -246,7 +251,7 @@ coluna com o número de agregados familiares em cada grupo.</p>
 <p>Também criamos uma variável de faixa etária utilizando a função <code>age_categories()</code> do pacote <strong>epikit</strong> - veja a seção <a href="cleaning.html#cleaning">limpeza de dados</a> para mais detalhes. Além disso, criamos uma variável do tipo caractere, que define em
 qual distrito se encontram os vários agrupamentos.</p>
 <p>Finalmente, recodificamos todas as variáveis yes/no (sim/não) para variáveis TRUE/FALSE (Verdadeiro/Falso) - caso contrário, estas não poderão ser utilizadas pelas funções de proporção <strong>survey</strong>.</p>
-<div class="sourceCode" id="cb1185"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1248"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## selecione os nomes das variáveis de data no dicionário </span></span>
 <span><span class="va">DATEVARS</span> <span class="op">&lt;-</span> <span class="va">survey_dict</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">type</span> <span class="op">==</span> <span class="st">"date"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -295,9 +300,9 @@ qual distrito se encontram os vários agrupamentos.</p>
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="dados-da-pesquisa" class="section level2" number="25.3">
+<div id="dados-da-pesquisa" class="section level2" number="26.3">
 <h2>
-<span class="header-section-number">25.3</span> Dados da pesquisa<a class="anchor" aria-label="anchor" href="#dados-da-pesquisa"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.3</span> Dados da pesquisa<a class="anchor" aria-label="anchor" href="#dados-da-pesquisa"><i class="fas fa-link"></i></a>
 </h2>
 <p>Existem inúmeras técnicas de amostragem que podem ser usados para pesquisas. Aqui demonstraremos o código para: - Estratificado -
 Conglomerados (Cluster) - Estratificado e Conglomerados</p>
@@ -305,7 +310,7 @@ Conglomerados (Cluster) - Estratificado e Conglomerados</p>
 Em nosso exemplo, há um nível para domicílio e um nível para indivíduos dentro desses domicílios.</p>
 <p>Estes dois níveis estão ligados por um identificador único. Para um conjunto de dados Kobo esta variável é “_index” a nível de domicílios, que corresponde
 ao “_parent_index” a nível individual. Isto criará novas linhas para domicílio com cada indivíduo correspondente. Para maiores detalhes, veja a seção do manual sobre união de bases (<a href="https://epirhandbook.com/joining-data.html" class="uri">https://epirhandbook.com/joining-data.html</a>).</p>
-<div class="sourceCode" id="cb1186"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1249"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## juntar os dados individuais e de domicílio para formar um conjunto completo de dados</span></span>
 <span><span class="va">survey_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">survey_data_hh</span>, </span>
 <span>                         <span class="va">survey_data_indiv</span>,</span>
@@ -317,16 +322,16 @@ ao “_parent_index” a nível individual. Isto criará novas linhas para domic
 <span>     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>uid <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"{index}_{index_y}"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <!-- ======================================================= -->
 </div>
-<div id="tempo-de-observação" class="section level2" number="25.4">
+<div id="tempo-de-observação" class="section level2" number="26.4">
 <h2>
-<span class="header-section-number">25.4</span> Tempo de observação<a class="anchor" aria-label="anchor" href="#tempo-de-observa%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.4</span> Tempo de observação<a class="anchor" aria-label="anchor" href="#tempo-de-observa%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
 </h2>
 <p>Para pesquisas de mortalidade, queremos agora saber quanto tempo cada indivíduo esteve presente no local, para podermos calcular um taxa de mortalidade para nosso
 período de interesse. Isto não é relevante para todas, mas particularmente para pesquisas de mortalidade, isso é importante, pois são conduzidas frequentemente
 entre populações móveis ou deslocadas.</p>
 <p>Para isso, definimos primeiro nosso período de tempo de interesse, também conhecido como período de retordo, ou período de <em>recall</em> (i.e. o tempo que os participantes
 são instruídos a se reportarem quando respondem as perguntas). Podemos então utilizar este período para definir datas inadequadas para o ausência, ou seja, se as mortes forem relatadas fora do período de interesse.</p>
-<div class="sourceCode" id="cb1187"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1250"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## definir o início/fim do período de recall</span></span>
 <span><span class="co">## pode ser alterado para variáveis de data do conjunto de dados </span></span>
 <span><span class="co">## (por exemplo, questionário de data de chegada e data)</span></span>
@@ -359,7 +364,7 @@ para as datas e depois usar isso para calcular a diferença entre os dias (pesso
 data após o início do recall, se aplicável (por exemplo chegadas ou nascimentos).</p>
 <p>Data final: Primeiro evento de partida apropriado dentro de seu período de recall, ou o final de seu período de recall, ou uma data antes do final do recall se
 aplicável (por exemplo, partidas e mortes).</p>
-<div class="sourceCode" id="cb1188"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1251"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## criar novas variáveis para datas/causas de início e fim</span></span>
 <span><span class="va">survey_data</span> <span class="op">&lt;-</span> <span class="va">survey_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>     <span class="co">## escolher a data mais próxima informada na pesquisa</span></span>
@@ -404,9 +409,9 @@ aplicável (por exemplo, partidas e mortes).</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>obstime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">enddate</span> <span class="op">-</span> <span class="va">startdate</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <!-- ======================================================= -->
 </div>
-<div id="ponderação" class="section level2" number="25.5">
+<div id="ponderação" class="section level2" number="26.5">
 <h2>
-<span class="header-section-number">25.5</span> Ponderação<a class="anchor" aria-label="anchor" href="#pondera%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.5</span> Ponderação<a class="anchor" aria-label="anchor" href="#pondera%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
 </h2>
 <p>É importante que você remova observações errôneas antes de acrescentar pesos à pesquisa. Por exemplo, se você tiver registros com tempos de observação negativos,
 precisará verificá-los (você pode fazer isso com a função<code>assert_positive_timespan()</code> do pacote <strong>sitrep</strong>. Outra questão é se você quiser eliminar linhas vazias (por
@@ -415,7 +420,7 @@ também precisarão ser removidos.</p>
 <p>Neste exemplo, filtramos para os casos que queremos remover e os armazenamos em um data frame separado - desta forma podemos descrever aqueles que foram excluídos da
 pesquisa. Em seguida, utilizamos a função <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code> do <strong>dplyr</strong> para remover estes casos descartados de nossos dados de pesquisa.</p>
 <p><span style="color: red;"><strong>PERIGO:</strong> Você não pode ter valores ausentes em sua variável de peso, ou qualquer uma das variáveis relevantes para o projeto de sua pesquisa (por exemplo, idade, sexo, estratos ou variáveis de agrupamento).</span></p>
-<div class="sourceCode" id="cb1189"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1252"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## armazene os casos que deseja remover para que possa descrevê-los (por exemplo, sem consentimento) </span></span>
 <span><span class="co">## ou local/cluster errados)</span></span>
 <span><span class="va">dropped</span> <span class="op">&lt;-</span> <span class="va">survey_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -424,7 +429,7 @@ pesquisa. Em seguida, utilizamos a função <code><a href="https://dplyr.tidyver
 <span><span class="co">## usar os casos descartados para remover as linhas não utilizadas do conjunto de dados da pesquisa </span></span>
 <span><span class="va">survey_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">survey_data</span>, <span class="va">dropped</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dropped</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Como mencionado acima, demonstramos como adicionar pesos para as três formas de amostragem (estratificado, conglomerado e conglomerado estratificado). Estas exigem informações sobre a população de origem e/ou os aglomerados pesquisados. Usaremos o código do “conglomerado estratificado” para este exemplo, mas escolha o que for mais apropriado para seu modelo de estudo.</p>
-<div class="sourceCode" id="cb1190"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1253"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># estratificado ----------------------------------------------------------------</span></span>
 <span><span class="co"># criar uma variável chamada "surv_weight_strata</span></span>
 <span><span class="co"># contém pesos para cada indivíduo - por faixa etária, sexo e distrito de saúde</span></span>
@@ -463,9 +468,9 @@ pesquisa. Em seguida, utilizamos a função <code><a href="https://dplyr.tidyver
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>surv_weight_cluster_strata <span class="op">=</span> <span class="va">surv_weight_strata</span> <span class="op">*</span> <span class="va">surv_weight_cluster</span><span class="op">)</span></span></code></pre></div>
 <!-- ======================================================= -->
 </div>
-<div id="objetos-de-delineamento-de-pesquisa" class="section level2" number="25.6">
+<div id="objetos-de-delineamento-de-pesquisa" class="section level2" number="26.6">
 <h2>
-<span class="header-section-number">25.6</span> Objetos de delineamento de pesquisa<a class="anchor" aria-label="anchor" href="#objetos-de-delineamento-de-pesquisa"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.6</span> Objetos de delineamento de pesquisa<a class="anchor" aria-label="anchor" href="#objetos-de-delineamento-de-pesquisa"><i class="fas fa-link"></i></a>
 </h2>
 <p>Crie um objeto de pesquisa de acordo com seu projeto de estudo. Utilizado da mesma forma que os <em>data frames</em> para calcular as proporções de peso etc.
 Certifique-se de que todas as variáveis necessárias sejam criadas antes disso.</p>
@@ -474,14 +479,14 @@ Certifique-se de que todas as variáveis necessárias sejam criadas antes disso.
 <p>Como mencionado anteriormente, há dois pacotes disponíveis para fazer isto. O clássico é o <strong>survey</strong> e depois há um pacote de “roupagem” (<em>wrapper</em>) chamado
 <strong>srvyr</strong> que torna os objetos e funções mais fáceis de arrumar. Demonstraremos ambos, mas observe que a maioria dos códigos neste capítulo utilizará objetos
 baseados no <strong>srvyr</strong>. A única exceção é que o pacote <strong>gtsummary</strong> só aceita objetos do <strong>survey</strong>.</p>
-<div id="pacote-survey" class="section level3" number="25.6.1">
+<div id="pacote-survey" class="section level3" number="26.6.1">
 <h3>
-<span class="header-section-number">25.6.1</span> Pacote <strong>survey</strong><a class="anchor" aria-label="anchor" href="#pacote-survey"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.6.1</span> Pacote <strong>survey</strong><a class="anchor" aria-label="anchor" href="#pacote-survey"><i class="fas fa-link"></i></a>
 </h3>
 <p>O pacote <strong>survey</strong> utiliza, do forma eficaz, codificação em <strong>R base</strong>, e por isso não é possível utilizar os <em>pipes</em> (<code>%&gt;%</code>) ou outra sintaxe do <strong>dplyr</strong>.
 Com o pacote <strong>survey</strong>, utilizamos a função <code>svydesign()</code> para definir um objeto de pesquisa com agrupamentos (cluster), pesos e estratificações apropriados.</p>
 <p><span style="color: black;"><strong>NOTA:</strong> precisamos utilizar o til (<code>~</code>) em frente às variáveis, pois o pacote usa a sintaxe <strong>R base</strong> para atribuição variáveis baseada em fórmulas.</span></p>
-<div class="sourceCode" id="cb1191"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1254"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># aleatório simples ------------------------------------------------------------</span></span>
 <span><span class="va">base_survey_design_simple</span> <span class="op">&lt;-</span> <span class="fu">svydesign</span><span class="op">(</span>ids <span class="op">=</span> <span class="op">~</span><span class="fl">1</span>, <span class="co"># 1 para nenhuma identificação de cluster</span></span>
 <span>                   weights <span class="op">=</span> <span class="cn">NULL</span>,               <span class="co"># sem adição de pesos</span></span>
@@ -510,13 +515,13 @@ Com o pacote <strong>survey</strong>, utilizamos a função <code>svydesign()</c
 <span>                   data <span class="op">=</span> <span class="va">survey_data</span>                     <span class="co"># especificar a base de dados</span></span>
 <span>                  <span class="op">)</span></span></code></pre></div>
 </div>
-<div id="pacote-srvyr" class="section level3" number="25.6.2">
+<div id="pacote-srvyr" class="section level3" number="26.6.2">
 <h3>
-<span class="header-section-number">25.6.2</span> Pacote <strong>srvyr</strong><a class="anchor" aria-label="anchor" href="#pacote-srvyr"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.6.2</span> Pacote <strong>srvyr</strong><a class="anchor" aria-label="anchor" href="#pacote-srvyr"><i class="fas fa-link"></i></a>
 </h3>
 <p>Com o pacote <strong>srvyr</strong>* podemos utilizar a função <code>as_survey_design()</code>, que tem os mesmos argumentos exemplificados acima, mas permite <em>pipes</em> (<code>%&gt;%</code>),
 e assim não precisamos utilizar o til (<code>~</code>).</p>
-<div class="sourceCode" id="cb1192"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1255"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># aleatório simples ------------------------------------------------------------</span></span>
 <span><span class="va">survey_design_simple</span> <span class="op">&lt;-</span> <span class="va">survey_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">as_survey_design</span><span class="op">(</span>ids <span class="op">=</span> <span class="fl">1</span>, <span class="co"># 1 para nenhuma identificação de cluster</span></span>
@@ -545,9 +550,9 @@ e assim não precisamos utilizar o til (<code>~</code>).</p>
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="análise-descritiva" class="section level2" number="25.7">
+<div id="análise-descritiva-2" class="section level2" number="26.7">
 <h2>
-<span class="header-section-number">25.7</span> Análise descritiva<a class="anchor" aria-label="anchor" href="#an%C3%A1lise-descritiva"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.7</span> Análise descritiva<a class="anchor" aria-label="anchor" href="#an%C3%A1lise-descritiva-2"><i class="fas fa-link"></i></a>
 </h2>
 <p>A análise descritiva básica e a visualização são amplamente cobertas em outros capítulos do manual, portanto, não vamos nos deter aqui. Para detalhes veja os
 capítulos <a href="tables-descriptive.html#tables-descriptive">Tabelas Descritivas</a>, <a href="stat-tests.html#stat-tests">Testes Estatísticos</a>,
@@ -559,16 +564,16 @@ capítulos <a href="tables-descriptive.html#tables-descriptive">Tabelas Descriti
 <li>Número de indivíduos excluídos e os motivos de exclusão</li>
 <li>Número médio (intervalo) de domicílios por agrupamento e de indivíduos por doméstico</li>
 </ul>
-<div id="viés-de-amostras" class="section level3" number="25.7.1">
+<div id="viés-de-amostras" class="section level3" number="26.7.1">
 <h3>
-<span class="header-section-number">25.7.1</span> Viés de amostras<a class="anchor" aria-label="anchor" href="#vi%C3%A9s-de-amostras"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.7.1</span> Viés de amostras<a class="anchor" aria-label="anchor" href="#vi%C3%A9s-de-amostras"><i class="fas fa-link"></i></a>
 </h3>
 <p>Compare as proporções em cada faixa etária entre sua amostra e a população de origem. Isto é importante para poder destacar um potencial viés de amostragem.
 Da mesma forma, você poderia repetir esta análise nas distribuições por sexo.</p>
 <p>Note que estes p-valores são apenas indicativos e uma discussão descritiva (ou visualização em pirâmides etárias abaixo) dadistribuições de sua amostra de estudo,
 em comparação com a população de origem, é mais importante do que o próprio teste binomial. Isto se deve ao fato de que o tamanho da amostra levará, na maioria
 das vezes, a diferenças que podem ser irrelevantes após a ponderação dos dados.</p>
-<div class="sourceCode" id="cb1193"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1256"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## contagem e proporção da população estudada</span></span>
 <span><span class="va">ag</span> <span class="op">&lt;-</span> <span class="va">survey_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -620,19 +625,19 @@ das vezes, a diferenças que podem ser irrelevantes após a ponderação dos dad
 <span>  <span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 5 × 6
 ## # Groups:   Faixa-etária [5]
-##   `Faixa-etária` `População de estudo (n)` `População de estudo (%)`
-##   &lt;chr&gt;                              &lt;int&gt;                     &lt;dbl&gt;
-## 1 0-2                                   12                    0.0256
-## 2 3-14                                  42                    0.0896
-## 3 15-29                                 64                    0.136 
-## 4 30-44                                 52                    0.111 
-## 5 45+                                  299                    0.638 
-## # ℹ 3 more variables: `População fonte (n)` &lt;dbl&gt;, `População fonte (%)` &lt;dbl&gt;,
-## #   `P-valor` &lt;chr&gt;</code></pre>
+##   `Faixa-etária` `População de estudo (n)` População de estudo …¹ `População fonte (n)`
+##   &lt;chr&gt;                              &lt;int&gt;                  &lt;dbl&gt;                 &lt;dbl&gt;
+## 1 0-2                                   12                 0.0256                  1360
+## 2 3-14                                  42                 0.0896                  7244
+## 3 15-29                                 64                 0.136                   5520
+## 4 30-44                                 52                 0.111                   3232
+## 5 45+                                  299                 0.638                   2644
+## # ℹ abbreviated name: ¹​`População de estudo (%)`
+## # ℹ 2 more variables: `População fonte (%)` &lt;dbl&gt;, `P-valor` &lt;chr&gt;</code></pre>
 </div>
-<div id="pirâmides-demográficas" class="section level3" number="25.7.2">
+<div id="pirâmides-demográficas" class="section level3" number="26.7.2">
 <h3>
-<span class="header-section-number">25.7.2</span> Pirâmides demográficas<a class="anchor" aria-label="anchor" href="#pir%C3%A2mides-demogr%C3%A1ficas"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.7.2</span> Pirâmides demográficas<a class="anchor" aria-label="anchor" href="#pir%C3%A2mides-demogr%C3%A1ficas"><i class="fas fa-link"></i></a>
 </h3>
 <p>As pirâmides demográficas (ou de idade-sexo) são uma maneira fácil de visualizar a distribuição em sua população pesquisada. Também vale a pena considerar a criação
 de <a href="tables-descriptive.html#tables-descriptive">Tabelas Descritivas</a> de idade e sexo por estratos de pesquisa. Demonstraremos utilizando o pacote <strong>apyramid</strong>,
@@ -643,7 +648,7 @@ substancialmente diferente da população original e se a ponderação corrige e
 também pode considerar a visualização por cada estrato de sua pesquisa - em nosso exemplo aqui, isso seria utilizando o argumento
 <code>stack_by = "health_district"</code> (veja `?age_pyramid’ para detalhes).</p>
 <p><span style="color: black;"><strong>NOTA:</strong> Os eixos x e y são invertidos em pirâmides</span></p>
-<div class="sourceCode" id="cb1195"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1258"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## definir limites e rótulos do eixo x -----------------------------------------</span></span>
 <span><span class="co">## (atualize estes números para serem os valores adequado ao seu gráfico)</span></span>
 <span><span class="va">max_prop</span> <span class="op">&lt;-</span> <span class="fl">35</span>      <span class="co"># escolha a maior proporção que quer mostrar</span></span>
@@ -748,14 +753,14 @@ também pode considerar a visualização por cada estrato de sua pesquisa - em n
 <span>       <span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/weighted_age_pyramid-1.png" width="1440"></div>
 </div>
-<div id="diagrama-aluvialsankey" class="section level3" number="25.7.3">
+<div id="diagrama-aluvialsankey" class="section level3" number="26.7.3">
 <h3>
-<span class="header-section-number">25.7.3</span> Diagrama aluvial/sankey<a class="anchor" aria-label="anchor" href="#diagrama-aluvialsankey"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.7.3</span> Diagrama aluvial/sankey<a class="anchor" aria-label="anchor" href="#diagrama-aluvialsankey"><i class="fas fa-link"></i></a>
 </h3>
 <p>A visualização de pontos de partida e resultados para indivíduos pode ser muito útil para se ter uma visão geral. Há uma aplicação bastante óbvia para populações
 móveis, porém existem inúmeras outras aplicações, tais como coortes ou qualquer outra situação em que há transições nos estados para indivíduos. Estes diagramas são
 conhecidos por vários nomes diferentes, incluindo aluvial, sankey e conjuntos paralelos - os detalhes estão no capítulo sobre <a href="diagrams.html#diagrams">Diagramas e Gráficos</a>.</p>
-<div class="sourceCode" id="cb1196"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1259"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## resuma os dados </span></span>
 <span><span class="va">flow_table</span> <span class="op">&lt;-</span> <span class="va">survey_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">startcause</span>, <span class="va">endcause</span>, <span class="va">sex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># faz contagem</span></span>
@@ -782,9 +787,9 @@ conhecidos por vários nomes diferentes, incluindo aluvial, sankey e conjuntos p
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="proporções-ponderadas" class="section level2" number="25.8">
+<div id="proporções-ponderadas" class="section level2" number="26.8">
 <h2>
-<span class="header-section-number">25.8</span> Proporções ponderadas<a class="anchor" aria-label="anchor" href="#propor%C3%A7%C3%B5es-ponderadas"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.8</span> Proporções ponderadas<a class="anchor" aria-label="anchor" href="#propor%C3%A7%C3%B5es-ponderadas"><i class="fas fa-link"></i></a>
 </h2>
 <p>Esta seção detalha como produzir tabelas para contagens e proporções ponderadas, com os intervalos de confiança associados e delineamento.
 Existem quatro opções diferentes, utilizando funções dos seguintes pacotes: <strong>survey</strong>, <strong>srvyr</strong>, <strong>sitrep</strong> e <strong>gtsummary</strong>. Para para
@@ -792,25 +797,25 @@ produzir uma tabela de estilo epidemiológico padrão com mínimo de código, n�
 entretanto, que isso ainda não está no CRAN e pode mudar no futuro. Caso contrário, o código <strong>survey</strong> será provavelmente o mais estável a longo prazo, enquanto
 <strong>srvyr</strong> caberá melhor dentro do fluxos de trabalho. Embora as funções <strong>gtsummary</strong> tenham um grande potencial, elas parecem ser experimentais e incompletas
 no momento em que da escrita deste manual.</p>
-<div id="pacote-survey-1" class="section level3" number="25.8.1">
+<div id="pacote-survey-1" class="section level3" number="26.8.1">
 <h3>
-<span class="header-section-number">25.8.1</span> Pacote <strong>survey</strong><a class="anchor" aria-label="anchor" href="#pacote-survey-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.8.1</span> Pacote <strong>survey</strong><a class="anchor" aria-label="anchor" href="#pacote-survey-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>Podemos utilizar a função <code>svyciprop()</code> do <strong>survey</strong> para obter proporções ponderadas e intervalos de confiança de 95%. Um delineamento apropriado pode ser extraído
 utilizando o <code>svymean()</code> em vez da função <code>svyprop()</code>. Vale notar que a função <code>svyprop()</code> parece apenas aceitar variáveis entre 0 e 1 (ou TRUE/FALSE), então, variáveis categóricas não funcionarão.</p>
 <p><span style="color: black;"><strong>NOTA:</strong> Funções do <strong>survey</strong> também aceitam objetos <strong>srvyr</strong> mas aqui usamos o objeto de delineamento <strong>survey</strong> apenas por uma questão de consistência</span></p>
-<div class="sourceCode" id="cb1197"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1260"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##  produção contagens ponderadas </span></span>
 <span><span class="fu">svytable</span><span class="op">(</span><span class="op">~</span><span class="va">died</span>, <span class="va">base_survey_design</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## died
 ##      FALSE       TRUE 
 ## 1406244.43   76213.01</code></pre>
-<div class="sourceCode" id="cb1199"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1262"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##  produção proporções ponderadas </span></span>
 <span><span class="fu">svyciprop</span><span class="op">(</span><span class="op">~</span><span class="va">died</span>, <span class="va">base_survey_design</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##               2.5% 97.5%
 ## died 0.0514 0.0208  0.12</code></pre>
-<div class="sourceCode" id="cb1201"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1264"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## obtem o efeito de delineamento  </span></span>
 <span><span class="fu">svymean</span><span class="op">(</span><span class="op">~</span><span class="va">died</span>, <span class="va">base_survey_design</span>, na.rm <span class="op">=</span> <span class="cn">T</span>, deff <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">deff</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -819,7 +824,7 @@ utilizando o <code>svymean()</code> em vez da função <code>svyprop()</code>. V
 <p>Podemos combinar as funções de <strong>survey</strong> mostradas acima em um função chamada <code>svy_prop</code>; e podemos então utilize essa função junto com o <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code> do pacote purrr
 para repetir sobre várias variáveis e criar uma tabela. Veja o capítulo <a href="iteration.html#iteration">Iterações e loops</a> para mais detalhes do
 pacote <strong>purrr</strong>.</p>
-<div class="sourceCode" id="cb1203"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1266"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Definir função para calcular contagens ponderadas, proporções, IC e efeito de delineamento</span></span>
 <span><span class="co"># x é a variável entre aspas </span></span>
 <span><span class="co"># O delineamento é seu objeto de desenho de pesquisa</span></span>
@@ -873,15 +878,15 @@ pacote <strong>purrr</strong>.</p>
 ## 2     died   76213.0       5.1   2.1   12.1                    3.8
 ## 3  arrived  761799.0      51.4  40.9   61.7                    3.9</code></pre>
 </div>
-<div id="pacote-srvyr-1" class="section level3" number="25.8.2">
+<div id="pacote-srvyr-1" class="section level3" number="26.8.2">
 <h3>
-<span class="header-section-number">25.8.2</span> Pacote <strong>srvyr</strong><a class="anchor" aria-label="anchor" href="#pacote-srvyr-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.8.2</span> Pacote <strong>srvyr</strong><a class="anchor" aria-label="anchor" href="#pacote-srvyr-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>Com <strong>srvyr</strong> podemos usar a sintaxe <strong>dplyr</strong> para criar uma tabela. Note que a função <code>survey_mean()</code> é utilizada e o argumento da proporção é especificado, e
 também que a mesma função é utilizada para calcular o efeito do delineamento. Isto porque <strong>srvyr</strong> envolve ambas as funções do pacote <strong>survey</strong> <code>svyciprop()</code>
 e <code>svymean()</code>, que são utilizadas na seção acima.</p>
 <p><span style="color: black;"><strong>NOTA:</strong> Não parece ser possível obter proporções a partir de variáveis categóricas utilizando <strong>srvyr</strong>, se você precisar disto então verifique a seção abaixo usando <strong>sitrep</strong></span></p>
-<div class="sourceCode" id="cb1205"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1268"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## usar o objeto delineado srvyr</span></span>
 <span><span class="va">survey_design</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
@@ -902,7 +907,7 @@ e <code>svymean()</code>, que são utilizadas na seção acima.</p>
 ##    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
 ## 1 76213.  5.14      2.08      12.1      3.76</code></pre>
 <p>Também aqui poderíamos escrever uma função para então reiterar sobre múltiplas variáveis usando o pacote <strong>purrr</strong>. Veja o capítulo do manual <a href="iteration.html#iteration">Iterações e loops</a> para detalhes sobre <strong>purrr</strong>.</p>
-<div class="sourceCode" id="cb1207"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1270"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># definir função para calcular contagens ponderadas, proporções, IC e delineamento</span></span>
 <span><span class="co"># o desenho é seu objeto de desenho de pesquisa</span></span>
 <span><span class="co"># x é a variável entre aspas </span></span>
@@ -946,13 +951,13 @@ e <code>svymean()</code>, que são utilizadas na seção acima.</p>
 ## 2 died      76213.  5.14      2.08      12.1      3.76
 ## 3 arrived  761799. 51.4      40.9       61.7      3.93</code></pre>
 </div>
-<div id="pacote-sitrep" class="section level3" number="25.8.3">
+<div id="pacote-sitrep" class="section level3" number="26.8.3">
 <h3>
-<span class="header-section-number">25.8.3</span> Pacote <strong>sitrep</strong><a class="anchor" aria-label="anchor" href="#pacote-sitrep"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.8.3</span> Pacote <strong>sitrep</strong><a class="anchor" aria-label="anchor" href="#pacote-sitrep"><i class="fas fa-link"></i></a>
 </h3>
 <p>A função <code>tab_survey()</code> de <strong>sitrep</strong> é um <em>wrapper</em> para <strong>srvyr</strong>, permitindo a criação de tabelas ponderadas com codificação mínima.
 Também permite calcular proporções ponderadas para variáveis categóricas.</p>
-<div class="sourceCode" id="cb1209"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1272"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>    <span class="co">## usando o objeto delimitado de pesquisa</span></span>
 <span><span class="va">survey_design</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="co">## passe os nomes das variáveis de interesse não cotadas</span></span>
@@ -974,13 +979,13 @@ Também permite calcular proporções ponderadas para variáveis categóricas.</
 ## 8 education_level primary    102609.  2.37 25.4% (16.2-37.3)
 ## 9 education_level secondary  130201.  6.68 32.2% (16.5-53.3)</code></pre>
 </div>
-<div id="pacote-gtsummary" class="section level3" number="25.8.4">
+<div id="pacote-gtsummary" class="section level3" number="26.8.4">
 <h3>
-<span class="header-section-number">25.8.4</span> Pacote <strong>gtsummary</strong><a class="anchor" aria-label="anchor" href="#pacote-gtsummary"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.8.4</span> Pacote <strong>gtsummary</strong><a class="anchor" aria-label="anchor" href="#pacote-gtsummary"><i class="fas fa-link"></i></a>
 </h3>
 <p>Com <strong>gtsummary</strong> não parece haver ainda funções embutidas para acrescentar intervalos de confiança ou efeito de delineamento. Aqui mostramos como definir uma função
 para adicionar intervalos de confiança e depois adicionar intervalos de confiança a uma tabela <strong>gtsummary</strong> criada utilizando a função <code>tbl_svysummary()</code>.</p>
-<div class="sourceCode" id="cb1212"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1275"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">confidence_intervals</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">variable</span>, <span class="va">by</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="co">## extrair os intervalos de confiança e multiplicar para obter porcentagens</span></span>
@@ -1008,23 +1013,23 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
 <span>      <span class="va">add_stat_1</span> <span class="op">~</span> <span class="st">"**95%IC**"</span></span>
 <span>    <span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<div id="sihtzhvuxq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#sihtzhvuxq table {
+<div id="nlrznbnkfc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nlrznbnkfc table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#sihtzhvuxq thead, #sihtzhvuxq tbody, #sihtzhvuxq tfoot, #sihtzhvuxq tr, #sihtzhvuxq td, #sihtzhvuxq th {
+#nlrznbnkfc thead, #nlrznbnkfc tbody, #nlrznbnkfc tfoot, #nlrznbnkfc tr, #nlrznbnkfc td, #nlrznbnkfc th {
   border-style: none;
 }
 
-#sihtzhvuxq p {
+#nlrznbnkfc p {
   margin: 0;
   padding: 0;
 }
 
-#sihtzhvuxq .gt_table {
+#nlrznbnkfc .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1050,12 +1055,12 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-left-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_caption {
+#nlrznbnkfc .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#sihtzhvuxq .gt_title {
+#nlrznbnkfc .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1067,7 +1072,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-bottom-width: 0;
 }
 
-#sihtzhvuxq .gt_subtitle {
+#nlrznbnkfc .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1079,7 +1084,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-top-width: 0;
 }
 
-#sihtzhvuxq .gt_heading {
+#nlrznbnkfc .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1091,13 +1096,13 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-right-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_bottom_border {
+#nlrznbnkfc .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_col_headings {
+#nlrznbnkfc .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1112,7 +1117,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-right-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_col_heading {
+#nlrznbnkfc .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1132,7 +1137,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   overflow-x: hidden;
 }
 
-#sihtzhvuxq .gt_column_spanner_outer {
+#nlrznbnkfc .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1144,15 +1149,15 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   padding-right: 4px;
 }
 
-#sihtzhvuxq .gt_column_spanner_outer:first-child {
+#nlrznbnkfc .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#sihtzhvuxq .gt_column_spanner_outer:last-child {
+#nlrznbnkfc .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#sihtzhvuxq .gt_column_spanner {
+#nlrznbnkfc .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1164,11 +1169,11 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   width: 100%;
 }
 
-#sihtzhvuxq .gt_spanner_row {
+#nlrznbnkfc .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#sihtzhvuxq .gt_group_heading {
+#nlrznbnkfc .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1194,7 +1199,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   text-align: left;
 }
 
-#sihtzhvuxq .gt_empty_group_heading {
+#nlrznbnkfc .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1209,15 +1214,15 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   vertical-align: middle;
 }
 
-#sihtzhvuxq .gt_from_md > :first-child {
+#nlrznbnkfc .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#sihtzhvuxq .gt_from_md > :last-child {
+#nlrznbnkfc .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#sihtzhvuxq .gt_row {
+#nlrznbnkfc .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1236,7 +1241,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   overflow-x: hidden;
 }
 
-#sihtzhvuxq .gt_stub {
+#nlrznbnkfc .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1249,7 +1254,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   padding-right: 5px;
 }
 
-#sihtzhvuxq .gt_stub_row_group {
+#nlrznbnkfc .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1263,15 +1268,15 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   vertical-align: top;
 }
 
-#sihtzhvuxq .gt_row_group_first td {
+#nlrznbnkfc .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#sihtzhvuxq .gt_row_group_first th {
+#nlrznbnkfc .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#sihtzhvuxq .gt_summary_row {
+#nlrznbnkfc .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1281,16 +1286,16 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   padding-right: 5px;
 }
 
-#sihtzhvuxq .gt_first_summary_row {
+#nlrznbnkfc .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_first_summary_row.thick {
+#nlrznbnkfc .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#sihtzhvuxq .gt_last_summary_row {
+#nlrznbnkfc .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1300,7 +1305,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-bottom-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_grand_summary_row {
+#nlrznbnkfc .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1310,7 +1315,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   padding-right: 5px;
 }
 
-#sihtzhvuxq .gt_first_grand_summary_row {
+#nlrznbnkfc .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1320,7 +1325,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-top-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_last_grand_summary_row_top {
+#nlrznbnkfc .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1330,11 +1335,11 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-bottom-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_striped {
+#nlrznbnkfc .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#sihtzhvuxq .gt_table_body {
+#nlrznbnkfc .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1343,7 +1348,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-bottom-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_footnotes {
+#nlrznbnkfc .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1357,7 +1362,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-right-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_footnote {
+#nlrznbnkfc .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1366,7 +1371,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   padding-right: 5px;
 }
 
-#sihtzhvuxq .gt_sourcenotes {
+#nlrznbnkfc .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1380,7 +1385,7 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   border-right-color: #D3D3D3;
 }
 
-#sihtzhvuxq .gt_sourcenote {
+#nlrznbnkfc .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1388,63 +1393,63 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
   padding-right: 5px;
 }
 
-#sihtzhvuxq .gt_left {
+#nlrznbnkfc .gt_left {
   text-align: left;
 }
 
-#sihtzhvuxq .gt_center {
+#nlrznbnkfc .gt_center {
   text-align: center;
 }
 
-#sihtzhvuxq .gt_right {
+#nlrznbnkfc .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#sihtzhvuxq .gt_font_normal {
+#nlrznbnkfc .gt_font_normal {
   font-weight: normal;
 }
 
-#sihtzhvuxq .gt_font_bold {
+#nlrznbnkfc .gt_font_bold {
   font-weight: bold;
 }
 
-#sihtzhvuxq .gt_font_italic {
+#nlrznbnkfc .gt_font_italic {
   font-style: italic;
 }
 
-#sihtzhvuxq .gt_super {
+#nlrznbnkfc .gt_super {
   font-size: 65%;
 }
 
-#sihtzhvuxq .gt_footnote_marks {
+#nlrznbnkfc .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#sihtzhvuxq .gt_asterisk {
+#nlrznbnkfc .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#sihtzhvuxq .gt_indent_1 {
+#nlrznbnkfc .gt_indent_1 {
   text-indent: 5px;
 }
 
-#sihtzhvuxq .gt_indent_2 {
+#nlrznbnkfc .gt_indent_2 {
   text-indent: 10px;
 }
 
-#sihtzhvuxq .gt_indent_3 {
+#nlrznbnkfc .gt_indent_3 {
   text-indent: 15px;
 }
 
-#sihtzhvuxq .gt_indent_4 {
+#nlrznbnkfc .gt_indent_4 {
   text-indent: 20px;
 }
 
-#sihtzhvuxq .gt_indent_5 {
+#nlrznbnkfc .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1486,18 +1491,18 @@ para adicionar intervalos de confiança e depois adicionar intervalos de confian
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="razões-ponderadas" class="section level2" number="25.9">
+<div id="razões-ponderadas" class="section level2" number="26.9">
 <h2>
-<span class="header-section-number">25.9</span> Razões ponderadas<a class="anchor" aria-label="anchor" href="#raz%C3%B5es-ponderadas"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.9</span> Razões ponderadas<a class="anchor" aria-label="anchor" href="#raz%C3%B5es-ponderadas"><i class="fas fa-link"></i></a>
 </h2>
 <p>Da mesma forma, para relações ponderadas (como para relações de mortalidade) você pode usar o pacote <strong>survey</strong> ou o pacote <strong>srvyr</strong>.
 Você poderia escrever funções (semelhantes àquelas acima) para iterar sobre várias variáveis. Você também poderá criar uma função para o pacote <strong>gtsummary</strong>,
 como acima, mas atualmente ela não tem nenhuma funcionalidade embutida.</p>
-<div id="pacote-survey-2" class="section level3" number="25.9.1">
+<div id="pacote-survey-2" class="section level3" number="26.9.1">
 <h3>
-<span class="header-section-number">25.9.1</span> Pacote <strong>survey</strong><a class="anchor" aria-label="anchor" href="#pacote-survey-2"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.9.1</span> Pacote <strong>survey</strong><a class="anchor" aria-label="anchor" href="#pacote-survey-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb1213"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1276"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ratio</span> <span class="op">&lt;-</span> <span class="fu">svyratio</span><span class="op">(</span><span class="op">~</span><span class="va">died</span>, </span>
 <span>         denominator <span class="op">=</span> <span class="op">~</span><span class="va">obstime</span>, </span>
 <span>         design <span class="op">=</span> <span class="va">base_survey_design</span><span class="op">)</span></span>
@@ -1511,11 +1516,11 @@ como acima, mas atualmente ela não tem nenhuma funcionalidade embutida.</p>
 <pre><code>##       obstime    2.5 %   97.5 %
 ## died 5.981922 1.194294 10.76955</code></pre>
 </div>
-<div id="pcaote-srvyr" class="section level3" number="25.9.2">
+<div id="pcaote-srvyr" class="section level3" number="26.9.2">
 <h3>
-<span class="header-section-number">25.9.2</span> Pcaote <strong>srvyr</strong><a class="anchor" aria-label="anchor" href="#pcaote-srvyr"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.9.2</span> Pcaote <strong>srvyr</strong><a class="anchor" aria-label="anchor" href="#pcaote-srvyr"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb1215"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1278"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">survey_design</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="co">## razão de pesquisa usada para contabilizar o tempo de observação </span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
@@ -1531,9 +1536,9 @@ como acima, mas atualmente ela não tem nenhuma funcionalidade embutida.</p>
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="referência" class="section level2" number="25.10">
+<div id="referência" class="section level2" number="26.10">
 <h2>
-<span class="header-section-number">25.10</span> Referência<a class="anchor" aria-label="anchor" href="#refer%C3%AAncia"><i class="fas fa-link"></i></a>
+<span class="header-section-number">26.10</span> Referência<a class="anchor" aria-label="anchor" href="#refer%C3%AAncia"><i class="fas fa-link"></i></a>
 </h2>
 <p><a href="https://stats.idre.ucla.edu/r/seminars/survey-data-analysis-with-r/">Página de estatísticas da UCLA</a></p>
 <p><a href="http://asdfree.com/">Analise dados de questioários gratuitamente</a></p>
@@ -1547,51 +1552,51 @@ como acima, mas atualmente ela não tem nenhuma funcionalidade embutida.</p>
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></div>
-<div class="next"><a href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></div>
+<div class="prev"><a href="contact-tracing.html"><span class="header-section-number">25</span> Rastreamento de contatos</a></div>
+<div class="next"><a href="survival-analysis.html"><span class="header-section-number">27</span> Análise de sobrevivência</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#survey-analysis"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
-<li><a class="nav-link" href="#vis%C3%A3o-geral-2"><span class="header-section-number">25.1</span> Visão Geral</a></li>
+<li><a class="nav-link" href="#survey-analysis"><span class="header-section-number">26</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="nav-link" href="#vis%C3%A3o-geral-2"><span class="header-section-number">26.1</span> Visão Geral</a></li>
 <li>
-<a class="nav-link" href="#prepara%C3%A7%C3%A3o-15"><span class="header-section-number">25.2</span> Preparação</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#prepara%C3%A7%C3%A3o-16"><span class="header-section-number">26.2</span> Preparação</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#pacotes-1">Pacotes</a></li>
 <li><a class="nav-link" href="#carregar-dados">Carregar dados</a></li>
 <li><a class="nav-link" href="#limpar-dados">Limpar dados</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#dados-da-pesquisa"><span class="header-section-number">25.3</span> Dados da pesquisa</a></li>
-<li><a class="nav-link" href="#tempo-de-observa%C3%A7%C3%A3o"><span class="header-section-number">25.4</span> Tempo de observação</a></li>
-<li><a class="nav-link" href="#pondera%C3%A7%C3%A3o"><span class="header-section-number">25.5</span> Ponderação</a></li>
+<li><a class="nav-link" href="#dados-da-pesquisa"><span class="header-section-number">26.3</span> Dados da pesquisa</a></li>
+<li><a class="nav-link" href="#tempo-de-observa%C3%A7%C3%A3o"><span class="header-section-number">26.4</span> Tempo de observação</a></li>
+<li><a class="nav-link" href="#pondera%C3%A7%C3%A3o"><span class="header-section-number">26.5</span> Ponderação</a></li>
 <li>
-<a class="nav-link" href="#objetos-de-delineamento-de-pesquisa"><span class="header-section-number">25.6</span> Objetos de delineamento de pesquisa</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#pacote-survey"><span class="header-section-number">25.6.1</span> Pacote survey</a></li>
-<li><a class="nav-link" href="#pacote-srvyr"><span class="header-section-number">25.6.2</span> Pacote srvyr</a></li>
+<a class="nav-link" href="#objetos-de-delineamento-de-pesquisa"><span class="header-section-number">26.6</span> Objetos de delineamento de pesquisa</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#pacote-survey"><span class="header-section-number">26.6.1</span> Pacote survey</a></li>
+<li><a class="nav-link" href="#pacote-srvyr"><span class="header-section-number">26.6.2</span> Pacote srvyr</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#an%C3%A1lise-descritiva"><span class="header-section-number">25.7</span> Análise descritiva</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#vi%C3%A9s-de-amostras"><span class="header-section-number">25.7.1</span> Viés de amostras</a></li>
-<li><a class="nav-link" href="#pir%C3%A2mides-demogr%C3%A1ficas"><span class="header-section-number">25.7.2</span> Pirâmides demográficas</a></li>
-<li><a class="nav-link" href="#diagrama-aluvialsankey"><span class="header-section-number">25.7.3</span> Diagrama aluvial/sankey</a></li>
+<a class="nav-link" href="#an%C3%A1lise-descritiva-2"><span class="header-section-number">26.7</span> Análise descritiva</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#vi%C3%A9s-de-amostras"><span class="header-section-number">26.7.1</span> Viés de amostras</a></li>
+<li><a class="nav-link" href="#pir%C3%A2mides-demogr%C3%A1ficas"><span class="header-section-number">26.7.2</span> Pirâmides demográficas</a></li>
+<li><a class="nav-link" href="#diagrama-aluvialsankey"><span class="header-section-number">26.7.3</span> Diagrama aluvial/sankey</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#propor%C3%A7%C3%B5es-ponderadas"><span class="header-section-number">25.8</span> Proporções ponderadas</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#pacote-survey-1"><span class="header-section-number">25.8.1</span> Pacote survey</a></li>
-<li><a class="nav-link" href="#pacote-srvyr-1"><span class="header-section-number">25.8.2</span> Pacote srvyr</a></li>
-<li><a class="nav-link" href="#pacote-sitrep"><span class="header-section-number">25.8.3</span> Pacote sitrep</a></li>
-<li><a class="nav-link" href="#pacote-gtsummary"><span class="header-section-number">25.8.4</span> Pacote gtsummary</a></li>
+<a class="nav-link" href="#propor%C3%A7%C3%B5es-ponderadas"><span class="header-section-number">26.8</span> Proporções ponderadas</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#pacote-survey-1"><span class="header-section-number">26.8.1</span> Pacote survey</a></li>
+<li><a class="nav-link" href="#pacote-srvyr-1"><span class="header-section-number">26.8.2</span> Pacote srvyr</a></li>
+<li><a class="nav-link" href="#pacote-sitrep"><span class="header-section-number">26.8.3</span> Pacote sitrep</a></li>
+<li><a class="nav-link" href="#pacote-gtsummary"><span class="header-section-number">26.8.4</span> Pacote gtsummary</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#raz%C3%B5es-ponderadas"><span class="header-section-number">25.9</span> Razões ponderadas</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#pacote-survey-2"><span class="header-section-number">25.9.1</span> Pacote survey</a></li>
-<li><a class="nav-link" href="#pcaote-srvyr"><span class="header-section-number">25.9.2</span> Pcaote srvyr</a></li>
+<a class="nav-link" href="#raz%C3%B5es-ponderadas"><span class="header-section-number">26.9</span> Razões ponderadas</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#pacote-survey-2"><span class="header-section-number">26.9.1</span> Pacote survey</a></li>
+<li><a class="nav-link" href="#pcaote-srvyr"><span class="header-section-number">26.9.2</span> Pcaote srvyr</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#refer%C3%AAncia"><span class="header-section-number">25.10</span> Referência</a></li>
+<li><a class="nav-link" href="#refer%C3%AAncia"><span class="header-section-number">26.10</span> Referência</a></li>
 </ul>
 
       <div class="book-extra">
@@ -1608,7 +1613,7 @@ como acima, mas atualmente ela não tem nenhuma funcionalidade embutida.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

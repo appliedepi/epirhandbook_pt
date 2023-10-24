@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>41 Painéis com Shiny | Manual de R para Epidemiologistas</title>
+<title>43 Painéis com Shiny | Manual de R para Epidemiologistas</title>
 <meta name="author" content="the handbook team">
 <meta name="description" content="Os painéis costumam ser uma ótima maneira de compartilhar resultados de análises com outras pessoas. Produzir um painel com shiny requer um conhecimento relativamente avançado da linguagem R, mas...">
 <meta name="generator" content="bookdown 0.35 with bs4_book()">
-<meta property="og:title" content="41 Painéis com Shiny | Manual de R para Epidemiologistas">
+<meta property="og:title" content="43 Painéis com Shiny | Manual de R para Epidemiologistas">
 <meta property="og:type" content="book">
 <meta property="og:description" content="Os painéis costumam ser uma ótima maneira de compartilhar resultados de análises com outras pessoas. Produzir um painel com shiny requer um conhecimento relativamente avançado da linguagem R, mas...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="41 Painéis com Shiny | Manual de R para Epidemiologistas">
+<meta name="twitter:title" content="43 Painéis com Shiny | Manual de R para Epidemiologistas">
 <meta name="twitter:description" content="Os painéis costumam ser uma ótima maneira de compartilhar resultados de análises com outras pessoas. Produzir um painel com shiny requer um conhecimento relativamente avançado da linguagem R, mas...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +25,10 @@
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
-<script src="libs/tabwid-1.1.3/tabwid.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/tabwid-1.1.3/tabwid.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.2.0/leaflet.js"></script><script src="libs/leaflet-providers-1.13.0/leaflet-providers_1.13.0.js"></script><script src="libs/leaflet-providers-plugin-2.2.0/leaflet-providers-plugin.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
 <script src="libs/grViz-binding-1.0.10/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.10.2/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script><link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
 <script src="libs/vis-9.1.0/vis-network.min.js"></script><script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -93,35 +96,37 @@
 <li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Campos em branco/faltantes</a></li>
 <li><a class="" href="standardization.html"><span class="header-section-number">21</span> Normalização de taxas</a></li>
 <li><a class="" href="moving-average.html"><span class="header-section-number">22</span> Médias móveis</a></li>
-<li><a class="" href="epidemic-models.html"><span class="header-section-number">23</span> Modelagem de epidemias</a></li>
-<li><a class="" href="contact-tracing.html"><span class="header-section-number">24</span> Rastreamento de contatos</a></li>
-<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Analises de pesquisa de questionários (survey)</a></li>
-<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Análise de sobrevivência</a></li>
+<li><a class="" href="time-series.html"><span class="header-section-number">23</span> Séries temporais e detecção de surtos</a></li>
+<li><a class="" href="epidemic-models.html"><span class="header-section-number">24</span> Modelagem de epidemias</a></li>
+<li><a class="" href="contact-tracing.html"><span class="header-section-number">25</span> Rastreamento de contatos</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">26</span> Analises de pesquisa de questionários (survey)</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">27</span> Análise de sobrevivência</a></li>
+<li><a class="" href="gis.html"><span class="header-section-number">28</span> Introdução ao GIS</a></li>
 <li class="book-part">Visualização de Dados</li>
-<li><a class="" href="tables-presentation.html"><span class="header-section-number">27</span> Tabelas para apresentação</a></li>
-<li><a class="" href="ggplot-basics.html"><span class="header-section-number">28</span> O básico do ggplot</a></li>
-<li><a class="" href="ggplot-tips.html"><span class="header-section-number">29</span> Dicas do ggplot</a></li>
-<li><a class="" href="epicurves.html"><span class="header-section-number">30</span> Curvas epidêmicas</a></li>
-<li><a class="" href="age-pyramid.html"><span class="header-section-number">31</span> Pirâmides demográficas e escalas Likert</a></li>
-<li><a class="" href="heatmaps.html"><span class="header-section-number">32</span> Gráficos de calor</a></li>
-<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagramas e gráficos</a></li>
-<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Análise de Combinações</a></li>
-<li><a class="" href="transmission-chains.html"><span class="header-section-number">35</span> Cadeias de Transmissão</a></li>
-<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Árvores filogenéticas</a></li>
-<li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Gráficos interativos</a></li>
+<li><a class="" href="tables-presentation.html"><span class="header-section-number">29</span> Tabelas para apresentação</a></li>
+<li><a class="" href="ggplot-basics.html"><span class="header-section-number">30</span> O básico do ggplot</a></li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">31</span> Dicas do ggplot</a></li>
+<li><a class="" href="epicurves.html"><span class="header-section-number">32</span> Curvas epidêmicas</a></li>
+<li><a class="" href="age-pyramid.html"><span class="header-section-number">33</span> Pirâmides demográficas e escalas Likert</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">34</span> Gráficos de calor</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">35</span> Diagramas e gráficos</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">36</span> Análise de Combinações</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">37</span> Cadeias de Transmissão</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">38</span> Árvores filogenéticas</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">39</span> Gráficos interativos</a></li>
 <li class="book-part">Relatórios e dashboards</li>
-<li><a class="" href="rmarkdown.html"><span class="header-section-number">38</span> Relatórios com R Markdown</a></li>
-<li><a class="" href="reportfactory.html"><span class="header-section-number">39</span> Organização de relatórios de rotina</a></li>
-<li><a class="" href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></li>
-<li><a class="active" href="shiny-basics.html"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li><a class="" href="rmarkdown.html"><span class="header-section-number">40</span> Relatórios com R Markdown</a></li>
+<li><a class="" href="reportfactory.html"><span class="header-section-number">41</span> Organização de relatórios de rotina</a></li>
+<li><a class="" href="flexdashboard.html"><span class="header-section-number">42</span> Painéis (Dashboards) com R Markdown</a></li>
+<li><a class="active" href="shiny-basics.html"><span class="header-section-number">43</span> Painéis com Shiny</a></li>
 <li class="book-part">Miscelânea</li>
-<li><a class="" href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></li>
-<li><a class="" href="directories.html"><span class="header-section-number">43</span> Interações de diretório</a></li>
-<li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Controle de versão e colaboração com Git e Github</a></li>
-<li><a class="" href="errors.html"><span class="header-section-number">45</span> Erros comuns</a></li>
-<li><a class="" href="help.html"><span class="header-section-number">46</span> Conseguindo ajuda</a></li>
-<li><a class="" href="network-drives.html"><span class="header-section-number">47</span> R em drives (pastas) na rede</a></li>
-<li><a class="" href="data-table.html"><span class="header-section-number">48</span> Data Table</a></li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">44</span> Escrevendo funções</a></li>
+<li><a class="" href="directories.html"><span class="header-section-number">45</span> Interações de diretório</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">46</span> Controle de versão e colaboração com Git e Github</a></li>
+<li><a class="" href="errors.html"><span class="header-section-number">47</span> Erros comuns</a></li>
+<li><a class="" href="help.html"><span class="header-section-number">48</span> Conseguindo ajuda</a></li>
+<li><a class="" href="network-drives.html"><span class="header-section-number">49</span> R em drives (pastas) na rede</a></li>
+<li><a class="" href="data-table.html"><span class="header-section-number">50</span> Data Table</a></li>
 </ul>
 
         <div class="book-extra">
@@ -129,9 +134,9 @@
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="shiny-basics" class="section level1" number="41">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="shiny-basics" class="section level1" number="43">
 <h1>
-<span class="header-section-number">41</span> Painéis com Shiny<a class="anchor" aria-label="anchor" href="#shiny-basics"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43</span> Painéis com Shiny<a class="anchor" aria-label="anchor" href="#shiny-basics"><i class="fas fa-link"></i></a>
 </h1>
 <p>Os painéis costumam ser uma ótima maneira de compartilhar resultados de análises com outras pessoas. Produzir um painel com <strong>shiny</strong> requer um conhecimento relativamente avançado da linguagem R, mas oferece uma personalização e possibilidades incríveis.</p>
 <p>&lt;! – Uma das maiores desvantagens do <code>R</code> é sua usabilidade para pessoas que são novas ou não têm experiência com linguagens de programação. Embora essas habilidades sejam muito valiosas, a maioria das pessoas descobrirá que isso representa uma barreira para o compartilhamento de análises, especialmente em ambientes multidisciplinares. Requer algum trabalho para manter uma instalação <code>R</code>, e nem todos se sentirão confortáveis executando um código compartilhado, mesmo que seja bem documentado e fácil de ler. Isso é <em>especialmente</em> verdadeiro quando os usuários precisam alterar os parâmetros do código! –&gt;</p>
@@ -139,16 +144,16 @@
 <p>Recomenda-se que alguém que esteja aprendendo painéis com <strong>shiny</strong> tenha bom conhecimento de transformação e visualização de dados e se sinta confortável para depurar código e escrever funções. Trabalhar com painéis não é intuitivo quando você está começando e às vezes é difícil de entender, mas é uma ótima habilidade de aprender e fica muito mais fácil com a prática!</p>
 <p>Esta página fornecerá uma breve visão geral de como fazer painéis com <strong>shiny</strong> e suas extensões.
 Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas talvez menos personalizáveis, consulte a página <strong>flextable</strong> (<a href="flexdashboard.html#flexdashboard">Painéis com R Markdown</a>).</p>
-<div id="preparação-33" class="section level2" number="41.1">
+<div id="preparação-35" class="section level2" number="43.1">
 <h2>
-<span class="header-section-number">41.1</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-33"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.1</span> Preparação<a class="anchor" aria-label="anchor" href="#prepara%C3%A7%C3%A3o-35"><i class="fas fa-link"></i></a>
 </h2>
 <div id="carregar-pacotes-14" class="section level3 unnumbered">
 <h3>Carregar pacotes<a class="anchor" aria-label="anchor" href="#carregar-pacotes-14"><i class="fas fa-link"></i></a>
 </h3>
 <p>Neste manual, enfatizamos <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code> de <strong>pacman</strong>, que instala o pacote se necessário <em>e</em> o carrega para uso. Você também pode carregar pacotes instalados com <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> do R <strong>base</strong>. Veja a página em <a href="basics.html#basics">Introdução ao R</a> para mais informações sobre pacotes R.</p>
 <p>Começamos instalando o pacote R <strong>shiny</strong>:</p>
-<div class="sourceCode" id="cb1676"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1802"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="st">"shiny"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="importar-dados-6" class="section level3 unnumbered">
@@ -159,9 +164,9 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="a-estrutura-de-um-aplicativo-shiny" class="section level2" number="41.2">
+<div id="a-estrutura-de-um-aplicativo-shiny" class="section level2" number="43.2">
 <h2>
-<span class="header-section-number">41.2</span> A estrutura de um aplicativo shiny<a class="anchor" aria-label="anchor" href="#a-estrutura-de-um-aplicativo-shiny"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.2</span> A estrutura de um aplicativo shiny<a class="anchor" aria-label="anchor" href="#a-estrutura-de-um-aplicativo-shiny"><i class="fas fa-link"></i></a>
 </h2>
 <div id="estruturas-de-arquivo-básicas" class="section level3 unnumbered">
 <h3>Estruturas de arquivo básicas<a class="anchor" aria-label="anchor" href="#estruturas-de-arquivo-b%C3%A1sicas"><i class="fas fa-link"></i></a>
@@ -175,7 +180,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 </li>
 </ol>
 <p>Nesta página, usaremos a primeira abordagem de ter um arquivo chamado <em>app.R</em>. Aqui está um script de exemplo:</p>
-<div class="sourceCode" id="cb1677"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1803"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># um exemplo de app.R</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/">shiny</a></span><span class="op">)</span></span>
@@ -242,9 +247,9 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <p>Depois de ter uma ideia do que é possível, também é útil mapear como você quer que o seu fique - você pode fazer isso no papel ou em qualquer software de desenho (PowerPoint, MS Paint etc.). É útil começar de forma simples para seu primeiro aplicativo! Também não há vergonha em usar o código que você encontra online de um bom aplicativo como modelo para o seu trabalho - é muito mais fácil do que construir algo do zero!</p>
 </div>
 </div>
-<div id="construindo-uma-iu" class="section level2" number="41.3">
+<div id="construindo-uma-iu" class="section level2" number="43.3">
 <h2>
-<span class="header-section-number">41.3</span> Construindo uma IU<a class="anchor" aria-label="anchor" href="#construindo-uma-iu"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.3</span> Construindo uma IU<a class="anchor" aria-label="anchor" href="#construindo-uma-iu"><i class="fas fa-link"></i></a>
 </h2>
 <p>Ao construir nosso aplicativo, é mais fácil trabalhar na IU primeiro, para que possamos ver o que estamos fazendo e não correr o risco de o aplicativo falhar devido a erros do servidor. Como mencionado anteriormente, geralmente é bom usar um modelo ao trabalhar na IU. Existem vários layouts padrão que podem ser usados com o shiny que estão disponíveis no pacote base shiny, mas é importante notar que também há várias extensões de pacote como <code>shinydashboard</code>. Usaremos um exemplo da base shiny para começar.</p>
 <p>Uma IU shiny é geralmente definida como uma série de funções aninhadas, na seguinte ordem</p>
@@ -274,7 +279,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <li>Uma área onde podemos mostrar nossa epicurva resultante.</li>
 </ol>
 <p>Isso pode ser parecido com isto:</p>
-<div class="sourceCode" id="cb1678"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1804"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/">shiny</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
@@ -343,9 +348,9 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <li><a href="https://github.com/dreamRs/shinyWidgets">shinyWidgets gallery</a></li>
 </ul>
 </div>
-<div id="carregando-dados-em-nosso-aplicativo" class="section level2" number="41.4">
+<div id="carregando-dados-em-nosso-aplicativo" class="section level2" number="43.4">
 <h2>
-<span class="header-section-number">41.4</span> Carregando dados em nosso aplicativo<a class="anchor" aria-label="anchor" href="#carregando-dados-em-nosso-aplicativo"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.4</span> Carregando dados em nosso aplicativo<a class="anchor" aria-label="anchor" href="#carregando-dados-em-nosso-aplicativo"><i class="fas fa-link"></i></a>
 </h2>
 <p>A próxima etapa no desenvolvimento de nosso aplicativo é colocar o servidor em funcionamento. Para fazer isso, no entanto, precisamos colocar alguns dados em nosso aplicativo e descobrir todos os cálculos que faremos. Um aplicativo shiny não é simples de depurar, já que geralmente não fica claro de onde vêm os erros, então é ideal para fazer com que todo o nosso processamento de dados e código de visualização funcionem antes de começarmos a fazer o próprio servidor.</p>
 <p>Portanto, como queremos fazer um aplicativo que mostra curvas epi que mudam com base na entrada do usuário, devemos pensar sobre o código de que precisaríamos para executá-lo em um script R normal. Precisamos:</p>
@@ -357,7 +362,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 </ol>
 <p>Esta lista é bastante direta e não deve ser muito difícil de fazer. Agora é importante pensar sobre quais partes desse processo precisam <em>ser feitas apenas uma vez</em> e quais partes precisam <em>ser executadas em resposta às entradas do usuário</em>. Isso ocorre porque os aplicativos shiny geralmente executam algum código antes de serem executados, o que é executado apenas uma vez. Isso ajudará no desempenho de nosso aplicativo se o máximo de nosso código puder ser movido para esta seção. Para este exemplo, só precisamos carregar nossos dados / pacotes e fazer as transformações básicas uma vez, para que possamos colocar esse código <em>fora do servidor</em>. Isso significa que a única coisa de que precisaremos no servidor é o código para visualizar nossos dados. Vamos desenvolver todos esses componentes em um script primeiro. No entanto, como estamos visualizando nossos dados com uma função, também podemos colocar o código <em>para a função</em> fora do servidor para que nossa função esteja no ambiente quando o aplicativo for executado!</p>
 <p>Primeiro, vamos carregar nossos dados. Como estamos trabalhando com um novo projeto e queremos torná-lo limpo, podemos criar um novo diretório chamado data e adicionar nossos dados de malária nele. Podemos executar o código abaixo em um script de teste que excluiremos ao limpar a estrutura de nosso aplicativo.</p>
-<div class="sourceCode" id="cb1679"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1805"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"lubridate"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># dados lidos</span></span>
@@ -382,27 +387,26 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 ## # ℹ 4 more variables: `malaria_rdt_5-14` &lt;int&gt;, malaria_rdt_15 &lt;int&gt;,
 ## #   malaria_tot &lt;int&gt;, newid &lt;int&gt;</code></pre>
 <p>Será mais fácil trabalhar com esses dados se usarmos padrões de dados organizados, então também devemos transformar em um formato de dados mais longo, em que a faixa etária é uma coluna e os casos é outra coluna. Podemos fazer isso facilmente usando o que aprendemos na página <a href="pivoting.html#pivoting">Pivoteando dados</a>.</p>
-<div class="sourceCode" id="cb1681"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1807"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">malaria_data</span> <span class="op">&lt;-</span> <span class="va">malaria_data</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span> <span class="op">(</span><span class="op">-</span><span class="va">newid</span><span class="op">)</span><span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"malaria_"</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"age_group"</span>, values_to <span class="op">=</span> <span class="st">"cases_reported"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">malaria_data</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## # A tibble: 12,152 × 7
-##    location_name data_date  submitted_date Province District age_group       
-##    &lt;chr&gt;         &lt;date&gt;     &lt;date&gt;         &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;           
-##  1 Facility 1    2020-08-11 2020-08-12     North    Spring   malaria_rdt_0-4 
-##  2 Facility 1    2020-08-11 2020-08-12     North    Spring   malaria_rdt_5-14
-##  3 Facility 1    2020-08-11 2020-08-12     North    Spring   malaria_rdt_15  
-##  4 Facility 1    2020-08-11 2020-08-12     North    Spring   malaria_tot     
-##  5 Facility 2    2020-08-11 2020-08-12     North    Bolo     malaria_rdt_0-4 
-##  6 Facility 2    2020-08-11 2020-08-12     North    Bolo     malaria_rdt_5-14
-##  7 Facility 2    2020-08-11 2020-08-12     North    Bolo     malaria_rdt_15  
-##  8 Facility 2    2020-08-11 2020-08-12     North    Bolo     malaria_tot     
-##  9 Facility 3    2020-08-11 2020-08-12     North    Dingo    malaria_rdt_0-4 
-## 10 Facility 3    2020-08-11 2020-08-12     North    Dingo    malaria_rdt_5-14
-## # ℹ 12,142 more rows
-## # ℹ 1 more variable: cases_reported &lt;int&gt;</code></pre>
+##    location_name data_date  submitted_date Province District age_group   cases_reported
+##    &lt;chr&gt;         &lt;date&gt;     &lt;date&gt;         &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;                &lt;int&gt;
+##  1 Facility 1    2020-08-11 2020-08-12     North    Spring   malaria_rd…             11
+##  2 Facility 1    2020-08-11 2020-08-12     North    Spring   malaria_rd…             12
+##  3 Facility 1    2020-08-11 2020-08-12     North    Spring   malaria_rd…             23
+##  4 Facility 1    2020-08-11 2020-08-12     North    Spring   malaria_tot             46
+##  5 Facility 2    2020-08-11 2020-08-12     North    Bolo     malaria_rd…             11
+##  6 Facility 2    2020-08-11 2020-08-12     North    Bolo     malaria_rd…             10
+##  7 Facility 2    2020-08-11 2020-08-12     North    Bolo     malaria_rd…              5
+##  8 Facility 2    2020-08-11 2020-08-12     North    Bolo     malaria_tot             26
+##  9 Facility 3    2020-08-11 2020-08-12     North    Dingo    malaria_rd…              8
+## 10 Facility 3    2020-08-11 2020-08-12     North    Dingo    malaria_rd…              5
+## # ℹ 12,142 more rows</code></pre>
 <p>E com isso terminamos de preparar nossos dados! Isso cruza os itens 1, 2 e 3 de nossa lista de coisas a desenvolver para nosso “script de teste R”. A última e mais difícil tarefa será construir uma função para produzir uma epicurva baseada em parâmetros definidos pelo usuário. Como mencionado anteriormente, é <em>altamente recomendado</em> que qualquer pessoa que esteja aprendendo algo shiny primeiro dê uma olhada na seção sobre programação funcional (<a href="writing-functions.html#writing-functions">Escrevendo funções</a>) para entender como isso funciona!</p>
 <p>Ao definir nossa função, pode ser difícil pensar sobre quais parâmetros queremos incluir. Para programação funcional com shiny, cada parâmetro relevante geralmente terá um widget associado a ele, então pensar sobre isso geralmente é bem fácil! Por exemplo, em nosso aplicativo atual, queremos ser capazes de filtrar por distrito e ter um widget para isso, para que possamos adicionar um parâmetro de distrito para refletir isso. Nós <em>não</em> temos nenhuma funcionalidade de aplicativo para filtrar por instalação (por enquanto), portanto, não precisamos adicionar isso como um parâmetro. Vamos começar criando uma função com três parâmetros:</p>
 <ol style="list-style-type: decimal">
@@ -410,7 +414,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <li>O distrito de escolha</li>
 <li>A faixa etária de escolha</li>
 </ol>
-<div class="sourceCode" id="cb1683"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1809"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_epicurve</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">district</span> <span class="op">=</span> <span class="st">"All"</span>, <span class="va">agegroup</span> <span class="op">=</span> <span class="st">"malaria_tot"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"All"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">district</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -464,9 +468,9 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <p>Não entraremos em muitos detalhes sobre essa função, pois é relativamente simples em como funciona. Uma coisa a se notar, entretanto, é que tratamos os erros retornando <code>NULL</code> quando, de outra forma, resultaria em um erro. Isso ocorre porque quando um servidor shiny produz um objeto <code>NULL</code> em vez de um objeto de gráfico, nada será mostrado na interface do usuário! Isso é importante, pois, caso contrário, os erros geralmente farão com que seu aplicativo pare de funcionar.</p>
 <p>Outra coisa a se notar é o uso do operador <code>%in%</code> ao avaliar a entrada <code>district</code>. Como mencionado acima, isso pode chegar como um vetor de caracteres com vários valores, então usar <code>%in%</code> é mais flexível do que dizer, <code>==</code>.</p>
 <p>Vamos testar nossa função!</p>
-<div class="sourceCode" id="cb1684"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1810"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_epicurve</span><span class="op">(</span><span class="va">malaria_data</span>, district <span class="op">=</span> <span class="st">"Bolo"</span>, agegroup <span class="op">=</span> <span class="st">"malaria_rdt_0-4"</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-1352-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-1420-1.png" width="672"></div>
 <p>Com nossa função funcionando, agora temos que entender como tudo isso vai se encaixar em nosso aplicativo shiny. Mencionamos o conceito de <em>código de inicialização</em> antes, mas vamos ver como podemos realmente incorporar isso à estrutura de nosso aplicativo. Podemos fazer isso de duas maneiras!</p>
 <ol style="list-style-type: decimal">
 <li>Coloque este código em seu arquivo <em>app.R</em> no início do script (acima da IU), ou<br>
@@ -474,7 +478,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <li>Crie um novo arquivo no diretório do seu aplicativo chamado <em>global.R</em> e coloque o código de inicialização neste arquivo.</li>
 </ol>
 <p>É importante notar neste ponto que geralmente é mais fácil, especialmente com aplicativos maiores, usar a segunda estrutura de arquivo, pois permite separar sua estrutura de arquivo de uma forma simples. Vamos desenvolver totalmente um script global.R agora. Pode ser assim:</p>
-<div class="sourceCode" id="cb1685"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1811"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># global.R script</span></span>
 <span></span>
 <span><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"lubridate"</span>, <span class="st">"shiny"</span><span class="op">)</span></span>
@@ -544,13 +548,13 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <span><span class="op">}</span></span></code></pre></div>
 <p>Fácil! Um grande recurso do shiny é que ele entenderá para que servem os arquivos chamados <em>app.R</em>, <em>server.R</em>, <em>ui.R</em> e <em>global.R</em>, portanto, não há necessidade de conectá-los entre si por meio de qualquer código. Portanto, apenas por ter esse código em <em>global.R</em> no diretório, ele será executado antes de iniciarmos nosso aplicativo!</p>
 <p>Devemos também observar que melhoraria a organização de nosso aplicativo se movêssemos a função de plotagem para seu próprio arquivo - isso será especialmente útil à medida que os aplicativos se tornam maiores. Para fazer isso, poderíamos criar outro diretório chamado <em>funcs</em> e colocar essa função em um arquivo chamado <em>plot_epicurve.R</em>. Poderíamos então ler essa função por meio do seguinte comando em <em>global.R</em></p>
-<div class="sourceCode" id="cb1686"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1812"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"funcs"</span>, <span class="st">"plot_epicurve.R"</span><span class="op">)</span>, local <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Observe que você deve <em>sempre</em> especificar <code>local = TRUE</code> em aplicativos shiny, uma vez que afetará o fornecimento quando / se o aplicativo for publicado em um servidor.</p>
 </div>
-<div id="desenvolvendo-um-servidor-de-aplicativos" class="section level2" number="41.5">
+<div id="desenvolvendo-um-servidor-de-aplicativos" class="section level2" number="43.5">
 <h2>
-<span class="header-section-number">41.5</span> Desenvolvendo um servidor de aplicativos<a class="anchor" aria-label="anchor" href="#desenvolvendo-um-servidor-de-aplicativos"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.5</span> Desenvolvendo um servidor de aplicativos<a class="anchor" aria-label="anchor" href="#desenvolvendo-um-servidor-de-aplicativos"><i class="fas fa-link"></i></a>
 </h2>
 <p>Agora que temos a maior parte do nosso código, só precisamos desenvolver nosso servidor. Esta é a parte final de nosso aplicativo e provavelmente a mais difícil de entender. O servidor é uma grande função R, mas é útil pensar nele como uma série de funções menores ou tarefas que o aplicativo pode executar. É importante entender que essas funções não são executadas em uma ordem linear. Há uma ordem para eles, mas não é totalmente necessário entender quando se começa com o shiny. Em um nível muito básico, essas tarefas ou funções serão ativadas quando houver uma mudança nas entradas do usuário que as afete, <em>a menos que o desenvolvedor as tenha configurado para que se comportem de maneira diferente</em>. Novamente, tudo isso é bastante abstrato, mas vamos primeiro examinar os três tipos básicos de <em>objetos</em> shiny</p>
 <ol style="list-style-type: decimal">
@@ -559,7 +563,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <li><p>Resultados (<em>Endpoints</em>) - são saídas que são passadas do servidor para a IU. Em nosso exemplo, essa seria a curva epi que estamos produzindo.</p></li>
 </ol>
 <p>Com isso em mente vamos construir nosso servidor passo a passo. Mostraremos nosso código de IU novamente aqui apenas para referência:</p>
-<div class="sourceCode" id="cb1687"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1813"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span> <span class="op">(</span><span class="st">"Aplicativo de visualização de instalação para malária"</span><span class="op">)</span>,</span>
@@ -619,7 +623,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 </li>
 </ul>
 <p>Conforme declarado anteriormente, esses nomes exclusivos que atribuímos às nossas entradas e saídas são cruciais. Eles <em>devem ser exclusivos</em> e são usados para passar informações entre a interface do usuário e o servidor. Em nosso servidor, acessamos nossas entradas através da sintaxe <code>input $ inputID</code> e saídas e passadas para a interface do usuário através da sintaxe<code>output $ output_name</code> Vamos dar uma olhada em um exemplo, porque novamente é difícil entender de outra forma!</p>
-<div class="sourceCode" id="cb1688"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1814"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">output</span><span class="op">$</span><span class="va">malaria_epicurve</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span></span>
@@ -642,9 +646,9 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <div class="inline-figure"><img src="images/shiny/listening.png" width="195"></div>
 <p>&lt;! – A FAZER: <em>ADICIONE ALGO AO BAIXAR UM ARQUIVO ZIP DO APLICATIVO?</em> –&gt;</p>
 </div>
-<div id="adicionando-mais-funcionalidades" class="section level2" number="41.6">
+<div id="adicionando-mais-funcionalidades" class="section level2" number="43.6">
 <h2>
-<span class="header-section-number">41.6</span> Adicionando mais funcionalidades<a class="anchor" aria-label="anchor" href="#adicionando-mais-funcionalidades"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.6</span> Adicionando mais funcionalidades<a class="anchor" aria-label="anchor" href="#adicionando-mais-funcionalidades"><i class="fas fa-link"></i></a>
 </h2>
 <p>Neste ponto, finalmente temos um aplicativo em execução, mas temos muito poucas funcionalidades. Até agora só vimos a “ponta do iceberg” do que shiny pode fazer, então há muito mais para aprender! Vamos continuar a construir nosso aplicativo existente, adicionando alguns recursos extras. Algumas coisas que podem ser interessantes de adicionar são:</p>
 <ol style="list-style-type: decimal">
@@ -675,7 +679,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <li><p><code>tags$b()</code> e <code>tags$i()</code> - são usadas para criar tags <code>$b()</code> em negrito e <code>tags$i()</code> em itálico com qualquer texto que esteja incluído!</p></li>
 <li><p><code>tags$ul()</code>, <code>tags$ol()</code> e <code>tags$li()</code> - são tags usadas na criação de * listas *. Todos eles são usados na sintaxe abaixo e permitem ao usuário criar uma lista ordenada (<code>tags$ol()</code>; ou seja, numerada) ou lista não ordenada (<code>tags$ul()</code>, ou seja, marcadores). <code>tags$li()</code> é usado para denotar itens na lista, independentemente do tipo de lista usado. Por exemplo:</p></li>
 </ul>
-<div class="sourceCode" id="cb1689"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1815"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tags</span><span class="op">$</span><span class="fu">ol</span><span class="op">(</span></span>
 <span>  </span>
 <span>  <span class="va">tags</span><span class="op">$</span><span class="fu">li</span><span class="op">(</span><span class="st">"Item 1"</span><span class="op">)</span>,</span>
@@ -692,7 +696,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <p>Note que cada um desses objetos pode ser acessado através de <code>tags$...</code> ou para alguns, apenas a função. Estes são efetivamente sinônimos, mas pode ajudar usar o estilo <code>tags$...</code> se você preferir ser mais explícito e não sobrescrever as funções acidentalmente. Esta também não é, de forma alguma, uma lista exaustiva de tags disponíveis. Há uma lista completa de todas as tags disponíveis em shiny <a href="https://shiny.rstudio.com/articles/tag-glossary.html">aqui</a> e ainda mais podem ser usadas inserindo HTML diretamente em sua interface do usuário!</p>
 <p>Se você se sentir confiante, também pode adicionar quaisquer <em>elementos de estilo css</em> às suas tags HTML com o argumento <code>style</code> em qualquer um deles. Não entraremos em detalhes sobre como isso funciona, mas uma dica para testar mudanças estéticas em uma IU é usar o modo inspetor HTML em cromo (do seu aplicativo shiny que você está executando no navegador) e editar o estilo dos objetos você mesmo!</p>
 <p>Vamos adicionar algum texto ao nosso aplicativo</p>
-<div class="sourceCode" id="cb1690"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1816"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span> <span class="op">(</span><span class="st">"Aplicativo de visualização de instalação para malária"</span><span class="op">)</span>,</span>
@@ -755,7 +759,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <h3>Adicionando um <em>link</em><a class="anchor" aria-label="anchor" href="#adicionando-um-link"><i class="fas fa-link"></i></a>
 </h3>
 <p>Para adicionar um <em>link</em> para um site, use <code>tags$a()</code> com o link e exiba o texto conforme mostrado abaixo. Para ter um parágrafo independente, coloque-o dentro de <code><a href="https://rstudio.github.io/htmltools/reference/builder.html">p()</a></code>. Para ter apenas algumas palavras de uma frase ligada, divida a frase em partes e use <code>tags$a()</code> para a parte com hiperlink. Para garantir que o link seja aberto em uma <em>nova</em> janela do navegador, adicione <code>target =" _blank"</code> como um argumento.</p>
-<div class="sourceCode" id="cb1691"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1817"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tags</span><span class="op">$</span><span class="fu">a</span><span class="op">(</span>href <span class="op">=</span> <span class="st">"www.epiRhandbook.com"</span>, <span class="st">"Visite nosso site!"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div id="adicionando-um-botão-de-download" class="section level3 unnumbered">
@@ -763,7 +767,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 </h3>
 <p>Vamos passar para o segundo dos três recursos. Um botão de <em>download</em> é algo bastante comum para adicionar a um aplicativo e é bastante fácil de fazer. Precisamos adicionar outro widget à nossa interface do usuário e precisamos adicionar outra saída ao nosso servidor para anexar a ele. Também podemos introduzir <em>condutores reativos</em> neste exemplo!</p>
 <p>Vamos atualizar nossa interface do usuário primeiro - isso é fácil, pois o shiny vem com um <em>widget</em> chamado <code><a href="https://rdrr.io/pkg/shiny/man/downloadButton.html">downloadButton()</a></code> - vamos dar a ele um inputId e um rótulo.</p>
-<div class="sourceCode" id="cb1692"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1818"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span> <span class="op">(</span><span class="st">"Aplicativo de visualização de instalação para malária"</span><span class="op">)</span>,</span>
@@ -829,7 +833,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <span><span class="op">)</span></span></code></pre></div>
 <p>Observe que também adicionamos uma tag <code><a href="https://rstudio.github.io/htmltools/reference/builder.html">hr()</a></code> - isso adiciona uma linha horizontal separando nossos widgets de controle de nossos widgets de download. Esta é outra das tags HTML que discutimos anteriormente.</p>
 <p>Agora que temos nossa interface do usuário pronta, precisamos adicionar o componente do servidor. Os downloads são feitos no servidor com a função <code><a href="https://rdrr.io/pkg/shiny/man/downloadHandler.html">downloadHandler()</a></code>. Semelhante ao nosso gráfico, precisamos anexá-lo a uma saída que tenha o mesmo inputId do botão de download. Esta função leva dois argumentos - <code>nome do arquivo</code> e <code>conteúdo</code> - ambos são funções. Como você pode adivinhar, <code>filename</code> é usado para especificar o nome do arquivo baixado, e <code>content</code> é usado para especificar o que deve ser baixado. <code>content</code> contém uma função que você usaria para salvar dados localmente - então se você estivesse baixando um arquivo csv você poderia usar <code><a href="https://rdrr.io/pkg/rio/man/export.html">rio :: export()</a></code>. Já que estamos baixando um gráfico, usaremos <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggplot2 :: ggsave()</a></code>. Vamos ver como o programamos (não o adicionaremos ao servidor ainda).</p>
-<div class="sourceCode" id="cb1693"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1819"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">output</span><span class="op">$</span><span class="va">malaria_epicurve</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span></span>
@@ -855,7 +859,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <p>1.<code><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive()</a></code>- este é o condutor reativo mais básico - ele reagirá sempre que qualquer entrada usada dentro dele mudar (então nossos widgets de distrito / faixa etária)<br>
 2. <code><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">eventReactive()</a></code> - este condutor reativo funciona da mesma forma que <code><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive()</a></code>, exceto que o usuário pode especificar quais entradas fazem com que ele seja executado novamente. Isso é útil se o seu condutor reativo demorar muito para processar, mas isso será explicado mais tarde.</p>
 <p>Vejamos os dois exemplos:</p>
-<div class="sourceCode" id="cb1694"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1820"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">malaria_plot_r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="fu">plot_epicurve</span><span class="op">(</span><span class="va">malaria_data</span>, district <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">select_district</span>, agegroup <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">select_agegroup</span><span class="op">)</span></span>
@@ -871,7 +875,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <p>Quando usamos a configuração <code><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">eventReactive()</a></code>, podemos especificar quais entradas fazem com que esse pedaço de código seja executado - isso não é muito útil para nós no momento, então podemos deixar por enquanto. Observe que você pode incluir várias entradas com <code><a href="https://rdrr.io/r/base/c.html">c()</a></code></p>
 <p>Vamos ver como podemos integrar isso em nosso código de servidor:</p>
-<div class="sourceCode" id="cb1695"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1821"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">malaria_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
@@ -906,7 +910,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <h3>Adicionando um seletor de instalação<a class="anchor" aria-label="anchor" href="#adicionando-um-seletor-de-instala%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
 </h3>
 <p>Vamos passar para o nosso próximo recurso - um seletor para instalações específicas. Implementaremos outro parâmetro em nossa função para que possamos informar isso como um argumento de nosso código. Vamos ver como fazer isso primeiro - ele apenas opera com os mesmos princípios que os outros parâmetros que já configuramos. Vamos atualizar e testar nossa função.</p>
-<div class="sourceCode" id="cb1696"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1822"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_epicurve</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">district</span> <span class="op">=</span> <span class="st">"All"</span>, <span class="va">agegroup</span> <span class="op">=</span> <span class="st">"malaria_tot"</span>, <span class="va">facility</span> <span class="op">=</span> <span class="st">"All"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="st">"All"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">district</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -977,15 +981,15 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Vamos testar:</p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-1369-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-1437-1.png" width="672"></div>
 <p>Com todas as instalações em nossos dados, não está muito claro quais instalações correspondem a quais distritos - e o usuário final também não saberá. Isso pode tornar o uso do aplicativo pouco intuitivo. Por esse motivo, devemos fazer com que as opções de instalação na IU mudem dinamicamente à medida que o usuário muda o distrito - para que uma filtre a outra! Uma vez que temos tantas variáveis que estamos usando nas opções, também podemos querer gerar algumas de nossas opções para a interface do usuário em nosso arquivo <em>global.R</em> _ a partir dos dados_. Por exemplo, podemos adicionar este fragmento de código a <em>global.R</em> depois de lermos nossos dados em:</p>
 <pre><code>## `summarise()` has grouped output by 'location_name'. You can override using the
 ## `.groups` argument.</code></pre>
 <p>Vamos dar uma olhada neles:</p>
-<div class="sourceCode" id="cb1698"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1824"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all_districts</span></span></code></pre></div>
 <pre><code>## [1] "All"     "Spring"  "Bolo"    "Dingo"   "Barnard"</code></pre>
-<div class="sourceCode" id="cb1700"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1826"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">installation_list</span></span></code></pre></div>
 <pre><code>## # A tibble: 65 × 2
 ##    location_name District
@@ -1002,7 +1006,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 ## 10 Facility 18   Bolo    
 ## # ℹ 55 more rows</code></pre>
 <p>Podemos passar essas novas variáveis para a interface do usuário sem nenhum problema, pois elas são visíveis globalmente pelo servidor e pela interface do usuário! Vamos atualizar nossa IU:</p>
-<div class="sourceCode" id="cb1702"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1828"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span> <span class="op">(</span><span class="st">"Aplicativo de visualização de instalação para malária"</span><span class="op">)</span>,</span>
@@ -1083,7 +1087,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 </ol>
 <p>Também precisamos entender as funções fornecidas de forma shiny que atualizam widgets. Eles são bastante simples de executar - eles primeiro pegam o objeto <code>sessão</code> da função do servidor (isso não precisa ser entendido por enquanto), e então o <code>inputId</code> da função a ser alterado. Em seguida, passamos novas versões de todos os parâmetros que já são obtidos por <code><a href="https://rdrr.io/pkg/shiny/man/selectInput.html">selectInput()</a></code> - eles serão atualizados automaticamente no widget.</p>
 <p>Vejamos um exemplo isolado de como poderíamos usar isso em nosso servidor. Quando o usuário muda o distrito, queremos filtrar nossa tabela de instalações por distrito e atualizar as opções para <em>refletir apenas aquelas que estão disponíveis naquele distrito</em> (e uma opção para todas as instalações)</p>
-<div class="sourceCode" id="cb1703"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1829"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observe.html">observe</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">select_district</span> <span class="op">==</span> <span class="st">"All"</span><span class="op">)</span> <span class="op">{</span></span>
@@ -1101,7 +1105,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <span>  </span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <p>E é isso! podemos adicioná-lo ao nosso servidor, e esse comportamento agora funcionará. Esta é a aparência de nosso novo servidor:</p>
-<div class="sourceCode" id="cb1704"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1830"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">malaria_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
@@ -1155,7 +1159,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <h3>Adicionando outra guia com uma tabela<a class="anchor" aria-label="anchor" href="#adicionando-outra-guia-com-uma-tabela"><i class="fas fa-link"></i></a>
 </h3>
 <p>Agora vamos passar para o último componente que queremos adicionar ao nosso aplicativo. Queremos separar nossa interface do usuário em duas guias, uma das quais terá uma tabela interativa onde o usuário pode ver os dados com os quais está fazendo a curva epidêmica. Para fazer isso, podemos usar os elementos da interface do usuário, que já vêm no pacote shiny, que relevantes para a elaboração de guias. Em um nível básico, podemos incluir a maior parte de nosso painel principal nesta estrutura geral:</p>
-<div class="sourceCode" id="cb1705"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1831"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ... o resto da interface do usuário</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
@@ -1173,7 +1177,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Vamos aplicar isso à nossa interface do usuário. Também queremos usar o pacote <strong>DT</strong> aqui - este é um ótimo pacote para fazer tabelas interativas a partir de dados pré-existentes. Podemos ver que está sendo usado para <code>DT :: datatableOutput()</code> neste exemplo.</p>
-<div class="sourceCode" id="cb1706"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1832"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
 <span>     </span>
 <span>     <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span> <span class="op">(</span><span class="st">"Aplicativo de visualização de instalação para malária"</span><span class="op">)</span>,</span>
@@ -1249,7 +1253,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <span>     <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Agora nosso aplicativo está organizado em guias! Vamos fazer as edições necessárias no servidor também. Como não precisamos manipular nosso conjunto de dados antes de renderizá-lo, isso é na verdade muito simples - apenas renderizamos o conjunto de dados malaria_data via DT :: renderDT() para a interface do usuário!</p>
-<div class="sourceCode" id="cb1707"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1833"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">malaria_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
@@ -1304,9 +1308,9 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <div class="inline-figure"><img src="images/shiny/app_table_view.gif" width="100%"></div>
 </div>
 </div>
-<div id="compartilhando-aplicativos-shiny" class="section level2" number="41.7">
+<div id="compartilhando-aplicativos-shiny" class="section level2" number="43.7">
 <h2>
-<span class="header-section-number">41.7</span> Compartilhando aplicativos shiny<a class="anchor" aria-label="anchor" href="#compartilhando-aplicativos-shiny"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.7</span> Compartilhando aplicativos shiny<a class="anchor" aria-label="anchor" href="#compartilhando-aplicativos-shiny"><i class="fas fa-link"></i></a>
 </h2>
 <p>Agora que você desenvolveu seu aplicativo, provavelmente deseja compartilhá-lo com outras pessoas - afinal, essa é a principal vantagem do shiny! Podemos fazer isso compartilhando o código diretamente ou podemos publicá-lo em um servidor. Se compartilharmos o código, outros poderão ver o que você fez e construir sobre ele, mas isso negará uma das principais vantagens do shiny - <em>pode eliminar a necessidade dos usuários finais de manter uma instalação R</em> . Por esse motivo, se você estiver compartilhando seu aplicativo com usuários que não se sentem confortáveis com R, é muito mais fácil compartilhar um aplicativo que foi publicado em um servidor.</p>
 <p>Se você preferir compartilhar o código, pode fazer um arquivo .zip do aplicativo, ou melhor ainda, <em>publicar seu aplicativo no github e adicionar colaboradores.</em> Você pode consultar a seção no github para obter mais informações aqui.</p>
@@ -1322,15 +1326,15 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <p>A partir daqui, você deve observar que o url da sua conta refletirá o nome do seu aplicativo - portanto, se o seu aplicativo se chamar <em>my_app</em>, o url será anexado como <em>xxx.io/my_app/</em>. Escolha o nome do seu aplicativo com sabedoria! Agora que você está pronto, clique em implantar - se for bem-sucedido, seu aplicativo será executado no url da web que você escolheu!</p>
 <p><em>algo sobre como fazer aplicativos em documentos?</em></p>
 </div>
-<div id="leitura-adicional" class="section level2" number="41.8">
+<div id="leitura-adicional" class="section level2" number="43.8">
 <h2>
-<span class="header-section-number">41.8</span> Leitura adicional<a class="anchor" aria-label="anchor" href="#leitura-adicional"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.8</span> Leitura adicional<a class="anchor" aria-label="anchor" href="#leitura-adicional"><i class="fas fa-link"></i></a>
 </h2>
 <p>Até agora, cobrimos muitos aspectos do shiny e mal arranhamos a superfície do que é oferecido ele. Embora este guia sirva como uma introdução, há muito mais coisas para aprender para entender completamente o shiny. Você deve começar a fazer aplicativos e adicionar gradualmente mais e mais funcionalidades</p>
 </div>
-<div id="pacotes-de-extensão-recomendados" class="section level2" number="41.9">
+<div id="pacotes-de-extensão-recomendados" class="section level2" number="43.9">
 <h2>
-<span class="header-section-number">41.9</span> Pacotes de extensão recomendados<a class="anchor" aria-label="anchor" href="#pacotes-de-extens%C3%A3o-recomendados"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.9</span> Pacotes de extensão recomendados<a class="anchor" aria-label="anchor" href="#pacotes-de-extens%C3%A3o-recomendados"><i class="fas fa-link"></i></a>
 </h2>
 <p>O que segue representa uma seleção de extensões shiny de alta qualidade que podem ajudá-lo a obter muito mais brilho (trocadilho com o nome <em>shiny</em> que em inglês significa “brilhante”). Em nenhuma ordem particular:</p>
 <ul>
@@ -1346,9 +1350,9 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <li><p><strong>plotly</strong> é um pacote para a criação de gráficos interativos que o usuário pode manipular no aplicativo. Você também pode converter seu gráfico para versões interativas via <code><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">plotly::ggplotly()</a></code>! Como alternativas, <strong>dygraphs</strong> e <strong>highcharter</strong> também são excelentes.</p></li>
 </ul>
 </div>
-<div id="recursos-recomendados" class="section level2" number="41.10">
+<div id="recursos-recomendados" class="section level2" number="43.10">
 <h2>
-<span class="header-section-number">41.10</span> Recursos recomendados<a class="anchor" aria-label="anchor" href="#recursos-recomendados"><i class="fas fa-link"></i></a>
+<span class="header-section-number">43.10</span> Recursos recomendados<a class="anchor" aria-label="anchor" href="#recursos-recomendados"><i class="fas fa-link"></i></a>
 </h2>
 
 </div>
@@ -1357,30 +1361,30 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 
 
 <div class="chapter-nav">
-<div class="prev"><a href="flexdashboard.html"><span class="header-section-number">40</span> Painéis (Dashboards) com R Markdown</a></div>
-<div class="next"><a href="writing-functions.html"><span class="header-section-number">42</span> Escrevendo funções</a></div>
+<div class="prev"><a href="flexdashboard.html"><span class="header-section-number">42</span> Painéis (Dashboards) com R Markdown</a></div>
+<div class="next"><a href="writing-functions.html"><span class="header-section-number">44</span> Escrevendo funções</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#shiny-basics"><span class="header-section-number">41</span> Painéis com Shiny</a></li>
+<li><a class="nav-link" href="#shiny-basics"><span class="header-section-number">43</span> Painéis com Shiny</a></li>
 <li>
-<a class="nav-link" href="#prepara%C3%A7%C3%A3o-33"><span class="header-section-number">41.1</span> Preparação</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#prepara%C3%A7%C3%A3o-35"><span class="header-section-number">43.1</span> Preparação</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#carregar-pacotes-14">Carregar pacotes</a></li>
 <li><a class="nav-link" href="#importar-dados-6">Importar dados</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#a-estrutura-de-um-aplicativo-shiny"><span class="header-section-number">41.2</span> A estrutura de um aplicativo shiny</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#a-estrutura-de-um-aplicativo-shiny"><span class="header-section-number">43.2</span> A estrutura de um aplicativo shiny</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#estruturas-de-arquivo-b%C3%A1sicas">Estruturas de arquivo básicas</a></li>
 <li><a class="nav-link" href="#o-servidor-e-a-ui">O servidor e a ui</a></li>
 <li><a class="nav-link" href="#antes-de-come%C3%A7ar-a-construir-um-aplicativo">Antes de começar a construir um aplicativo</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#construindo-uma-iu"><span class="header-section-number">41.3</span> Construindo uma IU</a></li>
-<li><a class="nav-link" href="#carregando-dados-em-nosso-aplicativo"><span class="header-section-number">41.4</span> Carregando dados em nosso aplicativo</a></li>
-<li><a class="nav-link" href="#desenvolvendo-um-servidor-de-aplicativos"><span class="header-section-number">41.5</span> Desenvolvendo um servidor de aplicativos</a></li>
+<li><a class="nav-link" href="#construindo-uma-iu"><span class="header-section-number">43.3</span> Construindo uma IU</a></li>
+<li><a class="nav-link" href="#carregando-dados-em-nosso-aplicativo"><span class="header-section-number">43.4</span> Carregando dados em nosso aplicativo</a></li>
+<li><a class="nav-link" href="#desenvolvendo-um-servidor-de-aplicativos"><span class="header-section-number">43.5</span> Desenvolvendo um servidor de aplicativos</a></li>
 <li>
-<a class="nav-link" href="#adicionando-mais-funcionalidades"><span class="header-section-number">41.6</span> Adicionando mais funcionalidades</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#adicionando-mais-funcionalidades"><span class="header-section-number">43.6</span> Adicionando mais funcionalidades</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#adicionando-texto-est%C3%A1tico">Adicionando texto estático</a></li>
 <li><a class="nav-link" href="#adicionando-um-link">Adicionando um link</a></li>
 <li><a class="nav-link" href="#adicionando-um-bot%C3%A3o-de-download">Adicionando um botão de download</a></li>
@@ -1388,10 +1392,10 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <li><a class="nav-link" href="#adicionando-outra-guia-com-uma-tabela">Adicionando outra guia com uma tabela</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#compartilhando-aplicativos-shiny"><span class="header-section-number">41.7</span> Compartilhando aplicativos shiny</a></li>
-<li><a class="nav-link" href="#leitura-adicional"><span class="header-section-number">41.8</span> Leitura adicional</a></li>
-<li><a class="nav-link" href="#pacotes-de-extens%C3%A3o-recomendados"><span class="header-section-number">41.9</span> Pacotes de extensão recomendados</a></li>
-<li><a class="nav-link" href="#recursos-recomendados"><span class="header-section-number">41.10</span> Recursos recomendados</a></li>
+<li><a class="nav-link" href="#compartilhando-aplicativos-shiny"><span class="header-section-number">43.7</span> Compartilhando aplicativos shiny</a></li>
+<li><a class="nav-link" href="#leitura-adicional"><span class="header-section-number">43.8</span> Leitura adicional</a></li>
+<li><a class="nav-link" href="#pacotes-de-extens%C3%A3o-recomendados"><span class="header-section-number">43.9</span> Pacotes de extensão recomendados</a></li>
+<li><a class="nav-link" href="#recursos-recomendados"><span class="header-section-number">43.10</span> Recursos recomendados</a></li>
 </ul>
 
       <div class="book-extra">
@@ -1412,7 +1416,7 @@ Para um método alternativo de tornar os painéis mais rápidos, fáceis, mas ta
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-22.</p>
+    <p>"<strong>Manual de R para Epidemiologistas</strong>" was written by the handbook team. It was last built on 2023-10-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

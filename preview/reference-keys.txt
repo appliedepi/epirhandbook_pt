@@ -1,5 +1,13 @@
-help
-issues-problemas-do-github
-exemplo-reprodutível
-postar-em-um-fórum
+gis
+visão-geral
+terminologia
+iniciando-com-gis
+preparação
+criando-gráficos-das-coordenadas
+joins-espaciais
+mapas-coropléticos
+criando-mapas-com-ggplot2
+mapas-base-basemaps
+mapas-de-calor-de-densidade-com-contornos
+estatística-espacial
 recursos
