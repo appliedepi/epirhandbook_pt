@@ -56,7 +56,7 @@ knitr::include_graphics(here::here("images", "Epi R Handbook Banner Portuguese 1
 
 **Você está começando a aprender R agora?** Conheça nossos [**tutoriais interativos gratuitos**](https://www.appliedepi.org/tutorial/) ou o [**curso introdutório**](https://www.appliedepi.org/live/) síncrono e virtual utilizado pelo CDC dos EUA, pela OMS, e mais de 75 outras agências de saúde e programas de treinamento em Epidemiologia de Campo.
 
-**Idiomas:** [Inglês (English)](https://www.epirhandbook.com/en), [Francês (Français)](https://epirhandbook.com/fr), [Espanhol (Español)](https://epirhandbook.com/es/), [Vietnamita (Tiếng Việt)](https://epirhandbook.com/vn/), [Japonês (日本)](https://epirhandbook.com/jp/), [Turco (Türkçe)](https://epirhandbook.com/tr/)  
+**Idiomas:** [Inglês (English)](https://www.epirhandbook.com/en), [Francês (Français)](https://epirhandbook.com/fr), [Espanhol (Español)](https://epirhandbook.com/es/), [Vietnamita (Tiếng Việt)](https://epirhandbook.com/vn/), [Japonês (日本)](https://epirhandbook.com/jp/), [Turco (Türkçe)](https://epirhandbook.com/tr/), [Português](https://epirhandbook.com/pt),  [Russo (Русский)](https://epirhandbook.com/ru)  
 
 Esta é uma versão traduzida para Português. Se você quer colaborar em melhorá-la, corrigindo algum erro, ou traduzir para outro idoma, por favor, nos contate!
 
